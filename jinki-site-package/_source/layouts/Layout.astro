@@ -1,0 +1,240 @@
+---
+/*
+  Base Layout — Jinki Aerial Intelligence
+
+  Nielsen H1 (Visibility): theme state applied immediately via inline script
+  to prevent flash of wrong theme (FOWT).
+  Nielsen H4 (Consistency): all pages share identical chrome.
+*/
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Jinki — Aerial Intelligence',
+  description = 'AI-powered aerial intelligence for infrastructure inspection, data center monitoring, perimeter security, and precision agriculture.'
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Preload critical fonts for performance -->
+    <link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Favicon placeholder — SWAP: Replace with Jinki's actual favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{title}</title>
+
+    <!-- Prevent flash of wrong theme — runs before render -->
+    <script is:inline>
+      (function() {
+        const theme = localStorage.getItem('jinki-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+
+  </head>
+  <body>
+    <!-- Scroll progress indicator — Agent 3 -->
+    <div class="scroll-progress" aria-hidden="true"></div>
+
+    <!-- Nielsen H7 (Flexibility): Skip to main content for keyboard users -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+    <slot />
+
+    <!-- Scrollytelling engine + reveal animations + parallax + counters -->
+    <script is:inline>
+      document.addEventListener('DOMContentLoaded', function() {
+
+        // === SCROLLYTELLING ENGINE ===
+        // Maps scroll progress within each section to a CSS custom property
+        // --scroll-progress (0 to 1), enabling scroll-driven transformations.
+        // Elements with data-scroll-fade, data-scroll-scale, data-scroll-slide
+        // animate proportionally to their section's scroll position.
+        var storytellerSections = document.querySelectorAll('[data-scrollytelling]');
+        var scrollElements = document.querySelectorAll('[data-scroll-fade],[data-scroll-scale],[data-scroll-slide],[data-scroll-rotate]');
+        var heroContent = document.querySelector('.hero-content');
+        var heroSection = document.getElementById('hero');
+
+        function updateScrollytelling() {
+          var scrollY = window.scrollY;
+          var winH = window.innerHeight;
+
+          // --- Hero parallax dissolve: content fades + rises as user scrolls past ---
+          if (heroSection && heroContent) {
+            var heroH = heroSection.offsetHeight;
+            var heroProgress = Math.min(Math.max(scrollY / (heroH * 0.6), 0), 1);
+            heroContent.style.opacity = 1 - heroProgress;
+            heroContent.style.transform = 'translateY(' + (-heroProgress * 60) + 'px)';
+          }
+
+          // --- Scroll-driven platform assembly ---
+          // Parts converge from scattered to assembled as user scrolls.
+          // Uses getAttribute('class') for SVG <g> element compatibility.
+          var platformParts = document.querySelectorAll('.platform-part');
+          if (platformParts.length && heroSection) {
+            var assemblyProgress = Math.min(Math.max(scrollY / (winH * 0.4), 0), 1);
+            var easeAssembly = 1 - Math.pow(1 - assemblyProgress, 3);
+            var factor = 1 - easeAssembly;
+
+            // Displacement map keyed by CSS class substring
+            var displacements = {
+              'body': [0, -30],
+              'left-arm': [-60, -40],
+              'right-arm': [60, -40],
+              'rear-left': [-50, 50],
+              'rear-right': [50, 50],
+              'sensor': [0, 40],
+              'antenna': [0, -50],
+              'scan': [0, 60]
+            };
+
+            platformParts.forEach(function(part) {
+              var cls = (part.getAttribute('class') || '');
+              var tx = 0, ty = 0, extra = '';
+
+              for (var key in displacements) {
+                if (cls.indexOf('platform-' + key) !== -1) {
+                  tx = displacements[key][0] * factor;
+                  ty = displacements[key][1] * factor;
+                  if (key === 'scan') extra = ' scaleY(' + easeAssembly + ')';
+                  break;
+                }
+              }
+
+              part.style.transform = 'translate(' + tx + 'px,' + ty + 'px)' + extra;
+              part.style.opacity = String(easeAssembly);
+            });
+          }
+
+          // --- Per-element scroll-driven animations ---
+          scrollElements.forEach(function(el) {
+            var rect = el.getBoundingClientRect();
+            // Progress: 0 when element enters bottom of viewport, 1 when at top
+            var rawProgress = 1 - (rect.top / winH);
+            var progress = Math.min(Math.max(rawProgress, 0), 1);
+            // Ease the progress for smoother motion
+            var eased = progress < 0.5
+              ? 2 * progress * progress
+              : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+            // data-scroll-fade: fade from 0 to 1 as element scrolls into view
+            if (el.hasAttribute('data-scroll-fade')) {
+              var fadeStart = parseFloat(el.getAttribute('data-scroll-fade')) || 0.2;
+              var fadeProgress = Math.min(Math.max((progress - fadeStart) / (1 - fadeStart), 0), 1);
+              el.style.opacity = fadeProgress;
+            }
+
+            // data-scroll-scale: scale from value to 1
+            if (el.hasAttribute('data-scroll-scale')) {
+              var startScale = parseFloat(el.getAttribute('data-scroll-scale')) || 0.9;
+              var scaleVal = startScale + (1 - startScale) * eased;
+              el.style.transform = 'scale(' + scaleVal + ')';
+            }
+
+            // data-scroll-slide: slide up from px offset
+            if (el.hasAttribute('data-scroll-slide')) {
+              var slideDistance = parseFloat(el.getAttribute('data-scroll-slide')) || 40;
+              var slideOffset = slideDistance * (1 - eased);
+              el.style.transform = 'translateY(' + slideOffset + 'px)';
+              el.style.opacity = eased;
+            }
+
+            // data-scroll-rotate: rotate from degrees to 0
+            if (el.hasAttribute('data-scroll-rotate')) {
+              var rotDeg = parseFloat(el.getAttribute('data-scroll-rotate')) || 5;
+              var rotVal = rotDeg * (1 - eased);
+              el.style.transform = 'rotate(' + rotVal + 'deg)';
+            }
+          });
+
+          // --- Section-level scroll progress CSS variable ---
+          storytellerSections.forEach(function(section) {
+            var rect = section.getBoundingClientRect();
+            var sectionProgress = Math.min(Math.max(
+              (winH - rect.top) / (winH + rect.height), 0), 1);
+            section.style.setProperty('--scroll-progress', sectionProgress);
+          });
+        }
+
+        var scrollTicking = false;
+        window.addEventListener('scroll', function() {
+          if (!scrollTicking) {
+            requestAnimationFrame(function() {
+              updateScrollytelling();
+              scrollTicking = false;
+            });
+            scrollTicking = true;
+          }
+        }, { passive: true });
+        updateScrollytelling();
+
+        // === SCROLL REVEAL OBSERVER (existing, preserved) ===
+        var reveals = document.querySelectorAll('.reveal');
+        if (reveals.length) {
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+          reveals.forEach(function(el) { observer.observe(el); });
+        }
+
+        // === COUNTER ANIMATION (existing, preserved) ===
+        var statValues = document.querySelectorAll('.stat-value[data-count]');
+        if (statValues.length) {
+          var counterObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                counterObserver.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.3 });
+          statValues.forEach(function(el) { counterObserver.observe(el); });
+        }
+
+        function animateCounter(el) {
+          var target = el.getAttribute('data-count');
+          var suffix = el.getAttribute('data-suffix') || '';
+          var num = parseFloat(target);
+          var isDecimal = target.indexOf('.') !== -1;
+          var duration = 1500;
+          var start = performance.now();
+          function update(now) {
+            var elapsed = now - start;
+            var progress = Math.min(elapsed / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            var current = num * eased;
+            el.textContent = isDecimal ? current.toFixed(1) + suffix : Math.round(current) + suffix;
+            if (progress < 1) requestAnimationFrame(update);
+          }
+          requestAnimationFrame(update);
+        }
+
+        // === BUTTON RIPPLE (existing, preserved) ===
+        document.querySelectorAll('.btn').forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            var rect = btn.getBoundingClientRect();
+            btn.style.setProperty('--ripple-x', ((e.clientX - rect.left) / rect.width * 100) + '%');
+            btn.style.setProperty('--ripple-y', ((e.clientY - rect.top) / rect.height * 100) + '%');
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

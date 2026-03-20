@@ -1,0 +1,334 @@
+---
+/*
+  Careers — Jinki Aerial Intelligence
+  Open roles and company culture page.
+*/
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const perks = [
+  { icon: 'rocket_launch', title: 'Ground Floor', desc: 'Join an early-stage team where your work directly shapes the product, the culture, and the trajectory.' },
+  { icon: 'shield', title: 'Security-First Culture', desc: 'Founded by a CISSP/CCSP — security and rigor are embedded in everything we do, not bolted on.' },
+  { icon: 'psychology', title: 'Deep Tech', desc: 'Work at the intersection of aerial systems, thermal imaging, computer vision, and AI analytics.' },
+  { icon: 'location_on', title: 'Virginia Base', desc: 'Operations centered in Northern Virginia — the epicenter of data center infrastructure and aerial innovation.' },
+];
+---
+
+<Layout title="Careers — Jinki Aerial Intelligence" description="Join the team building aerial intelligence for critical infrastructure. Open roles in operations, engineering, and analytics.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="careers-hero" aria-label="Careers at Jinki">
+      <div class="careers-hero-inner">
+        <div class="vert-eyebrow reveal">
+          <span class="vert-eyebrow-line"></span>
+          <span class="vert-eyebrow-text">Careers</span>
+        </div>
+        <h1 class="reveal reveal-delay-1">Build the Intelligence Layer<br/><span class="gradient-text-cyan">Above Critical Infrastructure</span></h1>
+        <p class="careers-subtitle reveal reveal-delay-2">
+          We're building the team that will define how the world's most important facilities
+          are monitored, maintained, and protected. If you're drawn to hard problems at the
+          intersection of aerial systems, AI, and real-world impact — we want to hear from you.
+        </p>
+      </div>
+    </section>
+
+    <!-- Culture / Perks -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Why Jinki">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Why Jinki</span>
+          </div>
+          <h2>What We Offer</h2>
+        </div>
+        <div class="perks-grid">
+          {perks.map((perk, i) => (
+            <div class={`perk-card reveal reveal-delay-${(i % 4) + 1}`}>
+              <div class="perk-icon-wrap">
+                <span class="material-symbols-outlined perk-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{perk.icon}</span>
+              </div>
+              <h3>{perk.title}</h3>
+              <p>{perk.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Open Roles -->
+    <section class="section" aria-label="Open Roles">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Open Roles</span>
+          </div>
+          <h2>Current Openings</h2>
+          <p class="section-subtitle">
+            We're always looking for exceptional people. If you don't see a role that fits
+            but believe you'd add value, reach out anyway.
+          </p>
+        </div>
+
+        <div class="roles-empty reveal">
+          <span class="material-symbols-outlined" style="font-size: 48px; color: var(--text-tertiary); font-variation-settings: 'FILL' 0;" aria-hidden="true">work</span>
+          <h3>No open roles at the moment</h3>
+          <p>We're building our team thoughtfully. Check back soon, or send a general inquiry to introduce yourself.</p>
+          <a href="#contact-general" class="btn-premium roles-cta">Send General Inquiry</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- General Contact -->
+    <section id="contact-general" class="section" style="background: var(--surface-dim);" aria-label="Get in Touch">
+      <div class="section-inner" style="text-align: center; max-width: 640px;">
+        <div class="reveal">
+          <h2>Interested in Joining?</h2>
+          <p class="section-subtitle" style="margin: 16px auto 32px;">
+            Send your resume and a brief note about what excites you about aerial intelligence
+            to the email below. We read every submission.
+          </p>
+          <!-- SWAP: Replace with real careers email -->
+          <a href="mailto:careers@jinki.ai" class="careers-email">careers@jinki.ai</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .careers-hero {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 140px clamp(20px, 5vw, 80px) 80px;
+    text-align: center;
+    background: var(--surface-container-lowest);
+    position: relative;
+  }
+
+  .careers-hero-inner {
+    max-width: 800px;
+  }
+
+  .careers-hero h1 {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+
+  .gradient-text-cyan {
+    background: linear-gradient(135deg, #00E5FF, #00a8b5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .careers-subtitle {
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.75;
+    color: var(--text-secondary);
+  }
+
+  .vert-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    justify-content: center;
+  }
+
+  .section-header .vert-eyebrow {
+    justify-content: flex-start;
+  }
+
+  .vert-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .vert-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+  }
+
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .section { padding: 8rem clamp(20px, 5vw, 80px); }
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 56px;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
+
+  .section-subtitle {
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-top: 16px;
+  }
+
+  /* Perks */
+  .perks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .perks-grid { grid-template-columns: 1fr; }
+  }
+
+  .perk-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .perk-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .perk-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 229, 255, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 30px var(--accent-glow);
+  }
+
+  .perk-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .perk-icon {
+    color: var(--accent);
+    font-size: 24px;
+  }
+
+  .perk-card h3 {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+  }
+
+  .perk-card p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* Roles Empty State */
+  .roles-empty {
+    text-align: center;
+    padding: 64px 32px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+
+  .roles-empty h3 {
+    font-family: var(--font-headline);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 16px;
+    margin-bottom: 12px;
+  }
+
+  .roles-empty p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 28px;
+  }
+
+  .roles-cta {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.75rem 2rem;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  /* Email link */
+  .careers-email {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 12px 24px;
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    display: inline-block;
+    transition: all 0.3s ease;
+  }
+
+  .careers-email:hover {
+    background: var(--accent-glow);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  /* Icon loading for Material Symbols */
+  .section h2 {
+    margin-bottom: 0;
+  }
+</style>

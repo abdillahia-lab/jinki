@@ -1,0 +1,248 @@
+---
+/*
+  Terms of Service — Jinki Aerial Intelligence
+  Legal terms governing use of jinki.ai services.
+*/
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const sections = [
+  {
+    id: 'acceptance',
+    title: '1. Acceptance of Terms',
+    content: `By accessing or using the services provided by Jinki Aerial Intelligence ("Jinki," "we," "us," or "our"), including the website at jinki.ai and all related aerial intelligence services, you agree to be bound by these Terms of Service. If you do not agree to these terms, you must not access or use our services.`,
+  },
+  {
+    id: 'services',
+    title: '2. Description of Services',
+    content: `Jinki provides aerial intelligence services for critical infrastructure, including but not limited to: infrastructure inspection, thermal imaging and analysis, data center monitoring, perimeter security assessment, and agricultural surveying. Our deliverables consist of data products, analytical reports, and actionable recommendations derived from aerial operations. Jinki is an aerial intelligence firm — we provide data-driven insights, not hardware.`,
+  },
+  {
+    id: 'responsibilities',
+    title: '3. User Responsibilities',
+    content: `You agree to: (a) provide accurate and complete information when engaging our services; (b) comply with all applicable local, state, and federal laws and regulations; (c) not interfere with or disrupt the integrity or performance of our services; (d) not attempt to gain unauthorized access to our systems or data; and (e) use all deliverables, reports, and data products solely for their intended lawful purpose.`,
+  },
+  {
+    id: 'ip',
+    title: '4. Intellectual Property',
+    content: `All content, methodologies, software, analytical frameworks, reports, and materials provided by Jinki are protected by intellectual property laws. Jinki retains all rights, title, and interest in its proprietary technology, processes, and analytical methods. Clients receive a limited, non-exclusive, non-transferable license to use deliverables for their internal business purposes only. You may not reproduce, distribute, or create derivative works from our proprietary materials without prior written consent.`,
+  },
+  {
+    id: 'confidentiality',
+    title: '5. Confidentiality',
+    content: `Both parties agree to maintain the confidentiality of any proprietary or sensitive information exchanged during the course of engagement. This includes, but is not limited to, facility data, inspection findings, security assessments, and infrastructure details. Confidential information shall not be disclosed to third parties without prior written consent, except as required by law. This obligation survives the termination of any service agreement.`,
+  },
+  {
+    id: 'liability',
+    title: '6. Limitation of Liability',
+    content: `To the maximum extent permitted by applicable law, Jinki shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, or business opportunities, arising out of or related to your use of our services. Our total liability for any claim arising from these terms or our services shall not exceed the fees paid by you for the specific service giving rise to the claim. Our services provide intelligence and recommendations — operational decisions remain the sole responsibility of the client.`,
+  },
+  {
+    id: 'indemnification',
+    title: '7. Indemnification',
+    content: `You agree to indemnify, defend, and hold harmless Jinki Aerial Intelligence, its officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, and expenses (including reasonable attorneys' fees) arising out of or in any way connected with: (a) your use of our services; (b) your violation of these terms; (c) your violation of any third-party rights; or (d) any operational decisions made based on our deliverables or recommendations.`,
+  },
+  {
+    id: 'governing-law',
+    title: '8. Governing Law',
+    content: `These Terms of Service shall be governed by and construed in accordance with the laws of the Commonwealth of Virginia, United States, without regard to its conflict of law provisions. Any disputes arising under or in connection with these terms shall be subject to the exclusive jurisdiction of the state and federal courts located in Virginia.`,
+  },
+  {
+    id: 'termination',
+    title: '9. Termination',
+    content: `Jinki reserves the right to suspend or terminate your access to our services at any time, with or without cause, upon reasonable notice. Upon termination, your right to use our services ceases immediately. Provisions that by their nature should survive termination — including intellectual property, confidentiality, limitation of liability, indemnification, and governing law — shall remain in effect.`,
+  },
+  {
+    id: 'changes',
+    title: '10. Changes to Terms',
+    content: `We reserve the right to modify these Terms of Service at any time. Material changes will be communicated through our website or via direct notice to active clients. Your continued use of our services following any modifications constitutes acceptance of the revised terms. We encourage you to review these terms periodically.`,
+  },
+  {
+    id: 'contact',
+    title: '11. Contact',
+    content: `If you have questions about these Terms of Service, please contact us:`,
+  },
+];
+---
+
+<Layout title="Terms of Service — Jinki Aerial Intelligence" description="Terms of Service governing the use of Jinki Aerial Intelligence services and website.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="terms-hero" aria-label="Terms of Service">
+      <div class="terms-hero-inner">
+        <div class="vert-eyebrow reveal">
+          <span class="vert-eyebrow-line"></span>
+          <span class="vert-eyebrow-text">Legal</span>
+        </div>
+        <h1 class="reveal reveal-delay-1">Terms of Service</h1>
+        <p class="terms-subtitle reveal reveal-delay-2">
+          Effective date: March 2026
+        </p>
+      </div>
+    </section>
+
+    <!-- Terms Content -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Terms of Service">
+      <div class="section-inner">
+        <div class="terms-content">
+          {sections.map((section, i) => (
+            <article id={section.id} class={`terms-block reveal reveal-delay-${(i % 3) + 1}`}>
+              <h2>{section.title}</h2>
+              <p>{section.content}</p>
+              {section.id === 'contact' && (
+                <div class="contact-details">
+                  <p><strong>Jinki Aerial Intelligence</strong></p>
+                  <p>Virginia, United States</p>
+                  <a href="mailto:legal@jinki.ai" class="terms-email">legal@jinki.ai</a>
+                </div>
+              )}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .terms-hero {
+    min-height: 45vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 140px clamp(20px, 5vw, 80px) 60px;
+    text-align: center;
+    background: var(--surface-container-lowest);
+    position: relative;
+  }
+
+  .terms-hero-inner {
+    max-width: 800px;
+  }
+
+  .terms-hero h1 {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  .terms-subtitle {
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
+    color: var(--text-secondary);
+    line-height: 1.75;
+  }
+
+  .vert-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    justify-content: center;
+  }
+
+  .vert-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .vert-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+  }
+
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .section { padding: 6rem clamp(20px, 5vw, 80px); }
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .terms-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .terms-block {
+    margin-bottom: 48px;
+  }
+
+  .terms-block:last-child {
+    margin-bottom: 0;
+  }
+
+  .terms-block h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.375rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .terms-block p {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .contact-details {
+    margin-top: 20px;
+    padding: 24px;
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+  }
+
+  .contact-details p {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 4px;
+  }
+
+  .contact-details strong {
+    color: var(--text-primary);
+  }
+
+  .terms-email {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 12px;
+    padding: 8px 20px;
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+  }
+
+  .terms-email:hover {
+    background: var(--accent-glow);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+</style>

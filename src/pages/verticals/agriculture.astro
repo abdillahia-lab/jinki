@@ -1,0 +1,782 @@
+---
+/*
+  Vertical Page — Agriculture | Jinki Aerial Intelligence
+
+  Crop health mapping, soil moisture analysis, yield forecasting, and
+  precision agriculture intelligence for Mid-Atlantic farming operations.
+*/
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import LeadGen from '../../components/LeadGen.astro';
+import Footer from '../../components/Footer.astro';
+
+const stats = [
+  { value: '$6.1B', label: 'agricultural aerial services market (2025)', source: 'Market Research' },
+  { value: '26%', label: 'annual market growth rate', source: 'Industry Forecast' },
+  { value: '1000s', label: 'of acres covered per flight session', source: 'Operational Data' },
+  { value: '15', label: 'spectral bands captured simultaneously', source: 'Sensor Specification' },
+];
+
+const services = [
+  {
+    icon: 'agriculture',
+    title: 'Crop Health Mapping',
+    desc: 'Multispectral and NDVI imaging that reveals crop stress, disease onset, and nutrient deficiencies before they\'re visible to the naked eye. Field-level resolution across thousands of acres in a single session.',
+  },
+  {
+    icon: 'water_drop',
+    title: 'Soil Moisture Analysis',
+    desc: 'Thermal and near-infrared imaging identifies irrigation inefficiencies, drainage problems, and moisture variation patterns. Optimize water application with precision zone mapping.',
+  },
+  {
+    icon: 'trending_up',
+    title: 'Yield Forecasting',
+    desc: 'High-resolution aerial data combined with temporal analysis produces accurate yield predictions. Make confident harvest planning and marketing decisions backed by current field intelligence.',
+  },
+  {
+    icon: 'speed',
+    title: 'Variable Rate Prescription Maps',
+    desc: 'Zone-level recommendations for fertilizer, pesticide, and irrigation application. Reduce input costs while improving crop performance with data-driven precision.',
+  },
+  {
+    icon: 'eco',
+    title: 'Stand Count & Emergence Analysis',
+    desc: 'Automated plant counting and emergence assessment within days of planting. Identify replanting needs and seeding rate issues before they impact yield.',
+  },
+  {
+    icon: 'thermostat',
+    title: 'Seasonal Monitoring Programs',
+    desc: 'Recurring aerial assessments throughout the growing season tracking crop development, stress progression, and treatment effectiveness. Trend data that improves decisions year over year.',
+  },
+];
+
+const painPoints = [
+  {
+    problem: 'Manual scouting can\'t cover large operations efficiently',
+    solution: 'Aerial multispectral imaging covers what would take scouts weeks to walk in a single flight session. Every acre assessed with consistent, quantifiable data.',
+  },
+  {
+    problem: 'Satellite imagery lacks field-level resolution',
+    solution: 'Sub-meter resolution from aerial platforms reveals individual plant health, row-level variation, and micro-zone conditions that satellite data simply cannot detect.',
+  },
+  {
+    problem: 'Input costs keep rising with uncertain returns',
+    solution: 'Variable rate prescription maps optimize every application. Apply inputs where they\'re needed, reduce where they\'re not. Data-driven precision that protects your margins.',
+  },
+  {
+    problem: 'Labor shortages make scouting unreliable',
+    solution: 'Fewer available agricultural workers means you need more from each one. Aerial intelligence automates the data gathering so your team focuses on decisions and execution.',
+  },
+];
+---
+
+<Layout title="Agriculture — Jinki Aerial Intelligence" description="Crop health mapping, soil moisture analysis, and yield forecasting for precision agriculture. Multispectral aerial intelligence that transforms how you manage your operation.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="vert-hero" aria-label="Agriculture Intelligence">
+      <div class="vert-hero-inner">
+        <div class="vert-hero-content reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Agriculture</span>
+          </div>
+          <h1 class="vert-hero-title">
+            Precision Intelligence for<br/>
+            <span class="gradient-text-green">Thousands of Acres</span>
+          </h1>
+          <p class="vert-hero-subtitle">
+            Crop health maps, soil moisture analysis, and yield forecasts that transform
+            how you manage your operation. Jinki's aerial multispectral intelligence
+            replaces weeks of manual scouting with field-level precision across your
+            entire acreage.
+          </p>
+          <div class="vert-hero-actions">
+            <a href="#lead-gen" class="btn-premium vert-cta">Schedule Assessment</a>
+            <a href="#services" class="vert-cta-secondary">View Services</a>
+          </div>
+        </div>
+        <div class="vert-hero-visual reveal reveal-delay-1" aria-hidden="true">
+          <div class="ndvi-preview">
+            <div class="ndvi-grid-overlay"></div>
+            <span class="material-symbols-outlined ndvi-icon" style="font-variation-settings: 'FILL' 1;">agriculture</span>
+            <div class="ndvi-zone zone-healthy"></div>
+            <div class="ndvi-zone zone-stress"></div>
+            <div class="ndvi-zone zone-critical"></div>
+            <div class="ndvi-readout">
+              <span class="readout-label">NDVI INDEX</span>
+              <span class="readout-value">0.82</span>
+              <span class="readout-status">HEALTHY CANOPY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar reveal">
+      <div class="stats-bar-inner">
+        {stats.map(stat => (
+          <div class="stat-item">
+            <span class="stat-value">{stat.value}</span>
+            <span class="stat-label">{stat.label}</span>
+            <span class="stat-source">{stat.source}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Problem / Solution -->
+    <section class="section" aria-label="Challenges We Solve">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">The Challenge</span>
+          </div>
+          <h2>Your Agronomist Shouldn't<br/>Be Flying Blind</h2>
+          <p class="section-subtitle">
+            Large-scale farming operations face rising input costs, labor shortages,
+            and growing pressure to optimize every acre. Manual scouting and satellite
+            imagery can't deliver the resolution you need.
+          </p>
+        </div>
+
+        <div class="pain-grid">
+          {painPoints.map((pp, i) => (
+            <div class={`pain-card reveal reveal-delay-${(i % 4) + 1}`}>
+              <div class="pain-problem">
+                <span class="pain-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">warning</span>
+                <h3>{pp.problem}</h3>
+              </div>
+              <div class="pain-solution">
+                <span class="pain-arrow">&rarr;</span>
+                <p>{pp.solution}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section id="services" class="section" style="background: var(--surface-dim);" aria-label="Services">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Services</span>
+          </div>
+          <h2>Complete Field Intelligence<br/>in a Single Flight Session</h2>
+          <p class="section-subtitle">
+            Every assessment delivers actionable prescriptions and recommendations —
+            not raw data. Zone-level maps, variable rate prescriptions, and trend
+            analysis your agronomist can act on immediately.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          {services.map((svc, i) => (
+            <div class={`service-card metallic-gloss reveal reveal-delay-${(i % 3) + 1}`}>
+              <div class="service-icon-wrap">
+                <span class="material-symbols-outlined service-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{svc.icon}</span>
+              </div>
+              <h3 class="service-title">{svc.title}</h3>
+              <p class="service-desc">{svc.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Differentiator Section -->
+    <section class="section" aria-label="Why Jinki">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Why Jinki</span>
+          </div>
+          <h2>Prescriptions, Not Pretty Pictures</h2>
+        </div>
+
+        <div class="diff-grid">
+          <div class="diff-card reveal">
+            <span class="diff-number">01</span>
+            <h3>Beyond RGB</h3>
+            <p>
+              15-band multispectral capture from our MicaSense sensor suite delivers
+              vegetation indices, chlorophyll mapping, and moisture analysis that RGB
+              cameras and satellites can't match.
+            </p>
+          </div>
+          <div class="diff-card reveal reveal-delay-1">
+            <span class="diff-number">02</span>
+            <h3>Actionable Prescriptions</h3>
+            <p>
+              We deliver variable rate application maps, not just pretty pictures.
+              Your agronomist gets zone-level recommendations ready for your
+              equipment's precision application system.
+            </p>
+          </div>
+          <div class="diff-card reveal reveal-delay-2">
+            <span class="diff-number">03</span>
+            <h3>Temporal Intelligence</h3>
+            <p>
+              Seasonal monitoring programs build a data history that reveals trends,
+              validates treatments, and improves decisions year over year.
+              Intelligence that compounds.
+            </p>
+          </div>
+          <div class="diff-card reveal reveal-delay-3">
+            <span class="diff-number">04</span>
+            <h3>Mid-Atlantic Focus</h3>
+            <p>
+              Corn, soy, small grains, specialty crops — we understand the crops,
+              the soils, and the growing conditions of the Mid-Atlantic region.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <LeadGen />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ---- Vertical Hero ---- */
+  .vert-hero {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    padding: 140px clamp(20px, 5vw, 80px) 60px;
+    background: var(--surface-container-lowest);
+    position: relative;
+  }
+
+  .vert-hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .vert-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .vert-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: #34D399;
+  }
+
+  .vert-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #34D399;
+  }
+
+  .vert-hero-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+
+  .gradient-text-green {
+    background: linear-gradient(135deg, #34D399, #10B981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .vert-hero-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 540px;
+    margin-bottom: 32px;
+  }
+
+  .vert-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .vert-cta {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .vert-cta-secondary {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .vert-cta-secondary:hover {
+    color: #34D399;
+  }
+
+  /* NDVI Preview Visual */
+  .ndvi-preview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #0a100c, #0f1a14);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+  }
+
+  .ndvi-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(52, 211, 153, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(52, 211, 153, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .ndvi-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    color: rgba(52, 211, 153, 0.08);
+  }
+
+  .ndvi-zone {
+    position: absolute;
+    border-radius: 50%;
+    animation: pulse-zone 3s ease-in-out infinite;
+  }
+
+  .zone-healthy {
+    width: 60px;
+    height: 60px;
+    top: 25%;
+    left: 20%;
+    background: radial-gradient(circle, rgba(52, 211, 153, 0.5), rgba(16, 185, 129, 0.2), transparent);
+    animation-delay: 0s;
+  }
+
+  .zone-stress {
+    width: 45px;
+    height: 45px;
+    top: 50%;
+    left: 55%;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.5), rgba(245, 158, 11, 0.2), transparent);
+    animation-delay: 1s;
+  }
+
+  .zone-critical {
+    width: 35px;
+    height: 35px;
+    top: 35%;
+    left: 75%;
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.5), rgba(220, 38, 38, 0.2), transparent);
+    animation-delay: 2s;
+  }
+
+  @keyframes pulse-zone {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+
+  .ndvi-readout {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(52, 211, 153, 0.15);
+  }
+
+  .readout-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .readout-value {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 700;
+    color: #34D399;
+  }
+
+  .readout-status {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #34D399;
+    animation: blink-status 2s ease-in-out infinite;
+  }
+
+  @keyframes blink-status {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ---- Stats Bar ---- */
+  .stats-bar {
+    background: var(--surface-container-low);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .stats-bar-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px clamp(20px, 5vw, 80px);
+    gap: 32px;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: var(--font-headline);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #34D399;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .stat-source {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ---- Sections ---- */
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding: 8rem clamp(20px, 5vw, 80px);
+    }
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 56px;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-top: 16px;
+  }
+
+  /* ---- Pain Points Grid ---- */
+  .pain-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .pain-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .pain-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .pain-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .pain-problem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .pain-icon {
+    color: #F59E0B;
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .pain-problem h3 {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .pain-solution {
+    display: flex;
+    gap: 12px;
+    padding-left: 32px;
+  }
+
+  .pain-arrow {
+    color: #34D399;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .pain-solution p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ---- Services Grid ---- */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .service-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(52, 211, 153, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(52, 211, 153, 0.08);
+  }
+
+  .service-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(52, 211, 153, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .service-card:hover .service-icon-wrap {
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.15);
+  }
+
+  .service-icon {
+    color: #34D399;
+    font-size: 24px;
+  }
+
+  .service-title {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ---- Differentiators ---- */
+  .diff-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .diff-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .diff-card {
+    padding: 32px;
+    border-left: 2px solid #34D399;
+    transition: background 0.3s ease;
+  }
+
+  .diff-card:hover {
+    background: rgba(52, 211, 153, 0.04);
+  }
+
+  .diff-number {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #34D399;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .diff-card h3 {
+    font-family: var(--font-headline);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .diff-card p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 768px) {
+    .vert-hero-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .vert-hero {
+      min-height: auto;
+      padding-top: 120px;
+    }
+
+    .stats-bar-inner {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .vert-hero-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+  }
+
+  /* ---- Light Mode ---- */
+  :global([data-theme="light"]) .ndvi-preview {
+    background: linear-gradient(135deg, #e8edea, #f0f5f2);
+    border-color: var(--glass-border);
+  }
+
+  :global([data-theme="light"]) .ndvi-icon {
+    color: rgba(16, 185, 129, 0.08);
+  }
+
+  :global([data-theme="light"]) .ndvi-readout {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(16, 185, 129, 0.15);
+  }
+
+  :global([data-theme="light"]) .ndvi-grid-overlay {
+    background-image:
+      linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+  }
+</style>

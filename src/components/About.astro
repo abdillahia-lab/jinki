@@ -1,0 +1,127 @@
+---
+/*
+  About / Mission Section — Jinki Aerial Intelligence
+
+  Design decisions:
+  - Split layout: mission narrative left, key metrics right (Shield AI pattern)
+  - Monospace metric labels for technical credibility
+  - Nielsen H2 (Real-world match): language that resonates with B2B buyers
+  - 2025 trend: large metrics with counter-style presentation
+*/
+
+const stats = [
+  { value: '99.7%', label: 'Uptime Reliability', count: '99.7', suffix: '%' },
+  { value: '10x', label: 'Faster Inspections', count: '10', suffix: 'x' },
+  { value: '50+', label: 'Enterprise Clients', count: '50', suffix: '+' },
+  { value: '1M+', label: 'Acres Analyzed', count: '1', suffix: 'M+' },
+];
+---
+
+<section id="about" class="section" aria-label="About Jinki" data-scrollytelling>
+  <div class="section-inner">
+    <div class="about-grid">
+      <!-- Left: Mission -->
+      <div class="about-content reveal">
+        <span class="label">Our Mission</span>
+        <h2>Transforming Aerial Data<br/>Into Actionable Intelligence</h2>
+        <p class="about-text">
+          Jinki builds autonomous aerial intelligence systems that see what humans can't.
+          Our AI-powered platform processes aerial data in real-time, delivering insights
+          that drive faster decisions for critical infrastructure, security operations,
+          and precision agriculture.
+        </p>
+        <p class="about-text">
+          We're not a hardware company — we're an intelligence company. Our systems
+          transform raw aerial data into structured, actionable recommendations that
+          integrate directly into your operational workflows.
+        </p>
+        <a href="#capabilities" class="btn btn-secondary about-cta">
+          See Our Capabilities
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Right: Stats -->
+      <div class="about-stats">
+        {stats.map((stat, i) => (
+          <div class={`stat-card card reveal reveal-delay-${i + 1}`} data-scroll-slide={20 + i * 15}>
+            <span class="stat-value" data-count={stat.count} data-suffix={stat.suffix}>{stat.value}</span>
+            <span class="stat-label">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-content h2 {
+    margin-bottom: 24px;
+  }
+
+  .about-text {
+    margin-bottom: 20px;
+    line-height: 1.8;
+  }
+
+  .about-cta {
+    margin-top: 12px;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .stat-card {
+    text-align: center;
+    padding: 32px 24px;
+  }
+
+  .stat-value {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 400;
+  }
+
+  @media (max-width: 768px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .about-stats {
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .stat-card {
+      padding: 24px 16px;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+    }
+  }
+</style>

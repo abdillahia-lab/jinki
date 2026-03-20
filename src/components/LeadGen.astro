@@ -1,0 +1,358 @@
+---
+/*
+  Lead Generation Section — Tactical Jinki
+  Glass-panel centered form with inline validation.
+  Uses CSS custom properties from global.css.
+*/
+---
+
+<section id="lead-gen" class="relative leadgen-section-padding" aria-label="Lead Generation">
+  <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem;">
+    <div class="glass-panel rounded-2xl shadow-2xl" style="border: 1px solid var(--border); max-width: 48rem; margin-left: auto; margin-right: auto; padding: 2rem;">
+
+      <!-- Header -->
+      <div class="text-center" style="margin-bottom: 3rem;">
+        <div class="flex items-center justify-center gap-3" style="margin-bottom: 1rem;">
+          <span class="block h-[1px] w-8" style="background: var(--accent);"></span>
+          <span class="leadgen-eyebrow">Contact</span>
+          <span class="block h-[1px] w-8" style="background: var(--accent);"></span>
+        </div>
+        <h2 class="font-headline text-4xl md:text-5xl font-bold" style="color: var(--text-primary);">
+          Get Your <span class="leadgen-headline-accent">Free Assessment</span>
+        </h2>
+        <p class="text-xl font-light mt-4" style="color: var(--text-secondary); margin-top: 1rem;">
+          Tell us about your facilities and we'll show you exactly how aerial intelligence can reduce risk and cut costs.
+        </p>
+      </div>
+
+      <!-- Form -->
+      <form id="leadgen-form" class="grid grid-cols-1 md:grid-cols-2 gap-8" novalidate>
+
+        <!-- First Name -->
+        <div class="leadgen-field">
+          <label for="lg-first-name" class="leadgen-label">First Name</label>
+          <input
+            type="text"
+            id="lg-first-name"
+            name="first_name"
+            required
+            autocomplete="given-name"
+            class="leadgen-input"
+          />
+          <span class="leadgen-error" aria-live="polite"></span>
+        </div>
+
+        <!-- Last Name -->
+        <div class="leadgen-field">
+          <label for="lg-last-name" class="leadgen-label">Last Name</label>
+          <input
+            type="text"
+            id="lg-last-name"
+            name="last_name"
+            required
+            autocomplete="family-name"
+            class="leadgen-input"
+          />
+          <span class="leadgen-error" aria-live="polite"></span>
+        </div>
+
+        <!-- Business Email -->
+        <div class="leadgen-field md:col-span-2">
+          <label for="lg-email" class="leadgen-label">Business Email</label>
+          <input
+            type="email"
+            id="lg-email"
+            name="email"
+            required
+            autocomplete="email"
+            class="leadgen-input"
+          />
+          <span class="leadgen-error" aria-live="polite"></span>
+        </div>
+
+        <!-- Interest -->
+        <div class="leadgen-field md:col-span-2">
+          <label for="lg-interest" class="leadgen-label">Area of Interest</label>
+          <select id="lg-interest" name="interest" class="leadgen-input leadgen-select">
+            <option value="">What type of infrastructure?</option>
+            <option value="data-centers">Data Centers &amp; Cooling Systems</option>
+            <option value="energy">Energy Grid &amp; Power Lines</option>
+            <option value="security">Perimeter &amp; Security Monitoring</option>
+            <option value="agriculture">Agriculture &amp; Crop Analytics</option>
+            <option value="other">Other / Not Sure Yet</option>
+          </select>
+        </div>
+
+        <!-- Submit -->
+        <div class="md:col-span-2 mt-6" style="margin-top: 1.5rem;">
+          <button
+            type="submit"
+            class="leadgen-submit btn-premium w-full font-headline font-bold uppercase tracking-[0.25em] text-sm rounded-xl cursor-pointer text-white"
+            style="padding: 1.5rem 2rem;"
+          >
+            Get Your Free Assessment
+          </button>
+          <p class="leadgen-reassurance text-center mt-4" style="margin-top: 1rem;">
+            <span class="material-symbols-outlined align-middle" style="font-size: 16px; color: var(--accent);" aria-hidden="true">lock</span>
+            No commitment required. We'll respond within one business day.
+          </p>
+        </div>
+      </form>
+
+      <!-- Success Message -->
+      <div id="leadgen-success" class="leadgen-success mt-8 text-center" style="margin-top: 2rem;" hidden>
+        <p>Thank you! Our team will reach out within one business day to schedule your assessment.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .leadgen-section-padding {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  @media (min-width: 768px) {
+    .leadgen-section-padding {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+
+    .glass-panel {
+      padding: 4rem !important;
+    }
+  }
+
+  .leadgen-headline-accent {
+    background: linear-gradient(135deg, #00E5FF, #7B61FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  :global([data-theme="light"]) .leadgen-headline-accent {
+    background: linear-gradient(135deg, #00838f, #5B4ACF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .leadgen-eyebrow {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+  }
+
+  .leadgen-label {
+    display: block;
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-tertiary);
+    margin-bottom: 0.75rem;
+  }
+
+  .leadgen-input {
+    width: 100%;
+    padding: 1.25rem;
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  }
+
+  .leadgen-input:hover {
+    border-color: var(--text-tertiary);
+  }
+
+  .leadgen-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow), 0 0 20px var(--accent-glow);
+    background: var(--surface-container-lowest);
+  }
+
+  .leadgen-input::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  .leadgen-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23849396' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.25rem center;
+    padding-right: 3rem;
+    cursor: pointer;
+  }
+
+  .leadgen-error {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--error);
+    min-height: 1.25rem;
+    margin-top: 0.35rem;
+  }
+
+  .leadgen-success {
+    padding: 1.5rem 2rem;
+    background: rgba(74, 222, 128, 0.08);
+    border: 1px solid rgba(74, 222, 128, 0.2);
+    border-radius: 12px;
+    color: #4ADE80;
+    font-size: 0.95rem;
+    backdrop-filter: blur(12px);
+    animation: success-fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes success-fade-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  :global([data-theme="light"]) .leadgen-success {
+    background: rgba(22, 163, 74, 0.08);
+    border-color: rgba(22, 163, 74, 0.2);
+    color: #16a34a;
+  }
+
+  .leadgen-reassurance {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    font-weight: 400;
+  }
+
+  .leadgen-field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .leadgen-input.input-error {
+    box-shadow: 0 0 0 2px var(--error);
+    border-color: var(--error);
+    animation: input-shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+  }
+
+  @keyframes input-shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(2px); }
+  }
+
+  .leadgen-submit {
+    background: linear-gradient(135deg, #00E5FF 0%, #00a8b5 50%, #00626e 100%);
+    box-shadow: 0 4px 16px rgba(0, 229, 255, 0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  .leadgen-submit:hover {
+    background: linear-gradient(135deg, #33ecff 0%, #00c4d4 50%, #007a8a 100%);
+    box-shadow: 0 6px 24px rgba(0, 229, 255, 0.4), 0 0 60px rgba(0, 229, 255, 0.1), inset 0 1px 0 rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+  }
+
+  .leadgen-submit:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 229, 255, 0.3), inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+
+  :global([data-theme="light"]) .leadgen-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow), 0 0 20px var(--accent-glow);
+    background: #ffffff;
+  }
+
+  :global([data-theme="light"]) .leadgen-input:hover {
+    border-color: var(--text-tertiary);
+  }
+
+  :global([data-theme="light"]) .leadgen-submit {
+    background: linear-gradient(135deg, #00838f, #005f6b);
+    box-shadow: 0 4px 16px rgba(0, 131, 143, 0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+
+  :global([data-theme="light"]) .leadgen-submit:hover {
+    background: linear-gradient(135deg, #00969e, #00727e);
+    box-shadow: 0 6px 24px rgba(0, 131, 143, 0.4), inset 0 1px 0 rgba(255,255,255,0.25);
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var form = document.getElementById('leadgen-form');
+    if (!form) return;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var valid = true;
+
+      var firstName = form.querySelector('#lg-first-name');
+      var lastName = form.querySelector('#lg-last-name');
+      var email = form.querySelector('#lg-email');
+
+      // Validate first name
+      if (!firstName.value.trim()) {
+        showError(firstName, 'First name is required');
+        valid = false;
+      } else {
+        clearError(firstName);
+      }
+
+      // Validate last name
+      if (!lastName.value.trim()) {
+        showError(lastName, 'Last name is required');
+        valid = false;
+      } else {
+        clearError(lastName);
+      }
+
+      // Validate email
+      if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+        showError(email, 'Please enter a valid business email');
+        valid = false;
+      } else {
+        clearError(email);
+      }
+
+      if (valid) {
+        var success = document.getElementById('leadgen-success');
+        success.hidden = false;
+        form.reset();
+        setTimeout(function () {
+          success.hidden = true;
+        }, 6000);
+      }
+    });
+
+    function showError(input, message) {
+      var error = input.parentNode.querySelector('.leadgen-error');
+      if (error) error.textContent = message;
+      input.classList.add('input-error');
+    }
+
+    function clearError(input) {
+      var error = input.parentNode.querySelector('.leadgen-error');
+      if (error) error.textContent = '';
+      input.classList.remove('input-error');
+    }
+
+    // Clear errors on input
+    form.querySelectorAll('input, select').forEach(function (input) {
+      input.addEventListener('input', function () {
+        clearError(input);
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,198 @@
+---
+/**
+ * Verticals.astro — Industrial verticals section
+ * Four-column card grid showcasing target industries.
+ */
+
+const verticals = [
+  {
+    title: "Data Centers",
+    icon: "dns",
+    img: "https://lh3.googleusercontent.com/aida/ADBb0uiqe27nwBJBiiFegXpqX4QJInvj8S7I1hx-98CvwYA39wP_T9xCEO7sdePnFVZOnZheTKo8dlgU_vQRtXdW_j2MK10pyGBngVyzTHGDdmZ5k8a2ZfHMKgWAXUUJ2qnfYAaPqzF_U_HTqcACB75ok5fOQhFUZYHKkcGYdQDYeH8-YrW-ZnF21rv7Rnv5t7Qjje4mbIBRfGcaJqGfd6Tn17cTV8nKeP3H888dHwXZ7vD2khSu9rzRgTOb8eq9ECLwVOX23Ja2xseGrc8",
+    desc: "Thermal reports that pinpoint cooling failures and roof damage before they cause downtime.",
+  },
+  {
+    title: "Energy Grid",
+    icon: "electric_bolt",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDCZ2S_AXbpqohGFOt8JiOIQHZu69FN4Pm7CPmnAsP6tkDnnH0yZKCZktPxZo_4_QNxdtwrdh9gOquvVlMD8WTQCRrL9-NZ6Pk_ReW6x_ZbgQb_OZv0eaapl2XhYZyWws4tlApotdvQXj-NHIM-zvHiU-oB60RY0wEMfBC3tnJqG-4Yem-zSDHaoAxzxVEskMb1KQNUg085aDuH3t9nZo1bCqZM3MyzPnVu8y3Tl_tN7t7tI7fqDUvNn4UOQ03q-9obbOUqRJZQs00y",
+    desc: "Condition assessments for power lines, substations, and solar farms — no shutdowns required.",
+  },
+  {
+    title: "Security",
+    icon: "security",
+    img: "https://lh3.googleusercontent.com/aida/ADBb0ujoL7fVnboOTJkoXrd2ACk3OzVpiWOAz4H-sqpGSFLCsJi5sDYYGATHAYtpBoWjkr-04fwGTrePKTst8g4_9Lw8fIMARGdA87tvqERMfwgmwiYbRlkiEFZWx4Y6IhboC9kuPvEYZirU-qblF-zHYH47qCC5cunj6o4ITIdvm5mfkAYNe84mhcoEWzZDKKrSysgb9glU2_pewA2kqm30G-gq_E200nh17q3a1RqWS_KObnk7onwJICVLyccnSBKJJHmy8dYhZz6Q74o",
+    desc: "Automated perimeter monitoring with real-time intrusion alerts and event reports.",
+  },
+  {
+    title: "Agriculture",
+    icon: "agriculture",
+    img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDou0tGvSnK0T0fmS0uFSPqXY3tfcMDUNxA9sbNGEc_zIoSy9w_Vl-jRIK7nuh1r4seHDokVwMWm5-NCzTOnsed_lJ7L8cYdtr5uDcbsqklBLrVM4lQNNRo_uAFJMyu9KSc5d2WbAnfxUIbJ1kxYSC0RVrSa3Ds01ePOB5LhoMC1horonoEY1X2a16Iu7jP5BHQUZIWsZW5vb7CqLyAobOOp9kh2zOdoJDKBAnD0kT0wRkMsqkOmVelbpRyHwPBj6c2Fk1XYOyDihCU",
+    desc: "Crop health maps, soil moisture analysis, and yield forecasts across thousands of acres.",
+  },
+];
+---
+
+<section id="verticals" class="verticals-section section-padding relative" style="background: var(--surface-dim);" aria-label="Industries We Serve">
+  <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem;">
+    <!-- Header row -->
+    <div class="flex flex-col md:flex-row justify-between items-end reveal" style="margin-bottom: 3rem;">
+      <div class="max-w-xl">
+        <div class="flex items-center gap-3" style="margin-bottom: 1rem;">
+          <span class="block h-[1px] w-8" style="background: var(--accent);"></span>
+          <span class="section-eyebrow">Verticals</span>
+        </div>
+        <h2 class="font-headline text-4xl md:text-5xl font-bold" style="color: var(--text-primary);">
+          Industries We Serve
+        </h2>
+        <p class="text-lg font-light mt-4" style="color: var(--text-secondary); margin-top: 1rem;">
+          We deliver tailored aerial intelligence and actionable data for the unique needs of each industry.
+        </p>
+      </div>
+      <a href="#lead-gen" class="verticals-ecosystem-link mt-6 md:mt-0 inline-flex items-center gap-2 text-[var(--accent)] uppercase tracking-[0.2em] text-sm font-semibold hover:gap-3 transition-all" style="margin-top: 1.5rem;">
+        Get Started
+        <span class="arrow-icon inline-block transition-transform duration-300">&rarr;</span>
+      </a>
+    </div>
+
+    <!-- 4-column grid -->
+    <div class="verticals-grid">
+      {verticals.map((v, i) => (
+        <div class={`group relative rounded-xl overflow-hidden metallic-gloss vertical-card reveal reveal-delay-${i + 1}`} style="aspect-ratio: 3 / 4.2;">
+          <!-- Background image -->
+          <img
+            src={v.img}
+            alt={v.title}
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+            loading="lazy"
+            decoding="async"
+          />
+          <!-- Gradient overlay -->
+          <div class="card-overlay absolute inset-0"></div>
+          <!-- Content -->
+          <div class="absolute bottom-0 left-0 z-10" style="padding: 2rem;">
+            <span class="material-symbols-outlined card-icon text-[var(--accent)] scale-125 mb-3 block" style="font-variation-settings: 'FILL' 1; margin-bottom: 0.75rem;" aria-hidden="true">
+              {v.icon}
+            </span>
+            <h3 class="font-headline text-2xl font-bold text-white">{v.title}</h3>
+            <p class="card-desc text-sm mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="margin-top: 0.5rem;">
+              {v.desc}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-padding {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+  }
+
+  .section-eyebrow {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+  }
+
+  .verticals-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .verticals-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .verticals-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .vertical-card {
+    cursor: pointer;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.5s ease;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+    border: 1px solid transparent;
+  }
+
+  .vertical-card:hover {
+    transform: translateY(-0.75rem) scale(1.02);
+    box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.5), 0 0 40px rgba(0, 229, 255, 0.1), inset 0 1px 0 rgba(255,255,255,0.1);
+    border-color: rgba(0, 229, 255, 0.2);
+  }
+
+  .vertical-card:active {
+    transform: translateY(-0.25rem) scale(1.01);
+  }
+
+  .verticals-ecosystem-link {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .verticals-ecosystem-link:hover {
+    text-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  .verticals-ecosystem-link:hover .arrow-icon {
+    transform: translateX(4px);
+  }
+
+  .card-overlay {
+    background: linear-gradient(to top, rgba(12, 14, 16, 0.95), rgba(12, 14, 16, 0.2) 60%, transparent);
+  }
+
+  .card-icon {
+    transition: text-shadow 0.4s ease, transform 0.4s ease;
+  }
+
+  .vertical-card:hover .card-icon {
+    text-shadow: 0 0 16px var(--accent-glow-strong), 0 0 32px var(--accent-glow);
+    transform: scale(1.15) translateY(-2px);
+  }
+
+  .card-desc {
+    color: rgba(255, 255, 255, 0.75);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    transform: translateY(8px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  .vertical-card:hover .card-desc {
+    transform: translateY(0);
+  }
+
+  /* Mobile: shorter cards */
+  @media (max-width: 767px) {
+    .vertical-card {
+      aspect-ratio: 4 / 3 !important;
+    }
+  }
+
+  /* Light mode */
+  :global([data-theme="light"]) .verticals-section {
+    background: var(--surface-dim);
+  }
+
+  :global([data-theme="light"]) .card-overlay {
+    background: linear-gradient(to top, rgba(26, 28, 30, 0.9), rgba(26, 28, 30, 0.15) 60%, transparent);
+  }
+</style>

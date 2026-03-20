@@ -1,0 +1,212 @@
+---
+/*
+  Blog Post Page — Jinki Aerial Intelligence
+
+  Dynamic route for individual blog posts.
+  Renders Markdown content with consistent layout.
+  Nielsen H6 (Recognition): breadcrumb navigation back to blog listing.
+*/
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(post => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={`${post.data.title} — Jinki Blog`} description={post.data.description}>
+  <Nav />
+  <main id="main-content" class="post-page">
+    <article class="post-article section-inner">
+      <!-- Breadcrumb — Nielsen H3 (User Control): easy way back -->
+      <nav class="breadcrumb reveal" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog">Blog</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{post.data.title}</span>
+      </nav>
+
+      <header class="post-header reveal">
+        <div class="post-meta">
+          <time datetime={post.data.date.toISOString()}>
+            {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+          <span class="post-author">by {post.data.author}</span>
+        </div>
+        <h1>{post.data.title}</h1>
+        <p class="post-desc">{post.data.description}</p>
+        {post.data.tags.length > 0 && (
+          <div class="post-tags">
+            {post.data.tags.map(tag => (
+              <span class="blog-tag">{tag}</span>
+            ))}
+          </div>
+        )}
+      </header>
+
+      <div class="post-content reveal reveal-delay-1">
+        <Content />
+      </div>
+
+      <footer class="post-footer">
+        <a href="/blog" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+          Back to Blog
+        </a>
+      </footer>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  .post-page {
+    padding-top: 120px;
+    min-height: 100vh;
+    background: var(--bg-primary);
+  }
+
+  .post-article {
+    max-width: 720px;
+    padding-bottom: 80px;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    margin-bottom: 40px;
+    color: var(--text-tertiary);
+  }
+
+  .breadcrumb a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--accent);
+  }
+
+  .post-header {
+    margin-bottom: 48px;
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    margin-bottom: 16px;
+  }
+
+  .post-author {
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+  }
+
+  .post-header h1 {
+    margin-bottom: 16px;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+  }
+
+  .post-desc {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .post-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .blog-tag {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: var(--accent-glow);
+    color: var(--accent);
+  }
+
+  /* Blog content styling */
+  .post-content {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+  }
+
+  .post-content :global(h2) {
+    font-size: 1.5rem;
+    margin: 48px 0 16px;
+    color: var(--text-primary);
+  }
+
+  .post-content :global(h3) {
+    font-size: 1.2rem;
+    margin: 32px 0 12px;
+    color: var(--text-primary);
+  }
+
+  .post-content :global(p) {
+    margin-bottom: 24px;
+    max-width: none;
+  }
+
+  .post-content :global(ul), .post-content :global(ol) {
+    margin-bottom: 24px;
+    padding-left: 24px;
+  }
+
+  .post-content :global(li) {
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+  }
+
+  .post-content :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    padding: 2px 6px;
+    background: var(--bg-card);
+    border-radius: 4px;
+    color: var(--accent);
+  }
+
+  .post-content :global(blockquote) {
+    border-left: 3px solid var(--accent);
+    padding-left: 20px;
+    margin: 24px 0;
+    font-style: italic;
+    color: var(--text-tertiary);
+  }
+
+  .post-content :global(a) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .post-footer {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+</style>

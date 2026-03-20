@@ -1,0 +1,1083 @@
+---
+/*
+  Service Page — Facility Intelligence Audit | Jinki Aerial Intelligence
+
+  Comprehensive aerial assessment of your facility's thermal health,
+  structural condition, and security posture. One engagement, one report,
+  clear next steps.
+*/
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import LeadGen from '../../components/LeadGen.astro';
+import Footer from '../../components/Footer.astro';
+
+const included = [
+  {
+    icon: 'thermostat',
+    title: 'Thermal Survey',
+    desc: 'Full-facility aerial thermal mapping identifying insulation failures, moisture intrusion, cooling anomalies, and equipment hot spots across every rooftop and mechanical system.',
+  },
+  {
+    icon: 'roofing',
+    title: 'Roof & Structural Assessment',
+    desc: 'High-resolution visual and thermal inspection with AI-prioritized damage classification: membrane degradation, ponding water, hail impact, and debris accumulation.',
+  },
+  {
+    icon: 'security',
+    title: 'Perimeter Security Evaluation',
+    desc: 'Thermal and visual perimeter assessment identifying camera blind spots, access vulnerabilities, lighting gaps, and monitoring coverage deficiencies across your entire boundary.',
+  },
+  {
+    icon: 'description',
+    title: 'Compliance Documentation',
+    desc: 'NFPA 70B thermal inspection records, ASHRAE temperature verification, environmental documentation, and regulatory-ready reporting delivered as part of every engagement.',
+  },
+];
+
+const process = [
+  {
+    step: '01',
+    title: 'Scoping Call',
+    desc: 'We learn your facility, your priorities, and your pain points. No generic questionnaire — a conversation about what matters to your operations team.',
+    icon: 'call',
+  },
+  {
+    step: '02',
+    title: 'Flight Planning',
+    desc: 'Regulatory coordination, airspace authorization, safety planning, and mission design tailored to your site geometry and inspection requirements.',
+    icon: 'flight_takeoff',
+  },
+  {
+    step: '03',
+    title: 'Data Capture',
+    desc: 'Aerial operations on-site. Thermal, visual, and multispectral data collection covering every structure, system, and perimeter section — typically completed in a single day.',
+    icon: 'satellite_alt',
+  },
+  {
+    step: '04',
+    title: 'Analysis & AI Processing',
+    desc: 'Raw data feeds our analytics pipeline: anomaly detection, severity classification, trend identification, and automated damage assessment across thousands of data points.',
+    icon: 'model_training',
+  },
+  {
+    step: '05',
+    title: 'Recommendations Report',
+    desc: 'The Facility Intelligence Report is delivered: severity-ranked findings, remediation priorities, cost estimates, compliance status, and suggested timelines.',
+    icon: 'assignment',
+  },
+  {
+    step: '06',
+    title: 'Follow-up Review',
+    desc: 'We walk your team through every finding. Questions answered, priorities confirmed, and a clear path forward — not a file drop and a goodbye.',
+    icon: 'groups',
+  },
+];
+
+const audiences = [
+  { icon: 'dns', label: 'Data Center Operators' },
+  { icon: 'electric_bolt', label: 'Energy Companies' },
+  { icon: 'apartment', label: 'Facility Managers' },
+  { icon: 'account_balance', label: 'Asset Owners' },
+  { icon: 'engineering', label: 'Maintenance Directors' },
+  { icon: 'shield', label: 'Security Teams' },
+];
+---
+
+<Layout title="Facility Intelligence Audit — Jinki Aerial Intelligence" description="Comprehensive aerial assessment of your facility's thermal health, structural condition, and security posture. One engagement, one report, clear next steps.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="vert-hero" aria-label="Facility Intelligence Audit">
+      <div class="vert-hero-inner">
+        <div class="vert-hero-content reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Facility Audit</span>
+          </div>
+          <h1 class="vert-hero-title">
+            One Assessment.<br/>
+            <span class="gradient-text-cyan">Complete Facility Intelligence.</span>
+          </h1>
+          <p class="vert-hero-subtitle">
+            Jinki's Facility Intelligence Audit combines thermal diagnostics, structural assessment,
+            and security evaluation into a single engagement. You get a prioritized recommendations
+            report — not raw data, not another dashboard. Clear findings. Clear next steps.
+          </p>
+          <div class="vert-hero-actions">
+            <a href="#lead-gen" class="btn-premium vert-cta">Schedule Your Audit</a>
+            <a href="#process" class="vert-cta-secondary">See the Process</a>
+          </div>
+        </div>
+        <div class="vert-hero-visual reveal reveal-delay-1" aria-hidden="true">
+          <div class="audit-preview">
+            <div class="audit-grid-overlay"></div>
+            <span class="material-symbols-outlined audit-bg-icon" style="font-variation-settings: 'FILL' 1;">assignment</span>
+            <div class="audit-scan-line"></div>
+            <div class="audit-readout">
+              <span class="readout-label">AUDIT STATUS</span>
+              <span class="readout-value audit-value">6 / 6</span>
+              <span class="readout-status audit-status">ASSESSMENT COMPLETE</span>
+            </div>
+            <div class="audit-badge badge-1">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 16px;">thermostat</span>
+              <span>Thermal</span>
+            </div>
+            <div class="audit-badge badge-2">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 16px;">roofing</span>
+              <span>Structural</span>
+            </div>
+            <div class="audit-badge badge-3">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 16px;">security</span>
+              <span>Security</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- What's Included -->
+    <section id="included" class="section" style="background: var(--surface-dim);" aria-label="What's Included">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">What's Included</span>
+          </div>
+          <h2>Every Surface. Every System.<br/>One Engagement.</h2>
+          <p class="section-subtitle">
+            A single aerial engagement covers your entire facility — thermal health,
+            structural condition, security posture, and compliance documentation.
+            No piecemeal scoping. No follow-up surprises.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          {included.map((svc, i) => (
+            <div class={`service-card metallic-gloss reveal reveal-delay-${(i % 4) + 1}`}>
+              <div class="service-icon-wrap">
+                <span class="material-symbols-outlined service-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{svc.icon}</span>
+              </div>
+              <h3 class="service-title">{svc.title}</h3>
+              <p class="service-desc">{svc.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Process Timeline -->
+    <section id="process" class="section" aria-label="The Process">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">The Process</span>
+          </div>
+          <h2>From Scoping Call to<br/>Actionable Report</h2>
+          <p class="section-subtitle">
+            Six steps from first conversation to prioritized recommendations.
+            Most facilities complete the entire process in two to three weeks.
+          </p>
+        </div>
+
+        <div class="timeline">
+          {process.map((step, i) => (
+            <div class={`timeline-item reveal reveal-delay-${(i % 4) + 1}`}>
+              <div class="timeline-marker">
+                <span class="timeline-step">{step.step}</span>
+                <div class="timeline-connector"></div>
+              </div>
+              <div class="timeline-content">
+                <div class="timeline-icon-wrap">
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 22px;" aria-hidden="true">{step.icon}</span>
+                </div>
+                <h3>{step.title}</h3>
+                <p>{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- The Deliverable -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="The Deliverable">
+      <div class="section-inner">
+        <div class="deliverable-layout reveal">
+          <div class="deliverable-text">
+            <div class="vert-eyebrow">
+              <span class="vert-eyebrow-line"></span>
+              <span class="vert-eyebrow-text">The Deliverable</span>
+            </div>
+            <h2>The Facility Intelligence Report</h2>
+            <p class="deliverable-lead">
+              Your team gets a work order, not a file dump. Every finding is ranked,
+              costed, and scheduled — ready for your next maintenance planning cycle.
+            </p>
+            <ul class="deliverable-list">
+              <li>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--accent); font-size: 20px;" aria-hidden="true">priority_high</span>
+                <span>Severity-ranked findings with visual evidence</span>
+              </li>
+              <li>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--accent); font-size: 20px;" aria-hidden="true">attach_money</span>
+                <span>Remediation priorities with cost estimates</span>
+              </li>
+              <li>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--accent); font-size: 20px;" aria-hidden="true">verified</span>
+                <span>Compliance status and documentation</span>
+              </li>
+              <li>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--accent); font-size: 20px;" aria-hidden="true">schedule</span>
+                <span>Suggested remediation timelines</span>
+              </li>
+              <li>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--accent); font-size: 20px;" aria-hidden="true">trending_up</span>
+                <span>Trend analysis for recurring assessments</span>
+              </li>
+            </ul>
+          </div>
+          <div class="deliverable-visual reveal reveal-delay-2" aria-hidden="true">
+            <div class="report-mockup">
+              <div class="report-header-bar">
+                <span class="report-dot" style="background: #FF6B35;"></span>
+                <span class="report-dot" style="background: #FFBD2E;"></span>
+                <span class="report-dot" style="background: #27C93F;"></span>
+                <span class="report-title-text">Facility Intelligence Report</span>
+              </div>
+              <div class="report-body">
+                <div class="report-row critical">
+                  <span class="report-severity">CRITICAL</span>
+                  <span class="report-finding">Cooling unit T-4 thermal anomaly</span>
+                  <span class="report-cost">$12,400</span>
+                </div>
+                <div class="report-row high">
+                  <span class="report-severity">HIGH</span>
+                  <span class="report-finding">Roof membrane degradation — Bldg C</span>
+                  <span class="report-cost">$34,200</span>
+                </div>
+                <div class="report-row medium">
+                  <span class="report-severity">MEDIUM</span>
+                  <span class="report-finding">Perimeter camera blind spot — NE gate</span>
+                  <span class="report-cost">$2,800</span>
+                </div>
+                <div class="report-row low">
+                  <span class="report-severity">LOW</span>
+                  <span class="report-finding">Insulation gap — mechanical room 2</span>
+                  <span class="report-cost">$1,600</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Who It's For -->
+    <section class="section" aria-label="Who It's For">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Who It's For</span>
+          </div>
+          <h2>Built for Teams That Own<br/>Critical Infrastructure</h2>
+        </div>
+
+        <div class="audience-grid">
+          {audiences.map((aud, i) => (
+            <div class={`audience-card reveal reveal-delay-${(i % 3) + 1}`}>
+              <span class="material-symbols-outlined audience-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{aud.icon}</span>
+              <span class="audience-label">{aud.label}</span>
+            </div>
+          ))}
+        </div>
+
+        <!-- Frequency -->
+        <div class="frequency-bar reveal">
+          <div class="frequency-inner">
+            <div class="frequency-item">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--accent); font-size: 24px;" aria-hidden="true">event</span>
+              <div>
+                <h4>One-Time Assessment</h4>
+                <p>Baseline your facility's condition with a single comprehensive engagement.</p>
+              </div>
+            </div>
+            <div class="frequency-divider"></div>
+            <div class="frequency-item">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--accent); font-size: 24px;" aria-hidden="true">event_repeat</span>
+              <div>
+                <h4>Recurring Program</h4>
+                <p>Quarterly, semi-annual, or annual assessments that track trends and measure remediation progress over time.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <LeadGen />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ---- Hero ---- */
+  .vert-hero {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    padding: 140px clamp(20px, 5vw, 80px) 60px;
+    background: var(--surface-container-lowest);
+    position: relative;
+  }
+
+  .vert-hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .vert-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .vert-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .vert-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+  }
+
+  .vert-hero-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+
+  .gradient-text-cyan {
+    background: linear-gradient(135deg, #00E5FF, #00a8b5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .vert-hero-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 540px;
+    margin-bottom: 32px;
+  }
+
+  .vert-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .vert-cta {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .vert-cta-secondary {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .vert-cta-secondary:hover {
+    color: var(--accent);
+  }
+
+  /* ---- Audit Preview Visual ---- */
+  .audit-preview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #0a0c10, #141820);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+  }
+
+  .audit-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .audit-bg-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    color: rgba(0, 229, 255, 0.06);
+  }
+
+  .audit-scan-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.4;
+    animation: scan-move 4s ease-in-out infinite;
+  }
+
+  @keyframes scan-move {
+    0%, 100% { top: 15%; }
+    50% { top: 80%; }
+  }
+
+  .audit-readout {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 229, 255, 0.15);
+  }
+
+  .readout-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .readout-value {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .audit-value {
+    color: var(--accent);
+  }
+
+  .readout-status {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .audit-status {
+    color: #27C93F;
+  }
+
+  .audit-badge {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    padding: 6px 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 229, 255, 0.12);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    animation: float-badge 5s ease-in-out infinite;
+  }
+
+  .badge-1 { top: 18%; right: 16%; animation-delay: 0s; }
+  .badge-2 { top: 42%; right: 10%; animation-delay: 1.5s; }
+  .badge-3 { top: 66%; right: 20%; animation-delay: 3s; }
+
+  @keyframes float-badge {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  /* ---- Sections ---- */
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding: 8rem clamp(20px, 5vw, 80px);
+    }
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 56px;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-top: 16px;
+  }
+
+  /* ---- Services Grid ---- */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .service-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 229, 255, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 30px var(--accent-glow);
+  }
+
+  .service-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .service-card:hover .service-icon-wrap {
+    box-shadow: 0 0 20px var(--accent-glow-strong);
+  }
+
+  .service-icon {
+    color: var(--accent);
+    font-size: 24px;
+  }
+
+  .service-title {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ---- Timeline ---- */
+  .timeline {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .timeline {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px 48px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .timeline {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 20px;
+    padding: 24px 0;
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-item {
+      flex-direction: column;
+      padding: 0;
+    }
+  }
+
+  .timeline-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-marker {
+      flex-direction: row;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .timeline-step {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: var(--accent-glow);
+  }
+
+  .timeline-connector {
+    width: 2px;
+    flex: 1;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    min-height: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-connector {
+      height: 2px;
+      width: auto;
+      flex: 1;
+      background: linear-gradient(to right, var(--accent), transparent);
+      min-height: auto;
+    }
+  }
+
+  .timeline-icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    color: var(--accent);
+  }
+
+  .timeline-content h3 {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .timeline-content p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ---- Deliverable ---- */
+  .deliverable-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .deliverable-layout {
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+  }
+
+  .deliverable-text h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
+
+  .deliverable-lead {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-top: 16px;
+    margin-bottom: 32px;
+  }
+
+  .deliverable-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .deliverable-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Report Mockup */
+  .report-mockup {
+    background: linear-gradient(135deg, #0a0c10, #141820);
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+  }
+
+  .report-header-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .report-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .report-title-text {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+    margin-left: 8px;
+  }
+
+  .report-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .report-row {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .report-severity {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  .report-row.critical .report-severity {
+    background: rgba(255, 59, 48, 0.15);
+    color: #FF3B30;
+  }
+
+  .report-row.high .report-severity {
+    background: rgba(255, 107, 53, 0.15);
+    color: #FF6B35;
+  }
+
+  .report-row.medium .report-severity {
+    background: rgba(255, 189, 46, 0.15);
+    color: #FFBD2E;
+  }
+
+  .report-row.low .report-severity {
+    background: rgba(0, 229, 255, 0.12);
+    color: var(--accent);
+  }
+
+  .report-finding {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .report-cost {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  /* ---- Audience Grid ---- */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+
+  @media (min-width: 768px) {
+    .audience-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .audience-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+
+  .audience-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 28px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  .audience-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .audience-icon {
+    font-size: 28px;
+    color: var(--accent);
+  }
+
+  .audience-label {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---- Frequency Bar ---- */
+  .frequency-bar {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+  }
+
+  .frequency-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .frequency-inner {
+      grid-template-columns: 1fr auto 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+  }
+
+  .frequency-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .frequency-item h4 {
+    font-family: var(--font-headline);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  .frequency-item p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .frequency-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+  }
+
+  @media (min-width: 768px) {
+    .frequency-divider {
+      width: 1px;
+      height: 64px;
+    }
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 768px) {
+    .vert-hero-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .vert-hero {
+      min-height: auto;
+      padding-top: 120px;
+    }
+
+    .vert-hero-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .report-row {
+      grid-template-columns: 70px 1fr;
+    }
+
+    .report-cost {
+      display: none;
+    }
+  }
+
+  /* ---- Light Mode ---- */
+  :global([data-theme="light"]) .audit-preview {
+    background: linear-gradient(135deg, #e8eaed, #f5f5f5);
+    border-color: var(--glass-border);
+  }
+
+  :global([data-theme="light"]) .audit-bg-icon {
+    color: rgba(0, 131, 143, 0.06);
+  }
+
+  :global([data-theme="light"]) .audit-readout {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 131, 143, 0.15);
+  }
+
+  :global([data-theme="light"]) .audit-grid-overlay {
+    background-image:
+      linear-gradient(rgba(0, 131, 143, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 131, 143, 0.05) 1px, transparent 1px);
+  }
+
+  :global([data-theme="light"]) .audit-badge {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 131, 143, 0.15);
+    color: var(--accent);
+  }
+
+  :global([data-theme="light"]) .report-mockup {
+    background: linear-gradient(135deg, #e8eaed, #f5f5f5);
+  }
+
+  :global([data-theme="light"]) .report-header-bar {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  :global([data-theme="light"]) .report-row {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+</style>

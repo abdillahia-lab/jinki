@@ -1,0 +1,762 @@
+---
+/*
+  Vertical Page — Energy Grid | Jinki Aerial Intelligence
+
+  Thermal inspection, solar panel assessment, power line surveys, and
+  substation intelligence for Virginia's energy infrastructure.
+*/
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import LeadGen from '../../components/LeadGen.astro';
+import Footer from '../../components/Footer.astro';
+
+const stats = [
+  { value: '75%', label: 'faster inspections than manual methods', source: 'Operational Data' },
+  { value: '3x', label: 'more anomalies detected vs ground crews', source: 'Georgia Power Benchmark' },
+  { value: '60%', label: 'reduction in annual O&M costs', source: 'Client Average' },
+  { value: '130+', label: 'solar farms in Virginia', source: 'SEIA Registry' },
+];
+
+const services = [
+  {
+    icon: 'solar_power',
+    title: 'Solar Panel Thermal Inspection',
+    desc: 'Panel-level fault identification across utility-scale installations. Thermal imaging detects hotspots, string failures, and degradation patterns invisible to visual inspection — saving $2,100+ per MW inspected.',
+  },
+  {
+    icon: 'electric_bolt',
+    title: 'Power Line & Tower Assessment',
+    desc: 'Aerial inspection of transmission and distribution infrastructure identifying damaged insulators, corrosion, vegetation encroachment, and structural deficiencies at 14 miles per day.',
+  },
+  {
+    icon: 'thermostat',
+    title: 'Substation Thermal Survey',
+    desc: 'Non-contact thermal assessment of transformers, switchgear, buswork, and connections. Identify failing components before they cause outages — without requiring equipment shutdowns.',
+  },
+  {
+    icon: 'forest',
+    title: 'Right-of-Way Vegetation Management',
+    desc: 'High-resolution aerial mapping of vegetation encroachment along power corridors. Prioritized clearance recommendations reduce wildfire risk and improve reliability.',
+  },
+  {
+    icon: 'construction',
+    title: 'Construction & Commissioning Support',
+    desc: 'Progress monitoring, volumetric analysis, and as-built documentation for solar farm construction and grid expansion projects.',
+  },
+  {
+    icon: 'thunderstorm',
+    title: 'Storm Damage Assessment',
+    desc: 'Rapid post-event aerial assessment of infrastructure damage with 24-hour turnaround. Prioritized restoration recommendations accelerate recovery.',
+  },
+];
+
+const painPoints = [
+  {
+    problem: 'Manual inspections cost $5,000+ per transmission tower',
+    solution: 'Aerial thermal inspection averages 7 minutes per structure at a fraction of the cost, covering miles of line in a single day.',
+  },
+  {
+    problem: 'Ground crews miss critical defects',
+    solution: 'Thermal imaging catches anomalies invisible to the naked eye. Utilities using aerial intelligence find 3x more issues than traditional inspection methods.',
+  },
+  {
+    problem: 'Equipment shutdowns for inspection disrupt service',
+    solution: 'Our non-contact thermal surveys assess live equipment without shutdowns. No service interruption, no lost revenue.',
+  },
+  {
+    problem: 'Wildfire liability from vegetation management gaps',
+    solution: 'Aerial corridor mapping identifies encroachment before it becomes a hazard. Prioritized clearance reports protect against regulatory penalties and liability.',
+  },
+];
+---
+
+<Layout title="Energy & Grid — Jinki Aerial Intelligence" description="Aerial thermal intelligence for solar farms, power lines, substations, and grid infrastructure. Condition-based maintenance recommendations for Virginia's energy sector.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="vert-hero" aria-label="Energy Grid Intelligence">
+      <div class="vert-hero-inner">
+        <div class="vert-hero-content reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Energy &amp; Grid</span>
+          </div>
+          <h1 class="vert-hero-title">
+            Condition Intelligence for the<br/>
+            <span class="gradient-text-energy">Assets You Can't Easily Reach</span>
+          </h1>
+          <p class="vert-hero-subtitle">
+            Virginia's solar farms and power infrastructure face growing demands with
+            shrinking maintenance budgets. Jinki delivers aerial thermal intelligence
+            for power lines, substations, and solar installations — without shutdowns,
+            without scaffolding, without risk.
+          </p>
+          <div class="vert-hero-actions">
+            <a href="#lead-gen" class="btn-premium vert-cta">Schedule Assessment</a>
+            <a href="#services" class="vert-cta-secondary">View Services</a>
+          </div>
+        </div>
+        <div class="vert-hero-visual reveal reveal-delay-1" aria-hidden="true">
+          <div class="thermal-preview">
+            <div class="thermal-grid-overlay"></div>
+            <span class="material-symbols-outlined thermal-icon" style="font-variation-settings: 'FILL' 1;">electric_bolt</span>
+            <div class="thermal-hotspot hotspot-1"></div>
+            <div class="thermal-hotspot hotspot-2"></div>
+            <div class="thermal-hotspot hotspot-3"></div>
+            <div class="thermal-readout">
+              <span class="readout-label">PANEL TEMP</span>
+              <span class="readout-value">91.7&deg;C</span>
+              <span class="readout-status">HOTSPOT DETECTED</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar reveal">
+      <div class="stats-bar-inner">
+        {stats.map(stat => (
+          <div class="stat-item">
+            <span class="stat-value">{stat.value}</span>
+            <span class="stat-label">{stat.label}</span>
+            <span class="stat-source">{stat.source}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Problem / Solution -->
+    <section class="section" aria-label="Challenges We Solve">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">The Challenge</span>
+          </div>
+          <h2>Your Grid Can't Wait for<br/>Scheduled Inspections</h2>
+          <p class="section-subtitle">
+            Energy operators face aging infrastructure, expanding service areas,
+            and increasing regulatory scrutiny. Manual inspections are too slow,
+            too expensive, and miss too much.
+          </p>
+        </div>
+
+        <div class="pain-grid">
+          {painPoints.map((pp, i) => (
+            <div class={`pain-card reveal reveal-delay-${(i % 4) + 1}`}>
+              <div class="pain-problem">
+                <span class="pain-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">warning</span>
+                <h3>{pp.problem}</h3>
+              </div>
+              <div class="pain-solution">
+                <span class="pain-arrow">&rarr;</span>
+                <p>{pp.solution}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section id="services" class="section" style="background: var(--surface-dim);" aria-label="Services">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Services</span>
+          </div>
+          <h2>Full-Spectrum Grid Intelligence<br/>in a Single Engagement</h2>
+          <p class="section-subtitle">
+            Every assessment delivers severity-ranked findings with location coordinates,
+            component identification, remediation recommendations, and estimated costs.
+            Your maintenance team gets a prioritized work order, not raw data.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          {services.map((svc, i) => (
+            <div class={`service-card metallic-gloss reveal reveal-delay-${(i % 3) + 1}`}>
+              <div class="service-icon-wrap">
+                <span class="material-symbols-outlined service-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{svc.icon}</span>
+              </div>
+              <h3 class="service-title">{svc.title}</h3>
+              <p class="service-desc">{svc.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Differentiator Section -->
+    <section class="section" aria-label="Why Jinki">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Why Jinki</span>
+          </div>
+          <h2>Your Local Energy Intelligence Partner</h2>
+        </div>
+
+        <div class="diff-grid">
+          <div class="diff-card reveal">
+            <span class="diff-number">01</span>
+            <h3>Regional Expertise</h3>
+            <p>
+              130+ solar farms and extensive grid infrastructure in Virginia alone.
+              We're not flying in from out of state — we're your local aerial intelligence
+              partner with same-day response capability.
+            </p>
+          </div>
+          <div class="diff-card reveal reveal-delay-1">
+            <span class="diff-number">02</span>
+            <h3>Thermal Specialists</h3>
+            <p>
+              Our H30T thermal payload delivers 640&times;512 resolution with radiometric
+              accuracy. Every finding includes quantified temperature data, not just
+              color maps.
+            </p>
+          </div>
+          <div class="diff-card reveal reveal-delay-2">
+            <span class="diff-number">03</span>
+            <h3>Actionable Reports</h3>
+            <p>
+              Severity-ranked findings with location coordinates, component identification,
+              remediation recommendations, and estimated costs. Your maintenance team
+              gets a prioritized work order.
+            </p>
+          </div>
+          <div class="diff-card reveal reveal-delay-3">
+            <span class="diff-number">04</span>
+            <h3>No Shutdowns Required</h3>
+            <p>
+              Non-contact thermal inspection means your assets stay energized and your
+              customers stay connected. We work around your operations, not against them.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <LeadGen />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ---- Vertical Hero ---- */
+  .vert-hero {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    padding: 140px clamp(20px, 5vw, 80px) 60px;
+    background: var(--surface-container-lowest);
+    position: relative;
+  }
+
+  .vert-hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .vert-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .vert-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .vert-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+  }
+
+  .vert-hero-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+
+  .gradient-text-energy {
+    background: linear-gradient(135deg, #FF8C00, #FF6B35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .vert-hero-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 540px;
+    margin-bottom: 32px;
+  }
+
+  .vert-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .vert-cta {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .vert-cta-secondary {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .vert-cta-secondary:hover {
+    color: var(--accent);
+  }
+
+  /* Thermal Preview Visual */
+  .thermal-preview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #0a0c10, #141820);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+  }
+
+  .thermal-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 140, 0, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 140, 0, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .thermal-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    color: rgba(255, 140, 0, 0.08);
+  }
+
+  .thermal-hotspot {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 140, 0, 0.6), rgba(255, 100, 50, 0.2), transparent);
+    animation: pulse-hotspot 3s ease-in-out infinite;
+  }
+
+  .hotspot-1 { top: 25%; left: 20%; animation-delay: 0s; }
+  .hotspot-2 { top: 50%; left: 55%; animation-delay: 1s; width: 50px; height: 50px; }
+  .hotspot-3 { top: 35%; left: 78%; animation-delay: 2s; width: 30px; height: 30px; }
+
+  @keyframes pulse-hotspot {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+  }
+
+  .thermal-readout {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 140, 0, 0.15);
+  }
+
+  .readout-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .readout-value {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 700;
+    color: #FF8C00;
+  }
+
+  .readout-status {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #FF8C00;
+    animation: blink-status 2s ease-in-out infinite;
+  }
+
+  @keyframes blink-status {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ---- Stats Bar ---- */
+  .stats-bar {
+    background: var(--surface-container-low);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .stats-bar-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px clamp(20px, 5vw, 80px);
+    gap: 32px;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: var(--font-headline);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .stat-source {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ---- Sections ---- */
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding: 8rem clamp(20px, 5vw, 80px);
+    }
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 56px;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-top: 16px;
+  }
+
+  /* ---- Pain Points Grid ---- */
+  .pain-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .pain-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .pain-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .pain-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .pain-problem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .pain-icon {
+    color: #FF8C00;
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .pain-problem h3 {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .pain-solution {
+    display: flex;
+    gap: 12px;
+    padding-left: 32px;
+  }
+
+  .pain-arrow {
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .pain-solution p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ---- Services Grid ---- */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .service-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 140, 0, 0.2);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(255, 140, 0, 0.05);
+  }
+
+  .service-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(255, 140, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .service-card:hover .service-icon-wrap {
+    box-shadow: 0 0 20px rgba(255, 140, 0, 0.15);
+  }
+
+  .service-icon {
+    color: #FF8C00;
+    font-size: 24px;
+  }
+
+  .service-title {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ---- Differentiators ---- */
+  .diff-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .diff-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .diff-card {
+    padding: 32px;
+    border-left: 2px solid #FF8C00;
+    transition: background 0.3s ease;
+  }
+
+  .diff-card:hover {
+    background: rgba(255, 140, 0, 0.04);
+  }
+
+  .diff-number {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #FF8C00;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .diff-card h3 {
+    font-family: var(--font-headline);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .diff-card p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 768px) {
+    .vert-hero-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .vert-hero {
+      min-height: auto;
+      padding-top: 120px;
+    }
+
+    .stats-bar-inner {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .vert-hero-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+  }
+
+  /* ---- Light Mode ---- */
+  :global([data-theme="light"]) .thermal-preview {
+    background: linear-gradient(135deg, #e8eaed, #f5f5f5);
+    border-color: var(--glass-border);
+  }
+
+  :global([data-theme="light"]) .thermal-icon {
+    color: rgba(255, 140, 0, 0.08);
+  }
+
+  :global([data-theme="light"]) .thermal-readout {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 140, 0, 0.15);
+  }
+
+  :global([data-theme="light"]) .thermal-grid-overlay {
+    background-image:
+      linear-gradient(rgba(255, 140, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 140, 0, 0.05) 1px, transparent 1px);
+  }
+</style>

@@ -1,0 +1,235 @@
+---
+/*
+  Footer Section — Jinki
+  4-column grid with brand, verticals, support links, and network status.
+  Uses CSS custom properties from global.css.
+*/
+
+const verticals = [
+  { href: '/verticals/data-centers', label: 'Data Centers' },
+  { href: '/verticals/energy-grid', label: 'Energy Grid' },
+  { href: '/verticals/security', label: 'Security' },
+  { href: '/verticals/agriculture', label: 'Agriculture' },
+];
+
+const support = [
+  { href: '/privacy', label: 'Privacy Policy' },
+  { href: '/terms', label: 'Terms of Service' },
+  { href: '/security', label: 'Security Architecture' },
+  { href: '/sitemap.xml', label: 'Sitemap' },
+];
+---
+
+<!-- Top Divider -->
+<div class="h-[1px] w-full" style="background: linear-gradient(to right, transparent, var(--border), transparent);"></div>
+
+<footer class="footer-section" role="contentinfo">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4" style="gap: 4rem; padding: 5rem 2rem; max-width: 1536px; margin-left: auto; margin-right: auto;">
+
+    <!-- 1. Brand Column -->
+    <div class="footer-brand-col">
+      <div class="flex items-center gap-3 mb-5" style="margin-bottom: 1.25rem;">
+        <!-- Radar Icon -->
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M8 22 C10 14 18 8 26 10 C34 12 36 20 33 27 C30 34 20 37 13 33 C6 29 6 26 8 22Z" stroke="var(--text-tertiary)" stroke-width="1" opacity="0.4" stroke-linecap="round"/>
+          <path d="M13 21 C14 16 20 12 26 14 C32 16 33 22 30 27 C27 32 20 33 16 30 C12 27 12 24 13 21Z" stroke="var(--accent)" stroke-width="1.1" opacity="0.6" stroke-linecap="round"/>
+          <path d="M17 20 C18 17 22 15 25 17 C28 19 28 23 26 26 C24 29 20 29 18 27 C16 25 16 22 17 20Z" stroke="var(--accent)" stroke-width="1.3" opacity="0.85" stroke-linecap="round"/>
+          <path d="M6 33 C12 26 18 20 22 18 C26 16 32 10 36 6" stroke="var(--accent)" stroke-width="1.5" opacity="0.9" stroke-linecap="round"/>
+          <circle cx="22" cy="18" r="2.5" fill="var(--accent)" opacity="0.95"/>
+        </svg>
+        <span class="footer-brand-text">Jinki</span>
+      </div>
+      <p class="text-sm leading-relaxed mb-6" style="color: var(--text-secondary); max-width: 280px; margin-bottom: 1.5rem;">
+        Aerial intelligence and actionable insights for the infrastructure that keeps the world running.
+      </p>
+      <!-- Social Icons -->
+      <div class="flex items-center gap-4">
+        <a href="#" class="footer-social-icon" aria-label="Hub">
+          <span class="material-symbols-outlined" style="font-size: 20px;" aria-hidden="true">hub</span>
+        </a>
+        <a href="#" class="footer-social-icon" aria-label="Share">
+          <span class="material-symbols-outlined" style="font-size: 20px;" aria-hidden="true">share</span>
+        </a>
+        <a href="#" class="footer-social-icon" aria-label="Security">
+          <span class="material-symbols-outlined" style="font-size: 20px;" aria-hidden="true">shield</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 2. Verticals -->
+    <div>
+      <h4 class="footer-col-header">Verticals</h4>
+      <ul class="flex flex-col gap-3">
+        {verticals.map(link => (
+          <li>
+            <a href={link.href} class="footer-link">{link.label}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- 3. Support -->
+    <div>
+      <h4 class="footer-col-header">Support</h4>
+      <ul class="flex flex-col gap-3">
+        {support.map(link => (
+          <li>
+            <a href={link.href} class="footer-link">{link.label}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- 4. Network Status -->
+    <div>
+      <h4 class="footer-col-header">Network Status</h4>
+      <div class="network-status-card flex items-center gap-4 rounded-lg" style="padding: 1.25rem;">
+        <span class="status-dot"></span>
+        <span class="text-sm font-medium" style="color: var(--text-primary);">All Systems Operational</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Copyright Bar -->
+  <div class="copyright-bar text-center" style="padding-top: 2.5rem; padding-bottom: 2.5rem;">
+    <p class="text-sm" style="color: var(--text-tertiary);">
+      &copy; 2026 Jinki Aerial Intelligence. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer-section {
+    background: var(--surface-container-lowest);
+  }
+
+  .copyright-bar {
+    background: var(--surface-container-low);
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .footer-brand-text {
+    font-family: var(--font-headline);
+    font-weight: 700;
+    font-size: 1.125rem;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+  }
+
+  .footer-col-header {
+    font-family: var(--font-headline);
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--glass-border);
+    position: relative;
+  }
+
+  .footer-col-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .footer-link {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+  }
+
+  .footer-link:hover {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+
+  .footer-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    color: var(--text-secondary);
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .footer-social-icon:hover {
+    color: var(--accent);
+    background: var(--accent-glow);
+    border-color: rgba(0, 229, 255, 0.15);
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px var(--accent-glow);
+  }
+
+  .footer-social-icon:active {
+    transform: translateY(-1px);
+  }
+
+  .network-status-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    box-shadow: inset 0 1px 0 var(--glass-highlight);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .network-status-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .network-status-card:hover {
+    border-color: rgba(0, 229, 255, 0.15);
+    box-shadow: inset 0 1px 0 var(--glass-highlight), 0 0 20px var(--accent-glow);
+  }
+
+  /* Cyan pulse dot */
+  .status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    position: relative;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  .status-dot::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: var(--accent-glow-strong);
+    animation: pulse-ring 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.5); opacity: 0; }
+  }
+</style>
+

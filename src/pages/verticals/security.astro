@@ -1,0 +1,794 @@
+---
+/*
+  Vertical Page — Security | Jinki Aerial Intelligence
+
+  Aerial threat detection, perimeter thermal surveillance, and
+  security intelligence for critical infrastructure facilities.
+*/
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import LeadGen from '../../components/LeadGen.astro';
+import Footer from '../../components/Footer.astro';
+
+const stats = [
+  { value: '$4.4B', label: 'security surveillance aerial market (2025)', source: 'Market Research' },
+  { value: '17.8%', label: 'annual market growth rate', source: 'Industry Forecast' },
+  { value: '30sec', label: 'alert-to-airborne response time', source: 'Jinki Ops Data' },
+  { value: '24/7', label: 'persistent monitoring capability', source: 'Platform Capability' },
+];
+
+const services = [
+  {
+    icon: 'radar',
+    title: 'Perimeter Thermal Surveillance',
+    desc: 'Complete thermal and HD coverage of your facility perimeter. Identify blind spots, assess coverage gaps, and detect intrusion attempts that fixed cameras miss — across campuses exceeding one mile in circumference.',
+  },
+  {
+    icon: 'speed',
+    title: 'Event-Triggered Response',
+    desc: 'Automated aerial response to perimeter alerts. When sensors detect activity, aerial assets deploy within 30 seconds to verify, classify, and stream live HD and thermal video to your security operations center.',
+  },
+  {
+    icon: 'shield',
+    title: 'Security Vulnerability Assessment',
+    desc: 'Comprehensive aerial evaluation of your physical security posture. Identifies sight-line gaps, access vulnerabilities, lighting deficiencies, and monitoring blind spots with prioritized remediation recommendations.',
+  },
+  {
+    icon: 'lock',
+    title: 'VMS & Access Control Integration',
+    desc: 'Aerial surveillance that connects with your existing video management system, access control, and perimeter sensors. Complete Alert-Response-Verify workflow from a centralized command interface.',
+  },
+  {
+    icon: 'verified_user',
+    title: 'Executive Protection & Event Security',
+    desc: 'Temporary aerial overwatch for high-value events, executive visits, and elevated threat periods. Real-time situational awareness streaming to your security team.',
+  },
+  {
+    icon: 'security',
+    title: 'Post-Incident Documentation',
+    desc: 'Rapid aerial documentation of security incidents for investigation, insurance claims, and law enforcement coordination. HD visual and thermal evidence capture with GPS-tagged imagery.',
+  },
+];
+
+const painPoints = [
+  {
+    problem: 'Guard patrols can\'t cover large campuses fast enough',
+    solution: 'Aerial thermal surveillance covers your entire perimeter in minutes. Threats detected and verified before ground teams can even reach the location.',
+  },
+  {
+    problem: 'Fixed cameras have inherent blind spots',
+    solution: 'Aerial vantage eliminates coverage gaps caused by terrain, structures, and vegetation. Thermal imaging detects concealed activity that visible-light cameras miss entirely.',
+  },
+  {
+    problem: 'False alarm response wastes security resources',
+    solution: 'Aerial verification classifies alerts before dispatching ground teams. Reduce unnecessary responses while ensuring real threats get immediate attention.',
+  },
+  {
+    problem: 'Perimeter monitoring costs escalate with facility size',
+    solution: 'Scale coverage without scaling headcount. One aerial system covers more ground than multiple fixed camera installations and guard posts.',
+  },
+];
+---
+
+<Layout title="Security — Jinki Aerial Intelligence" description="Aerial threat detection, perimeter thermal surveillance, and security intelligence for critical infrastructure. Force multiplier for your security team.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="vert-hero" aria-label="Security Intelligence">
+      <div class="vert-hero-inner">
+        <div class="vert-hero-content reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Security</span>
+          </div>
+          <h1 class="vert-hero-title">
+            Aerial Threat Detection for<br/>
+            <span class="gradient-text-violet">Critical Perimeters</span>
+          </h1>
+          <p class="vert-hero-subtitle">
+            Fixed cameras have blind spots. Guard patrols take minutes. Jinki's aerial
+            thermal surveillance covers your entire perimeter in seconds, verifying threats
+            before they become incidents. Force multiplier for your security team, not a replacement.
+          </p>
+          <div class="vert-hero-actions">
+            <a href="#lead-gen" class="btn-premium vert-cta">Schedule Assessment</a>
+            <a href="#services" class="vert-cta-secondary">View Services</a>
+          </div>
+        </div>
+        <div class="vert-hero-visual reveal reveal-delay-1" aria-hidden="true">
+          <div class="security-preview">
+            <div class="security-grid-overlay"></div>
+            <span class="material-symbols-outlined security-icon" style="font-variation-settings: 'FILL' 1;">security</span>
+            <div class="security-sweep"></div>
+            <div class="security-ping ping-1"></div>
+            <div class="security-ping ping-2"></div>
+            <div class="security-ping ping-3"></div>
+            <div class="security-readout">
+              <span class="readout-label">PERIMETER STATUS</span>
+              <span class="readout-value">ACTIVE</span>
+              <span class="readout-status">THREAT DETECTED — SECTOR 7</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar reveal">
+      <div class="stats-bar-inner">
+        {stats.map(stat => (
+          <div class="stat-item">
+            <span class="stat-value">{stat.value}</span>
+            <span class="stat-label">{stat.label}</span>
+            <span class="stat-source">{stat.source}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Problem / Solution -->
+    <section class="section" aria-label="Challenges We Solve">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">The Challenge</span>
+          </div>
+          <h2>Your Perimeter Has<br/>More Gaps Than You Think</h2>
+          <p class="section-subtitle">
+            Facility security teams face expanding perimeters, sophisticated threats,
+            and diminishing budgets. Static cameras and guard patrols leave critical
+            vulnerabilities that adversaries know how to exploit.
+          </p>
+        </div>
+
+        <div class="pain-grid">
+          {painPoints.map((pp, i) => (
+            <div class={`pain-card reveal reveal-delay-${(i % 4) + 1}`}>
+              <div class="pain-problem">
+                <span class="pain-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">warning</span>
+                <h3>{pp.problem}</h3>
+              </div>
+              <div class="pain-solution">
+                <span class="pain-arrow">&rarr;</span>
+                <p>{pp.solution}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section id="services" class="section" style="background: var(--surface-dim);" aria-label="Services">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Services</span>
+          </div>
+          <h2>Complete Perimeter Intelligence<br/>from Alert to Resolution</h2>
+          <p class="section-subtitle">
+            Every engagement delivers actionable security intelligence — not raw video feeds.
+            Threat classifications, vulnerability assessments, and remediation priorities
+            your security team can act on immediately.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          {services.map((svc, i) => (
+            <div class={`service-card metallic-gloss reveal reveal-delay-${(i % 3) + 1}`}>
+              <div class="service-icon-wrap">
+                <span class="material-symbols-outlined service-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{svc.icon}</span>
+              </div>
+              <h3 class="service-title">{svc.title}</h3>
+              <p class="service-desc">{svc.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Differentiator Section -->
+    <section class="section" aria-label="Why Jinki">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Why Jinki</span>
+          </div>
+          <h2>Intelligence, Not Just Footage</h2>
+        </div>
+
+        <div class="diff-grid">
+          <div class="diff-card reveal">
+            <span class="diff-number">01</span>
+            <h3>Intelligence, Not Just Surveillance</h3>
+            <p>
+              We don't just watch — we analyze. Every engagement includes a security
+              posture assessment with vulnerability findings, coverage gap analysis,
+              and improvement recommendations.
+            </p>
+          </div>
+          <div class="diff-card reveal reveal-delay-1">
+            <span class="diff-number">02</span>
+            <h3>Thermal Advantage</h3>
+            <p>
+              Darkness and concealment are irrelevant. Our thermal imaging detects body heat,
+              vehicle signatures, and equipment activity regardless of lighting conditions
+              or visual obstructions.
+            </p>
+          </div>
+          <div class="diff-card reveal reveal-delay-2">
+            <span class="diff-number">03</span>
+            <h3>CISSP-Led Operations</h3>
+            <p>
+              Our founder holds the CISSP certification — the same credential trusted to
+              architect enterprise cybersecurity. Physical security deserves the same rigor.
+            </p>
+          </div>
+          <div class="diff-card reveal reveal-delay-3">
+            <span class="diff-number">04</span>
+            <h3>Critical Infrastructure Focus</h3>
+            <p>
+              Purpose-built for data centers, energy facilities, and high-value campuses.
+              We understand the specific threat profiles and compliance requirements of
+              critical infrastructure.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <LeadGen />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ---- Vertical Hero ---- */
+  .vert-hero {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    padding: 140px clamp(20px, 5vw, 80px) 60px;
+    background: var(--surface-container-lowest);
+    position: relative;
+  }
+
+  .vert-hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .vert-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .vert-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .vert-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+  }
+
+  .vert-hero-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+
+  .gradient-text-violet {
+    background: linear-gradient(135deg, #7B61FF, #4F46E5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .vert-hero-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 540px;
+    margin-bottom: 32px;
+  }
+
+  .vert-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .vert-cta {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .vert-cta-secondary {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .vert-cta-secondary:hover {
+    color: var(--accent);
+  }
+
+  /* Security Preview Visual */
+  .security-preview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #0a0a14, #12101e);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+  }
+
+  .security-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(123, 97, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(123, 97, 255, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .security-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    color: rgba(123, 97, 255, 0.08);
+  }
+
+  .security-sweep {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px;
+    height: 200px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(123, 97, 255, 0.15) 30deg,
+      transparent 60deg
+    );
+    animation: sweep-rotate 4s linear infinite;
+  }
+
+  @keyframes sweep-rotate {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .security-ping {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(123, 97, 255, 0.8);
+    box-shadow: 0 0 12px rgba(123, 97, 255, 0.4);
+    animation: ping-pulse 3s ease-in-out infinite;
+  }
+
+  .ping-1 { top: 28%; left: 22%; animation-delay: 0s; }
+  .ping-2 { top: 60%; left: 65%; animation-delay: 1.2s; }
+  .ping-3 { top: 35%; left: 78%; animation-delay: 2.4s; }
+
+  @keyframes ping-pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+  }
+
+  .security-readout {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(123, 97, 255, 0.15);
+  }
+
+  .readout-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .readout-value {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 700;
+    color: #7B61FF;
+  }
+
+  .readout-status {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #FF6B35;
+    animation: blink-status 2s ease-in-out infinite;
+  }
+
+  @keyframes blink-status {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ---- Stats Bar ---- */
+  .stats-bar {
+    background: var(--surface-container-low);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .stats-bar-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px clamp(20px, 5vw, 80px);
+    gap: 32px;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: var(--font-headline);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  .stat-source {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ---- Sections ---- */
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding: 8rem clamp(20px, 5vw, 80px);
+    }
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 56px;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-top: 16px;
+  }
+
+  /* ---- Pain Points Grid ---- */
+  .pain-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .pain-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .pain-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .pain-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .pain-problem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .pain-icon {
+    color: #FF6B35;
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .pain-problem h3 {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .pain-solution {
+    display: flex;
+    gap: 12px;
+    padding-left: 32px;
+  }
+
+  .pain-arrow {
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .pain-solution p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ---- Services Grid ---- */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .service-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(123, 97, 255, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(123, 97, 255, 0.08);
+  }
+
+  .service-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(123, 97, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .service-card:hover .service-icon-wrap {
+    box-shadow: 0 0 20px rgba(123, 97, 255, 0.15);
+  }
+
+  .service-icon {
+    color: #7B61FF;
+    font-size: 24px;
+  }
+
+  .service-title {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ---- Differentiators ---- */
+  .diff-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .diff-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .diff-card {
+    padding: 32px;
+    border-left: 2px solid #7B61FF;
+    transition: background 0.3s ease;
+  }
+
+  .diff-card:hover {
+    background: rgba(123, 97, 255, 0.04);
+  }
+
+  .diff-number {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #7B61FF;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .diff-card h3 {
+    font-family: var(--font-headline);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .diff-card p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 768px) {
+    .vert-hero-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .vert-hero {
+      min-height: auto;
+      padding-top: 120px;
+    }
+
+    .stats-bar-inner {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .vert-hero-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+  }
+
+  /* ---- Light Mode ---- */
+  :global([data-theme="light"]) .security-preview {
+    background: linear-gradient(135deg, #eae8f0, #f5f4f8);
+    border-color: var(--glass-border);
+  }
+
+  :global([data-theme="light"]) .security-icon {
+    color: rgba(79, 70, 229, 0.08);
+  }
+
+  :global([data-theme="light"]) .security-readout {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(79, 70, 229, 0.15);
+  }
+
+  :global([data-theme="light"]) .security-grid-overlay {
+    background-image:
+      linear-gradient(rgba(79, 70, 229, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79, 70, 229, 0.05) 1px, transparent 1px);
+  }
+
+  :global([data-theme="light"]) .security-sweep {
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(79, 70, 229, 0.1) 30deg,
+      transparent 60deg
+    );
+  }
+</style>

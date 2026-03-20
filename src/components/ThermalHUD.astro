@@ -1,0 +1,208 @@
+---
+/*
+  ThermalHUD Section — Jinki Aerial Intelligence
+
+  Design decisions:
+  - Split layout: text + stats left, HUD image right
+  - Scanline overlay + crosshair + hotspot callout for tactical feel
+  - Glass panel container for the image
+  - CSS custom properties for theme-aware styling
+*/
+---
+
+<section id="thermal-hud" class="thermal-section-padding" style="background: color-mix(in srgb, var(--surface-container-low) 30%, transparent);" aria-label="Precision Structural Analysis">
+  <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem;">
+    <div class="thermal-grid">
+
+      <!-- Left: Text -->
+      <div class="reveal">
+        <!-- Eyebrow -->
+        <div class="flex items-center gap-3 mb-6" style="margin-bottom: 1.5rem;">
+          <span class="block h-[1px] w-8" style="background: var(--accent);"></span>
+          <span class="text-xs font-bold uppercase tracking-widest" style="font-family: var(--font-label); color: var(--accent);">Thermal Imaging</span>
+        </div>
+
+        <!-- Headline -->
+        <h2 class="text-4xl md:text-5xl font-bold mb-6" style="font-family: var(--font-headline); color: var(--text-primary); margin-bottom: 1.5rem;">
+          Find Hidden Problems With <span class="thermal-headline-accent">Heat Vision</span>
+        </h2>
+
+        <!-- Body -->
+        <p class="text-lg font-light leading-relaxed mb-10" style="color: var(--text-secondary); margin-bottom: 2.5rem;">
+          Our aerial thermal imaging detects temperature differences as small as 0.5&deg;C. We identify overheating equipment, insulation gaps, water leaks, and structural weak points — delivering prioritized repair recommendations without disrupting your operations.
+        </p>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2" style="gap: 2rem;">
+          <div class="thermal-stat border-l-2" style="border-color: var(--accent); padding-left: 1.5rem;">
+            <span class="thermal-stat-value block text-3xl font-bold" style="font-family: var(--font-headline); color: var(--accent);">0.1m</span>
+            <span class="block text-[0.625rem] uppercase tracking-widest mt-1" style="font-family: var(--font-label); color: var(--text-tertiary); margin-top: 0.25rem;">Spatial Resolution</span>
+          </div>
+          <div class="thermal-stat border-l-2" style="border-color: var(--accent); padding-left: 1.5rem;">
+            <span class="thermal-stat-value block text-3xl font-bold" style="font-family: var(--font-headline); color: var(--accent);">Real-Time</span>
+            <span class="block text-[0.625rem] uppercase tracking-widest mt-1" style="font-family: var(--font-label); color: var(--text-tertiary); margin-top: 0.25rem;">On-Site Processing</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: HUD Image -->
+      <div class="reveal">
+        <div class="glass-panel relative rounded-xl shadow-2xl overflow-hidden" style="border: 1px solid color-mix(in srgb, var(--outline-variant) 20%, transparent);">
+
+          <!-- Scanline overlay -->
+          <div class="absolute inset-0 pointer-events-none opacity-20 z-10" style="background: repeating-linear-gradient(to bottom, transparent, transparent 3px, rgba(0, 229, 255, 0.08) 3px, rgba(0, 229, 255, 0.08) 4px);"></div>
+
+          <!-- Thermal image -->
+          <img
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaNp20er2wmJv-SVRXs_yxzzo4oMmwH3iwN8C4q2Vn7CA7fImY1lOPDGw8TnhA9N_VbUYT31Z00T8lNVGDVvL3EpCBj7j0TQete06xE421MpIji7XsLADNsQa-H0BHVxPVTMbob6OOg6rBjovlhxd5dBDJTyT-QpQaW0c1M3V6Q2ks_eznWqXAvun0as2F8D7KRMVq3jVwBLAIQHIMKnoN-rmpMXOb2Wqm4FwPSdC9nwl0b1bIAuBrum5WVCEqvgMKj5EybN5V4bov"
+            alt="Thermal infrared scan of industrial infrastructure showing heat distribution analysis"
+            class="aspect-video w-full object-cover rounded-lg thermal-img"
+            loading="lazy"
+            decoding="async"
+          />
+
+          <!-- HUD Crosshair -->
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
+            <div class="thermal-crosshair w-[48px] h-[48px] rounded-full border-2" style="border-color: rgba(0, 229, 255, 0.4);">
+              <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[6px] h-[6px] rounded-full" style="background: var(--accent);"></div>
+            </div>
+          </div>
+
+          <!-- Hotspot callout -->
+          <div class="absolute top-1/2 left-1/2 -translate-x-1/2 z-20 pointer-events-none" style="margin-top: -48px;">
+            <div class="text-center whitespace-nowrap">
+              <span class="block text-xs font-bold" style="font-family: var(--font-mono); color: var(--accent);">HOTSPOT: 142.4&deg;F</span>
+              <span class="block text-[0.625rem] mt-0.5 hud-sublabel" style="font-family: var(--font-mono);">SUBSTATION_09_A</span>
+            </div>
+          </div>
+
+          <!-- Status badge -->
+          <div class="thermal-badge absolute bottom-4 left-4 z-20 flex items-center gap-2 rounded-sm backdrop-blur-md" style="padding: 0.375rem 0.75rem;">
+            <span class="thermal-pulse-dot block w-2 h-2 rounded-full" style="background: var(--error);"></span>
+            <span class="text-[0.625rem] uppercase tracking-wider" style="font-family: var(--font-label); color: var(--text-secondary);">LIVE // Thermal Scan</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .thermal-section-padding {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  @media (min-width: 768px) {
+    .thermal-section-padding {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+  }
+
+  .thermal-headline-accent {
+    background: linear-gradient(135deg, #FF6B35, #FF4500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-style: italic;
+  }
+
+  :global([data-theme="light"]) .thermal-headline-accent {
+    background: linear-gradient(135deg, #D44500, #B83000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .thermal-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (min-width: 1024px) {
+    .thermal-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  /* Thermal image */
+  .thermal-img {
+    filter: brightness(0.9) contrast(1.25);
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .thermal-img:hover {
+    transform: scale(1.03);
+  }
+
+  :root[data-theme="dark"] .thermal-img,
+  :root:not([data-theme]) .thermal-img {
+    filter: brightness(0.75) contrast(1.25);
+  }
+
+  /* Crosshair pulse */
+  .thermal-crosshair {
+    position: relative;
+    animation: crosshair-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes crosshair-pulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+
+  /* Red pulse dot */
+  .thermal-pulse-dot {
+    animation: pulse-dot 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* HUD sublabel */
+  .hud-sublabel {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  /* Thermal badge */
+  .thermal-badge {
+    background: rgba(12, 14, 16, 0.8);
+  }
+
+  /* Light mode adjustments */
+  :global([data-theme="light"]) .thermal-img {
+    filter: brightness(0.9) contrast(1.25);
+  }
+
+  :global([data-theme="light"]) .thermal-badge {
+    background: rgba(255, 255, 255, 0.85);
+  }
+
+  :global([data-theme="light"]) .hud-sublabel {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  /* Stat hover effects */
+  .thermal-stat {
+    transition: border-color 0.3s ease;
+  }
+
+  .thermal-stat:hover {
+    border-color: var(--accent-soft);
+  }
+
+  .thermal-stat-value {
+    transition: text-shadow 0.3s ease;
+  }
+
+  .thermal-stat:hover .thermal-stat-value {
+    text-shadow: 0 0 20px var(--accent-glow-strong);
+  }
+</style>

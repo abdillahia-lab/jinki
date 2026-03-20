@@ -1,0 +1,287 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="How aerial thermal imaging provides a new layer of monitoring for data center facilities, catching hotspots before they become outages."><meta name="generator" content="Astro v6.0.6"><!-- Preload critical fonts for performance --><link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin><!-- Favicon placeholder — SWAP: Replace with Jinki's actual favicon --><link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Thermal Intelligence for Data Centers — Jinki Blog</title><!-- Prevent flash of wrong theme — runs before render --><script>
+      (function() {
+        const theme = localStorage.getItem('jinki-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script><link rel="stylesheet" href="/_astro/Nav.D0IeLSDb.css">
+<style>.post-page[data-astro-cid-4sn4zg3r]{padding-top:120px;min-height:100vh;background:var(--bg-primary)}.post-article[data-astro-cid-4sn4zg3r]{max-width:720px;padding-bottom:80px}.breadcrumb[data-astro-cid-4sn4zg3r]{display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:40px;color:var(--text-tertiary)}.breadcrumb[data-astro-cid-4sn4zg3r] a[data-astro-cid-4sn4zg3r]{color:var(--text-secondary);text-decoration:none}.breadcrumb[data-astro-cid-4sn4zg3r] a[data-astro-cid-4sn4zg3r]:hover{color:var(--accent)}.post-header[data-astro-cid-4sn4zg3r]{margin-bottom:48px}.post-meta[data-astro-cid-4sn4zg3r]{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--text-tertiary);font-family:var(--font-mono);margin-bottom:16px}.post-author[data-astro-cid-4sn4zg3r]{color:var(--text-secondary);font-family:var(--font-sans)}.post-header[data-astro-cid-4sn4zg3r] h1[data-astro-cid-4sn4zg3r]{margin-bottom:16px;font-size:clamp(2rem,4vw,2.75rem)}.post-desc[data-astro-cid-4sn4zg3r]{font-size:1.15rem;line-height:1.7;color:var(--text-secondary)}.post-tags[data-astro-cid-4sn4zg3r]{display:flex;gap:8px;margin-top:16px}.blog-tag[data-astro-cid-4sn4zg3r]{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.05em;padding:3px 10px;border-radius:4px;background:var(--accent-glow);color:var(--accent)}.post-content[data-astro-cid-4sn4zg3r]{font-size:18px;line-height:1.8;color:var(--text-secondary)}.post-content[data-astro-cid-4sn4zg3r] h2{font-size:1.5rem;margin:48px 0 16px;color:var(--text-primary)}.post-content[data-astro-cid-4sn4zg3r] h3{font-size:1.2rem;margin:32px 0 12px;color:var(--text-primary)}.post-content[data-astro-cid-4sn4zg3r] p{margin-bottom:24px;max-width:none}.post-content[data-astro-cid-4sn4zg3r] ul,.post-content[data-astro-cid-4sn4zg3r] ol{margin-bottom:24px;padding-left:24px}.post-content[data-astro-cid-4sn4zg3r] li{margin-bottom:8px;color:var(--text-secondary)}.post-content[data-astro-cid-4sn4zg3r] code{font-family:var(--font-mono);font-size:.9em;padding:2px 6px;background:var(--bg-card);border-radius:4px;color:var(--accent)}.post-content[data-astro-cid-4sn4zg3r] blockquote{border-left:3px solid var(--accent);padding-left:20px;margin:24px 0;font-style:italic;color:var(--text-tertiary)}.post-content[data-astro-cid-4sn4zg3r] a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}.post-footer[data-astro-cid-4sn4zg3r]{margin-top:64px;padding-top:32px;border-top:1px solid var(--border)}
+</style></head> <body> <!-- Scroll progress indicator — Agent 3 --> <div class="scroll-progress" aria-hidden="true"></div> <!-- Nielsen H7 (Flexibility): Skip to main content for keyboard users --> <a href="#main-content" class="skip-to-content">Skip to main content</a>  <header id="site-nav" class="nav" data-astro-cid-dmqpwcec> <div class="nav-inner" data-astro-cid-dmqpwcec> <!-- Logo: Topographic terrain contour mark with embedded flight trajectory.
+         Organic contour shapes suggest terrain viewed from altitude.
+         A diagonal scan/flight path cuts through the terrain — intelligence in motion.
+         Hover animates the flight path and shifts contour opacity. --> <a href="/" class="nav-logo" aria-label="Jinki — Home" data-astro-cid-dmqpwcec> <svg class="logo-mark" width="38" height="38" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" data-astro-cid-dmqpwcec> <!-- Outer terrain contour — organic, irregular --> <path class="logo-contour logo-contour-1" d="M8 22 C10 14 18 8 26 10 C34 12 36 20 33 27 C30 34 20 37 13 33 C6 29 6 26 8 22Z" stroke="var(--text-tertiary)" stroke-width="1" opacity="0.4" stroke-linecap="round" data-astro-cid-dmqpwcec></path> <!-- Mid terrain contour --> <path class="logo-contour logo-contour-2" d="M13 21 C14 16 20 12 26 14 C32 16 33 22 30 27 C27 32 20 33 16 30 C12 27 12 24 13 21Z" stroke="var(--accent)" stroke-width="1.1" opacity="0.6" stroke-linecap="round" data-astro-cid-dmqpwcec></path> <!-- Inner terrain contour — summit --> <path class="logo-contour logo-contour-3" d="M17 20 C18 17 22 15 25 17 C28 19 28 23 26 26 C24 29 20 29 18 27 C16 25 16 22 17 20Z" stroke="var(--accent)" stroke-width="1.3" opacity="0.85" stroke-linecap="round" data-astro-cid-dmqpwcec></path> <!-- Flight trajectory — diagonal scan path cutting across terrain --> <path class="logo-flight" d="M6 33 C12 26 18 20 22 18 C26 16 32 10 36 6" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="0" opacity="0.9" stroke-linecap="round" data-astro-cid-dmqpwcec></path> <!-- Data acquisition point on flight path — where intelligence is captured --> <circle class="logo-datapoint" cx="22" cy="18" r="2.5" fill="var(--accent)" opacity="0.95" data-astro-cid-dmqpwcec></circle> <!-- Secondary data nodes along flight path --> <circle cx="14" cy="25" r="1" fill="var(--text-tertiary)" opacity="0.4" data-astro-cid-dmqpwcec></circle> <circle cx="30" cy="11" r="1" fill="var(--text-tertiary)" opacity="0.4" data-astro-cid-dmqpwcec></circle> </svg> <span class="logo-wordmark" data-astro-cid-dmqpwcec> <span class="logo-text" data-astro-cid-dmqpwcec>JINKI</span><span class="logo-dot" data-astro-cid-dmqpwcec>.ai</span> </span> </a> <!-- Desktop Navigation --> <nav class="nav-links" aria-label="Main navigation" data-astro-cid-dmqpwcec> <a href="/about" class="nav-link" data-astro-cid-dmqpwcec>About</a><a href="#capabilities" class="nav-link" data-astro-cid-dmqpwcec>Capabilities</a><a href="#use-cases" class="nav-link" data-astro-cid-dmqpwcec>Use Cases</a><a href="/blog" class="nav-link" data-astro-cid-dmqpwcec>Blog</a><a href="#contact" class="nav-link" data-astro-cid-dmqpwcec>Contact</a> </nav> <div class="nav-actions" data-astro-cid-dmqpwcec> <!-- Theme Toggle — Nielsen H3 (User Control): user chooses their preference --> <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode" type="button" data-astro-cid-dmqpwcec> <!-- Sun icon (shown in dark mode) --> <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-dmqpwcec> <circle cx="12" cy="12" r="5" data-astro-cid-dmqpwcec></circle> <line x1="12" y1="1" x2="12" y2="3" data-astro-cid-dmqpwcec></line> <line x1="12" y1="21" x2="12" y2="23" data-astro-cid-dmqpwcec></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" data-astro-cid-dmqpwcec></line> <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" data-astro-cid-dmqpwcec></line> <line x1="1" y1="12" x2="3" y2="12" data-astro-cid-dmqpwcec></line> <line x1="21" y1="12" x2="23" y2="12" data-astro-cid-dmqpwcec></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" data-astro-cid-dmqpwcec></line> <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" data-astro-cid-dmqpwcec></line> </svg> <!-- Moon icon (shown in light mode) --> <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-dmqpwcec> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" data-astro-cid-dmqpwcec></path> </svg> </button> <a href="#contact" class="btn btn-primary nav-cta" data-astro-cid-dmqpwcec>Get in Touch</a> <!-- Mobile hamburger --> <button id="mobile-toggle" class="mobile-toggle" aria-label="Open menu" aria-expanded="false" type="button" data-astro-cid-dmqpwcec> <span class="hamburger-line" data-astro-cid-dmqpwcec></span> <span class="hamburger-line" data-astro-cid-dmqpwcec></span> <span class="hamburger-line" data-astro-cid-dmqpwcec></span> </button> </div> </div> <!-- Mobile menu overlay --> <div id="mobile-menu" class="mobile-menu" aria-hidden="true" data-astro-cid-dmqpwcec> <nav class="mobile-nav" aria-label="Mobile navigation" data-astro-cid-dmqpwcec> <a href="/about" class="mobile-link" data-astro-cid-dmqpwcec>About</a><a href="#capabilities" class="mobile-link" data-astro-cid-dmqpwcec>Capabilities</a><a href="#use-cases" class="mobile-link" data-astro-cid-dmqpwcec>Use Cases</a><a href="/blog" class="mobile-link" data-astro-cid-dmqpwcec>Blog</a><a href="#contact" class="mobile-link" data-astro-cid-dmqpwcec>Contact</a> <a href="#contact" class="btn btn-primary mobile-cta" data-astro-cid-dmqpwcec>Get in Touch</a> </nav> </div> </header>  <script>
+  (function() {
+    var nav = document.getElementById('site-nav');
+    var scrollThreshold = 50;
+
+    // --- Scroll progress bar ---
+    var progressBar = document.querySelector('.scroll-progress');
+
+    function updateScroll() {
+      // Nav solid/transparent
+      if (window.scrollY > scrollThreshold) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+      // Scroll progress
+      if (progressBar) {
+        var docH = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = docH > 0 ? (window.scrollY / docH) * 100 : 0;
+        progressBar.style.width = pct + '%';
+      }
+    }
+
+    window.addEventListener('scroll', updateScroll, { passive: true });
+    updateScroll();
+
+    // --- Active section highlighting ---
+    var navLinksEls = document.querySelectorAll('.nav-link[href^="#"]');
+    var sections = [];
+    navLinksEls.forEach(function(link) {
+      var id = link.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) sections.push({ el: el, link: link });
+    });
+
+    function updateActiveSection() {
+      var scrollPos = window.scrollY + 200;
+      var activeLink = null;
+      sections.forEach(function(s) {
+        if (s.el.offsetTop <= scrollPos) {
+          activeLink = s.link;
+        }
+      });
+      navLinksEls.forEach(function(l) { l.classList.remove('active'); });
+      if (activeLink) activeLink.classList.add('active');
+    }
+
+    if (sections.length) {
+      window.addEventListener('scroll', updateActiveSection, { passive: true });
+      updateActiveSection();
+    }
+
+    // --- Theme toggle with smooth rotation ---
+    var toggle = document.getElementById('theme-toggle');
+    toggle.addEventListener('click', function() {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme') || 'dark';
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('jinki-theme', next);
+      // Animate toggle button
+      toggle.style.transform = 'rotate(180deg) scale(0.8)';
+      setTimeout(function() { toggle.style.transform = ''; }, 300);
+    });
+
+    // --- Mobile menu ---
+    var mobileToggle = document.getElementById('mobile-toggle');
+    var mobileMenu = document.getElementById('mobile-menu');
+
+    mobileToggle.addEventListener('click', function() {
+      var expanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+      mobileToggle.setAttribute('aria-expanded', !expanded);
+      mobileMenu.classList.toggle('open');
+      mobileMenu.setAttribute('aria-hidden', expanded);
+      document.body.style.overflow = expanded ? '' : 'hidden';
+    });
+
+    var mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        mobileToggle.setAttribute('aria-expanded', 'false');
+        mobileMenu.classList.remove('open');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      });
+    });
+  })();
+</script> <main id="main-content" class="post-page" data-astro-cid-4sn4zg3r> <article class="post-article section-inner" data-astro-cid-4sn4zg3r> <!-- Breadcrumb — Nielsen H3 (User Control): easy way back --> <nav class="breadcrumb reveal" aria-label="Breadcrumb" data-astro-cid-4sn4zg3r> <a href="/" data-astro-cid-4sn4zg3r>Home</a> <span aria-hidden="true" data-astro-cid-4sn4zg3r>/</span> <a href="/blog" data-astro-cid-4sn4zg3r>Blog</a> <span aria-hidden="true" data-astro-cid-4sn4zg3r>/</span> <span aria-current="page" data-astro-cid-4sn4zg3r>Thermal Intelligence for Data Centers</span> </nav> <header class="post-header reveal" data-astro-cid-4sn4zg3r> <div class="post-meta" data-astro-cid-4sn4zg3r> <time datetime="2026-03-10T00:00:00.000Z" data-astro-cid-4sn4zg3r> March 9, 2026 </time> <span class="post-author" data-astro-cid-4sn4zg3r>by Jinki Team</span> </div> <h1 data-astro-cid-4sn4zg3r>Thermal Intelligence for Data Centers</h1> <p class="post-desc" data-astro-cid-4sn4zg3r>How aerial thermal imaging provides a new layer of monitoring for data center facilities, catching hotspots before they become outages.</p> <div class="post-tags" data-astro-cid-4sn4zg3r> <span class="blog-tag" data-astro-cid-4sn4zg3r>data centers</span><span class="blog-tag" data-astro-cid-4sn4zg3r>thermal</span><span class="blog-tag" data-astro-cid-4sn4zg3r>monitoring</span> </div> </header> <div class="post-content reveal reveal-delay-1" data-astro-cid-4sn4zg3r> <p>Data centers are the backbone of the digital economy. A single outage can cost millions in lost revenue and SLA penalties. Traditional monitoring covers internal systems well, but the building envelope — roofing, HVAC units, electrical infrastructure — often goes unmonitored until something fails.</p>
+<h2 id="the-aerial-advantage">The Aerial Advantage</h2>
+<p>Autonomous aerial systems equipped with radiometric thermal cameras can survey an entire data center campus in minutes. The resulting thermal maps reveal heat signatures invisible to ground-level observation: overloaded transformers, failing HVAC compressors, compromised roofing insulation, and electrical faults.</p>
+<h2 id="predictive-not-reactive">Predictive, Not Reactive</h2>
+<p>Our AI models analyze thermal data against historical baselines, identifying trends before they reach critical thresholds. A transformer running 15 degrees above its seasonal average gets flagged weeks before it fails — giving your operations team time to schedule maintenance on their terms, not the equipment’s.</p>
+<h2 id="integration-with-existing-systems">Integration with Existing Systems</h2>
+<p>Jinki’s platform integrates directly with DCIM and BMS systems, feeding aerial intelligence into the monitoring dashboards your team already uses. No new tools to learn, no workflows to change — just a new layer of visibility that makes existing systems smarter.</p> </div> <footer class="post-footer" data-astro-cid-4sn4zg3r> <a href="/blog" class="btn btn-secondary" data-astro-cid-4sn4zg3r> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-4sn4zg3r> <line x1="19" y1="12" x2="5" y2="12" data-astro-cid-4sn4zg3r></line> <polyline points="12 19 5 12 12 5" data-astro-cid-4sn4zg3r></polyline> </svg>
+Back to Blog
+</a> </footer> </article> </main>  <!-- Scrollytelling engine + reveal animations + parallax + counters --> <script>
+      document.addEventListener('DOMContentLoaded', function() {
+
+        // === SCROLLYTELLING ENGINE ===
+        // Maps scroll progress within each section to a CSS custom property
+        // --scroll-progress (0 to 1), enabling scroll-driven transformations.
+        // Elements with data-scroll-fade, data-scroll-scale, data-scroll-slide
+        // animate proportionally to their section's scroll position.
+        var storytellerSections = document.querySelectorAll('[data-scrollytelling]');
+        var scrollElements = document.querySelectorAll('[data-scroll-fade],[data-scroll-scale],[data-scroll-slide],[data-scroll-rotate]');
+        var heroContent = document.querySelector('.hero-content');
+        var heroSection = document.getElementById('hero');
+
+        function updateScrollytelling() {
+          var scrollY = window.scrollY;
+          var winH = window.innerHeight;
+
+          // --- Hero parallax dissolve: content fades + rises as user scrolls past ---
+          if (heroSection && heroContent) {
+            var heroH = heroSection.offsetHeight;
+            var heroProgress = Math.min(Math.max(scrollY / (heroH * 0.6), 0), 1);
+            heroContent.style.opacity = 1 - heroProgress;
+            heroContent.style.transform = 'translateY(' + (-heroProgress * 60) + 'px)';
+          }
+
+          // --- Scroll-driven platform assembly ---
+          // Parts converge from scattered to assembled as user scrolls.
+          // Uses getAttribute('class') for SVG <g> element compatibility.
+          var platformParts = document.querySelectorAll('.platform-part');
+          if (platformParts.length && heroSection) {
+            var assemblyProgress = Math.min(Math.max(scrollY / (winH * 0.4), 0), 1);
+            var easeAssembly = 1 - Math.pow(1 - assemblyProgress, 3);
+            var factor = 1 - easeAssembly;
+
+            // Displacement map keyed by CSS class substring
+            var displacements = {
+              'body': [0, -30],
+              'left-arm': [-60, -40],
+              'right-arm': [60, -40],
+              'rear-left': [-50, 50],
+              'rear-right': [50, 50],
+              'sensor': [0, 40],
+              'antenna': [0, -50],
+              'scan': [0, 60]
+            };
+
+            platformParts.forEach(function(part) {
+              var cls = (part.getAttribute('class') || '');
+              var tx = 0, ty = 0, extra = '';
+
+              for (var key in displacements) {
+                if (cls.indexOf('platform-' + key) !== -1) {
+                  tx = displacements[key][0] * factor;
+                  ty = displacements[key][1] * factor;
+                  if (key === 'scan') extra = ' scaleY(' + easeAssembly + ')';
+                  break;
+                }
+              }
+
+              part.style.transform = 'translate(' + tx + 'px,' + ty + 'px)' + extra;
+              part.style.opacity = String(easeAssembly);
+            });
+          }
+
+          // --- Per-element scroll-driven animations ---
+          scrollElements.forEach(function(el) {
+            var rect = el.getBoundingClientRect();
+            // Progress: 0 when element enters bottom of viewport, 1 when at top
+            var rawProgress = 1 - (rect.top / winH);
+            var progress = Math.min(Math.max(rawProgress, 0), 1);
+            // Ease the progress for smoother motion
+            var eased = progress < 0.5
+              ? 2 * progress * progress
+              : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+            // data-scroll-fade: fade from 0 to 1 as element scrolls into view
+            if (el.hasAttribute('data-scroll-fade')) {
+              var fadeStart = parseFloat(el.getAttribute('data-scroll-fade')) || 0.2;
+              var fadeProgress = Math.min(Math.max((progress - fadeStart) / (1 - fadeStart), 0), 1);
+              el.style.opacity = fadeProgress;
+            }
+
+            // data-scroll-scale: scale from value to 1
+            if (el.hasAttribute('data-scroll-scale')) {
+              var startScale = parseFloat(el.getAttribute('data-scroll-scale')) || 0.9;
+              var scaleVal = startScale + (1 - startScale) * eased;
+              el.style.transform = 'scale(' + scaleVal + ')';
+            }
+
+            // data-scroll-slide: slide up from px offset
+            if (el.hasAttribute('data-scroll-slide')) {
+              var slideDistance = parseFloat(el.getAttribute('data-scroll-slide')) || 40;
+              var slideOffset = slideDistance * (1 - eased);
+              el.style.transform = 'translateY(' + slideOffset + 'px)';
+              el.style.opacity = eased;
+            }
+
+            // data-scroll-rotate: rotate from degrees to 0
+            if (el.hasAttribute('data-scroll-rotate')) {
+              var rotDeg = parseFloat(el.getAttribute('data-scroll-rotate')) || 5;
+              var rotVal = rotDeg * (1 - eased);
+              el.style.transform = 'rotate(' + rotVal + 'deg)';
+            }
+          });
+
+          // --- Section-level scroll progress CSS variable ---
+          storytellerSections.forEach(function(section) {
+            var rect = section.getBoundingClientRect();
+            var sectionProgress = Math.min(Math.max(
+              (winH - rect.top) / (winH + rect.height), 0), 1);
+            section.style.setProperty('--scroll-progress', sectionProgress);
+          });
+        }
+
+        var scrollTicking = false;
+        window.addEventListener('scroll', function() {
+          if (!scrollTicking) {
+            requestAnimationFrame(function() {
+              updateScrollytelling();
+              scrollTicking = false;
+            });
+            scrollTicking = true;
+          }
+        }, { passive: true });
+        updateScrollytelling();
+
+        // === SCROLL REVEAL OBSERVER (existing, preserved) ===
+        var reveals = document.querySelectorAll('.reveal');
+        if (reveals.length) {
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+          reveals.forEach(function(el) { observer.observe(el); });
+        }
+
+        // === COUNTER ANIMATION (existing, preserved) ===
+        var statValues = document.querySelectorAll('.stat-value[data-count]');
+        if (statValues.length) {
+          var counterObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                animateCounter(entry.target);
+                counterObserver.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.3 });
+          statValues.forEach(function(el) { counterObserver.observe(el); });
+        }
+
+        function animateCounter(el) {
+          var target = el.getAttribute('data-count');
+          var suffix = el.getAttribute('data-suffix') || '';
+          var num = parseFloat(target);
+          var isDecimal = target.indexOf('.') !== -1;
+          var duration = 1500;
+          var start = performance.now();
+          function update(now) {
+            var elapsed = now - start;
+            var progress = Math.min(elapsed / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3);
+            var current = num * eased;
+            el.textContent = isDecimal ? current.toFixed(1) + suffix : Math.round(current) + suffix;
+            if (progress < 1) requestAnimationFrame(update);
+          }
+          requestAnimationFrame(update);
+        }
+
+        // === BUTTON RIPPLE (existing, preserved) ===
+        document.querySelectorAll('.btn').forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            var rect = btn.getBoundingClientRect();
+            btn.style.setProperty('--ripple-x', ((e.clientX - rect.left) / rect.width * 100) + '%');
+            btn.style.setProperty('--ripple-y', ((e.clientY - rect.top) / rect.height * 100) + '%');
+          });
+        });
+      });
+    </script> </body> </html>

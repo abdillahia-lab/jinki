@@ -1,0 +1,44 @@
+---
+/*
+  Home Page — Tactical Jinki | Aerial Intelligence & Infrastructure
+
+  Single-page layout: Nav → Hero (globe) → Verticals → Thermal HUD →
+  Bento Stats → Lead Gen → Footer.
+
+  Design spec: docs/superpowers/specs/2026-03-19-jinki-landing-page-transformation.md
+*/
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import TrustBar from '../components/TrustBar.astro';
+import Verticals from '../components/Verticals.astro';
+import ThermalHUD from '../components/ThermalHUD.astro';
+import BentoStats from '../components/BentoStats.astro';
+import LeadGen from '../components/LeadGen.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+  <Nav />
+  <main id="main-content">
+    <Hero />
+    <TrustBar />
+    <Verticals />
+    <div class="section-fade" aria-hidden="true"></div>
+    <ThermalHUD />
+    <div class="section-fade" aria-hidden="true"></div>
+    <BentoStats />
+    <div class="section-fade" aria-hidden="true"></div>
+    <LeadGen />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .section-fade {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+</style>

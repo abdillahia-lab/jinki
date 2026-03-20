@@ -1,0 +1,1129 @@
+---
+/*
+  Service Page — Autonomous Deployment | Jinki Aerial Intelligence
+
+  Persistent autonomous aerial monitoring for facilities requiring
+  continuous intelligence. Scheduled patrols, event-triggered response,
+  and real-time analytics.
+*/
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import LeadGen from '../../components/LeadGen.astro';
+import Footer from '../../components/Footer.astro';
+
+const capabilities = [
+  {
+    icon: 'thermostat',
+    title: 'Nightly Thermal Patrols',
+    desc: 'Scheduled thermal sweeps of every rooftop, mechanical system, and exterior surface — detecting anomalies before they escalate to failures. Runs autonomously on your defined cadence.',
+  },
+  {
+    icon: 'security',
+    title: 'Perimeter Security Response',
+    desc: 'Event-triggered launch on alarm activation. Autonomous aerial systems reach the alert zone, capture thermal and visual evidence, and feed real-time intelligence to your security operations center.',
+  },
+  {
+    icon: 'construction',
+    title: 'Construction Progress Monitoring',
+    desc: 'Automated orthomosaic capture and volumetric analysis for active construction sites. Daily or weekly flyovers that keep stakeholders informed without disrupting work zones.',
+  },
+  {
+    icon: 'eco',
+    title: 'Environmental Compliance',
+    desc: 'Thermal plume monitoring, noise impact documentation, and visual compliance records generated on schedule — supporting regulatory filings and community reporting requirements.',
+  },
+  {
+    icon: 'monitor_heart',
+    title: 'Asset Health Tracking',
+    desc: 'Continuous trend analysis across thermal, visual, and multispectral data. AI-powered anomaly detection that tracks degradation patterns and predicts maintenance needs.',
+  },
+  {
+    icon: 'hub',
+    title: 'System Integration',
+    desc: 'Intelligence delivered directly to your existing platforms — SCADA, VMS, BMS, and digital twin environments. No new dashboards to learn. No manual data transfers.',
+  },
+];
+
+const specs = [
+  { value: '150–200', label: 'missions per month per dock', icon: 'flight' },
+  { value: '-20 to 50\u00B0C', label: 'all-weather operating range', icon: 'device_thermostat' },
+  { value: '99%+', label: 'platform availability', icon: 'check_circle' },
+  { value: '24/7', label: 'autonomous operations', icon: 'schedule' },
+];
+
+const differentiators = [
+  {
+    number: '01',
+    title: 'Not Just Hardware',
+    desc: 'We don\'t sell you equipment and walk away. Jinki manages the entire operation: mission design, data analysis, platform maintenance, and report delivery. Your team receives intelligence, not an operations burden.',
+  },
+  {
+    number: '02',
+    title: 'Intelligence Pipeline',
+    desc: 'Every flight feeds an AI analytics layer that detects anomalies, tracks trends, and generates actionable alerts. Raw sensor data becomes prioritized recommendations — automatically, continuously.',
+  },
+  {
+    number: '03',
+    title: 'Proven Platform',
+    desc: 'Our autonomous systems run 150 to 200 missions per month in all weather conditions with 99%+ availability. Auto-charging, auto-calibration, and remote diagnostics keep operations running without on-site intervention.',
+  },
+  {
+    number: '04',
+    title: 'Scale on Demand',
+    desc: 'Single dock to multi-dock deployment across your entire campus. Add capacity as your facility grows — same intelligence pipeline, same reporting, same managed service.',
+  },
+];
+
+const integrations = [
+  { label: 'SCADA', icon: 'manufacturing' },
+  { label: 'VMS', icon: 'videocam' },
+  { label: 'BMS', icon: 'apartment' },
+  { label: 'Digital Twin', icon: 'view_in_ar' },
+  { label: 'SOC', icon: 'shield' },
+  { label: 'CMMS', icon: 'build' },
+];
+---
+
+<Layout title="Autonomous Deployment — Jinki Aerial Intelligence" description="Persistent autonomous aerial monitoring for facilities requiring continuous intelligence. Scheduled patrols, event-triggered response, and real-time analytics.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="vert-hero" aria-label="Autonomous Deployment">
+      <div class="vert-hero-inner">
+        <div class="vert-hero-content reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Autonomous Deployment</span>
+          </div>
+          <h1 class="vert-hero-title">
+            Persistent Intelligence.<br/>
+            <span class="gradient-text-teal">Autonomous Operations.</span>
+          </h1>
+          <p class="vert-hero-subtitle">
+            For facilities requiring more than periodic assessments, Jinki deploys autonomous
+            aerial systems that launch, capture, analyze, and report — without human intervention.
+            Scheduled thermal patrols, event-triggered security response, and continuous environmental
+            monitoring from a permanent on-site installation.
+          </p>
+          <div class="vert-hero-actions">
+            <a href="#lead-gen" class="btn-premium vert-cta deploy-cta">Plan Your Deployment</a>
+            <a href="#capabilities" class="vert-cta-secondary">View Capabilities</a>
+          </div>
+        </div>
+        <div class="vert-hero-visual reveal reveal-delay-1" aria-hidden="true">
+          <div class="deploy-preview">
+            <div class="deploy-grid-overlay"></div>
+            <span class="material-symbols-outlined deploy-bg-icon" style="font-variation-settings: 'FILL' 1;">cell_tower</span>
+            <div class="deploy-orbit orbit-1"></div>
+            <div class="deploy-orbit orbit-2"></div>
+            <div class="deploy-pulse"></div>
+            <div class="deploy-readout">
+              <span class="readout-label">SYSTEM STATUS</span>
+              <span class="readout-value deploy-value">ACTIVE</span>
+              <span class="readout-status deploy-status">187 MISSIONS THIS MONTH</span>
+            </div>
+            <div class="deploy-status-badge">
+              <span class="status-dot-live"></span>
+              <span>AUTONOMOUS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Specs Bar -->
+    <div class="stats-bar reveal">
+      <div class="stats-bar-inner">
+        {specs.map(spec => (
+          <div class="stat-item">
+            <span class="stat-value">{spec.value}</span>
+            <span class="stat-label">{spec.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Capabilities Grid -->
+    <section id="capabilities" class="section" style="background: var(--surface-dim);" aria-label="Capabilities">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Capabilities</span>
+          </div>
+          <h2>Scheduled. Triggered.<br/>Always Watching.</h2>
+          <p class="section-subtitle">
+            Autonomous aerial systems that operate on your schedule, respond to your alarms,
+            and deliver intelligence directly to your existing platforms — no pilots, no coordination,
+            no manual data processing.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          {capabilities.map((cap, i) => (
+            <div class={`service-card metallic-gloss reveal reveal-delay-${(i % 3) + 1}`}>
+              <div class="service-icon-wrap teal-icon-wrap">
+                <span class="material-symbols-outlined service-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{cap.icon}</span>
+              </div>
+              <h3 class="service-title">{cap.title}</h3>
+              <p class="service-desc">{cap.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Managed Service -->
+    <section class="section" aria-label="Managed Service">
+      <div class="section-inner">
+        <div class="managed-layout">
+          <div class="managed-text reveal">
+            <div class="vert-eyebrow">
+              <span class="vert-eyebrow-line"></span>
+              <span class="vert-eyebrow-text">Managed Service</span>
+            </div>
+            <h2>You Get Intelligence.<br/>We Handle Everything Else.</h2>
+            <p class="managed-lead">
+              Jinki manages the full operational stack: mission planning, flight operations,
+              data analysis, platform maintenance, and report delivery. Your team receives
+              prioritized intelligence delivered to your systems — not another platform to manage.
+            </p>
+            <ul class="managed-list">
+              <li>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 20px;" aria-hidden="true">route</span>
+                <span>Mission planning and optimization</span>
+              </li>
+              <li>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 20px;" aria-hidden="true">model_training</span>
+                <span>AI-powered data analysis and anomaly detection</span>
+              </li>
+              <li>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 20px;" aria-hidden="true">build</span>
+                <span>Platform maintenance and remote diagnostics</span>
+              </li>
+              <li>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 20px;" aria-hidden="true">summarize</span>
+                <span>Automated reporting and alert delivery</span>
+              </li>
+              <li>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 20px;" aria-hidden="true">support_agent</span>
+                <span>Dedicated operations team and support</span>
+              </li>
+            </ul>
+          </div>
+          <div class="managed-visual reveal reveal-delay-2" aria-hidden="true">
+            <div class="ops-mockup">
+              <div class="ops-header-bar">
+                <span class="ops-dot" style="background: #FF6B35;"></span>
+                <span class="ops-dot" style="background: #FFBD2E;"></span>
+                <span class="ops-dot" style="background: #27C93F;"></span>
+                <span class="ops-title-text">Operations Dashboard</span>
+              </div>
+              <div class="ops-body">
+                <div class="ops-stat-row">
+                  <div class="ops-stat">
+                    <span class="ops-stat-value">187</span>
+                    <span class="ops-stat-label">Missions</span>
+                  </div>
+                  <div class="ops-stat">
+                    <span class="ops-stat-value">99.4%</span>
+                    <span class="ops-stat-label">Uptime</span>
+                  </div>
+                  <div class="ops-stat">
+                    <span class="ops-stat-value">12</span>
+                    <span class="ops-stat-label">Alerts</span>
+                  </div>
+                </div>
+                <div class="ops-mission-list">
+                  <div class="ops-mission">
+                    <span class="ops-mission-status active"></span>
+                    <span class="ops-mission-name">Thermal Patrol — Zone A</span>
+                    <span class="ops-mission-time">In Progress</span>
+                  </div>
+                  <div class="ops-mission">
+                    <span class="ops-mission-status complete"></span>
+                    <span class="ops-mission-name">Perimeter Sweep — Full Campus</span>
+                    <span class="ops-mission-time">23:45</span>
+                  </div>
+                  <div class="ops-mission">
+                    <span class="ops-mission-status scheduled"></span>
+                    <span class="ops-mission-name">Roof Survey — Building D</span>
+                    <span class="ops-mission-time">04:00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Integrations -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Integrations">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Integrations</span>
+          </div>
+          <h2>Connects to Your<br/>Existing Infrastructure</h2>
+          <p class="section-subtitle">
+            Intelligence delivered where your teams already work.
+            No new platforms to learn. No manual exports. No middleware.
+          </p>
+        </div>
+
+        <div class="integration-grid">
+          {integrations.map((intg, i) => (
+            <div class={`integration-card reveal reveal-delay-${(i % 3) + 1}`}>
+              <span class="material-symbols-outlined integration-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{intg.icon}</span>
+              <span class="integration-label">{intg.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Differentiators -->
+    <section class="section" aria-label="Why Jinki">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Why Jinki</span>
+          </div>
+          <h2>Intelligence as a Service,<br/>Not Equipment as a Sale</h2>
+        </div>
+
+        <div class="diff-grid">
+          {differentiators.map((diff) => (
+            <div class={`diff-card teal-border reveal reveal-delay-${parseInt(diff.number)}`}>
+              <span class="diff-number teal-number">{diff.number}</span>
+              <h3>{diff.title}</h3>
+              <p>{diff.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <LeadGen />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ---- Hero ---- */
+  .vert-hero {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    padding: 140px clamp(20px, 5vw, 80px) 60px;
+    background: var(--surface-container-lowest);
+    position: relative;
+  }
+
+  .vert-hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .vert-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .vert-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .vert-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+  }
+
+  .vert-hero-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+
+  .gradient-text-teal {
+    background: linear-gradient(135deg, #00C9A7, #00897B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .vert-hero-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 540px;
+    margin-bottom: 32px;
+  }
+
+  .vert-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .vert-cta {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .deploy-cta {
+    background: linear-gradient(135deg, #00C9A7, #00897B) !important;
+  }
+
+  .deploy-cta:hover {
+    box-shadow: 0 0 30px rgba(0, 201, 167, 0.3);
+  }
+
+  .vert-cta-secondary {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .vert-cta-secondary:hover {
+    color: #00C9A7;
+  }
+
+  /* ---- Deploy Preview Visual ---- */
+  .deploy-preview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #0a0c10, #0f1a18);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+  }
+
+  .deploy-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 201, 167, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 201, 167, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .deploy-bg-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    color: rgba(0, 201, 167, 0.06);
+  }
+
+  .deploy-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 201, 167, 0.12);
+    animation: orbit-spin 20s linear infinite;
+  }
+
+  .orbit-1 {
+    width: 160px;
+    height: 160px;
+    margin-top: -80px;
+    margin-left: -80px;
+  }
+
+  .orbit-2 {
+    width: 260px;
+    height: 260px;
+    margin-top: -130px;
+    margin-left: -130px;
+    animation-duration: 30s;
+    animation-direction: reverse;
+  }
+
+  .orbit-1::after,
+  .orbit-2::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00C9A7;
+    box-shadow: 0 0 12px rgba(0, 201, 167, 0.6);
+  }
+
+  @keyframes orbit-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .deploy-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    background: #00C9A7;
+    box-shadow: 0 0 20px rgba(0, 201, 167, 0.5);
+    animation: deploy-pulse-anim 3s ease-in-out infinite;
+  }
+
+  @keyframes deploy-pulse-anim {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.6; }
+  }
+
+  .deploy-readout {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 201, 167, 0.15);
+  }
+
+  .readout-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .readout-value {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .deploy-value {
+    color: #00C9A7;
+  }
+
+  .readout-status {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .deploy-status {
+    color: #00C9A7;
+  }
+
+  .deploy-status-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 201, 167, 0.2);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #00C9A7;
+  }
+
+  .status-dot-live {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00C9A7;
+    box-shadow: 0 0 8px rgba(0, 201, 167, 0.6);
+    animation: blink-live 2s ease-in-out infinite;
+  }
+
+  @keyframes blink-live {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ---- Stats Bar ---- */
+  .stats-bar {
+    background: var(--surface-container-low);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .stats-bar-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px clamp(20px, 5vw, 80px);
+    gap: 32px;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .stat-value {
+    font-family: var(--font-headline);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #00C9A7;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  /* ---- Sections ---- */
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .section {
+      padding: 8rem clamp(20px, 5vw, 80px);
+    }
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 56px;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-top: 16px;
+  }
+
+  /* ---- Services Grid ---- */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .service-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 201, 167, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 201, 167, 0.15);
+  }
+
+  .service-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .teal-icon-wrap {
+    background: rgba(0, 201, 167, 0.12);
+  }
+
+  .service-card:hover .teal-icon-wrap {
+    box-shadow: 0 0 20px rgba(0, 201, 167, 0.25);
+  }
+
+  .service-icon {
+    color: #00C9A7;
+    font-size: 24px;
+  }
+
+  .service-title {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ---- Managed Service Layout ---- */
+  .managed-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .managed-layout {
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+  }
+
+  .managed-text h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
+
+  .managed-lead {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-top: 16px;
+    margin-bottom: 32px;
+  }
+
+  .managed-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .managed-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Ops Mockup */
+  .ops-mockup {
+    background: linear-gradient(135deg, #0a0c10, #0f1a18);
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+  }
+
+  .ops-header-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .ops-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .ops-title-text {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+    margin-left: 8px;
+  }
+
+  .ops-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ops-stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .ops-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 12px;
+    background: rgba(0, 201, 167, 0.06);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 201, 167, 0.1);
+  }
+
+  .ops-stat-value {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #00C9A7;
+  }
+
+  .ops-stat-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .ops-mission-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ops-mission {
+    display: grid;
+    grid-template-columns: 10px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .ops-mission-status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .ops-mission-status.active {
+    background: #00C9A7;
+    box-shadow: 0 0 8px rgba(0, 201, 167, 0.5);
+    animation: blink-live 2s ease-in-out infinite;
+  }
+
+  .ops-mission-status.complete {
+    background: var(--text-tertiary);
+  }
+
+  .ops-mission-status.scheduled {
+    background: transparent;
+    border: 2px solid var(--text-tertiary);
+  }
+
+  .ops-mission-name {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .ops-mission-time {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+
+  /* ---- Integration Grid ---- */
+  .integration-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @media (min-width: 768px) {
+    .integration-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .integration-grid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+
+  .integration-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 28px 16px;
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  .integration-card:hover {
+    border-color: rgba(0, 201, 167, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .integration-icon {
+    font-size: 28px;
+    color: #00C9A7;
+  }
+
+  .integration-label {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---- Differentiators ---- */
+  .diff-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .diff-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .diff-card {
+    padding: 32px;
+    border-left: 2px solid var(--accent);
+    transition: background 0.3s ease;
+  }
+
+  .teal-border {
+    border-left-color: #00C9A7;
+  }
+
+  .diff-card:hover {
+    background: rgba(0, 201, 167, 0.06);
+  }
+
+  .diff-number {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .teal-number {
+    color: #00C9A7;
+  }
+
+  .diff-card h3 {
+    font-family: var(--font-headline);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .diff-card p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 768px) {
+    .vert-hero-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .vert-hero {
+      min-height: auto;
+      padding-top: 120px;
+    }
+
+    .stats-bar-inner {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .vert-hero-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+  }
+
+  /* ---- Light Mode ---- */
+  :global([data-theme="light"]) .deploy-preview {
+    background: linear-gradient(135deg, #e8eaed, #eef5f3);
+    border-color: var(--glass-border);
+  }
+
+  :global([data-theme="light"]) .deploy-bg-icon {
+    color: rgba(0, 137, 123, 0.06);
+  }
+
+  :global([data-theme="light"]) .deploy-readout {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 137, 123, 0.15);
+  }
+
+  :global([data-theme="light"]) .deploy-grid-overlay {
+    background-image:
+      linear-gradient(rgba(0, 137, 123, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 137, 123, 0.05) 1px, transparent 1px);
+  }
+
+  :global([data-theme="light"]) .deploy-status-badge {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 137, 123, 0.15);
+  }
+
+  :global([data-theme="light"]) .deploy-orbit {
+    border-color: rgba(0, 137, 123, 0.12);
+  }
+
+  :global([data-theme="light"]) .ops-mockup {
+    background: linear-gradient(135deg, #e8eaed, #eef5f3);
+  }
+
+  :global([data-theme="light"]) .ops-header-bar {
+    background: rgba(0, 0, 0, 0.05);
+  }
+
+  :global([data-theme="light"]) .ops-stat {
+    background: rgba(0, 137, 123, 0.06);
+    border-color: rgba(0, 137, 123, 0.1);
+  }
+
+  :global([data-theme="light"]) .ops-mission {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+
+  :global([data-theme="light"]) .stat-value {
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .service-icon {
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .teal-icon-wrap {
+    background: rgba(0, 137, 123, 0.1);
+  }
+
+  :global([data-theme="light"]) .integration-icon {
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .teal-number {
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .teal-border {
+    border-left-color: #00897B;
+  }
+
+  :global([data-theme="light"]) .diff-card:hover {
+    background: rgba(0, 137, 123, 0.06);
+  }
+</style>
