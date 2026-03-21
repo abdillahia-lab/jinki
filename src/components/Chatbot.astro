@@ -72,7 +72,11 @@
     border-radius: 16px; overflow: hidden;
     box-shadow: 0 16px 48px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.05) inset;
   }
-  .jc-panel[aria-hidden="false"] { display: flex; }
+  .jc-panel[aria-hidden="false"] { display: flex; animation: chatPanelIn 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)); }
+  @keyframes chatPanelIn {
+    from { opacity: 0; transform: translateY(16px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
 
   /* Header */
   .jc-header {
