@@ -421,7 +421,7 @@ const sections = [
     border-left: 2px solid transparent;
     border-radius: 0 6px 6px 0;
     display: block;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease, background 0.2s ease, border-left-color 0.2s ease;
   }
 
   .sidebar-link:hover {
@@ -542,7 +542,7 @@ const sections = [
     border: 1px solid var(--accent);
     border-radius: 12px;
     display: inline-block;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
   }
 
   .legal-email-btn:hover {

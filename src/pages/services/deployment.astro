@@ -870,7 +870,7 @@ const capabilities = [
     background: rgba(0, 201, 167, 0.08);
     border: 2px solid rgba(0, 201, 167, 0.15);
     color: #00C9A7;
-    transition: all 0.4s ease;
+    transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
     margin-bottom: 12px;
     position: relative;
   }
@@ -882,7 +882,7 @@ const capabilities = [
     inset: -6px;
     border-radius: 50%;
     border: 2px solid transparent;
-    transition: all 0.5s ease;
+    transition: border-color 0.5s ease, inset 0.5s ease;
   }
 
   .seq-step.active .seq-icon-wrap::before {
@@ -902,7 +902,7 @@ const capabilities = [
     inset: -2px;
     border-radius: 50%;
     background: transparent;
-    transition: all 0.4s ease;
+    transition: box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
   }
 
   .seq-step.active .seq-icon-wrap::after {
@@ -1014,7 +1014,7 @@ const capabilities = [
     border: 1px solid var(--glass-border);
     border-radius: 12px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease, transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
     position: relative;
     overflow: hidden;
   }
@@ -1819,7 +1819,7 @@ const capabilities = [
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     padding: 32px;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), border-color 0.4s ease, box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
     position: relative;
     overflow: hidden;
   }
@@ -1898,7 +1898,7 @@ const capabilities = [
     inset: -3px;
     border-radius: 14px;
     border: 1.5px solid transparent;
-    transition: all 0.4s ease;
+    transition: border-color 0.4s ease, box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
     pointer-events: none;
   }
 

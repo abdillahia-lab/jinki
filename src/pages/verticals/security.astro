@@ -1727,7 +1727,7 @@ const integrations = [
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
-    transition: all 0.5s ease;
+    transition: gap 0.5s ease;
   }
   .night-split.night-mode .night-panel-day { opacity: 0.4; transform: scale(0.96); }
   .night-split.night-mode .night-panel-night { opacity: 1; transform: scale(1); box-shadow: 0 0 40px rgba(123, 97, 255, 0.15); }
@@ -1864,7 +1864,7 @@ const integrations = [
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     padding: 32px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), border-color 0.3s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
     position: relative;
     overflow: hidden;
     z-index: 1;

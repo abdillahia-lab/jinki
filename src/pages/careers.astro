@@ -512,7 +512,7 @@ const culturePoints = [
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.25s ease;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
     white-space: nowrap;
   }
 
@@ -555,7 +555,7 @@ const culturePoints = [
     background: var(--bg-card);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease, transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
     position: relative;
     overflow: hidden;
   }
@@ -635,7 +635,7 @@ const culturePoints = [
     letter-spacing: 0.1em;
     border-radius: 10px;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
   }
 
   :global([data-theme="light"]) .role-apply-btn {
@@ -786,7 +786,7 @@ const culturePoints = [
     padding: 28px 24px;
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), border-color 0.3s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
     display: flex;
     flex-direction: column;
   }
@@ -892,7 +892,7 @@ const culturePoints = [
     color: var(--accent);
     position: relative;
     z-index: 2;
-    transition: all 0.3s ease;
+    transition: transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
     box-shadow: 0 0 20px var(--accent-glow);
   }
 
@@ -990,7 +990,7 @@ const culturePoints = [
     padding: 32px 28px;
     position: relative;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), border-color 0.3s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
     display: flex;
     flex-direction: column;
   }
@@ -1071,7 +1071,7 @@ const culturePoints = [
     font-weight: 600;
     border-radius: 12px;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
   }
 
   :global([data-theme="light"]) .cta-btn {

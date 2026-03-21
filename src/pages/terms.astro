@@ -412,7 +412,7 @@ const sections = [
     display: flex;
     align-items: center;
     gap: 8px;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease, background 0.2s ease, border-left-color 0.2s ease;
   }
 
   .sidebar-link:hover {
@@ -580,7 +580,7 @@ const sections = [
     padding: 8px 20px;
     border: 1px solid var(--accent);
     border-radius: 10px;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
   }
 
   .legal-email-btn:hover {
