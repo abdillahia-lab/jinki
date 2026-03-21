@@ -34,7 +34,15 @@ const reportTabs = [
 ];
 ---
 
-<Layout title="Facility Intelligence Scan — Jinki Aerial Intelligence" description="Comprehensive aerial assessment of your facility. One mission. One report. Clear next steps.">
+<Layout title="Facility Intelligence Scan — Jinki Aerial Intelligence" description="Comprehensive aerial assessment of your facility. One mission. One report. Clear next steps." jsonLd={{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Facility Intelligence Scan",
+  "provider": { "@type": "Organization", "name": "Jinki Aerial Intelligence" },
+  "description": "Comprehensive aerial thermal and visual assessment of facility infrastructure with prioritized intelligence report delivered within 24 hours.",
+  "areaServed": "Mid-Atlantic United States",
+  "serviceType": "Aerial Infrastructure Inspection",
+}}>
   <Nav />
   <main id="main-content">
 

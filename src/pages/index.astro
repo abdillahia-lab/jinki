@@ -19,7 +19,18 @@ import LeadGen from '../components/LeadGen.astro';
 import Footer from '../components/Footer.astro';
 ---
 
-<Layout>
+<Layout jsonLd={{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Jinki Aerial Intelligence",
+  "url": "https://jinki.ai",
+  "description": "Aerial intelligence platform for critical infrastructure — data centers, energy grids, security perimeters, and agriculture.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://jinki.ai/blog?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}}>
   <Nav />
   <main id="main-content">
     <Hero />

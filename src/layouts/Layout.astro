@@ -5,14 +5,34 @@ import Chatbot from '../components/Chatbot.astro';
 interface Props {
   title?: string;
   description?: string;
+  jsonLd?: Record<string, any>;
 }
 
 const {
   title = 'Jinki | Aerial Intelligence for Critical Infrastructure',
-  description = 'Jinki turns aerial data into prioritized maintenance recommendations for infrastructure you can\'t easily reach — power lines, data centers, and farmland.'
+  description = 'Jinki turns aerial data into prioritized maintenance recommendations for infrastructure you can\'t easily reach — power lines, data centers, and farmland.',
+  jsonLd,
 } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, 'https://jinki.ai').href;
+
+// Default Organization schema (every page)
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Jinki Aerial Intelligence",
+  "url": "https://jinki.ai",
+  "logo": "https://jinki.ai/images/jinki-logo-512.png",
+  "description": "Aerial intelligence platform delivering thermal inspection, condition assessment, and autonomous monitoring for critical infrastructure.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "sales",
+    "email": "hello@jinki.ai",
+  },
+  "sameAs": [],
+  "areaServed": "Mid-Atlantic United States",
+  "serviceType": ["Aerial Thermal Inspection", "Autonomous Infrastructure Monitoring", "Facility Intelligence Assessment"],
+};
 ---
 
 <!doctype html>
@@ -37,6 +57,10 @@ const canonicalUrl = new URL(Astro.url.pathname, 'https://jinki.ai').href;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="https://jinki.ai/images/og-preview.png" />
 
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
     <!-- Preload critical fonts (self-hosted) -->
     <link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
@@ -50,28 +74,7 @@ const canonicalUrl = new URL(Astro.url.pathname, 'https://jinki.ai').href;
     <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
     <title>{title}</title>
 
-    <!-- Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Organization",
-          "name": "Jinki",
-          "url": "https://jinki.ai",
-          "description": description,
-          "foundingDate": "2025",
-          "areaServed": "Worldwide",
-          "serviceType": ["Aerial Intelligence", "Infrastructure Inspection", "Thermal Imaging", "Predictive Maintenance"],
-          "knowsAbout": ["aerial data analytics", "infrastructure monitoring", "thermal imaging", "predictive maintenance", "data center inspection", "energy grid inspection", "agricultural intelligence"]
-        },
-        {
-          "@type": "WebSite",
-          "name": "Jinki",
-          "url": "https://jinki.ai",
-          "description": description
-        }
-      ]
-    })} />
+    <!-- (JSON-LD structured data is in the head above) -->
 
     <noscript><style>.reveal { opacity: 1 !important; transform: none !important; }</style></noscript>
 

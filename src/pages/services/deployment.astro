@@ -73,7 +73,15 @@ const capabilities = [
 ];
 ---
 
-<Layout title="Autonomous Deployment — Jinki Aerial Intelligence" description="Persistent autonomous aerial intelligence for facilities that need continuous visibility. DJI Dock 3 platform capable of 150-200 missions per month with 24/7 autonomous operation.">
+<Layout title="Autonomous Deployment — Jinki Aerial Intelligence" description="Persistent autonomous aerial intelligence for facilities that need continuous visibility. DJI Dock 3 platform capable of 150-200 missions per month with 24/7 autonomous operation." jsonLd={{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Autonomous Deployment",
+  "provider": { "@type": "Organization", "name": "Jinki Aerial Intelligence" },
+  "description": "Persistent autonomous aerial monitoring with on-site DJI Dock 3 platform capable of 150-200 missions per month with 24/7 operation.",
+  "areaServed": "Mid-Atlantic United States",
+  "serviceType": "Autonomous Aerial Monitoring",
+}}>
   <Nav />
   <main id="main-content">
 
