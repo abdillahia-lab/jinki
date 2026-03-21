@@ -151,11 +151,11 @@
 
   var answers = {
     Assessment: {
-      text: 'Our Facility Intelligence Audit is a one-time aerial assessment that delivers a comprehensive report with thermal, structural, and environmental findings.',
-      link: '/services/audit', cta: 'Learn about audits'
+      text: 'Our Facility Intelligence Scan is a one-time aerial assessment that delivers a comprehensive report with thermal, structural, and environmental findings.',
+      link: '/services/audit', cta: 'Learn about scans'
     },
     Services: {
-      text: 'We offer two core services: Facility Audits (one-time assessments) and Autonomous Deployment (persistent monitoring with recurring missions).',
+      text: 'We offer two core services: Facility Intelligence Scans (one-time assessments) and Autonomous Deployment (persistent monitoring with recurring missions).',
       link: '/services/audit', cta: 'Explore services'
     },
     Industries: {
@@ -248,7 +248,7 @@
     removeQuickReplies();
     addUser(v);
     var lc = v.toLowerCase();
-    if (/audit|assess/.test(lc)) { showAnswer('Assessment'); return; }
+    if (/scan|assess|evaluation/.test(lc)) { showAnswer('Assessment'); return; }
     if (/service|deploy/.test(lc)) { showAnswer('Services'); return; }
     if (/industr|vertical|data.?center|energy|secur|agri/.test(lc)) { showAnswer('Industries'); return; }
     if (/contact|touch|start|talk|hello|hi\b/.test(lc)) { showAnswer('Contact'); return; }

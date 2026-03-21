@@ -11,10 +11,10 @@ import LeadGen from '../../components/LeadGen.astro';
 import Footer from '../../components/Footer.astro';
 
 const stats = [
-  { value: '340+', label: 'miles inspected per day', source: 'Operational Data' },
-  { value: '83%', label: 'cost reduction vs manual inspection', source: 'Client Average' },
-  { value: 'Zero', label: 'unplanned outages for monitored clients', source: '2025 Performance' },
-  { value: '$4.2M', label: 'saved per utility annually', source: 'ROI Analysis' },
+  { value: '50+ mi', label: 'corridor coverage per mission', source: 'Platform Capability' },
+  { value: '0.5°C', label: 'thermal detection sensitivity', source: 'H30T Sensor Spec' },
+  { value: '24hr', label: 'findings report turnaround', source: 'Service Commitment' },
+  { value: '200/mo', label: 'autonomous mission capacity', source: 'DJI Dock 3 Spec' },
 ];
 
 const detections = [
@@ -105,7 +105,7 @@ const techSections = [
 ];
 ---
 
-<Layout title="Energy & Grid Intelligence — Jinki Aerial Intelligence" description="Predictive aerial intelligence for power lines, transmission towers, solar farms, wind turbines, and substations. Prevent grid failures and reduce inspection costs 83%.">
+<Layout title="Energy & Grid Intelligence — Jinki Aerial Intelligence" description="Predictive aerial intelligence for power lines, transmission towers, solar farms, wind turbines, and substations. Severity-ranked findings delivered within 24 hours.">
   <Nav />
   <main id="main-content">
 
@@ -123,11 +123,11 @@ const techSections = [
           </h1>
           <p class="eg-hero-subtitle">
             Transmission towers, power lines, solar farms, and substations — inspected
-            at 340 miles per day. Jinki delivers severity-ranked findings that prevent
-            outages before they happen, cutting inspection costs by 83%.
+            across 50+ mile corridors per mission. Jinki delivers severity-ranked findings
+            that identify degradation before it becomes downtime.
           </p>
           <div class="eg-hero-actions">
-            <a href="#lead-gen" class="btn-premium eg-cta" style="background: linear-gradient(135deg, #FF8C00, #FF6B35);">Schedule Assessment</a>
+            <a href="#lead-gen" class="btn-premium eg-cta" style="background: linear-gradient(135deg, #FF8C00, #FF6B35);">Request a Demo</a>
             <a href="#risk-detection" class="eg-cta-secondary">
               <span class="material-symbols-outlined" style="font-size: 18px; font-variation-settings: 'FILL' 1;" aria-hidden="true">arrow_downward</span>
               See Detection Types
@@ -135,8 +135,15 @@ const techSections = [
           </div>
         </div>
         <div class="eg-hero-visual reveal reveal-delay-1" aria-hidden="true">
-          <!-- Animated SVG Power Grid Network -->
           <div class="eg-grid-container">
+            <!-- Real aerial photo as base layer -->
+            <img
+              src="/images/powerline-aerial.jpg"
+              alt=""
+              class="eg-hero-photo"
+              loading="eager"
+              decoding="async"
+            />
             <svg viewBox="0 0 500 400" class="eg-grid-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animated power grid network visualization">
               <!-- Grid lines with flowing electricity -->
               <defs>
@@ -486,8 +493,8 @@ const techSections = [
               <div class="eg-tl-item">
                 <span class="eg-tl-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">payments</span>
                 <div>
-                  <h4>$5,000+ Per Tower</h4>
-                  <p>Helicopter time, crew mobilization, traffic management, and equipment shutdowns drain budgets.</p>
+                  <h4>High Per-Tower Costs</h4>
+                  <p>Helicopter time, crew mobilization, traffic management, and equipment shutdowns make traditional inspection expensive.</p>
                 </div>
               </div>
               <div class="eg-tl-item">
@@ -530,8 +537,8 @@ const techSections = [
               <div class="eg-tl-item">
                 <span class="eg-tl-icon eg-tl-icon-after material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">savings</span>
                 <div>
-                  <h4>83% Cost Reduction</h4>
-                  <p>No helicopters, no road crews, no shutdowns. Aerial intelligence at a fraction of legacy costs.</p>
+                  <h4>Fraction of Legacy Costs</h4>
+                  <p>No helicopters, no road crews, no shutdowns. Aerial intelligence replaces expensive manual methods.</p>
                 </div>
               </div>
               <div class="eg-tl-item">
@@ -796,7 +803,16 @@ const techSections = [
     color: #FF8C00;
   }
 
-  /* ---- Hero Visual: Animated SVG Grid ---- */
+  /* ---- Hero Visual: Photo + Animated SVG Grid ---- */
+  .eg-hero-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.4) contrast(1.2) saturate(0.4);
+    z-index: 0;
+  }
   .eg-grid-container {
     position: relative;
     width: 100%;

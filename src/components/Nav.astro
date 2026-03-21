@@ -12,7 +12,7 @@ const verticals = [
 ];
 
 const services = [
-  { href: '/services/audit', label: 'Facility Audit' },
+  { href: '/services/audit', label: 'Facility Intelligence Scan' },
   { href: '/services/deployment', label: 'Autonomous Deployment' },
 ];
 ---
@@ -28,8 +28,6 @@ const services = [
 
     <!-- Desktop links -->
     <ul class="nav-links" style="display:flex;align-items:center;gap:4px;list-style:none;margin:0;padding:0;">
-      <li><a href="/#hero" class="nav-link">Home</a></li>
-
       <!-- Verticals dropdown -->
       <li class="dropdown" style="position:relative;">
         <button class="nav-link dropdown-trigger" aria-expanded="false" aria-haspopup="true" style="display:flex;align-items:center;gap:4px;">
@@ -82,8 +80,6 @@ const services = [
   <!-- Mobile slide-out panel -->
   <div id="mobile-panel" class="mobile-panel" aria-hidden="true">
     <div class="mobile-panel-inner" style="display:flex;flex-direction:column;gap:4px;padding:20px;">
-      <a href="/#hero" class="mobile-link">Home</a>
-
       <div class="mobile-section-label" style="font-family:var(--font-label);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);padding:16px 14px 6px;">Verticals</div>
       {verticals.map(v => (
         <a href={v.href} class="mobile-link" style="display:flex;align-items:center;gap:10px;">
@@ -312,6 +308,9 @@ const services = [
       var icon = mobileToggle?.querySelector('.material-symbols-outlined');
       if (icon) icon.textContent = 'close';
       document.body.style.overflow = 'hidden';
+      // Focus first link for keyboard users
+      var firstLink = mobilePanel?.querySelector('a');
+      if (firstLink) setTimeout(function() { firstLink.focus(); }, 100);
     }
 
     function closeMobile() {
@@ -322,6 +321,8 @@ const services = [
       var icon = mobileToggle?.querySelector('.material-symbols-outlined');
       if (icon) icon.textContent = 'menu';
       document.body.style.overflow = '';
+      // Return focus to toggle button
+      mobileToggle?.focus();
     }
 
     mobileToggle?.addEventListener('click', function () {

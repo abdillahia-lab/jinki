@@ -163,7 +163,7 @@ function estimateReadTime(description: string): number {
               <h3 style="margin-bottom: 8px;">Get aerial intelligence insights delivered</h3>
               <p>Join industry leaders receiving our monthly briefing on autonomous operations, thermal analytics, and infrastructure monitoring.</p>
             </div>
-            <form class="omega-newsletter-form" onsubmit="event.preventDefault();">
+            <form class="omega-newsletter-form" id="blog-newsletter">
               <div class="omega-input-group">
                 <input
                   type="email"
@@ -836,4 +836,36 @@ function estimateReadTime(description: string): number {
       if (active) moveIndicator(active);
     });
   });
+
+  // Blog newsletter — Formspree
+  const blogForm = document.getElementById('blog-newsletter') as HTMLFormElement;
+  if (blogForm) {
+    blogForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const input = blogForm.querySelector('.omega-email-input') as HTMLInputElement;
+      const btn = blogForm.querySelector('.omega-subscribe-btn') as HTMLButtonElement;
+      const note = blogForm.querySelector('.omega-newsletter-note') as HTMLElement;
+      if (!input?.value) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      try {
+        const res = await fetch('https://formspree.io/f/xpznqkdl', {
+          method: 'POST',
+          body: JSON.stringify({ email: input.value, _subject: 'Blog Newsletter Signup' }),
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        });
+        if (res.ok) {
+          input.value = '';
+          btn.textContent = 'Subscribed!';
+          if (note) { note.textContent = 'You\'re in! We\'ll send monthly insights.'; note.style.color = '#34D399'; }
+        } else { throw new Error('fail'); }
+      } catch {
+        btn.textContent = 'Subscribe';
+        if (note) { note.textContent = 'Something went wrong. Try again.'; note.style.color = '#FF6B6B'; }
+      }
+      btn.disabled = false;
+    });
+  }
 </script>

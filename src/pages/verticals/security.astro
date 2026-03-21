@@ -17,10 +17,10 @@ import LeadGen from '../../components/LeadGen.astro';
 import Footer from '../../components/Footer.astro';
 
 const stats = [
-  { value: '$4.4B', label: 'Security surveillance aerial market (2025)', source: 'Market Research' },
-  { value: '30s', label: 'Alert-to-airborne response time', source: 'Jinki Ops Data' },
-  { value: '98.7%', label: 'Threat classification accuracy', source: 'AI Model Metrics' },
-  { value: '24/7', label: 'Persistent autonomous patrol', source: 'Platform Capability' },
+  { value: '500+', label: 'acre perimeter coverage per mission', source: 'Platform Capability' },
+  { value: '<90s', label: 'dock-to-airborne response', source: 'DJI Dock 3 Spec' },
+  { value: 'Thermal', label: 'day and night detection capability', source: 'H30T Sensor' },
+  { value: '24/7', label: 'persistent autonomous patrol', source: 'Dock 3 Automation' },
 ];
 
 const services = [
@@ -32,7 +32,7 @@ const services = [
   {
     icon: 'speed',
     title: 'Event-Triggered Response',
-    desc: 'Automated aerial response to perimeter alerts. When sensors detect activity, aerial assets deploy within 30 seconds to verify, classify, and stream live video.',
+    desc: 'Automated aerial response to perimeter alerts. When sensors detect activity, the DJI Dock 3 launches aerial assets to verify, classify, and stream live thermal video to your SOC.',
   },
   {
     icon: 'shield',
@@ -63,7 +63,7 @@ const painPoints = [
   },
   {
     problem: 'Fixed cameras have inherent blind spots',
-    solution: 'Aerial vantage eliminates coverage gaps caused by terrain, structures, and vegetation. Thermal imaging detects concealed activity visible cameras miss.',
+    solution: 'Aerial vantage significantly reduces coverage gaps caused by terrain, structures, and vegetation. Thermal imaging is designed to detect concealed activity that visible cameras may miss.',
   },
   {
     problem: 'False alarm response wastes security resources',
@@ -94,7 +94,7 @@ const integrations = [
 ];
 ---
 
-<Layout title="Security — Jinki Aerial Intelligence" description="Aerial threat detection, perimeter thermal surveillance, and security intelligence for critical infrastructure. 24/7 autonomous patrol with AI threat classification.">
+<Layout title="Security — Jinki Aerial Intelligence" description="Aerial perimeter surveillance and thermal threat detection for critical infrastructure. 24/7 autonomous patrol covering 500+ acre perimeters.">
   <Nav />
   <main id="main-content">
 
@@ -116,7 +116,7 @@ const integrations = [
             before they become incidents. A force multiplier, not a replacement.
           </p>
           <div class="sec-hero-actions">
-            <a href="#lead-gen" class="btn-premium sec-cta">Schedule Assessment</a>
+            <a href="#lead-gen" class="btn-premium sec-cta">Request a Demo</a>
             <a href="#services" class="sec-cta-secondary">View Capabilities</a>
           </div>
         </div>
@@ -124,6 +124,14 @@ const integrations = [
         <!-- HUD Visual -->
         <div class="sec-hero-visual reveal reveal-delay-1" aria-hidden="true">
           <div class="hud-container">
+            <!-- Real facility photo as base layer -->
+            <img
+              src="/images/facility-night-aerial.jpg"
+              alt=""
+              class="hud-photo"
+              loading="eager"
+              decoding="async"
+            />
             <!-- Night vision green overlay -->
             <div class="hud-nightvision"></div>
             <!-- Grid scanlines -->
@@ -402,33 +410,33 @@ const integrations = [
             against traditional security measures.
           </p>
         </div>
-        <div class="response-chart reveal" role="img" aria-label="Response time comparison: Jinki 30 seconds, Guard patrol 4.5 minutes, Camera-only 8+ minutes">
-          <div class="chart-row" data-target="30" data-label="30s">
+        <div class="response-chart reveal" role="img" aria-label="Coverage comparison: Jinki autonomous aerial vs traditional security methods">
+          <div class="chart-row">
             <span class="chart-label">Jinki Aerial Intelligence</span>
             <div class="chart-bar-wrap">
-              <div class="chart-bar chart-bar-jinki" style="--bar-pct: 6.25%;">
-                <span class="chart-bar-value">30s</span>
+              <div class="chart-bar chart-bar-jinki" style="--bar-pct: 100%;">
+                <span class="chart-bar-value">Autonomous, 24/7, Thermal</span>
               </div>
             </div>
           </div>
-          <div class="chart-row" data-target="270" data-label="4.5min">
-            <span class="chart-label">Guard Patrol Response</span>
+          <div class="chart-row">
+            <span class="chart-label">Guard Patrol</span>
             <div class="chart-bar-wrap">
-              <div class="chart-bar chart-bar-guard" style="--bar-pct: 56.25%;">
-                <span class="chart-bar-value">4.5 min</span>
+              <div class="chart-bar chart-bar-guard" style="--bar-pct: 35%;">
+                <span class="chart-bar-value">Scheduled, Limited Coverage</span>
               </div>
             </div>
           </div>
-          <div class="chart-row" data-target="480" data-label="8+min">
-            <span class="chart-label">Camera-Only Detection</span>
+          <div class="chart-row">
+            <span class="chart-label">Fixed Cameras</span>
             <div class="chart-bar-wrap">
-              <div class="chart-bar chart-bar-camera" style="--bar-pct: 100%;">
-                <span class="chart-bar-value">8+ min</span>
+              <div class="chart-bar chart-bar-camera" style="--bar-pct: 50%;">
+                <span class="chart-bar-value">Static, Blind Spots</span>
               </div>
             </div>
           </div>
           <div class="chart-legend">
-            <span class="chart-legend-label">Detection + Verification + Classification + Response Dispatch</span>
+            <span class="chart-legend-label">Relative perimeter coverage capability</span>
           </div>
         </div>
       </div>
@@ -731,6 +739,15 @@ const integrations = [
     border: 1px solid rgba(123, 97, 255, 0.15);
     overflow: hidden;
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 0 60px rgba(123, 97, 255, 0.08);
+  }
+  .hud-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.5) contrast(1.2) saturate(0.3);
+    z-index: 0;
   }
   .hud-nightvision {
     position: absolute;

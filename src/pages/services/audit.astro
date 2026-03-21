@@ -1,6 +1,6 @@
 ---
 /*
-  TEAM OMEGA — Facility Intelligence Audit | Jinki Aerial Intelligence
+  TEAM OMEGA — Facility Intelligence Scan | Jinki Aerial Intelligence
   Redesigned: cinematic mission-briefing aesthetic with interactive process wheel,
   findings gallery, comparison, and tabbed deliverable preview.
 */
@@ -34,12 +34,12 @@ const reportTabs = [
 ];
 ---
 
-<Layout title="Facility Intelligence Audit — Jinki Aerial Intelligence" description="Comprehensive aerial assessment of your facility. One mission. One report. Clear next steps.">
+<Layout title="Facility Intelligence Scan — Jinki Aerial Intelligence" description="Comprehensive aerial assessment of your facility. One mission. One report. Clear next steps.">
   <Nav />
   <main id="main-content">
 
     <!-- ============ HERO — Mission Briefing ============ -->
-    <section class="omega-hero" aria-label="Facility Intelligence Audit">
+    <section class="omega-hero" aria-label="Facility Intelligence Scan">
       <div class="omega-hero-inner">
         <div class="omega-hero-content reveal">
           <div class="omega-eyebrow">
@@ -51,12 +51,12 @@ const reportTabs = [
             <span class="gradient-text-cyan">Total Facility Intelligence.</span>
           </h1>
           <p class="omega-hero-subtitle">
-            Jinki's Facility Intelligence Audit combines thermal diagnostics, structural assessment,
+            Jinki's Facility Intelligence Scan combines thermal diagnostics, structural assessment,
             and security evaluation into a single engagement. You receive a prioritized recommendations
             report — not raw data. Clear findings. Clear next steps.
           </p>
           <div class="omega-hero-actions">
-            <a href="#lead-gen" class="btn-premium omega-cta">Schedule Your Audit</a>
+            <a href="#lead-gen" class="btn-premium omega-cta">Schedule Your Scan</a>
             <a href="#process-wheel" class="omega-cta-secondary">See the Process</a>
           </div>
         </div>
@@ -71,7 +71,15 @@ const reportTabs = [
               </svg>
             </div>
             <div class="mission-center-icon">
-              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 36px; color: var(--accent);">assignment</span>
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="16" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.4"/>
+                <circle cx="20" cy="20" r="8" stroke="var(--accent)" stroke-width="1.5" opacity="0.6"/>
+                <circle cx="20" cy="20" r="2.5" fill="var(--accent)"/>
+                <line x1="20" y1="2" x2="20" y2="10" stroke="var(--accent)" stroke-width="1" opacity="0.5"/>
+                <line x1="20" y1="30" x2="20" y2="38" stroke="var(--accent)" stroke-width="1" opacity="0.5"/>
+                <line x1="2" y1="20" x2="10" y2="20" stroke="var(--accent)" stroke-width="1" opacity="0.5"/>
+                <line x1="30" y1="20" x2="38" y2="20" stroke="var(--accent)" stroke-width="1" opacity="0.5"/>
+              </svg>
             </div>
             <!-- Mission status badges -->
             <div class="mission-stat-badge badge-tl">
@@ -110,7 +118,7 @@ const reportTabs = [
 
         <div class="process-wheel-container reveal">
           <!-- Circular wheel for desktop -->
-          <div class="process-wheel" role="tablist" aria-label="Audit process steps">
+          <div class="process-wheel" role="tablist" aria-label="Scan process steps">
             <div class="wheel-center">
               <div class="wheel-center-content" id="wheel-center-content">
                 <span class="material-symbols-outlined wheel-center-icon" style="font-variation-settings: 'FILL' 1;" id="wheel-icon" aria-hidden="true">call</span>
@@ -304,8 +312,8 @@ const reportTabs = [
                       Building C, Zone 3
                     </span>
                     <span class="finding-meta-item">
-                      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 14px;" aria-hidden="true">attach_money</span>
-                      Est. $2,400 - $34,200
+                      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 14px;" aria-hidden="true">priority_high</span>
+                      Remediation Required
                     </span>
                   </div>
                 </div>
@@ -337,14 +345,14 @@ const reportTabs = [
             <span class="omega-eyebrow-line"></span>
             <span class="omega-eyebrow-text">The Difference</span>
           </div>
-          <h2>Traditional Audit<br/>vs Jinki Intelligence</h2>
+          <h2>Traditional Inspection<br/>vs Jinki Intelligence</h2>
         </div>
 
         <div class="comparison-container reveal">
           <div class="comparison-side comparison-traditional">
             <div class="comparison-header-bar traditional-bar">
               <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;" aria-hidden="true">schedule</span>
-              <h3>Traditional Audit</h3>
+              <h3>Traditional Inspection</h3>
             </div>
             <ul class="comparison-list">
               <li class="comparison-negative">
@@ -392,7 +400,7 @@ const reportTabs = [
           <div class="comparison-side comparison-jinki">
             <div class="comparison-header-bar jinki-bar">
               <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;" aria-hidden="true">bolt</span>
-              <h3>Jinki Intelligence Audit</h3>
+              <h3>Jinki Intelligence Scan</h3>
             </div>
             <ul class="comparison-list">
               <li class="comparison-positive">

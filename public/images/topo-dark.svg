@@ -1,162 +1,249 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
-  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+  <defs>
+    <filter id="w1" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="turbulence" baseFrequency="0.006 0.005" numOctaves="5" seed="2" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="65" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="w2" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="turbulence" baseFrequency="0.009 0.007" numOctaves="4" seed="11" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="50" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <filter id="w3" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="turbulence" baseFrequency="0.012 0.008" numOctaves="3" seed="19" result="t"/>
+      <feDisplacementMap in="SourceGraphic" in2="t" scale="40" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
 
-    <!-- CLUSTER A: Dense peak, upper-left -->
-    <ellipse cx="195" cy="165" rx="12" ry="10" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
-    <path d="M170 165 C170 145 195 132 215 140 C235 148 238 172 220 185 C202 198 170 188 170 165Z" stroke="rgba(255,255,255,0.42)" stroke-width="1.4"/>
-    <path d="M148 168 C145 135 180 115 215 125 C250 135 260 170 242 198 C224 226 155 215 148 168Z" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
-    <path d="M125 172 C118 128 168 100 218 112 C268 124 282 168 260 205 C238 242 135 228 125 172Z" stroke="rgba(255,255,255,0.28)" stroke-width="1.3"/>
-    <path d="M100 178 C90 118 155 82 222 98 C289 114 308 172 280 218 C252 264 112 248 100 178Z" stroke="rgba(255,255,255,0.22)" stroke-width="1.2"/>
-    <path d="M75 185 C62 108 142 62 228 82 C314 102 338 178 302 235 C266 292 90 268 75 185Z" stroke="rgba(255,255,255,0.16)" stroke-width="1.1"/>
-    <path d="M50 195 C32 98 128 42 235 65 C342 88 372 185 328 255 C284 325 70 295 50 195Z" stroke="rgba(255,255,255,0.12)" stroke-width="1.0"/>
+  <!-- Layer 1: Major terrain features — dense contour clusters -->
+  <g fill="none" stroke-linecap="round" filter="url(#w1)">
+    <!-- Peak A: upper-left (12 rings) -->
+    <circle cx="120" cy="110" r="8" stroke="rgba(255,255,255,0.210)" stroke-width="0.7"/>
+    <circle cx="120" cy="110" r="14" stroke="rgba(255,255,255,0.193)" stroke-width="0.7"/>
+    <circle cx="120" cy="110" r="21" stroke="rgba(255,255,255,0.175)" stroke-width="0.6"/>
+    <circle cx="120" cy="110" r="29" stroke="rgba(255,255,255,0.158)" stroke-width="0.6"/>
+    <circle cx="120" cy="110" r="38" stroke="rgba(255,255,255,0.140)" stroke-width="0.6"/>
+    <circle cx="120" cy="110" r="48" stroke="rgba(255,255,255,0.123)" stroke-width="0.5"/>
+    <circle cx="120" cy="110" r="60" stroke="rgba(255,255,255,0.105)" stroke-width="0.5"/>
+    <circle cx="120" cy="110" r="74" stroke="rgba(255,255,255,0.088)" stroke-width="0.5"/>
+    <circle cx="120" cy="110" r="90" stroke="rgba(255,255,255,0.070)" stroke-width="0.4"/>
+    <circle cx="120" cy="110" r="110" stroke="rgba(255,255,255,0.063)" stroke-width="0.4"/>
+    <circle cx="120" cy="110" r="134" stroke="rgba(255,255,255,0.052)" stroke-width="0.4"/>
+    <circle cx="120" cy="110" r="162" stroke="rgba(255,255,255,0.042)" stroke-width="0.3"/>
 
-    <!-- CLUSTER B: Broad oval, center -->
-    <ellipse cx="580" cy="520" rx="18" ry="14" stroke="rgba(255,255,255,0.5)" stroke-width="1.3"/>
-    <path d="M540 518 C538 490 565 472 598 480 C631 488 645 518 632 545 C619 572 548 558 540 518Z" stroke="rgba(255,255,255,0.42)" stroke-width="1.5"/>
-    <path d="M510 520 C505 478 545 452 595 462 C645 472 668 515 650 555 C632 595 518 575 510 520Z" stroke="rgba(255,255,255,0.35)" stroke-width="1.4"/>
-    <path d="M478 525 C470 468 522 432 590 445 C658 458 688 515 665 565 C642 615 490 592 478 525Z" stroke="rgba(255,255,255,0.28)" stroke-width="1.3"/>
-    <path d="M445 532 C432 458 498 410 588 428 C678 446 715 518 685 580 C655 642 462 612 445 532Z" stroke="rgba(255,255,255,0.22)" stroke-width="1.2"/>
-    <path d="M412 540 C395 448 475 388 585 410 C695 432 742 522 705 598 C668 674 432 638 412 540Z" stroke="rgba(255,255,255,0.17)" stroke-width="1.1"/>
-    <path d="M378 550 C358 438 452 365 582 392 C712 419 768 528 725 618 C682 708 402 665 378 550Z" stroke="rgba(255,255,255,0.12)" stroke-width="1.0"/>
-    <path d="M342 562 C318 425 428 340 580 372 C732 404 798 535 748 640 C698 745 370 695 342 562Z" stroke="rgba(255,255,255,0.08)" stroke-width="0.9"/>
+    <!-- Peak B: center-dominant (14 rings) -->
+    <circle cx="400" cy="370" r="6" stroke="rgba(255,255,255,0.228)" stroke-width="0.8"/>
+    <circle cx="400" cy="370" r="12" stroke="rgba(255,255,255,0.210)" stroke-width="0.7"/>
+    <circle cx="400" cy="370" r="19" stroke="rgba(255,255,255,0.193)" stroke-width="0.7"/>
+    <circle cx="400" cy="370" r="27" stroke="rgba(255,255,255,0.175)" stroke-width="0.6"/>
+    <circle cx="400" cy="370" r="36" stroke="rgba(255,255,255,0.158)" stroke-width="0.6"/>
+    <circle cx="400" cy="370" r="46" stroke="rgba(255,255,255,0.140)" stroke-width="0.6"/>
+    <circle cx="400" cy="370" r="58" stroke="rgba(255,255,255,0.123)" stroke-width="0.5"/>
+    <circle cx="400" cy="370" r="72" stroke="rgba(255,255,255,0.105)" stroke-width="0.5"/>
+    <circle cx="400" cy="370" r="88" stroke="rgba(255,255,255,0.088)" stroke-width="0.5"/>
+    <circle cx="400" cy="370" r="108" stroke="rgba(255,255,255,0.077)" stroke-width="0.4"/>
+    <circle cx="400" cy="370" r="132" stroke="rgba(255,255,255,0.063)" stroke-width="0.4"/>
+    <circle cx="400" cy="370" r="160" stroke="rgba(255,255,255,0.052)" stroke-width="0.4"/>
+    <circle cx="400" cy="370" r="195" stroke="rgba(255,255,255,0.042)" stroke-width="0.3"/>
+    <circle cx="400" cy="370" r="235" stroke="rgba(255,255,255,0.032)" stroke-width="0.3"/>
 
-    <!-- CLUSTER C: Tight peak, right side -->
-    <circle cx="920" cy="340" r="8" stroke="rgba(255,255,255,0.48)" stroke-width="1.2"/>
-    <ellipse cx="920" cy="340" rx="25" ry="22" stroke="rgba(255,255,255,0.40)" stroke-width="1.4"/>
-    <path d="M878 338 C875 308 905 288 935 298 C965 308 978 342 962 368 C946 394 882 378 878 338Z" stroke="rgba(255,255,255,0.33)" stroke-width="1.3"/>
-    <path d="M855 340 C848 298 888 270 932 282 C976 294 995 342 975 378 C955 414 862 395 855 340Z" stroke="rgba(255,255,255,0.26)" stroke-width="1.2"/>
-    <path d="M830 345 C820 288 870 252 928 268 C986 284 1010 345 985 390 C960 435 842 412 830 345Z" stroke="rgba(255,255,255,0.20)" stroke-width="1.1"/>
-    <path d="M805 352 C792 278 852 232 925 252 C998 272 1028 348 998 405 C968 462 820 432 805 352Z" stroke="rgba(255,255,255,0.15)" stroke-width="1.0"/>
-    <path d="M778 360 C762 268 835 212 922 235 C1009 258 1048 352 1012 422 C976 492 798 455 778 360Z" stroke="rgba(255,255,255,0.10)" stroke-width="0.9"/>
+    <!-- Peak C: right (11 rings) -->
+    <circle cx="660" cy="190" r="8" stroke="rgba(255,255,255,0.193)" stroke-width="0.7"/>
+    <circle cx="660" cy="190" r="15" stroke="rgba(255,255,255,0.175)" stroke-width="0.6"/>
+    <circle cx="660" cy="190" r="23" stroke="rgba(255,255,255,0.158)" stroke-width="0.6"/>
+    <circle cx="660" cy="190" r="32" stroke="rgba(255,255,255,0.140)" stroke-width="0.5"/>
+    <circle cx="660" cy="190" r="42" stroke="rgba(255,255,255,0.123)" stroke-width="0.5"/>
+    <circle cx="660" cy="190" r="54" stroke="rgba(255,255,255,0.105)" stroke-width="0.5"/>
+    <circle cx="660" cy="190" r="68" stroke="rgba(255,255,255,0.088)" stroke-width="0.4"/>
+    <circle cx="660" cy="190" r="85" stroke="rgba(255,255,255,0.070)" stroke-width="0.4"/>
+    <circle cx="660" cy="190" r="105" stroke="rgba(255,255,255,0.056)" stroke-width="0.4"/>
+    <circle cx="660" cy="190" r="130" stroke="rgba(255,255,255,0.042)" stroke-width="0.3"/>
+    <circle cx="660" cy="190" r="160" stroke="rgba(255,255,255,0.032)" stroke-width="0.3"/>
 
-    <!-- CLUSTER D: Lower-left broad depression -->
-    <ellipse cx="280" cy="850" rx="15" ry="12" stroke="rgba(255,255,255,0.45)" stroke-width="1.2"/>
-    <path d="M245 848 C242 825 268 808 298 818 C328 828 342 855 325 878 C308 901 250 882 245 848Z" stroke="rgba(255,255,255,0.38)" stroke-width="1.3"/>
-    <path d="M218 852 C212 818 248 795 292 808 C336 821 355 858 335 890 C315 922 226 898 218 852Z" stroke="rgba(255,255,255,0.30)" stroke-width="1.2"/>
-    <path d="M190 858 C180 810 228 780 288 798 C348 816 372 862 348 902 C324 942 202 915 190 858Z" stroke="rgba(255,255,255,0.24)" stroke-width="1.1"/>
-    <path d="M162 865 C148 802 208 765 285 788 C362 811 392 868 362 918 C332 968 178 935 162 865Z" stroke="rgba(255,255,255,0.18)" stroke-width="1.0"/>
-    <path d="M132 875 C115 795 188 748 282 775 C376 802 412 878 378 938 C344 998 152 958 132 875Z" stroke="rgba(255,255,255,0.13)" stroke-width="0.9"/>
-    <path d="M102 888 C80 788 168 728 280 762 C392 796 435 888 395 960 C355 1032 128 985 102 888Z" stroke="rgba(255,255,255,0.09)" stroke-width="0.8"/>
+    <!-- Peak D: lower-left (10 rings) -->
+    <circle cx="190" cy="610" r="7" stroke="rgba(255,255,255,0.193)" stroke-width="0.7"/>
+    <circle cx="190" cy="610" r="14" stroke="rgba(255,255,255,0.175)" stroke-width="0.6"/>
+    <circle cx="190" cy="610" r="22" stroke="rgba(255,255,255,0.158)" stroke-width="0.6"/>
+    <circle cx="190" cy="610" r="32" stroke="rgba(255,255,255,0.140)" stroke-width="0.5"/>
+    <circle cx="190" cy="610" r="44" stroke="rgba(255,255,255,0.123)" stroke-width="0.5"/>
+    <circle cx="190" cy="610" r="58" stroke="rgba(255,255,255,0.098)" stroke-width="0.5"/>
+    <circle cx="190" cy="610" r="75" stroke="rgba(255,255,255,0.077)" stroke-width="0.4"/>
+    <circle cx="190" cy="610" r="96" stroke="rgba(255,255,255,0.063)" stroke-width="0.4"/>
+    <circle cx="190" cy="610" r="122" stroke="rgba(255,255,255,0.049)" stroke-width="0.3"/>
+    <circle cx="190" cy="610" r="155" stroke="rgba(255,255,255,0.035)" stroke-width="0.3"/>
 
-    <!-- CLUSTER E: Upper-right elongated -->
-    <ellipse cx="1020" cy="120" rx="20" ry="10" stroke="rgba(255,255,255,0.45)" stroke-width="1.2"/>
-    <path d="M980 118 C978 98 1008 85 1038 92 C1068 99 1080 122 1065 140 C1050 158 985 145 980 118Z" stroke="rgba(255,255,255,0.38)" stroke-width="1.3"/>
-    <path d="M955 120 C950 92 988 72 1030 82 C1072 92 1090 125 1072 148 C1054 171 962 155 955 120Z" stroke="rgba(255,255,255,0.30)" stroke-width="1.2"/>
-    <path d="M928 125 C920 85 968 58 1025 72 C1082 86 1105 128 1082 158 C1059 188 938 168 928 125Z" stroke="rgba(255,255,255,0.22)" stroke-width="1.1"/>
-    <path d="M900 132 C888 78 948 42 1020 60 C1092 78 1120 132 1092 170 C1064 208 915 185 900 132Z" stroke="rgba(255,255,255,0.16)" stroke-width="1.0"/>
+    <!-- Peak E: lower-right (11 rings) -->
+    <circle cx="630" cy="590" r="8" stroke="rgba(255,255,255,0.210)" stroke-width="0.7"/>
+    <circle cx="630" cy="590" r="16" stroke="rgba(255,255,255,0.193)" stroke-width="0.6"/>
+    <circle cx="630" cy="590" r="25" stroke="rgba(255,255,255,0.175)" stroke-width="0.6"/>
+    <circle cx="630" cy="590" r="35" stroke="rgba(255,255,255,0.140)" stroke-width="0.5"/>
+    <circle cx="630" cy="590" r="47" stroke="rgba(255,255,255,0.123)" stroke-width="0.5"/>
+    <circle cx="630" cy="590" r="61" stroke="rgba(255,255,255,0.098)" stroke-width="0.5"/>
+    <circle cx="630" cy="590" r="78" stroke="rgba(255,255,255,0.077)" stroke-width="0.4"/>
+    <circle cx="630" cy="590" r="98" stroke="rgba(255,255,255,0.063)" stroke-width="0.4"/>
+    <circle cx="630" cy="590" r="122" stroke="rgba(255,255,255,0.049)" stroke-width="0.3"/>
+    <circle cx="630" cy="590" r="152" stroke="rgba(255,255,255,0.035)" stroke-width="0.3"/>
+    <circle cx="630" cy="590" r="188" stroke="rgba(255,255,255,0.028)" stroke-width="0.3"/>
+  </g>
 
-    <!-- CLUSTER F: Bottom-right concentric -->
-    <circle cx="980" cy="920" r="10" stroke="rgba(255,255,255,0.48)" stroke-width="1.3"/>
-    <circle cx="980" cy="920" r="28" stroke="rgba(255,255,255,0.38)" stroke-width="1.2"/>
-    <circle cx="980" cy="920" r="50" stroke="rgba(255,255,255,0.30)" stroke-width="1.1"/>
-    <circle cx="980" cy="920" r="75" stroke="rgba(255,255,255,0.22)" stroke-width="1.0"/>
-    <circle cx="980" cy="920" r="105" stroke="rgba(255,255,255,0.16)" stroke-width="0.9"/>
-    <circle cx="980" cy="920" r="140" stroke="rgba(255,255,255,0.11)" stroke-width="0.8"/>
+  <!-- Layer 2: Secondary terrain with different warp -->
+  <g fill="none" stroke-linecap="round" filter="url(#w2)">
+    <!-- Peak F: top-center -->
+    <circle cx="430" cy="75" r="6" stroke="rgba(255,255,255,0.193)" stroke-width="0.6"/>
+    <circle cx="430" cy="75" r="13" stroke="rgba(255,255,255,0.168)" stroke-width="0.6"/>
+    <circle cx="430" cy="75" r="21" stroke="rgba(255,255,255,0.140)" stroke-width="0.5"/>
+    <circle cx="430" cy="75" r="31" stroke="rgba(255,255,255,0.116)" stroke-width="0.5"/>
+    <circle cx="430" cy="75" r="43" stroke="rgba(255,255,255,0.088)" stroke-width="0.4"/>
+    <circle cx="430" cy="75" r="58" stroke="rgba(255,255,255,0.070)" stroke-width="0.4"/>
+    <circle cx="430" cy="75" r="76" stroke="rgba(255,255,255,0.052)" stroke-width="0.3"/>
+    <circle cx="430" cy="75" r="100" stroke="rgba(255,255,255,0.035)" stroke-width="0.3"/>
 
-    <!-- CLUSTER G: Small knoll center-top -->
-    <circle cx="620" cy="180" r="6" stroke="rgba(255,255,255,0.45)" stroke-width="1.1"/>
-    <ellipse cx="620" cy="180" rx="22" ry="18" stroke="rgba(255,255,255,0.35)" stroke-width="1.2"/>
-    <path d="M582 178 C578 152 608 135 640 142 C672 149 685 178 668 200 C651 222 588 208 582 178Z" stroke="rgba(255,255,255,0.26)" stroke-width="1.1"/>
-    <path d="M558 182 C550 142 592 118 640 128 C688 138 708 178 688 210 C668 242 568 222 558 182Z" stroke="rgba(255,255,255,0.18)" stroke-width="1.0"/>
-    <path d="M532 188 C520 132 575 100 642 115 C709 130 735 182 710 222 C685 262 548 238 532 188Z" stroke="rgba(255,255,255,0.12)" stroke-width="0.9"/>
+    <!-- Peak G: bottom-center -->
+    <circle cx="370" cy="730" r="8" stroke="rgba(255,255,255,0.175)" stroke-width="0.6"/>
+    <circle cx="370" cy="730" r="16" stroke="rgba(255,255,255,0.150)" stroke-width="0.5"/>
+    <circle cx="370" cy="730" r="26" stroke="rgba(255,255,255,0.123)" stroke-width="0.5"/>
+    <circle cx="370" cy="730" r="38" stroke="rgba(255,255,255,0.098)" stroke-width="0.4"/>
+    <circle cx="370" cy="730" r="54" stroke="rgba(255,255,255,0.077)" stroke-width="0.4"/>
+    <circle cx="370" cy="730" r="74" stroke="rgba(255,255,255,0.056)" stroke-width="0.3"/>
+    <circle cx="370" cy="730" r="100" stroke="rgba(255,255,255,0.038)" stroke-width="0.3"/>
 
-    <!-- CONNECTING RIDGES — flowing lines between clusters -->
-    <!-- Ridge A to G -->
-    <path d="M235 145 C295 128 375 118 455 125 C535 132 568 152 582 178" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"/>
-    <path d="M250 175 C315 158 398 148 478 155 C558 162 588 178 608 198" stroke="rgba(255,255,255,0.14)" stroke-width="1.0"/>
-    <path d="M268 208 C338 188 420 178 500 188 C580 198 615 215 638 240" stroke="rgba(255,255,255,0.10)" stroke-width="0.9"/>
+    <!-- Peak H: between A and B -->
+    <circle cx="260" cy="240" r="6" stroke="rgba(255,255,255,0.175)" stroke-width="0.6"/>
+    <circle cx="260" cy="240" r="13" stroke="rgba(255,255,255,0.150)" stroke-width="0.5"/>
+    <circle cx="260" cy="240" r="22" stroke="rgba(255,255,255,0.123)" stroke-width="0.5"/>
+    <circle cx="260" cy="240" r="33" stroke="rgba(255,255,255,0.098)" stroke-width="0.4"/>
+    <circle cx="260" cy="240" r="47" stroke="rgba(255,255,255,0.077)" stroke-width="0.4"/>
+    <circle cx="260" cy="240" r="64" stroke="rgba(255,255,255,0.056)" stroke-width="0.3"/>
+    <circle cx="260" cy="240" r="85" stroke="rgba(255,255,255,0.038)" stroke-width="0.3"/>
+    <circle cx="260" cy="240" r="112" stroke="rgba(255,255,255,0.028)" stroke-width="0.3"/>
 
-    <!-- Ridge G to C -->
-    <path d="M665 165 C718 148 775 142 830 155 C870 165 895 195 908 228" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"/>
-    <path d="M680 200 C732 185 785 180 838 195 C878 208 902 238 918 272" stroke="rgba(255,255,255,0.14)" stroke-width="1.0"/>
+    <!-- Peak I: between B and C -->
+    <circle cx="545" cy="270" r="6" stroke="rgba(255,255,255,0.175)" stroke-width="0.6"/>
+    <circle cx="545" cy="270" r="14" stroke="rgba(255,255,255,0.140)" stroke-width="0.5"/>
+    <circle cx="545" cy="270" r="24" stroke="rgba(255,255,255,0.116)" stroke-width="0.5"/>
+    <circle cx="545" cy="270" r="36" stroke="rgba(255,255,255,0.088)" stroke-width="0.4"/>
+    <circle cx="545" cy="270" r="52" stroke="rgba(255,255,255,0.070)" stroke-width="0.4"/>
+    <circle cx="545" cy="270" r="72" stroke="rgba(255,255,255,0.049)" stroke-width="0.3"/>
+    <circle cx="545" cy="270" r="98" stroke="rgba(255,255,255,0.035)" stroke-width="0.3"/>
 
-    <!-- Ridge E down to C -->
-    <path d="M965 165 C958 208 948 258 938 295" stroke="rgba(255,255,255,0.16)" stroke-width="1.0"/>
-    <path d="M1000 178 C992 222 978 272 965 315" stroke="rgba(255,255,255,0.12)" stroke-width="0.9"/>
+    <!-- Peak J: between D and E -->
+    <circle cx="415" cy="550" r="5" stroke="rgba(255,255,255,0.168)" stroke-width="0.5"/>
+    <circle cx="415" cy="550" r="12" stroke="rgba(255,255,255,0.140)" stroke-width="0.5"/>
+    <circle cx="415" cy="550" r="21" stroke="rgba(255,255,255,0.116)" stroke-width="0.4"/>
+    <circle cx="415" cy="550" r="32" stroke="rgba(255,255,255,0.088)" stroke-width="0.4"/>
+    <circle cx="415" cy="550" r="46" stroke="rgba(255,255,255,0.070)" stroke-width="0.3"/>
+    <circle cx="415" cy="550" r="64" stroke="rgba(255,255,255,0.049)" stroke-width="0.3"/>
 
-    <!-- Ridge C down to B -->
-    <path d="M830 395 C798 428 758 462 718 492 C678 522 638 540 600 548" stroke="rgba(255,255,255,0.18)" stroke-width="1.2"/>
-    <path d="M855 418 C818 455 775 492 732 525 C689 558 645 578 608 588" stroke="rgba(255,255,255,0.14)" stroke-width="1.0"/>
+    <!-- Peak K: left edge -->
+    <circle cx="45" cy="400" r="7" stroke="rgba(255,255,255,0.168)" stroke-width="0.6"/>
+    <circle cx="45" cy="400" r="16" stroke="rgba(255,255,255,0.140)" stroke-width="0.5"/>
+    <circle cx="45" cy="400" r="28" stroke="rgba(255,255,255,0.116)" stroke-width="0.5"/>
+    <circle cx="45" cy="400" r="44" stroke="rgba(255,255,255,0.088)" stroke-width="0.4"/>
+    <circle cx="45" cy="400" r="64" stroke="rgba(255,255,255,0.070)" stroke-width="0.4"/>
+    <circle cx="45" cy="400" r="90" stroke="rgba(255,255,255,0.049)" stroke-width="0.3"/>
+    <circle cx="45" cy="400" r="124" stroke="rgba(255,255,255,0.035)" stroke-width="0.3"/>
 
-    <!-- Ridge A down to D -->
-    <path d="M145 255 C165 345 188 445 205 545 C222 645 242 745 262 815" stroke="rgba(255,255,255,0.16)" stroke-width="1.1"/>
-    <path d="M175 272 C195 358 218 455 238 555 C258 655 275 752 292 818" stroke="rgba(255,255,255,0.12)" stroke-width="0.9"/>
+    <!-- Peak L: right edge -->
+    <circle cx="760" cy="440" r="7" stroke="rgba(255,255,255,0.168)" stroke-width="0.6"/>
+    <circle cx="760" cy="440" r="16" stroke="rgba(255,255,255,0.140)" stroke-width="0.5"/>
+    <circle cx="760" cy="440" r="28" stroke="rgba(255,255,255,0.116)" stroke-width="0.4"/>
+    <circle cx="760" cy="440" r="44" stroke="rgba(255,255,255,0.088)" stroke-width="0.4"/>
+    <circle cx="760" cy="440" r="66" stroke="rgba(255,255,255,0.063)" stroke-width="0.3"/>
+    <circle cx="760" cy="440" r="94" stroke="rgba(255,255,255,0.042)" stroke-width="0.3"/>
+  </g>
 
-    <!-- Valley between B and D -->
-    <path d="M395 605 C375 658 355 715 340 775 C328 818 318 845 305 862" stroke="rgba(255,255,255,0.16)" stroke-width="1.1"/>
-    <path d="M425 628 C405 682 382 738 365 798 C352 838 340 865 328 882" stroke="rgba(255,255,255,0.12)" stroke-width="0.9"/>
+  <!-- Layer 3: Tertiary micro-features filling gaps -->
+  <g fill="none" stroke-linecap="round" filter="url(#w3)">
+    <!-- Upper-right -->
+    <circle cx="720" cy="80" r="5" stroke="rgba(255,255,255,0.158)" stroke-width="0.5"/>
+    <circle cx="720" cy="80" r="12" stroke="rgba(255,255,255,0.123)" stroke-width="0.4"/>
+    <circle cx="720" cy="80" r="22" stroke="rgba(255,255,255,0.088)" stroke-width="0.4"/>
+    <circle cx="720" cy="80" r="36" stroke="rgba(255,255,255,0.063)" stroke-width="0.3"/>
+    <circle cx="720" cy="80" r="54" stroke="rgba(255,255,255,0.042)" stroke-width="0.3"/>
+    <circle cx="720" cy="80" r="78" stroke="rgba(255,255,255,0.028)" stroke-width="0.3"/>
 
-    <!-- Ridge B to F -->
-    <path d="M650 598 C712 648 778 702 842 758 C905 815 945 862 965 895" stroke="rgba(255,255,255,0.16)" stroke-width="1.1"/>
-    <path d="M672 625 C732 672 798 728 858 785 C918 842 955 882 975 912" stroke="rgba(255,255,255,0.12)" stroke-width="0.9"/>
+    <!-- Lower-left corner -->
+    <circle cx="75" cy="720" r="6" stroke="rgba(255,255,255,0.140)" stroke-width="0.5"/>
+    <circle cx="75" cy="720" r="14" stroke="rgba(255,255,255,0.116)" stroke-width="0.4"/>
+    <circle cx="75" cy="720" r="25" stroke="rgba(255,255,255,0.088)" stroke-width="0.4"/>
+    <circle cx="75" cy="720" r="40" stroke="rgba(255,255,255,0.063)" stroke-width="0.3"/>
+    <circle cx="75" cy="720" r="60" stroke="rgba(255,255,255,0.042)" stroke-width="0.3"/>
 
-    <!-- CLUSTER H: Small depression, left-center -->
-    <ellipse cx="120" cy="545" rx="10" ry="8" stroke="rgba(255,255,255,0.42)" stroke-width="1.1"/>
-    <ellipse cx="120" cy="545" rx="28" ry="22" stroke="rgba(255,255,255,0.32)" stroke-width="1.0"/>
-    <ellipse cx="120" cy="545" rx="50" ry="40" stroke="rgba(255,255,255,0.22)" stroke-width="0.9"/>
-    <ellipse cx="120" cy="545" rx="78" ry="62" stroke="rgba(255,255,255,0.14)" stroke-width="0.8"/>
+    <!-- Scatter fills -->
+    <circle cx="295" cy="445" r="4" stroke="rgba(255,255,255,0.140)" stroke-width="0.4"/>
+    <circle cx="295" cy="445" r="10" stroke="rgba(255,255,255,0.105)" stroke-width="0.4"/>
+    <circle cx="295" cy="445" r="18" stroke="rgba(255,255,255,0.077)" stroke-width="0.3"/>
+    <circle cx="295" cy="445" r="30" stroke="rgba(255,255,255,0.052)" stroke-width="0.3"/>
+    <circle cx="295" cy="445" r="46" stroke="rgba(255,255,255,0.035)" stroke-width="0.3"/>
 
-    <!-- CLUSTER I: Small knoll, bottom-center -->
-    <circle cx="600" cy="1020" r="8" stroke="rgba(255,255,255,0.42)" stroke-width="1.1"/>
-    <circle cx="600" cy="1020" r="25" stroke="rgba(255,255,255,0.32)" stroke-width="1.0"/>
-    <circle cx="600" cy="1020" r="48" stroke="rgba(255,255,255,0.22)" stroke-width="0.9"/>
-    <circle cx="600" cy="1020" r="75" stroke="rgba(255,255,255,0.14)" stroke-width="0.8"/>
-    <circle cx="600" cy="1020" r="108" stroke="rgba(255,255,255,0.09)" stroke-width="0.7"/>
+    <circle cx="555" cy="495" r="4" stroke="rgba(255,255,255,0.140)" stroke-width="0.4"/>
+    <circle cx="555" cy="495" r="10" stroke="rgba(255,255,255,0.105)" stroke-width="0.4"/>
+    <circle cx="555" cy="495" r="18" stroke="rgba(255,255,255,0.077)" stroke-width="0.3"/>
+    <circle cx="555" cy="495" r="30" stroke="rgba(255,255,255,0.052)" stroke-width="0.3"/>
 
-    <!-- CLUSTER J: Broad terrain, center-right -->
-    <ellipse cx="820" cy="700" rx="14" ry="11" stroke="rgba(255,255,255,0.40)" stroke-width="1.1"/>
-    <ellipse cx="820" cy="700" rx="35" ry="28" stroke="rgba(255,255,255,0.30)" stroke-width="1.0"/>
-    <ellipse cx="820" cy="700" rx="60" ry="48" stroke="rgba(255,255,255,0.22)" stroke-width="0.9"/>
-    <ellipse cx="820" cy="700" rx="90" ry="72" stroke="rgba(255,255,255,0.15)" stroke-width="0.8"/>
-    <ellipse cx="820" cy="700" rx="125" ry="100" stroke="rgba(255,255,255,0.10)" stroke-width="0.7"/>
+    <circle cx="155" cy="345" r="4" stroke="rgba(255,255,255,0.123)" stroke-width="0.4"/>
+    <circle cx="155" cy="345" r="10" stroke="rgba(255,255,255,0.088)" stroke-width="0.3"/>
+    <circle cx="155" cy="345" r="20" stroke="rgba(255,255,255,0.063)" stroke-width="0.3"/>
+    <circle cx="155" cy="345" r="34" stroke="rgba(255,255,255,0.042)" stroke-width="0.3"/>
 
-    <!-- FLOWING CONTOUR LINES — long terrain lines -->
-    <path d="M0 380 C80 345 195 322 328 318 C462 314 595 332 695 368 C795 404 862 458 928 525 C994 592 1042 672 1090 758 C1138 844 1168 935 1200 1020" stroke="rgba(255,255,255,0.12)" stroke-width="1.0"/>
-    <path d="M0 420 C85 388 205 368 345 365 C485 362 618 378 718 412 C818 446 882 498 948 562 C1014 626 1058 702 1105 785 C1152 868 1178 948 1200 1042" stroke="rgba(255,255,255,0.09)" stroke-width="0.9"/>
+    <circle cx="685" cy="375" r="4" stroke="rgba(255,255,255,0.123)" stroke-width="0.4"/>
+    <circle cx="685" cy="375" r="10" stroke="rgba(255,255,255,0.088)" stroke-width="0.3"/>
+    <circle cx="685" cy="375" r="20" stroke="rgba(255,255,255,0.063)" stroke-width="0.3"/>
 
-    <path d="M0 680 C95 648 218 628 358 632 C498 636 632 658 738 698 C844 738 918 798 985 868 C1052 938 1102 1012 1148 1088 C1174 1138 1192 1172 1200 1200" stroke="rgba(255,255,255,0.10)" stroke-width="0.9"/>
+    <circle cx="480" cy="170" r="4" stroke="rgba(255,255,255,0.123)" stroke-width="0.4"/>
+    <circle cx="480" cy="170" r="11" stroke="rgba(255,255,255,0.088)" stroke-width="0.3"/>
+    <circle cx="480" cy="170" r="22" stroke="rgba(255,255,255,0.063)" stroke-width="0.3"/>
+    <circle cx="480" cy="170" r="38" stroke="rgba(255,255,255,0.042)" stroke-width="0.3"/>
 
-    <path d="M320 0 C338 68 358 152 382 242 C406 332 435 428 468 518 C501 608 538 692 582 768 C626 844 678 912 738 968 C798 1024 868 1068 948 1102 C1028 1136 1118 1162 1200 1178" stroke="rgba(255,255,255,0.10)" stroke-width="0.9"/>
+    <circle cx="95" cy="195" r="4" stroke="rgba(255,255,255,0.105)" stroke-width="0.3"/>
+    <circle cx="95" cy="195" r="12" stroke="rgba(255,255,255,0.077)" stroke-width="0.3"/>
+    <circle cx="95" cy="195" r="24" stroke="rgba(255,255,255,0.052)" stroke-width="0.3"/>
 
-    <path d="M0 980 C68 958 155 942 258 938 C362 934 478 942 585 968 C692 994 788 1038 875 1092 C962 1146 1038 1172 1105 1188 L1200 1200" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+    <circle cx="705" cy="650" r="4" stroke="rgba(255,255,255,0.105)" stroke-width="0.3"/>
+    <circle cx="705" cy="650" r="12" stroke="rgba(255,255,255,0.077)" stroke-width="0.3"/>
+    <circle cx="705" cy="650" r="24" stroke="rgba(255,255,255,0.052)" stroke-width="0.3"/>
+    <circle cx="705" cy="650" r="42" stroke="rgba(255,255,255,0.035)" stroke-width="0.3"/>
 
-    <!-- ACCENT CONTOURS — cyan tint -->
-    <path d="M168 225 C202 168 292 138 385 158 C478 178 528 248 498 322 C468 396 368 428 278 398 C188 368 138 288 168 225Z" stroke="rgba(0,212,255,0.12)" stroke-width="2.0"/>
-    <path d="M755 495 C792 438 878 412 955 442 C1032 472 1065 555 1032 628 C999 701 908 732 835 698 C762 664 722 558 755 495Z" stroke="rgba(0,212,255,0.10)" stroke-width="1.8"/>
-    <path d="M142 825 C175 768 258 742 342 768 C426 794 462 868 432 935 C402 1002 315 1032 235 1002 C155 972 112 888 142 825Z" stroke="rgba(0,212,255,0.10)" stroke-width="1.8"/>
+    <circle cx="345" cy="145" r="4" stroke="rgba(255,255,255,0.105)" stroke-width="0.3"/>
+    <circle cx="345" cy="145" r="11" stroke="rgba(255,255,255,0.077)" stroke-width="0.3"/>
+    <circle cx="345" cy="145" r="22" stroke="rgba(255,255,255,0.052)" stroke-width="0.3"/>
 
-    <!-- SMALL SCATTERED FEATURES for density -->
-    <circle cx="420" cy="320" r="5" stroke="rgba(255,255,255,0.35)" stroke-width="0.9"/>
-    <circle cx="420" cy="320" r="15" stroke="rgba(255,255,255,0.22)" stroke-width="0.8"/>
-    <circle cx="420" cy="320" r="28" stroke="rgba(255,255,255,0.14)" stroke-width="0.7"/>
+    <circle cx="500" cy="680" r="4" stroke="rgba(255,255,255,0.105)" stroke-width="0.3"/>
+    <circle cx="500" cy="680" r="12" stroke="rgba(255,255,255,0.077)" stroke-width="0.3"/>
+    <circle cx="500" cy="680" r="24" stroke="rgba(255,255,255,0.052)" stroke-width="0.3"/>
 
-    <ellipse cx="750" cy="150" rx="8" ry="6" stroke="rgba(255,255,255,0.35)" stroke-width="0.9"/>
-    <ellipse cx="750" cy="150" rx="22" ry="16" stroke="rgba(255,255,255,0.22)" stroke-width="0.8"/>
-    <ellipse cx="750" cy="150" rx="40" ry="30" stroke="rgba(255,255,255,0.14)" stroke-width="0.7"/>
+    <!-- Extra saddle and ridge connectors -->
+    <circle cx="320" cy="310" r="4" stroke="rgba(255,255,255,0.098)" stroke-width="0.3"/>
+    <circle cx="320" cy="310" r="12" stroke="rgba(255,255,255,0.070)" stroke-width="0.3"/>
+    <circle cx="320" cy="310" r="24" stroke="rgba(255,255,255,0.049)" stroke-width="0.3"/>
+    <circle cx="320" cy="310" r="42" stroke="rgba(255,255,255,0.032)" stroke-width="0.3"/>
 
-    <circle cx="350" cy="650" r="6" stroke="rgba(255,255,255,0.35)" stroke-width="0.9"/>
-    <circle cx="350" cy="650" r="18" stroke="rgba(255,255,255,0.22)" stroke-width="0.8"/>
-    <circle cx="350" cy="650" r="35" stroke="rgba(255,255,255,0.14)" stroke-width="0.7"/>
+    <circle cx="530" cy="460" r="4" stroke="rgba(255,255,255,0.098)" stroke-width="0.3"/>
+    <circle cx="530" cy="460" r="12" stroke="rgba(255,255,255,0.070)" stroke-width="0.3"/>
+    <circle cx="530" cy="460" r="24" stroke="rgba(255,255,255,0.049)" stroke-width="0.3"/>
 
-    <ellipse cx="1080" cy="550" rx="10" ry="8" stroke="rgba(255,255,255,0.35)" stroke-width="0.9"/>
-    <ellipse cx="1080" cy="550" rx="30" ry="24" stroke="rgba(255,255,255,0.22)" stroke-width="0.8"/>
-    <ellipse cx="1080" cy="550" rx="55" ry="44" stroke="rgba(255,255,255,0.14)" stroke-width="0.7"/>
+    <circle cx="250" cy="500" r="4" stroke="rgba(255,255,255,0.088)" stroke-width="0.3"/>
+    <circle cx="250" cy="500" r="12" stroke="rgba(255,255,255,0.063)" stroke-width="0.3"/>
+    <circle cx="250" cy="500" r="26" stroke="rgba(255,255,255,0.042)" stroke-width="0.3"/>
+    <circle cx="250" cy="500" r="44" stroke="rgba(255,255,255,0.028)" stroke-width="0.3"/>
 
-    <circle cx="180" cy="1080" r="7" stroke="rgba(255,255,255,0.32)" stroke-width="0.9"/>
-    <circle cx="180" cy="1080" r="22" stroke="rgba(255,255,255,0.20)" stroke-width="0.8"/>
-    <circle cx="180" cy="1080" r="42" stroke="rgba(255,255,255,0.12)" stroke-width="0.7"/>
+    <circle cx="600" cy="120" r="4" stroke="rgba(255,255,255,0.098)" stroke-width="0.3"/>
+    <circle cx="600" cy="120" r="14" stroke="rgba(255,255,255,0.070)" stroke-width="0.3"/>
+    <circle cx="600" cy="120" r="28" stroke="rgba(255,255,255,0.049)" stroke-width="0.3"/>
 
-    <ellipse cx="500" cy="780" rx="9" ry="7" stroke="rgba(255,255,255,0.32)" stroke-width="0.9"/>
-    <ellipse cx="500" cy="780" rx="25" ry="20" stroke="rgba(255,255,255,0.20)" stroke-width="0.8"/>
-    <ellipse cx="500" cy="780" rx="48" ry="38" stroke="rgba(255,255,255,0.12)" stroke-width="0.7"/>
+    <circle cx="150" cy="480" r="4" stroke="rgba(255,255,255,0.088)" stroke-width="0.3"/>
+    <circle cx="150" cy="480" r="14" stroke="rgba(255,255,255,0.063)" stroke-width="0.3"/>
+    <circle cx="150" cy="480" r="30" stroke="rgba(255,255,255,0.042)" stroke-width="0.3"/>
 
-    <circle cx="1100" cy="200" r="5" stroke="rgba(255,255,255,0.30)" stroke-width="0.8"/>
-    <circle cx="1100" cy="200" r="16" stroke="rgba(255,255,255,0.18)" stroke-width="0.7"/>
-    <circle cx="1100" cy="200" r="32" stroke="rgba(255,255,255,0.10)" stroke-width="0.6"/>
+    <circle cx="700" cy="300" r="4" stroke="rgba(255,255,255,0.088)" stroke-width="0.3"/>
+    <circle cx="700" cy="300" r="14" stroke="rgba(255,255,255,0.063)" stroke-width="0.3"/>
+    <circle cx="700" cy="300" r="30" stroke="rgba(255,255,255,0.042)" stroke-width="0.3"/>
+  </g>
 
-    <ellipse cx="680" cy="420" rx="7" ry="5" stroke="rgba(255,255,255,0.32)" stroke-width="0.8"/>
-    <ellipse cx="680" cy="420" rx="20" ry="15" stroke="rgba(255,255,255,0.20)" stroke-width="0.7"/>
-    <ellipse cx="680" cy="420" rx="38" ry="28" stroke="rgba(255,255,255,0.12)" stroke-width="0.6"/>
-
+  <!-- Subtle cyan accent — outermost contours only -->
+  <g fill="none" stroke-linecap="round" filter="url(#w1)">
+    <circle cx="400" cy="370" r="270" stroke="rgba(0,212,255,0.045)" stroke-width="0.4"/>
+    <circle cx="400" cy="370" r="310" stroke="rgba(0,212,255,0.030)" stroke-width="0.3"/>
+    <circle cx="190" cy="610" r="170" stroke="rgba(0,131,143,0.045)" stroke-width="0.3"/>
+    <circle cx="660" cy="190" r="175" stroke="rgba(0,212,255,0.036)" stroke-width="0.3"/>
   </g>
 </svg>

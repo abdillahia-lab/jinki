@@ -8,7 +8,8 @@ const verticals = [
   {
     title: "Data Centers",
     icon: "dns",
-    img: "https://lh3.googleusercontent.com/aida/ADBb0uiqe27nwBJBiiFegXpqX4QJInvj8S7I1hx-98CvwYA39wP_T9xCEO7sdePnFVZOnZheTKo8dlgU_vQRtXdW_j2MK10pyGBngVyzTHGDdmZ5k8a2ZfHMKgWAXUUJ2qnfYAaPqzF_U_HTqcACB75ok5fOQhFUZYHKkcGYdQDYeH8-YrW-ZnF21rv7Rnv5t7Qjje4mbIBRfGcaJqGfd6Tn17cTV8nKeP3H888dHwXZ7vD2khSu9rzRgTOb8eq9ECLwVOX23Ja2xseGrc8",
+    img: "/images/dc-rooftop-aerial.jpg",
+    gradient: "",
     desc: "Thermal scans that detect hotspots within 0.5\u00B0C accuracy, pinpointing cooling failures and roof damage before they cause unplanned downtime.",
     link: "/verticals/data-centers",
   },
@@ -16,21 +17,24 @@ const verticals = [
     title: "Energy & Utilities",
     icon: "electric_bolt",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDCZ2S_AXbpqohGFOt8JiOIQHZu69FN4Pm7CPmnAsP6tkDnnH0yZKCZktPxZo_4_QNxdtwrdh9gOquvVlMD8WTQCRrL9-NZ6Pk_ReW6x_ZbgQb_OZv0eaapl2XhYZyWws4tlApotdvQXj-NHIM-zvHiU-oB60RY0wEMfBC3tnJqG-4Yem-zSDHaoAxzxVEskMb1KQNUg085aDuH3t9nZo1bCqZM3MyzPnVu8y3Tl_tN7t7tI7fqDUvNn4UOQ03q-9obbOUqRJZQs00y",
+    gradient: "",
     desc: "Condition assessments for power lines, substations, and solar arrays \u2014 inspecting 50+ miles of corridor per day without service interruption.",
     link: "/verticals/energy-grid",
   },
   {
     title: "Perimeter Security",
     icon: "security",
-    img: "https://lh3.googleusercontent.com/aida/ADBb0ujoL7fVnboOTJkoXrd2ACk3OzVpiWOAz4H-sqpGSFLCsJi5sDYYGATHAYtpBoWjkr-04fwGTrePKTst8g4_9Lw8fIMARGdA87tvqERMfwgmwiYbRlkiEFZWx4Y6IhboC9kuPvEYZirU-qblF-zHYH47qCC5cunj6o4ITIdvm5mfkAYNe84mhcoEWzZDKKrSysgb9glU2_pewA2kqm30G-gq_E200nh17q3a1RqWS_KObnk7onwJICVLyccnSBKJJHmy8dYhZz6Q74o",
-    desc: "Persistent aerial monitoring covering 500+ acre perimeters with real-time intrusion alerts and 6-minute average response advantage.",
+    img: "/images/facility-night-aerial.jpg",
+    gradient: "",
+    desc: "Persistent aerial monitoring covering 500+ acre perimeters with thermal intrusion detection and autonomous response capability.",
     link: "/verticals/security",
   },
   {
     title: "Agriculture",
     icon: "agriculture",
     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDou0tGvSnK0T0fmS0uFSPqXY3tfcMDUNxA9sbNGEc_zIoSy9w_Vl-jRIK7nuh1r4seHDokVwMWm5-NCzTOnsed_lJ7L8cYdtr5uDcbsqklBLrVM4lQNNRo_uAFJMyu9KSc5d2WbAnfxUIbJ1kxYSC0RVrSa3Ds01ePOB5LhoMC1horonoEY1X2a16Iu7jP5BHQUZIWsZW5vb7CqLyAobOOp9kh2zOdoJDKBAnD0kT0wRkMsqkOmVelbpRyHwPBj6c2Fk1XYOyDihCU",
-    desc: "NDVI crop health maps, soil moisture analysis, and yield forecasts across thousands of acres \u2014 identifying irrigation waste that saves 2M+ gallons per season.",
+    gradient: "",
+    desc: "NDVI crop health maps, soil moisture analysis, and yield intelligence across thousands of acres \u2014 identifying irrigation inefficiency and crop stress early.",
     link: "/verticals/agriculture",
   },
 ];
@@ -61,14 +65,18 @@ const verticals = [
     <!-- 4-column grid -->
     <div class="verticals-grid">
       {verticals.map((v) => (
-        <a href={v.link} class="group relative rounded-xl overflow-hidden vertical-card reveal" style="aspect-ratio: 3 / 4.2; display: block; text-decoration: none;">
-          <img
-            src={v.img}
-            alt=""
-            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            loading="lazy"
-            decoding="async"
-          />
+        <a href={v.link} class="group relative rounded-xl overflow-hidden vertical-card reveal" style={`aspect-ratio: 3 / 4.2; display: block; text-decoration: none;${v.gradient ? ` background: ${v.gradient};` : ''}`}>
+          {v.img ? (
+            <img
+              src={v.img}
+              alt=""
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <div class="absolute inset-0 vertical-card-pattern" aria-hidden="true"></div>
+          )}
           <div class="card-overlay absolute inset-0"></div>
           <div class="absolute bottom-0 left-0 right-0 z-10" style="padding: 1.75rem 2rem 2rem;">
             <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; margin-bottom: 0.75rem; display: block; font-size: 1.75rem; color: var(--accent); text-shadow: 0 2px 8px rgba(0,0,0,0.5);" aria-hidden="true">
@@ -118,11 +126,12 @@ const verticals = [
   .vertical-card {
     cursor: pointer;
     border: 1px solid transparent;
-    transition: transform 0.4s ease, border-color 0.4s ease;
+    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
   }
   .vertical-card:hover {
-    transform: scale(1.02);
+    transform: scale(1.02) translateY(-4px);
     border-color: rgba(0, 229, 255, 0.25);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 229, 255, 0.08);
   }
 
   .verticals-cta {
@@ -156,6 +165,20 @@ const verticals = [
 
   @media (max-width: 767px) {
     .vertical-card { aspect-ratio: 4 / 3 !important; }
+  }
+
+  /* CSS-only pattern for gradient cards — grid + glow */
+  .vertical-card-pattern {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+      radial-gradient(ellipse at 60% 30%, rgba(255,255,255,0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 70%, rgba(0,229,255,0.12) 0%, transparent 40%);
+    background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
+    transition: opacity 0.5s ease;
+  }
+  .vertical-card:hover .vertical-card-pattern {
+    opacity: 0.7;
   }
 
   @media (prefers-reduced-motion: reduce) {

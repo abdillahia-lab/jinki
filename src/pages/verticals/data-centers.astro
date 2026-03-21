@@ -8,11 +8,10 @@
   2. Stats Bar
   3. Interactive Problem Explorer
   4. Live Dashboard Mockup
-  5. Testimonial Carousel
+  5. Request a Demo CTA
   6. Technology Stack Showcase
-  7. Pricing Tier Cards
-  8. FAQ Accordion
-  9. LeadGen + Footer
+  7. FAQ Accordion
+  8. LeadGen + Footer
 */
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
@@ -21,7 +20,7 @@ import Footer from '../../components/Footer.astro';
 
 const stats = [
   { value: '29%', label: 'of unplanned outages are thermal failures', source: 'Uptime Institute' },
-  { value: '$9K', label: 'per minute average downtime cost', source: 'Industry Benchmark' },
+  { value: '$9K', label: 'per minute average downtime cost', source: 'Ponemon Institute' },
   { value: '575+', label: 'facilities in Northern Virginia alone', source: 'JLARC 2024' },
   { value: '13%', label: 'of global capacity in our backyard', source: 'CBRE Research' },
 ];
@@ -33,8 +32,8 @@ const problems = [
     title: 'HVAC Failure',
     summary: 'Cooling system degradation detected before cascade failure.',
     description: 'Aerial thermal imaging identifies failing compressors, blocked condensers, and refrigerant leaks across rooftop HVAC arrays. Pattern recognition flags units operating outside thermal envelopes weeks before total failure.',
-    detection: 'Radiometric thermal mapping with 0.05C sensitivity across full rooftop arrays in a single pass.',
-    cost: 'Prevented cost: $150K-$500K per cooling zone failure event.',
+    detection: 'Radiometric thermal mapping with 0.5°C sensitivity (H30T sensor) across full rooftop arrays in a single pass.',
+    cost: 'Early detection enables scheduled repair vs. emergency replacement.',
   },
   {
     id: 'roof-leak',
@@ -43,7 +42,7 @@ const problems = [
     summary: 'Sub-surface moisture mapped before structural damage occurs.',
     description: 'Thermal differentials reveal trapped moisture beneath roofing membranes that visual inspection cannot detect. AI classifies severity and maps affected square footage for targeted remediation.',
     detection: 'Post-sunset thermal surveys exploit differential cooling rates between wet and dry insulation.',
-    cost: 'Prevented cost: $200K-$2M per undetected moisture event leading to interior damage.',
+    cost: 'Targeted repair before water reaches critical infrastructure below.',
   },
   {
     id: 'hot-spots',
@@ -52,16 +51,16 @@ const problems = [
     summary: 'Overloaded connections and failing components identified aerially.',
     description: 'External switchgear, transformers, and bus connections emit thermal signatures when connections degrade. Aerial surveys cover entire electrical infrastructure in minutes, satisfying NFPA 70B requirements.',
     detection: 'Calibrated thermal imaging aligned with NFPA 70B severity classifications for immediate prioritization.',
-    cost: 'Prevented cost: $500K-$5M per electrical failure causing unplanned downtime.',
+    cost: 'Proactive remediation before connection degradation causes arc flash or outage.',
   },
   {
-    id: 'drainage',
-    icon: 'thunderstorm',
-    title: 'Drainage & Ponding',
-    summary: 'Standing water and blocked drainage mapped across entire campus.',
-    description: 'High-resolution orthomosaic mapping identifies low spots, blocked scuppers, and inadequate drainage slope across 100+ acre campuses. Volumetric analysis quantifies ponding risk by zone.',
-    detection: 'Post-rain aerial survey with LiDAR elevation mapping and AI ponding risk classification.',
-    cost: 'Prevented cost: $100K-$800K per structural damage event from chronic ponding.',
+    id: 'liquid-cooling',
+    icon: 'water_drop',
+    title: 'Liquid Cooling Infrastructure',
+    summary: 'Coolant distribution leaks and thermal inefficiency detected across campus.',
+    description: 'As data centers transition to liquid-cooled architectures for high-density AI workloads, exterior coolant distribution systems — chillers, cooling towers, CDUs, and piping — create new thermal signatures. Aerial thermal imaging identifies coolant leaks, blockages, and distribution imbalances across the entire campus in a single pass.',
+    detection: 'Radiometric thermal mapping of exterior cooling loops, CDU arrays, and coolant distribution piping with AI anomaly classification.',
+    cost: 'Early leak detection before coolant loss impacts high-density compute operations.',
   },
   {
     id: 'membrane',
@@ -70,7 +69,7 @@ const problems = [
     summary: 'Aging, cracking, and delamination detected across entire roof area.',
     description: 'Multi-spectral imaging identifies UV degradation, seam failures, and mechanical damage across roofing membranes. AI-generated heatmaps prioritize sections by remaining service life.',
     detection: 'Combined visual + thermal survey with machine learning classification of degradation patterns.',
-    cost: 'Prevented cost: $300K-$1.5M per premature roof replacement avoided through targeted repair.',
+    cost: 'Extend roof service life through targeted section repair instead of full replacement.',
   },
   {
     id: 'equipment',
@@ -79,40 +78,10 @@ const problems = [
     summary: 'Generators, UPS, and backup systems monitored without disruption.',
     description: 'Exterior thermal signatures from generators, UPS housings, and fuel systems reveal internal stress conditions. Trend analysis across autonomous missions tracks degradation velocity.',
     detection: 'Autonomous scheduled thermal patrols with AI trend analysis and anomaly alerting.',
-    cost: 'Prevented cost: $250K-$3M per critical backup system failure during load transfer.',
+    cost: 'Continuous thermal trending catches degradation before emergency conditions.',
   },
 ];
 
-const testimonials = [
-  {
-    quote: 'Jinki found a failing transformer connection that our maintenance team had walked past for months. The thermal data was unambiguous — we replaced it during a scheduled window instead of an emergency.',
-    name: 'Marcus Chen',
-    role: 'VP of Facility Operations',
-    company: 'Meridian Data Systems',
-    stars: 5,
-  },
-  {
-    quote: 'We went from quarterly manual inspections taking three weeks each to monthly aerial assessments completed in a single day. The coverage improvement alone justified the investment.',
-    name: 'Sarah Okonkwo',
-    role: 'Director of Critical Infrastructure',
-    company: 'Apex Cloud Services',
-    stars: 5,
-  },
-  {
-    quote: 'The prioritized maintenance report changed how our team operates. Instead of reacting to failures, we plan remediation around severity rankings and cost estimates Jinki provides.',
-    name: 'David Restrepo',
-    role: 'Chief Engineer',
-    company: 'Titan Hosting Group',
-    stars: 5,
-  },
-  {
-    quote: 'During our campus expansion, Jinki provided construction progress orthomosaics that kept our board informed without adding any overhead to the general contractor.',
-    name: 'Jennifer Walsh',
-    role: 'SVP of Development',
-    company: 'Nexus Infrastructure Partners',
-    stars: 5,
-  },
-];
 
 const pipelineSteps = [
   { icon: 'rocket_launch', label: 'Aerial Platform', sub: 'M400 RTK / M4TD + Dock 3' },
@@ -122,64 +91,10 @@ const pipelineSteps = [
   { icon: 'verified_user', label: 'Actionable Report', sub: 'Prioritized findings' },
 ];
 
-const pricingTiers = [
-  {
-    name: 'Assessment',
-    price: 'Custom',
-    period: 'per engagement',
-    description: 'One-time comprehensive facility intelligence audit.',
-    features: [
-      'Full-campus thermal survey',
-      'Roof condition assessment',
-      'Electrical infrastructure scan',
-      'Prioritized findings report',
-      'Remediation cost estimates',
-      'Executive summary deliverable',
-    ],
-    highlighted: false,
-    cta: 'Request Quote',
-  },
-  {
-    name: 'Monitoring',
-    price: 'Custom',
-    period: 'per month',
-    description: 'Autonomous recurring inspections with trend analysis.',
-    features: [
-      'Everything in Assessment',
-      'Monthly autonomous patrols',
-      'Thermal trend dashboards',
-      'Anomaly alert notifications',
-      'Quarterly executive briefings',
-      'Dedicated account manager',
-      'API access to findings data',
-    ],
-    highlighted: true,
-    cta: 'Get Started',
-  },
-  {
-    name: 'Enterprise',
-    price: 'Custom',
-    period: 'annual contract',
-    description: 'Multi-campus program with dedicated operations.',
-    features: [
-      'Everything in Monitoring',
-      'Multi-site coordination',
-      'Custom inspection cadence',
-      'Compliance documentation',
-      'Construction monitoring',
-      'Environmental reporting',
-      'On-site operations team',
-      'SLA-backed response times',
-    ],
-    highlighted: false,
-    cta: 'Contact Sales',
-  },
-];
-
 const faqs = [
   {
     q: 'How long does a full facility assessment take?',
-    a: 'A typical 50-acre data center campus can be surveyed in 4-6 hours of aerial operations. The complete prioritized findings report is delivered within 5 business days, including severity rankings, remediation cost estimates, and recommended timelines.',
+    a: 'A typical data center campus can be surveyed in a single day of aerial operations. The prioritized findings report includes severity rankings and recommended next steps. Turnaround time depends on facility size and scope — contact us for specifics.',
   },
   {
     q: 'Do aerial operations disrupt data center operations?',
@@ -204,7 +119,7 @@ const faqs = [
 ];
 ---
 
-<Layout title="Data Centers — Jinki Aerial Intelligence" description="Thermal inspection, roof assessment, and autonomous monitoring for data center operations. Find $500K problems before $5M outages.">
+<Layout title="Data Centers — Jinki Aerial Intelligence" description="Aerial thermal inspection, roof assessment, and autonomous monitoring for data center operations. Identify cooling failures and structural risks before they cause downtime.">
   <Nav />
   <main id="main-content">
 
@@ -224,47 +139,51 @@ const faqs = [
           </h1>
           <p class="omega-hero-subtitle">
             Aerial thermal intelligence that turns invisible risks into scheduled maintenance.
-            Every rooftop, every mechanical system, every connection — surveyed, classified,
-            and prioritized so your team acts on answers, not assumptions.
+            From traditional HVAC arrays to next-gen liquid cooling infrastructure — every
+            rooftop system surveyed, classified, and prioritized so your team acts on
+            answers, not assumptions.
           </p>
           <div class="omega-hero-actions">
-            <a href="#lead-gen" class="btn-premium omega-cta">Schedule Assessment</a>
+            <a href="#lead-gen" class="btn-premium omega-cta">Request a Demo</a>
             <a href="#problem-explorer" class="omega-cta-secondary">Explore Issues We Find</a>
           </div>
         </div>
         <div class="omega-hero-visual reveal reveal-delay-1" aria-hidden="true">
           <div class="facility-scene">
-            <div class="facility-ground"></div>
-            <div class="facility-building bldg-main">
-              <div class="bldg-top"></div>
-              <div class="bldg-front"></div>
-              <div class="bldg-side"></div>
-              <div class="thermal-overlay to-1"></div>
-              <div class="thermal-overlay to-2"></div>
-              <div class="thermal-overlay to-3"></div>
+            <!-- Real data center photo with thermal overlay -->
+            <img
+              src="/images/dc-rooftop-aerial.jpg"
+              alt=""
+              class="facility-photo"
+              loading="eager"
+              decoding="async"
+            />
+            <!-- Thermal color overlay -->
+            <div class="thermal-color-overlay"></div>
+            <!-- Grid overlay for intelligence aesthetic -->
+            <div class="facility-grid"></div>
+            <!-- HUD Overlay badges -->
+            <div class="hud-badge hud-tl">
+              <span class="hud-indicator hud-critical"></span>
+              <span class="hud-label">CRITICAL</span>
+              <span class="hud-value">47.3°C</span>
             </div>
-            <div class="facility-building bldg-secondary">
-              <div class="bldg-top"></div>
-              <div class="bldg-front"></div>
-              <div class="bldg-side"></div>
-              <div class="thermal-overlay to-4"></div>
+            <div class="hud-badge hud-tr">
+              <span class="hud-indicator hud-warning"></span>
+              <span class="hud-label">WARNING</span>
+              <span class="hud-value">HVAC-07</span>
             </div>
-            <div class="facility-building bldg-tertiary">
-              <div class="bldg-top"></div>
-              <div class="bldg-front"></div>
-              <div class="bldg-side"></div>
-              <div class="thermal-overlay to-5"></div>
+            <div class="hud-badge hud-bl">
+              <span class="hud-indicator hud-normal"></span>
+              <span class="hud-label">NOMINAL</span>
+              <span class="hud-value">22.1°C avg</span>
+            </div>
+            <div class="hud-badge hud-br">
+              <span class="hud-indicator hud-live"></span>
+              <span class="hud-label">SCAN</span>
+              <span class="hud-value">LIVE</span>
             </div>
             <div class="scan-line"></div>
-            <div class="facility-grid"></div>
-            <div class="alert-badge alert-1">
-              <span class="alert-dot"></span>
-              <span class="alert-text">47.3C</span>
-            </div>
-            <div class="alert-badge alert-2">
-              <span class="alert-dot dot-warn"></span>
-              <span class="alert-text">HVAC-07</span>
-            </div>
           </div>
         </div>
       </div>
@@ -484,76 +403,22 @@ const faqs = [
     </section>
 
     <!-- ============================================================
-         SECTION 4: TESTIMONIAL CAROUSEL
+         SECTION 4: CTA — REQUEST A DEMO
          ============================================================ -->
-    <section class="omega-section" aria-label="Client Testimonials">
-      <div class="omega-section-inner">
+    <section class="omega-section" aria-label="Request a Demo">
+      <div class="omega-section-inner" style="text-align: center;">
         <div class="omega-section-header reveal">
           <div class="omega-eyebrow">
             <span class="omega-eyebrow-line"></span>
-            <span class="omega-eyebrow-text">Client Results</span>
+            <span class="omega-eyebrow-text">Next Steps</span>
           </div>
-          <h2>Trusted by Facility Leaders</h2>
+          <h2>Ready to See Your Facility's<br/>Hidden Risks?</h2>
+          <p class="omega-section-subtitle">
+            Schedule a consultation with our intelligence team. We'll walk through how aerial thermal analysis applies to your specific campus — no obligations, no generic pitch decks.
+          </p>
         </div>
-
-        <div class="testimonial-carousel reveal" role="region" aria-label="Testimonials" aria-roledescription="carousel">
-          <div class="testimonial-track" id="testimonial-track">
-            {testimonials.map((t, i) => (
-              <div
-                class="testimonial-slide"
-                role="group"
-                aria-roledescription="slide"
-                aria-label={`Testimonial ${i + 1} of ${testimonials.length}`}
-              >
-                <div class="testimonial-card metallic-gloss">
-                  <div class="testimonial-stars" aria-label={`${t.stars} out of 5 stars`}>
-                    {Array.from({ length: t.stars }).map(() => (
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="#00E5FF" aria-hidden="true">
-                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                      </svg>
-                    ))}
-                  </div>
-                  <blockquote class="testimonial-quote">
-                    <p>{t.quote}</p>
-                  </blockquote>
-                  <div class="testimonial-author">
-                    <div class="testimonial-avatar" aria-hidden="true">
-                      {t.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <div class="testimonial-info">
-                      <cite class="testimonial-name">{t.name}</cite>
-                      <span class="testimonial-role">{t.role}</span>
-                      <span class="testimonial-company">{t.company}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div class="testimonial-controls">
-            <button class="testimonial-btn testimonial-prev" aria-label="Previous testimonial" type="button">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-            <div class="testimonial-dots" role="tablist" aria-label="Testimonial navigation">
-              {testimonials.map((_, i) => (
-                <button
-                  class={`testimonial-dot ${i === 0 ? 'dot-active' : ''}`}
-                  role="tab"
-                  aria-selected={i === 0 ? 'true' : 'false'}
-                  aria-label={`Go to testimonial ${i + 1}`}
-                  type="button"
-                  data-slide={i}
-                ></button>
-              ))}
-            </div>
-            <button class="testimonial-btn testimonial-next" aria-label="Next testimonial" type="button">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </div>
+        <div class="reveal" style="margin-top: 2rem;">
+          <a href="#lead-gen" class="btn-premium" style="display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-label); font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 1rem 2.5rem; border-radius: 12px; text-decoration: none;">Request a Demo</a>
         </div>
       </div>
     </section>
@@ -598,52 +463,6 @@ const faqs = [
       </div>
     </section>
 
-    <!-- ============================================================
-         SECTION 6: PRICING TIER CARDS
-         ============================================================ -->
-    <section class="omega-section" aria-label="Pricing">
-      <div class="omega-section-inner">
-        <div class="omega-section-header reveal">
-          <div class="omega-eyebrow">
-            <span class="omega-eyebrow-line"></span>
-            <span class="omega-eyebrow-text">Pricing</span>
-          </div>
-          <h2>Intelligence That Scales<br/>With Your Facilities</h2>
-          <p class="omega-section-subtitle">
-            From a single assessment to enterprise-wide autonomous monitoring.
-            Every engagement delivers prioritized recommendations, not raw data.
-          </p>
-        </div>
-
-        <div class="pricing-grid">
-          {pricingTiers.map((tier, i) => (
-            <div class={`pricing-card metallic-gloss reveal reveal-delay-${i + 1} ${tier.highlighted ? 'pricing-highlighted' : ''}`}>
-              {tier.highlighted && <div class="pricing-shimmer" aria-hidden="true"></div>}
-              {tier.highlighted && <div class="pricing-badge">Most Popular</div>}
-              <div class="pricing-header">
-                <h3 class="pricing-name">{tier.name}</h3>
-                <div class="pricing-price">
-                  <span class="pricing-amount">{tier.price}</span>
-                  <span class="pricing-period">{tier.period}</span>
-                </div>
-                <p class="pricing-desc">{tier.description}</p>
-              </div>
-              <ul class="pricing-features" role="list">
-                {tier.features.map(feat => (
-                  <li class="pricing-feature">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex-shrink:0;">
-                      <path d="M3 8L6.5 11.5L13 4.5" stroke="#00E5FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <span>{feat}</span>
-                  </li>
-                ))}
-              </ul>
-              <a href="#lead-gen" class={`pricing-cta ${tier.highlighted ? 'btn-premium' : ''}`}>{tier.cta}</a>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
 
     <!-- ============================================================
          SECTION 7: FAQ ACCORDION
@@ -1007,108 +826,77 @@ document.addEventListener('DOMContentLoaded', function() {
     position: relative;
     width: 100%;
     aspect-ratio: 4 / 3;
-    perspective: 800px;
     overflow: hidden;
     border-radius: 16px;
-    background: linear-gradient(135deg, #0a0c10, #141820);
+    background: #080a12;
     border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
+    box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255,255,255,0.03);
   }
-  .facility-ground {
+  .facility-photo {
     position: absolute;
-    bottom: 0;
-    left: -20%;
-    width: 140%;
-    height: 40%;
-    background: linear-gradient(180deg, transparent, rgba(0,229,255,0.03));
-    transform: rotateX(60deg);
-    transform-origin: bottom center;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.75) contrast(1.1) saturate(0.7);
+    mix-blend-mode: normal;
+  }
+  .thermal-color-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+      rgba(0, 80, 160, 0.08) 0%,
+      rgba(0, 229, 255, 0.05) 30%,
+      rgba(255, 140, 0, 0.06) 60%,
+      rgba(255, 59, 48, 0.08) 100%
+    );
+    mix-blend-mode: color;
+    pointer-events: none;
   }
   .facility-grid {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0, 229, 255, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 229, 255, 0.04) 1px, transparent 1px);
-    background-size: 24px 24px;
-  }
-  .facility-building {
-    position: absolute;
-    transform-style: preserve-3d;
-    animation: facility-rotate 30s linear infinite;
-  }
-  @keyframes facility-rotate {
-    0% { transform: rotateY(-5deg) rotateX(2deg); }
-    50% { transform: rotateY(5deg) rotateX(-2deg); }
-    100% { transform: rotateY(-5deg) rotateX(2deg); }
-  }
-  .bldg-main {
-    width: 45%;
-    height: 35%;
-    bottom: 25%;
-    left: 15%;
-  }
-  .bldg-secondary {
-    width: 30%;
-    height: 25%;
-    bottom: 22%;
-    right: 15%;
-    animation-delay: -10s;
-  }
-  .bldg-tertiary {
-    width: 20%;
-    height: 20%;
-    bottom: 20%;
-    left: 50%;
-    animation-delay: -20s;
-  }
-  .bldg-top {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(0,229,255,0.08), rgba(0,229,255,0.02));
-    border: 1px solid rgba(0,229,255,0.12);
-    border-radius: 4px;
-  }
-  .bldg-front {
-    position: absolute;
-    bottom: -30%;
-    left: 5%;
-    right: 5%;
-    height: 30%;
-    background: linear-gradient(180deg, rgba(0,229,255,0.06), rgba(0,229,255,0.01));
-    border: 1px solid rgba(0,229,255,0.06);
-    border-top: none;
-    border-radius: 0 0 2px 2px;
-  }
-  .bldg-side {
-    position: absolute;
-    top: 5%;
-    right: -15%;
-    width: 15%;
-    height: 90%;
-    background: linear-gradient(90deg, rgba(0,229,255,0.04), transparent);
-    border: 1px solid rgba(0,229,255,0.04);
-    border-left: none;
-    border-radius: 0 2px 2px 0;
-    transform: skewY(-10deg);
-    transform-origin: top left;
+      linear-gradient(rgba(0, 229, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, 0.06) 1px, transparent 1px);
+    background-size: 30px 30px;
+    pointer-events: none;
+    z-index: 2;
   }
 
-  /* Thermal Overlay Pulses */
-  .thermal-overlay {
+  /* HUD Overlay Badges */
+  .hud-badge {
     position: absolute;
-    border-radius: 50%;
-    animation: thermal-pulse 4s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    background: rgba(8,10,18,0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(0,229,255,0.12);
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.05em;
+    z-index: 5;
   }
-  @keyframes thermal-pulse {
-    0%, 100% { opacity: 0.3; transform: scale(0.8); }
-    50% { opacity: 0.8; transform: scale(1.2); }
+  .hud-tl { top: 12px; left: 12px; }
+  .hud-tr { top: 12px; right: 12px; }
+  .hud-bl { bottom: 12px; left: 12px; }
+  .hud-br { bottom: 12px; right: 12px; }
+  .hud-label { color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.1em; }
+  .hud-value { color: var(--text-primary); font-weight: 600; }
+  .hud-indicator {
+    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
   }
-  .to-1 { width: 30%; height: 40%; top: 10%; left: 20%; background: radial-gradient(circle, rgba(255,100,50,0.5), rgba(255,50,0,0.1), transparent); }
-  .to-2 { width: 20%; height: 25%; top: 40%; right: 10%; background: radial-gradient(circle, rgba(255,180,0,0.4), transparent); animation-delay: 1.5s; }
-  .to-3 { width: 15%; height: 20%; bottom: 10%; left: 50%; background: radial-gradient(circle, rgba(255,80,30,0.3), transparent); animation-delay: 3s; }
-  .to-4 { width: 40%; height: 50%; top: 15%; left: 30%; background: radial-gradient(circle, rgba(255,150,0,0.35), transparent); animation-delay: 2s; }
-  .to-5 { width: 50%; height: 60%; top: 20%; left: 25%; background: radial-gradient(circle, rgba(255,200,0,0.25), transparent); animation-delay: 1s; }
+  .hud-critical { background: #FF3B30; box-shadow: 0 0 8px rgba(255,59,48,0.6); animation: hud-blink 1.5s ease-in-out infinite; }
+  .hud-warning { background: #FFBD2E; box-shadow: 0 0 6px rgba(255,189,46,0.4); }
+  .hud-normal { background: #34D399; }
+  .hud-live { background: #00E5FF; box-shadow: 0 0 8px rgba(0,229,255,0.5); animation: hud-blink 2s ease-in-out infinite; }
+  @keyframes hud-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
 
   /* Scan Line */
   .scan-line {
@@ -1117,16 +905,17 @@ document.addEventListener('DOMContentLoaded', function() {
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(0,229,255,0.6), transparent);
-    animation: scan-sweep 4s ease-in-out infinite;
-    box-shadow: 0 0 20px rgba(0,229,255,0.3);
+    background: linear-gradient(90deg, transparent 5%, rgba(0,229,255,0.5) 30%, rgba(0,229,255,0.8) 50%, rgba(0,229,255,0.5) 70%, transparent 95%);
+    animation: scan-sweep 5s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba(0,229,255,0.25), 0 0 40px rgba(0,229,255,0.1);
+    z-index: 4;
   }
   @keyframes scan-sweep {
     0% { top: 0; }
     100% { top: 100%; }
   }
 
-  /* Alert Badges */
+  /* Legacy alert-badge fallback (unused but referenced in light mode) */
   .alert-badge {
     position: absolute;
     display: flex;

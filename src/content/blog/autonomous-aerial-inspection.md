@@ -14,7 +14,7 @@ Modern infrastructure networks span thousands of miles. Manual inspection can't 
 
 ## From Data to Decisions
 
-The real breakthrough isn't the drone — it's the intelligence layer. Our AI models process aerial imagery in real-time, automatically detecting thermal anomalies, structural degradation, vegetation encroachment, and corrosion patterns. The output isn't raw data — it's prioritized, actionable maintenance recommendations.
+The real breakthrough isn't the aircraft — it's the intelligence layer. Our AI models are designed to process aerial imagery and detect thermal anomalies, structural degradation, vegetation encroachment, and corrosion patterns. The goal isn't raw data — it's prioritized, actionable maintenance recommendations.
 
 ## What's Next
 

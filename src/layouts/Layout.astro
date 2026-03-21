@@ -11,6 +11,8 @@ const {
   title = 'Jinki | Aerial Intelligence for Critical Infrastructure',
   description = 'Jinki turns aerial data into prioritized maintenance recommendations for infrastructure you can\'t easily reach — power lines, data centers, and farmland.'
 } = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, 'https://jinki.ai').href;
 ---
 
 <!doctype html>
@@ -21,17 +23,19 @@ const {
     <meta name="description" content={description} />
     <meta name="theme-color" content="#121416" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#fafbfc" media="(prefers-color-scheme: light)" />
-    <link rel="canonical" href="https://jinki.ai" />
+    <link rel="canonical" href={canonicalUrl} />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://jinki.ai" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content="https://jinki.ai/images/og-preview.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://jinki.ai/images/og-preview.png" />
 
     <!-- Preload critical fonts (self-hosted) -->
     <link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
@@ -74,7 +78,8 @@ const {
     <!-- Prevent flash of wrong theme -->
     <script is:inline>
       (function() {
-        var theme = localStorage.getItem('jinki-theme') || 'dark';
+        var stored = localStorage.getItem('jinki-theme');
+        var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
         document.documentElement.setAttribute('data-theme', theme);
       })();
     </script>

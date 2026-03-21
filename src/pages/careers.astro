@@ -109,24 +109,24 @@ const hiringSteps = [
   { step: 4, title: 'Offer', desc: 'We move fast. Expect a decision within one week of final interview.', icon: 'verified' },
 ];
 
-const testimonials = [
+const culturePoints = [
   {
-    quote: 'Working at Jinki means your code flies — literally. Seeing a model I trained detect a thermal anomaly in real-time on a live mission is unlike anything else.',
-    name: 'Engineering Team Member',
-    dept: 'Engineering',
-    deptColor: '#00E5FF',
+    icon: 'rocket_launch',
+    title: 'Your Code Flies',
+    desc: 'The models and systems you build get deployed on live aerial missions. You see results in the real world — not just dashboards.',
+    color: '#00E5FF',
   },
   {
-    quote: 'The security-first culture is not lip service. When leadership comes from an enterprise security background, rigor is just how things get done. It makes the work feel meaningful.',
-    name: 'Operations Team Member',
-    dept: 'Operations',
-    deptColor: '#34D399',
+    icon: 'security',
+    title: 'Security-First Culture',
+    desc: 'Leadership comes from enterprise security backgrounds. Rigor is how we operate — not an afterthought.',
+    color: '#34D399',
   },
   {
-    quote: 'I joined because the pitch was honest: hard problems, small team, massive impact. Six months in, every word held up.',
-    name: 'Business Team Member',
-    dept: 'Business',
-    deptColor: '#FF8C00',
+    icon: 'group',
+    title: 'Small Team, Massive Impact',
+    desc: 'Hard problems, direct ownership, and the kind of work where every contribution moves the needle.',
+    color: '#FF8C00',
   },
 ];
 ---
@@ -315,22 +315,19 @@ const testimonials = [
       </div>
     </section>
 
-    <!-- ============ TESTIMONIALS ============ -->
-    <section class="section" style="background: var(--surface-dim);" aria-label="Employee Testimonials">
+    <!-- ============ WHY JINKI ============ -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Why Jinki">
       <div class="section-inner">
         <div class="testimonials-header reveal" style="text-align: center; margin-bottom: 48px;">
-          <span class="label">From the Team</span>
-          <h2>Why They Chose Jinki</h2>
+          <span class="label">The Culture</span>
+          <h2>Why Jinki</h2>
         </div>
         <div class="testimonials-grid">
-          {testimonials.map((t, i) => (
+          {culturePoints.map((c, i) => (
             <div class={`testimonial-card reveal reveal-delay-${i + 1}`}>
-              <div class="testimonial-quote-mark" aria-hidden="true">"</div>
-              <p class="testimonial-text">{t.quote}</p>
-              <div class="testimonial-footer">
-                <span class="testimonial-name">{t.name}</span>
-                <span class="testimonial-dept-badge" style={`background: ${t.deptColor}20; color: ${t.deptColor}; border: 1px solid ${t.deptColor}30;`}>{t.dept}</span>
-              </div>
+              <span class="material-symbols-outlined" aria-hidden="true" style={`font-size: 2rem; color: ${c.color}; margin-bottom: 1rem; display: block;`}>{c.icon}</span>
+              <h3 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">{c.title}</h3>
+              <p class="testimonial-text" style="font-style: normal;">{c.desc}</p>
             </div>
           ))}
         </div>

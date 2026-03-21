@@ -175,7 +175,7 @@ body::before {
   opacity: 1;
   transition: opacity 0.4s ease;
   background-image: url('/images/topo-dark.svg');
-  background-size: 1200px 1200px;
+  background-size: 600px 600px;
   background-repeat: repeat;
 }
 
@@ -201,6 +201,21 @@ a {
   color: var(--accent);
   text-decoration: none;
   transition: color 0.2s ease;
+}
+
+a:visited {
+  color: var(--accent-soft);
+}
+
+/* Navigation and CTA links should not show visited state */
+.nav-link:visited,
+.nav-cta:visited,
+.cta-primary:visited,
+.cta-secondary:visited,
+.btn-premium:visited,
+.dropdown-item:visited,
+.mobile-link:visited {
+  color: inherit;
 }
 
 :focus-visible {

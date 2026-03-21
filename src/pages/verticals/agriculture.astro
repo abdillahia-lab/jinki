@@ -13,10 +13,10 @@ import LeadGen from '../../components/LeadGen.astro';
 import Footer from '../../components/Footer.astro';
 
 const stats = [
-  { value: '15-25%', label: 'Yield Improvement', icon: 'trending_up' },
-  { value: '40%', label: 'Water Savings', icon: 'water_drop' },
-  { value: '72hr', label: 'Early Disease Detection', icon: 'biotech' },
-  { value: '1000+', label: 'Acres Per Session', icon: 'landscape' },
+  { value: 'NDVI', label: 'Multispectral Crop Health Mapping', icon: 'trending_up' },
+  { value: '0.1m', label: 'Spatial Resolution', icon: 'water_drop' },
+  { value: 'AI', label: 'Anomaly Detection & Classification', icon: 'biotech' },
+  { value: '1000+', label: 'Acres Per Mission', icon: 'landscape' },
 ];
 
 const seasons = [
@@ -54,7 +54,7 @@ const seasons = [
       'Variable rate prescription maps',
       'Post-harvest residue analysis',
     ],
-    metric: 'Final yield prediction within 3% accuracy',
+    metric: 'Data-driven harvest timing recommendations',
   },
   {
     season: 'Winter',
@@ -74,7 +74,7 @@ const pipelineSteps = [
   {
     icon: 'satellite_alt',
     title: 'Multispectral Capture',
-    desc: 'DJI M400 RTK with 15-band multispectral and thermal sensors captures sub-meter resolution data across the full electromagnetic spectrum.',
+    desc: 'DJI M400 RTK platform with thermal and visual sensors captures high-resolution aerial data for NDVI analysis and crop health assessment.',
     color: '#60A5FA',
   },
   {
@@ -97,12 +97,7 @@ const pipelineSteps = [
   },
 ];
 
-const cropOptions = [
-  { name: 'Corn', yieldGain: 22, waterSave: 35, pestReduce: 28 },
-  { name: 'Soybeans', yieldGain: 18, waterSave: 40, pestReduce: 32 },
-  { name: 'Wheat', yieldGain: 15, waterSave: 30, pestReduce: 25 },
-  { name: 'Specialty Crops', yieldGain: 25, waterSave: 45, pestReduce: 35 },
-];
+/* cropOptions removed — fabricated yield/water/pest metrics had no sourcing */
 ---
 
 <Layout title="Agriculture — Jinki Aerial Intelligence" description="Precision agriculture intelligence: NDVI crop health mapping, irrigation analysis, pest detection, and yield forecasting. Aerial multispectral intelligence that transforms how you manage your operation.">
@@ -142,8 +137,8 @@ const cropOptions = [
             forecasts across your entire operation.
           </p>
           <div class="ag-hero-actions" style="display: flex; align-items: center; gap: 24px; margin-top: 32px;">
-            <a href="#lead-gen" class="btn-premium ag-cta">Schedule Assessment</a>
-            <a href="#roi-calculator" class="ag-cta-secondary">Calculate ROI</a>
+            <a href="#lead-gen" class="btn-premium ag-cta">Request a Demo</a>
+            <a href="#roi-calculator" class="ag-cta-secondary">See Capabilities</a>
           </div>
         </div>
 
@@ -441,68 +436,43 @@ const cropOptions = [
       </div>
     </section>
 
-    <!-- ============ ROI CALCULATOR ============ -->
-    <section id="roi-calculator" class="ag-section" aria-label="ROI Calculator">
+    <!-- ============ CUSTOM ANALYSIS CTA ============ -->
+    <section id="roi-calculator" class="ag-section" aria-label="Request Custom Analysis">
       <div class="ag-section-inner">
         <div class="ag-section-header reveal">
           <div class="ag-eyebrow">
             <span class="ag-eyebrow-line"></span>
-            <span class="ag-eyebrow-text">ROI Calculator</span>
+            <span class="ag-eyebrow-text">Custom Analysis</span>
           </div>
-          <h2>Estimate Your Return<br />on <span class="gradient-text-green">Aerial Intelligence</span></h2>
+          <h2>Your Operation.<br />Your <span class="gradient-text-green">Intelligence Plan.</span></h2>
           <p class="ag-section-sub">
-            Enter your operation details to see projected improvements from
-            precision aerial monitoring.
+            Every farm is different. Tell us about your acreage, crops, and challenges — we'll design an aerial intelligence approach tailored to your operation.
           </p>
         </div>
 
         <div class="roi-calculator reveal reveal-delay-1">
-          <div class="roi-inputs">
-            <div class="roi-input-group">
-              <label for="acreage" class="roi-label">Total Acreage</label>
-              <div class="roi-input-wrap">
-                <input type="number" id="acreage" class="roi-input" value="500" min="50" max="50000" step="50" aria-describedby="acreage-hint" />
-                <span class="roi-unit">acres</span>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 2rem; padding: 2rem 0;">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%; max-width: 600px;">
+              <div class="roi-result-card">
+                <span class="material-symbols-outlined roi-result-icon" style="color: #34D399; font-variation-settings: 'FILL' 1;" aria-hidden="true">satellite_alt</span>
+                <span class="roi-result-label" style="font-size: 0.8125rem;">NDVI Crop Health</span>
+                <span class="roi-result-detail">Field-level stress mapping</span>
               </div>
-              <span id="acreage-hint" class="roi-hint">50 — 50,000 acres</span>
-            </div>
-
-            <div class="roi-input-group">
-              <label for="cropType" class="roi-label">Primary Crop</label>
-              <div class="roi-input-wrap">
-                <select id="cropType" class="roi-input roi-select">
-                  {cropOptions.map(crop => (
-                    <option value={crop.name}>{crop.name}</option>
-                  ))}
-                </select>
+              <div class="roi-result-card">
+                <span class="material-symbols-outlined roi-result-icon" style="color: #60A5FA; font-variation-settings: 'FILL' 1;" aria-hidden="true">water_drop</span>
+                <span class="roi-result-label" style="font-size: 0.8125rem;">Irrigation Analysis</span>
+                <span class="roi-result-detail">Distribution uniformity</span>
               </div>
+              <div class="roi-result-card">
+                <span class="material-symbols-outlined roi-result-icon" style="color: #F59E0B; font-variation-settings: 'FILL' 1;" aria-hidden="true">bug_report</span>
+                <span class="roi-result-label" style="font-size: 0.8125rem;">Early Detection</span>
+                <span class="roi-result-detail">Pest & disease anomalies</span>
             </div>
-
-            <button type="button" id="calcBtn" class="btn-premium ag-cta roi-calc-btn" aria-label="Calculate projected ROI">
-              <span class="material-symbols-outlined" style="font-size: 18px; font-variation-settings: 'FILL' 1;" aria-hidden="true">calculate</span>
-              Calculate ROI
-            </button>
-          </div>
-
-          <div class="roi-results" id="roiResults">
-            <div class="roi-result-card">
-              <span class="material-symbols-outlined roi-result-icon" style="color: #34D399; font-variation-settings: 'FILL' 1;" aria-hidden="true">trending_up</span>
-              <span class="roi-result-value" id="yieldResult">22%</span>
-              <span class="roi-result-label">Yield Improvement</span>
-              <span class="roi-result-detail" id="yieldDetail">Estimated across 500 acres</span>
             </div>
-            <div class="roi-result-card">
-              <span class="material-symbols-outlined roi-result-icon" style="color: #60A5FA; font-variation-settings: 'FILL' 1;" aria-hidden="true">water_drop</span>
-              <span class="roi-result-value" id="waterResult">35%</span>
-              <span class="roi-result-label">Water Savings</span>
-              <span class="roi-result-detail" id="waterDetail">Through precision irrigation</span>
-            </div>
-            <div class="roi-result-card">
-              <span class="material-symbols-outlined roi-result-icon" style="color: #F59E0B; font-variation-settings: 'FILL' 1;" aria-hidden="true">bug_report</span>
-              <span class="roi-result-value" id="pestResult">28%</span>
-              <span class="roi-result-label">Pest Damage Reduction</span>
-              <span class="roi-result-detail" id="pestDetail">Via early detection alerts</span>
-            </div>
+            <a href="#lead-gen" class="btn-premium ag-cta" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+              <span class="material-symbols-outlined" style="font-size: 18px; font-variation-settings: 'FILL' 1;" aria-hidden="true">arrow_forward</span>
+              Request a Custom Analysis
+            </a>
           </div>
         </div>
       </div>
@@ -536,31 +506,54 @@ const cropOptions = [
     inset: 0;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 10%;
-    opacity: 0.35;
+    gap: 3px;
+    padding: 8% 10%;
+    opacity: 0.15;
   }
 
   .ndvi-row {
     flex: 1;
-    border-radius: 4px;
+    border-radius: 2px;
     background: linear-gradient(
       90deg,
-      hsl(calc(0 + var(--row) * 15), 70%, 25%) 0%,
-      hsl(calc(30 + var(--row) * 10), 70%, 35%) 20%,
-      hsl(calc(80 + var(--row) * 5), 65%, 40%) 40%,
-      hsl(calc(140 + var(--row) * 3), 60%, 42%) 60%,
-      hsl(calc(150 + var(--row) * 2), 55%, 45%) 80%,
-      hsl(calc(160 - var(--row) * 5), 50%, 38%) 100%
+      rgba(16, 52, 36, 0.9) 0%,
+      rgba(22, 78, 48, 0.85) 15%,
+      rgba(26, 96, 55, 0.8) 30%,
+      rgba(30, 115, 62, 0.75) 50%,
+      rgba(22, 90, 50, 0.8) 65%,
+      rgba(34, 130, 70, 0.7) 80%,
+      rgba(20, 70, 42, 0.85) 100%
     );
-    animation: ndvi-shift 8s ease-in-out infinite alternate;
-    animation-delay: calc(var(--row) * 0.3s);
+    animation: ndvi-shift 10s ease-in-out infinite alternate;
+    animation-delay: calc(var(--row) * 0.4s);
+  }
+
+  .ndvi-row:nth-child(3) {
+    background: linear-gradient(
+      90deg,
+      rgba(26, 96, 55, 0.8) 0%,
+      rgba(80, 50, 20, 0.6) 35%,
+      rgba(120, 65, 25, 0.5) 50%,
+      rgba(26, 96, 55, 0.8) 70%,
+      rgba(22, 78, 48, 0.85) 100%
+    );
+  }
+
+  .ndvi-row:nth-child(6) {
+    background: linear-gradient(
+      90deg,
+      rgba(30, 115, 62, 0.75) 0%,
+      rgba(34, 130, 70, 0.7) 40%,
+      rgba(90, 55, 22, 0.55) 60%,
+      rgba(110, 60, 24, 0.5) 75%,
+      rgba(26, 96, 55, 0.8) 100%
+    );
   }
 
   @keyframes ndvi-shift {
-    0% { opacity: 0.6; }
+    0% { opacity: 0.7; }
     50% { opacity: 1; }
-    100% { opacity: 0.7; }
+    100% { opacity: 0.8; }
   }
 
   .scan-sweep {
@@ -604,6 +597,19 @@ const cropOptions = [
     max-width: 1280px;
     margin: 0 auto;
     width: 100%;
+  }
+
+  .ag-hero-content {
+    position: relative;
+  }
+  .ag-hero-content::before {
+    content: '';
+    position: absolute;
+    inset: -2rem -3rem;
+    border-radius: 1.5rem;
+    background: radial-gradient(ellipse at 30% 50%, rgba(5,5,8,0.85), rgba(5,5,8,0.6) 60%, transparent 85%);
+    z-index: -1;
+    pointer-events: none;
   }
 
   /* Eyebrow */
@@ -2197,41 +2203,6 @@ const cropOptions = [
       handle!.setAttribute('aria-valuenow', String(Math.round(newPct)));
     });
 
-    // === ROI Calculator ===
-    const crops: Record<string, { yieldGain: number; waterSave: number; pestReduce: number }> = {
-      'Corn': { yieldGain: 22, waterSave: 35, pestReduce: 28 },
-      'Soybeans': { yieldGain: 18, waterSave: 40, pestReduce: 32 },
-      'Wheat': { yieldGain: 15, waterSave: 30, pestReduce: 25 },
-      'Specialty Crops': { yieldGain: 25, waterSave: 45, pestReduce: 35 },
-    };
-
-    const calcBtn = document.getElementById('calcBtn');
-    const acreageInput = document.getElementById('acreage') as HTMLInputElement | null;
-    const cropSelect = document.getElementById('cropType') as HTMLSelectElement | null;
-
-    function calculate() {
-      if (!acreageInput || !cropSelect) return;
-      const acres = parseInt(acreageInput.value) || 500;
-      const cropName = cropSelect.value;
-      const crop = crops[cropName] || crops['Corn'];
-
-      const yieldEl = document.getElementById('yieldResult');
-      const waterEl = document.getElementById('waterResult');
-      const pestEl = document.getElementById('pestResult');
-      const yieldDet = document.getElementById('yieldDetail');
-      const waterDet = document.getElementById('waterDetail');
-      const pestDet = document.getElementById('pestDetail');
-
-      if (yieldEl) yieldEl.textContent = crop.yieldGain + '%';
-      if (waterEl) waterEl.textContent = crop.waterSave + '%';
-      if (pestEl) pestEl.textContent = crop.pestReduce + '%';
-      if (yieldDet) yieldDet.textContent = `Estimated across ${acres.toLocaleString()} acres of ${cropName.toLowerCase()}`;
-      if (waterDet) waterDet.textContent = `Through precision irrigation mapping`;
-      if (pestDet) pestDet.textContent = `Via early detection on ${acres.toLocaleString()} acres`;
-    }
-
-    calcBtn?.addEventListener('click', calculate);
-    acreageInput?.addEventListener('change', calculate);
-    cropSelect?.addEventListener('change', calculate);
+    // ROI calculator removed — replaced with capability showcase + CTA
   });
 </script>

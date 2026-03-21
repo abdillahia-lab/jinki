@@ -14,8 +14,8 @@ Autonomous aerial systems equipped with radiometric thermal cameras can survey a
 
 ## Predictive, Not Reactive
 
-Our AI models analyze thermal data against historical baselines, identifying trends before they reach critical thresholds. A transformer running 15 degrees above its seasonal average gets flagged weeks before it fails — giving your operations team time to schedule maintenance on their terms, not the equipment's.
+Our AI models are built to analyze thermal data against historical baselines, identifying trends before they reach critical thresholds. A transformer running significantly above its seasonal average gets flagged before failure — giving operations teams time to schedule maintenance proactively.
 
 ## Integration with Existing Systems
 
-Jinki's platform integrates directly with DCIM and BMS systems, feeding aerial intelligence into the monitoring dashboards your team already uses. No new tools to learn, no workflows to change — just a new layer of visibility that makes existing systems smarter.
+Jinki's platform is designed to integrate with DCIM and BMS systems, feeding aerial intelligence into the monitoring dashboards your team already uses. The goal: no new tools to learn, no workflows to change — just a new layer of visibility.
