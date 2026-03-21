@@ -66,7 +66,20 @@
       "Bash(brew install:*)",
       "Bash(python3 -c \":*)",
       "WebFetch(domain:thecyberhawk.com)",
-      "Bash(PATH=\"$HOME/.nvm/versions/node/v24.12.0/bin:$PATH\" npx astro check)"
+      "Bash(PATH=\"$HOME/.nvm/versions/node/v24.12.0/bin:$PATH\" npx astro check)",
+      "Bash(PATH=/Users/aa/.nvm/versions/node/v24.12.0/bin:$PATH npx astro build)",
+      "WebFetch(domain:unsplash.com)",
+      "Bash(curl -sL \"https://unsplash.com/photos/77IoOu54-g4/download?w=1200\" -o /Users/aa/JInki.ai/public/images/dc-rooftop-aerial.jpg)",
+      "Bash(curl -sL \"https://unsplash.com/photos/g_VMfa175Nc/download?w=1200\" -o /Users/aa/JInki.ai/public/images/facility-night-aerial.jpg)",
+      "Bash(curl -sL \"https://unsplash.com/photos/l9mfyuXwgbM/download?w=1200\" -o /Users/aa/JInki.ai/public/images/powerline-aerial.jpg)",
+      "Bash(git add:*)",
+      "Bash(rm -f .git/index.lock)",
+      "Bash(git commit:*)",
+      "Bash(claude --version)",
+      "Bash(mkdir -p /Users/aa/JInki.ai/.claude/skills)",
+      "Bash(cp -r /Users/aa/.claude/skills/anthropic-skills-repo/skills/algorithmic-art /Users/aa/JInki.ai/.claude/skills/)",
+      "Bash(cp -r /Users/aa/.claude/skills/anthropic-skills-repo/skills/canvas-design /Users/aa/JInki.ai/.claude/skills/)",
+      "Bash(cp -r /Users/aa/.claude/skills/anthropic-skills-repo/skills/theme-factory /Users/aa/JInki.ai/.claude/skills/)"
     ]
   }
 }

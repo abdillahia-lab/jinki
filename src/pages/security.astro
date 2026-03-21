@@ -12,8 +12,8 @@ const pillars = [
   {
     icon: 'encrypted',
     title: 'Encryption',
-    summary: 'AES-256 at rest, TLS 1.3 in transit. Air-gapped options available.',
-    details: 'All data is encrypted using AES-256 at rest and TLS 1.3 for data in transit. We offer air-gapped processing environments for classified or highly sensitive engagements. Encryption keys are managed through a dedicated key management service with automatic rotation. Client data never touches shared infrastructure unless explicitly authorized.',
+    summary: 'AES-256 at rest, TLS 1.3 in transit. Zero-trust architecture.',
+    details: 'All data is encrypted using AES-256 at rest and TLS 1.3 for data in transit. Encryption keys are managed through cloud-provider KMS with automated rotation policies. Our architecture follows zero-trust principles — client data is logically isolated and access requires explicit authorization at every layer.',
     color: '#00E5FF',
   },
   {
@@ -33,7 +33,7 @@ const pillars = [
   {
     icon: 'monitoring',
     title: 'Monitoring',
-    summary: '24/7 SIEM with anomaly detection and automated response.',
+    summary: 'Centralized logging with anomaly detection and alerting.',
     details: 'Security monitoring through centralized logging with anomaly detection. Automated alerting triggers on detection of suspicious activity. Security events are triaged by severity with defined escalation paths. Regular security reviews ensure our detection capabilities evolve with the threat landscape.',
     color: '#FF8C00',
   },
@@ -41,7 +41,7 @@ const pillars = [
     icon: 'verified_user',
     title: 'Compliance',
     summary: 'SOC 2 Type I in progress. NIST 800-53 aligned.',
-    details: 'Controls mapped to NIST 800-53 with SOC 2 Type I audit actively underway. All engagements operate under NDA by default. We align with the frameworks your compliance team already trusts — and we publish our roadmap so you can track our progress.',
+    details: 'Controls mapped to NIST 800-53 framework with SOC 2 Type I preparation underway. All engagements operate under NDA by default. We align with the frameworks your compliance team already trusts — and we publish our roadmap so you can track our progress.',
     color: '#00D4FF',
   },
   {
@@ -55,7 +55,7 @@ const pillars = [
 
 const milestones = [
   { date: 'Q1 2026', title: 'Security Foundation', desc: 'NIST 800-53 control mapping and gap analysis completed.', status: 'complete' },
-  { date: 'Q2 2026', title: 'SOC 2 Type I', desc: 'Initial audit engagement with third-party assessor.', status: 'active' },
+  { date: 'Q2 2026', title: 'SOC 2 Type I', desc: 'Assessor selection and formal audit engagement.', status: 'active' },
   { date: 'Q3 2026', title: 'Penetration Testing', desc: 'Annual third-party penetration test and remediation cycle.', status: 'upcoming' },
   { date: 'Q4 2026', title: 'SOC 2 Type II', desc: 'Observation period begins for Type II certification.', status: 'upcoming' },
   { date: 'Q1 2027', title: 'Type II Certification', desc: 'Targeted SOC 2 Type II report issuance.', status: 'upcoming' },
@@ -63,7 +63,7 @@ const milestones = [
 
 const trustIndicators = [
   { label: 'Encryption Standard', value: 'AES-256 / TLS 1.3', icon: 'lock' },
-  { label: 'Uptime Target', value: '99.9%+', icon: 'speed' },
+  { label: 'Availability', value: 'High-availability design', icon: 'speed' },
   { label: 'Data Retention', value: 'Client-defined', icon: 'delete_sweep' },
   { label: 'Incident Response', value: '< 24h notification', icon: 'notification_important' },
   { label: 'Access Logging', value: 'Comprehensive', icon: 'history' },
@@ -71,7 +71,7 @@ const trustIndicators = [
 ];
 ---
 
-<Layout title="Security Architecture — Jinki Aerial Intelligence" description="Enterprise-grade security posture. AES-256 encryption, SOC 2 readiness, NIST alignment, and security-cleared personnel on every engagement.">
+<Layout title="Security Architecture — Jinki Aerial Intelligence" description="Security-first aerial intelligence. AES-256 encryption, SOC 2 preparation, NIST 800-53 alignment, and NDA-by-default engagements.">
   <Nav />
   <main id="main-content">
 
