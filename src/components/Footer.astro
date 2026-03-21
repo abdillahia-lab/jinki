@@ -142,7 +142,7 @@ const company = [
     text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-primary);
     margin-bottom: 24px; padding-bottom: 10px; border-bottom: 1px solid var(--glass-border); position: relative;
   }
-  .footer-col-title::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 28px; height: 1px; background: var(--accent); }
+  .footer-col-title::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 28px; height: 1px; background: var(--accent); transition: width 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)); }
   .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
   .footer-links a { font-family: var(--font-body); font-size: 0.875rem; color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease; display: inline-block; }
   .footer-links a:hover { color: var(--accent); transform: translateX(3px); }
