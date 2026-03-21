@@ -235,7 +235,11 @@ p {
 a {
   color: var(--accent);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.25s ease;
+}
+
+a:hover {
+  color: var(--accent-soft);
 }
 
 a:visited {
@@ -258,6 +262,13 @@ a:visited {
   outline-offset: 3px;
   border-radius: 4px;
   transition: outline-offset 0.15s ease;
+}
+
+/* Image defaults — prevent layout shift */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Smooth scroll for anchor links */
