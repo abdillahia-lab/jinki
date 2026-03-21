@@ -80,7 +80,7 @@ function estimateReadTime(description: string): number {
                data-tags={JSON.stringify(posts[0].data.tags)}>
               <div class="omega-card-image-wrap">
                 {posts[0].data.image ? (
-                  <img src={posts[0].data.image} alt="" class="omega-card-image" loading="eager" />
+                  <img src={posts[0].data.image} alt={posts[0].data.title} class="omega-card-image" loading="eager" />
                 ) : (
                   <div class="omega-card-image-placeholder">
                     <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
@@ -121,7 +121,7 @@ function estimateReadTime(description: string): number {
                    data-tags={JSON.stringify(post.data.tags)}>
                   <div class="omega-card-image-wrap omega-card-image-small">
                     {post.data.image ? (
-                      <img src={post.data.image} alt="" class="omega-card-image" loading="lazy" />
+                      <img src={post.data.image} alt={post.data.title} class="omega-card-image" loading="lazy" />
                     ) : (
                       <div class="omega-card-image-placeholder">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
@@ -196,7 +196,7 @@ function estimateReadTime(description: string): number {
                  style={`animation-delay: ${i * 80}ms;`}>
                 <div class="omega-card-image-wrap omega-card-image-regular">
                   {post.data.image ? (
-                    <img src={post.data.image} alt="" class="omega-card-image" loading="lazy" />
+                    <img src={post.data.image} alt={post.data.title} class="omega-card-image" loading="lazy" />
                   ) : (
                     <div class="omega-card-image-placeholder">
                       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">

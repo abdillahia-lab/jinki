@@ -46,7 +46,7 @@ const shareUrl = encodeURIComponent(currentUrl);
     <section class="omega-post-hero">
       <div class="omega-post-hero-bg">
         {post.data.image ? (
-          <img src={post.data.image} alt="" class="omega-hero-image" loading="eager" />
+          <img src={post.data.image} alt={post.data.title} class="omega-hero-image" loading="eager" />
         ) : (
           <div class="omega-hero-gradient"></div>
         )}
