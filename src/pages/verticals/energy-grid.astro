@@ -2003,7 +2003,9 @@ const techSections = [
   .eg-diff-card {
     padding: 32px;
     border-left: none;
-    transition: background 0.3s ease, box-shadow 0.3s ease;
+    transition: background 0.4s ease,
+                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
     position: relative;
     border-radius: 12px;
     background: var(--bg-card);
@@ -2033,6 +2035,7 @@ const techSections = [
   .eg-diff-card:hover {
     background: rgba(255, 140, 0, 0.04);
     box-shadow: 0 8px 32px rgba(255, 140, 0, 0.06);
+    transform: translateY(-3px);
   }
 
   /* Animated accent line that draws in on reveal */
