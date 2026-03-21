@@ -36,11 +36,16 @@
         <div class="lg-step-dot" data-step="3">3</div>
       </div>
 
-      <form id="lg-form" action="#" novalidate>
-        <!-- Honeypot -->
+      <form id="lg-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
+        <!-- SWAP: Replace with your Web3Forms access key (get one free at web3forms.com) -->
+        <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE" />
+        <input type="hidden" name="subject" value="New Intelligence Request from jinki.ai" />
+        <input type="hidden" name="from_name" value="Jinki Website" />
+        <input type="hidden" name="redirect" value="https://jinki.ai/?submitted=true" />
+        <!-- Honeypot (Web3Forms also uses this name) -->
         <div aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px;">
-          <label for="lg-website">Website</label>
-          <input type="text" id="lg-website" name="website" tabindex="-1" autocomplete="off" />
+          <label for="lg-botcheck">Website</label>
+          <input type="text" id="lg-botcheck" name="botcheck" tabindex="-1" autocomplete="off" />
         </div>
 
         <!-- Step 1: Service Selection -->
