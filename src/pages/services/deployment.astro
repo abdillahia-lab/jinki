@@ -1,307 +1,479 @@
 ---
 /*
-  Service Page — Autonomous Deployment | Jinki Aerial Intelligence
+  TEAM ALPHA — Autonomous Deployment | Jinki Aerial Intelligence
 
-  Persistent autonomous aerial monitoring for facilities requiring
-  continuous intelligence. Scheduled patrols, event-triggered response,
-  and real-time analytics.
+  Redesigned service page with:
+  1. Animated flight path SVG hero circling a facility
+  2. DJI Dock 3 showcase with animated deployment sequence
+  3. Interactive coverage calculator
+  4. 24/7 day/night cycle visualization
+  5. Integration architecture diagram
 */
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import LeadGen from '../../components/LeadGen.astro';
 import Footer from '../../components/Footer.astro';
 
+const dockSpecs = [
+  { label: 'Dimensions', value: '1075 x 891 x 525mm', icon: 'straighten' },
+  { label: 'Weight', value: '34.5 kg', icon: 'scale' },
+  { label: 'Operating Temp', value: '-20 to 50 C', icon: 'device_thermostat' },
+  { label: 'IP Rating', value: 'IP55 Weatherproof', icon: 'water_drop' },
+  { label: 'Charging', value: '25 min full charge', icon: 'bolt' },
+  { label: 'Connectivity', value: '4G LTE + WiFi 6', icon: 'cell_tower' },
+];
+
+const deploySequence = [
+  { step: 1, label: 'Dock Opens', icon: 'door_open', desc: 'Automated lid opens, platform prepares for launch' },
+  { step: 2, label: 'Platform Launches', icon: 'flight_takeoff', desc: 'Vertical takeoff, GPS lock confirmed' },
+  { step: 3, label: 'Patrol Active', icon: 'radar', desc: 'Autonomous route execution with real-time telemetry' },
+  { step: 4, label: 'Data Captured', icon: 'photo_camera', desc: 'Thermal + visual data streamed to analytics pipeline' },
+  { step: 5, label: 'Return & Dock', icon: 'flight_land', desc: 'Precision landing, auto-charging begins' },
+];
+
+const integrationNodes = [
+  { id: 'dock', label: 'Dock 3', icon: 'home', desc: 'On-site autonomous station' },
+  { id: 'platform', label: 'M4TD', icon: 'flight', desc: 'Aerial capture platform' },
+  { id: 'cloud', label: 'Cloud AI', icon: 'cloud', desc: 'Processing & analytics' },
+  { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', desc: 'Operations visibility' },
+  { id: 'alerts', label: 'Alerts', icon: 'notification_important', desc: 'Real-time notifications' },
+];
+
 const capabilities = [
   {
     icon: 'thermostat',
-    title: 'Nightly Thermal Patrols',
-    desc: 'Scheduled thermal sweeps of every rooftop, mechanical system, and exterior surface — detecting anomalies before they escalate to failures. Runs autonomously on your defined cadence.',
+    title: 'Scheduled Thermal Patrols',
+    desc: 'Nightly thermal sweeps of every rooftop, mechanical system, and exterior surface. AI anomaly detection triggers alerts before failures escalate.',
   },
   {
     icon: 'security',
-    title: 'Perimeter Security Response',
-    desc: 'Event-triggered launch on alarm activation. Autonomous aerial systems reach the alert zone, capture thermal and visual evidence, and feed real-time intelligence to your security operations center.',
-  },
-  {
-    icon: 'construction',
-    title: 'Construction Progress Monitoring',
-    desc: 'Automated orthomosaic capture and volumetric analysis for active construction sites. Daily or weekly flyovers that keep stakeholders informed without disrupting work zones.',
-  },
-  {
-    icon: 'eco',
-    title: 'Environmental Compliance',
-    desc: 'Thermal plume monitoring, noise impact documentation, and visual compliance records generated on schedule — supporting regulatory filings and community reporting requirements.',
+    title: 'Event-Triggered Response',
+    desc: 'Autonomous launch on alarm activation. The platform reaches the alert zone in under 90 seconds, capturing thermal and visual evidence for your SOC.',
   },
   {
     icon: 'monitor_heart',
     title: 'Asset Health Tracking',
-    desc: 'Continuous trend analysis across thermal, visual, and multispectral data. AI-powered anomaly detection that tracks degradation patterns and predicts maintenance needs.',
+    desc: 'Continuous trend analysis across every data point. Machine learning models predict maintenance needs weeks before they become emergencies.',
+  },
+  {
+    icon: 'construction',
+    title: 'Progress Monitoring',
+    desc: 'Automated orthomosaic capture and volumetric analysis for construction sites. Daily flyovers keep stakeholders informed without disrupting work zones.',
+  },
+  {
+    icon: 'eco',
+    title: 'Environmental Compliance',
+    desc: 'Thermal plume monitoring, noise documentation, and visual compliance records on schedule. Automated regulatory reporting generation.',
   },
   {
     icon: 'hub',
     title: 'System Integration',
-    desc: 'Intelligence delivered directly to your existing platforms — SCADA, VMS, BMS, and digital twin environments. No new dashboards to learn. No manual data transfers.',
+    desc: 'Intelligence delivered to SCADA, VMS, BMS, and digital twin environments. No new dashboards. No manual data transfers.',
   },
-];
-
-const specs = [
-  { value: '150–200', label: 'missions per month per dock', icon: 'flight' },
-  { value: '-20 to 50\u00B0C', label: 'all-weather operating range', icon: 'device_thermostat' },
-  { value: '99%+', label: 'platform availability', icon: 'check_circle' },
-  { value: '24/7', label: 'autonomous operations', icon: 'schedule' },
-];
-
-const differentiators = [
-  {
-    number: '01',
-    title: 'Not Just Hardware',
-    desc: 'We don\'t sell you equipment and walk away. Jinki manages the entire operation: mission design, data analysis, platform maintenance, and report delivery. Your team receives intelligence, not an operations burden.',
-  },
-  {
-    number: '02',
-    title: 'Intelligence Pipeline',
-    desc: 'Every flight feeds an AI analytics layer that detects anomalies, tracks trends, and generates actionable alerts. Raw sensor data becomes prioritized recommendations — automatically, continuously.',
-  },
-  {
-    number: '03',
-    title: 'Proven Platform',
-    desc: 'Our autonomous systems run 150 to 200 missions per month in all weather conditions with 99%+ availability. Auto-charging, auto-calibration, and remote diagnostics keep operations running without on-site intervention.',
-  },
-  {
-    number: '04',
-    title: 'Scale on Demand',
-    desc: 'Single dock to multi-dock deployment across your entire campus. Add capacity as your facility grows — same intelligence pipeline, same reporting, same managed service.',
-  },
-];
-
-const integrations = [
-  { label: 'SCADA', icon: 'manufacturing' },
-  { label: 'VMS', icon: 'videocam' },
-  { label: 'BMS', icon: 'apartment' },
-  { label: 'Digital Twin', icon: 'view_in_ar' },
-  { label: 'SOC', icon: 'shield' },
-  { label: 'CMMS', icon: 'build' },
 ];
 ---
 
-<Layout title="Autonomous Deployment — Jinki Aerial Intelligence" description="Persistent autonomous aerial monitoring for facilities requiring continuous intelligence. Scheduled patrols, event-triggered response, and real-time analytics.">
+<Layout title="Autonomous Deployment — Jinki Aerial Intelligence" description="Persistent autonomous aerial monitoring with DJI Dock 3 and M4TD. 150-200 missions per month, 24/7 operations, zero human intervention required.">
   <Nav />
   <main id="main-content">
 
-    <!-- Hero -->
-    <section class="vert-hero" aria-label="Autonomous Deployment">
-      <div class="vert-hero-inner">
-        <div class="vert-hero-content reveal">
-          <div class="vert-eyebrow">
-            <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">Autonomous Deployment</span>
+    <!-- ============ HERO — FLIGHT PATH ============ -->
+    <section class="deploy-hero" aria-label="Autonomous Deployment">
+      <div class="flight-path-bg" aria-hidden="true">
+        <!-- Facility outline -->
+        <svg class="facility-svg" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Grid lines for context -->
+          <line x1="200" y1="0" x2="200" y2="500" stroke="rgba(0, 201, 167, 0.04)" stroke-width="0.5"/>
+          <line x1="400" y1="0" x2="400" y2="500" stroke="rgba(0, 201, 167, 0.04)" stroke-width="0.5"/>
+          <line x1="600" y1="0" x2="600" y2="500" stroke="rgba(0, 201, 167, 0.04)" stroke-width="0.5"/>
+          <line x1="0" y1="150" x2="800" y2="150" stroke="rgba(0, 201, 167, 0.04)" stroke-width="0.5"/>
+          <line x1="0" y1="250" x2="800" y2="250" stroke="rgba(0, 201, 167, 0.04)" stroke-width="0.5"/>
+          <line x1="0" y1="350" x2="800" y2="350" stroke="rgba(0, 201, 167, 0.04)" stroke-width="0.5"/>
+          <!-- Facility building -->
+          <rect x="300" y="180" width="200" height="140" rx="4" stroke="rgba(0, 201, 167, 0.3)" stroke-width="1.5" fill="rgba(0, 201, 167, 0.04)"/>
+          <rect x="320" y="200" width="60" height="40" rx="2" stroke="rgba(0, 201, 167, 0.18)" stroke-width="1" fill="rgba(0, 201, 167, 0.02)"/>
+          <rect x="420" y="200" width="60" height="40" rx="2" stroke="rgba(0, 201, 167, 0.18)" stroke-width="1" fill="rgba(0, 201, 167, 0.02)"/>
+          <rect x="320" y="260" width="60" height="40" rx="2" stroke="rgba(0, 201, 167, 0.18)" stroke-width="1" fill="rgba(0, 201, 167, 0.02)"/>
+          <rect x="420" y="260" width="60" height="40" rx="2" stroke="rgba(0, 201, 167, 0.18)" stroke-width="1" fill="rgba(0, 201, 167, 0.02)"/>
+          <!-- Building labels -->
+          <text x="350" y="224" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.25)" text-anchor="middle">B1</text>
+          <text x="450" y="224" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.25)" text-anchor="middle">B2</text>
+          <text x="350" y="284" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.25)" text-anchor="middle">B3</text>
+          <text x="450" y="284" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.25)" text-anchor="middle">B4</text>
+          <!-- Perimeter -->
+          <rect x="200" y="100" width="400" height="300" rx="8" stroke="rgba(0, 201, 167, 0.15)" stroke-width="1" stroke-dasharray="8 4" fill="none"/>
+          <text x="400" y="92" font-family="monospace" font-size="8" fill="rgba(0, 201, 167, 0.2)" text-anchor="middle" letter-spacing="2">PERIMETER</text>
+          <!-- Coverage radius circle -->
+          <circle cx="400" cy="250" r="180" stroke="rgba(0, 201, 167, 0.06)" stroke-width="1" stroke-dasharray="3 6" fill="none"/>
+          <circle cx="400" cy="250" r="120" stroke="rgba(0, 201, 167, 0.04)" stroke-width="1" stroke-dasharray="3 6" fill="none"/>
+          <!-- Dock position -->
+          <rect x="220" y="360" width="30" height="20" rx="4" fill="rgba(0, 201, 167, 0.2)" stroke="rgba(0, 201, 167, 0.5)" stroke-width="1.5"/>
+          <text x="235" y="395" font-family="monospace" font-size="9" fill="rgba(0, 201, 167, 0.45)" text-anchor="middle" font-weight="bold">DOCK 3</text>
+          <!-- Scan zones -->
+          <circle cx="350" cy="220" r="8" fill="none" stroke="rgba(0, 201, 167, 0.15)" stroke-width="0.5"><animate attributeName="r" values="8;16;8" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.5;0;0.5" dur="3s" repeatCount="indefinite"/></circle>
+          <circle cx="450" cy="280" r="8" fill="none" stroke="rgba(0, 201, 167, 0.15)" stroke-width="0.5"><animate attributeName="r" values="8;16;8" dur="3s" begin="1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.5;0;0.5" dur="3s" begin="1s" repeatCount="indefinite"/></circle>
+          <!-- Flight path -->
+          <path d="M235,360 L235,120 L580,120 L580,380 L220,380 L220,200 L400,200" stroke="rgba(0, 201, 167, 0.35)" stroke-width="1.5" stroke-dasharray="6 3" fill="none"/>
+          <!-- Animated platform dot -->
+          <circle r="6" fill="#00C9A7" opacity="1" filter="url(#glow)">
+            <animateMotion dur="12s" repeatCount="indefinite" path="M235,360 L235,120 L580,120 L580,380 L220,380 L220,200 L400,200 L235,360"/>
+          </circle>
+          <circle r="14" fill="none" stroke="#00C9A7" opacity="0.4">
+            <animateMotion dur="12s" repeatCount="indefinite" path="M235,360 L235,120 L580,120 L580,380 L220,380 L220,200 L400,200 L235,360"/>
+            <animate attributeName="r" values="10;20;10" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Waypoints -->
+          <circle cx="235" cy="120" r="4" fill="rgba(0, 201, 167, 0.15)" stroke="rgba(0, 201, 167, 0.4)" stroke-width="1"/>
+          <circle cx="580" cy="120" r="4" fill="rgba(0, 201, 167, 0.15)" stroke="rgba(0, 201, 167, 0.4)" stroke-width="1"/>
+          <circle cx="580" cy="380" r="4" fill="rgba(0, 201, 167, 0.15)" stroke="rgba(0, 201, 167, 0.4)" stroke-width="1"/>
+          <circle cx="220" cy="380" r="4" fill="rgba(0, 201, 167, 0.15)" stroke="rgba(0, 201, 167, 0.4)" stroke-width="1"/>
+          <!-- Waypoint labels -->
+          <text x="235" y="112" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.3)" text-anchor="middle">WP1</text>
+          <text x="580" y="112" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.3)" text-anchor="middle">WP2</text>
+          <text x="592" y="385" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.3)" text-anchor="middle">WP3</text>
+          <!-- Glow filter -->
+          <defs>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+        </svg>
+      </div>
+
+      <div class="hero-inner">
+        <div class="hero-content reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">Autonomous Deployment</span>
           </div>
-          <h1 class="vert-hero-title">
+          <h1 class="hero-title">
             Persistent Intelligence.<br/>
-            <span class="gradient-text-teal">Autonomous Operations.</span>
+            <span class="gradient-text-teal">Zero Intervention.</span>
           </h1>
-          <p class="vert-hero-subtitle">
-            For facilities requiring more than periodic assessments, Jinki deploys autonomous
-            aerial systems that launch, capture, analyze, and report — without human intervention.
-            Scheduled thermal patrols, event-triggered security response, and continuous environmental
-            monitoring from a permanent on-site installation.
+          <p class="hero-subtitle">
+            For facilities that need more than periodic assessments. Jinki deploys
+            autonomous aerial systems that launch, capture, analyze, and report —
+            150 to 200 missions per month, 24/7, without a single operator on-site.
           </p>
-          <div class="vert-hero-actions">
-            <a href="#lead-gen" class="btn-premium vert-cta deploy-cta">Plan Your Deployment</a>
-            <a href="#capabilities" class="vert-cta-secondary">View Capabilities</a>
+          <div class="hero-actions">
+            <a href="#lead-gen" class="btn-premium hero-cta">Plan Your Deployment</a>
+            <a href="#dock" class="hero-cta-secondary">
+              <span class="material-symbols-outlined" style="font-size: 18px; font-variation-settings: 'FILL' 1;" aria-hidden="true">arrow_downward</span>
+              Explore the Platform
+            </a>
           </div>
         </div>
-        <div class="vert-hero-visual reveal reveal-delay-1" aria-hidden="true">
-          <div class="deploy-preview">
-            <div class="deploy-grid-overlay"></div>
-            <span class="material-symbols-outlined deploy-bg-icon" style="font-variation-settings: 'FILL' 1;">cell_tower</span>
-            <div class="deploy-orbit orbit-1"></div>
-            <div class="deploy-orbit orbit-2"></div>
-            <div class="deploy-pulse"></div>
-            <div class="deploy-readout">
-              <span class="readout-label">SYSTEM STATUS</span>
-              <span class="readout-value deploy-value">ACTIVE</span>
-              <span class="readout-status deploy-status">187 MISSIONS THIS MONTH</span>
+        <div class="hero-stats-bar reveal reveal-delay-1">
+          <div class="hero-stat">
+            <span class="hero-stat-value">150-200</span>
+            <span class="hero-stat-label">Missions / Month</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">99%+</span>
+            <span class="hero-stat-label">Platform Availability</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">24/7</span>
+            <span class="hero-stat-label">Autonomous Ops</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">&lt;90s</span>
+            <span class="hero-stat-label">Response Time</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DOCK 3 SHOWCASE ============ -->
+    <section id="dock" class="section" style="background: var(--surface-dim);" aria-label="DJI Dock 3 Platform">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">The Platform</span>
+          </div>
+          <h2>Dock 3 + M4TD<br/>Autonomous Station</h2>
+          <p class="section-subtitle">
+            A permanent on-site installation that launches, operates, and recovers
+            aerial systems without human intervention. All-weather. All-hours.
+          </p>
+        </div>
+
+        <!-- Deployment Sequence Animation -->
+        <div class="sequence-strip reveal">
+          <div class="sequence-label">DEPLOYMENT SEQUENCE</div>
+          <div class="sequence-steps">
+            {deploySequence.map((seq) => (
+              <div class="seq-step" data-seq={seq.step}>
+                <div class="seq-icon-wrap">
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 28px;" aria-hidden="true">{seq.icon}</span>
+                </div>
+                <div class="seq-connector" aria-hidden="true">
+                  <div class="seq-connector-fill"></div>
+                </div>
+                <span class="seq-step-label">{seq.label}</span>
+                <span class="seq-step-desc">{seq.desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Specs Grid -->
+        <div class="specs-grid" style="margin-top: 48px;">
+          {dockSpecs.map((spec, i) => (
+            <div class={`spec-card reveal reveal-delay-${(i % 3) + 1}`}>
+              <span class="material-symbols-outlined spec-card-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{spec.icon}</span>
+              <div class="spec-card-content">
+                <span class="spec-card-value">{spec.value}</span>
+                <span class="spec-card-label">{spec.label}</span>
+              </div>
             </div>
-            <div class="deploy-status-badge">
-              <span class="status-dot-live"></span>
-              <span>AUTONOMOUS</span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COVERAGE CALCULATOR ============ -->
+    <section class="section" aria-label="Coverage Calculator">
+      <div class="section-inner">
+        <div class="calc-layout">
+          <div class="calc-text reveal">
+            <div class="eyebrow">
+              <span class="eyebrow-line"></span>
+              <span class="eyebrow-text">Coverage Calculator</span>
+            </div>
+            <h2>Size Your<br/>Deployment</h2>
+            <p class="calc-lead">
+              Enter your facility perimeter to estimate missions per month,
+              coverage percentage, and typical response time. Results are based
+              on standard Dock 3 operating parameters.
+            </p>
+          </div>
+          <div class="calc-card reveal reveal-delay-2">
+            <div class="calc-card-inner">
+              <div class="calc-perimeter-viz" aria-hidden="true">
+                <svg viewBox="0 0 120 120" class="calc-perimeter-svg">
+                  <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(0, 201, 167, 0.06)" stroke-width="1" stroke-dasharray="4 3"/>
+                  <circle cx="60" cy="60" r="35" fill="none" stroke="rgba(0, 201, 167, 0.04)" stroke-width="0.5" stroke-dasharray="3 4"/>
+                  <circle cx="60" cy="60" id="calc-perimeter-ring" fill="none" stroke="#00C9A7" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.3" r="20"/>
+                  <circle cx="60" cy="60" id="calc-perimeter-glow" fill="none" stroke="#00C9A7" stroke-width="4" stroke-dasharray="6 3" opacity="0.06" r="20" filter="url(#calc-glow)"/>
+                  <rect x="50" y="50" width="20" height="20" rx="2" fill="rgba(0, 201, 167, 0.08)" stroke="rgba(0, 201, 167, 0.2)" stroke-width="0.5"/>
+                  <defs>
+                    <filter id="calc-glow" x="-50%" y="-50%" width="200%" height="200%">
+                      <feGaussianBlur in="SourceGraphic" stdDeviation="4"/>
+                    </filter>
+                  </defs>
+                </svg>
+              </div>
+              <label class="calc-input-label" for="perimeter-input">Facility Perimeter (meters)</label>
+              <div class="calc-input-wrap">
+                <input
+                  type="range"
+                  id="perimeter-input"
+                  min="500"
+                  max="10000"
+                  step="100"
+                  value="3000"
+                  class="calc-slider"
+                  aria-label="Facility perimeter in meters"
+                />
+                <div class="calc-input-display">
+                  <span class="calc-perimeter-value" id="perimeter-display">3,000</span>
+                  <span class="calc-unit">meters</span>
+                </div>
+              </div>
+              <div class="calc-results">
+                <div class="calc-result">
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 24px;" aria-hidden="true">flight</span>
+                  <div>
+                    <span class="calc-result-value" id="missions-result">180</span>
+                    <span class="calc-result-label">Missions / Month</span>
+                  </div>
+                </div>
+                <div class="calc-result">
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 24px;" aria-hidden="true">my_location</span>
+                  <div>
+                    <span class="calc-result-value" id="coverage-result">98%</span>
+                    <span class="calc-result-label">Coverage Area</span>
+                  </div>
+                </div>
+                <div class="calc-result">
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 24px;" aria-hidden="true">timer</span>
+                  <div>
+                    <span class="calc-result-value" id="response-result">72s</span>
+                    <span class="calc-result-label">Avg Response Time</span>
+                  </div>
+                </div>
+              </div>
+              <div class="calc-note">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--text-tertiary); font-size: 16px;" aria-hidden="true">info</span>
+                <span>Estimates based on single Dock 3 with standard flight parameters. Multi-dock deployments scale linearly.</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Specs Bar -->
-    <div class="stats-bar reveal">
-      <div class="stats-bar-inner">
-        {specs.map(spec => (
-          <div class="stat-item">
-            <span class="stat-value">{spec.value}</span>
-            <span class="stat-label">{spec.label}</span>
+    <!-- ============ 24/7 OPERATIONS — DAY/NIGHT ============ -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="24/7 Operations">
+      <div class="section-inner">
+        <div class="section-header reveal" style="text-align: center; max-width: 640px; margin-left: auto; margin-right: auto;">
+          <div class="eyebrow" style="justify-content: center;">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">24/7 Operations</span>
           </div>
-        ))}
-      </div>
-    </div>
+          <h2>Day Shift. Night Shift.<br/>No Shift Change.</h2>
+          <p class="section-subtitle" style="margin-left: auto; margin-right: auto;">
+            Autonomous systems operate continuously through every condition.
+            Thermal patrols run at night when anomalies are most visible.
+            Security sweeps respond to alarms in seconds, not minutes.
+          </p>
+        </div>
 
-    <!-- Capabilities Grid -->
-    <section id="capabilities" class="section" style="background: var(--surface-dim);" aria-label="Capabilities">
+        <div class="daynight-visual reveal" aria-hidden="true">
+          <div class="daynight-track">
+            <div class="daynight-cycle">
+              <div class="dn-segment day-segment">
+                <div class="dn-sky day-sky">
+                  <span class="material-symbols-outlined dn-celestial" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">light_mode</span>
+                </div>
+                <div class="dn-ops">
+                  <div class="dn-mission-tag">
+                    <span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1;" aria-hidden="true">construction</span>
+                    Progress Monitoring
+                  </div>
+                  <div class="dn-mission-tag">
+                    <span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1;" aria-hidden="true">eco</span>
+                    Environmental Survey
+                  </div>
+                </div>
+                <span class="dn-time-label">06:00 - 18:00</span>
+              </div>
+              <div class="dn-transition" aria-hidden="true">
+                <div class="dn-transition-line"></div>
+              </div>
+              <div class="dn-segment night-segment">
+                <div class="dn-sky night-sky">
+                  <span class="material-symbols-outlined dn-celestial" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">dark_mode</span>
+                </div>
+                <div class="dn-ops">
+                  <div class="dn-mission-tag night-tag">
+                    <span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1;" aria-hidden="true">thermostat</span>
+                    Thermal Patrol
+                  </div>
+                  <div class="dn-mission-tag night-tag">
+                    <span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1;" aria-hidden="true">security</span>
+                    Security Sweep
+                  </div>
+                </div>
+                <span class="dn-time-label">18:00 - 06:00</span>
+              </div>
+            </div>
+            <div class="dn-cursor" aria-hidden="true">
+              <div class="dn-cursor-line"></div>
+              <div class="dn-cursor-label">NOW</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mission Stats -->
+        <div class="ops-stats-grid reveal" style="margin-top: 48px;">
+          <div class="ops-stat-card">
+            <span class="ops-sc-value">6-8</span>
+            <span class="ops-sc-label">Missions per day</span>
+          </div>
+          <div class="ops-stat-card">
+            <span class="ops-sc-value">4</span>
+            <span class="ops-sc-label">Night thermal patrols</span>
+          </div>
+          <div class="ops-stat-card">
+            <span class="ops-sc-value">365</span>
+            <span class="ops-sc-label">Days per year</span>
+          </div>
+          <div class="ops-stat-card">
+            <span class="ops-sc-value">0</span>
+            <span class="ops-sc-label">Operators required</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ INTEGRATION ARCHITECTURE ============ -->
+    <section class="section" aria-label="Integration Architecture">
       <div class="section-inner">
         <div class="section-header reveal">
-          <div class="vert-eyebrow">
-            <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">Capabilities</span>
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">Architecture</span>
+          </div>
+          <h2>From Dock to Dashboard.<br/>Fully Automated Pipeline.</h2>
+          <p class="section-subtitle">
+            Data flows from the on-site dock through AI processing to your existing
+            platforms. Every step is automated. Every integration is bidirectional.
+          </p>
+        </div>
+
+        <div class="arch-diagram reveal">
+          <div class="arch-flow">
+            {integrationNodes.map((node, i) => (
+              <div class="arch-node">
+                <div class="arch-node-icon">
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 28px;" aria-hidden="true">{node.icon}</span>
+                </div>
+                <span class="arch-node-label">{node.label}</span>
+                <span class="arch-node-desc">{node.desc}</span>
+                {i < integrationNodes.length - 1 && (
+                  <div class="arch-arrow" aria-hidden="true">
+                    <span class="material-symbols-outlined" style="font-size: 20px;" aria-hidden="true">arrow_forward</span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <div class="arch-integrations">
+            <span class="arch-int-label">DELIVERS TO</span>
+            <div class="arch-int-tags">
+              <span class="arch-tag">SCADA</span>
+              <span class="arch-tag">VMS</span>
+              <span class="arch-tag">BMS</span>
+              <span class="arch-tag">Digital Twin</span>
+              <span class="arch-tag">SOC</span>
+              <span class="arch-tag">CMMS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CAPABILITIES ============ -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Capabilities">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">Capabilities</span>
           </div>
           <h2>Scheduled. Triggered.<br/>Always Watching.</h2>
           <p class="section-subtitle">
-            Autonomous aerial systems that operate on your schedule, respond to your alarms,
-            and deliver intelligence directly to your existing platforms — no pilots, no coordination,
-            no manual data processing.
+            Autonomous operations that run on your schedule, respond to your alarms,
+            and deliver intelligence to your existing platforms.
           </p>
         </div>
 
-        <div class="services-grid">
+        <div class="cap-grid">
           {capabilities.map((cap, i) => (
-            <div class={`service-card metallic-gloss reveal reveal-delay-${(i % 3) + 1}`}>
-              <div class="service-icon-wrap teal-icon-wrap">
-                <span class="material-symbols-outlined service-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{cap.icon}</span>
+            <div class={`cap-card metallic-gloss reveal reveal-delay-${(i % 3) + 1}`}>
+              <div class="cap-icon-wrap">
+                <span class="material-symbols-outlined cap-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{cap.icon}</span>
               </div>
-              <h3 class="service-title">{cap.title}</h3>
-              <p class="service-desc">{cap.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- Managed Service -->
-    <section class="section" aria-label="Managed Service">
-      <div class="section-inner">
-        <div class="managed-layout">
-          <div class="managed-text reveal">
-            <div class="vert-eyebrow">
-              <span class="vert-eyebrow-line"></span>
-              <span class="vert-eyebrow-text">Managed Service</span>
-            </div>
-            <h2>You Get Intelligence.<br/>We Handle Everything Else.</h2>
-            <p class="managed-lead">
-              Jinki manages the full operational stack: mission planning, flight operations,
-              data analysis, platform maintenance, and report delivery. Your team receives
-              prioritized intelligence delivered to your systems — not another platform to manage.
-            </p>
-            <ul class="managed-list">
-              <li>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 20px;" aria-hidden="true">route</span>
-                <span>Mission planning and optimization</span>
-              </li>
-              <li>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 20px;" aria-hidden="true">model_training</span>
-                <span>AI-powered data analysis and anomaly detection</span>
-              </li>
-              <li>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 20px;" aria-hidden="true">build</span>
-                <span>Platform maintenance and remote diagnostics</span>
-              </li>
-              <li>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 20px;" aria-hidden="true">summarize</span>
-                <span>Automated reporting and alert delivery</span>
-              </li>
-              <li>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 20px;" aria-hidden="true">support_agent</span>
-                <span>Dedicated operations team and support</span>
-              </li>
-            </ul>
-          </div>
-          <div class="managed-visual reveal reveal-delay-2" aria-hidden="true">
-            <div class="ops-mockup">
-              <div class="ops-header-bar">
-                <span class="ops-dot" style="background: #FF6B35;"></span>
-                <span class="ops-dot" style="background: #FFBD2E;"></span>
-                <span class="ops-dot" style="background: #27C93F;"></span>
-                <span class="ops-title-text">Operations Dashboard</span>
-              </div>
-              <div class="ops-body">
-                <div class="ops-stat-row">
-                  <div class="ops-stat">
-                    <span class="ops-stat-value">187</span>
-                    <span class="ops-stat-label">Missions</span>
-                  </div>
-                  <div class="ops-stat">
-                    <span class="ops-stat-value">99.4%</span>
-                    <span class="ops-stat-label">Uptime</span>
-                  </div>
-                  <div class="ops-stat">
-                    <span class="ops-stat-value">12</span>
-                    <span class="ops-stat-label">Alerts</span>
-                  </div>
-                </div>
-                <div class="ops-mission-list">
-                  <div class="ops-mission">
-                    <span class="ops-mission-status active"></span>
-                    <span class="ops-mission-name">Thermal Patrol — Zone A</span>
-                    <span class="ops-mission-time">In Progress</span>
-                  </div>
-                  <div class="ops-mission">
-                    <span class="ops-mission-status complete"></span>
-                    <span class="ops-mission-name">Perimeter Sweep — Full Campus</span>
-                    <span class="ops-mission-time">23:45</span>
-                  </div>
-                  <div class="ops-mission">
-                    <span class="ops-mission-status scheduled"></span>
-                    <span class="ops-mission-name">Roof Survey — Building D</span>
-                    <span class="ops-mission-time">04:00</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Integrations -->
-    <section class="section" style="background: var(--surface-dim);" aria-label="Integrations">
-      <div class="section-inner">
-        <div class="section-header reveal">
-          <div class="vert-eyebrow">
-            <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">Integrations</span>
-          </div>
-          <h2>Connects to Your<br/>Existing Infrastructure</h2>
-          <p class="section-subtitle">
-            Intelligence delivered where your teams already work.
-            No new platforms to learn. No manual exports. No middleware.
-          </p>
-        </div>
-
-        <div class="integration-grid">
-          {integrations.map((intg, i) => (
-            <div class={`integration-card reveal reveal-delay-${(i % 3) + 1}`}>
-              <span class="material-symbols-outlined integration-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{intg.icon}</span>
-              <span class="integration-label">{intg.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- Differentiators -->
-    <section class="section" aria-label="Why Jinki">
-      <div class="section-inner">
-        <div class="section-header reveal">
-          <div class="vert-eyebrow">
-            <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">Why Jinki</span>
-          </div>
-          <h2>Intelligence as a Service,<br/>Not Equipment as a Sale</h2>
-        </div>
-
-        <div class="diff-grid">
-          {differentiators.map((diff) => (
-            <div class={`diff-card teal-border reveal reveal-delay-${parseInt(diff.number)}`}>
-              <span class="diff-number teal-number">{diff.number}</span>
-              <h3>{diff.title}</h3>
-              <p>{diff.desc}</p>
+              <h3 class="cap-title">{cap.title}</h3>
+              <p class="cap-desc">{cap.desc}</p>
             </div>
           ))}
         </div>
@@ -313,55 +485,193 @@ const integrations = [
   <Footer />
 </Layout>
 
-<style>
-  /* ---- Hero ---- */
-  .vert-hero {
-    min-height: 85vh;
-    display: flex;
-    align-items: center;
-    padding: 140px clamp(20px, 5vw, 80px) 60px;
-    background: var(--surface-container-lowest);
-    position: relative;
+<script>
+  // Coverage Calculator
+  const slider = document.getElementById('perimeter-input') as HTMLInputElement;
+  const perimeterDisplay = document.getElementById('perimeter-display');
+  const missionsResult = document.getElementById('missions-result');
+  const coverageResult = document.getElementById('coverage-result');
+  const responseResult = document.getElementById('response-result');
+
+  const perimeterRing = document.getElementById('calc-perimeter-ring');
+  const perimeterGlow = document.getElementById('calc-perimeter-glow');
+  const calcResults = document.querySelectorAll('.calc-result');
+  const calcValues = document.querySelectorAll('.calc-result-value');
+
+  function animateValueChange() {
+    calcResults.forEach(r => {
+      r.classList.add('value-changed');
+      setTimeout(() => r.classList.remove('value-changed'), 400);
+    });
+    calcValues.forEach(v => {
+      v.classList.add('animating');
+      setTimeout(() => v.classList.remove('animating'), 200);
+    });
   }
 
-  .vert-hero-inner {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 60px;
+  function updateCalculator() {
+    if (!slider || !perimeterDisplay || !missionsResult || !coverageResult || !responseResult) return;
+    const perimeter = parseInt(slider.value);
+    perimeterDisplay.textContent = perimeter.toLocaleString();
+
+    // Missions: base 200 for small, scales down as perimeter grows (longer routes = fewer missions)
+    const missions = Math.round(200 - (perimeter - 500) * 0.005);
+    const clampedMissions = Math.max(150, Math.min(200, missions));
+    missionsResult.textContent = String(clampedMissions);
+
+    // Coverage: 99% for small, decreasing slightly for very large
+    const coverage = Math.max(92, Math.round(99 - (perimeter - 500) * 0.0008));
+    coverageResult.textContent = coverage + '%';
+
+    // Response time: increases with perimeter
+    const response = Math.round(45 + (perimeter / 200));
+    responseResult.textContent = response + 's';
+
+    // Animate value pop
+    animateValueChange();
+
+    // Scale perimeter visualization ring (20-48 based on slider)
+    const ringR = 20 + ((perimeter - 500) / 9500) * 28;
+    if (perimeterRing) perimeterRing.setAttribute('r', String(ringR));
+    if (perimeterGlow) perimeterGlow.setAttribute('r', String(ringR));
+  }
+
+  if (slider) {
+    slider.addEventListener('input', updateCalculator);
+    updateCalculator();
+  }
+
+  // Deployment sequence animation
+  const sequenceSteps = document.querySelectorAll('.seq-step');
+  let currentSeq = 0;
+
+  function animateSequence() {
+    sequenceSteps.forEach((step, i) => {
+      step.classList.toggle('active', i <= currentSeq);
+    });
+    currentSeq = (currentSeq + 1) % sequenceSteps.length;
+  }
+
+  if (sequenceSteps.length > 0) {
+    animateSequence();
+    setInterval(animateSequence, 2000);
+  }
+
+  // Ops stats count-up animation on scroll reveal
+  const opsValues = document.querySelectorAll('.ops-sc-value');
+  const opsGrid = document.querySelector('.ops-stats-grid');
+  let opsAnimated = false;
+
+  function animateCountUp() {
+    if (opsAnimated) return;
+    opsAnimated = true;
+    opsValues.forEach((el, i) => {
+      const htmlEl = el as HTMLElement;
+      const finalText = htmlEl.textContent || '';
+      htmlEl.style.opacity = '0';
+      setTimeout(() => {
+        htmlEl.style.opacity = '1';
+        htmlEl.classList.add('counted');
+        htmlEl.addEventListener('animationend', () => htmlEl.classList.remove('counted'), { once: true });
+      }, i * 150);
+    });
+  }
+
+  if (opsGrid) {
+    const opsObs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCountUp();
+          opsObs.disconnect();
+        }
+      });
+    }, { threshold: 0.3 });
+    opsObs.observe(opsGrid);
+  }
+
+  // Day/Night cursor animation
+  const dnCursor = document.querySelector('.dn-cursor') as HTMLElement;
+  if (dnCursor) {
+    let cursorPos = 0;
+    function moveCursor() {
+      cursorPos = (cursorPos + 0.15) % 100;
+      dnCursor.style.left = cursorPos + '%';
+      requestAnimationFrame(moveCursor);
+    }
+    moveCursor();
+  }
+</script>
+
+<style>
+  /* ============================================================
+     HERO — FLIGHT PATH
+     ============================================================ */
+  .deploy-hero {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
     align-items: center;
+    padding: 160px clamp(20px, 5vw, 80px) 80px;
+    background: var(--surface-container-lowest);
+    overflow: hidden;
+  }
+
+  .flight-path-bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  .facility-svg {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+  }
+
+  .hero-inner {
     max-width: 1280px;
     margin: 0 auto;
     width: 100%;
+    position: relative;
+    z-index: 1;
   }
 
-  .vert-eyebrow {
+  .hero-content {
+    max-width: 640px;
+  }
+
+  .eyebrow {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 16px;
   }
 
-  .vert-eyebrow-line {
+  .eyebrow-line {
     display: block;
     width: 32px;
     height: 1px;
-    background: var(--accent);
+    background: #00C9A7;
   }
 
-  .vert-eyebrow-text {
+  .eyebrow-text {
     font-family: var(--font-label);
     font-size: 0.6875rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.3em;
-    color: var(--accent);
+    color: #00C9A7;
   }
 
-  .vert-hero-title {
+  .hero-title {
     font-family: var(--font-headline);
-    font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+    font-size: clamp(2.5rem, 5vw + 0.5rem, 4.5rem);
     font-weight: 700;
-    line-height: 1.1;
+    line-height: 1.05;
     color: var(--text-primary);
     margin-bottom: 24px;
   }
@@ -373,22 +683,23 @@ const integrations = [
     background-clip: text;
   }
 
-  .vert-hero-subtitle {
+  .hero-subtitle {
     font-family: var(--font-body);
-    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
-    line-height: 1.75;
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.1875rem);
+    line-height: 1.8;
     color: var(--text-secondary);
-    max-width: 540px;
-    margin-bottom: 32px;
+    max-width: 580px;
+    margin-bottom: 36px;
   }
 
-  .vert-hero-actions {
+  .hero-actions {
     display: flex;
     align-items: center;
     gap: 24px;
+    margin-bottom: 48px;
   }
 
-  .vert-cta {
+  .hero-cta {
     font-family: var(--font-headline);
     font-size: 0.8125rem;
     font-weight: 700;
@@ -398,17 +709,14 @@ const integrations = [
     border-radius: 12px;
     color: #fff;
     text-decoration: none;
+    background: linear-gradient(135deg, #00C9A7, #00897B);
   }
 
-  .deploy-cta {
-    background: linear-gradient(135deg, #00C9A7, #00897B) !important;
-  }
-
-  .deploy-cta:hover {
+  .hero-cta:hover {
     box-shadow: 0 0 30px rgba(0, 201, 167, 0.3);
   }
 
-  .vert-cta-secondary {
+  .hero-cta-secondary {
     font-family: var(--font-headline);
     font-size: 0.8125rem;
     font-weight: 700;
@@ -417,228 +725,64 @@ const integrations = [
     color: var(--text-secondary);
     text-decoration: none;
     transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
-  .vert-cta-secondary:hover {
+  .hero-cta-secondary:hover {
     color: #00C9A7;
   }
 
-  /* ---- Deploy Preview Visual ---- */
-  .deploy-preview {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    background: linear-gradient(135deg, #0a0c10, #0f1a18);
-    border-radius: 16px;
+  .hero-stats-bar {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 24px 28px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
     border: 1px solid var(--glass-border);
-    overflow: hidden;
-    box-shadow: var(--glass-shadow);
+    border-radius: 16px;
+    max-width: fit-content;
+    flex-wrap: wrap;
   }
 
-  .deploy-grid-overlay {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0, 201, 167, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 201, 167, 0.04) 1px, transparent 1px);
-    background-size: 24px 24px;
-  }
-
-  .deploy-bg-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 80px;
-    color: rgba(0, 201, 167, 0.06);
-  }
-
-  .deploy-orbit {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    border-radius: 50%;
-    border: 1px solid rgba(0, 201, 167, 0.12);
-    animation: orbit-spin 20s linear infinite;
-  }
-
-  .orbit-1 {
-    width: 160px;
-    height: 160px;
-    margin-top: -80px;
-    margin-left: -80px;
-  }
-
-  .orbit-2 {
-    width: 260px;
-    height: 260px;
-    margin-top: -130px;
-    margin-left: -130px;
-    animation-duration: 30s;
-    animation-direction: reverse;
-  }
-
-  .orbit-1::after,
-  .orbit-2::after {
-    content: '';
-    position: absolute;
-    top: -4px;
-    left: 50%;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #00C9A7;
-    box-shadow: 0 0 12px rgba(0, 201, 167, 0.6);
-  }
-
-  @keyframes orbit-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  .deploy-pulse {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    margin-top: -10px;
-    margin-left: -10px;
-    border-radius: 50%;
-    background: #00C9A7;
-    box-shadow: 0 0 20px rgba(0, 201, 167, 0.5);
-    animation: deploy-pulse-anim 3s ease-in-out infinite;
-  }
-
-  @keyframes deploy-pulse-anim {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.5); opacity: 0.6; }
-  }
-
-  .deploy-readout {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
+  .hero-stat {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(8px);
-    padding: 12px 16px;
-    border-radius: 8px;
-    border: 1px solid rgba(0, 201, 167, 0.15);
   }
 
-  .readout-label {
+  .hero-stat-value {
+    font-family: var(--font-headline);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #00C9A7;
+  }
+
+  .hero-stat-label {
     font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.15em;
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-tertiary);
   }
 
-  .readout-value {
-    font-family: var(--font-mono);
-    font-size: 24px;
-    font-weight: 700;
+  .hero-stat-divider {
+    width: 1px;
+    height: 36px;
+    background: var(--glass-border);
   }
 
-  .deploy-value {
-    color: #00C9A7;
-  }
-
-  .readout-status {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .deploy-status {
-    color: #00C9A7;
-  }
-
-  .deploy-status-badge {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    padding: 6px 14px;
-    border-radius: 20px;
-    border: 1px solid rgba(0, 201, 167, 0.2);
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #00C9A7;
-  }
-
-  .status-dot-live {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #00C9A7;
-    box-shadow: 0 0 8px rgba(0, 201, 167, 0.6);
-    animation: blink-live 2s ease-in-out infinite;
-  }
-
-  @keyframes blink-live {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  /* ---- Stats Bar ---- */
-  .stats-bar {
-    background: var(--surface-container-low);
-    border-top: 1px solid var(--glass-border);
-    border-bottom: 1px solid var(--glass-border);
-  }
-
-  .stats-bar-inner {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 48px clamp(20px, 5vw, 80px);
-    gap: 32px;
-  }
-
-  .stat-item {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    text-align: center;
-  }
-
-  .stat-value {
-    font-family: var(--font-headline);
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #00C9A7;
-    line-height: 1;
-  }
-
-  .stat-label {
-    font-family: var(--font-body);
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.4;
-  }
-
-  /* ---- Sections ---- */
+  /* ============================================================
+     SECTIONS SHARED
+     ============================================================ */
   .section {
     padding: 5rem clamp(20px, 5vw, 80px);
   }
 
   @media (min-width: 768px) {
-    .section {
-      padding: 8rem clamp(20px, 5vw, 80px);
-    }
+    .section { padding: 7rem clamp(20px, 5vw, 80px); }
   }
 
   .section-inner {
@@ -647,7 +791,7 @@ const integrations = [
   }
 
   .section-header {
-    margin-bottom: 56px;
+    margin-bottom: 48px;
   }
 
   .section-header h2 {
@@ -655,7 +799,7 @@ const integrations = [
     font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
     font-weight: 700;
     color: var(--text-primary);
-    line-height: 1.15;
+    line-height: 1.12;
     margin-top: 8px;
   }
 
@@ -668,36 +812,305 @@ const integrations = [
     margin-top: 16px;
   }
 
-  /* ---- Services Grid ---- */
-  .services-grid {
+  /* ============================================================
+     DEPLOYMENT SEQUENCE
+     ============================================================ */
+  .sequence-strip {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 32px;
+    overflow: hidden;
+  }
+
+  .sequence-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 24px;
+  }
+
+  .sequence-steps {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .sequence-steps::-webkit-scrollbar { display: none; }
+
+  .seq-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 140px;
+    flex: 1;
+    position: relative;
+    opacity: 0.3;
+    transition: opacity 0.6s ease, transform 0.4s ease;
+  }
+
+  .seq-step.active {
+    opacity: 1;
+  }
+
+  .seq-icon-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 201, 167, 0.08);
+    border: 2px solid rgba(0, 201, 167, 0.15);
+    color: #00C9A7;
+    transition: all 0.4s ease;
+    margin-bottom: 12px;
+    position: relative;
+  }
+
+  /* Animated ring around icon */
+  .seq-icon-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: all 0.5s ease;
+  }
+
+  .seq-step.active .seq-icon-wrap::before {
+    border-color: rgba(0, 201, 167, 0.4);
+    animation: seq-ring-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes seq-ring-pulse {
+    0%, 100% { inset: -6px; opacity: 0.6; border-color: rgba(0, 201, 167, 0.4); }
+    50% { inset: -10px; opacity: 0.15; border-color: rgba(0, 201, 167, 0.6); }
+  }
+
+  /* Inner glow ring */
+  .seq-icon-wrap::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: transparent;
+    transition: all 0.4s ease;
+  }
+
+  .seq-step.active .seq-icon-wrap::after {
+    box-shadow: inset 0 0 12px rgba(0, 201, 167, 0.15), 0 0 16px rgba(0, 201, 167, 0.1);
+  }
+
+  .seq-step.active .seq-icon-wrap {
+    background: rgba(0, 201, 167, 0.15);
+    border-color: #00C9A7;
+    box-shadow: 0 0 24px rgba(0, 201, 167, 0.25), 0 0 48px rgba(0, 201, 167, 0.08);
+  }
+
+  .seq-connector {
+    position: absolute;
+    top: 28px;
+    left: calc(50% + 28px);
+    right: calc(-50% + 28px);
+    height: 2px;
+    background: rgba(0, 201, 167, 0.1);
+    overflow: hidden;
+  }
+
+  .seq-step:last-child .seq-connector { display: none; }
+
+  .seq-connector-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #00C9A7, rgba(0, 201, 167, 0.4));
+    transition: width 0.6s ease;
+    position: relative;
+  }
+
+  /* Pulsing data-flow particle along connector */
+  .seq-connector-fill::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00C9A7;
+    box-shadow: 0 0 10px rgba(0, 201, 167, 0.6), 0 0 20px rgba(0, 201, 167, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .seq-step.active .seq-connector-fill {
+    width: 100%;
+  }
+
+  .seq-step.active .seq-connector-fill::after {
+    opacity: 1;
+    animation: data-flow-pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes data-flow-pulse {
+    0%, 100% { box-shadow: 0 0 6px rgba(0, 201, 167, 0.4); transform: scale(0.8); }
+    50% { box-shadow: 0 0 16px rgba(0, 201, 167, 0.8), 0 0 30px rgba(0, 201, 167, 0.3); transform: scale(1.2); }
+  }
+
+  /* Sequential animation delays for ring activation */
+  .seq-step[data-seq="1"].active .seq-icon-wrap::before { animation-delay: 0s; }
+  .seq-step[data-seq="2"].active .seq-icon-wrap::before { animation-delay: 0.2s; }
+  .seq-step[data-seq="3"].active .seq-icon-wrap::before { animation-delay: 0.4s; }
+  .seq-step[data-seq="4"].active .seq-icon-wrap::before { animation-delay: 0.6s; }
+  .seq-step[data-seq="5"].active .seq-icon-wrap::before { animation-delay: 0.8s; }
+
+  .seq-step-label {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .seq-step-desc {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+    line-height: 1.4;
+    max-width: 120px;
+  }
+
+  /* ============================================================
+     SPECS GRID
+     ============================================================ */
+  .specs-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
   @media (min-width: 768px) {
-    .services-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .specs-grid { grid-template-columns: repeat(3, 1fr); }
   }
 
   @media (min-width: 1024px) {
-    .services-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
+    .specs-grid { grid-template-columns: repeat(6, 1fr); }
   }
 
-  .service-card {
+  .spec-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 24px 12px;
     background: var(--surface-container-low);
     border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 32px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
   }
 
-  .service-card::before {
+  .spec-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at 50% 30%, rgba(0, 201, 167, 0.08), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .spec-card:hover {
+    border-color: rgba(0, 201, 167, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 0 20px rgba(0, 201, 167, 0.1);
+  }
+
+  .spec-card:hover::after {
+    opacity: 1;
+  }
+
+  .spec-card-icon {
+    font-size: 24px;
+    color: #00C9A7;
+    transition: filter 0.3s ease;
+  }
+
+  .spec-card:hover .spec-card-icon {
+    filter: drop-shadow(0 0 8px rgba(0, 201, 167, 0.5));
+  }
+
+  .spec-card-value {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: block;
+  }
+
+  .spec-card-label {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    display: block;
+  }
+
+  /* ============================================================
+     COVERAGE CALCULATOR
+     ============================================================ */
+  .calc-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  @media (min-width: 768px) {
+    .calc-layout {
+      grid-template-columns: 1fr 1.2fr;
+      gap: 64px;
+      align-items: center;
+    }
+  }
+
+  .calc-text h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.12;
+    margin-top: 8px;
+  }
+
+  .calc-lead {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-top: 16px;
+  }
+
+  .calc-card-inner {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .calc-card-inner::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -706,424 +1119,960 @@ const integrations = [
     border-radius: inherit;
   }
 
-  .service-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(0, 201, 167, 0.15);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 201, 167, 0.15);
+  .calc-perimeter-viz {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 120px;
+    height: 120px;
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 0;
   }
 
-  .service-icon-wrap {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: var(--accent-glow);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-    transition: box-shadow 0.3s ease;
+  .calc-perimeter-svg {
+    width: 100%;
+    height: 100%;
   }
 
-  .teal-icon-wrap {
-    background: rgba(0, 201, 167, 0.12);
+  #calc-perimeter-ring,
+  #calc-perimeter-glow {
+    transition: r 0.3s ease;
+    transform-origin: center;
+    animation: perimeter-rotate 20s linear infinite;
   }
 
-  .service-card:hover .teal-icon-wrap {
-    box-shadow: 0 0 20px rgba(0, 201, 167, 0.25);
+  @keyframes perimeter-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 
-  .service-icon {
-    color: #00C9A7;
-    font-size: 24px;
-  }
-
-  .service-title {
+  .calc-input-label {
     font-family: var(--font-headline);
-    font-size: 1.0625rem;
+    font-size: 0.8125rem;
     font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 12px;
-  }
-
-  .service-desc {
-    font-size: 0.875rem;
     color: var(--text-secondary);
-    line-height: 1.7;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 16px;
   }
 
-  /* ---- Managed Service Layout ---- */
-  .managed-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 48px;
-    align-items: center;
-  }
-
-  @media (min-width: 768px) {
-    .managed-layout {
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-    }
-  }
-
-  .managed-text h2 {
-    font-family: var(--font-headline);
-    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
-    font-weight: 700;
-    color: var(--text-primary);
-    line-height: 1.15;
-    margin-top: 8px;
-  }
-
-  .managed-lead {
-    font-family: var(--font-body);
-    font-size: 1.0625rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    margin-top: 16px;
+  .calc-input-wrap {
     margin-bottom: 32px;
   }
 
-  .managed-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+  .calc-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, rgba(0, 201, 167, 0.25), rgba(0, 201, 167, 0.06));
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    position: relative;
   }
 
-  .managed-list li {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-family: var(--font-body);
-    font-size: 0.9375rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-  }
-
-  /* Ops Mockup */
-  .ops-mockup {
-    background: linear-gradient(135deg, #0a0c10, #0f1a18);
-    border-radius: 12px;
-    border: 1px solid var(--glass-border);
-    overflow: hidden;
-    box-shadow: var(--glass-shadow);
-  }
-
-  .ops-header-bar {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 16px;
-    background: rgba(0, 0, 0, 0.3);
-    border-bottom: 1px solid var(--glass-border);
-  }
-
-  .ops-dot {
-    width: 10px;
-    height: 10px;
+  .calc-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #10F0C0, #00C9A7);
+    box-shadow: 0 0 16px rgba(0, 201, 167, 0.5), 0 0 40px rgba(0, 201, 167, 0.15);
+    cursor: pointer;
+    border: 3px solid var(--surface-container-low);
+    transition: box-shadow 0.2s ease;
   }
 
-  .ops-title-text {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-tertiary);
-    letter-spacing: 0.05em;
-    margin-left: 8px;
+  .calc-slider::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 20px rgba(0, 201, 167, 0.7), 0 0 50px rgba(0, 201, 167, 0.25);
   }
 
-  .ops-body {
-    padding: 20px;
+  .calc-slider::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, #10F0C0, #00C9A7);
+    box-shadow: 0 0 16px rgba(0, 201, 167, 0.5), 0 0 40px rgba(0, 201, 167, 0.15);
+    cursor: pointer;
+    border: 3px solid var(--surface-container-low);
+  }
+
+  .calc-input-display {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 12px;
   }
 
-  .ops-stat-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-  }
-
-  .ops-stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: 12px;
-    background: rgba(0, 201, 167, 0.06);
-    border-radius: 8px;
-    border: 1px solid rgba(0, 201, 167, 0.1);
-  }
-
-  .ops-stat-value {
-    font-family: var(--font-mono);
-    font-size: 1.25rem;
+  .calc-perimeter-value {
+    font-family: var(--font-headline);
+    font-size: 2rem;
     font-weight: 700;
     color: #00C9A7;
   }
 
-  .ops-stat-label {
+  .calc-unit {
     font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-size: 0.75rem;
     color: var(--text-tertiary);
+    letter-spacing: 0.05em;
   }
 
-  .ops-mission-list {
+  .calc-results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 480px) {
+    .calc-results { grid-template-columns: 1fr; }
+  }
+
+  .calc-result {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: rgba(0, 201, 167, 0.06);
+    border: 1px solid rgba(0, 201, 167, 0.1);
+    border-radius: 12px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .calc-result.value-changed {
+    border-color: rgba(0, 201, 167, 0.35);
+    box-shadow: 0 0 16px rgba(0, 201, 167, 0.12);
+  }
+
+  .calc-result-value {
+    font-family: var(--font-headline);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: block;
+    transition: transform 0.15s ease, color 0.15s ease;
+  }
+
+  .calc-result-value.animating {
+    transform: scale(1.15);
+    color: #00C9A7;
+  }
+
+  .calc-result-label {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    display: block;
+  }
+
+  .calc-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+  }
+
+  /* ============================================================
+     DAY/NIGHT VISUALIZATION
+     ============================================================ */
+  .daynight-visual {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+  }
+
+  .daynight-track {
+    position: relative;
+    display: flex;
+    height: 240px;
+  }
+
+  .daynight-cycle {
+    display: flex;
+    width: 100%;
+  }
+
+  .dn-segment {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 20px;
+    position: relative;
+  }
+
+  .day-segment {
+    background: linear-gradient(180deg, #1a2a3a 0%, #0d1a26 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Warm amber ambient glow for day */
+  .day-segment::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 189, 46, 0.15), transparent 70%);
+    animation: day-glow-pulse 4s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes day-glow-pulse {
+    0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.15); }
+  }
+
+  .night-segment {
+    background: linear-gradient(180deg, #0a0c14 0%, #050608 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Cool blue ambient glow for night */
+  .night-segment::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(100, 140, 200, 0.12), transparent 70%);
+    animation: night-glow-pulse 5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes night-glow-pulse {
+    0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+    50% { opacity: 0.9; transform: translateX(-50%) scale(1.1); }
+  }
+
+  /* Animated mission activity dots */
+  .day-segment::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #FFBD2E;
+    box-shadow:
+      30px 20px 0 rgba(255, 189, 46, 0.4),
+      -20px 30px 0 rgba(255, 189, 46, 0.3),
+      15px -10px 0 rgba(255, 189, 46, 0.25);
+    top: 55%;
+    left: 40%;
+    animation: mission-dots-day 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes mission-dots-day {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
+
+  .night-segment::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #00C9A7;
+    box-shadow:
+      25px 15px 0 rgba(0, 201, 167, 0.5),
+      -15px 25px 0 rgba(0, 201, 167, 0.35),
+      10px -15px 0 rgba(0, 201, 167, 0.3);
+    top: 55%;
+    left: 45%;
+    animation: mission-dots-night 2.5s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  @keyframes mission-dots-night {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+
+  .dn-sky {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .day-sky .dn-celestial {
+    font-size: 36px;
+    color: #FFBD2E;
+    filter: drop-shadow(0 0 12px rgba(255, 189, 46, 0.4));
+    animation: sun-glow 3s ease-in-out infinite;
+  }
+
+  @keyframes sun-glow {
+    0%, 100% { filter: drop-shadow(0 0 12px rgba(255, 189, 46, 0.4)); }
+    50% { filter: drop-shadow(0 0 24px rgba(255, 189, 46, 0.6)) drop-shadow(0 0 48px rgba(255, 189, 46, 0.2)); }
+  }
+
+  .night-sky .dn-celestial {
+    font-size: 36px;
+    color: #B0BEC5;
+    filter: drop-shadow(0 0 8px rgba(176, 190, 197, 0.3));
+    animation: moon-glow 4s ease-in-out infinite;
+  }
+
+  @keyframes moon-glow {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(176, 190, 197, 0.3)); }
+    50% { filter: drop-shadow(0 0 16px rgba(176, 190, 197, 0.5)) drop-shadow(0 0 36px rgba(100, 140, 200, 0.15)); }
+  }
+
+  .dn-transition {
+    width: 2px;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+  }
+
+  .dn-transition-line {
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg,
+      rgba(255, 189, 46, 0.4),
+      rgba(255, 189, 46, 0.1) 40%,
+      rgba(100, 140, 200, 0.1) 60%,
+      rgba(100, 140, 200, 0.4));
+    position: relative;
+  }
+
+  .dn-transition-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -4px;
+    width: 10px;
+    height: 100%;
+    background: linear-gradient(180deg,
+      rgba(255, 189, 46, 0.08),
+      transparent 30%,
+      transparent 70%,
+      rgba(100, 140, 200, 0.08));
+    pointer-events: none;
+  }
+
+  .dn-ops {
     display: flex;
     flex-direction: column;
     gap: 8px;
-  }
-
-  .ops-mission {
-    display: grid;
-    grid-template-columns: 10px 1fr auto;
-    gap: 12px;
     align-items: center;
-    padding: 10px 12px;
+  }
+
+  .dn-mission-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(0, 201, 167, 0.1);
+    border: 1px solid rgba(0, 201, 167, 0.15);
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.04);
-  }
-
-  .ops-mission-status {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-  }
-
-  .ops-mission-status.active {
-    background: #00C9A7;
-    box-shadow: 0 0 8px rgba(0, 201, 167, 0.5);
-    animation: blink-live 2s ease-in-out infinite;
-  }
-
-  .ops-mission-status.complete {
-    background: var(--text-tertiary);
-  }
-
-  .ops-mission-status.scheduled {
-    background: transparent;
-    border: 2px solid var(--text-tertiary);
-  }
-
-  .ops-mission-name {
-    font-family: var(--font-body);
-    font-size: 12px;
-    color: var(--text-secondary);
-  }
-
-  .ops-mission-time {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: #00C9A7;
+  }
+
+  .dn-mission-tag.night-tag {
+    background: rgba(0, 201, 167, 0.15);
+    border-color: rgba(0, 201, 167, 0.25);
+  }
+
+  .dn-time-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
     color: var(--text-tertiary);
   }
 
-  /* ---- Integration Grid ---- */
-  .integration-grid {
+  .dn-cursor {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .dn-cursor-line {
+    width: 2px;
+    height: 100%;
+    background: #00C9A7;
+    box-shadow: 0 0 8px rgba(0, 201, 167, 0.5);
+  }
+
+  .dn-cursor-label {
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #00C9A7;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* Ops Stats */
+  .ops-stats-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
 
   @media (min-width: 768px) {
-    .integration-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
+    .ops-stats-grid { grid-template-columns: repeat(4, 1fr); }
   }
 
-  @media (min-width: 1024px) {
-    .integration-grid {
-      grid-template-columns: repeat(6, 1fr);
-    }
-  }
-
-  .integration-card {
+  .ops-stat-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 6px;
     padding: 28px 16px;
     background: var(--surface-container-low);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
-    transition: all 0.3s ease;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .integration-card:hover {
+  .ops-stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00C9A7, transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease, width 0.4s ease;
+  }
+
+  .ops-stat-card:hover {
     border-color: rgba(0, 201, 167, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 201, 167, 0.06);
   }
 
-  .integration-icon {
-    font-size: 28px;
+  .ops-stat-card:hover::before {
+    opacity: 1;
+    width: 100%;
+  }
+
+  .ops-sc-value {
+    font-family: var(--font-headline);
+    font-size: 2rem;
+    font-weight: 700;
     color: #00C9A7;
+    line-height: 1;
   }
 
-  .integration-label {
+  .ops-sc-value.counted {
+    animation: count-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes count-pop {
+    0% { transform: scale(0.6); opacity: 0; }
+    60% { transform: scale(1.08); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .ops-sc-label {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+  }
+
+  /* ============================================================
+     INTEGRATION ARCHITECTURE
+     ============================================================ */
+  .arch-diagram {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 40px 32px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .arch-diagram::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .arch-flow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-bottom: 32px;
+  }
+
+  .arch-flow::-webkit-scrollbar { display: none; }
+
+  .arch-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 120px;
+    flex: 1;
+    position: relative;
+    padding: 0 8px;
+  }
+
+  .arch-node-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 201, 167, 0.1);
+    border: 1px solid rgba(0, 201, 167, 0.2);
+    color: #00C9A7;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+    animation: arch-node-pulse 3s ease-in-out infinite;
+  }
+
+  .arch-node:nth-child(1) .arch-node-icon { animation-delay: 0s; }
+  .arch-node:nth-child(2) .arch-node-icon { animation-delay: 0.6s; }
+  .arch-node:nth-child(3) .arch-node-icon { animation-delay: 1.2s; }
+  .arch-node:nth-child(4) .arch-node-icon { animation-delay: 1.8s; }
+  .arch-node:nth-child(5) .arch-node-icon { animation-delay: 2.4s; }
+
+  @keyframes arch-node-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0, 201, 167, 0); }
+    50% { box-shadow: 0 0 16px rgba(0, 201, 167, 0.12), 0 0 4px rgba(0, 201, 167, 0.08); }
+  }
+
+  .arch-node:hover .arch-node-icon {
+    background: rgba(0, 201, 167, 0.15);
+    box-shadow: 0 0 24px rgba(0, 201, 167, 0.25);
+    animation: none;
+  }
+
+  .arch-node-label {
     font-family: var(--font-headline);
     font-size: 0.8125rem;
     font-weight: 700;
     color: var(--text-primary);
-    letter-spacing: 0.02em;
+    display: block;
+    margin-bottom: 4px;
   }
 
-  /* ---- Differentiators ---- */
-  .diff-grid {
+  .arch-node-desc {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.03em;
+  }
+
+  .arch-arrow {
+    position: absolute;
+    top: 20px;
+    right: -12px;
+    color: rgba(0, 201, 167, 0.3);
+    z-index: 1;
+  }
+
+  /* Data flow particle animation on connectors */
+  .arch-arrow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -18px;
+    width: 36px;
+    height: 2px;
+    background: rgba(0, 201, 167, 0.08);
+    transform: translateY(-50%);
+    overflow: hidden;
+  }
+
+  .arch-arrow::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #00C9A7;
+    box-shadow: 0 0 8px rgba(0, 201, 167, 0.5);
+    animation: arch-particle-flow 2s ease-in-out infinite;
+    opacity: 0.6;
+  }
+
+  .arch-node:nth-child(1) .arch-arrow::after { animation-delay: 0s; }
+  .arch-node:nth-child(2) .arch-arrow::after { animation-delay: 0.5s; }
+  .arch-node:nth-child(3) .arch-arrow::after { animation-delay: 1s; }
+  .arch-node:nth-child(4) .arch-arrow::after { animation-delay: 1.5s; }
+
+  @keyframes arch-particle-flow {
+    0% { left: -20px; opacity: 0; }
+    20% { opacity: 0.8; }
+    80% { opacity: 0.8; }
+    100% { left: 16px; opacity: 0; }
+  }
+
+  .arch-integrations {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding-top: 24px;
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .arch-int-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .arch-int-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .arch-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #00C9A7;
+    background: rgba(0, 201, 167, 0.08);
+    border: 1px solid rgba(0, 201, 167, 0.15);
+    padding: 6px 14px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+
+  .arch-tag:hover {
+    background: rgba(0, 201, 167, 0.14);
+    border-color: rgba(0, 201, 167, 0.35);
+    box-shadow: 0 0 16px rgba(0, 201, 167, 0.15), 0 0 4px rgba(0, 201, 167, 0.1);
+    text-shadow: 0 0 8px rgba(0, 201, 167, 0.3);
+  }
+
+  /* ============================================================
+     CAPABILITIES GRID
+     ============================================================ */
+  .cap-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
   }
 
   @media (min-width: 768px) {
-    .diff-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .cap-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
-  .diff-card {
+  @media (min-width: 1024px) {
+    .cap-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .cap-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
     padding: 32px;
-    border-left: 2px solid var(--accent);
-    transition: background 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
   }
 
-  .teal-border {
-    border-left-color: #00C9A7;
+  /* Glossy shine layer */
+  .cap-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 1;
   }
 
-  .diff-card:hover {
-    background: rgba(0, 201, 167, 0.06);
+  /* Subtle grid pattern revealed on hover */
+  .cap-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 201, 167, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 201, 167, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    border-radius: inherit;
   }
 
-  .diff-number {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--accent);
-    letter-spacing: 0.1em;
-    margin-bottom: 12px;
-    display: block;
+  .cap-card:hover::after {
+    opacity: 1;
   }
 
-  .teal-number {
+  /* Animated border gradient on hover */
+  .cap-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 201, 167, 0.25);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.2),
+      0 0 30px rgba(0, 201, 167, 0.12),
+      inset 0 0 0 1px rgba(0, 201, 167, 0.08);
+    animation: cap-border-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes cap-border-glow {
+    0%, 100% { border-color: rgba(0, 201, 167, 0.25); }
+    50% { border-color: rgba(0, 201, 167, 0.4); }
+  }
+
+  /* Staggered reveal delay via nth-child */
+  .cap-card:nth-child(1) { transition-delay: 0s; }
+  .cap-card:nth-child(2) { transition-delay: 0.06s; }
+  .cap-card:nth-child(3) { transition-delay: 0.12s; }
+  .cap-card:nth-child(4) { transition-delay: 0.18s; }
+  .cap-card:nth-child(5) { transition-delay: 0.24s; }
+  .cap-card:nth-child(6) { transition-delay: 0.30s; }
+
+  .cap-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(0, 201, 167, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: box-shadow 0.4s ease, background 0.4s ease;
+    position: relative;
+  }
+
+  /* Teal glow ring around icon */
+  .cap-icon-wrap::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 14px;
+    border: 1.5px solid transparent;
+    transition: all 0.4s ease;
+    pointer-events: none;
+  }
+
+  .cap-card:hover .cap-icon-wrap {
+    box-shadow: 0 0 24px rgba(0, 201, 167, 0.3), 0 0 8px rgba(0, 201, 167, 0.15);
+    background: rgba(0, 201, 167, 0.18);
+  }
+
+  .cap-card:hover .cap-icon-wrap::after {
+    border-color: rgba(0, 201, 167, 0.35);
+    box-shadow: 0 0 12px rgba(0, 201, 167, 0.15);
+  }
+
+  .cap-icon {
     color: #00C9A7;
+    font-size: 24px;
   }
 
-  .diff-card h3 {
+  .cap-title {
     font-family: var(--font-headline);
-    font-size: 1.125rem;
+    font-size: 1.0625rem;
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 12px;
   }
 
-  .diff-card p {
-    font-size: 0.9375rem;
+  .cap-desc {
+    font-size: 0.875rem;
     color: var(--text-secondary);
     line-height: 1.7;
   }
 
-  /* ---- Responsive ---- */
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
   @media (max-width: 768px) {
-    .vert-hero-inner {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-
-    .vert-hero {
+    .deploy-hero {
       min-height: auto;
       padding-top: 120px;
+      padding-bottom: 60px;
     }
 
-    .stats-bar-inner {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-
-    .vert-hero-actions {
+    .hero-actions {
       flex-direction: column;
       align-items: flex-start;
       gap: 16px;
     }
+
+    .hero-stats-bar {
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .hero-stat-divider:nth-of-type(2) {
+      display: none;
+    }
+
+    .sequence-steps {
+      overflow-x: auto;
+    }
+
+    .arch-flow {
+      overflow-x: auto;
+    }
+
+    .daynight-track {
+      height: 200px;
+    }
   }
 
-  /* ---- Light Mode ---- */
-  :global([data-theme="light"]) .deploy-preview {
-    background: linear-gradient(135deg, #e8eaed, #eef5f3);
-    border-color: var(--glass-border);
+  /* ============================================================
+     LIGHT MODE
+     ============================================================ */
+  :global([data-theme="light"]) .facility-svg rect[fill] {
+    fill: rgba(0, 137, 123, 0.02);
   }
 
-  :global([data-theme="light"]) .deploy-bg-icon {
-    color: rgba(0, 137, 123, 0.06);
+  :global([data-theme="light"]) .facility-svg rect[stroke] {
+    stroke: rgba(0, 137, 123, 0.12);
   }
 
-  :global([data-theme="light"]) .deploy-readout {
-    background: rgba(255, 255, 255, 0.8);
+  :global([data-theme="light"]) .facility-svg path {
+    stroke: rgba(0, 137, 123, 0.15);
+  }
+
+  :global([data-theme="light"]) .facility-svg circle[fill="#00C9A7"] {
+    fill: #00897B;
+  }
+
+  :global([data-theme="light"]) .facility-svg text {
+    fill: rgba(0, 137, 123, 0.3);
+  }
+
+  :global([data-theme="light"]) .hero-cta {
+    background: linear-gradient(135deg, #00897B, #006064);
+  }
+
+  :global([data-theme="light"]) .hero-stat-value,
+  :global([data-theme="light"]) .ops-sc-value,
+  :global([data-theme="light"]) .calc-perimeter-value {
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .seq-icon-wrap {
+    background: rgba(0, 137, 123, 0.08);
+    border-color: rgba(0, 137, 123, 0.15);
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .seq-step.active .seq-icon-wrap {
+    background: rgba(0, 137, 123, 0.15);
+    border-color: #00897B;
+    box-shadow: 0 0 24px rgba(0, 137, 123, 0.15);
+  }
+
+  :global([data-theme="light"]) .spec-card:hover,
+  :global([data-theme="light"]) .cap-card:hover {
     border-color: rgba(0, 137, 123, 0.15);
   }
 
-  :global([data-theme="light"]) .deploy-grid-overlay {
-    background-image:
-      linear-gradient(rgba(0, 137, 123, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 137, 123, 0.05) 1px, transparent 1px);
+  :global([data-theme="light"]) .spec-card-icon,
+  :global([data-theme="light"]) .cap-icon,
+  :global([data-theme="light"]) .arch-tag {
+    color: #00897B;
   }
 
-  :global([data-theme="light"]) .deploy-status-badge {
-    background: rgba(255, 255, 255, 0.7);
+  :global([data-theme="light"]) .arch-node-icon {
+    background: rgba(0, 137, 123, 0.08);
     border-color: rgba(0, 137, 123, 0.15);
+    color: #00897B;
   }
 
-  :global([data-theme="light"]) .deploy-orbit {
-    border-color: rgba(0, 137, 123, 0.12);
+  :global([data-theme="light"]) .calc-slider::-webkit-slider-thumb {
+    background: #00897B;
+    box-shadow: 0 0 12px rgba(0, 137, 123, 0.3);
   }
 
-  :global([data-theme="light"]) .ops-mockup {
-    background: linear-gradient(135deg, #e8eaed, #eef5f3);
+  :global([data-theme="light"]) .calc-slider::-moz-range-thumb {
+    background: #00897B;
+    box-shadow: 0 0 12px rgba(0, 137, 123, 0.3);
   }
 
-  :global([data-theme="light"]) .ops-header-bar {
-    background: rgba(0, 0, 0, 0.05);
-  }
-
-  :global([data-theme="light"]) .ops-stat {
+  :global([data-theme="light"]) .calc-result {
     background: rgba(0, 137, 123, 0.06);
     border-color: rgba(0, 137, 123, 0.1);
   }
 
-  :global([data-theme="light"]) .ops-mission {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.06);
-  }
-
-  :global([data-theme="light"]) .stat-value {
+  :global([data-theme="light"]) .dn-mission-tag {
+    background: rgba(0, 137, 123, 0.08);
+    border-color: rgba(0, 137, 123, 0.12);
     color: #00897B;
   }
 
-  :global([data-theme="light"]) .service-icon {
-    color: #00897B;
+  :global([data-theme="light"]) .day-segment {
+    background: linear-gradient(180deg, #e8eef5, #dce5ed);
   }
 
-  :global([data-theme="light"]) .teal-icon-wrap {
+  :global([data-theme="light"]) .night-segment {
+    background: linear-gradient(180deg, #c8d0d8, #b0b8c0);
+  }
+
+  :global([data-theme="light"]) .arch-tag {
+    background: rgba(0, 137, 123, 0.06);
+    border-color: rgba(0, 137, 123, 0.12);
+  }
+
+  :global([data-theme="light"]) .cap-icon-wrap {
     background: rgba(0, 137, 123, 0.1);
   }
 
-  :global([data-theme="light"]) .integration-icon {
+  :global([data-theme="light"]) .eyebrow-line {
+    background: #00897B;
+  }
+
+  :global([data-theme="light"]) .eyebrow-text {
     color: #00897B;
-  }
-
-  :global([data-theme="light"]) .teal-number {
-    color: #00897B;
-  }
-
-  :global([data-theme="light"]) .teal-border {
-    border-left-color: #00897B;
-  }
-
-  :global([data-theme="light"]) .diff-card:hover {
-    background: rgba(0, 137, 123, 0.06);
   }
 </style>

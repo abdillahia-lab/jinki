@@ -1,97 +1,182 @@
 ---
-/*
-  TrustBar — Thin social proof strip between Hero and Verticals.
-  Shows key differentiators with icons.
-*/
-const signals = [
-  { icon: 'precision_manufacturing', text: 'FAA Part 107 Certified' },
-  { icon: 'shield', text: 'SOC 2 Compliant' },
-  { icon: 'speed', text: '< 24hr Deployment' },
-  { icon: 'trending_down', text: '60% Lower Inspection Costs' },
+const capabilities = [
+  {
+    headline: "48-Hour Intelligence Reports",
+    description: "What takes manual inspection teams 3+ weeks, our aerial platform delivers in under 48 hours — complete with thermal overlays, anomaly classification, and prioritized repair recommendations.",
+    metric: "95% faster turnaround",
+  },
+  {
+    headline: "Persistent Perimeter Coverage",
+    description: "Autonomous missions launch on schedule or on trigger, covering 500+ acre perimeters with real-time alerts — no gaps, no blind spots, no fatigue.",
+    metric: "6-min response advantage",
+  },
+  {
+    headline: "Precision Resource Mapping",
+    description: "NDVI crop health maps and thermal moisture analysis across thousands of acres identify irrigation waste and yield risks before they compound.",
+    metric: "Acre-level precision",
+  },
+];
+
+const trustBadges = [
+  { icon: 'flight_takeoff', label: 'FAA Part 107' },
+  { icon: 'radar', label: 'DC SFRA Trained' },
+  { icon: 'verified_user', label: 'SOC 2 Roadmap' },
+  { icon: 'lock', label: 'End-to-End Encrypted' },
+  { icon: 'health_and_safety', label: 'OSHA Compliant' },
+  { icon: 'shield', label: 'NDA by Default' },
 ];
 ---
 
-<div class="trust-bar reveal" aria-label="Trust signals">
-  <div class="trust-inner">
-    {signals.map(s => (
-      <div class="trust-item">
-        <span class="material-symbols-outlined trust-icon" aria-hidden="true">{s.icon}</span>
-        <span class="trust-text">{s.text}</span>
+<section class="trust-bar" aria-label="Social proof">
+
+  <!-- Stats -->
+  <div class="trust-counters reveal" style="padding: 80px 24px; border-bottom: 1px solid var(--glass-border);">
+    <div class="trust-counters-grid" style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;">
+      <div class="trust-counter" style="text-align: center;">
+        <span class="trust-counter-val" style="display: block; font-family: var(--font-headline); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--accent); letter-spacing: -0.03em; line-height: 1.1;">0.5°C</span>
+        <span class="trust-counter-lbl" style="display: block; font-family: var(--font-label); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-top: 8px;">Thermal Accuracy</span>
       </div>
-    ))}
+      <div class="trust-counter" style="text-align: center;">
+        <span class="trust-counter-val" style="display: block; font-family: var(--font-headline); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--accent); letter-spacing: -0.03em; line-height: 1.1;">50+ mi</span>
+        <span class="trust-counter-lbl" style="display: block; font-family: var(--font-label); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-top: 8px;">Daily Corridor Range</span>
+      </div>
+      <div class="trust-counter" style="text-align: center;">
+        <span class="trust-counter-val" style="display: block; font-family: var(--font-headline); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--accent); letter-spacing: -0.03em; line-height: 1.1;">24hr</span>
+        <span class="trust-counter-lbl" style="display: block; font-family: var(--font-label); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-top: 8px;">Report Turnaround</span>
+      </div>
+      <div class="trust-counter" style="text-align: center;">
+        <span class="trust-counter-val" style="display: block; font-family: var(--font-headline); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; color: var(--accent); letter-spacing: -0.03em; line-height: 1.1;">200/mo</span>
+        <span class="trust-counter-lbl" style="display: block; font-family: var(--font-label); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-top: 8px;">Autonomous Missions</span>
+      </div>
+    </div>
   </div>
-</div>
+
+  <!-- Trust Badges -->
+  <div class="trust-badges reveal" style="padding: 48px 24px; text-align: center; border-bottom: 1px solid var(--glass-border);">
+    <p style="font-family: var(--font-label); font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-tertiary); margin-bottom: 24px;">Certifications & Compliance</p>
+    <div class="badges-row">
+      {trustBadges.map((b) => (
+        <div class="badge-chip">
+          <span class="material-symbols-outlined" style="font-size: 1.125rem; color: var(--accent); font-variation-settings: 'FILL' 1;" aria-hidden="true">{b.icon}</span>
+          <span style="font-family: var(--font-label); font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-secondary);">{b.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Capabilities -->
+  <div class="trust-quotes reveal" style="padding: 80px 24px;">
+    <h2 style="font-family: var(--font-headline); font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 700; color: var(--text-primary); text-align: center; letter-spacing: -0.02em; margin-bottom: 16px;">What We Deliver</h2>
+    <p style="font-family: var(--font-body); font-size: 0.875rem; color: var(--text-tertiary); text-align: center; margin-bottom: 48px;">Aerial intelligence capabilities built for critical infrastructure operators.</p>
+    <div class="quotes-grid">
+      {capabilities.map((c) => (
+        <div class="quote-card">
+          <span class="quote-metric">{c.metric}</span>
+          <h3 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 700; color: var(--text-primary); margin-bottom: 12px;">{c.headline}</h3>
+          <p class="quote-text" style="border-left: none; padding-left: 0;">{c.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+
+</section>
 
 <style>
   .trust-bar {
-    background: var(--surface-container);
-    padding: 1.25rem 1.5rem;
-    overflow: hidden;
-    border-top: 1px solid var(--glass-border);
-    border-bottom: 1px solid var(--glass-border);
-    position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
-  .trust-bar::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--glossy-shine);
-    pointer-events: none;
-  }
-
-  .trust-inner {
-    max-width: 80rem;
-    margin: 0 auto;
+  .badges-row {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1.5rem 3rem;
     flex-wrap: wrap;
+    gap: 12px 20px;
+    max-width: 900px;
+    margin: 0 auto;
   }
 
-  .trust-item {
+  .badge-chip {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    white-space: nowrap;
-    padding: 0.5rem 0.75rem;
+    gap: 6px;
+    padding: 8px 14px;
     border-radius: 8px;
-    transition: background 0.3s ease, transform 0.3s ease;
-    cursor: default;
+    border: 1px solid var(--glass-border);
+    background: var(--surface-container);
   }
 
-  .trust-item:hover {
-    background: var(--accent-glow);
-    transform: translateY(-1px);
+  .quotes-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
   }
 
-  .trust-item:hover .trust-icon {
-    text-shadow: 0 0 12px var(--accent-glow-strong);
+  .quote-card {
+    padding: 32px 24px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
   }
 
-  .trust-icon {
-    font-size: 1.125rem;
-    color: var(--accent);
-    font-variation-settings: 'FILL' 1;
-    transition: text-shadow 0.3s ease;
-  }
-
-  .trust-text {
+  .quote-metric {
+    display: inline-block;
     font-family: var(--font-label);
     font-size: 0.6875rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-secondary);
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    padding: 4px 10px;
+    background: var(--accent-glow);
+    border-radius: 9999px;
+    margin-bottom: 16px;
   }
 
-  /* Mobile: 2-column */
-  @media (max-width: 767px) {
-    .trust-inner {
-      gap: 1rem 2rem;
-      justify-content: center;
+  .quote-text {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    padding-left: 16px;
+    border-left: 2px solid rgba(0, 229, 255, 0.3);
+  }
+
+  .quote-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--surface-container);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 1023px) {
+    .quotes-grid {
+      grid-template-columns: 1fr;
+      max-width: 520px;
+    }
+    .trust-counters-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
     }
   }
 
+  @media (max-width: 767px) {
+    .trust-counters,
+    .trust-quotes {
+      padding: 56px 16px !important;
+    }
+    .trust-counters-grid {
+      gap: 16px !important;
+    }
+    .badges-row {
+      gap: 8px 12px;
+    }
+  }
 </style>

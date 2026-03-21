@@ -1,317 +1,571 @@
 ---
 /*
-  Service Page — Facility Intelligence Audit | Jinki Aerial Intelligence
-
-  Comprehensive aerial assessment of your facility's thermal health,
-  structural condition, and security posture. One engagement, one report,
-  clear next steps.
+  TEAM OMEGA — Facility Intelligence Audit | Jinki Aerial Intelligence
+  Redesigned: cinematic mission-briefing aesthetic with interactive process wheel,
+  findings gallery, comparison, and tabbed deliverable preview.
 */
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import LeadGen from '../../components/LeadGen.astro';
 import Footer from '../../components/Footer.astro';
 
-const included = [
-  {
-    icon: 'thermostat',
-    title: 'Thermal Survey',
-    desc: 'Full-facility aerial thermal mapping identifying insulation failures, moisture intrusion, cooling anomalies, and equipment hot spots across every rooftop and mechanical system.',
-  },
-  {
-    icon: 'roofing',
-    title: 'Roof & Structural Assessment',
-    desc: 'High-resolution visual and thermal inspection with AI-prioritized damage classification: membrane degradation, ponding water, hail impact, and debris accumulation.',
-  },
-  {
-    icon: 'security',
-    title: 'Perimeter Security Evaluation',
-    desc: 'Thermal and visual perimeter assessment identifying camera blind spots, access vulnerabilities, lighting gaps, and monitoring coverage deficiencies across your entire boundary.',
-  },
-  {
-    icon: 'description',
-    title: 'Compliance Documentation',
-    desc: 'NFPA 70B thermal inspection records, ASHRAE temperature verification, environmental documentation, and regulatory-ready reporting delivered as part of every engagement.',
-  },
-];
-
 const process = [
-  {
-    step: '01',
-    title: 'Scoping Call',
-    desc: 'We learn your facility, your priorities, and your pain points. No generic questionnaire — a conversation about what matters to your operations team.',
-    icon: 'call',
-  },
-  {
-    step: '02',
-    title: 'Flight Planning',
-    desc: 'Regulatory coordination, airspace authorization, safety planning, and mission design tailored to your site geometry and inspection requirements.',
-    icon: 'flight_takeoff',
-  },
-  {
-    step: '03',
-    title: 'Data Capture',
-    desc: 'Aerial operations on-site. Thermal, visual, and multispectral data collection covering every structure, system, and perimeter section — typically completed in a single day.',
-    icon: 'satellite_alt',
-  },
-  {
-    step: '04',
-    title: 'Analysis & AI Processing',
-    desc: 'Raw data feeds our analytics pipeline: anomaly detection, severity classification, trend identification, and automated damage assessment across thousands of data points.',
-    icon: 'model_training',
-  },
-  {
-    step: '05',
-    title: 'Recommendations Report',
-    desc: 'The Facility Intelligence Report is delivered: severity-ranked findings, remediation priorities, cost estimates, compliance status, and suggested timelines.',
-    icon: 'assignment',
-  },
-  {
-    step: '06',
-    title: 'Follow-up Review',
-    desc: 'We walk your team through every finding. Questions answered, priorities confirmed, and a clear path forward — not a file drop and a goodbye.',
-    icon: 'groups',
-  },
+  { step: '01', title: 'Scoping Call', desc: 'We learn your facility, your priorities, and your pain points. A real conversation about what matters to your operations team.', icon: 'call' },
+  { step: '02', title: 'Flight Planning', desc: 'Airspace authorization, safety planning, and mission design tailored to your site geometry and inspection requirements.', icon: 'flight_takeoff' },
+  { step: '03', title: 'Data Capture', desc: 'On-site aerial operations. Thermal, visual, and multispectral data across every structure — typically completed in a single day.', icon: 'satellite_alt' },
+  { step: '04', title: 'AI Analysis', desc: 'Our analytics pipeline processes thousands of data points: anomaly detection, severity classification, and automated damage assessment.', icon: 'model_training' },
+  { step: '05', title: 'Recommendations', desc: 'The Facility Intelligence Report: severity-ranked findings, remediation priorities, cost estimates, and suggested timelines.', icon: 'assignment' },
+  { step: '06', title: 'Review & Handoff', desc: 'We walk your team through every finding. Questions answered, priorities confirmed, and a clear path forward.', icon: 'groups' },
 ];
 
-const audiences = [
-  { icon: 'dns', label: 'Data Center Operators' },
-  { icon: 'electric_bolt', label: 'Energy Companies' },
-  { icon: 'apartment', label: 'Facility Managers' },
-  { icon: 'account_balance', label: 'Asset Owners' },
-  { icon: 'engineering', label: 'Maintenance Directors' },
-  { icon: 'shield', label: 'Security Teams' },
+const findings = [
+  { type: 'CRITICAL', label: 'Cooling Unit Thermal Anomaly', category: 'Thermal', color: '#FF3B30', img: 'thermostat' },
+  { type: 'HIGH', label: 'Roof Membrane Degradation', category: 'Structural', color: '#FF6B35', img: 'roofing' },
+  { type: 'MEDIUM', label: 'Camera Blind Spot — NE Gate', category: 'Security', color: '#FFBD2E', img: 'security' },
+  { type: 'LOW', label: 'Insulation Gap — Mech Room 2', category: 'Efficiency', color: '#00E5FF', img: 'electric_bolt' },
+];
+
+const reportTabs = [
+  { id: 'executive', label: 'Executive Summary', icon: 'summarize', content: 'High-level facility health score, total findings by severity, estimated remediation budget, and recommended priority actions for leadership review.' },
+  { id: 'thermal', label: 'Thermal Analysis', icon: 'thermostat', content: 'Complete thermal mapping with anomaly locations, delta-T measurements, equipment identification, and NFPA 70B compliance status for every inspected system.' },
+  { id: 'structural', label: 'Structural Report', icon: 'roofing', content: 'AI-classified damage assessment with visual evidence, area measurements, degradation ratings, and projected repair costs for every roof section and exterior surface.' },
+  { id: 'security', label: 'Security Evaluation', icon: 'security', content: 'Perimeter coverage analysis, camera blind spot mapping, lighting gap identification, and access vulnerability documentation with remediation recommendations.' },
+  { id: 'compliance', label: 'Compliance Package', icon: 'verified', content: 'Regulatory-ready documentation including ASHRAE temperature verification, environmental records, inspection certificates, and audit trail for every data point collected.' },
 ];
 ---
 
-<Layout title="Facility Intelligence Audit — Jinki Aerial Intelligence" description="Comprehensive aerial assessment of your facility's thermal health, structural condition, and security posture. One engagement, one report, clear next steps.">
+<Layout title="Facility Intelligence Audit — Jinki Aerial Intelligence" description="Comprehensive aerial assessment of your facility. One mission. One report. Clear next steps.">
   <Nav />
   <main id="main-content">
 
-    <!-- Hero -->
-    <section class="vert-hero" aria-label="Facility Intelligence Audit">
-      <div class="vert-hero-inner">
-        <div class="vert-hero-content reveal">
-          <div class="vert-eyebrow">
-            <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">Facility Audit</span>
+    <!-- ============ HERO — Mission Briefing ============ -->
+    <section class="omega-hero" aria-label="Facility Intelligence Audit">
+      <div class="omega-hero-inner">
+        <div class="omega-hero-content reveal">
+          <div class="omega-eyebrow">
+            <span class="omega-eyebrow-line"></span>
+            <span class="omega-eyebrow-text">Mission Briefing</span>
           </div>
-          <h1 class="vert-hero-title">
-            One Assessment.<br/>
-            <span class="gradient-text-cyan">Complete Facility Intelligence.</span>
+          <h1 class="omega-hero-title">
+            One Mission.<br/>
+            <span class="gradient-text-cyan">Total Facility Intelligence.</span>
           </h1>
-          <p class="vert-hero-subtitle">
+          <p class="omega-hero-subtitle">
             Jinki's Facility Intelligence Audit combines thermal diagnostics, structural assessment,
-            and security evaluation into a single engagement. You get a prioritized recommendations
-            report — not raw data, not another dashboard. Clear findings. Clear next steps.
+            and security evaluation into a single engagement. You receive a prioritized recommendations
+            report — not raw data. Clear findings. Clear next steps.
           </p>
-          <div class="vert-hero-actions">
-            <a href="#lead-gen" class="btn-premium vert-cta">Schedule Your Audit</a>
-            <a href="#process" class="vert-cta-secondary">See the Process</a>
+          <div class="omega-hero-actions">
+            <a href="#lead-gen" class="btn-premium omega-cta">Schedule Your Audit</a>
+            <a href="#process-wheel" class="omega-cta-secondary">See the Process</a>
           </div>
         </div>
-        <div class="vert-hero-visual reveal reveal-delay-1" aria-hidden="true">
-          <div class="audit-preview">
-            <div class="audit-grid-overlay"></div>
-            <span class="material-symbols-outlined audit-bg-icon" style="font-variation-settings: 'FILL' 1;">assignment</span>
-            <div class="audit-scan-line"></div>
-            <div class="audit-readout">
-              <span class="readout-label">AUDIT STATUS</span>
-              <span class="readout-value audit-value">6 / 6</span>
-              <span class="readout-status audit-status">ASSESSMENT COMPLETE</span>
+        <div class="omega-hero-visual reveal reveal-delay-1" aria-hidden="true">
+          <div class="mission-briefing-card">
+            <div class="mission-grid-overlay"></div>
+            <!-- Countdown rings -->
+            <div class="countdown-ring ring-outer">
+              <svg viewBox="0 0 120 120" class="countdown-svg">
+                <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(0,229,255,0.08)" stroke-width="2" />
+                <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(0,229,255,0.5)" stroke-width="2" stroke-dasharray="339.29" stroke-dashoffset="50" stroke-linecap="round" class="countdown-progress" />
+              </svg>
             </div>
-            <div class="audit-badge badge-1">
-              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 16px;">thermostat</span>
-              <span>Thermal</span>
+            <div class="mission-center-icon">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 36px; color: var(--accent);">assignment</span>
             </div>
-            <div class="audit-badge badge-2">
-              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 16px;">roofing</span>
-              <span>Structural</span>
+            <!-- Mission status badges -->
+            <div class="mission-stat-badge badge-tl">
+              <span class="mission-stat-label">TARGETS</span>
+              <span class="mission-stat-val">4 BUILDINGS</span>
             </div>
-            <div class="audit-badge badge-3">
-              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 16px;">security</span>
-              <span>Security</span>
+            <div class="mission-stat-badge badge-tr">
+              <span class="mission-stat-label">DURATION</span>
+              <span class="mission-stat-val">1 DAY</span>
             </div>
+            <div class="mission-stat-badge badge-bl">
+              <span class="mission-stat-label">SENSORS</span>
+              <span class="mission-stat-val">THERMAL + VISUAL</span>
+            </div>
+            <div class="mission-stat-badge badge-br">
+              <span class="mission-stat-label">STATUS</span>
+              <span class="mission-stat-val status-ready">READY</span>
+            </div>
+            <div class="mission-scan-line"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- What's Included -->
-    <section id="included" class="section" style="background: var(--surface-dim);" aria-label="What's Included">
-      <div class="section-inner">
-        <div class="section-header reveal">
-          <div class="vert-eyebrow">
-            <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">What's Included</span>
+    <!-- ============ INTERACTIVE PROCESS WHEEL ============ -->
+    <section id="process-wheel" class="omega-section" style="background: var(--surface-dim);" aria-label="The Process">
+      <div class="omega-section-inner">
+        <div class="omega-section-header reveal">
+          <div class="omega-eyebrow">
+            <span class="omega-eyebrow-line"></span>
+            <span class="omega-eyebrow-text">The Process</span>
           </div>
-          <h2>Every Surface. Every System.<br/>One Engagement.</h2>
-          <p class="section-subtitle">
-            A single aerial engagement covers your entire facility — thermal health,
-            structural condition, security posture, and compliance documentation.
-            No piecemeal scoping. No follow-up surprises.
-          </p>
+          <h2>Six Steps to<br/>Actionable Intelligence</h2>
+          <p class="omega-section-subtitle">Click any step to learn more. Most facilities complete the entire process in two to three weeks.</p>
         </div>
 
-        <div class="services-grid">
-          {included.map((svc, i) => (
-            <div class={`service-card metallic-gloss reveal reveal-delay-${(i % 4) + 1}`}>
-              <div class="service-icon-wrap">
-                <span class="material-symbols-outlined service-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{svc.icon}</span>
+        <div class="process-wheel-container reveal">
+          <!-- Circular wheel for desktop -->
+          <div class="process-wheel" role="tablist" aria-label="Audit process steps">
+            <div class="wheel-center">
+              <div class="wheel-center-content" id="wheel-center-content">
+                <span class="material-symbols-outlined wheel-center-icon" style="font-variation-settings: 'FILL' 1;" id="wheel-icon" aria-hidden="true">call</span>
+                <span class="wheel-center-step" id="wheel-step">01</span>
+                <span class="wheel-center-title" id="wheel-title">Scoping Call</span>
               </div>
-              <h3 class="service-title">{svc.title}</h3>
-              <p class="service-desc">{svc.desc}</p>
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- Process Timeline -->
-    <section id="process" class="section" aria-label="The Process">
-      <div class="section-inner">
-        <div class="section-header reveal">
-          <div class="vert-eyebrow">
-            <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">The Process</span>
+            {process.map((p, i) => {
+              const angle = (i * 60) - 90;
+              const rad = angle * Math.PI / 180;
+              const radius = 42;
+              const x = 50 + radius * Math.cos(rad);
+              const y = 50 + radius * Math.sin(rad);
+              return (
+                <button
+                  class={`wheel-node ${i === 0 ? 'active' : ''}`}
+                  role="tab"
+                  aria-selected={i === 0 ? 'true' : 'false'}
+                  aria-controls="wheel-detail-panel"
+                  data-step={i}
+                  data-icon={p.icon}
+                  data-title={p.title}
+                  data-desc={p.desc}
+                  data-num={p.step}
+                  style={`left: ${x}%; top: ${y}%;`}
+                >
+                  <span class="wheel-node-num">{p.step}</span>
+                  <span class="wheel-node-label">{p.title}</span>
+                </button>
+              );
+            })}
+            <!-- SVG connector ring -->
+            <svg class="wheel-ring-svg" viewBox="0 0 100 100" aria-hidden="true">
+              <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="0.3" stroke-dasharray="2,2" />
+            </svg>
           </div>
-          <h2>From Scoping Call to<br/>Actionable Report</h2>
-          <p class="section-subtitle">
-            Six steps from first conversation to prioritized recommendations.
-            Most facilities complete the entire process in two to three weeks.
-          </p>
-        </div>
 
-        <div class="timeline">
-          {process.map((step, i) => (
-            <div class={`timeline-item reveal reveal-delay-${(i % 4) + 1}`}>
-              <div class="timeline-marker">
-                <span class="timeline-step">{step.step}</span>
-                <div class="timeline-connector"></div>
-              </div>
-              <div class="timeline-content">
-                <div class="timeline-icon-wrap">
-                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 22px;" aria-hidden="true">{step.icon}</span>
+          <!-- Detail panel -->
+          <div class="wheel-detail-panel" id="wheel-detail-panel" role="tabpanel" aria-live="polite">
+            <p class="wheel-detail-desc" id="wheel-desc">We learn your facility, your priorities, and your pain points. A real conversation about what matters to your operations team.</p>
+          </div>
+
+          <!-- Mobile fallback: vertical timeline -->
+          <div class="process-mobile-list">
+            {process.map((p, i) => (
+              <div class={`process-mobile-item reveal reveal-delay-${(i % 4) + 1}`}>
+                <div class="process-mobile-marker">
+                  <span class="process-mobile-step">{p.step}</span>
+                  {i < process.length - 1 && <div class="process-mobile-connector"></div>}
                 </div>
-                <h3>{step.title}</h3>
-                <p>{step.desc}</p>
+                <div class="process-mobile-body">
+                  <div class="process-mobile-icon-wrap">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;" aria-hidden="true">{p.icon}</span>
+                  </div>
+                  <h3>{p.title}</h3>
+                  <p>{p.desc}</p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- The Deliverable -->
-    <section class="section" style="background: var(--surface-dim);" aria-label="The Deliverable">
-      <div class="section-inner">
-        <div class="deliverable-layout reveal">
-          <div class="deliverable-text">
-            <div class="vert-eyebrow">
-              <span class="vert-eyebrow-line"></span>
-              <span class="vert-eyebrow-text">The Deliverable</span>
+    <!-- ============ SAMPLE FINDINGS GALLERY ============ -->
+    <section class="omega-section" aria-label="Sample Findings">
+      <div class="omega-section-inner">
+        <div class="omega-section-header reveal">
+          <div class="omega-eyebrow">
+            <span class="omega-eyebrow-line"></span>
+            <span class="omega-eyebrow-text">Sample Findings</span>
+          </div>
+          <h2>What We Find.<br/>What You Act On.</h2>
+          <p class="omega-section-subtitle">
+            Every finding is severity-ranked, geolocated, and paired with remediation recommendations and cost estimates.
+          </p>
+        </div>
+
+        <div class="findings-gallery">
+          <div class="findings-carousel" id="findings-carousel">
+            {findings.map((f, i) => (
+              <div class={`finding-card reveal reveal-delay-${(i % 4) + 1}`}>
+                <div class="finding-image-area">
+                  {/* Rich CSS-only visual per finding type */}
+                  <div class={`finding-visual finding-visual-${i}`} aria-hidden="true">
+                    {i === 0 && (
+                      <Fragment>
+                        {/* Thermal heatmap visualization */}
+                        <div class="thermal-grid">
+                          <div class="thermal-cell t-cool"></div><div class="thermal-cell t-cool"></div><div class="thermal-cell t-warm"></div><div class="thermal-cell t-hot"></div>
+                          <div class="thermal-cell t-cool"></div><div class="thermal-cell t-warm"></div><div class="thermal-cell t-hot"></div><div class="thermal-cell t-critical"></div>
+                          <div class="thermal-cell t-warm"></div><div class="thermal-cell t-hot"></div><div class="thermal-cell t-critical"></div><div class="thermal-cell t-hot"></div>
+                          <div class="thermal-cell t-cool"></div><div class="thermal-cell t-warm"></div><div class="thermal-cell t-hot"></div><div class="thermal-cell t-warm"></div>
+                        </div>
+                        <div class="thermal-crosshair"></div>
+                        <div class="thermal-readout">
+                          <span class="thermal-temp">ΔT +12.4°C</span>
+                          <span class="thermal-label">ANOMALY DETECTED</span>
+                        </div>
+                      </Fragment>
+                    )}
+                    {i === 1 && (
+                      <Fragment>
+                        {/* Structural degradation visualization */}
+                        <svg class="structural-svg" viewBox="0 0 200 150" fill="none">
+                          <rect x="10" y="10" width="180" height="130" rx="4" stroke="rgba(255,107,53,0.15)" stroke-width="1" fill="none" />
+                          <line x1="20" y1="40" x2="180" y2="40" stroke="rgba(255,107,53,0.08)" stroke-width="1" />
+                          <line x1="20" y1="70" x2="180" y2="70" stroke="rgba(255,107,53,0.08)" stroke-width="1" />
+                          <line x1="20" y1="100" x2="180" y2="100" stroke="rgba(255,107,53,0.08)" stroke-width="1" />
+                          {/* Crack pattern */}
+                          <path d="M60 30 L65 55 L58 70 L68 95 L62 120" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" opacity="0.8" />
+                          <path d="M65 55 L80 60" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round" opacity="0.5" />
+                          <path d="M68 95 L82 90" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round" opacity="0.5" />
+                          {/* Damage zones */}
+                          <circle cx="65" cy="55" r="12" fill="rgba(255,107,53,0.1)" stroke="rgba(255,107,53,0.3)" stroke-width="1" stroke-dasharray="3,3" />
+                          <circle cx="68" cy="95" r="15" fill="rgba(255,107,53,0.1)" stroke="rgba(255,107,53,0.3)" stroke-width="1" stroke-dasharray="3,3" />
+                          {/* Measurement annotations */}
+                          <line x1="120" y1="35" x2="120" y2="105" stroke="rgba(255,107,53,0.4)" stroke-width="1" stroke-dasharray="4,4" />
+                          <text x="128" y="73" fill="#FF6B35" font-size="8" font-family="var(--font-mono)">12.3m²</text>
+                        </svg>
+                        <div class="structural-badge">
+                          <span class="structural-rating">D+</span>
+                          <span class="structural-label">CONDITION</span>
+                        </div>
+                      </Fragment>
+                    )}
+                    {i === 2 && (
+                      <Fragment>
+                        {/* Security radar / blind spot visualization */}
+                        <div class="radar-container">
+                          <svg class="radar-svg" viewBox="0 0 200 200" fill="none">
+                            <circle cx="100" cy="100" r="80" stroke="rgba(255,189,46,0.08)" stroke-width="1" fill="none" />
+                            <circle cx="100" cy="100" r="55" stroke="rgba(255,189,46,0.08)" stroke-width="1" fill="none" />
+                            <circle cx="100" cy="100" r="30" stroke="rgba(255,189,46,0.08)" stroke-width="1" fill="none" />
+                            <line x1="100" y1="20" x2="100" y2="180" stroke="rgba(255,189,46,0.06)" stroke-width="1" />
+                            <line x1="20" y1="100" x2="180" y2="100" stroke="rgba(255,189,46,0.06)" stroke-width="1" />
+                            {/* Camera coverage arcs */}
+                            <path d="M100 100 L160 40 A85 85 0 0 1 170 90 Z" fill="rgba(39,201,63,0.1)" stroke="rgba(39,201,63,0.25)" stroke-width="1" />
+                            <path d="M100 100 L40 140 A85 85 0 0 1 30 90 Z" fill="rgba(39,201,63,0.1)" stroke="rgba(39,201,63,0.25)" stroke-width="1" />
+                            <path d="M100 100 L130 170 A85 85 0 0 1 60 165 Z" fill="rgba(39,201,63,0.1)" stroke="rgba(39,201,63,0.25)" stroke-width="1" />
+                            {/* Blind spot — highlighted */}
+                            <path d="M100 100 L35 45 A85 85 0 0 1 90 22 Z" fill="rgba(255,189,46,0.15)" stroke="#FFBD2E" stroke-width="1.5" stroke-dasharray="4,3" />
+                            <text x="50" y="50" fill="#FFBD2E" font-size="7" font-family="var(--font-mono)" text-anchor="middle">BLIND SPOT</text>
+                          </svg>
+                          <div class="radar-sweep"></div>
+                        </div>
+                      </Fragment>
+                    )}
+                    {i === 3 && (
+                      <Fragment>
+                        {/* Efficiency / insulation gap visualization */}
+                        <svg class="efficiency-svg" viewBox="0 0 200 150" fill="none">
+                          {/* Building cross-section outline */}
+                          <rect x="30" y="20" width="140" height="110" rx="3" stroke="rgba(0,229,255,0.12)" stroke-width="1" fill="none" />
+                          <line x1="100" y1="20" x2="100" y2="130" stroke="rgba(0,229,255,0.06)" stroke-width="1" />
+                          {/* Insulation layers - left side (good) */}
+                          <rect x="35" y="25" width="60" height="100" rx="2" fill="rgba(0,229,255,0.04)" />
+                          <line x1="35" y1="45" x2="95" y2="45" stroke="rgba(0,229,255,0.12)" stroke-width="1" stroke-dasharray="2,4" />
+                          <line x1="35" y1="65" x2="95" y2="65" stroke="rgba(0,229,255,0.12)" stroke-width="1" stroke-dasharray="2,4" />
+                          <line x1="35" y1="85" x2="95" y2="85" stroke="rgba(0,229,255,0.12)" stroke-width="1" stroke-dasharray="2,4" />
+                          <line x1="35" y1="105" x2="95" y2="105" stroke="rgba(0,229,255,0.12)" stroke-width="1" stroke-dasharray="2,4" />
+                          {/* Right side — gap highlighted */}
+                          <rect x="105" y="25" width="60" height="40" rx="2" fill="rgba(0,229,255,0.04)" />
+                          <rect x="105" y="90" width="60" height="35" rx="2" fill="rgba(0,229,255,0.04)" />
+                          {/* The gap */}
+                          <rect x="105" y="65" width="60" height="25" rx="2" fill="rgba(0,229,255,0.08)" stroke="#00E5FF" stroke-width="1.5" stroke-dasharray="4,3" />
+                          <text x="135" y="81" fill="#00E5FF" font-size="7" font-family="var(--font-mono)" text-anchor="middle">GAP</text>
+                          {/* Heat flow arrows */}
+                          <path d="M135 60 L135 68" stroke="#FF3B30" stroke-width="1.5" opacity="0.6" marker-end="url(#arrowRed)" />
+                          <path d="M120 88 L120 80" stroke="#FF3B30" stroke-width="1.5" opacity="0.6" marker-end="url(#arrowRed)" />
+                          <path d="M150 60 L150 68" stroke="#FF3B30" stroke-width="1.5" opacity="0.6" marker-end="url(#arrowRed)" />
+                          <defs>
+                            <marker id="arrowRed" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#FF3B30" opacity="0.6" /></marker>
+                          </defs>
+                        </svg>
+                        <div class="efficiency-readout">
+                          <span class="efficiency-loss">~18% loss</span>
+                          <span class="efficiency-label">THERMAL EFFICIENCY</span>
+                        </div>
+                      </Fragment>
+                    )}
+                  </div>
+                  <span class="finding-severity-badge" style={`background: ${f.color}20; color: ${f.color}; border-color: ${f.color}40;`}>{f.type}</span>
+                  <span class="finding-category-badge">{f.category}</span>
+                </div>
+                <div class="finding-info">
+                  <h3>{f.label}</h3>
+                  <div class="finding-meta">
+                    <span class="finding-meta-item">
+                      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 14px;" aria-hidden="true">location_on</span>
+                      Building C, Zone 3
+                    </span>
+                    <span class="finding-meta-item">
+                      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 14px;" aria-hidden="true">attach_money</span>
+                      Est. $2,400 - $34,200
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div class="findings-nav" aria-label="Findings navigation">
+            <button class="findings-nav-btn" id="findings-prev" aria-label="Previous finding">
+              <span class="material-symbols-outlined" style="font-size: 20px;">chevron_left</span>
+            </button>
+            <div class="findings-dots" id="findings-dots">
+              {findings.map((_, i) => (
+                <button class={`findings-dot ${i === 0 ? 'active' : ''}`} data-slide={i} aria-label={`Go to finding ${i + 1}`}></button>
+              ))}
             </div>
-            <h2>The Facility Intelligence Report</h2>
-            <p class="deliverable-lead">
-              Your team gets a work order, not a file dump. Every finding is ranked,
-              costed, and scheduled — ready for your next maintenance planning cycle.
-            </p>
-            <ul class="deliverable-list">
-              <li>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--accent); font-size: 20px;" aria-hidden="true">priority_high</span>
-                <span>Severity-ranked findings with visual evidence</span>
+            <button class="findings-nav-btn" id="findings-next" aria-label="Next finding">
+              <span class="material-symbols-outlined" style="font-size: 20px;">chevron_right</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COMPARISON: TRADITIONAL vs JINKI ============ -->
+    <section class="omega-section" style="background: var(--surface-dim);" aria-label="Comparison">
+      <div class="omega-section-inner">
+        <div class="omega-section-header reveal">
+          <div class="omega-eyebrow">
+            <span class="omega-eyebrow-line"></span>
+            <span class="omega-eyebrow-text">The Difference</span>
+          </div>
+          <h2>Traditional Audit<br/>vs Jinki Intelligence</h2>
+        </div>
+
+        <div class="comparison-container reveal">
+          <div class="comparison-side comparison-traditional">
+            <div class="comparison-header-bar traditional-bar">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;" aria-hidden="true">schedule</span>
+              <h3>Traditional Audit</h3>
+            </div>
+            <ul class="comparison-list">
+              <li class="comparison-negative">
+                <span class="material-symbols-outlined cmp-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">close</span>
+                <div>
+                  <strong>2 - 4 weeks</strong>
+                  <span>to complete full facility assessment</span>
+                </div>
               </li>
-              <li>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--accent); font-size: 20px;" aria-hidden="true">attach_money</span>
-                <span>Remediation priorities with cost estimates</span>
+              <li class="comparison-negative">
+                <span class="material-symbols-outlined cmp-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">close</span>
+                <div>
+                  <strong>Partial coverage</strong>
+                  <span>Accessible areas only, blind spots remain</span>
+                </div>
               </li>
-              <li>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--accent); font-size: 20px;" aria-hidden="true">verified</span>
-                <span>Compliance status and documentation</span>
+              <li class="comparison-negative">
+                <span class="material-symbols-outlined cmp-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">close</span>
+                <div>
+                  <strong>Manual reporting</strong>
+                  <span>Subjective findings, inconsistent formatting</span>
+                </div>
               </li>
-              <li>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--accent); font-size: 20px;" aria-hidden="true">schedule</span>
-                <span>Suggested remediation timelines</span>
+              <li class="comparison-negative">
+                <span class="material-symbols-outlined cmp-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">close</span>
+                <div>
+                  <strong>Safety risk</strong>
+                  <span>Personnel on roofs, in confined spaces</span>
+                </div>
               </li>
-              <li>
-                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--accent); font-size: 20px;" aria-hidden="true">trending_up</span>
-                <span>Trend analysis for recurring assessments</span>
+              <li class="comparison-negative">
+                <span class="material-symbols-outlined cmp-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">close</span>
+                <div>
+                  <strong>No trend data</strong>
+                  <span>Point-in-time snapshot with no baseline</span>
+                </div>
               </li>
             </ul>
           </div>
-          <div class="deliverable-visual reveal reveal-delay-2" aria-hidden="true">
-            <div class="report-mockup">
-              <div class="report-header-bar">
-                <span class="report-dot" style="background: #FF6B35;"></span>
-                <span class="report-dot" style="background: #FFBD2E;"></span>
-                <span class="report-dot" style="background: #27C93F;"></span>
-                <span class="report-title-text">Facility Intelligence Report</span>
-              </div>
-              <div class="report-body">
-                <div class="report-row critical">
-                  <span class="report-severity">CRITICAL</span>
-                  <span class="report-finding">Cooling unit T-4 thermal anomaly</span>
-                  <span class="report-cost">$12,400</span>
-                </div>
-                <div class="report-row high">
-                  <span class="report-severity">HIGH</span>
-                  <span class="report-finding">Roof membrane degradation — Bldg C</span>
-                  <span class="report-cost">$34,200</span>
-                </div>
-                <div class="report-row medium">
-                  <span class="report-severity">MEDIUM</span>
-                  <span class="report-finding">Perimeter camera blind spot — NE gate</span>
-                  <span class="report-cost">$2,800</span>
-                </div>
-                <div class="report-row low">
-                  <span class="report-severity">LOW</span>
-                  <span class="report-finding">Insulation gap — mechanical room 2</span>
-                  <span class="report-cost">$1,600</span>
-                </div>
-              </div>
+
+          <div class="comparison-divider">
+            <span class="comparison-vs">VS</span>
+          </div>
+
+          <div class="comparison-side comparison-jinki">
+            <div class="comparison-header-bar jinki-bar">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;" aria-hidden="true">bolt</span>
+              <h3>Jinki Intelligence Audit</h3>
             </div>
+            <ul class="comparison-list">
+              <li class="comparison-positive">
+                <span class="material-symbols-outlined cmp-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>1 day on-site</strong>
+                  <span>Full facility data captured in hours</span>
+                </div>
+              </li>
+              <li class="comparison-positive">
+                <span class="material-symbols-outlined cmp-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>100% coverage</strong>
+                  <span>Every surface, every system, no blind spots</span>
+                </div>
+              </li>
+              <li class="comparison-positive">
+                <span class="material-symbols-outlined cmp-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>AI-powered analysis</strong>
+                  <span>Consistent, severity-ranked, cost-estimated</span>
+                </div>
+              </li>
+              <li class="comparison-positive">
+                <span class="material-symbols-outlined cmp-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>Zero personnel risk</strong>
+                  <span>Aerial operations eliminate roof access</span>
+                </div>
+              </li>
+              <li class="comparison-positive">
+                <span class="material-symbols-outlined cmp-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>Trend-ready baseline</strong>
+                  <span>Data structured for recurring comparisons</span>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Who It's For -->
-    <section class="section" aria-label="Who It's For">
-      <div class="section-inner">
-        <div class="section-header reveal">
-          <div class="vert-eyebrow">
-            <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">Who It's For</span>
+    <!-- ============ DELIVERABLE PREVIEW — TABBED ============ -->
+    <section class="omega-section" aria-label="The Deliverable">
+      <div class="omega-section-inner">
+        <div class="omega-section-header reveal">
+          <div class="omega-eyebrow">
+            <span class="omega-eyebrow-line"></span>
+            <span class="omega-eyebrow-text">The Deliverable</span>
           </div>
-          <h2>Built for Teams That Own<br/>Critical Infrastructure</h2>
+          <h2>The Facility Intelligence Report</h2>
+          <p class="omega-section-subtitle">
+            Your team gets a work order, not a file dump. Every finding is ranked, costed, and scheduled.
+          </p>
         </div>
 
-        <div class="audience-grid">
-          {audiences.map((aud, i) => (
-            <div class={`audience-card reveal reveal-delay-${(i % 3) + 1}`}>
-              <span class="material-symbols-outlined audience-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{aud.icon}</span>
-              <span class="audience-label">{aud.label}</span>
-            </div>
-          ))}
-        </div>
+        <div class="report-tabs-container reveal">
+          <div class="report-tabs" role="tablist" aria-label="Report sections">
+            {reportTabs.map((tab, i) => (
+              <button
+                class={`report-tab ${i === 0 ? 'active' : ''}`}
+                role="tab"
+                aria-selected={i === 0 ? 'true' : 'false'}
+                aria-controls={`report-panel-${tab.id}`}
+                id={`report-tab-${tab.id}`}
+                data-tab={tab.id}
+              >
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 18px;" aria-hidden="true">{tab.icon}</span>
+                <span class="report-tab-label">{tab.label}</span>
+              </button>
+            ))}
+          </div>
 
-        <!-- Frequency -->
-        <div class="frequency-bar reveal">
-          <div class="frequency-inner">
-            <div class="frequency-item">
-              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--accent); font-size: 24px;" aria-hidden="true">event</span>
-              <div>
-                <h4>One-Time Assessment</h4>
-                <p>Baseline your facility's condition with a single comprehensive engagement.</p>
+          <div class="report-panels">
+            {reportTabs.map((tab, i) => (
+              <div
+                class={`report-panel ${i === 0 ? 'active' : ''}`}
+                role="tabpanel"
+                id={`report-panel-${tab.id}`}
+                aria-labelledby={`report-tab-${tab.id}`}
+              >
+                <div class="report-panel-mockup">
+                  <div class="report-panel-header">
+                    <span class="report-panel-dot" style="background: #FF6B35;"></span>
+                    <span class="report-panel-dot" style="background: #FFBD2E;"></span>
+                    <span class="report-panel-dot" style="background: #27C93F;"></span>
+                    <span class="report-panel-title">{tab.label}</span>
+                  </div>
+                  <div class="report-panel-body">
+                    <div class="report-panel-content-grid">
+                      <div class="report-panel-left">
+                        <div class="report-panel-icon-area">
+                          <span class="material-symbols-outlined" style={`font-variation-settings: 'FILL' 1; font-size: 32px; color: var(--accent);`} aria-hidden="true">{tab.icon}</span>
+                        </div>
+                        <p class="report-panel-desc">{tab.content}</p>
+                      </div>
+                      <div class="report-panel-right" aria-hidden="true">
+                        {tab.id === 'executive' && (
+                          <div class="report-viz report-viz-score">
+                            <div class="health-ring">
+                              <svg viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="8" />
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="url(#scoreGrad)" stroke-width="8" stroke-dasharray="198 264" stroke-linecap="round" transform="rotate(-90 50 50)" class="health-ring-fill" />
+                                <defs><linearGradient id="scoreGrad"><stop offset="0%" stop-color="#00E5FF" /><stop offset="100%" stop-color="#27C93F" /></linearGradient></defs>
+                              </svg>
+                              <div class="health-ring-label">
+                                <span class="health-score">B+</span>
+                                <span class="health-text">Health</span>
+                              </div>
+                            </div>
+                            <div class="severity-breakdown">
+                              <div class="severity-row"><span class="sev-dot" style="background:#FF3B30;"></span><span class="sev-label">Critical</span><span class="sev-count">2</span></div>
+                              <div class="severity-row"><span class="sev-dot" style="background:#FF6B35;"></span><span class="sev-label">High</span><span class="sev-count">5</span></div>
+                              <div class="severity-row"><span class="sev-dot" style="background:#FFBD2E;"></span><span class="sev-label">Medium</span><span class="sev-count">8</span></div>
+                              <div class="severity-row"><span class="sev-dot" style="background:#00E5FF;"></span><span class="sev-label">Low</span><span class="sev-count">12</span></div>
+                            </div>
+                          </div>
+                        )}
+                        {tab.id === 'thermal' && (
+                          <div class="report-viz report-viz-thermal">
+                            <div class="mini-thermal-map">
+                              <div class="mt-row"><div class="mt-c" style="background:#1a237e;"></div><div class="mt-c" style="background:#1565c0;"></div><div class="mt-c" style="background:#1565c0;"></div><div class="mt-c" style="background:#2e7d32;"></div><div class="mt-c" style="background:#f57c00;"></div><div class="mt-c" style="background:#e65100;"></div></div>
+                              <div class="mt-row"><div class="mt-c" style="background:#1a237e;"></div><div class="mt-c" style="background:#1565c0;"></div><div class="mt-c" style="background:#2e7d32;"></div><div class="mt-c" style="background:#f57c00;"></div><div class="mt-c" style="background:#d84315;"></div><div class="mt-c" style="background:#ff1744;"></div></div>
+                              <div class="mt-row"><div class="mt-c" style="background:#1565c0;"></div><div class="mt-c" style="background:#2e7d32;"></div><div class="mt-c" style="background:#f57c00;"></div><div class="mt-c" style="background:#d84315;"></div><div class="mt-c" style="background:#ff1744;"></div><div class="mt-c" style="background:#d84315;"></div></div>
+                              <div class="mt-row"><div class="mt-c" style="background:#1a237e;"></div><div class="mt-c" style="background:#1a237e;"></div><div class="mt-c" style="background:#2e7d32;"></div><div class="mt-c" style="background:#f57c00;"></div><div class="mt-c" style="background:#d84315;"></div><div class="mt-c" style="background:#f57c00;"></div></div>
+                            </div>
+                            <div class="thermal-scale">
+                              <div class="thermal-scale-bar"></div>
+                              <div class="thermal-scale-labels"><span>18°C</span><span>42°C</span></div>
+                            </div>
+                          </div>
+                        )}
+                        {tab.id === 'structural' && (
+                          <div class="report-viz report-viz-structural">
+                            <div class="condition-bars">
+                              <div class="cond-item"><span class="cond-label">Roof A</span><div class="cond-track"><div class="cond-fill" style="width:92%;background:linear-gradient(90deg,#27C93F,#2e7d32);"></div></div><span class="cond-val">A</span></div>
+                              <div class="cond-item"><span class="cond-label">Roof B</span><div class="cond-track"><div class="cond-fill" style="width:68%;background:linear-gradient(90deg,#FFBD2E,#f57c00);"></div></div><span class="cond-val">C+</span></div>
+                              <div class="cond-item"><span class="cond-label">Roof C</span><div class="cond-track"><div class="cond-fill" style="width:35%;background:linear-gradient(90deg,#FF6B35,#FF3B30);"></div></div><span class="cond-val">D+</span></div>
+                              <div class="cond-item"><span class="cond-label">Facade</span><div class="cond-track"><div class="cond-fill" style="width:85%;background:linear-gradient(90deg,#27C93F,#2e7d32);"></div></div><span class="cond-val">B+</span></div>
+                            </div>
+                          </div>
+                        )}
+                        {tab.id === 'security' && (
+                          <div class="report-viz report-viz-security">
+                            <div class="coverage-stat">
+                              <span class="coverage-pct">73%</span>
+                              <span class="coverage-label">Perimeter Covered</span>
+                            </div>
+                            <div class="gap-list">
+                              <div class="gap-item"><span class="gap-dot" style="background:#FF3B30;"></span>NE Gate — No coverage</div>
+                              <div class="gap-item"><span class="gap-dot" style="background:#FFBD2E;"></span>Loading dock — Partial</div>
+                              <div class="gap-item"><span class="gap-dot" style="background:#FFBD2E;"></span>South fence — Low-light</div>
+                            </div>
+                          </div>
+                        )}
+                        {tab.id === 'compliance' && (
+                          <div class="report-viz report-viz-compliance">
+                            <div class="compliance-checks">
+                              <div class="comp-row"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:16px;color:#27C93F;">check_circle</span><span>ASHRAE Temp Verification</span></div>
+                              <div class="comp-row"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:16px;color:#27C93F;">check_circle</span><span>Environmental Records</span></div>
+                              <div class="comp-row"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:16px;color:#27C93F;">check_circle</span><span>Inspection Certificates</span></div>
+                              <div class="comp-row"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:16px;color:#FFBD2E;">pending</span><span>NFPA 70B Status</span></div>
+                              <div class="comp-row"><span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;font-size:16px;color:#27C93F;">check_circle</span><span>Full Audit Trail</span></div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="frequency-divider"></div>
-            <div class="frequency-item">
-              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--accent); font-size: 24px;" aria-hidden="true">event_repeat</span>
-              <div>
-                <h4>Recurring Program</h4>
-                <p>Quarterly, semi-annual, or annual assessments that track trends and measure remediation progress over time.</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -323,17 +577,18 @@ const audiences = [
 </Layout>
 
 <style>
-  /* ---- Hero ---- */
-  .vert-hero {
-    min-height: 85vh;
+  /* ================ HERO ================ */
+  .omega-hero {
+    min-height: 90vh;
     display: flex;
     align-items: center;
     padding: 140px clamp(20px, 5vw, 80px) 60px;
     background: var(--surface-container-lowest);
     position: relative;
+    overflow: hidden;
   }
 
-  .vert-hero-inner {
+  .omega-hero-inner {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
     gap: 60px;
@@ -343,21 +598,21 @@ const audiences = [
     width: 100%;
   }
 
-  .vert-eyebrow {
+  .omega-eyebrow {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 16px;
   }
 
-  .vert-eyebrow-line {
+  .omega-eyebrow-line {
     display: block;
     width: 32px;
     height: 1px;
     background: var(--accent);
   }
 
-  .vert-eyebrow-text {
+  .omega-eyebrow-text {
     font-family: var(--font-label);
     font-size: 0.6875rem;
     font-weight: 700;
@@ -366,7 +621,7 @@ const audiences = [
     color: var(--accent);
   }
 
-  .vert-hero-title {
+  .omega-hero-title {
     font-family: var(--font-headline);
     font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
     font-weight: 700;
@@ -382,7 +637,7 @@ const audiences = [
     background-clip: text;
   }
 
-  .vert-hero-subtitle {
+  .omega-hero-subtitle {
     font-family: var(--font-body);
     font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
     line-height: 1.75;
@@ -391,13 +646,13 @@ const audiences = [
     margin-bottom: 32px;
   }
 
-  .vert-hero-actions {
+  .omega-hero-actions {
     display: flex;
     align-items: center;
     gap: 24px;
   }
 
-  .vert-cta {
+  .omega-cta {
     font-family: var(--font-headline);
     font-size: 0.8125rem;
     font-weight: 700;
@@ -409,7 +664,7 @@ const audiences = [
     text-decoration: none;
   }
 
-  .vert-cta-secondary {
+  .omega-cta-secondary {
     font-family: var(--font-headline);
     font-size: 0.8125rem;
     font-weight: 700;
@@ -420,12 +675,10 @@ const audiences = [
     transition: color 0.2s ease;
   }
 
-  .vert-cta-secondary:hover {
-    color: var(--accent);
-  }
+  .omega-cta-secondary:hover { color: var(--accent); }
 
-  /* ---- Audit Preview Visual ---- */
-  .audit-preview {
+  /* Mission Briefing Card */
+  .mission-briefing-card {
     position: relative;
     width: 100%;
     aspect-ratio: 4 / 3;
@@ -434,132 +687,137 @@ const audiences = [
     border: 1px solid var(--glass-border);
     overflow: hidden;
     box-shadow: var(--glass-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .audit-grid-overlay {
+  .mission-grid-overlay {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0, 229, 255, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 229, 255, 0.04) 1px, transparent 1px);
-    background-size: 24px 24px;
+      linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
   }
 
-  .audit-bg-icon {
+  .countdown-ring {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 80px;
-    color: rgba(0, 229, 255, 0.06);
+    width: 120px;
+    height: 120px;
   }
 
-  .audit-scan-line {
+  .countdown-svg {
+    width: 100%;
+    height: 100%;
+    animation: countdown-rotate 12s linear infinite;
+  }
+
+  .countdown-progress {
+    transform-origin: center;
+    animation: countdown-dash 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes countdown-rotate {
+    from { transform: rotate(-90deg); }
+    to { transform: rotate(270deg); }
+  }
+
+  @keyframes countdown-dash {
+    0% { stroke-dashoffset: 200; }
+    100% { stroke-dashoffset: 20; }
+  }
+
+  .mission-center-icon {
+    position: relative;
+    z-index: 2;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(0, 229, 255, 0.08);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: glow-pulse 4s ease-in-out infinite;
+  }
+
+  .mission-stat-badge {
     position: absolute;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-    opacity: 0.4;
-    animation: scan-move 4s ease-in-out infinite;
-  }
-
-  @keyframes scan-move {
-    0%, 100% { top: 15%; }
-    50% { top: 80%; }
-  }
-
-  .audit-readout {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(8px);
-    padding: 12px 16px;
+    padding: 8px 12px;
     border-radius: 8px;
-    border: 1px solid rgba(0, 229, 255, 0.15);
+    border: 1px solid rgba(0, 229, 255, 0.12);
+    z-index: 2;
   }
 
-  .readout-label {
+  .badge-tl { top: 16px; left: 16px; }
+  .badge-tr { top: 16px; right: 16px; }
+  .badge-bl { bottom: 16px; left: 16px; }
+  .badge-br { bottom: 16px; right: 16px; }
+
+  .mission-stat-label {
     font-family: var(--font-mono);
-    font-size: 9px;
+    font-size: 8px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--text-tertiary);
   }
 
-  .readout-value {
+  .mission-stat-val {
     font-family: var(--font-mono);
-    font-size: 24px;
+    font-size: 11px;
     font-weight: 700;
-  }
-
-  .audit-value {
     color: var(--accent);
+    letter-spacing: 0.05em;
   }
 
-  .readout-status {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .audit-status {
+  .status-ready {
     color: #27C93F;
   }
 
-  .audit-badge {
+  .mission-scan-line {
     position: absolute;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(8px);
-    padding: 6px 12px;
-    border-radius: 20px;
-    border: 1px solid rgba(0, 229, 255, 0.12);
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent);
-    animation: float-badge 5s ease-in-out infinite;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.3;
+    animation: scan-move 5s ease-in-out infinite;
+    z-index: 1;
   }
 
-  .badge-1 { top: 18%; right: 16%; animation-delay: 0s; }
-  .badge-2 { top: 42%; right: 10%; animation-delay: 1.5s; }
-  .badge-3 { top: 66%; right: 20%; animation-delay: 3s; }
-
-  @keyframes float-badge {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+  @keyframes scan-move {
+    0%, 100% { top: 10%; }
+    50% { top: 90%; }
   }
 
-  /* ---- Sections ---- */
-  .section {
+  /* ================ SECTIONS ================ */
+  .omega-section {
     padding: 5rem clamp(20px, 5vw, 80px);
   }
 
   @media (min-width: 768px) {
-    .section {
-      padding: 8rem clamp(20px, 5vw, 80px);
-    }
+    .omega-section { padding: 7rem clamp(20px, 5vw, 80px); }
   }
 
-  .section-inner {
+  .omega-section-inner {
     max-width: 1280px;
     margin: 0 auto;
   }
 
-  .section-header {
+  .omega-section-header {
     margin-bottom: 56px;
   }
 
-  .section-header h2 {
+  .omega-section-header h2 {
     font-family: var(--font-headline);
     font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
     font-weight: 700;
@@ -568,7 +826,7 @@ const audiences = [
     margin-top: 8px;
   }
 
-  .section-subtitle {
+  .omega-section-subtitle {
     font-family: var(--font-body);
     font-size: 1.0625rem;
     color: var(--text-secondary);
@@ -577,135 +835,176 @@ const audiences = [
     margin-top: 16px;
   }
 
-  /* ---- Services Grid ---- */
-  .services-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
+  /* ================ PROCESS WHEEL ================ */
+  .process-wheel-container {
+    position: relative;
+  }
+
+  .process-wheel {
+    display: none;
+    position: relative;
+    width: 480px;
+    height: 480px;
+    margin: 0 auto 40px;
   }
 
   @media (min-width: 768px) {
-    .services-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .process-wheel { display: block; }
+    .process-mobile-list { display: none !important; }
   }
 
-  .service-card {
-    background: var(--surface-container-low);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 32px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .service-card::before {
-    content: '';
+  .wheel-ring-svg {
     position: absolute;
     inset: 0;
-    background: var(--glossy-shine);
-    pointer-events: none;
-    border-radius: inherit;
+    width: 100%;
+    height: 100%;
   }
 
-  .service-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(0, 229, 255, 0.15);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 30px var(--accent-glow);
-  }
-
-  .service-icon-wrap {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: var(--accent-glow);
+  .wheel-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: var(--surface-container-low);
+    border: 2px solid rgba(0, 229, 255, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
-    transition: box-shadow 0.3s ease;
+    z-index: 2;
+    box-shadow: 0 0 40px rgba(0, 229, 255, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .service-card:hover .service-icon-wrap {
-    box-shadow: 0 0 20px var(--accent-glow-strong);
+  .wheel-center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
   }
 
-  .service-icon {
+  .wheel-center-icon {
     color: var(--accent);
-    font-size: 24px;
+    font-size: 28px;
   }
 
-  .service-title {
+  .wheel-center-step {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+  }
+
+  .wheel-center-title {
     font-family: var(--font-headline);
-    font-size: 1.0625rem;
+    font-size: 0.75rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 12px;
+    max-width: 100px;
+    line-height: 1.2;
   }
 
-  .service-desc {
-    font-size: 0.875rem;
+  .wheel-node {
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    margin-left: -36px;
+    margin-top: -36px;
+    border-radius: 50%;
+    background: var(--surface-container);
+    border: 2px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 3;
+  }
+
+  .wheel-node:hover,
+  .wheel-node.active {
+    border-color: var(--accent);
+    background: rgba(0, 229, 255, 0.08);
+    box-shadow: 0 0 24px rgba(0, 229, 255, 0.2);
+    transform: scale(1.1);
+  }
+
+  .wheel-node.active {
+    border-width: 2px;
+  }
+
+  .wheel-node-num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .wheel-node-label {
+    font-family: var(--font-label);
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    text-align: center;
+    line-height: 1.1;
+    max-width: 60px;
+  }
+
+  .wheel-detail-panel {
+    display: none;
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .wheel-detail-panel { display: block; }
+  }
+
+  .wheel-detail-desc {
+    font-family: var(--font-body);
+    font-size: 1rem;
     color: var(--text-secondary);
     line-height: 1.7;
+    transition: opacity 0.3s ease;
   }
 
-  /* ---- Timeline ---- */
-  .timeline {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-    position: relative;
+  /* Mobile process list */
+  .process-mobile-list {
+    display: flex;
+    flex-direction: column;
   }
 
   @media (min-width: 768px) {
-    .timeline {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 32px 48px;
-    }
+    .process-mobile-list { display: none; }
   }
 
-  @media (min-width: 1024px) {
-    .timeline {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-  .timeline-item {
+  .process-mobile-item {
     display: flex;
     gap: 20px;
-    padding: 24px 0;
-    position: relative;
+    padding: 20px 0;
   }
 
-  @media (min-width: 768px) {
-    .timeline-item {
-      flex-direction: column;
-      padding: 0;
-    }
-  }
-
-  .timeline-marker {
+  .process-mobile-marker {
     display: flex;
     flex-direction: column;
     align-items: center;
     flex-shrink: 0;
   }
 
-  @media (min-width: 768px) {
-    .timeline-marker {
-      flex-direction: row;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-  }
-
-  .timeline-step {
+  .process-mobile-step {
     font-family: var(--font-mono);
     font-size: 0.75rem;
     font-weight: 700;
     color: var(--accent);
-    letter-spacing: 0.1em;
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -713,113 +1012,556 @@ const audiences = [
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
     background: var(--accent-glow);
   }
 
-  .timeline-connector {
+  .process-mobile-connector {
     width: 2px;
     flex: 1;
     background: linear-gradient(to bottom, var(--accent), transparent);
     min-height: 24px;
   }
 
-  @media (min-width: 768px) {
-    .timeline-connector {
-      height: 2px;
-      width: auto;
-      flex: 1;
-      background: linear-gradient(to right, var(--accent), transparent);
-      min-height: auto;
-    }
-  }
-
-  .timeline-icon-wrap {
-    width: 40px;
-    height: 40px;
+  .process-mobile-icon-wrap {
+    width: 36px;
+    height: 36px;
     border-radius: 10px;
     background: var(--accent-glow);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     color: var(--accent);
   }
 
-  .timeline-content h3 {
+  .process-mobile-body h3 {
     font-family: var(--font-headline);
-    font-size: 1.0625rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
-  .timeline-content p {
+  .process-mobile-body p {
     font-size: 0.875rem;
     color: var(--text-secondary);
     line-height: 1.7;
   }
 
-  /* ---- Deliverable ---- */
-  .deliverable-layout {
+  /* ================ FINDINGS GALLERY ================ */
+  .findings-gallery {
+    position: relative;
+  }
+
+  .findings-carousel {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 48px;
+    gap: 20px;
+  }
+
+  @media (min-width: 600px) {
+    .findings-carousel { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1024px) {
+    .findings-carousel { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .finding-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .finding-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 229, 255, 0.15);
+  }
+
+  .finding-image-area {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #0a0c10, #141820);
+    display: flex;
     align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .finding-visual {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  /* --- Thermal Heatmap --- */
+  .thermal-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+    width: 85%;
+    height: 75%;
+    padding: 8px;
+  }
+  .thermal-cell {
+    border-radius: 4px;
+    transition: opacity 0.3s;
+  }
+  .t-cool { background: linear-gradient(135deg, #1a237e, #283593); }
+  .t-warm { background: linear-gradient(135deg, #e65100, #f57c00); }
+  .t-hot { background: linear-gradient(135deg, #d84315, #ff3d00); }
+  .t-critical {
+    background: linear-gradient(135deg, #b71c1c, #ff1744);
+    animation: thermal-pulse 2s ease-in-out infinite;
+  }
+  .thermal-crosshair {
+    position: absolute;
+    top: 35%;
+    right: 28%;
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid rgba(255, 59, 48, 0.7);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(255, 59, 48, 0.3);
+  }
+  .thermal-crosshair::before,
+  .thermal-crosshair::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 59, 48, 0.5);
+  }
+  .thermal-crosshair::before {
+    top: 50%;
+    left: -8px;
+    right: -8px;
+    height: 1px;
+  }
+  .thermal-crosshair::after {
+    left: 50%;
+    top: -8px;
+    bottom: -8px;
+    width: 1px;
+  }
+  .thermal-readout {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+  .thermal-temp {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: #FF3B30;
+    text-shadow: 0 0 8px rgba(255, 59, 48, 0.4);
+  }
+  .thermal-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    color: rgba(255, 59, 48, 0.6);
+  }
+  @keyframes thermal-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* --- Structural Degradation --- */
+  .structural-svg {
+    width: 85%;
+    height: 85%;
+  }
+  .structural-badge {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 107, 53, 0.1);
+    border: 1px solid rgba(255, 107, 53, 0.25);
+    border-radius: 8px;
+    padding: 6px 12px;
+  }
+  .structural-rating {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 800;
+    color: #FF6B35;
+  }
+  .structural-label {
+    font-family: var(--font-mono);
+    font-size: 7px;
+    letter-spacing: 0.12em;
+    color: rgba(255, 107, 53, 0.6);
+  }
+
+  /* --- Security Radar --- */
+  .radar-container {
+    position: relative;
+    width: 85%;
+    height: 85%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .radar-svg {
+    width: 100%;
+    height: 100%;
+  }
+  .radar-sweep {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 2px;
+    transform-origin: left center;
+    background: linear-gradient(90deg, rgba(255, 189, 46, 0.6), transparent);
+    animation: radar-spin 3s linear infinite;
+  }
+  @keyframes radar-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* --- Efficiency / Insulation --- */
+  .efficiency-svg {
+    width: 85%;
+    height: 85%;
+  }
+  .efficiency-readout {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .efficiency-loss {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: #00E5FF;
+  }
+  .efficiency-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.12em;
+    color: rgba(0, 229, 255, 0.5);
+  }
+
+  .finding-severity-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid;
+  }
+
+  .finding-category-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--text-secondary);
+    backdrop-filter: blur(4px);
+  }
+
+  .finding-info {
+    padding: 16px;
+  }
+
+  .finding-info h3 {
+    font-family: var(--font-headline);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .finding-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .finding-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+  }
+
+  .findings-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  @media (min-width: 1024px) {
+    .findings-nav { display: none; }
+  }
+
+  .findings-nav-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--surface-container);
+    border: 1px solid var(--glass-border);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .findings-nav-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .findings-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .findings-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--glass-border);
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .findings-dot.active {
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent-glow);
+  }
+
+  /* ================ COMPARISON ================ */
+  .comparison-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 
   @media (min-width: 768px) {
-    .deliverable-layout {
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
+    .comparison-container {
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0;
     }
   }
 
-  .deliverable-text h2 {
+  .comparison-side {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .comparison-side:hover {
+    transform: translateY(-2px);
+  }
+
+  .comparison-header-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 24px;
+  }
+
+  .comparison-header-bar h3 {
     font-family: var(--font-headline);
-    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-size: 0.9375rem;
     font-weight: 700;
-    color: var(--text-primary);
-    line-height: 1.15;
-    margin-top: 8px;
   }
 
-  .deliverable-lead {
-    font-family: var(--font-body);
-    font-size: 1.0625rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    margin-top: 16px;
-    margin-bottom: 32px;
+  .traditional-bar {
+    background: rgba(255, 59, 48, 0.08);
+    border-bottom: 1px solid rgba(255, 59, 48, 0.15);
+    color: #FF6B6B;
   }
 
-  .deliverable-list {
+  .traditional-bar h3 { color: #FF6B6B; }
+
+  .jinki-bar {
+    background: rgba(0, 229, 255, 0.06);
+    border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+    color: var(--accent);
+  }
+
+  .jinki-bar h3 { color: var(--accent); }
+
+  .comparison-list {
     list-style: none;
+    padding: 20px 24px;
     display: flex;
     flex-direction: column;
     gap: 16px;
   }
 
-  .deliverable-list li {
+  .comparison-list li {
     display: flex;
-    align-items: center;
     gap: 12px;
-    font-family: var(--font-body);
-    font-size: 0.9375rem;
+    align-items: flex-start;
+  }
+
+  .cmp-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .comparison-negative .cmp-icon { color: #FF6B6B; }
+  .comparison-positive .cmp-icon { color: #27C93F; }
+
+  .comparison-list li strong {
+    display: block;
+    font-family: var(--font-headline);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .comparison-list li span {
+    font-size: 0.8125rem;
     color: var(--text-secondary);
     line-height: 1.5;
   }
 
-  /* Report Mockup */
-  .report-mockup {
+  .comparison-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+  }
+
+  .comparison-vs {
+    font-family: var(--font-headline);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: var(--surface-dim);
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: 1px solid var(--glass-border);
+  }
+
+  @media (max-width: 767px) {
+    .comparison-divider {
+      padding: 0;
+    }
+  }
+
+  /* ================ REPORT TABS ================ */
+  .report-tabs-container {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .report-tabs {
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--glass-border);
+    scrollbar-width: none;
+  }
+
+  .report-tabs::-webkit-scrollbar { display: none; }
+
+  .report-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 20px;
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .report-tab:hover {
+    color: var(--text-secondary);
+    background: rgba(0, 229, 255, 0.03);
+  }
+
+  .report-tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    background: rgba(0, 229, 255, 0.05);
+  }
+
+  .report-tab-label {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+  }
+
+  .report-panels {
+    padding: 32px;
+  }
+
+  .report-panel {
+    display: none;
+  }
+
+  .report-panel.active {
+    display: block;
+  }
+
+  .report-panel-mockup {
     background: linear-gradient(135deg, #0a0c10, #141820);
     border-radius: 12px;
     border: 1px solid var(--glass-border);
     overflow: hidden;
-    box-shadow: var(--glass-shadow);
   }
 
-  .report-header-bar {
+  .report-panel-header {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -828,13 +1570,13 @@ const audiences = [
     border-bottom: 1px solid var(--glass-border);
   }
 
-  .report-dot {
+  .report-panel-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
   }
 
-  .report-title-text {
+  .report-panel-title {
     font-family: var(--font-mono);
     font-size: 11px;
     color: var(--text-tertiary);
@@ -842,242 +1584,491 @@ const audiences = [
     margin-left: 8px;
   }
 
-  .report-body {
-    padding: 16px;
+  .report-panel-body {
+    padding: 32px;
+  }
+
+  .report-panel-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .report-panel-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .report-panel-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+  }
+
+  .report-panel-icon-area {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .report-panel-desc {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* --- Report Visualizations --- */
+  .report-viz { width: 100%; }
+
+  /* Executive: Health ring + severity breakdown */
+  .report-viz-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .health-ring {
+    position: relative;
+    width: 120px;
+    height: 120px;
+  }
+  .health-ring svg { width: 100%; height: 100%; }
+  .health-ring-fill {
+    animation: ring-draw 1.5s ease-out forwards;
+    stroke-dashoffset: 264;
+  }
+  @keyframes ring-draw {
+    to { stroke-dashoffset: 66; }
+  }
+  .health-ring-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .health-score {
+    font-family: var(--font-headline);
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text-primary);
+  }
+  .health-text {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+  .severity-breakdown {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 100%;
+    max-width: 180px;
   }
-
-  .report-row {
-    display: grid;
-    grid-template-columns: 80px 1fr auto;
-    gap: 12px;
+  .severity-row {
+    display: flex;
     align-items: center;
-    padding: 10px 12px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.04);
-  }
-
-  .report-severity {
+    gap: 8px;
     font-family: var(--font-mono);
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 4px;
-    text-align: center;
-  }
-
-  .report-row.critical .report-severity {
-    background: rgba(255, 59, 48, 0.15);
-    color: #FF3B30;
-  }
-
-  .report-row.high .report-severity {
-    background: rgba(255, 107, 53, 0.15);
-    color: #FF6B35;
-  }
-
-  .report-row.medium .report-severity {
-    background: rgba(255, 189, 46, 0.15);
-    color: #FFBD2E;
-  }
-
-  .report-row.low .report-severity {
-    background: rgba(0, 229, 255, 0.12);
-    color: var(--accent);
-  }
-
-  .report-finding {
-    font-family: var(--font-body);
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-secondary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
-
-  .report-cost {
-    font-family: var(--font-mono);
-    font-size: 12px;
+  .sev-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .sev-label { flex: 1; }
+  .sev-count {
     font-weight: 700;
     color: var(--text-primary);
   }
 
-  /* ---- Audience Grid ---- */
-  .audience-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-    margin-bottom: 56px;
+  /* Thermal: Mini heatmap */
+  .report-viz-thermal {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .mini-thermal-map {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .mt-row {
+    display: flex;
+    gap: 2px;
+  }
+  .mt-c {
+    flex: 1;
+    height: 28px;
+    border-radius: 2px;
+    opacity: 0.85;
+  }
+  .thermal-scale {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .thermal-scale-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #1a237e, #1565c0, #2e7d32, #f57c00, #d84315, #ff1744);
+  }
+  .thermal-scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-tertiary);
   }
 
-  @media (min-width: 768px) {
-    .audience-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
+  /* Structural: Condition bars */
+  .condition-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+  }
+  .cond-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cond-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+    width: 52px;
+    flex-shrink: 0;
+  }
+  .cond-track {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+  }
+  .cond-fill {
+    height: 100%;
+    border-radius: 4px;
+    animation: bar-grow 1.2s ease-out forwards;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  .cond-val {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-primary);
+    width: 24px;
+    text-align: right;
+  }
+  @keyframes bar-grow {
+    to { transform: scaleX(1); }
   }
 
-  @media (min-width: 1024px) {
-    .audience-grid {
-      grid-template-columns: repeat(6, 1fr);
-    }
+  /* Security: Coverage stat + gap list */
+  .report-viz-security {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
   }
-
-  .audience-card {
+  .coverage-stat {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    padding: 28px 16px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    transition: all 0.3s ease;
-    text-align: center;
   }
-
-  .audience-card:hover {
-    border-color: var(--border-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  }
-
-  .audience-icon {
-    font-size: 28px;
-    color: var(--accent);
-  }
-
-  .audience-label {
+  .coverage-pct {
     font-family: var(--font-headline);
-    font-size: 0.8125rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    letter-spacing: 0.02em;
+    font-size: 40px;
+    font-weight: 800;
+    color: #FFBD2E;
+    line-height: 1;
   }
-
-  /* ---- Frequency Bar ---- */
-  .frequency-bar {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 40px;
+  .coverage-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-top: 4px;
   }
-
-  .frequency-inner {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-
-  @media (min-width: 768px) {
-    .frequency-inner {
-      grid-template-columns: 1fr auto 1fr;
-      gap: 40px;
-      align-items: center;
-    }
-  }
-
-  .frequency-item {
+  .gap-list {
     display: flex;
-    gap: 16px;
-    align-items: flex-start;
-  }
-
-  .frequency-item h4 {
-    font-family: var(--font-headline);
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 6px;
-  }
-
-  .frequency-item p {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
-  .frequency-divider {
+    flex-direction: column;
+    gap: 8px;
     width: 100%;
-    height: 1px;
-    background: var(--border);
+  }
+  .gap-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-secondary);
+  }
+  .gap-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
   }
 
-  @media (min-width: 768px) {
-    .frequency-divider {
-      width: 1px;
-      height: 64px;
-    }
+  /* Compliance: Checklist */
+  .compliance-checks {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+  .comp-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text-secondary);
   }
 
-  /* ---- Responsive ---- */
+  /* ================ RESPONSIVE ================ */
   @media (max-width: 768px) {
-    .vert-hero-inner {
+    .omega-hero-inner {
       grid-template-columns: 1fr;
       gap: 40px;
     }
 
-    .vert-hero {
+    .omega-hero {
       min-height: auto;
       padding-top: 120px;
     }
 
-    .vert-hero-actions {
+    .omega-hero-actions {
       flex-direction: column;
       align-items: flex-start;
       gap: 16px;
     }
 
-    .report-row {
-      grid-template-columns: 70px 1fr;
+    .report-panels {
+      padding: 20px;
     }
 
-    .report-cost {
-      display: none;
+    .report-panel-body {
+      padding: 20px;
+    }
+
+    .report-panel-content-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .report-panel-right {
+      min-height: 160px;
     }
   }
 
-  /* ---- Light Mode ---- */
-  :global([data-theme="light"]) .audit-preview {
+  /* ================ LIGHT MODE ================ */
+  :global([data-theme="light"]) .mission-briefing-card {
     background: linear-gradient(135deg, #e8eaed, #f5f5f5);
-    border-color: var(--glass-border);
   }
 
-  :global([data-theme="light"]) .audit-bg-icon {
-    color: rgba(0, 131, 143, 0.06);
-  }
-
-  :global([data-theme="light"]) .audit-readout {
+  :global([data-theme="light"]) .mission-stat-badge {
     background: rgba(255, 255, 255, 0.8);
     border-color: rgba(0, 131, 143, 0.15);
   }
 
-  :global([data-theme="light"]) .audit-grid-overlay {
-    background-image:
-      linear-gradient(rgba(0, 131, 143, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 131, 143, 0.05) 1px, transparent 1px);
-  }
-
-  :global([data-theme="light"]) .audit-badge {
-    background: rgba(255, 255, 255, 0.7);
-    border-color: rgba(0, 131, 143, 0.15);
+  :global([data-theme="light"]) .mission-stat-val {
     color: var(--accent);
   }
 
-  :global([data-theme="light"]) .report-mockup {
+  :global([data-theme="light"]) .status-ready {
+    color: #0d8c5f;
+  }
+
+  :global([data-theme="light"]) .mission-grid-overlay {
+    background-image:
+      linear-gradient(rgba(0, 131, 143, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 131, 143, 0.04) 1px, transparent 1px);
+  }
+
+  :global([data-theme="light"]) .finding-image-area {
     background: linear-gradient(135deg, #e8eaed, #f5f5f5);
   }
 
-  :global([data-theme="light"]) .report-header-bar {
-    background: rgba(0, 0, 0, 0.05);
+  :global([data-theme="light"]) .finding-category-badge {
+    background: rgba(255, 255, 255, 0.7);
   }
 
-  :global([data-theme="light"]) .report-row {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.06);
+  :global([data-theme="light"]) .wheel-center {
+    border-color: rgba(0, 131, 143, 0.15);
+    box-shadow: 0 0 40px rgba(0, 131, 143, 0.08);
+  }
+
+  :global([data-theme="light"]) .wheel-node:hover,
+  :global([data-theme="light"]) .wheel-node.active {
+    border-color: var(--accent);
+    background: rgba(0, 131, 143, 0.06);
+    box-shadow: 0 0 24px rgba(0, 131, 143, 0.15);
+  }
+
+  :global([data-theme="light"]) .traditional-bar {
+    background: rgba(255, 59, 48, 0.06);
+    border-bottom-color: rgba(255, 59, 48, 0.1);
+  }
+
+  :global([data-theme="light"]) .jinki-bar {
+    background: rgba(0, 131, 143, 0.06);
+    border-bottom-color: rgba(0, 131, 143, 0.1);
+  }
+
+  :global([data-theme="light"]) .report-panel-mockup {
+    background: linear-gradient(135deg, #e8eaed, #f5f5f5);
+  }
+
+  :global([data-theme="light"]) .report-panel-header {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  :global([data-theme="light"]) .cond-track {
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  :global([data-theme="light"]) .mt-c {
+    opacity: 0.7;
+  }
+
+  :global([data-theme="light"]) .comparison-vs {
+    background: var(--surface-dim);
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // ====== Process Wheel Interaction ======
+    const wheelNodes = document.querySelectorAll('.wheel-node');
+    const wheelIcon = document.getElementById('wheel-icon');
+    const wheelStep = document.getElementById('wheel-step');
+    const wheelTitle = document.getElementById('wheel-title');
+    const wheelDesc = document.getElementById('wheel-desc');
+
+    wheelNodes.forEach(node => {
+      node.addEventListener('click', () => {
+        wheelNodes.forEach(n => {
+          n.classList.remove('active');
+          n.setAttribute('aria-selected', 'false');
+        });
+        node.classList.add('active');
+        node.setAttribute('aria-selected', 'true');
+
+        if (wheelIcon) wheelIcon.textContent = node.dataset.icon || '';
+        if (wheelStep) wheelStep.textContent = node.dataset.num || '';
+        if (wheelTitle) wheelTitle.textContent = node.dataset.title || '';
+        if (wheelDesc) {
+          wheelDesc.style.opacity = '0';
+          setTimeout(() => {
+            wheelDesc.textContent = node.dataset.desc || '';
+            wheelDesc.style.opacity = '1';
+          }, 150);
+        }
+      });
+    });
+
+    // ====== Report Tabs ======
+    const reportTabs = document.querySelectorAll('.report-tab');
+    const reportPanels = document.querySelectorAll('.report-panel');
+
+    reportTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        reportTabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        reportPanels.forEach(p => p.classList.remove('active'));
+
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        const panel = document.getElementById(`report-panel-${target}`);
+        if (panel) panel.classList.add('active');
+      });
+    });
+
+    // ====== Findings Carousel (mobile) ======
+    const carousel = document.getElementById('findings-carousel');
+    const prevBtn = document.getElementById('findings-prev');
+    const nextBtn = document.getElementById('findings-next');
+    const dots = document.querySelectorAll('.findings-dot');
+    let currentSlide = 0;
+    const totalSlides = dots.length;
+
+    function updateCarousel() {
+      if (!carousel) return;
+      const cards = carousel.querySelectorAll('.finding-card');
+      if (window.innerWidth >= 1024) return;
+
+      cards.forEach((card, i) => {
+        const el = /** @type {HTMLElement} */ (card);
+        if (window.innerWidth >= 600) {
+          el.style.display = (i === currentSlide || i === currentSlide + 1) ? 'block' : 'none';
+        } else {
+          el.style.display = i === currentSlide ? 'block' : 'none';
+        }
+      });
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSlide);
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateCarousel();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateCarousel();
+      });
+    }
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        currentSlide = parseInt(dot.dataset.slide || '0', 10);
+        updateCarousel();
+      });
+    });
+
+    // Reset on resize
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        const cards = carousel?.querySelectorAll('.finding-card');
+        if (window.innerWidth >= 1024 && cards) {
+          cards.forEach(card => {
+            /** @type {HTMLElement} */ (card).style.display = '';
+          });
+        } else {
+          updateCarousel();
+        }
+      }, 250);
+    });
+  });
+</script>

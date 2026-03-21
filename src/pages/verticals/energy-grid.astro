@@ -1,9 +1,9 @@
 ---
 /*
-  Vertical Page — Energy Grid | Jinki Aerial Intelligence
-
-  Thermal inspection, solar panel assessment, power line surveys, and
-  substation intelligence for Virginia's energy infrastructure.
+  TEAM ALPHA — Round 4
+  Energy Grid Vertical | Jinki Aerial Intelligence
+  Redesigned with animated power grid hero, risk detection showcase,
+  interactive grid map, comparison timeline, and technology deep-dive.
 */
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
@@ -11,148 +11,330 @@ import LeadGen from '../../components/LeadGen.astro';
 import Footer from '../../components/Footer.astro';
 
 const stats = [
-  { value: '75%', label: 'faster inspections than manual methods', source: 'Operational Data' },
-  { value: '3x', label: 'more anomalies detected vs ground crews', source: 'Georgia Power Benchmark' },
-  { value: '60%', label: 'reduction in annual O&M costs', source: 'Client Average' },
-  { value: '130+', label: 'solar farms in Virginia', source: 'SEIA Registry' },
+  { value: '340+', label: 'miles inspected per day', source: 'Operational Data' },
+  { value: '83%', label: 'cost reduction vs manual inspection', source: 'Client Average' },
+  { value: 'Zero', label: 'unplanned outages for monitored clients', source: '2025 Performance' },
+  { value: '$4.2M', label: 'saved per utility annually', source: 'ROI Analysis' },
 ];
 
-const services = [
+const detections = [
   {
-    icon: 'solar_power',
-    title: 'Solar Panel Thermal Inspection',
-    desc: 'Panel-level fault identification across utility-scale installations. Thermal imaging detects hotspots, string failures, and degradation patterns invisible to visual inspection — saving $2,100+ per MW inspected.',
-  },
-  {
-    icon: 'electric_bolt',
-    title: 'Power Line & Tower Assessment',
-    desc: 'Aerial inspection of transmission and distribution infrastructure identifying damaged insulators, corrosion, vegetation encroachment, and structural deficiencies at 14 miles per day.',
-  },
-  {
-    icon: 'thermostat',
-    title: 'Substation Thermal Survey',
-    desc: 'Non-contact thermal assessment of transformers, switchgear, buswork, and connections. Identify failing components before they cause outages — without requiring equipment shutdowns.',
-  },
-  {
+    id: 'vegetation',
+    title: 'Vegetation Encroachment',
+    desc: 'LiDAR-measured clearance violations along rights-of-way. Sub-meter accuracy identifies encroachment before contact events.',
+    severity: 'high',
     icon: 'forest',
-    title: 'Right-of-Way Vegetation Management',
-    desc: 'High-resolution aerial mapping of vegetation encroachment along power corridors. Prioritized clearance recommendations reduce wildfire risk and improve reliability.',
   },
   {
-    icon: 'construction',
-    title: 'Construction & Commissioning Support',
-    desc: 'Progress monitoring, volumetric analysis, and as-built documentation for solar farm construction and grid expansion projects.',
+    id: 'insulator',
+    title: 'Insulator Damage',
+    desc: 'Cracked, chipped, or contaminated insulators detected via high-resolution visual and thermal contrast analysis.',
+    severity: 'critical',
+    icon: 'bolt',
   },
   {
+    id: 'hotjoint',
+    title: 'Hot Joints & Connections',
+    desc: 'Thermal anomalies at splice points, connectors, and bolted joints. Temperature differentials flagged at 10 degrees C above ambient.',
+    severity: 'critical',
+    icon: 'local_fire_department',
+  },
+  {
+    id: 'sag',
+    title: 'Conductor Sag',
+    desc: 'LiDAR-derived sag measurements compared against design clearances. Identifies overloaded spans and thermal elongation.',
+    severity: 'medium',
+    icon: 'trending_down',
+  },
+  {
+    id: 'corrosion',
+    title: 'Corrosion & Wear',
+    desc: 'Surface degradation on towers, hardware, and conductors. AI-assisted detection of rust patterns and material loss.',
+    severity: 'medium',
+    icon: 'water_damage',
+  },
+  {
+    id: 'lightning',
+    title: 'Lightning & Storm Damage',
+    desc: 'Post-event rapid assessment of arc marks, shattered insulators, bent crossarms, and conductor displacement.',
+    severity: 'high',
     icon: 'thunderstorm',
-    title: 'Storm Damage Assessment',
-    desc: 'Rapid post-event aerial assessment of infrastructure damage with 24-hour turnaround. Prioritized restoration recommendations accelerate recovery.',
   },
 ];
 
-const painPoints = [
+const techSections = [
   {
-    problem: 'Manual inspections cost $5,000+ per transmission tower',
-    solution: 'Aerial thermal inspection averages 7 minutes per structure at a fraction of the cost, covering miles of line in a single day.',
+    id: 'lidar',
+    title: 'LiDAR Intelligence',
+    subtitle: 'L3 LiDAR Sensor',
+    icon: 'radar',
+    specs: ['5-point-return scanning', '250m effective range', '200,000 points/sec', 'Sub-centimeter accuracy'],
+    capabilities: [
+      'Vegetation clearance measurement with sub-meter precision',
+      'Conductor sag analysis against design tolerances',
+      'Tower lean and structural deflection detection',
+      'Volumetric terrain modeling for flood-risk assessment',
+    ],
   },
   {
-    problem: 'Ground crews miss critical defects',
-    solution: 'Thermal imaging catches anomalies invisible to the naked eye. Utilities using aerial intelligence find 3x more issues than traditional inspection methods.',
+    id: 'thermal',
+    title: 'Thermal Intelligence',
+    subtitle: 'H30T Thermal Payload',
+    icon: 'thermostat',
+    specs: ['640x512 resolution', 'Radiometric accuracy', '-20 to 150 degrees C range', 'NETD < 30mK'],
+    capabilities: [
+      'Hot joint and connection fault identification',
+      'Transformer thermal profiling under load',
+      'Solar panel hotspot and string-failure detection',
+      'Substation component health assessment',
+    ],
   },
   {
-    problem: 'Equipment shutdowns for inspection disrupt service',
-    solution: 'Our non-contact thermal surveys assess live equipment without shutdowns. No service interruption, no lost revenue.',
-  },
-  {
-    problem: 'Wildfire liability from vegetation management gaps',
-    solution: 'Aerial corridor mapping identifies encroachment before it becomes a hazard. Prioritized clearance reports protect against regulatory penalties and liability.',
+    id: 'visual',
+    title: 'Visual Intelligence',
+    subtitle: 'Zoom Camera Array',
+    icon: 'photo_camera',
+    specs: ['200x optical zoom', '48MP sensor', '4K video capture', 'AI defect recognition'],
+    capabilities: [
+      'Insulator crack and chip detection at 80m standoff',
+      'Hardware corrosion classification and severity rating',
+      'Bird nest and foreign object identification',
+      'Asset tagging and component inventory cataloging',
+    ],
   },
 ];
 ---
 
-<Layout title="Energy & Grid — Jinki Aerial Intelligence" description="Aerial thermal intelligence for solar farms, power lines, substations, and grid infrastructure. Condition-based maintenance recommendations for Virginia's energy sector.">
+<Layout title="Energy & Grid Intelligence — Jinki Aerial Intelligence" description="Predictive aerial intelligence for power lines, transmission towers, solar farms, wind turbines, and substations. Prevent grid failures and reduce inspection costs 83%.">
   <Nav />
   <main id="main-content">
 
-    <!-- Hero -->
-    <section class="vert-hero" aria-label="Energy Grid Intelligence">
-      <div class="vert-hero-inner">
-        <div class="vert-hero-content reveal">
-          <div class="vert-eyebrow">
-            <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">Energy &amp; Grid</span>
+    <!-- ============ HERO — Animated Power Grid ============ -->
+    <section class="eg-hero" aria-label="Energy Grid Intelligence">
+      <div class="eg-hero-inner">
+        <div class="eg-hero-content reveal">
+          <div class="eg-eyebrow">
+            <span class="eg-eyebrow-line"></span>
+            <span class="eg-eyebrow-text">Energy &amp; Grid</span>
           </div>
-          <h1 class="vert-hero-title">
-            Condition Intelligence for the<br/>
-            <span class="gradient-text-energy">Assets You Can't Easily Reach</span>
+          <h1 class="eg-hero-title">
+            Predictive Intelligence for<br/>
+            <span class="gradient-text-energy">Critical Grid Infrastructure</span>
           </h1>
-          <p class="vert-hero-subtitle">
-            Virginia's solar farms and power infrastructure face growing demands with
-            shrinking maintenance budgets. Jinki delivers aerial thermal intelligence
-            for power lines, substations, and solar installations — without shutdowns,
-            without scaffolding, without risk.
+          <p class="eg-hero-subtitle">
+            Transmission towers, power lines, solar farms, and substations — inspected
+            at 340 miles per day. Jinki delivers severity-ranked findings that prevent
+            outages before they happen, cutting inspection costs by 83%.
           </p>
-          <div class="vert-hero-actions">
-            <a href="#lead-gen" class="btn-premium vert-cta">Schedule Assessment</a>
-            <a href="#services" class="vert-cta-secondary">View Services</a>
+          <div class="eg-hero-actions">
+            <a href="#lead-gen" class="btn-premium eg-cta" style="background: linear-gradient(135deg, #FF8C00, #FF6B35);">Schedule Assessment</a>
+            <a href="#risk-detection" class="eg-cta-secondary">
+              <span class="material-symbols-outlined" style="font-size: 18px; font-variation-settings: 'FILL' 1;" aria-hidden="true">arrow_downward</span>
+              See Detection Types
+            </a>
           </div>
         </div>
-        <div class="vert-hero-visual reveal reveal-delay-1" aria-hidden="true">
-          <div class="thermal-preview">
-            <div class="thermal-grid-overlay"></div>
-            <span class="material-symbols-outlined thermal-icon" style="font-variation-settings: 'FILL' 1;">electric_bolt</span>
-            <div class="thermal-hotspot hotspot-1"></div>
-            <div class="thermal-hotspot hotspot-2"></div>
-            <div class="thermal-hotspot hotspot-3"></div>
-            <div class="thermal-readout">
-              <span class="readout-label">PANEL TEMP</span>
-              <span class="readout-value">91.7&deg;C</span>
-              <span class="readout-status">HOTSPOT DETECTED</span>
+        <div class="eg-hero-visual reveal reveal-delay-1" aria-hidden="true">
+          <!-- Animated SVG Power Grid Network -->
+          <div class="eg-grid-container">
+            <svg viewBox="0 0 500 400" class="eg-grid-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animated power grid network visualization">
+              <!-- Grid lines with flowing electricity -->
+              <defs>
+                <filter id="glow-orange" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="4" result="blur"/>
+                  <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+                <filter id="glow-red" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="6" result="blur"/>
+                  <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+                <linearGradient id="line-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#FF8C00" stop-opacity="0.3"/>
+                  <stop offset="50%" stop-color="#FF8C00" stop-opacity="0.8"/>
+                  <stop offset="100%" stop-color="#FF6B35" stop-opacity="0.3"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Transmission lines -->
+              <line x1="60" y1="80" x2="200" y2="120" class="eg-power-line"/>
+              <line x1="200" y1="120" x2="340" y2="70" class="eg-power-line"/>
+              <line x1="340" y1="70" x2="440" y2="130" class="eg-power-line"/>
+              <line x1="200" y1="120" x2="250" y2="230" class="eg-power-line"/>
+              <line x1="250" y1="230" x2="130" y2="300" class="eg-power-line"/>
+              <line x1="250" y1="230" x2="400" y2="260" class="eg-power-line"/>
+              <line x1="400" y1="260" x2="440" y2="130" class="eg-power-line"/>
+              <line x1="130" y1="300" x2="60" y2="80" class="eg-power-line eg-line-long"/>
+              <line x1="400" y1="260" x2="350" y2="350" class="eg-power-line"/>
+              <line x1="130" y1="300" x2="250" y2="350" class="eg-power-line"/>
+
+              <!-- Flowing electricity dashes -->
+              <line x1="60" y1="80" x2="200" y2="120" class="eg-flow-line" style="--flow-dur: 2s;"/>
+              <line x1="200" y1="120" x2="340" y2="70" class="eg-flow-line" style="--flow-dur: 1.8s;"/>
+              <line x1="340" y1="70" x2="440" y2="130" class="eg-flow-line" style="--flow-dur: 2.2s;"/>
+              <line x1="200" y1="120" x2="250" y2="230" class="eg-flow-line" style="--flow-dur: 1.6s;"/>
+              <line x1="250" y1="230" x2="130" y2="300" class="eg-flow-line" style="--flow-dur: 2.4s;"/>
+              <line x1="250" y1="230" x2="400" y2="260" class="eg-flow-line" style="--flow-dur: 1.9s;"/>
+              <line x1="400" y1="260" x2="440" y2="130" class="eg-flow-line" style="--flow-dur: 2.1s;"/>
+              <line x1="400" y1="260" x2="350" y2="350" class="eg-flow-line" style="--flow-dur: 1.7s;"/>
+              <line x1="130" y1="300" x2="250" y2="350" class="eg-flow-line" style="--flow-dur: 2.3s;"/>
+
+              <!-- Substation nodes — normal (orange pulse) -->
+              <circle cx="60" cy="80" r="10" class="eg-node"/>
+              <circle cx="60" cy="80" r="16" class="eg-node-pulse"/>
+              <circle cx="200" cy="120" r="12" class="eg-node eg-node-large"/>
+              <circle cx="200" cy="120" r="20" class="eg-node-pulse" style="animation-delay: 0.5s;"/>
+              <circle cx="340" cy="70" r="10" class="eg-node"/>
+              <circle cx="340" cy="70" r="16" class="eg-node-pulse" style="animation-delay: 1s;"/>
+              <circle cx="440" cy="130" r="10" class="eg-node"/>
+              <circle cx="440" cy="130" r="16" class="eg-node-pulse" style="animation-delay: 1.5s;"/>
+              <circle cx="130" cy="300" r="10" class="eg-node"/>
+              <circle cx="130" cy="300" r="16" class="eg-node-pulse" style="animation-delay: 0.8s;"/>
+              <circle cx="350" cy="350" r="9" class="eg-node"/>
+              <circle cx="350" cy="350" r="14" class="eg-node-pulse" style="animation-delay: 1.2s;"/>
+              <circle cx="250" cy="350" r="9" class="eg-node"/>
+              <circle cx="250" cy="350" r="14" class="eg-node-pulse" style="animation-delay: 0.3s;"/>
+
+              <!-- Anomaly node (red pulse) -->
+              <circle cx="250" cy="230" r="12" class="eg-node-anomaly"/>
+              <circle cx="250" cy="230" r="22" class="eg-node-anomaly-pulse"/>
+              <circle cx="250" cy="230" r="34" class="eg-node-anomaly-ring"/>
+
+              <!-- Anomaly label -->
+              <rect x="270" y="210" width="110" height="28" rx="4" fill="rgba(255,60,60,0.15)" stroke="rgba(255,60,60,0.4)" stroke-width="1"/>
+              <text x="325" y="229" text-anchor="middle" class="eg-anomaly-label">ANOMALY</text>
+
+              <!-- Hub node label -->
+              <text x="200" y="150" text-anchor="middle" class="eg-node-label">HUB-01</text>
+              <text x="250" y="260" text-anchor="middle" class="eg-node-label eg-label-red">FAULT</text>
+
+              <!-- Tower icons (simplified) -->
+              <g class="eg-tower-icon" transform="translate(55, 40)">
+                <line x1="5" y1="0" x2="5" y2="30" stroke="#FF8C00" stroke-width="1.5" opacity="0.5"/>
+                <line x1="0" y1="10" x2="10" y2="10" stroke="#FF8C00" stroke-width="1" opacity="0.5"/>
+                <line x1="1" y1="20" x2="9" y2="20" stroke="#FF8C00" stroke-width="1" opacity="0.5"/>
+              </g>
+              <g class="eg-tower-icon" transform="translate(335, 30)">
+                <line x1="5" y1="0" x2="5" y2="30" stroke="#FF8C00" stroke-width="1.5" opacity="0.5"/>
+                <line x1="0" y1="10" x2="10" y2="10" stroke="#FF8C00" stroke-width="1" opacity="0.5"/>
+                <line x1="1" y1="20" x2="9" y2="20" stroke="#FF8C00" stroke-width="1" opacity="0.5"/>
+              </g>
+
+              <!-- Scan path -->
+              <path d="M 80 60 Q 180 40 300 80 T 430 100" class="eg-scan-path" fill="none"/>
+            </svg>
+
+            <!-- HUD overlay -->
+            <div class="eg-hud-readout">
+              <span class="eg-hud-label">GRID STATUS</span>
+              <span class="eg-hud-value">MONITORING</span>
+              <span class="eg-hud-alert">1 ANOMALY DETECTED</span>
+            </div>
+            <div class="eg-hud-coords">
+              <span>37.5407 N / 77.4360 W</span>
+              <span>ALT 120m AGL</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Stats Bar -->
-    <div class="stats-bar reveal">
-      <div class="stats-bar-inner">
+    <!-- ============ STATS BAR ============ -->
+    <div class="eg-stats-bar reveal">
+      <div class="eg-stats-inner">
         {stats.map(stat => (
-          <div class="stat-item">
-            <span class="stat-value">{stat.value}</span>
-            <span class="stat-label">{stat.label}</span>
-            <span class="stat-source">{stat.source}</span>
+          <div class="eg-stat-item">
+            <span class="eg-stat-value">{stat.value}</span>
+            <span class="eg-stat-label">{stat.label}</span>
+            <span class="eg-stat-source">{stat.source}</span>
           </div>
         ))}
       </div>
     </div>
 
-    <!-- Problem / Solution -->
-    <section class="section" aria-label="Challenges We Solve">
-      <div class="section-inner">
-        <div class="section-header reveal">
-          <div class="vert-eyebrow">
-            <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">The Challenge</span>
+    <!-- ============ RISK DETECTION SHOWCASE ============ -->
+    <section id="risk-detection" class="eg-section" aria-label="Risk Detection Types">
+      <div class="eg-section-inner">
+        <div class="eg-section-header reveal">
+          <div class="eg-eyebrow">
+            <span class="eg-eyebrow-line"></span>
+            <span class="eg-eyebrow-text">Detection Intelligence</span>
           </div>
-          <h2>Your Grid Can't Wait for<br/>Scheduled Inspections</h2>
-          <p class="section-subtitle">
-            Energy operators face aging infrastructure, expanding service areas,
-            and increasing regulatory scrutiny. Manual inspections are too slow,
-            too expensive, and miss too much.
+          <h2>Six Failure Modes.<br/>One Aerial Platform.</h2>
+          <p class="eg-section-subtitle">
+            Every flight captures thermal, visual, and LiDAR data simultaneously.
+            AI-assisted analysis identifies and severity-ranks these critical failure modes
+            before they cause outages.
           </p>
         </div>
 
-        <div class="pain-grid">
-          {painPoints.map((pp, i) => (
-            <div class={`pain-card reveal reveal-delay-${(i % 4) + 1}`}>
-              <div class="pain-problem">
-                <span class="pain-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">warning</span>
-                <h3>{pp.problem}</h3>
+        <div class="eg-detection-grid">
+          {detections.map((det, i) => (
+            <div class={`eg-detection-card reveal reveal-delay-${(i % 3) + 1}`} data-severity={det.severity} data-detection={det.id}>
+              <div class="eg-det-visual" aria-hidden="true">
+                {det.id === 'vegetation' && (
+                  <div class="eg-anim-vegetation">
+                    <div class="eg-vine eg-vine-1"></div>
+                    <div class="eg-vine eg-vine-2"></div>
+                    <div class="eg-vine eg-vine-3"></div>
+                    <div class="eg-vine-leaf eg-leaf-1"></div>
+                    <div class="eg-vine-leaf eg-leaf-2"></div>
+                  </div>
+                )}
+                {det.id === 'insulator' && (
+                  <div class="eg-anim-insulator">
+                    <div class="eg-crack eg-crack-1"></div>
+                    <div class="eg-crack eg-crack-2"></div>
+                    <div class="eg-spark eg-spark-1"></div>
+                    <div class="eg-spark eg-spark-2"></div>
+                    <div class="eg-spark eg-spark-3"></div>
+                  </div>
+                )}
+                {det.id === 'hotjoint' && (
+                  <div class="eg-anim-hotjoint">
+                    <div class="eg-thermal-core"></div>
+                    <div class="eg-thermal-ring eg-thermal-ring-1"></div>
+                    <div class="eg-thermal-ring eg-thermal-ring-2"></div>
+                    <div class="eg-thermal-ring eg-thermal-ring-3"></div>
+                  </div>
+                )}
+                {det.id === 'sag' && (
+                  <div class="eg-anim-sag">
+                    <div class="eg-sag-pole eg-sag-pole-l"></div>
+                    <div class="eg-sag-pole eg-sag-pole-r"></div>
+                    <div class="eg-sag-wire"></div>
+                  </div>
+                )}
+                {det.id === 'corrosion' && (
+                  <div class="eg-anim-corrosion">
+                    <div class="eg-rust eg-rust-1"></div>
+                    <div class="eg-rust eg-rust-2"></div>
+                    <div class="eg-rust eg-rust-3"></div>
+                    <div class="eg-rust eg-rust-4"></div>
+                    <div class="eg-rust eg-rust-5"></div>
+                  </div>
+                )}
+                {det.id === 'lightning' && (
+                  <div class="eg-anim-lightning">
+                    <div class="eg-ground-base"></div>
+                    <div class="eg-ground-shift"></div>
+                    <div class="eg-ground-crack-l"></div>
+                    <div class="eg-ground-crack-r"></div>
+                  </div>
+                )}
               </div>
-              <div class="pain-solution">
-                <span class="pain-arrow">&rarr;</span>
-                <p>{pp.solution}</p>
+              <div class="eg-det-icon-wrap">
+                <span class="material-symbols-outlined eg-det-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{det.icon}</span>
+                <svg class="eg-det-ring" viewBox="0 0 60 60" aria-hidden="true">
+                  <circle cx="30" cy="30" r="26" fill="none" stroke-width="2" class="eg-det-ring-bg"/>
+                  <circle cx="30" cy="30" r="26" fill="none" stroke-width="2" class="eg-det-ring-progress" style={`--ring-delay: ${i * 0.2}s;`}/>
+                </svg>
+              </div>
+              <div class="eg-det-content">
+                <div class="eg-det-header">
+                  <h3>{det.title}</h3>
+                  <span class={`eg-severity eg-severity-${det.severity}`}>{det.severity}</span>
+                </div>
+                <p>{det.desc}</p>
               </div>
             </div>
           ))}
@@ -160,81 +342,324 @@ const painPoints = [
       </div>
     </section>
 
-    <!-- Services Grid -->
-    <section id="services" class="section" style="background: var(--surface-dim);" aria-label="Services">
-      <div class="section-inner">
-        <div class="section-header reveal">
-          <div class="vert-eyebrow">
-            <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">Services</span>
+    <!-- ============ INTERACTIVE GRID MAP ============ -->
+    <section class="eg-section eg-section-dim" aria-label="Inspection Coverage">
+      <div class="eg-section-inner">
+        <div class="eg-section-header reveal">
+          <div class="eg-eyebrow">
+            <span class="eg-eyebrow-line"></span>
+            <span class="eg-eyebrow-text">Coverage Intelligence</span>
           </div>
-          <h2>Full-Spectrum Grid Intelligence<br/>in a Single Engagement</h2>
-          <p class="section-subtitle">
-            Every assessment delivers severity-ranked findings with location coordinates,
-            component identification, remediation recommendations, and estimated costs.
-            Your maintenance team gets a prioritized work order, not raw data.
+          <h2>Systematic Aerial Coverage<br/>Across Your Service Territory</h2>
+          <p class="eg-section-subtitle">
+            Automated flight planning covers every span, tower, and substation.
+            Real-time progress tracking ensures zero missed assets.
           </p>
         </div>
 
-        <div class="services-grid">
-          {services.map((svc, i) => (
-            <div class={`service-card metallic-gloss reveal reveal-delay-${(i % 3) + 1}`}>
-              <div class="service-icon-wrap">
-                <span class="material-symbols-outlined service-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{svc.icon}</span>
-              </div>
-              <h3 class="service-title">{svc.title}</h3>
-              <p class="service-desc">{svc.desc}</p>
+        <div class="eg-map-container reveal">
+          <svg viewBox="0 0 800 450" class="eg-map-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stylized grid map showing inspection scan paths">
+            <defs>
+              <pattern id="map-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,140,0,0.06)" stroke-width="0.5"/>
+              </pattern>
+              <linearGradient id="scan-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#FF8C00" stop-opacity="0"/>
+                <stop offset="50%" stop-color="#FF8C00" stop-opacity="0.8"/>
+                <stop offset="100%" stop-color="#FF6B35" stop-opacity="0"/>
+              </linearGradient>
+              <filter id="map-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            <rect width="800" height="450" fill="url(#map-grid)"/>
+
+            <!-- Territory boundary -->
+            <path d="M 100 60 L 250 40 L 450 55 L 650 45 L 720 100 L 740 200 L 700 320 L 600 380 L 400 400 L 200 370 L 80 280 L 60 160 Z"
+                  fill="rgba(255,140,0,0.03)" stroke="rgba(255,140,0,0.15)" stroke-width="1" stroke-dasharray="8 4"/>
+
+            <!-- Transmission corridors -->
+            <line x1="120" y1="120" x2="680" y2="100" stroke="rgba(255,140,0,0.12)" stroke-width="2"/>
+            <line x1="200" y1="80" x2="250" y2="350" stroke="rgba(255,140,0,0.12)" stroke-width="2"/>
+            <line x1="400" y1="60" x2="420" y2="380" stroke="rgba(255,140,0,0.12)" stroke-width="2"/>
+            <line x1="150" y1="250" x2="680" y2="230" stroke="rgba(255,140,0,0.12)" stroke-width="2"/>
+
+            <!-- Tower positions -->
+            <circle cx="180" cy="110" r="4" fill="#FF8C00" opacity="0.5"/>
+            <circle cx="300" cy="105" r="4" fill="#FF8C00" opacity="0.5"/>
+            <circle cx="420" cy="95" r="4" fill="#FF8C00" opacity="0.5"/>
+            <circle cx="560" cy="100" r="4" fill="#FF8C00" opacity="0.5"/>
+            <circle cx="240" cy="180" r="4" fill="#FF8C00" opacity="0.5"/>
+            <circle cx="410" cy="200" r="4" fill="#FF8C00" opacity="0.5"/>
+            <circle cx="310" cy="280" r="4" fill="#FF8C00" opacity="0.5"/>
+            <circle cx="530" cy="270" r="4" fill="#FF8C00" opacity="0.5"/>
+            <circle cx="200" cy="320" r="4" fill="#FF8C00" opacity="0.5"/>
+            <circle cx="500" cy="340" r="4" fill="#FF8C00" opacity="0.5"/>
+
+            <!-- Substations -->
+            <rect x="155" y="95" width="14" height="14" rx="2" fill="none" stroke="#FF8C00" stroke-width="1.5" opacity="0.7"/>
+            <rect x="545" y="85" width="14" height="14" rx="2" fill="none" stroke="#FF8C00" stroke-width="1.5" opacity="0.7"/>
+            <rect x="395" y="185" width="14" height="14" rx="2" fill="none" stroke="#FF8C00" stroke-width="1.5" opacity="0.7"/>
+
+            <!-- Scan paths (animated) -->
+            <path d="M 120 115 C 200 100 300 120 400 95 S 550 110 680 100" class="eg-scan-animated" fill="none"/>
+            <path d="M 150 250 C 250 240 350 260 450 235 S 580 245 680 230" class="eg-scan-animated eg-scan-delayed" fill="none"/>
+            <path d="M 200 80 C 210 150 230 220 250 350" class="eg-scan-animated eg-scan-delayed-2" fill="none"/>
+
+            <!-- Progress markers -->
+            <circle r="5" class="eg-scan-dot" fill="#FF8C00" filter="url(#map-glow)">
+              <animateMotion dur="6s" repeatCount="indefinite" path="M 120 115 C 200 100 300 120 400 95 S 550 110 680 100"/>
+            </circle>
+            <circle r="5" class="eg-scan-dot" fill="#FF8C00" filter="url(#map-glow)">
+              <animateMotion dur="7s" repeatCount="indefinite" path="M 150 250 C 250 240 350 260 450 235 S 580 245 680 230"/>
+            </circle>
+
+            <!-- Anomaly markers on map -->
+            <circle cx="410" cy="200" r="8" fill="none" stroke="#FF4444" stroke-width="1.5" class="eg-map-anomaly"/>
+            <circle cx="310" cy="280" r="8" fill="none" stroke="#FF4444" stroke-width="1.5" class="eg-map-anomaly" style="animation-delay: 1s;"/>
+          </svg>
+
+          <!-- Map legend -->
+          <div class="eg-map-legend">
+            <div class="eg-legend-item">
+              <span class="eg-legend-dot" style="background: #FF8C00;"></span>
+              <span>Tower / Asset</span>
             </div>
+            <div class="eg-legend-item">
+              <span class="eg-legend-square" style="border-color: #FF8C00;"></span>
+              <span>Substation</span>
+            </div>
+            <div class="eg-legend-item">
+              <span class="eg-legend-dot" style="background: #FF4444;"></span>
+              <span>Anomaly Detected</span>
+            </div>
+            <div class="eg-legend-item">
+              <span class="eg-legend-line"></span>
+              <span>Scan Path</span>
+            </div>
+          </div>
+
+          <!-- Map stats overlay -->
+          <div class="eg-map-stats">
+            <div class="eg-map-stat">
+              <span class="eg-map-stat-val">847</span>
+              <span class="eg-map-stat-label">Assets Cataloged</span>
+            </div>
+            <div class="eg-map-stat">
+              <span class="eg-map-stat-val">98.7%</span>
+              <span class="eg-map-stat-label">Coverage</span>
+            </div>
+            <div class="eg-map-stat">
+              <span class="eg-map-stat-val">12</span>
+              <span class="eg-map-stat-label">Anomalies Found</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COMPARISON TIMELINE ============ -->
+    <section class="eg-section" aria-label="Before and After Comparison">
+      <div class="eg-section-inner">
+        <div class="eg-section-header reveal">
+          <div class="eg-eyebrow">
+            <span class="eg-eyebrow-line"></span>
+            <span class="eg-eyebrow-text">The Transformation</span>
+          </div>
+          <h2>From Reactive Maintenance<br/>to Predictive Intelligence</h2>
+        </div>
+
+        <div class="eg-timeline reveal">
+          <!-- BEFORE side -->
+          <div class="eg-timeline-side eg-timeline-before">
+            <div class="eg-timeline-badge eg-badge-before">Before Jinki</div>
+            <div class="eg-timeline-items">
+              <div class="eg-tl-item">
+                <span class="eg-tl-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">schedule</span>
+                <div>
+                  <h4>6-Month Inspection Cycles</h4>
+                  <p>Manual crews on foot or in helicopters. Months between inspections leave assets unmonitored.</p>
+                </div>
+              </div>
+              <div class="eg-tl-item">
+                <span class="eg-tl-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">payments</span>
+                <div>
+                  <h4>$5,000+ Per Tower</h4>
+                  <p>Helicopter time, crew mobilization, traffic management, and equipment shutdowns drain budgets.</p>
+                </div>
+              </div>
+              <div class="eg-tl-item">
+                <span class="eg-tl-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">report</span>
+                <div>
+                  <h4>Reactive Failures</h4>
+                  <p>Defects found only after outages occur. Emergency repairs cost 4 to 8 times more than planned maintenance.</p>
+                </div>
+              </div>
+              <div class="eg-tl-item">
+                <span class="eg-tl-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">description</span>
+                <div>
+                  <h4>Paper-Based Reports</h4>
+                  <p>Handwritten notes, inconsistent grading, and weeks of delay before findings reach maintenance teams.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Center divider -->
+          <div class="eg-timeline-divider" aria-hidden="true">
+            <div class="eg-timeline-line"></div>
+            <div class="eg-timeline-arrow">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">arrow_forward</span>
+            </div>
+            <div class="eg-timeline-line"></div>
+          </div>
+
+          <!-- AFTER side -->
+          <div class="eg-timeline-side eg-timeline-after">
+            <div class="eg-timeline-badge eg-badge-after">With Jinki</div>
+            <div class="eg-timeline-items">
+              <div class="eg-tl-item">
+                <span class="eg-tl-icon eg-tl-icon-after material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">speed</span>
+                <div>
+                  <h4>340+ Miles Per Day</h4>
+                  <p>Automated flight paths cover entire corridors in hours. Monthly monitoring becomes standard.</p>
+                </div>
+              </div>
+              <div class="eg-tl-item">
+                <span class="eg-tl-icon eg-tl-icon-after material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">savings</span>
+                <div>
+                  <h4>83% Cost Reduction</h4>
+                  <p>No helicopters, no road crews, no shutdowns. Aerial intelligence at a fraction of legacy costs.</p>
+                </div>
+              </div>
+              <div class="eg-tl-item">
+                <span class="eg-tl-icon eg-tl-icon-after material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">verified</span>
+                <div>
+                  <h4>Predictive Detection</h4>
+                  <p>Thermal and LiDAR intelligence identifies failing components months before outage events.</p>
+                </div>
+              </div>
+              <div class="eg-tl-item">
+                <span class="eg-tl-icon eg-tl-icon-after material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">dashboard</span>
+                <div>
+                  <h4>Digital Work Orders</h4>
+                  <p>Severity-ranked findings with GPS coordinates, photos, thermal data, and cost estimates — delivered in 48 hours.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TECHNOLOGY DEEP-DIVE ============ -->
+    <section class="eg-section eg-section-dim" aria-label="Technology Capabilities">
+      <div class="eg-section-inner">
+        <div class="eg-section-header reveal">
+          <div class="eg-eyebrow">
+            <span class="eg-eyebrow-line"></span>
+            <span class="eg-eyebrow-text">Technology</span>
+          </div>
+          <h2>Three Sensor Modalities.<br/>One Integrated Platform.</h2>
+          <p class="eg-section-subtitle">
+            The DJI M400 RTK carries all three payloads simultaneously. Every flight captures
+            thermal, visual, and LiDAR data — no second passes, no data gaps.
+          </p>
+        </div>
+
+        <div class="eg-tech-grid">
+          {techSections.map((tech, i) => (
+            <details class={`eg-tech-panel reveal reveal-delay-${i + 1}`} id={`tech-${tech.id}`}>
+              <summary class="eg-tech-summary">
+                <div class="eg-tech-header">
+                  <div class="eg-tech-icon-wrap">
+                    <span class="material-symbols-outlined eg-tech-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{tech.icon}</span>
+                  </div>
+                  <div>
+                    <h3 class="eg-tech-title">{tech.title}</h3>
+                    <span class="eg-tech-subtitle">{tech.subtitle}</span>
+                  </div>
+                </div>
+                <span class="eg-tech-toggle material-symbols-outlined" style="font-variation-settings: 'FILL' 0;" aria-hidden="true">expand_more</span>
+              </summary>
+              <div class="eg-tech-body">
+                <div class="eg-tech-specs">
+                  <h4>Specifications</h4>
+                  <ul>
+                    {tech.specs.map(spec => (
+                      <li>
+                        <span class="eg-spec-dot"></span>
+                        {spec}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div class="eg-tech-capabilities">
+                  <h4>Capabilities</h4>
+                  <ul>
+                    {tech.capabilities.map(cap => (
+                      <li>
+                        <span class="material-symbols-outlined eg-cap-check" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">check_circle</span>
+                        {cap}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </details>
           ))}
         </div>
       </div>
     </section>
 
-    <!-- Differentiator Section -->
-    <section class="section" aria-label="Why Jinki">
-      <div class="section-inner">
-        <div class="section-header reveal">
-          <div class="vert-eyebrow">
-            <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">Why Jinki</span>
+    <!-- ============ WHY JINKI ============ -->
+    <section class="eg-section" aria-label="Why Jinki">
+      <div class="eg-section-inner">
+        <div class="eg-section-header reveal">
+          <div class="eg-eyebrow">
+            <span class="eg-eyebrow-line"></span>
+            <span class="eg-eyebrow-text">Why Jinki</span>
           </div>
-          <h2>Your Local Energy Intelligence Partner</h2>
+          <h2>Your Grid Intelligence Partner</h2>
         </div>
 
-        <div class="diff-grid">
-          <div class="diff-card reveal">
-            <span class="diff-number">01</span>
-            <h3>Regional Expertise</h3>
+        <div class="eg-diff-grid">
+          <div class="eg-diff-card reveal">
+            <span class="eg-diff-num">01</span>
+            <h3>Energy Sector Specialists</h3>
             <p>
-              130+ solar farms and extensive grid infrastructure in Virginia alone.
-              We're not flying in from out of state — we're your local aerial intelligence
-              partner with same-day response capability.
+              Transmission, distribution, solar, and substation expertise.
+              Our analysts understand NERC standards, vegetation management
+              requirements, and utility maintenance workflows.
             </p>
           </div>
-          <div class="diff-card reveal reveal-delay-1">
-            <span class="diff-number">02</span>
-            <h3>Thermal Specialists</h3>
+          <div class="eg-diff-card reveal reveal-delay-1">
+            <span class="eg-diff-num">02</span>
+            <h3>Multi-Sensor Fusion</h3>
             <p>
-              Our H30T thermal payload delivers 640&times;512 resolution with radiometric
-              accuracy. Every finding includes quantified temperature data, not just
-              color maps.
+              Thermal, LiDAR, and visual data captured simultaneously and
+              cross-referenced. Findings include temperature data, clearance
+              measurements, and high-resolution imagery in a single report.
             </p>
           </div>
-          <div class="diff-card reveal reveal-delay-2">
-            <span class="diff-number">03</span>
-            <h3>Actionable Reports</h3>
+          <div class="eg-diff-card reveal reveal-delay-2">
+            <span class="eg-diff-num">03</span>
+            <h3>Actionable Deliverables</h3>
             <p>
-              Severity-ranked findings with location coordinates, component identification,
-              remediation recommendations, and estimated costs. Your maintenance team
-              gets a prioritized work order.
+              Severity-ranked findings with GPS coordinates, component ID,
+              remediation recommendations, and estimated repair costs.
+              Your crews get prioritized work orders, not raw data.
             </p>
           </div>
-          <div class="diff-card reveal reveal-delay-3">
-            <span class="diff-number">04</span>
-            <h3>No Shutdowns Required</h3>
+          <div class="eg-diff-card reveal reveal-delay-3">
+            <span class="eg-diff-num">04</span>
+            <h3>Zero Downtime Required</h3>
             <p>
-              Non-contact thermal inspection means your assets stay energized and your
-              customers stay connected. We work around your operations, not against them.
+              Non-contact inspection means your assets stay energized and your
+              customers stay connected. No shutdowns, no road closures, no
+              service interruptions.
             </p>
           </div>
         </div>
@@ -247,17 +672,34 @@ const painPoints = [
 </Layout>
 
 <style>
-  /* ---- Vertical Hero ---- */
-  .vert-hero {
-    min-height: 85vh;
+  /* ================================================================
+     ENERGY GRID — TEAM ALPHA REDESIGN
+     Orange/amber accent: #FF8C00 / #FF6B35
+     ================================================================ */
+
+  /* ---- Hero ---- */
+  .eg-hero {
+    min-height: 90vh;
     display: flex;
     align-items: center;
     padding: 140px clamp(20px, 5vw, 80px) 60px;
     background: var(--surface-container-lowest);
     position: relative;
+    overflow: hidden;
   }
 
-  .vert-hero-inner {
+  .eg-hero::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(ellipse, rgba(255, 140, 0, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .eg-hero-inner {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
     gap: 60px;
@@ -265,32 +707,35 @@ const painPoints = [
     max-width: 1280px;
     margin: 0 auto;
     width: 100%;
+    position: relative;
+    z-index: 1;
   }
 
-  .vert-eyebrow {
+  /* Eyebrow */
+  .eg-eyebrow {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 16px;
   }
 
-  .vert-eyebrow-line {
+  .eg-eyebrow-line {
     display: block;
     width: 32px;
     height: 1px;
-    background: var(--accent);
+    background: #FF8C00;
   }
 
-  .vert-eyebrow-text {
+  .eg-eyebrow-text {
     font-family: var(--font-label);
     font-size: 0.6875rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.3em;
-    color: var(--accent);
+    color: #FF8C00;
   }
 
-  .vert-hero-title {
+  .eg-hero-title {
     font-family: var(--font-headline);
     font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
     font-weight: 700;
@@ -306,7 +751,7 @@ const painPoints = [
     background-clip: text;
   }
 
-  .vert-hero-subtitle {
+  .eg-hero-subtitle {
     font-family: var(--font-body);
     font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
     line-height: 1.75;
@@ -315,13 +760,13 @@ const painPoints = [
     margin-bottom: 32px;
   }
 
-  .vert-hero-actions {
+  .eg-hero-actions {
     display: flex;
     align-items: center;
     gap: 24px;
   }
 
-  .vert-cta {
+  .eg-cta {
     font-family: var(--font-headline);
     font-size: 0.8125rem;
     font-weight: 700;
@@ -333,7 +778,10 @@ const painPoints = [
     text-decoration: none;
   }
 
-  .vert-cta-secondary {
+  .eg-cta-secondary {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-family: var(--font-headline);
     font-size: 0.8125rem;
     font-weight: 700;
@@ -344,15 +792,15 @@ const painPoints = [
     transition: color 0.2s ease;
   }
 
-  .vert-cta-secondary:hover {
-    color: var(--accent);
+  .eg-cta-secondary:hover {
+    color: #FF8C00;
   }
 
-  /* Thermal Preview Visual */
-  .thermal-preview {
+  /* ---- Hero Visual: Animated SVG Grid ---- */
+  .eg-grid-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 5 / 4;
     background: linear-gradient(135deg, #0a0c10, #141820);
     border-radius: 16px;
     border: 1px solid var(--glass-border);
@@ -360,93 +808,180 @@ const painPoints = [
     box-shadow: var(--glass-shadow);
   }
 
-  .thermal-grid-overlay {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255, 140, 0, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 140, 0, 0.04) 1px, transparent 1px);
-    background-size: 24px 24px;
+  .eg-grid-svg {
+    width: 100%;
+    height: 100%;
   }
 
-  .thermal-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 80px;
-    color: rgba(255, 140, 0, 0.08);
+  /* Power lines (static base) */
+  .eg-power-line {
+    stroke: rgba(255, 140, 0, 0.15);
+    stroke-width: 2;
   }
 
-  .thermal-hotspot {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 140, 0, 0.6), rgba(255, 100, 50, 0.2), transparent);
-    animation: pulse-hotspot 3s ease-in-out infinite;
+  /* Flowing electricity (animated dashes) */
+  .eg-flow-line {
+    stroke: #FF8C00;
+    stroke-width: 2;
+    stroke-dasharray: 8 16;
+    stroke-linecap: round;
+    opacity: 0.6;
+    animation: eg-flow var(--flow-dur, 2s) linear infinite;
   }
 
-  .hotspot-1 { top: 25%; left: 20%; animation-delay: 0s; }
-  .hotspot-2 { top: 50%; left: 55%; animation-delay: 1s; width: 50px; height: 50px; }
-  .hotspot-3 { top: 35%; left: 78%; animation-delay: 2s; width: 30px; height: 30px; }
-
-  @keyframes pulse-hotspot {
-    0%, 100% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.3); }
+  @keyframes eg-flow {
+    from { stroke-dashoffset: 48; }
+    to { stroke-dashoffset: 0; }
   }
 
-  .thermal-readout {
+  /* Substation nodes */
+  .eg-node {
+    fill: #FF8C00;
+    opacity: 0.8;
+  }
+
+  .eg-node-large {
+    opacity: 0.9;
+  }
+
+  .eg-node-pulse {
+    fill: none;
+    stroke: #FF8C00;
+    stroke-width: 1.5;
+    opacity: 0;
+    animation: eg-node-glow 3s ease-in-out infinite;
+  }
+
+  @keyframes eg-node-glow {
+    0% { opacity: 0.6; r: 14; }
+    50% { opacity: 0; r: 24; }
+    100% { opacity: 0.6; r: 14; }
+  }
+
+  /* Anomaly node (red) */
+  .eg-node-anomaly {
+    fill: #FF4444;
+    opacity: 0.9;
+  }
+
+  .eg-node-anomaly-pulse {
+    fill: none;
+    stroke: #FF4444;
+    stroke-width: 2;
+    animation: eg-anomaly-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes eg-anomaly-pulse {
+    0% { opacity: 0.8; r: 16; }
+    50% { opacity: 0; r: 30; }
+    100% { opacity: 0.8; r: 16; }
+  }
+
+  .eg-node-anomaly-ring {
+    fill: none;
+    stroke: rgba(255, 68, 68, 0.2);
+    stroke-width: 1;
+    animation: eg-anomaly-pulse 2s ease-in-out infinite 0.5s;
+  }
+
+  .eg-anomaly-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    fill: #FF4444;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+  }
+
+  .eg-node-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    fill: rgba(255, 140, 0, 0.5);
+    letter-spacing: 0.1em;
+  }
+
+  .eg-label-red {
+    fill: rgba(255, 68, 68, 0.6);
+  }
+
+  /* Scan path */
+  .eg-scan-path {
+    stroke: rgba(255, 140, 0, 0.2);
+    stroke-width: 1;
+    stroke-dasharray: 4 6;
+    animation: eg-scan-dash 3s linear infinite;
+  }
+
+  @keyframes eg-scan-dash {
+    from { stroke-dashoffset: 20; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* HUD overlays */
+  .eg-hud-readout {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
+    top: 16px;
+    left: 16px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    background: rgba(0, 0, 0, 0.6);
+    gap: 3px;
+    background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(8px);
-    padding: 12px 16px;
+    padding: 10px 14px;
     border-radius: 8px;
     border: 1px solid rgba(255, 140, 0, 0.15);
   }
 
-  .readout-label {
+  .eg-hud-label {
     font-family: var(--font-mono);
-    font-size: 9px;
+    font-size: 8px;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--text-tertiary);
   }
 
-  .readout-value {
+  .eg-hud-value {
     font-family: var(--font-mono);
-    font-size: 24px;
+    font-size: 13px;
     font-weight: 700;
     color: #FF8C00;
   }
 
-  .readout-status {
+  .eg-hud-alert {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 9px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #FF8C00;
-    animation: blink-status 2s ease-in-out infinite;
+    color: #FF4444;
+    animation: blink-alert 2s ease-in-out infinite;
   }
 
-  @keyframes blink-status {
+  @keyframes blink-alert {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
   }
 
+  .eg-hud-coords {
+    position: absolute;
+    bottom: 12px;
+    right: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    color: rgba(255, 140, 0, 0.4);
+    letter-spacing: 0.05em;
+    text-align: right;
+  }
+
   /* ---- Stats Bar ---- */
-  .stats-bar {
+  .eg-stats-bar {
     background: var(--surface-container-low);
     border-top: 1px solid var(--glass-border);
     border-bottom: 1px solid var(--glass-border);
   }
 
-  .stats-bar-inner {
+  .eg-stats-inner {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     max-width: 1280px;
@@ -455,57 +990,119 @@ const painPoints = [
     gap: 32px;
   }
 
-  .stat-item {
+  .eg-stat-item {
     display: flex;
     flex-direction: column;
     gap: 6px;
     text-align: center;
+    position: relative;
   }
 
-  .stat-value {
+  .eg-stat-value {
     font-family: var(--font-headline);
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--accent);
+    color: #FF8C00;
     line-height: 1;
+    position: relative;
+    z-index: 1;
+    animation: eg-electric-pulse 3s ease-in-out infinite;
+    text-shadow: 0 0 20px rgba(255, 140, 0, 0.3), 0 0 40px rgba(255, 107, 53, 0.1);
   }
 
-  .stat-label {
+  .eg-stat-item:nth-child(2) .eg-stat-value { animation-delay: 0.5s; }
+  .eg-stat-item:nth-child(3) .eg-stat-value { animation-delay: 1.0s; }
+  .eg-stat-item:nth-child(4) .eg-stat-value { animation-delay: 1.5s; }
+
+  @keyframes eg-electric-pulse {
+    0%, 100% {
+      text-shadow: 0 0 20px rgba(255, 140, 0, 0.3), 0 0 40px rgba(255, 107, 53, 0.1);
+      opacity: 1;
+    }
+    15% {
+      text-shadow: 0 0 30px rgba(255, 140, 0, 0.6), 0 0 60px rgba(255, 107, 53, 0.25), 0 0 80px rgba(255, 140, 0, 0.1);
+      opacity: 1;
+    }
+    17% {
+      opacity: 0.85;
+    }
+    19% {
+      opacity: 1;
+      text-shadow: 0 0 35px rgba(255, 140, 0, 0.7), 0 0 70px rgba(255, 107, 53, 0.3);
+    }
+    50% {
+      text-shadow: 0 0 15px rgba(255, 140, 0, 0.2), 0 0 30px rgba(255, 107, 53, 0.05);
+    }
+  }
+
+  /* Gradient glow behind stat number */
+  .eg-stat-item::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 60px;
+    background: radial-gradient(ellipse, rgba(255, 140, 0, 0.12) 0%, rgba(255, 107, 53, 0.04) 50%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: eg-stat-glow-bg 3s ease-in-out infinite;
+    z-index: 0;
+  }
+
+  .eg-stat-item:nth-child(2)::before { animation-delay: 0.5s; }
+  .eg-stat-item:nth-child(3)::before { animation-delay: 1.0s; }
+  .eg-stat-item:nth-child(4)::before { animation-delay: 1.5s; }
+
+  @keyframes eg-stat-glow-bg {
+    0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+    15% { opacity: 1; transform: translateX(-50%) scale(1.15); }
+    50% { opacity: 0.4; transform: translateX(-50%) scale(0.95); }
+  }
+
+  .eg-stat-label {
     font-family: var(--font-body);
     font-size: 0.875rem;
     color: var(--text-secondary);
     line-height: 1.4;
+    position: relative;
+    z-index: 1;
   }
 
-  .stat-source {
+  .eg-stat-source {
     font-family: var(--font-mono);
     font-size: 0.625rem;
     color: var(--text-tertiary);
     text-transform: uppercase;
     letter-spacing: 0.1em;
+    position: relative;
+    z-index: 1;
   }
 
-  /* ---- Sections ---- */
-  .section {
+  /* ---- Section Base ---- */
+  .eg-section {
     padding: 5rem clamp(20px, 5vw, 80px);
   }
 
   @media (min-width: 768px) {
-    .section {
-      padding: 8rem clamp(20px, 5vw, 80px);
-    }
+    .eg-section { padding: 7rem clamp(20px, 5vw, 80px); }
   }
 
-  .section-inner {
+  .eg-section-dim {
+    background: var(--surface-dim);
+  }
+
+  .eg-section-inner {
     max-width: 1280px;
     margin: 0 auto;
   }
 
-  .section-header {
+  .eg-section-header {
     margin-bottom: 56px;
   }
 
-  .section-header h2 {
+  .eg-section-header h2 {
     font-family: var(--font-headline);
     font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
     font-weight: 700;
@@ -514,7 +1111,7 @@ const painPoints = [
     margin-top: 8px;
   }
 
-  .section-subtitle {
+  .eg-section-subtitle {
     font-family: var(--font-body);
     font-size: 1.0625rem;
     color: var(--text-secondary);
@@ -523,103 +1120,32 @@ const painPoints = [
     margin-top: 16px;
   }
 
-  /* ---- Pain Points Grid ---- */
-  .pain-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-
-  @media (min-width: 768px) {
-    .pain-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  .pain-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 32px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .pain-card:hover {
-    border-color: var(--border-hover);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
-  }
-
-  .pain-problem {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 20px;
-  }
-
-  .pain-icon {
-    color: #FF8C00;
-    font-size: 20px;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .pain-problem h3 {
-    font-family: var(--font-headline);
-    font-size: 1.0625rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    line-height: 1.3;
-  }
-
-  .pain-solution {
-    display: flex;
-    gap: 12px;
-    padding-left: 32px;
-  }
-
-  .pain-arrow {
-    color: var(--accent);
-    font-weight: 700;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .pain-solution p {
-    font-size: 0.9375rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
-  }
-
-  /* ---- Services Grid ---- */
-  .services-grid {
+  /* ---- Risk Detection Cards ---- */
+  .eg-detection-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
   }
 
-  @media (min-width: 768px) {
-    .services-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  @media (min-width: 640px) {
+    .eg-detection-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (min-width: 1024px) {
-    .services-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
+    .eg-detection-grid { grid-template-columns: repeat(3, 1fr); }
   }
 
-  .service-card {
-    background: var(--surface-container-low);
-    border: 1px solid var(--glass-border);
+  .eg-detection-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 32px;
+    padding: 28px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
   }
 
-  .service-card::before {
+  .eg-detection-card::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -628,13 +1154,676 @@ const painPoints = [
     border-radius: inherit;
   }
 
-  .service-card:hover {
+  .eg-detection-card:hover {
     transform: translateY(-4px);
     border-color: rgba(255, 140, 0, 0.2);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(255, 140, 0, 0.05);
   }
 
-  .service-icon-wrap {
+  .eg-det-icon-wrap {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .eg-det-icon {
+    color: #FF8C00;
+    font-size: 26px;
+    z-index: 1;
+  }
+
+  .eg-det-ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .eg-det-ring-bg {
+    stroke: rgba(255, 140, 0, 0.1);
+  }
+
+  .eg-det-ring-progress {
+    stroke: #FF8C00;
+    stroke-dasharray: 163;
+    stroke-dashoffset: 163;
+    stroke-linecap: round;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    animation: eg-ring-fill 1.5s ease-out forwards;
+    animation-delay: var(--ring-delay, 0s);
+  }
+
+  @keyframes eg-ring-fill {
+    to { stroke-dashoffset: 40; }
+  }
+
+  .eg-det-content {}
+
+  .eg-det-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .eg-det-header h3 {
+    font-family: var(--font-headline);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+
+  .eg-severity {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .eg-severity-critical {
+    background: rgba(255, 68, 68, 0.12);
+    color: #FF4444;
+    border: 1px solid rgba(255, 68, 68, 0.2);
+  }
+
+  .eg-severity-high {
+    background: rgba(255, 140, 0, 0.12);
+    color: #FF8C00;
+    border: 1px solid rgba(255, 140, 0, 0.2);
+  }
+
+  .eg-severity-medium {
+    background: rgba(255, 200, 0, 0.1);
+    color: #E6B800;
+    border: 1px solid rgba(255, 200, 0, 0.15);
+  }
+
+  .eg-detection-card p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ---- Detection Card Animated Visuals ---- */
+  .eg-det-visual {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 48px;
+    height: 48px;
+    opacity: 0.35;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .eg-detection-card:hover .eg-det-visual {
+    opacity: 0.6;
+  }
+
+  /* -- Vegetation: Growing vines -- */
+  .eg-anim-vegetation {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .eg-vine {
+    position: absolute;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to top, #4CAF50, #81C784);
+    border-radius: 1px;
+    transform-origin: bottom center;
+    animation: eg-vine-grow 4s ease-in-out infinite;
+  }
+
+  .eg-vine-1 { left: 12px; height: 0; animation-delay: 0s; }
+  .eg-vine-2 { left: 24px; height: 0; animation-delay: 0.8s; transform: rotate(5deg); }
+  .eg-vine-3 { left: 36px; height: 0; animation-delay: 1.5s; transform: rotate(-3deg); }
+
+  @keyframes eg-vine-grow {
+    0% { height: 0; }
+    40% { height: 38px; }
+    70% { height: 38px; }
+    100% { height: 0; }
+  }
+
+  .eg-vine-leaf {
+    position: absolute;
+    width: 8px;
+    height: 6px;
+    background: #66BB6A;
+    border-radius: 0 50% 50% 50%;
+    animation: eg-leaf-appear 4s ease-in-out infinite;
+    opacity: 0;
+  }
+
+  .eg-leaf-1 { left: 14px; bottom: 20px; transform: rotate(30deg); animation-delay: 1s; }
+  .eg-leaf-2 { left: 20px; bottom: 28px; transform: rotate(-40deg) scaleX(-1); animation-delay: 1.6s; }
+
+  @keyframes eg-leaf-appear {
+    0%, 30% { opacity: 0; transform: rotate(30deg) scale(0.5); }
+    50% { opacity: 0.8; transform: rotate(30deg) scale(1); }
+    80%, 100% { opacity: 0; transform: rotate(30deg) scale(0.5); }
+  }
+
+  /* -- Insulator: Crack & arc sparks -- */
+  .eg-anim-insulator {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .eg-crack {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 0;
+    background: rgba(255, 200, 120, 0.8);
+    transform-origin: top center;
+    animation: eg-crack-grow 3s ease-in-out infinite;
+  }
+
+  .eg-crack-1 { transform: translate(-6px, -14px) rotate(15deg); animation-delay: 0s; }
+  .eg-crack-2 { transform: translate(4px, -10px) rotate(-25deg); animation-delay: 0.5s; }
+
+  @keyframes eg-crack-grow {
+    0%, 60% { height: 0; opacity: 0; }
+    70% { height: 18px; opacity: 1; }
+    80% { height: 18px; opacity: 0.6; }
+    100% { height: 0; opacity: 0; }
+  }
+
+  .eg-spark {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #FFD54F;
+    border-radius: 50%;
+    box-shadow: 0 0 6px 2px rgba(255, 213, 79, 0.6), 0 0 12px 4px rgba(255, 140, 0, 0.3);
+    opacity: 0;
+    animation: eg-spark-flash 2s ease-in-out infinite;
+  }
+
+  .eg-spark-1 { top: 14px; left: 20px; animation-delay: 0.3s; }
+  .eg-spark-2 { top: 24px; left: 30px; animation-delay: 1.1s; }
+  .eg-spark-3 { top: 18px; left: 36px; animation-delay: 1.8s; }
+
+  @keyframes eg-spark-flash {
+    0%, 85%, 100% { opacity: 0; transform: scale(0.5); }
+    88% { opacity: 1; transform: scale(1.5); }
+    90% { opacity: 0.3; transform: scale(0.8); }
+    92% { opacity: 1; transform: scale(1.2); }
+    95% { opacity: 0; transform: scale(0.5); }
+  }
+
+  /* -- Hot Joints: Thermal glow rings -- */
+  .eg-anim-hotjoint {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .eg-thermal-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #FF4444, #FF8C00);
+    transform: translate(-50%, -50%);
+    animation: eg-thermal-core-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes eg-thermal-core-pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 8px rgba(255, 68, 68, 0.5); }
+    50% { transform: translate(-50%, -50%) scale(1.3); box-shadow: 0 0 16px rgba(255, 68, 68, 0.8), 0 0 30px rgba(255, 140, 0, 0.3); }
+  }
+
+  .eg-thermal-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 68, 68, 0.4);
+    animation: eg-thermal-expand 2.5s ease-out infinite;
+    transform: translate(-50%, -50%);
+  }
+
+  .eg-thermal-ring-1 { width: 16px; height: 16px; animation-delay: 0s; }
+  .eg-thermal-ring-2 { width: 16px; height: 16px; animation-delay: 0.8s; }
+  .eg-thermal-ring-3 { width: 16px; height: 16px; animation-delay: 1.6s; }
+
+  @keyframes eg-thermal-expand {
+    0% { width: 16px; height: 16px; opacity: 0.6; border-color: rgba(255, 68, 68, 0.6); }
+    100% { width: 44px; height: 44px; opacity: 0; border-color: rgba(255, 140, 0, 0); }
+  }
+
+  /* -- Conductor Sag: Drooping wire -- */
+  .eg-anim-sag {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .eg-sag-pole {
+    position: absolute;
+    top: 8px;
+    width: 3px;
+    height: 20px;
+    background: linear-gradient(to bottom, rgba(255, 140, 0, 0.6), rgba(255, 140, 0, 0.3));
+    border-radius: 1px;
+  }
+
+  .eg-sag-pole-l { left: 6px; }
+  .eg-sag-pole-r { right: 6px; }
+
+  .eg-sag-wire {
+    position: absolute;
+    top: 10px;
+    left: 8px;
+    right: 8px;
+    height: 30px;
+    border: none;
+    border-bottom: 2px solid #FF8C00;
+    border-radius: 0 0 50% 50%;
+    animation: eg-sag-droop 3s ease-in-out infinite;
+  }
+
+  @keyframes eg-sag-droop {
+    0%, 100% { height: 20px; border-bottom-color: rgba(255, 140, 0, 0.5); }
+    50% { height: 32px; border-bottom-color: rgba(255, 68, 68, 0.7); }
+  }
+
+  /* -- Corrosion: Spreading rust -- */
+  .eg-anim-corrosion {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .eg-rust {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(180, 100, 40, 0.6), rgba(139, 69, 19, 0.2), transparent);
+    animation: eg-rust-spread 5s ease-in-out infinite;
+    opacity: 0;
+  }
+
+  .eg-rust-1 { top: 18px; left: 20px; width: 12px; height: 10px; animation-delay: 0s; }
+  .eg-rust-2 { top: 12px; left: 28px; width: 10px; height: 8px; animation-delay: 0.8s; }
+  .eg-rust-3 { top: 24px; left: 14px; width: 14px; height: 11px; animation-delay: 1.5s; }
+  .eg-rust-4 { top: 22px; left: 30px; width: 8px; height: 8px; animation-delay: 2.2s; }
+  .eg-rust-5 { top: 14px; left: 16px; width: 9px; height: 7px; animation-delay: 3s; }
+
+  @keyframes eg-rust-spread {
+    0% { opacity: 0; transform: scale(0.3); }
+    20% { opacity: 0.7; transform: scale(1); }
+    60% { opacity: 0.5; transform: scale(1.4); }
+    100% { opacity: 0; transform: scale(1.6); }
+  }
+
+  /* -- Lightning/Storm: Ground displacement -- */
+  .eg-anim-lightning {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .eg-ground-base {
+    position: absolute;
+    bottom: 8px;
+    left: 4px;
+    right: 4px;
+    height: 3px;
+    background: rgba(255, 140, 0, 0.4);
+    border-radius: 1px;
+  }
+
+  .eg-ground-shift {
+    position: absolute;
+    bottom: 8px;
+    left: 22px;
+    right: 4px;
+    height: 3px;
+    background: rgba(255, 140, 0, 0.4);
+    border-radius: 1px;
+    animation: eg-ground-displace 3s ease-in-out infinite;
+    transform-origin: left center;
+  }
+
+  @keyframes eg-ground-displace {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    40% { transform: translateY(-4px) rotate(-2deg); }
+    60% { transform: translateY(-4px) rotate(-2deg); }
+  }
+
+  .eg-ground-crack-l,
+  .eg-ground-crack-r {
+    position: absolute;
+    bottom: 8px;
+    width: 2px;
+    height: 0;
+    background: rgba(255, 68, 68, 0.5);
+    animation: eg-crack-open 3s ease-in-out infinite;
+  }
+
+  .eg-ground-crack-l { left: 20px; transform-origin: bottom; }
+  .eg-ground-crack-r { left: 22px; transform-origin: bottom; }
+
+  @keyframes eg-crack-open {
+    0%, 20% { height: 0; opacity: 0; }
+    40% { height: 16px; opacity: 0.7; }
+    60% { height: 16px; opacity: 0.5; }
+    100% { height: 0; opacity: 0; }
+  }
+
+  /* ---- Interactive Grid Map ---- */
+  .eg-map-container {
+    position: relative;
+    background: linear-gradient(135deg, #0a0c10, #141820);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+  }
+
+  .eg-map-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .eg-scan-animated {
+    stroke: #FF8C00;
+    stroke-width: 2;
+    stroke-dasharray: 12 8;
+    opacity: 0.5;
+    animation: eg-scan-move 4s linear infinite;
+  }
+
+  .eg-scan-delayed {
+    animation-delay: 1.5s;
+  }
+
+  .eg-scan-delayed-2 {
+    animation-delay: 3s;
+  }
+
+  @keyframes eg-scan-move {
+    from { stroke-dashoffset: 40; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  .eg-scan-dot {
+    opacity: 0.9;
+  }
+
+  .eg-map-anomaly {
+    animation: eg-map-anomaly-blink 2s ease-in-out infinite;
+  }
+
+  @keyframes eg-map-anomaly-blink {
+    0%, 100% { opacity: 0.8; r: 8; }
+    50% { opacity: 0.3; r: 14; }
+  }
+
+  .eg-map-legend {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 140, 0, 0.1);
+  }
+
+  .eg-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+  }
+
+  .eg-legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .eg-legend-square {
+    width: 8px;
+    height: 8px;
+    border: 1.5px solid;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .eg-legend-line {
+    width: 16px;
+    height: 2px;
+    background: #FF8C00;
+    border-radius: 1px;
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  .eg-map-stats {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 140, 0, 0.1);
+  }
+
+  .eg-map-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: center;
+  }
+
+  .eg-map-stat-val {
+    font-family: var(--font-headline);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #FF8C00;
+    line-height: 1;
+  }
+
+  .eg-map-stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+  }
+
+  /* ---- Comparison Timeline ---- */
+  .eg-timeline {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .eg-timeline-side {}
+
+  .eg-timeline-badge {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-bottom: 28px;
+  }
+
+  .eg-badge-before {
+    background: rgba(255, 68, 68, 0.08);
+    color: #FF6666;
+    border: 1px solid rgba(255, 68, 68, 0.15);
+  }
+
+  .eg-badge-after {
+    background: rgba(255, 140, 0, 0.08);
+    color: #FF8C00;
+    border: 1px solid rgba(255, 140, 0, 0.15);
+  }
+
+  .eg-timeline-items {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .eg-tl-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .eg-tl-icon {
+    flex-shrink: 0;
+    font-size: 22px;
+    color: rgba(255, 68, 68, 0.5);
+    margin-top: 2px;
+  }
+
+  .eg-tl-icon-after {
+    color: #FF8C00;
+  }
+
+  .eg-tl-item h4 {
+    font-family: var(--font-headline);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .eg-tl-item p {
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  /* Timeline center divider */
+  .eg-timeline-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding-top: 40px;
+  }
+
+  .eg-timeline-line {
+    width: 2px;
+    flex: 1;
+    min-height: 80px;
+    background: linear-gradient(to bottom, rgba(255, 68, 68, 0.2), rgba(255, 140, 0, 0.3));
+  }
+
+  .eg-timeline-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 140, 0, 0.1);
+    border: 1px solid rgba(255, 140, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FF8C00;
+    animation: eg-arrow-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes eg-arrow-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255, 140, 0, 0.15); }
+    50% { box-shadow: 0 0 0 12px rgba(255, 140, 0, 0); }
+  }
+
+  .eg-timeline-arrow .material-symbols-outlined {
+    font-size: 20px;
+  }
+
+  /* ---- Technology Deep-Dive ---- */
+  .eg-tech-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+  }
+
+  .eg-tech-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+  }
+
+  .eg-tech-panel:hover {
+    box-shadow: 0 4px 24px rgba(255, 140, 0, 0.06);
+  }
+
+  .eg-tech-panel[open] {
+    border-color: rgba(255, 140, 0, 0.2);
+  }
+
+  .eg-tech-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 28px;
+    cursor: pointer;
+    list-style: none;
+    transition: background 0.2s ease;
+  }
+
+  .eg-tech-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .eg-tech-summary:hover {
+    background: rgba(255, 140, 0, 0.03);
+  }
+
+  .eg-tech-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .eg-tech-icon-wrap {
     width: 48px;
     height: 48px;
     border-radius: 12px;
@@ -642,121 +1831,382 @@ const painPoints = [
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
-    transition: box-shadow 0.3s ease;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.3s ease;
   }
 
-  .service-card:hover .service-icon-wrap {
+  /* Radial glow behind icon */
+  .eg-tech-icon-wrap::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 16px;
+    background: radial-gradient(circle, rgba(255, 140, 0, 0.1) 0%, transparent 70%);
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .eg-tech-summary:hover .eg-tech-icon-wrap::after {
+    opacity: 1;
+    background: radial-gradient(circle, rgba(255, 140, 0, 0.2) 0%, rgba(255, 107, 53, 0.06) 50%, transparent 70%);
+  }
+
+  .eg-tech-summary:hover .eg-tech-icon-wrap {
+    background: rgba(255, 140, 0, 0.14);
     box-shadow: 0 0 20px rgba(255, 140, 0, 0.15);
   }
 
-  .service-icon {
+  .eg-tech-icon {
     color: #FF8C00;
     font-size: 24px;
+    position: relative;
+    z-index: 1;
   }
 
-  .service-title {
+  /* Connector dots between tech panels */
+  .eg-tech-panel:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #FF8C00;
+    opacity: 0.3;
+    z-index: 2;
+    box-shadow: -10px 0 0 rgba(255, 140, 0, 0.15), 10px 0 0 rgba(255, 140, 0, 0.15);
+  }
+
+  .eg-tech-title {
     font-family: var(--font-headline);
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 12px;
+    line-height: 1.2;
   }
 
-  .service-desc {
+  .eg-tech-subtitle {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+    display: block;
+  }
+
+  .eg-tech-toggle {
+    color: var(--text-tertiary);
+    font-size: 24px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .eg-tech-panel[open] .eg-tech-toggle {
+    transform: rotate(180deg);
+  }
+
+  .eg-tech-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    padding: 0 28px 28px;
+    border-top: 1px solid var(--border);
+    margin-top: 0;
+    padding-top: 24px;
+  }
+
+  .eg-tech-body h4 {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #FF8C00;
+    margin-bottom: 16px;
+  }
+
+  .eg-tech-specs ul,
+  .eg-tech-capabilities ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .eg-tech-specs li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+  }
+
+  .eg-spec-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #FF8C00;
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  .eg-tech-capabilities li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
     font-size: 0.875rem;
     color: var(--text-secondary);
-    line-height: 1.7;
+    line-height: 1.5;
   }
 
-  /* ---- Differentiators ---- */
-  .diff-grid {
+  .eg-cap-check {
+    color: #FF8C00;
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ---- Why Jinki / Differentiators ---- */
+  .eg-diff-grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 24px;
   }
 
   @media (min-width: 768px) {
-    .diff-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .eg-diff-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
-  .diff-card {
+  .eg-diff-card {
     padding: 32px;
-    border-left: 2px solid #FF8C00;
-    transition: background 0.3s ease;
+    border-left: none;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    border-radius: 12px;
+    background: var(--bg-card);
+    overflow: hidden;
   }
 
-  .diff-card:hover {
+  /* Gradient border using pseudo-element */
+  .eg-diff-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    padding: 1px;
+    background: linear-gradient(160deg, #FF8C00, rgba(255, 107, 53, 0.3), rgba(255, 140, 0, 0.1), transparent);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    transition: background 0.4s ease;
+    pointer-events: none;
+  }
+
+  .eg-diff-card:hover::before {
+    background: linear-gradient(160deg, #FF6B35, #FF8C00, rgba(255, 140, 0, 0.4), #FF6B35);
+  }
+
+  .eg-diff-card:hover {
     background: rgba(255, 140, 0, 0.04);
+    box-shadow: 0 8px 32px rgba(255, 140, 0, 0.06);
   }
 
-  .diff-number {
+  /* Animated accent line that draws in on reveal */
+  .eg-diff-card::after {
+    content: '';
+    position: absolute;
+    top: 32px;
+    left: 0;
+    width: 3px;
+    height: 0;
+    background: linear-gradient(to bottom, #FF8C00, #FF6B35);
+    border-radius: 2px;
+    transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+  }
+
+  .eg-diff-card:global(.revealed)::after {
+    height: 40px;
+  }
+
+  .eg-diff-card:hover::after {
+    height: 60px;
+    box-shadow: 0 0 8px rgba(255, 140, 0, 0.3);
+  }
+
+  .eg-diff-num {
     font-family: var(--font-mono);
     font-size: 0.75rem;
     color: #FF8C00;
     letter-spacing: 0.1em;
     margin-bottom: 12px;
     display: block;
+    position: relative;
+    z-index: 1;
   }
 
-  .diff-card h3 {
+  .eg-diff-card h3 {
     font-family: var(--font-headline);
     font-size: 1.125rem;
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
   }
 
-  .diff-card p {
+  .eg-diff-card p {
     font-size: 0.9375rem;
     color: var(--text-secondary);
     line-height: 1.7;
+    position: relative;
+    z-index: 1;
   }
 
   /* ---- Responsive ---- */
   @media (max-width: 768px) {
-    .vert-hero-inner {
+    .eg-hero-inner {
       grid-template-columns: 1fr;
       gap: 40px;
     }
 
-    .vert-hero {
+    .eg-hero {
       min-height: auto;
       padding-top: 120px;
     }
 
-    .stats-bar-inner {
+    .eg-stats-inner {
       grid-template-columns: repeat(2, 1fr);
       gap: 24px;
     }
 
-    .vert-hero-actions {
+    .eg-hero-actions {
       flex-direction: column;
       align-items: flex-start;
       gap: 16px;
     }
+
+    .eg-timeline {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .eg-timeline-divider {
+      flex-direction: row;
+      padding-top: 0;
+    }
+
+    .eg-timeline-line {
+      width: auto;
+      height: 2px;
+      min-height: auto;
+      flex: 1;
+    }
+
+    .eg-tech-body {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .eg-map-stats {
+      position: relative;
+      top: auto;
+      right: auto;
+      border-radius: 0;
+      border-top: 1px solid rgba(255, 140, 0, 0.1);
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      justify-content: center;
+    }
+
+    .eg-map-legend {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      border-radius: 0;
+      border-top: 1px solid rgba(255, 140, 0, 0.1);
+      border-left: none;
+      border-right: none;
+      border-bottom: none;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .eg-stats-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .eg-stat-value {
+      font-size: 2rem;
+    }
+
+    .eg-det-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 
   /* ---- Light Mode ---- */
-  :global([data-theme="light"]) .thermal-preview {
+  :global([data-theme="light"]) .eg-grid-container {
     background: linear-gradient(135deg, #e8eaed, #f5f5f5);
-    border-color: var(--glass-border);
   }
 
-  :global([data-theme="light"]) .thermal-icon {
-    color: rgba(255, 140, 0, 0.08);
+  :global([data-theme="light"]) .eg-hud-readout {
+    background: rgba(255, 255, 255, 0.7);
   }
 
-  :global([data-theme="light"]) .thermal-readout {
+  :global([data-theme="light"]) .eg-hud-coords {
+    color: rgba(255, 140, 0, 0.5);
+  }
+
+  :global([data-theme="light"]) .eg-map-container {
+    background: linear-gradient(135deg, #e8eaed, #f5f5f5);
+  }
+
+  :global([data-theme="light"]) .eg-map-legend {
     background: rgba(255, 255, 255, 0.8);
-    border-color: rgba(255, 140, 0, 0.15);
   }
 
-  :global([data-theme="light"]) .thermal-grid-overlay {
-    background-image:
-      linear-gradient(rgba(255, 140, 0, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 140, 0, 0.05) 1px, transparent 1px);
+  :global([data-theme="light"]) .eg-map-stats {
+    background: rgba(255, 255, 255, 0.8);
+  }
+
+  :global([data-theme="light"]) .eg-power-line {
+    stroke: rgba(255, 140, 0, 0.2);
+  }
+
+  :global([data-theme="light"]) .eg-hero::before {
+    background: radial-gradient(ellipse, rgba(255, 140, 0, 0.04) 0%, transparent 70%);
+  }
+
+  :global([data-theme="light"]) .eg-node-label {
+    fill: rgba(255, 140, 0, 0.6);
+  }
+
+  :global([data-theme="light"]) .eg-anomaly-label {
+    fill: #CC3333;
+  }
+
+  :global([data-theme="light"]) .eg-detection-card:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08), 0 0 30px rgba(255, 140, 0, 0.05);
+  }
+
+  :global([data-theme="light"]) .eg-severity-critical {
+    background: rgba(255, 68, 68, 0.08);
+  }
+
+  :global([data-theme="light"]) .eg-severity-high {
+    background: rgba(255, 140, 0, 0.08);
+  }
+
+  :global([data-theme="light"]) .eg-severity-medium {
+    background: rgba(255, 200, 0, 0.06);
   }
 </style>

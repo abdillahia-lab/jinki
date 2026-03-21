@@ -351,23 +351,6 @@ a {
 }
 
 /* --- Animations --- */
-@keyframes pulse {
-  0%, 100% { opacity: 0.9; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(1.3); }
-}
-
-@keyframes globeSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.orb-pulse {
-  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.globe-rotation {
-  animation: globeSpin 120s linear infinite;
-}
 
 /* --- Scrollbar --- */
 ::-webkit-scrollbar { width: 6px; }
@@ -417,10 +400,7 @@ a {
   body::before,
   .scroll-progress,
   .skip-to-content,
-  nav,
-  .orbital-rings,
-  .globe-layer,
-  .status-dot::after {
+  nav {
     display: none !important;
   }
 

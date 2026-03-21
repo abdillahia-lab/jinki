@@ -1,48 +1,95 @@
 ---
 /*
-  About Us Page — Jinki Aerial Intelligence
+  About Page — Adapted from Team Omega Round 11
+  Jinki Aerial Intelligence
 
-  Agent 5: Full about page with mission statement, core values,
-  founder profile (Adnan Abdillahi), and company narrative.
-  Positioned as an aerial intelligence company, not a drone vendor.
+  Immersive parallax hero, scrollytelling narrative, animated counters,
+  team carousel with flip cards, approach methodology pillars,
+  office/field visual split.
 */
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
-import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
 
-const values = [
-  {
-    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>`,
-    name: 'Security by Design',
-    description: 'Built on enterprise security principles, our processes, data handling, and personnel standards meet the same bar as the critical infrastructure we serve.'
-  },
-  {
-    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`,
-    name: 'Verified Precision',
-    description: 'We hold ourselves to auditable accuracy standards because the organizations that trust us with their facilities cannot afford ambiguity.'
-  },
-  {
-    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
-    name: 'Intelligence Over Hardware',
-    description: 'Platforms are replaceable; the ability to extract reliable, timely insight from aerial data is what changes decisions, and that is where we invest.'
-  },
-  {
-    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
-    name: 'Transparent Partnership',
-    description: 'Clients receive honest assessments, clear scope, and no surprises — earning long-term trust matters more to us than closing a single contract.'
-  },
-  {
-    icon: `<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M6 8h.01M6 12h.01M10 8h4"/></svg>`,
-    name: 'Mission-First Execution',
-    description: 'Every engagement begins and ends with the client\'s operational objective — we measure success by outcomes delivered, not hours flown.'
-  }
+const stats = [
+  { value: 4, suffix: '', label: 'Industry Verticals' },
+  { value: 0.5, suffix: '°C', label: 'Thermal Accuracy' },
+  { value: 50, suffix: '+ mi', label: 'Daily Corridor Range' },
+  { value: 24, suffix: 'hr', label: 'Report Turnaround' },
 ];
 
-const certifications = [
-  { abbr: 'CISSP', full: 'Certified Information Systems Security Professional', issuer: 'ISC2', color: '#00A651' },
-  { abbr: 'CCSP', full: 'Certified Cloud Security Professional', issuer: 'ISC2', color: '#0072BC' },
-  { abbr: 'AIGP', full: 'AI Governance Professional', issuer: 'IAPP', color: '#8B5CF6' },
-  { abbr: 'PMP', full: 'Project Management Professional', issuer: 'PMI', color: '#1B75BC' },
+const team = [
+  {
+    name: 'Adnan Abdillahi',
+    role: 'Founder & CEO',
+    bio: 'Enterprise security and project management background. Built Jinki from the intersection of cybersecurity expertise and aerial intelligence to deliver verified answers for critical infrastructure.',
+    initials: 'AA',
+  },
+  {
+    name: 'Operations Lead',
+    role: 'Head of Flight Operations',
+    bio: 'FAA Part 107 certified with hands-on experience across data center, energy grid, and perimeter security aerial operations.',
+    initials: 'OL',
+  },
+  {
+    name: 'AI/ML Lead',
+    role: 'Head of Intelligence',
+    bio: 'Computer vision and geospatial analytics specialist transforming raw aerial captures into same-day actionable intelligence for facility operators.',
+    initials: 'ML',
+  },
+  {
+    name: 'Security Architect',
+    role: 'Head of Security',
+    bio: 'Ensures every data pipeline, model deployment, and client deliverable meets the rigorous security standards critical infrastructure demands.',
+    initials: 'SA',
+  },
+];
+
+const pillars = [
+  {
+    id: 'data-first',
+    icon: 'database',
+    title: 'Data-First',
+    summary: 'Every decision begins with verified, high-fidelity data.',
+    details: 'We invest in sensor calibration, flight path optimization, and multi-spectral fusion to ensure the data entering our pipeline is trustworthy from the first capture. Raw footage means nothing — validated, georeferenced intelligence is everything.',
+  },
+  {
+    id: 'safety-always',
+    icon: 'shield',
+    title: 'Safety-Always',
+    summary: 'Zero compromises on operational and data security.',
+    details: 'From encrypted data-at-rest to security-first workflows built on NIST 800-53 controls, safety is not a feature — it is the foundation. Every mission plan undergoes risk assessment, every model output is audited, and every deliverable chain-of-custody is documented.',
+  },
+  {
+    id: 'impact-driven',
+    icon: 'trending_up',
+    title: 'Impact-Driven',
+    summary: 'We measure success by outcomes, not hours flown.',
+    details: 'Clients do not pay for flight time — they pay for answers. Our engagements are scoped around operational impact: reduced inspection costs, faster anomaly detection, actionable maintenance schedules. If it does not move the needle, we do not ship it.',
+  },
+];
+
+const storyBlocks = [
+  {
+    title: 'The Problem We Saw',
+    text: 'Critical infrastructure operators were drowning in raw aerial footage with no reliable way to convert it into decisions. Most providers sold flight hours — not intelligence.',
+    visual: 'signal_cellular_alt',
+  },
+  {
+    title: 'The Company We Built',
+    text: 'We assembled a team of security professionals, AI engineers, and operations specialists to build an intelligence layer — not another hardware vendor. Aerial platforms are sensors, not products.',
+    visual: 'hub',
+  },
+  {
+    title: 'The Standard We Set',
+    text: 'Every engagement delivers verified, same-day actionable intelligence. Our founder\'s enterprise security background ensures security is embedded in every pipeline, not bolted on afterward.',
+    visual: 'verified_user',
+  },
+  {
+    title: 'Where We Are Going',
+    text: 'Autonomous persistent monitoring across every critical vertical — data centers, energy grids, perimeter security, and precision agriculture. Intelligence that never sleeps, scales without limits, and earns trust through transparency.',
+    visual: 'rocket_launch',
+  },
 ];
 ---
 
@@ -50,439 +97,1090 @@ const certifications = [
   <Nav />
   <main id="main-content">
 
-    <!-- Hero banner for About page -->
+    <!-- ============ PARALLAX HERO ============ -->
     <section class="about-hero" aria-label="About Jinki">
-      <div class="about-hero-inner">
+      <div class="parallax-bg" aria-hidden="true">
+        <div class="parallax-layer parallax-layer--grid"></div>
+        <div class="parallax-layer parallax-layer--silhouettes"></div>
+        <div class="parallax-layer parallax-layer--scan"></div>
+      </div>
+      <div class="about-hero-content">
         <span class="label reveal">About Jinki</span>
-        <h1 class="reveal reveal-delay-1">The Intelligence Layer<br/><span class="gradient-text">Above Your Operations</span></h1>
-        <p class="about-hero-subtitle reveal reveal-delay-2">
+        <h1 class="reveal reveal-delay-1">The Intelligence Layer<br/><span class="hero-gradient">Above Your Operations</span></h1>
+        <p class="hero-subtitle reveal reveal-delay-2">
           We build autonomous aerial intelligence systems that transform how organizations
           see, understand, and protect their most critical assets.
         </p>
-      </div>
-    </section>
-
-    <!-- Mission Statement -->
-    <section class="section" aria-label="Our Mission">
-      <div class="section-inner">
-        <div class="mission-grid">
-          <div class="mission-content reveal">
-            <span class="label">Our Mission</span>
-            <h2>Trusted Aerial Intelligence<br/>for Critical Operations</h2>
-            <p class="mission-text">
-              Jinki Aerial Intelligence exists to give organizations a decisive informational
-              advantage over the assets they protect, maintain, and grow. We combine certified
-              security expertise, autonomous aerial platforms, and applied AI to transform raw
-              flight data into actionable intelligence — delivered with the rigor and
-              accountability that critical infrastructure demands.
-            </p>
-            <p class="mission-text">
-              Most aerial operators sell flight time. We built an intelligence company that
-              uses aerial platforms as sensors, not products — fusing computer vision,
-              geospatial analytics, and domain expertise to turn raw captures into decisions
-              our clients can act on the same day. The organizations we serve don't need
-              more footage. They need verified answers.
-            </p>
-          </div>
-          <div class="mission-visual reveal reveal-delay-1">
-            <div class="mission-visual-graphic" aria-hidden="true">
-              <!-- Abstract intelligence visualization -->
-              <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="150" cy="150" r="120" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="4 8"/>
-                <circle cx="150" cy="150" r="90" stroke="var(--accent)" stroke-width="0.6" stroke-dasharray="3 6" opacity="0.4"/>
-                <circle cx="150" cy="150" r="60" stroke="var(--accent)" stroke-width="0.8" stroke-dasharray="2 4" opacity="0.6"/>
-                <circle cx="150" cy="150" r="30" stroke="var(--accent)" stroke-width="1" opacity="0.8"/>
-                <circle cx="150" cy="150" r="8" fill="var(--accent)" opacity="0.9"/>
-                <!-- Data flow lines -->
-                <line x1="150" y1="30" x2="150" y2="60" stroke="var(--text-tertiary)" stroke-width="0.5" opacity="0.3"/>
-                <line x1="150" y1="240" x2="150" y2="270" stroke="var(--text-tertiary)" stroke-width="0.5" opacity="0.3"/>
-                <line x1="30" y1="150" x2="60" y2="150" stroke="var(--text-tertiary)" stroke-width="0.5" opacity="0.3"/>
-                <line x1="240" y1="150" x2="270" y2="150" stroke="var(--text-tertiary)" stroke-width="0.5" opacity="0.3"/>
-                <!-- Diagonal scan lines -->
-                <line x1="65" y1="65" x2="95" y2="95" stroke="var(--text-tertiary)" stroke-width="0.4" opacity="0.2"/>
-                <line x1="205" y1="205" x2="235" y2="235" stroke="var(--text-tertiary)" stroke-width="0.4" opacity="0.2"/>
-                <line x1="235" y1="65" x2="205" y2="95" stroke="var(--text-tertiary)" stroke-width="0.4" opacity="0.2"/>
-                <line x1="65" y1="235" x2="95" y2="205" stroke="var(--text-tertiary)" stroke-width="0.4" opacity="0.2"/>
-              </svg>
-            </div>
-          </div>
+        <div class="hero-scroll-cue reveal reveal-delay-3" aria-hidden="true">
+          <span class="scroll-line"></span>
+          <span class="scroll-label">Scroll to explore</span>
         </div>
       </div>
     </section>
 
-    <!-- Core Values -->
-    <section class="section" style="background: var(--bg-elevated);" aria-label="Core Values">
+    <!-- ============ SCROLLYTELLING NARRATIVE ============ -->
+    <section class="section" aria-label="Our Story" style="background: var(--surface-dim);">
       <div class="section-inner">
-        <div class="values-header reveal">
-          <span class="label">Core Values</span>
-          <h2>What Drives Every Mission</h2>
-          <p class="values-subtitle">
-            These aren't aspirational statements — they're operational commitments
-            embedded in how we build, fly, and deliver.
-          </p>
+        <div class="story-header reveal" style="text-align: center; margin-bottom: 64px;">
+          <span class="label">Our Story</span>
+          <h2>How Jinki Came to Be</h2>
         </div>
-
-        <div class="values-grid">
-          {values.map((val, i) => (
-            <div class={`value-card card reveal reveal-delay-${(i % 4) + 1}`}>
-              <div class="value-icon" set:html={val.icon} />
-              <h3 class="value-name">{val.name}</h3>
-              <p class="value-desc">{val.description}</p>
+        <div class="story-timeline">
+          {storyBlocks.map((block, i) => (
+            <div class={`story-block ${i % 2 === 0 ? 'story-block--left' : 'story-block--right'} reveal`}>
+              <div class="story-visual" aria-hidden="true">
+                <div class="story-icon-wrap">
+                  <span class="material-symbols-outlined" style="font-size: 32px; font-variation-settings: 'FILL' 1;">{block.visual}</span>
+                </div>
+                <div class="story-connector"></div>
+              </div>
+              <div class="story-content">
+                <h3 style="margin-bottom: 12px;">{block.title}</h3>
+                <p style="line-height: 1.8;">{block.text}</p>
+              </div>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    <!-- Founder Profile -->
-    <section class="section" aria-label="Leadership">
+    <!-- ============ BY THE NUMBERS ============ -->
+    <section class="section stats-section" aria-label="By the Numbers">
       <div class="section-inner">
-        <div class="founder-header reveal">
-          <span class="label">Leadership</span>
-          <h2>Founded on Security,<br/>Built for Scale</h2>
+        <div class="stats-header reveal" style="text-align: center; margin-bottom: 56px;">
+          <span class="label">By the Numbers</span>
+          <h2>Measured Impact</h2>
         </div>
-
-        <div class="founder-grid">
-          <div class="founder-photo-wrap reveal">
-            <!-- SWAP: Replace placeholder with actual founder photo -->
-            <!-- Place photo at public/images/founder.jpg and update the src below -->
-            <div class="founder-photo-placeholder" aria-label="Founder & CEO">
-              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-              </svg>
-              <span class="photo-swap-label">Upload Photo</span>
+        <div class="stats-grid">
+          {stats.map((stat, i) => (
+            <div class={`stat-card reveal reveal-delay-${(i % 4) + 1}`}>
+              <span class="stat-value" data-target={stat.value} data-suffix={stat.suffix}>0{stat.suffix}</span>
+              <span class="stat-label">{stat.label}</span>
             </div>
-          </div>
+          ))}
+        </div>
+      </div>
+    </section>
 
-          <div class="founder-bio reveal reveal-delay-1">
-            <span class="founder-title">Founder & CEO</span>
-
-            <p class="founder-text">
-              Our founder brings a rare combination of deep security credentials and
-              operational discipline to aerial intelligence. Holding both the CISSP and CCSP
-              certifications from ISC2, he applies the same frameworks that protect
-              enterprise networks and cloud environments to safeguarding the sensitive
-              data Jinki collects over client facilities — an assurance most aerial
-              service providers simply cannot offer.
-            </p>
-            <p class="founder-text">
-              As an IAPP-certified AI Governance Professional (AIGP), he ensures that
-              every AI model Jinki deploys is governed with the transparency, fairness,
-              and accountability that regulated industries require. His PMI Project
-              Management Professional (PMP) credential reflects a career spent delivering
-              complex, multi-stakeholder technology programs on schedule and within
-              scope — exactly the rigor you want behind the team operating above your
-              most critical assets.
-            </p>
-
-            <!-- Certification badges with issuing body attribution -->
-            <div class="cert-badges-grid">
-              {certifications.map(cert => (
-                <div class="cert-badge-card" title={cert.full}>
-                  <div class="cert-badge-icon" style={`border-color: ${cert.color}; box-shadow: 0 0 12px ${cert.color}20;`}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={cert.color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                      <path d="M9 12l2 2 4-4"/>
-                    </svg>
+    <!-- ============ TEAM CAROUSEL ============ -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Our Team">
+      <div class="section-inner">
+        <div class="team-header reveal" style="text-align: center; margin-bottom: 56px;">
+          <span class="label">Leadership</span>
+          <h2>The Team Behind the Intelligence</h2>
+          <p style="max-width: 560px; margin: 16px auto 0; color: var(--text-secondary);">
+            Security professionals, AI engineers, and operations specialists building
+            the future of aerial intelligence.
+          </p>
+        </div>
+        <div class="team-carousel" role="list">
+          {team.map((member, i) => (
+            <div class={`team-card-wrapper reveal reveal-delay-${(i % 4) + 1}`} role="listitem">
+              <div class="team-card" tabindex="0" aria-label={`${member.name}, ${member.role}. Activate to see bio.`}>
+                <div class="team-card-front">
+                  <div class="team-avatar">
+                    <span class="team-initials">{member.initials}</span>
                   </div>
-                  <span class="cert-badge-abbr" style={`color: ${cert.color};`}>{cert.abbr}</span>
-                  <span class="cert-badge-full">{cert.full}</span>
-                  <span class="cert-badge-issuer">{cert.issuer}</span>
+                  <h3 class="team-name">{member.name}</h3>
+                  <span class="team-role">{member.role}</span>
+                  <span class="team-flip-hint" aria-hidden="true">Hover for bio</span>
                 </div>
-              ))}
+                <div class="team-card-back">
+                  <p class="team-bio">{member.bio}</p>
+                  <span class="team-name-back">{member.name}</span>
+                </div>
+              </div>
             </div>
+          ))}
+        </div>
+        <div class="carousel-scroll-hint" aria-hidden="true">
+          <span class="material-symbols-outlined" style="font-size: 18px; color: var(--text-tertiary); font-variation-settings: 'FILL' 0;">swipe</span>
+          <span style="font-size: 12px; color: var(--text-tertiary); font-family: var(--font-mono); letter-spacing: 0.06em;">SCROLL TO SEE MORE</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ APPROACH / HOW WE THINK ============ -->
+    <section class="section" aria-label="Our Approach">
+      <div class="section-inner">
+        <div class="approach-header reveal" style="text-align: center; margin-bottom: 56px;">
+          <span class="label">Our Approach</span>
+          <h2>How We Think</h2>
+          <p style="max-width: 560px; margin: 16px auto 0; color: var(--text-secondary);">
+            Three principles guide every mission, model, and deliverable.
+          </p>
+        </div>
+        <div class="pillars-grid">
+          {pillars.map((pillar, i) => (
+            <div class={`pillar-card reveal reveal-delay-${i + 1}`}>
+              <button
+                class="pillar-header-btn"
+                aria-expanded="false"
+                aria-controls={`pillar-detail-${pillar.id}`}
+                data-pillar={pillar.id}
+              >
+                <div class="pillar-icon-wrap">
+                  <span class="material-symbols-outlined" style="font-size: 28px; color: var(--accent); font-variation-settings: 'FILL' 1;" aria-hidden="true">{pillar.icon}</span>
+                </div>
+                <div class="pillar-text">
+                  <h3 style="margin-bottom: 8px;">{pillar.title}</h3>
+                  <p class="pillar-summary">{pillar.summary}</p>
+                </div>
+                <span class="pillar-chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
+              </button>
+              <div class="pillar-detail" id={`pillar-detail-${pillar.id}`} aria-hidden="true">
+                <p style="line-height: 1.8;">{pillar.details}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ OFFICE / FIELD SPLIT ============ -->
+    <section class="section split-section" style="background: var(--surface-dim);" aria-label="How We Work">
+      <div class="section-inner">
+        <div class="split-header reveal" style="text-align: center; margin-bottom: 56px;">
+          <span class="label">How We Work</span>
+          <h2>Intelligence Meets Operations</h2>
+        </div>
+        <div class="split-grid">
+          <div class="split-panel split-panel--office reveal">
+            <div class="split-panel-inner">
+              <div class="split-icon-row" aria-hidden="true">
+                <span class="material-symbols-outlined" style="font-size: 40px; color: var(--accent); font-variation-settings: 'FILL' 1;">monitoring</span>
+              </div>
+              <h3 style="margin-bottom: 16px;">The Intelligence Lab</h3>
+              <ul class="split-list">
+                <li>AI model training & validation</li>
+                <li>Thermal & multispectral data fusion</li>
+                <li>Geospatial analytics pipelines</li>
+                <li>Client report generation</li>
+                <li>Security & compliance auditing</li>
+              </ul>
+            </div>
+            <div class="split-tag" aria-hidden="true">OFFICE</div>
+          </div>
+          <div class="split-divider reveal" aria-hidden="true">
+            <div class="split-divider-line"></div>
+            <div class="split-divider-dot"></div>
+            <div class="split-divider-line"></div>
+          </div>
+          <div class="split-panel split-panel--field reveal reveal-delay-1">
+            <div class="split-panel-inner">
+              <div class="split-icon-row" aria-hidden="true">
+                <span class="material-symbols-outlined" style="font-size: 40px; color: #34D399; font-variation-settings: 'FILL' 1;">flight_takeoff</span>
+              </div>
+              <h3 style="margin-bottom: 16px;">The Field</h3>
+              <ul class="split-list">
+                <li>Autonomous mission deployment</li>
+                <li>Facility intelligence audits</li>
+                <li>Sensor calibration & QA</li>
+                <li>On-site client briefings</li>
+                <li>Emergency rapid-response ops</li>
+              </ul>
+            </div>
+            <div class="split-tag split-tag--field" aria-hidden="true">FIELD</div>
           </div>
         </div>
       </div>
     </section>
 
-    <Contact />
+    <!-- CTA -->
+    <section class="section" aria-label="Get in Touch" style="text-align: center;">
+      <div class="section-inner" style="max-width: 640px; margin: 0 auto;">
+        <div class="reveal">
+          <span class="label">Ready to Talk?</span>
+          <h2 style="margin-bottom: 16px;">Let Us Show You What We See</h2>
+          <p style="margin-bottom: 32px; color: var(--text-secondary); line-height: 1.8;">
+            Whether you need a one-time facility audit or persistent autonomous monitoring,
+            we are ready to deliver the intelligence your operations demand.
+          </p>
+          <a href="/#lead-gen" class="btn-premium cta-btn">Get in Touch</a>
+        </div>
+      </div>
+    </section>
+
   </main>
+  <Footer />
 </Layout>
 
 <style>
-  /* About Hero */
+  /* ==================== PARALLAX HERO ==================== */
   .about-hero {
-    min-height: 60vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 140px clamp(20px, 5vw, 80px) 80px;
-    text-align: center;
-    position: relative;
-    background: var(--surface-container-lowest);
-  }
-
-  .about-hero-inner {
-    max-width: 800px;
-  }
-
-  .about-hero h1 {
-    margin-bottom: 24px;
-  }
-
-  .about-hero-subtitle {
-    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.2rem);
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.7;
-  }
-
-  /* Mission Section */
-  .mission-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 80px;
-    align-items: center;
-  }
-
-  .mission-content h2 {
-    margin-bottom: 24px;
-  }
-
-  .mission-text {
-    margin-bottom: 20px;
-    line-height: 1.8;
-  }
-
-  .mission-visual {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .mission-visual-graphic {
-    width: 100%;
-    max-width: 300px;
-    opacity: 0.7;
-  }
-
-  .mission-visual-graphic svg {
-    width: 100%;
-    height: auto;
-  }
-
-  /* Values Section */
-  .values-header {
-    text-align: center;
-    margin-bottom: 56px;
-  }
-
-  .values-subtitle {
-    max-width: 560px;
-    margin: 16px auto 0;
-  }
-
-  .values-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  /* Last two values center in their row */
-  .values-grid .value-card:nth-child(4) {
-    grid-column: 1 / 2;
-    margin-left: auto;
-    margin-right: 0;
-  }
-
-  .value-card {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .value-icon {
-    color: var(--accent);
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--accent-glow);
-    border-radius: 12px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .value-card:hover .value-icon {
-    transform: scale(1.1);
-    box-shadow: 0 0 20px var(--accent-glow-strong);
-  }
-
-  .value-name {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-
-  .value-desc {
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--text-secondary);
-    max-width: none;
-  }
-
-  /* Founder Section */
-  .founder-header {
-    text-align: center;
-    margin-bottom: 56px;
-  }
-
-  .founder-grid {
-    display: grid;
-    grid-template-columns: 0.4fr 0.6fr;
-    gap: 64px;
-    align-items: start;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .founder-photo-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-  }
-
-  .founder-photo-placeholder {
-    width: 220px;
-    height: 280px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     overflow: hidden;
+    padding: 120px clamp(20px, 5vw, 80px) 80px;
   }
 
-  .founder-photo-placeholder::after {
-    display: none;
-  }
-
-  .photo-swap-label {
+  .parallax-bg {
     position: absolute;
-    bottom: 16px;
-    font-size: 11px;
-    color: var(--text-tertiary);
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
   }
 
-  .founder-title {
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+  .parallax-layer {
+    position: absolute;
+    inset: 0;
+    will-change: transform;
+  }
+
+  .parallax-layer--grid {
+    background-image:
+      linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  :global([data-theme="light"]) .parallax-layer--grid {
+    background-image:
+      linear-gradient(rgba(0, 131, 143, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 131, 143, 0.05) 1px, transparent 1px);
+  }
+
+  .parallax-layer--silhouettes {
+    background: linear-gradient(180deg, transparent 50%, var(--bg-primary) 100%);
+    opacity: 0.6;
+  }
+
+  .parallax-layer--silhouettes::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background:
+      linear-gradient(180deg, transparent 0%, var(--surface-container-low) 100%);
+    clip-path: polygon(
+      0% 100%, 0% 60%, 5% 60%, 5% 40%, 8% 40%, 8% 55%, 12% 55%,
+      12% 30%, 15% 30%, 15% 50%, 20% 50%, 20% 35%, 24% 35%, 24% 60%,
+      30% 60%, 30% 20%, 34% 20%, 34% 45%, 38% 45%, 38% 55%, 42% 55%,
+      42% 25%, 46% 25%, 46% 50%, 52% 50%, 52% 40%, 56% 40%, 56% 65%,
+      62% 65%, 62% 35%, 66% 35%, 66% 50%, 70% 50%, 70% 30%, 74% 30%,
+      74% 55%, 80% 55%, 80% 45%, 84% 45%, 84% 60%, 90% 60%, 90% 50%,
+      94% 50%, 94% 65%, 100% 65%, 100% 100%
+    );
+  }
+
+  .parallax-layer--scan {
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(0, 229, 255, 0.02) 50%,
+      transparent 100%
+    );
+    animation: scan-sweep 8s ease-in-out infinite;
+  }
+
+  :global([data-theme="light"]) .parallax-layer--scan {
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(0, 131, 143, 0.03) 50%,
+      transparent 100%
+    );
+  }
+
+  @keyframes scan-sweep {
+    0%, 100% { transform: translateY(-30%); }
+    50% { transform: translateY(30%); }
+  }
+
+  .about-hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 800px;
+  }
+
+  .about-hero-content h1 {
+    font-size: clamp(2.25rem, 5vw + 0.5rem, 3.75rem);
     margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
+    line-height: 1.08;
   }
 
-  .founder-text {
-    margin-bottom: 16px;
-    line-height: 1.8;
-    font-size: 16px;
-    max-width: none;
+  .hero-gradient {
+    background: linear-gradient(135deg, #00E5FF 0%, #7B61FF 50%, #00E5FF 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 6s ease infinite;
   }
 
-  /* Certification badge cards — prominent 2x2 grid */
-  .cert-badges-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 28px;
+  :global([data-theme="light"]) .hero-gradient {
+    background: linear-gradient(135deg, #00838f 0%, #4F46E5 50%, #00838f 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 6s ease infinite;
   }
 
-  .cert-badge-card {
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.2rem);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .hero-scroll-cue {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    padding: 20px 16px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    text-align: center;
-    transition: all 0.3s ease;
-    cursor: default;
+    margin-top: 48px;
   }
 
-  .cert-badge-card:hover {
-    border-color: var(--border-hover);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    transform: translateY(-3px);
+  .scroll-line {
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(180deg, var(--accent), transparent);
+    animation: scroll-pulse 2s ease-in-out infinite;
   }
 
-  .cert-badge-icon {
-    width: 48px;
-    height: 48px;
+  @keyframes scroll-pulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  .scroll-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-tertiary);
+  }
+
+  /* ==================== SCROLLYTELLING ==================== */
+  .story-timeline {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .story-timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--border-hover), var(--border-hover), transparent);
+    transform: translateX(-50%);
+  }
+
+  .story-block {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    align-items: start;
+    margin-bottom: 48px;
+  }
+
+  .story-block:last-child {
+    margin-bottom: 0;
+  }
+
+  .story-block--left .story-content {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: right;
+    padding-right: 40px;
+  }
+
+  .story-block--left .story-visual {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .story-block--left::after {
+    content: '';
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .story-block--right .story-content {
+    grid-column: 3;
+    grid-row: 1;
+    text-align: left;
+    padding-left: 40px;
+  }
+
+  .story-block--right .story-visual {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .story-block--right::before {
+    content: '';
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .story-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .story-icon-wrap {
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    border: 2px solid;
+    background: var(--bg-card);
+    border: 2px solid var(--accent);
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--bg-elevated);
+    box-shadow: 0 0 20px var(--accent-glow);
+    color: var(--accent);
   }
 
-  .cert-badge-abbr {
-    font-family: var(--font-mono);
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+  .story-connector {
+    display: none;
   }
 
-  .cert-badge-full {
-    font-size: 11px;
+  .story-content h3 {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+  }
+
+  .story-content p {
+    font-size: 15px;
     color: var(--text-secondary);
-    line-height: 1.3;
-  }
-
-  .cert-badge-issuer {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--text-tertiary);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
   }
 
   @media (max-width: 768px) {
-    .mission-grid {
-      grid-template-columns: 1fr;
-      gap: 48px;
+    .story-timeline::before {
+      left: 28px;
     }
 
-    .mission-visual {
-      order: -1;
+    .story-block {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
     }
 
-    .mission-visual-graphic {
-      max-width: 200px;
+    .story-block--left .story-content,
+    .story-block--right .story-content {
+      text-align: left;
+      padding: 0;
     }
 
-    .values-grid {
-      grid-template-columns: 1fr;
+    .story-visual {
+      flex-shrink: 0;
     }
 
-    .values-grid .value-card:nth-child(4) {
-      grid-column: auto;
-      margin-left: 0;
+    .story-icon-wrap {
+      width: 48px;
+      height: 48px;
     }
 
-    .founder-grid {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-
-    .founder-photo-wrap {
-      align-items: center;
+    .story-icon-wrap .material-symbols-outlined {
+      font-size: 24px !important;
     }
   }
+
+  /* ==================== STATS / BY THE NUMBERS ==================== */
+  .stats-section {
+    background: var(--surface-container-lowest);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stats-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+
+  .stat-card {
+    text-align: center;
+    padding: 32px 16px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    backdrop-filter: blur(12px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+
+  .stat-value {
+    display: block;
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+  }
+
+  @media (max-width: 768px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+  }
+
+  /* ==================== TEAM CAROUSEL ==================== */
+  .team-carousel {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 8px;
+  }
+
+  .team-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .team-card-wrapper {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+    perspective: 800px;
+  }
+
+  .team-card {
+    width: 100%;
+    height: 340px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border-radius: 16px;
+  }
+
+  .team-card:hover,
+  .team-card:focus-visible {
+    transform: rotateY(180deg);
+  }
+
+  .team-card-front,
+  .team-card-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    background: var(--bg-card);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    overflow: hidden;
+  }
+
+  .team-card-front::before,
+  .team-card-back::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .team-card-back {
+    transform: rotateY(180deg);
+    background: var(--surface-container-high);
+    justify-content: center;
+    text-align: center;
+  }
+
+  .team-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--accent-glow);
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .team-initials {
+    font-family: var(--font-headline);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .team-name {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .team-role {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+
+  .team-flip-hint {
+    font-size: 11px;
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: auto;
+  }
+
+  .team-bio {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+
+  .team-name-back {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: auto;
+  }
+
+  .carousel-scroll-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  @media (min-width: 1200px) {
+    .team-carousel {
+      justify-content: center;
+    }
+    .carousel-scroll-hint {
+      display: none;
+    }
+  }
+
+  /* ==================== APPROACH PILLARS ==================== */
+  .pillars-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .pillar-card {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+  }
+
+  .pillar-card:hover {
+    border-color: var(--border-hover);
+  }
+
+  .pillar-header-btn {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 28px 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    text-align: left;
+    font-family: inherit;
+    transition: background 0.2s ease;
+  }
+
+  .pillar-header-btn:hover {
+    background: var(--bg-card-hover);
+  }
+
+  .pillar-icon-wrap {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pillar-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .pillar-text h3 {
+    font-size: 1.125rem;
+    color: var(--text-primary);
+  }
+
+  .pillar-summary {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .pillar-chevron {
+    flex-shrink: 0;
+    font-size: 24px;
+    color: var(--text-tertiary);
+    transition: transform 0.3s ease;
+  }
+
+  .pillar-header-btn[aria-expanded="true"] .pillar-chevron {
+    transform: rotate(180deg);
+  }
+
+  .pillar-detail {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+    padding: 0 32px;
+  }
+
+  .pillar-detail.is-open {
+    max-height: 200px;
+    padding: 0 32px 28px;
+  }
+
+  .pillar-detail p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    padding-left: 72px;
+  }
+
+  @media (max-width: 768px) {
+    .pillar-header-btn {
+      padding: 20px 20px;
+      gap: 16px;
+    }
+
+    .pillar-detail {
+      padding: 0 20px;
+    }
+
+    .pillar-detail.is-open {
+      padding: 0 20px 20px;
+    }
+
+    .pillar-detail p {
+      padding-left: 0;
+    }
+  }
+
+  /* ==================== OFFICE / FIELD SPLIT ==================== */
+  .split-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .split-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .split-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .split-panel:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .split-panel-inner {
+    padding: 40px 32px;
+  }
+
+  .split-icon-row {
+    margin-bottom: 20px;
+  }
+
+  .split-panel h3 {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+  }
+
+  .split-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .split-list li {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .split-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+  .split-panel--field .split-list li::before {
+    background: #34D399;
+  }
+
+  .split-tag {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    background: var(--accent-glow);
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
+  .split-tag--field {
+    color: #34D399;
+    background: rgba(52, 211, 153, 0.15);
+  }
+
+  .split-divider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 24px;
+  }
+
+  .split-divider-line {
+    width: 1px;
+    flex: 1;
+    background: var(--border-hover);
+  }
+
+  .split-divider-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    margin: 12px 0;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .split-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .split-divider {
+      flex-direction: row;
+      padding: 0;
+    }
+
+    .split-divider-line {
+      height: 1px;
+      width: auto;
+      flex: 1;
+    }
+
+    .split-divider-dot {
+      margin: 0 12px;
+    }
+  }
+
+  /* ==================== CTA ==================== */
+  .cta-btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: linear-gradient(135deg, var(--accent), #0091a1);
+    color: #000;
+    font-family: var(--font-headline);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  :global([data-theme="light"]) .cta-btn {
+    color: #fff;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px var(--accent-glow-strong);
+  }
+
+  /* ==================== SHARED ==================== */
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .section { padding: 8rem clamp(20px, 5vw, 80px); }
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .label {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+    line-height: 1.1;
+  }
 </style>
+
+<script>
+  // Animated counters
+  function animateCounters() {
+    const counters = document.querySelectorAll('.stat-value[data-target]');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          const target = parseInt(el.dataset.target || '0');
+          const suffix = el.dataset.suffix || '';
+          const duration = 2000;
+          const start = performance.now();
+
+          function update(now: number) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(eased * target);
+            el.textContent = current + suffix;
+            if (progress < 1) requestAnimationFrame(update);
+          }
+
+          requestAnimationFrame(update);
+          observer.unobserve(el);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    counters.forEach(c => observer.observe(c));
+  }
+
+  // Expandable pillars
+  function initPillars() {
+    document.querySelectorAll('.pillar-header-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        const controlsId = btn.getAttribute('aria-controls');
+        if (!controlsId) return;
+        const detail = document.getElementById(controlsId);
+        if (!detail) return;
+
+        btn.setAttribute('aria-expanded', String(!expanded));
+        detail.setAttribute('aria-hidden', String(expanded));
+        detail.classList.toggle('is-open', !expanded);
+      });
+    });
+  }
+
+  // Parallax on scroll
+  function initParallax() {
+    const layers = document.querySelectorAll('.parallax-layer');
+    const speeds = [0.1, 0.2, 0.05];
+
+    function onScroll() {
+      const scrollY = window.scrollY;
+      layers.forEach((layer, i) => {
+        (layer as HTMLElement).style.transform = `translateY(${scrollY * speeds[i]}px)`;
+      });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    animateCounters();
+    initPillars();
+    initParallax();
+  });
+</script>

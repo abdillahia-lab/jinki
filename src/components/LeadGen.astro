@@ -1,358 +1,333 @@
 ---
 /*
-  Lead Generation Section — Tactical Jinki
-  Glass-panel centered form with inline validation.
-  Uses CSS custom properties from global.css.
+  LeadGen — Intelligence Request Form
+  3-step wizard: service selection, contact info, message + submit.
+  Glass-panel styling, honeypot anti-spam, no confetti/canvas.
 */
 ---
 
-<section id="lead-gen" class="relative leadgen-section-padding" aria-label="Lead Generation">
+<section id="lead-gen" class="relative" style="padding-top: 5rem; padding-bottom: 5rem;" aria-label="Request Intelligence Assessment">
   <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem;">
-    <div class="glass-panel rounded-2xl shadow-2xl" style="border: 1px solid var(--border); max-width: 48rem; margin-left: auto; margin-right: auto; padding: 2rem;">
 
-      <!-- Header -->
-      <div class="text-center" style="margin-bottom: 3rem;">
-        <div class="flex items-center justify-center gap-3" style="margin-bottom: 1rem;">
-          <span class="block h-[1px] w-8" style="background: var(--accent);"></span>
-          <span class="leadgen-eyebrow">Contact</span>
-          <span class="block h-[1px] w-8" style="background: var(--accent);"></span>
-        </div>
-        <h2 class="font-headline text-4xl md:text-5xl font-bold" style="color: var(--text-primary);">
-          Get Your <span class="leadgen-headline-accent">Free Assessment</span>
-        </h2>
-        <p class="text-xl font-light mt-4" style="color: var(--text-secondary); margin-top: 1rem;">
-          Tell us about your facilities and we'll show you exactly how aerial intelligence can reduce risk and cut costs.
-        </p>
+    <!-- Header -->
+    <div class="text-center" style="margin-bottom: 3rem;">
+      <div class="flex items-center justify-center" style="gap: 0.75rem; margin-bottom: 1rem;">
+        <span class="block" style="height: 1px; width: 2rem; background: var(--accent);"></span>
+        <span class="lg-eyebrow">Intelligence Request</span>
+        <span class="block" style="height: 1px; width: 2rem; background: var(--accent);"></span>
+      </div>
+      <h2 class="font-headline text-4xl md:text-5xl font-bold" style="color: var(--text-primary);">
+        Start Your <span style="background: linear-gradient(135deg, var(--accent), #7B61FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Assessment</span>
+      </h2>
+      <p class="text-xl font-light" style="color: var(--text-secondary); margin-top: 1rem; max-width: 36rem; margin-left: auto; margin-right: auto;">
+        Three quick steps to unlock aerial intelligence for your facility.
+      </p>
+    </div>
+
+    <!-- Wizard Container -->
+    <div class="lg-wizard glass-panel" style="border: 1px solid var(--glass-border); max-width: 52rem; margin-left: auto; margin-right: auto; padding: 2.5rem; border-radius: 16px; position: relative; overflow: hidden; background: var(--glass-bg); backdrop-filter: blur(24px) saturate(1.8); -webkit-backdrop-filter: blur(24px) saturate(1.8);">
+
+      <!-- Progress Bar -->
+      <div class="lg-progress" style="display: flex; align-items: center; margin-bottom: 2rem; gap: 0.5rem;">
+        <div class="lg-step-dot active" data-step="1">1</div>
+        <div class="lg-step-line"><div class="lg-step-fill" id="lg-fill-1"></div></div>
+        <div class="lg-step-dot" data-step="2">2</div>
+        <div class="lg-step-line"><div class="lg-step-fill" id="lg-fill-2"></div></div>
+        <div class="lg-step-dot" data-step="3">3</div>
       </div>
 
-      <!-- Form -->
-      <form id="leadgen-form" class="grid grid-cols-1 md:grid-cols-2 gap-8" novalidate>
-
-        <!-- First Name -->
-        <div class="leadgen-field">
-          <label for="lg-first-name" class="leadgen-label">First Name</label>
-          <input
-            type="text"
-            id="lg-first-name"
-            name="first_name"
-            required
-            autocomplete="given-name"
-            class="leadgen-input"
-          />
-          <span class="leadgen-error" aria-live="polite"></span>
+      <form id="lg-form" action="#" novalidate>
+        <!-- Honeypot -->
+        <div aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px;">
+          <label for="lg-website">Website</label>
+          <input type="text" id="lg-website" name="website" tabindex="-1" autocomplete="off" />
         </div>
 
-        <!-- Last Name -->
-        <div class="leadgen-field">
-          <label for="lg-last-name" class="leadgen-label">Last Name</label>
-          <input
-            type="text"
-            id="lg-last-name"
-            name="last_name"
-            required
-            autocomplete="family-name"
-            class="leadgen-input"
-          />
-          <span class="leadgen-error" aria-live="polite"></span>
-        </div>
+        <!-- Step 1: Service Selection -->
+        <fieldset class="lg-step" id="lg-step-1" style="border: none; padding: 0; margin: 0;">
+          <legend class="lg-step-title">Select a Service</legend>
+          <p class="lg-step-desc">What type of intelligence engagement are you looking for?</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+            <label class="lg-radio-card">
+              <input type="radio" name="service" value="audit" required />
+              <span class="lg-card-inner">
+                <span class="material-symbols-outlined" style="font-size: 1.75rem; color: var(--accent);" aria-hidden="true">assignment</span>
+                <span class="lg-card-title">Facility Audit</span>
+                <span class="lg-card-desc">One-time aerial assessment with actionable report</span>
+              </span>
+            </label>
+            <label class="lg-radio-card">
+              <input type="radio" name="service" value="deployment" />
+              <span class="lg-card-inner">
+                <span class="material-symbols-outlined" style="font-size: 1.75rem; color: var(--accent);" aria-hidden="true">precision_manufacturing</span>
+                <span class="lg-card-title">Autonomous Deployment</span>
+                <span class="lg-card-desc">Persistent monitoring with recurring missions</span>
+              </span>
+            </label>
+            <label class="lg-radio-card">
+              <input type="radio" name="service" value="consultation" />
+              <span class="lg-card-inner">
+                <span class="material-symbols-outlined" style="font-size: 1.75rem; color: var(--accent);" aria-hidden="true">forum</span>
+                <span class="lg-card-title">Consultation</span>
+                <span class="lg-card-desc">Explore how aerial intelligence fits your needs</span>
+              </span>
+            </label>
+          </div>
+          <div style="display: flex; justify-content: flex-end; margin-top: 2rem;">
+            <button type="button" class="lg-btn lg-btn-next" data-next="2">Continue</button>
+          </div>
+        </fieldset>
 
-        <!-- Business Email -->
-        <div class="leadgen-field md:col-span-2">
-          <label for="lg-email" class="leadgen-label">Business Email</label>
-          <input
-            type="email"
-            id="lg-email"
-            name="email"
-            required
-            autocomplete="email"
-            class="leadgen-input"
-          />
-          <span class="leadgen-error" aria-live="polite"></span>
-        </div>
+        <!-- Step 2: Contact Info -->
+        <fieldset class="lg-step" id="lg-step-2" style="border: none; padding: 0; margin: 0; display: none;">
+          <legend class="lg-step-title">Your Details</legend>
+          <p class="lg-step-desc">Tell us how to reach you.</p>
+          <div style="display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1.5rem;">
+            <div class="lg-field">
+              <label for="lg-name">Full Name</label>
+              <input type="text" id="lg-name" name="name" required placeholder="Jane Smith" autocomplete="name" />
+            </div>
+            <div class="lg-field">
+              <label for="lg-company">Company</label>
+              <input type="text" id="lg-company" name="company" required placeholder="Acme Corp" autocomplete="organization" />
+            </div>
+            <div class="lg-field">
+              <label for="lg-email">Work Email</label>
+              <input type="email" id="lg-email" name="email" required placeholder="jane@acme.com" autocomplete="email" />
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <button type="button" class="lg-btn lg-btn-back" data-prev="1">Back</button>
+            <button type="button" class="lg-btn lg-btn-next" data-next="3">Continue</button>
+          </div>
+        </fieldset>
 
-        <!-- Interest -->
-        <div class="leadgen-field md:col-span-2">
-          <label for="lg-interest" class="leadgen-label">Area of Interest</label>
-          <select id="lg-interest" name="interest" class="leadgen-input leadgen-select">
-            <option value="">What type of infrastructure?</option>
-            <option value="data-centers">Data Centers &amp; Cooling Systems</option>
-            <option value="energy">Energy Grid &amp; Power Lines</option>
-            <option value="security">Perimeter &amp; Security Monitoring</option>
-            <option value="agriculture">Agriculture &amp; Crop Analytics</option>
-            <option value="other">Other / Not Sure Yet</option>
-          </select>
-        </div>
-
-        <!-- Submit -->
-        <div class="md:col-span-2 mt-6" style="margin-top: 1.5rem;">
-          <button
-            type="submit"
-            class="leadgen-submit btn-premium w-full font-headline font-bold uppercase tracking-[0.25em] text-sm rounded-xl cursor-pointer text-white"
-            style="padding: 1.5rem 2rem;"
-          >
-            Get Your Free Assessment
-          </button>
-          <p class="leadgen-reassurance text-center mt-4" style="margin-top: 1rem;">
-            <span class="material-symbols-outlined align-middle" style="font-size: 16px; color: var(--accent);" aria-hidden="true">lock</span>
-            No commitment required. We'll respond within one business day.
-          </p>
-        </div>
+        <!-- Step 3: Message + Submit -->
+        <fieldset class="lg-step" id="lg-step-3" style="border: none; padding: 0; margin: 0; display: none;">
+          <legend class="lg-step-title">Additional Details</legend>
+          <p class="lg-step-desc">Anything else we should know about your facility or requirements?</p>
+          <div style="margin-top: 1.5rem;">
+            <div class="lg-field">
+              <label for="lg-message">Message <span style="color: var(--text-tertiary); font-weight: 400;">(optional)</span></label>
+              <textarea id="lg-message" name="message" rows="4" placeholder="Tell us about your facility, fleet size, or specific challenges..."></textarea>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
+            <button type="button" class="lg-btn lg-btn-back" data-prev="2">Back</button>
+            <button type="submit" class="lg-btn lg-btn-submit">Submit Request</button>
+          </div>
+        </fieldset>
       </form>
 
       <!-- Success Message -->
-      <div id="leadgen-success" class="leadgen-success mt-8 text-center" style="margin-top: 2rem;" hidden>
-        <p>Thank you! Our team will reach out within one business day to schedule your assessment.</p>
+      <div id="lg-success" style="display: none; text-align: center; padding: 2rem 0;">
+        <span class="material-symbols-outlined" style="font-size: 3rem; color: #34d399;" aria-hidden="true">check_circle</span>
+        <h3 style="font-family: var(--font-headline); font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-top: 1rem;">Request Received</h3>
+        <p style="font-family: var(--font-body); color: var(--text-secondary); margin-top: 0.5rem; max-width: 28rem; margin-left: auto; margin-right: auto;">
+          Our intelligence team will review your submission and reach out within one business day.
+        </p>
       </div>
-
     </div>
   </div>
 </section>
 
 <style>
-  .leadgen-section-padding {
-    padding-top: 5rem;
-    padding-bottom: 5rem;
-  }
-
-  @media (min-width: 768px) {
-    .leadgen-section-padding {
-      padding-top: 8rem;
-      padding-bottom: 8rem;
-    }
-
-    .glass-panel {
-      padding: 4rem !important;
-    }
-  }
-
-  .leadgen-headline-accent {
-    background: linear-gradient(135deg, #00E5FF, #7B61FF);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  :global([data-theme="light"]) .leadgen-headline-accent {
-    background: linear-gradient(135deg, #00838f, #5B4ACF);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .leadgen-eyebrow {
+  .lg-eyebrow {
     font-family: var(--font-label);
-    font-size: 0.6875rem;
-    font-weight: 700;
+    font-size: 0.75rem;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.3em;
+    letter-spacing: 0.15em;
     color: var(--accent);
   }
 
-  .leadgen-label {
-    display: block;
-    font-family: var(--font-label);
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--text-tertiary);
-    margin-bottom: 0.75rem;
+  /* Progress */
+  .lg-step-dot {
+    width: 2rem; height: 2rem; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700;
+    background: var(--surface-container); color: var(--text-tertiary);
+    border: 2px solid var(--glass-border);
+    transition: all 0.3s ease; flex-shrink: 0;
+  }
+  .lg-step-dot.active, .lg-step-dot.done {
+    background: var(--accent); color: #050508; border-color: var(--accent);
+  }
+  .lg-step-line {
+    flex: 1; height: 2px; background: var(--glass-border); border-radius: 1px; overflow: hidden;
+  }
+  .lg-step-fill {
+    height: 100%; width: 0; background: var(--accent); transition: width 0.3s ease;
   }
 
-  .leadgen-input {
-    width: 100%;
-    padding: 1.25rem;
-    background: var(--surface-container-low);
-    border: 1px solid var(--outline-variant);
-    border-radius: 10px;
-    color: var(--text-primary);
-    font-family: var(--font-body);
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  /* Step content */
+  .lg-step-title {
+    font-family: var(--font-headline); font-size: 1.25rem; font-weight: 700;
+    color: var(--text-primary); margin-bottom: 0.25rem;
+  }
+  .lg-step-desc {
+    font-family: var(--font-body); font-size: 0.875rem; color: var(--text-secondary);
   }
 
-  .leadgen-input:hover {
-    border-color: var(--text-tertiary);
+  /* Radio cards */
+  .lg-radio-card input { position: absolute; opacity: 0; pointer-events: none; }
+  .lg-radio-card {
+    cursor: pointer; display: block;
+  }
+  .lg-card-inner {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    padding: 1.5rem 1rem; border-radius: 12px;
+    border: 1px solid var(--glass-border); background: var(--surface-container);
+    transition: all 0.2s ease; gap: 0.5rem;
+  }
+  .lg-radio-card:hover .lg-card-inner {
+    border-color: var(--accent); background: color-mix(in srgb, var(--accent) 5%, var(--surface-container));
+  }
+  .lg-radio-card input:checked + .lg-card-inner {
+    border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--surface-container));
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .lg-radio-card input:focus-visible + .lg-card-inner {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .lg-card-title {
+    font-family: var(--font-headline); font-size: 0.875rem; font-weight: 700; color: var(--text-primary);
+  }
+  .lg-card-desc {
+    font-family: var(--font-body); font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;
   }
 
-  .leadgen-input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-glow), 0 0 20px var(--accent-glow);
-    background: var(--surface-container-lowest);
+  /* Form fields */
+  .lg-field { display: flex; flex-direction: column; gap: 0.375rem; }
+  .lg-field label {
+    font-family: var(--font-label); font-size: 0.75rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary);
+  }
+  .lg-field input, .lg-field textarea {
+    font-family: var(--font-body); font-size: 0.9375rem; color: var(--text-primary);
+    background: var(--surface-container); border: 1px solid var(--glass-border);
+    border-radius: 10px; padding: 0.75rem 1rem; outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .lg-field input:focus, .lg-field textarea:focus {
+    border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
+  }
+  .lg-field input.invalid, .lg-field textarea.invalid {
+    border-color: var(--error, #ef4444);
+  }
+  .lg-field input::placeholder, .lg-field textarea::placeholder { color: var(--text-tertiary); }
+  .lg-field textarea { resize: vertical; min-height: 5rem; }
+
+  /* Buttons */
+  .lg-btn {
+    font-family: var(--font-label); font-size: 0.8125rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 0.75rem 1.75rem; border-radius: 10px; border: none; cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .lg-btn-next, .lg-btn-submit {
+    background: var(--accent); color: #050508;
+  }
+  .lg-btn-next:hover, .lg-btn-submit:hover {
+    filter: brightness(1.1); transform: translateY(-1px);
+  }
+  .lg-btn-back {
+    background: transparent; color: var(--text-secondary);
+    border: 1px solid var(--glass-border);
+  }
+  .lg-btn-back:hover { border-color: var(--text-secondary); }
+  .lg-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* Light mode */
+  :global([data-theme="light"]) .lg-card-inner { background: var(--surface-container-low); }
+  :global([data-theme="light"]) .lg-field input,
+  :global([data-theme="light"]) .lg-field textarea { background: var(--surface-container-low); }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .lg-step-fill { transition: none; }
+    .lg-btn { transition: none; }
+    .lg-card-inner { transition: none; }
   }
 
-  .leadgen-input::placeholder {
-    color: var(--text-tertiary);
-  }
-
-  .leadgen-select {
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23849396' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 1.25rem center;
-    padding-right: 3rem;
-    cursor: pointer;
-  }
-
-  .leadgen-error {
-    display: block;
-    font-size: 0.8rem;
-    color: var(--error);
-    min-height: 1.25rem;
-    margin-top: 0.35rem;
-  }
-
-  .leadgen-success {
-    padding: 1.5rem 2rem;
-    background: rgba(74, 222, 128, 0.08);
-    border: 1px solid rgba(74, 222, 128, 0.2);
-    border-radius: 12px;
-    color: #4ADE80;
-    font-size: 0.95rem;
-    backdrop-filter: blur(12px);
-    animation: success-fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  @keyframes success-fade-in {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  :global([data-theme="light"]) .leadgen-success {
-    background: rgba(22, 163, 74, 0.08);
-    border-color: rgba(22, 163, 74, 0.2);
-    color: #16a34a;
-  }
-
-  .leadgen-reassurance {
-    font-size: 0.8rem;
-    color: var(--text-tertiary);
-    font-weight: 400;
-  }
-
-  .leadgen-field {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .leadgen-input.input-error {
-    box-shadow: 0 0 0 2px var(--error);
-    border-color: var(--error);
-    animation: input-shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97);
-  }
-
-  @keyframes input-shake {
-    0%, 100% { transform: translateX(0); }
-    20% { transform: translateX(-6px); }
-    40% { transform: translateX(5px); }
-    60% { transform: translateX(-3px); }
-    80% { transform: translateX(2px); }
-  }
-
-  .leadgen-submit {
-    background: linear-gradient(135deg, #00E5FF 0%, #00a8b5 50%, #00626e 100%);
-    box-shadow: 0 4px 16px rgba(0, 229, 255, 0.3), inset 0 1px 0 rgba(255,255,255,0.2);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  }
-
-  .leadgen-submit:hover {
-    background: linear-gradient(135deg, #33ecff 0%, #00c4d4 50%, #007a8a 100%);
-    box-shadow: 0 6px 24px rgba(0, 229, 255, 0.4), 0 0 60px rgba(0, 229, 255, 0.1), inset 0 1px 0 rgba(255,255,255,0.25);
-    transform: translateY(-2px);
-  }
-
-  .leadgen-submit:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(0, 229, 255, 0.3), inset 0 1px 0 rgba(255,255,255,0.15);
-  }
-
-  :global([data-theme="light"]) .leadgen-input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-glow), 0 0 20px var(--accent-glow);
-    background: #ffffff;
-  }
-
-  :global([data-theme="light"]) .leadgen-input:hover {
-    border-color: var(--text-tertiary);
-  }
-
-  :global([data-theme="light"]) .leadgen-submit {
-    background: linear-gradient(135deg, #00838f, #005f6b);
-    box-shadow: 0 4px 16px rgba(0, 131, 143, 0.3), inset 0 1px 0 rgba(255,255,255,0.2);
-  }
-
-  :global([data-theme="light"]) .leadgen-submit:hover {
-    background: linear-gradient(135deg, #00969e, #00727e);
-    box-shadow: 0 6px 24px rgba(0, 131, 143, 0.4), inset 0 1px 0 rgba(255,255,255,0.25);
+  @media (max-width: 640px) {
+    .lg-wizard { padding: 1.5rem !important; }
   }
 </style>
 
-<script is:inline>
-  (function () {
-    var form = document.getElementById('leadgen-form');
-    if (!form) return;
+<script>
+  const form = document.getElementById('lg-form') as HTMLFormElement;
+  const success = document.getElementById('lg-success')!;
+  const dots = document.querySelectorAll<HTMLElement>('.lg-step-dot');
+  const fills = [document.getElementById('lg-fill-1'), document.getElementById('lg-fill-2')];
+  let current = 1;
 
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var valid = true;
+  function showStep(n: number) {
+    document.querySelectorAll<HTMLElement>('.lg-step').forEach(s => s.style.display = 'none');
+    const step = document.getElementById(`lg-step-${n}`);
+    if (step) step.style.display = 'block';
+    dots.forEach((d, i) => {
+      const sn = i + 1;
+      d.classList.toggle('active', sn === n);
+      d.classList.toggle('done', sn < n);
+    });
+    fills.forEach((f, i) => {
+      if (f) f.style.width = (i + 1) < n ? '100%' : '0';
+    });
+    current = n;
+  }
 
-      var firstName = form.querySelector('#lg-first-name');
-      var lastName = form.querySelector('#lg-last-name');
-      var email = form.querySelector('#lg-email');
-
-      // Validate first name
-      if (!firstName.value.trim()) {
-        showError(firstName, 'First name is required');
+  function validateStep(n: number): boolean {
+    const step = document.getElementById(`lg-step-${n}`);
+    if (!step) return false;
+    const fields = step.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]');
+    let valid = true;
+    fields.forEach(f => {
+      if (f.type === 'radio') {
+        const radios = step.querySelectorAll<HTMLInputElement>(`input[name="${f.name}"]`);
+        const checked = Array.from(radios).some(r => r.checked);
+        if (!checked) valid = false;
+      } else if (!f.value.trim()) {
+        f.classList.add('invalid');
+        valid = false;
+      } else if (f.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value)) {
+        f.classList.add('invalid');
         valid = false;
       } else {
-        clearError(firstName);
-      }
-
-      // Validate last name
-      if (!lastName.value.trim()) {
-        showError(lastName, 'Last name is required');
-        valid = false;
-      } else {
-        clearError(lastName);
-      }
-
-      // Validate email
-      if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-        showError(email, 'Please enter a valid business email');
-        valid = false;
-      } else {
-        clearError(email);
-      }
-
-      if (valid) {
-        var success = document.getElementById('leadgen-success');
-        success.hidden = false;
-        form.reset();
-        setTimeout(function () {
-          success.hidden = true;
-        }, 6000);
+        f.classList.remove('invalid');
       }
     });
+    return valid;
+  }
 
-    function showError(input, message) {
-      var error = input.parentNode.querySelector('.leadgen-error');
-      if (error) error.textContent = message;
-      input.classList.add('input-error');
+  // Clear invalid on input
+  form.addEventListener('input', (e) => {
+    const t = e.target as HTMLElement;
+    if (t.classList.contains('invalid')) t.classList.remove('invalid');
+  });
+
+  // Next/Back buttons
+  form.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-next],[data-prev]');
+    if (!btn) return;
+    const next = btn.dataset.next;
+    const prev = btn.dataset.prev;
+    if (next) {
+      if (validateStep(current)) showStep(Number(next));
+    } else if (prev) {
+      showStep(Number(prev));
     }
+  });
 
-    function clearError(input) {
-      var error = input.parentNode.querySelector('.leadgen-error');
-      if (error) error.textContent = '';
-      input.classList.remove('input-error');
-    }
-
-    // Clear errors on input
-    form.querySelectorAll('input, select').forEach(function (input) {
-      input.addEventListener('input', function () {
-        clearError(input);
-      });
-    });
-  })();
+  // Submit
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Honeypot check
+    const hp = (document.getElementById('lg-website') as HTMLInputElement);
+    if (hp && hp.value) return;
+    if (!validateStep(current)) return;
+    form.style.display = 'none';
+    document.querySelector('.lg-progress')?.setAttribute('style', 'display:none');
+    success.style.display = 'block';
+  });
 </script>

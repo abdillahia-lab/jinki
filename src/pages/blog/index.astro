@@ -1,156 +1,839 @@
 ---
 /*
   Blog Listing Page — Jinki Aerial Intelligence
-
-  Displays all blog posts in reverse chronological order.
-  Uses Astro content collections for type-safe blog management.
+  Magazine-style layout with featured card, category tabs,
+  view toggle (grid/list), newsletter signup, animated entries.
+  Dark/Light theme aware.
 */
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
+
+const allTags = [...new Set(posts.flatMap(p => p.data.tags))];
+
+function estimateReadTime(description: string): number {
+  return Math.max(3, Math.ceil(description.split(/\s+/).length / 40) + 2);
+}
 ---
 
-<Layout title="Blog — Jinki Aerial Intelligence">
+<Layout title="Blog — Jinki Aerial Intelligence" description="Insights on aerial intelligence, autonomous systems, and industry trends from the Jinki team.">
   <Nav />
-  <main id="main-content" class="blog-page">
-    <div class="section-inner">
-      <div class="blog-header reveal">
-        <span class="label">Blog</span>
-        <h1>Insights & Updates</h1>
-        <p class="blog-subtitle">
-          The latest on aerial intelligence, autonomous systems, and industry trends.
-        </p>
-      </div>
+  <main id="main-content" class="omega-blog-page">
+    <!-- Hero Header -->
+    <section class="omega-blog-hero" style="padding-top: 140px; padding-bottom: 64px;">
+      <div class="omega-blog-inner">
+        <div class="omega-blog-header reveal">
+          <span class="omega-label">Blog</span>
+          <h1 style="margin-bottom: 16px;">
+            <span class="omega-gradient-text">Insights</span> & Intelligence
+          </h1>
+          <p class="omega-subtitle" style="margin-bottom: 32px;">
+            Expert perspectives on aerial intelligence, autonomous operations, and the future of infrastructure monitoring.
+          </p>
+        </div>
 
-      <div class="blog-grid">
-        {posts.map((post, i) => (
-          <a href={`/blog/${post.id}`} class={`blog-card card reveal reveal-delay-${Math.min(i + 1, 4)}`}>
-            <div class="blog-card-content">
-              <div class="blog-meta">
-                <time datetime={post.data.date.toISOString()}>
-                  {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-                </time>
-                {post.data.tags.length > 0 && (
-                  <span class="blog-tag">{post.data.tags[0]}</span>
+        <!-- Category Tabs -->
+        <div class="omega-tabs reveal reveal-delay-1" role="tablist" aria-label="Filter by category">
+          <button class="omega-tab active" role="tab" aria-selected="true" data-category="all">
+            All Posts
+          </button>
+          {allTags.map(tag => (
+            <button class="omega-tab" role="tab" aria-selected="false" data-category={tag}>
+              {tag.charAt(0).toUpperCase() + tag.slice(1)}
+            </button>
+          ))}
+          <div class="omega-tab-indicator" aria-hidden="true"></div>
+        </div>
+
+        <!-- View Toggle -->
+        <div class="omega-view-toggle reveal reveal-delay-2" role="group" aria-label="Layout view">
+          <button class="omega-view-btn active" data-view="grid" aria-label="Grid view" aria-pressed="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+            </svg>
+          </button>
+          <button class="omega-view-btn" data-view="list" aria-label="List view" aria-pressed="false">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/>
+              <line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/>
+              <line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured + Sidebar Magazine Layout -->
+    {posts.length > 0 && (
+      <section class="omega-featured-section" style="padding-bottom: 48px;">
+        <div class="omega-blog-inner">
+          <div class="omega-magazine-layout reveal">
+            <!-- Featured (large) card -->
+            <a href={`/blog/${posts[0].id}`}
+               class="omega-card omega-card-featured"
+               data-tags={JSON.stringify(posts[0].data.tags)}>
+              <div class="omega-card-image-wrap">
+                {posts[0].data.image ? (
+                  <img src={posts[0].data.image} alt="" class="omega-card-image" loading="eager" />
+                ) : (
+                  <div class="omega-card-image-placeholder">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
+                      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                      <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                      <line x1="12" y1="22.08" x2="12" y2="12"/>
+                    </svg>
+                  </div>
                 )}
+                <div class="omega-card-overlay"></div>
               </div>
-              <h2 class="blog-card-title">{post.data.title}</h2>
-              <p class="blog-card-desc">{post.data.description}</p>
-              <span class="blog-read-more">
-                Read more
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12"/>
-                  <polyline points="12 5 19 12 12 19"/>
-                </svg>
-              </span>
-            </div>
-          </a>
-        ))}
-      </div>
+              <div class="omega-card-body" style="padding: 32px;">
+                <div class="omega-card-meta" style="margin-bottom: 12px;">
+                  {posts[0].data.tags[0] && (
+                    <span class="omega-tag">{posts[0].data.tags[0]}</span>
+                  )}
+                  <time datetime={posts[0].data.date.toISOString()}>
+                    {posts[0].data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </time>
+                  <span class="omega-read-time">{estimateReadTime(posts[0].data.description)} min read</span>
+                </div>
+                <h2 class="omega-card-title" style="margin-bottom: 12px;">{posts[0].data.title}</h2>
+                <p class="omega-card-desc">{posts[0].data.description}</p>
+                <span class="omega-read-link" style="margin-top: 20px;">
+                  Read article
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                  </svg>
+                </span>
+              </div>
+            </a>
 
-      {posts.length === 0 && (
-        <p class="blog-empty">No posts yet. Check back soon.</p>
-      )}
-    </div>
+            <!-- Sidebar stacked cards -->
+            <div class="omega-sidebar-stack">
+              {posts.slice(1, 3).map((post, i) => (
+                <a href={`/blog/${post.id}`}
+                   class={`omega-card omega-card-sidebar`}
+                   data-tags={JSON.stringify(post.data.tags)}>
+                  <div class="omega-card-image-wrap omega-card-image-small">
+                    {post.data.image ? (
+                      <img src={post.data.image} alt="" class="omega-card-image" loading="lazy" />
+                    ) : (
+                      <div class="omega-card-image-placeholder">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
+                          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                          <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                          <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                      </div>
+                    )}
+                    <div class="omega-card-overlay"></div>
+                  </div>
+                  <div class="omega-card-body" style="padding: 20px;">
+                    <div class="omega-card-meta" style="margin-bottom: 8px;">
+                      {post.data.tags[0] && (
+                        <span class="omega-tag">{post.data.tags[0]}</span>
+                      )}
+                      <time datetime={post.data.date.toISOString()}>
+                        {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                      </time>
+                    </div>
+                    <h3 class="omega-card-title-sm" style="margin-bottom: 6px;">{post.data.title}</h3>
+                    <p class="omega-card-desc-sm">{post.data.description}</p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Newsletter Signup -->
+    <section class="omega-newsletter-section" style="padding: 48px 0;">
+      <div class="omega-blog-inner">
+        <div class="omega-newsletter glass-panel reveal" style="padding: 48px; border-radius: 16px;">
+          <div class="omega-newsletter-content">
+            <div class="omega-newsletter-text">
+              <span class="omega-label" style="margin-bottom: 8px;">Stay Informed</span>
+              <h3 style="margin-bottom: 8px;">Get aerial intelligence insights delivered</h3>
+              <p>Join industry leaders receiving our monthly briefing on autonomous operations, thermal analytics, and infrastructure monitoring.</p>
+            </div>
+            <form class="omega-newsletter-form" onsubmit="event.preventDefault();">
+              <div class="omega-input-group">
+                <input
+                  type="email"
+                  placeholder="you@company.com"
+                  required
+                  aria-label="Email address"
+                  class="omega-email-input"
+                />
+                <button type="submit" class="omega-subscribe-btn btn-premium">
+                  Subscribe
+                </button>
+              </div>
+              <p class="omega-newsletter-note">No spam. Unsubscribe anytime.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- All Posts Grid / List -->
+    {posts.length > 3 && (
+      <section class="omega-all-posts" style="padding: 48px 0 96px;">
+        <div class="omega-blog-inner">
+          <h2 class="reveal" style="margin-bottom: 32px; font-size: 1.5rem;">All Articles</h2>
+          <div class="omega-posts-grid" id="omega-posts-container">
+            {posts.slice(3).map((post, i) => (
+              <a href={`/blog/${post.id}`}
+                 class={`omega-card omega-card-regular reveal`}
+                 data-tags={JSON.stringify(post.data.tags)}
+                 style={`animation-delay: ${i * 80}ms;`}>
+                <div class="omega-card-image-wrap omega-card-image-regular">
+                  {post.data.image ? (
+                    <img src={post.data.image} alt="" class="omega-card-image" loading="lazy" />
+                  ) : (
+                    <div class="omega-card-image-placeholder">
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                        <line x1="12" y1="22.08" x2="12" y2="12"/>
+                      </svg>
+                    </div>
+                  )}
+                  <div class="omega-card-overlay"></div>
+                </div>
+                <div class="omega-card-body" style="padding: 24px;">
+                  <div class="omega-card-meta" style="margin-bottom: 8px;">
+                    {post.data.tags[0] && (
+                      <span class="omega-tag">{post.data.tags[0]}</span>
+                    )}
+                    <time datetime={post.data.date.toISOString()}>
+                      {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </time>
+                  </div>
+                  <h3 class="omega-card-title-sm" style="margin-bottom: 8px;">{post.data.title}</h3>
+                  <p class="omega-card-desc-sm">{post.data.description}</p>
+                  <span class="omega-read-link" style="margin-top: 16px;">
+                    Read article
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                    </svg>
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {posts.length === 0 && (
+      <section style="padding: 120px 0; text-align: center;">
+        <p style="color: var(--text-tertiary); font-size: 1.1rem;">No posts yet. Check back soon.</p>
+      </section>
+    )}
   </main>
+  <Footer />
 </Layout>
 
 <style>
-  .blog-page {
-    padding-top: 120px;
+  /* ===== Page ===== */
+  .omega-blog-page {
     min-height: 100vh;
     background: var(--bg-primary);
   }
 
-  .blog-header {
-    margin-bottom: 48px;
+  .omega-blog-inner {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 24px;
+    padding-right: 24px;
   }
 
-  .blog-header h1 {
+  /* ===== Header ===== */
+  .omega-label {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    background: var(--accent-glow);
+    padding: 4px 12px;
+    border-radius: 4px;
     margin-bottom: 16px;
   }
 
-  .blog-subtitle {
-    max-width: 480px;
+  .omega-gradient-text {
+    background: linear-gradient(135deg, var(--accent) 0%, #7B61FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  .blog-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    padding-bottom: 80px;
+  .omega-subtitle {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 560px;
   }
 
-  .blog-card {
-    text-decoration: none;
-    display: block;
-  }
-
-  .blog-card-content {
+  /* ===== Tabs ===== */
+  .omega-tabs {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
+    position: relative;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 4px;
   }
 
-  .blog-meta {
+  .omega-tabs::-webkit-scrollbar { display: none; }
+
+  .omega-tab {
+    font-family: var(--font-label);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 8px;
+    white-space: nowrap;
+    transition: color 0.3s ease, background 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  .omega-tab:hover {
+    color: var(--text-primary);
+  }
+
+  .omega-tab.active {
+    color: var(--accent);
+  }
+
+  .omega-tab-indicator {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+
+  /* ===== View Toggle ===== */
+  .omega-view-toggle {
+    display: flex;
+    gap: 4px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 4px;
+    width: fit-content;
+    margin-top: 24px;
+  }
+
+  .omega-view-btn {
     display: flex;
     align-items: center;
-    gap: 12px;
-  }
-
-  .blog-meta time {
-    font-size: 13px;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
     color: var(--text-tertiary);
-    font-family: var(--font-mono);
+    cursor: pointer;
+    transition: all 0.25s ease;
   }
 
-  .blog-tag {
-    font-size: 11px;
-    font-weight: 500;
+  .omega-view-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .omega-view-btn.active {
+    background: var(--accent-glow);
+    color: var(--accent);
+  }
+
+  /* ===== Magazine Layout ===== */
+  .omega-magazine-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 24px;
+    min-height: 480px;
+  }
+
+  .omega-sidebar-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* ===== Card Base ===== */
+  .omega-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease,
+                box-shadow 0.4s ease;
+  }
+
+  .omega-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-hover);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+  }
+
+  .omega-card:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  :global([data-theme="light"]) .omega-card:hover {
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+  }
+
+  /* ===== Card Image ===== */
+  .omega-card-image-wrap {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-elevated);
+  }
+
+  .omega-card-featured .omega-card-image-wrap {
+    height: 260px;
+  }
+
+  .omega-card-image-small {
+    height: 140px;
+  }
+
+  .omega-card-image-regular {
+    height: 180px;
+  }
+
+  .omega-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .omega-card:hover .omega-card-image {
+    transform: scale(1.06);
+  }
+
+  .omega-card-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-card) 100%);
+    color: var(--text-tertiary);
+  }
+
+  .omega-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
+    opacity: 0.4;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+
+  .omega-card:hover .omega-card-overlay {
+    opacity: 0.7;
+  }
+
+  :global([data-theme="light"]) .omega-card-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 60%);
+    opacity: 0.2;
+  }
+
+  :global([data-theme="light"]) .omega-card:hover .omega-card-overlay {
+    opacity: 0.4;
+  }
+
+  /* ===== Card Body ===== */
+  .omega-card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .omega-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .omega-card-meta time,
+  .omega-read-time {
+    font-size: 12px;
+    font-family: var(--font-mono);
+    color: var(--text-tertiary);
+  }
+
+  .omega-tag {
+    font-size: 10px;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 3px 10px;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
     border-radius: 4px;
     background: var(--accent-glow);
     color: var(--accent);
   }
 
-  .blog-card-title {
-    font-size: 1.3rem;
+  .omega-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.2;
+    transition: transform 0.3s ease;
+  }
+
+  .omega-card:hover .omega-card-title {
+    transform: translateY(-2px);
+  }
+
+  .omega-card-title-sm {
+    font-size: 1.1rem;
     font-weight: 600;
     color: var(--text-primary);
     line-height: 1.3;
+    transition: transform 0.3s ease;
   }
 
-  .blog-card-desc {
+  .omega-card:hover .omega-card-title-sm {
+    transform: translateY(-2px);
+  }
+
+  .omega-card-desc {
     font-size: 15px;
     line-height: 1.6;
     color: var(--text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
-  .blog-read-more {
-    display: flex;
+  .omega-card-desc-sm {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .omega-read-link {
+    display: inline-flex;
     align-items: center;
     gap: 6px;
     font-size: 14px;
     font-weight: 500;
     color: var(--accent);
-    margin-top: auto;
+    transition: gap 0.3s ease;
   }
 
-  .blog-empty {
-    text-align: center;
-    padding: 80px 0;
+  .omega-card:hover .omega-read-link {
+    gap: 10px;
+  }
+
+  /* ===== Featured card fills height ===== */
+  .omega-card-featured {
+    height: 100%;
+  }
+
+  .omega-card-sidebar {
+    flex: 1;
+  }
+
+  /* ===== Newsletter ===== */
+  .omega-newsletter-content {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    position: relative;
+    z-index: 3;
+  }
+
+  .omega-newsletter-text {
+    flex: 1;
+  }
+
+  .omega-newsletter-text h3 {
+    font-size: 1.4rem;
+    color: var(--text-primary);
+  }
+
+  .omega-newsletter-text p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  .omega-newsletter-form {
+    flex-shrink: 0;
+    width: 380px;
+  }
+
+  .omega-input-group {
+    display: flex;
+    gap: 8px;
+  }
+
+  .omega-email-input {
+    flex: 1;
+    font-family: var(--font-body);
+    font-size: 14px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  .omega-email-input:focus {
+    border-color: var(--accent);
+  }
+
+  .omega-email-input::placeholder {
     color: var(--text-tertiary);
   }
 
-  @media (max-width: 768px) {
-    .blog-grid {
+  .omega-subscribe-btn {
+    font-family: var(--font-label);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #000;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+
+  .omega-subscribe-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px var(--accent-glow-strong);
+  }
+
+  .omega-newsletter-note {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+  }
+
+  /* ===== Posts Grid ===== */
+  .omega-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* List view */
+  .omega-posts-grid.omega-list-view {
+    grid-template-columns: 1fr;
+  }
+
+  .omega-list-view .omega-card-regular {
+    flex-direction: row;
+  }
+
+  .omega-list-view .omega-card-image-regular {
+    width: 260px;
+    height: auto;
+    min-height: 160px;
+    flex-shrink: 0;
+  }
+
+  /* ===== Entry Animation ===== */
+  .omega-card {
+    animation: omegaCardEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes omegaCardEnter {
+    from {
+      opacity: 0;
+      transform: scale(0.95) translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  /* ===== Filtering hide/show ===== */
+  .omega-card.omega-hidden {
+    display: none;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 1024px) {
+    .omega-magazine-layout {
       grid-template-columns: 1fr;
+    }
+
+    .omega-sidebar-stack {
+      flex-direction: row;
+    }
+
+    .omega-sidebar-stack .omega-card-sidebar {
+      flex: 1;
+    }
+
+    .omega-posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .omega-newsletter-content {
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .omega-newsletter-form {
+      width: 100%;
+    }
+
+    .omega-sidebar-stack {
+      flex-direction: column;
+    }
+
+    .omega-posts-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .omega-list-view .omega-card-regular {
+      flex-direction: column;
+    }
+
+    .omega-list-view .omega-card-image-regular {
+      width: 100%;
+      height: 180px;
+    }
+
+    .omega-card-featured .omega-card-image-wrap {
+      height: 200px;
+    }
+  }
+
+  /* ===== Print ===== */
+  @media print {
+    .omega-view-toggle,
+    .omega-tabs,
+    .omega-newsletter-section,
+    .omega-card-overlay {
+      display: none !important;
+    }
+
+    .omega-card {
+      break-inside: avoid;
+      box-shadow: none !important;
+      border: 1px solid #ccc !important;
     }
   }
 </style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // --- Tab filtering ---
+    const tabs = document.querySelectorAll<HTMLButtonElement>('.omega-tab');
+    const indicator = document.querySelector<HTMLElement>('.omega-tab-indicator');
+    const cards = document.querySelectorAll<HTMLElement>('.omega-card[data-tags]');
+
+    function moveIndicator(tab: HTMLButtonElement) {
+      if (!indicator) return;
+      const rect = tab.getBoundingClientRect();
+      const parent = tab.parentElement!.getBoundingClientRect();
+      indicator.style.left = `${rect.left - parent.left}px`;
+      indicator.style.width = `${rect.width}px`;
+    }
+
+    // Init indicator position
+    const activeTab = document.querySelector<HTMLButtonElement>('.omega-tab.active');
+    if (activeTab) moveIndicator(activeTab);
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        moveIndicator(tab);
+
+        const category = tab.dataset.category;
+        cards.forEach(card => {
+          if (category === 'all') {
+            card.classList.remove('omega-hidden');
+          } else {
+            const tags: string[] = JSON.parse(card.dataset.tags || '[]');
+            card.classList.toggle('omega-hidden', !tags.includes(category!));
+          }
+        });
+      });
+    });
+
+    // --- View toggle ---
+    const viewBtns = document.querySelectorAll<HTMLButtonElement>('.omega-view-btn');
+    const postsContainer = document.getElementById('omega-posts-container');
+
+    viewBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        viewBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+
+        if (postsContainer) {
+          if (btn.dataset.view === 'list') {
+            postsContainer.classList.add('omega-list-view');
+          } else {
+            postsContainer.classList.remove('omega-list-view');
+          }
+        }
+      });
+    });
+
+    // Recalculate indicator on resize
+    window.addEventListener('resize', () => {
+      const active = document.querySelector<HTMLButtonElement>('.omega-tab.active');
+      if (active) moveIndicator(active);
+    });
+  });
+</script>

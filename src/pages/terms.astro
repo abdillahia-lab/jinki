@@ -1,67 +1,99 @@
 ---
 /*
   Terms of Service — Jinki Aerial Intelligence
-  Legal terms governing use of jinki.ai services.
+  Enhanced terms of service with jump-to-section sidebar navigation,
+  key points summary boxes, version history toggle, and print-friendly styles.
 */
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
+const lastUpdated = 'March 15, 2026';
+const version = '2.0';
+
+const versionHistory = [
+  { version: '2.0', date: 'March 15, 2026', note: 'Expanded service descriptions and added indemnification clause.' },
+  { version: '1.1', date: 'December 1, 2025', note: 'Updated intellectual property and confidentiality sections.' },
+  { version: '1.0', date: 'September 1, 2025', note: 'Initial terms of service.' },
+];
+
 const sections = [
   {
     id: 'acceptance',
-    title: '1. Acceptance of Terms',
-    content: `By accessing or using the services provided by Jinki Aerial Intelligence ("Jinki," "we," "us," or "our"), including the website at jinki.ai and all related aerial intelligence services, you agree to be bound by these Terms of Service. If you do not agree to these terms, you must not access or use our services.`,
+    number: '01',
+    title: 'Acceptance of Terms',
+    keyPoints: ['Agreement required to use services', 'Applies to website and all aerial intelligence services'],
+    content: 'By accessing or using the services provided by Jinki Aerial Intelligence ("Jinki," "we," "us," or "our"), including the website at jinki.ai and all related aerial intelligence services, you agree to be bound by these Terms of Service. If you do not agree to these terms, you must not access or use our services.',
   },
   {
     id: 'services',
-    title: '2. Description of Services',
-    content: `Jinki provides aerial intelligence services for critical infrastructure, including but not limited to: infrastructure inspection, thermal imaging and analysis, data center monitoring, perimeter security assessment, and agricultural surveying. Our deliverables consist of data products, analytical reports, and actionable recommendations derived from aerial operations. Jinki is an aerial intelligence firm — we provide data-driven insights, not hardware.`,
+    number: '02',
+    title: 'Description of Services',
+    keyPoints: ['Infrastructure inspection and thermal analysis', 'Data products, reports, and recommendations', 'Intelligence firm, not hardware provider'],
+    content: 'Jinki provides aerial intelligence services for critical infrastructure, including but not limited to: infrastructure inspection, thermal imaging and analysis, data center monitoring, perimeter security assessment, and agricultural surveying. Our deliverables consist of data products, analytical reports, and actionable recommendations derived from aerial operations. Jinki is an aerial intelligence firm — we provide data-driven insights, not hardware.',
   },
   {
     id: 'responsibilities',
-    title: '3. User Responsibilities',
-    content: `You agree to: (a) provide accurate and complete information when engaging our services; (b) comply with all applicable local, state, and federal laws and regulations; (c) not interfere with or disrupt the integrity or performance of our services; (d) not attempt to gain unauthorized access to our systems or data; and (e) use all deliverables, reports, and data products solely for their intended lawful purpose.`,
+    number: '03',
+    title: 'User Responsibilities',
+    keyPoints: ['Provide accurate information', 'Comply with all applicable laws', 'Use deliverables for lawful purposes only'],
+    content: 'You agree to: (a) provide accurate and complete information when engaging our services; (b) comply with all applicable local, state, and federal laws and regulations; (c) not interfere with or disrupt the integrity or performance of our services; (d) not attempt to gain unauthorized access to our systems or data; and (e) use all deliverables, reports, and data products solely for their intended lawful purpose.',
   },
   {
     id: 'ip',
-    title: '4. Intellectual Property',
-    content: `All content, methodologies, software, analytical frameworks, reports, and materials provided by Jinki are protected by intellectual property laws. Jinki retains all rights, title, and interest in its proprietary technology, processes, and analytical methods. Clients receive a limited, non-exclusive, non-transferable license to use deliverables for their internal business purposes only. You may not reproduce, distribute, or create derivative works from our proprietary materials without prior written consent.`,
+    number: '04',
+    title: 'Intellectual Property',
+    keyPoints: ['Jinki retains IP rights to methods and technology', 'Limited non-exclusive license for deliverables', 'No reproduction without consent'],
+    content: 'All content, methodologies, software, analytical frameworks, reports, and materials provided by Jinki are protected by intellectual property laws. Jinki retains all rights, title, and interest in its proprietary technology, processes, and analytical methods. Clients receive a limited, non-exclusive, non-transferable license to use deliverables for their internal business purposes only. You may not reproduce, distribute, or create derivative works from our proprietary materials without prior written consent.',
   },
   {
     id: 'confidentiality',
-    title: '5. Confidentiality',
-    content: `Both parties agree to maintain the confidentiality of any proprietary or sensitive information exchanged during the course of engagement. This includes, but is not limited to, facility data, inspection findings, security assessments, and infrastructure details. Confidential information shall not be disclosed to third parties without prior written consent, except as required by law. This obligation survives the termination of any service agreement.`,
+    number: '05',
+    title: 'Confidentiality',
+    keyPoints: ['Mutual confidentiality obligations', 'Covers facility data, findings, and assessments', 'Obligation survives termination'],
+    content: 'Both parties agree to maintain the confidentiality of any proprietary or sensitive information exchanged during the course of engagement. This includes, but is not limited to, facility data, inspection findings, security assessments, and infrastructure details. Confidential information shall not be disclosed to third parties without prior written consent, except as required by law. This obligation survives the termination of any service agreement.',
   },
   {
     id: 'liability',
-    title: '6. Limitation of Liability',
-    content: `To the maximum extent permitted by applicable law, Jinki shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, or business opportunities, arising out of or related to your use of our services. Our total liability for any claim arising from these terms or our services shall not exceed the fees paid by you for the specific service giving rise to the claim. Our services provide intelligence and recommendations — operational decisions remain the sole responsibility of the client.`,
+    number: '06',
+    title: 'Limitation of Liability',
+    keyPoints: ['No liability for indirect or consequential damages', 'Total liability capped at service fees paid', 'Operational decisions remain client responsibility'],
+    content: 'To the maximum extent permitted by applicable law, Jinki shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, or business opportunities, arising out of or related to your use of our services. Our total liability for any claim arising from these terms or our services shall not exceed the fees paid by you for the specific service giving rise to the claim. Our services provide intelligence and recommendations — operational decisions remain the sole responsibility of the client.',
   },
   {
     id: 'indemnification',
-    title: '7. Indemnification',
-    content: `You agree to indemnify, defend, and hold harmless Jinki Aerial Intelligence, its officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, and expenses (including reasonable attorneys' fees) arising out of or in any way connected with: (a) your use of our services; (b) your violation of these terms; (c) your violation of any third-party rights; or (d) any operational decisions made based on our deliverables or recommendations.`,
+    number: '07',
+    title: 'Indemnification',
+    keyPoints: ['Client indemnifies Jinki against claims', 'Covers violations of terms or third-party rights', 'Includes decisions based on deliverables'],
+    content: 'You agree to indemnify, defend, and hold harmless Jinki Aerial Intelligence, its officers, directors, employees, and agents from and against any claims, liabilities, damages, losses, and expenses (including reasonable attorneys\' fees) arising out of or in any way connected with: (a) your use of our services; (b) your violation of these terms; (c) your violation of any third-party rights; or (d) any operational decisions made based on our deliverables or recommendations.',
   },
   {
     id: 'governing-law',
-    title: '8. Governing Law',
-    content: `These Terms of Service shall be governed by and construed in accordance with the laws of the Commonwealth of Virginia, United States, without regard to its conflict of law provisions. Any disputes arising under or in connection with these terms shall be subject to the exclusive jurisdiction of the state and federal courts located in Virginia.`,
+    number: '08',
+    title: 'Governing Law',
+    keyPoints: ['Virginia law governs', 'Exclusive jurisdiction in Virginia courts'],
+    content: 'These Terms of Service shall be governed by and construed in accordance with the laws of the Commonwealth of Virginia, United States, without regard to its conflict of law provisions. Any disputes arising under or in connection with these terms shall be subject to the exclusive jurisdiction of the state and federal courts located in Virginia.',
   },
   {
     id: 'termination',
-    title: '9. Termination',
-    content: `Jinki reserves the right to suspend or terminate your access to our services at any time, with or without cause, upon reasonable notice. Upon termination, your right to use our services ceases immediately. Provisions that by their nature should survive termination — including intellectual property, confidentiality, limitation of liability, indemnification, and governing law — shall remain in effect.`,
+    number: '09',
+    title: 'Termination',
+    keyPoints: ['Jinki may suspend or terminate access', 'Certain provisions survive termination'],
+    content: 'Jinki reserves the right to suspend or terminate your access to our services at any time, with or without cause, upon reasonable notice. Upon termination, your right to use our services ceases immediately. Provisions that by their nature should survive termination — including intellectual property, confidentiality, limitation of liability, indemnification, and governing law — shall remain in effect.',
   },
   {
     id: 'changes',
-    title: '10. Changes to Terms',
-    content: `We reserve the right to modify these Terms of Service at any time. Material changes will be communicated through our website or via direct notice to active clients. Your continued use of our services following any modifications constitutes acceptance of the revised terms. We encourage you to review these terms periodically.`,
+    number: '10',
+    title: 'Changes to Terms',
+    keyPoints: ['Terms may be modified at any time', 'Material changes communicated via website', 'Continued use constitutes acceptance'],
+    content: 'We reserve the right to modify these Terms of Service at any time. Material changes will be communicated through our website or via direct notice to active clients. Your continued use of our services following any modifications constitutes acceptance of the revised terms. We encourage you to review these terms periodically.',
   },
   {
     id: 'contact',
-    title: '11. Contact',
-    content: `If you have questions about these Terms of Service, please contact us:`,
+    number: '11',
+    title: 'Contact',
+    keyPoints: ['legal@jinki.ai for all inquiries'],
+    content: 'If you have questions about these Terms of Service, please contact us:',
   },
 ];
 ---
@@ -71,37 +103,104 @@ const sections = [
   <main id="main-content">
 
     <!-- Hero -->
-    <section class="terms-hero" aria-label="Terms of Service">
-      <div class="terms-hero-inner">
+    <section class="legal-hero" aria-label="Terms of Service">
+      <div class="legal-hero-inner">
         <div class="vert-eyebrow reveal">
           <span class="vert-eyebrow-line"></span>
           <span class="vert-eyebrow-text">Legal</span>
         </div>
         <h1 class="reveal reveal-delay-1">Terms of Service</h1>
-        <p class="terms-subtitle reveal reveal-delay-2">
-          Effective date: March 2026
+        <p class="legal-hero-sub reveal reveal-delay-2">
+          Effective {lastUpdated}. These terms govern your use of Jinki Aerial Intelligence services.
         </p>
+        <div class="legal-meta reveal reveal-delay-3">
+          <span class="legal-version-badge">v{version}</span>
+          <button class="version-history-btn" id="version-toggle-terms" aria-expanded="false">
+            View version history
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+        </div>
+        <!-- Version History Dropdown -->
+        <div class="version-history-panel" id="version-panel-terms" aria-hidden="true">
+          <table class="version-table">
+            <thead>
+              <tr>
+                <th>Version</th>
+                <th>Date</th>
+                <th>Changes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {versionHistory.map(v => (
+                <tr>
+                  <td><span class="version-tag">v{v.version}</span></td>
+                  <td>{v.date}</td>
+                  <td>{v.note}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
-    <!-- Terms Content -->
+    <!-- Terms Content with Sidebar -->
     <section class="section" style="background: var(--surface-dim);" aria-label="Terms of Service">
-      <div class="section-inner">
-        <div class="terms-content">
+      <div class="legal-layout">
+
+        <!-- Sidebar Navigation -->
+        <nav class="legal-sidebar" aria-label="Terms sections">
+          <div class="sidebar-sticky">
+            <h3 class="sidebar-title">On this page</h3>
+            <ul class="sidebar-links">
+              {sections.map(s => (
+                <li>
+                  <a href={`#${s.id}`} class="sidebar-link" data-section={s.id}>
+                    <span class="sidebar-num">{s.number}</span>
+                    {s.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="legal-content">
           {sections.map((section, i) => (
-            <article id={section.id} class={`terms-block reveal reveal-delay-${(i % 3) + 1}`}>
-              <h2>{section.title}</h2>
-              <p>{section.content}</p>
+            <article id={section.id} class={`legal-section reveal reveal-delay-${(i % 3) + 1}`}>
+              <div class="legal-section-header">
+                <span class="section-number">{section.number}</span>
+                <h2>{section.title}</h2>
+              </div>
+
+              {/* Key Points Summary */}
+              <div class="key-points-box">
+                <span class="key-points-label">Key Points</span>
+                <ul class="key-points-list">
+                  {section.keyPoints.map(kp => (
+                    <li>{kp}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <p class="legal-paragraph">{section.content}</p>
+
               {section.id === 'contact' && (
-                <div class="contact-details">
-                  <p><strong>Jinki Aerial Intelligence</strong></p>
-                  <p>Virginia, United States</p>
-                  <a href="mailto:legal@jinki.ai" class="terms-email">legal@jinki.ai</a>
+                <div class="contact-block">
+                  <div class="contact-card">
+                    <p class="contact-company">Jinki Aerial Intelligence</p>
+                    <p class="contact-location">Virginia, United States</p>
+                    <a href="mailto:legal@jinki.ai" class="legal-email-btn">legal@jinki.ai</a>
+                  </div>
                 </div>
               )}
             </article>
           ))}
         </div>
+
       </div>
     </section>
 
@@ -110,7 +209,8 @@ const sections = [
 </Layout>
 
 <style>
-  .terms-hero {
+  /* === HERO === */
+  .legal-hero {
     min-height: 45vh;
     display: flex;
     align-items: center;
@@ -121,11 +221,11 @@ const sections = [
     position: relative;
   }
 
-  .terms-hero-inner {
+  .legal-hero-inner {
     max-width: 800px;
   }
 
-  .terms-hero h1 {
+  .legal-hero h1 {
     font-family: var(--font-headline);
     font-size: clamp(2rem, 4vw + 0.5rem, 3.25rem);
     font-weight: 700;
@@ -134,7 +234,7 @@ const sections = [
     margin-bottom: 16px;
   }
 
-  .terms-subtitle {
+  .legal-hero-sub {
     font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
     color: var(--text-secondary);
     line-height: 1.75;
@@ -164,6 +264,92 @@ const sections = [
     color: var(--accent);
   }
 
+  /* === VERSION META === */
+  .legal-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .legal-version-badge {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--accent);
+    background: var(--accent-glow);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+  }
+
+  .version-history-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .version-history-btn:hover { color: var(--accent); }
+
+  .version-history-btn svg {
+    transition: transform 0.3s ease;
+  }
+
+  .version-history-btn.open svg {
+    transform: rotate(180deg);
+  }
+
+  .version-history-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), margin 0.4s ease;
+    margin-top: 0;
+  }
+
+  .version-history-panel.open {
+    max-height: 300px;
+    margin-top: 20px;
+  }
+
+  .version-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    text-align: left;
+  }
+
+  .version-table th {
+    font-family: var(--font-headline);
+    font-weight: 700;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .version-table td {
+    padding: 10px 12px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .version-tag {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+
+  /* === LAYOUT === */
   .section {
     padding: 5rem clamp(20px, 5vw, 80px);
   }
@@ -172,77 +358,286 @@ const sections = [
     .section { padding: 6rem clamp(20px, 5vw, 80px); }
   }
 
-  .section-inner {
+  .legal-layout {
     max-width: 1280px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 64px;
   }
 
-  .terms-content {
+  @media (max-width: 1024px) {
+    .legal-layout { grid-template-columns: 1fr; gap: 0; }
+  }
+
+  /* === SIDEBAR === */
+  .legal-sidebar {
+    display: block;
+  }
+
+  @media (max-width: 1024px) {
+    .legal-sidebar { display: none; }
+  }
+
+  .sidebar-sticky {
+    position: sticky;
+    top: 120px;
+  }
+
+  .sidebar-title {
+    font-family: var(--font-headline);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-tertiary);
+    margin-bottom: 16px;
+  }
+
+  .sidebar-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sidebar-link {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 7px 12px;
+    border-left: 2px solid transparent;
+    border-radius: 0 6px 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .sidebar-link:hover {
+    color: var(--text-primary);
+    background: var(--accent-glow);
+    border-left-color: var(--accent);
+  }
+
+  .sidebar-link.active {
+    color: var(--accent);
+    background: var(--accent-glow);
+    border-left-color: var(--accent);
+    font-weight: 600;
+  }
+
+  .sidebar-num {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--text-tertiary);
+    opacity: 0.7;
+    min-width: 18px;
+  }
+
+  .sidebar-link.active .sidebar-num {
+    color: var(--accent);
+    opacity: 1;
+  }
+
+  /* === CONTENT === */
+  .legal-content {
     max-width: 800px;
-    margin: 0 auto;
   }
 
-  .terms-block {
+  .legal-section {
     margin-bottom: 48px;
   }
 
-  .terms-block:last-child {
-    margin-bottom: 0;
+  .legal-section:last-of-type { margin-bottom: 0; }
+
+  .legal-section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--glass-border);
   }
 
-  .terms-block h2 {
+  .section-number {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .legal-section h2 {
     font-family: var(--font-headline);
     font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.375rem);
     font-weight: 700;
     color: var(--text-primary);
     line-height: 1.2;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--glass-border);
   }
 
-  .terms-block p {
+  /* === KEY POINTS BOX === */
+  .key-points-box {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .key-points-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .key-points-label {
+    font-family: var(--font-headline);
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .key-points-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .key-points-list li {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .key-points-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+  /* === PARAGRAPHS === */
+  .legal-paragraph {
     font-family: var(--font-body);
     font-size: 0.9375rem;
     color: var(--text-secondary);
     line-height: 1.8;
   }
 
-  .contact-details {
-    margin-top: 20px;
+  /* === CONTACT === */
+  .contact-block { margin-top: 24px; }
+
+  .contact-card {
     padding: 24px;
     background: var(--surface-container-low);
     border: 1px solid var(--glass-border);
     border-radius: 12px;
+    display: inline-block;
   }
 
-  .contact-details p {
-    font-family: var(--font-body);
+  .contact-company {
+    font-family: var(--font-headline);
     font-size: 0.9375rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
+    font-weight: 700;
+    color: var(--text-primary);
     margin-bottom: 4px;
   }
 
-  .contact-details strong {
-    color: var(--text-primary);
+  .contact-location {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
   }
 
-  .terms-email {
+  .legal-email-btn {
     font-family: var(--font-mono);
     font-size: 1rem;
     color: var(--accent);
     text-decoration: none;
     display: inline-block;
-    margin-top: 12px;
     padding: 8px 20px;
     border: 1px solid var(--accent);
     border-radius: 10px;
     transition: all 0.3s ease;
   }
 
-  .terms-email:hover {
+  .legal-email-btn:hover {
     background: var(--accent-glow);
     box-shadow: 0 0 20px var(--accent-glow);
   }
+
+  /* === PRINT === */
+  @media print {
+    .legal-sidebar { display: none !important; }
+    .legal-layout { grid-template-columns: 1fr !important; }
+    .legal-hero { min-height: auto; padding: 40px 20px; }
+    .legal-section { break-inside: avoid; page-break-inside: avoid; }
+    .key-points-box { background: #f5f5f5 !important; border-color: #ddd !important; }
+    .key-points-label { color: #333 !important; }
+    .key-points-list li { color: #333 !important; }
+    .legal-paragraph { color: #333 !important; }
+    .version-history-panel { display: none !important; }
+    .section-number { color: #666 !important; }
+    .contact-card { background: #f5f5f5 !important; border-color: #ddd !important; }
+  }
 </style>
+
+<script>
+  // Version history toggle
+  const versionToggle = document.getElementById('version-toggle-terms');
+  const versionPanel = document.getElementById('version-panel-terms');
+
+  if (versionToggle && versionPanel) {
+    versionToggle.addEventListener('click', () => {
+      const isOpen = versionPanel.classList.contains('open');
+      versionPanel.classList.toggle('open');
+      versionToggle.classList.toggle('open');
+      versionToggle.setAttribute('aria-expanded', String(!isOpen));
+      versionPanel.setAttribute('aria-hidden', String(isOpen));
+    });
+  }
+
+  // Sidebar active state tracking
+  const sidebarLinks = document.querySelectorAll('.sidebar-link');
+  const legalSections = document.querySelectorAll('.legal-section');
+
+  if (sidebarLinks.length > 0 && legalSections.length > 0) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            sidebarLinks.forEach((link) => {
+              link.classList.toggle('active', link.getAttribute('data-section') === id);
+            });
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -70% 0px', threshold: 0 }
+    );
+
+    legalSections.forEach((section) => observer.observe(section));
+  }
+</script>
