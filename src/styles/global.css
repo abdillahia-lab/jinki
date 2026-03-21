@@ -286,6 +286,17 @@ html {
   background: rgba(0, 131, 143, 0.15);
 }
 
+/* --- Section Eyebrow (design system component) --- */
+.section-eyebrow {
+  font-family: var(--font-label);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  line-height: 1;
+}
+
 /* --- Skip to Content --- */
 .skip-to-content {
   position: absolute;
