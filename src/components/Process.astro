@@ -1,0 +1,156 @@
+---
+/*
+  Process Section — How an engagement works
+
+  Three-step visual process showing the journey from
+  initial contact to actionable intelligence delivery.
+  No fabricated claims — this is the actual service flow.
+*/
+const steps = [
+  {
+    num: '01',
+    title: 'Scope & Plan',
+    desc: 'We assess your facility, define the inspection area, and build a mission plan tailored to your infrastructure — rooftops, perimeters, corridors, or fields.',
+    icon: 'assignment',
+  },
+  {
+    num: '02',
+    title: 'Capture & Analyze',
+    desc: 'Our aerial platform executes the mission — thermal, visual, and multispectral sensors capture every surface. AI classifies findings by severity in real time.',
+    icon: 'precision_manufacturing',
+  },
+  {
+    num: '03',
+    title: 'Deliver & Act',
+    desc: 'You receive a prioritized intelligence report within 24 hours — not raw data, but clear recommendations your maintenance team can execute immediately.',
+    icon: 'verified',
+  },
+];
+---
+
+<section id="process" style="padding-top: 7rem; padding-bottom: 7rem;" aria-label="How It Works">
+  <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem;">
+
+    <!-- Header -->
+    <div class="reveal" style="text-align: center; max-width: 40rem; margin-left: auto; margin-right: auto; margin-bottom: 4rem;">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 1rem;">
+        <span style="display: block; height: 1px; width: 2rem; background: var(--accent);"></span>
+        <span class="section-eyebrow">Process</span>
+        <span style="display: block; height: 1px; width: 2rem; background: var(--accent);"></span>
+      </div>
+      <h2 style="font-family: var(--font-headline); font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; color: var(--text-primary); margin-bottom: 1rem; line-height: 1.12; letter-spacing: -0.02em;">
+        From Contact to Intelligence<br/>in <span style="color: var(--accent);">Three Steps</span>
+      </h2>
+      <p style="font-family: var(--font-body); font-size: 1.0625rem; color: var(--text-secondary); line-height: 1.65;">
+        No complex procurement cycles. No multi-month onboarding. We move at the speed your operations demand.
+      </p>
+    </div>
+
+    <!-- Steps -->
+    <div class="process-grid">
+      {steps.map((step, i) => (
+        <div class={`process-step reveal ${i > 0 ? `reveal-delay-${i}` : ''}`}>
+          <div class="process-step-header">
+            <span class="process-num">{step.num}</span>
+            <span class="material-symbols-outlined process-icon" aria-hidden="true">{step.icon}</span>
+          </div>
+          <h3 class="process-title">{step.title}</h3>
+          <p class="process-desc">{step.desc}</p>
+          {i < steps.length - 1 && (
+            <div class="process-connector" aria-hidden="true">
+              <span class="material-symbols-outlined" style="font-size: 16px; color: var(--accent); opacity: 0.4;">arrow_forward</span>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .process-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .process-grid { grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
+  }
+
+  .process-step {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: border-color 0.4s ease,
+                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+
+  .process-step:hover {
+    border-color: rgba(0, 229, 255, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 0 20px rgba(0, 229, 255, 0.04);
+    transform: translateY(-3px);
+  }
+
+  .process-step-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+
+  .process-num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.6;
+    letter-spacing: 0.05em;
+  }
+
+  .process-icon {
+    font-size: 24px;
+    color: var(--accent);
+    opacity: 0.5;
+  }
+
+  .process-title {
+    font-family: var(--font-headline);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .process-desc {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  .process-connector {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .process-connector {
+      display: flex;
+      position: absolute;
+      right: -1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .process-step { transition: none; }
+  }
+</style>
