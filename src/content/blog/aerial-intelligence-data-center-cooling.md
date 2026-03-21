@@ -2,7 +2,7 @@
 title: "How Aerial Intelligence Is Reshaping Data Center Cooling Management"
 description: "Data centers are transitioning from traditional HVAC to liquid cooling for AI workloads. Aerial thermal intelligence provides the visibility needed to manage both systems."
 date: 2026-03-21
-author: "Jinki Team"
+author: "Adnan Abdillahi"
 tags: ["data centers", "thermal", "AI", "monitoring"]
 ---
 

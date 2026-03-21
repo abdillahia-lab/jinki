@@ -2,7 +2,7 @@
 title: "Why Thermal Imaging Delivers the Highest ROI in Infrastructure Maintenance"
 description: "A practical breakdown of how aerial thermal inspection prevents costly failures and why it outperforms visual-only methods for critical infrastructure."
 date: 2026-03-18
-author: "Jinki Team"
+author: "Adnan Abdillahi"
 tags: ["thermal", "inspection", "infrastructure", "monitoring"]
 ---
 

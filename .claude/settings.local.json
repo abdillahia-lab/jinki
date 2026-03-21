@@ -76,7 +76,29 @@
       "Bash(rm -f .git/index.lock)",
       "Bash(git commit:*)",
       "Bash(git merge:*)",
-      "Bash(\"/Users/aa/.claude/plugins/cache/claude-plugins-official/ralph-loop/6b70f99f769f/scripts/setup-ralph-loop.sh\" \"Iterate on every component page and design element of the Jinki website to achieve luxury tier quality. Pick one element per iteration, read the code, apply premium design patterns from research, make the improvement, build with astro build. Focus on spacing, shadows, easing, typography, micro-interactions, card hover states, section rhythm, mobile UX. Never fabricate claims. Use PATH at nvm node v24. --max-iterations 250\")"
+      "Bash(\"/Users/aa/.claude/plugins/cache/claude-plugins-official/ralph-loop/6b70f99f769f/scripts/setup-ralph-loop.sh\" \"Iterate on every component page and design element of the Jinki website to achieve luxury tier quality. Pick one element per iteration, read the code, apply premium design patterns from research, make the improvement, build with astro build. Focus on spacing, shadows, easing, typography, micro-interactions, card hover states, section rhythm, mobile UX. Never fabricate claims. Use PATH at nvm node v24. --max-iterations 250\")",
+      "Bash(grep -rn \"font-size: 0\\\\.5[0-9]*rem\\\\|font-size: 0\\\\.6[0-4]\" src/components/*.astro)",
+      "Bash(grep -rn \"border-radius: 6px\\\\|border-radius:6px\" src/components/*.astro src/styles/global.css)",
+      "Bash(for f:*)",
+      "Bash(do)",
+      "Bash(sed -i '' 's/transition: transform 0\\\\.3s ease;/transition: transform 0.4s var\\(--ease-out-premium, cubic-bezier\\(0.16, 1, 0.3, 1\\)\\);/g' \"$f\")",
+      "Bash(done)",
+      "Read(//Users/aa/JInki.ai/**)",
+      "Bash(python3 /tmp/logo_gen2.py)",
+      "Bash(for d:*)",
+      "Bash(do echo:*)",
+      "Read(//Users/aa/JInki.ai/.claude/skills/$d/**)",
+      "Bash(PATH=/Users/aa/.nvm/versions/node/v24.12.0/bin:$PATH npm list -g wrangler)",
+      "Bash(PATH=/Users/aa/.nvm/versions/node/v24.12.0/bin:$PATH npm install -g wrangler)",
+      "Bash(PATH=/Users/aa/.nvm/versions/node/v24.12.0/bin:$PATH wrangler pages project create jinki-ai --production-branch main)",
+      "Bash(PATH=/Users/aa/.nvm/versions/node/v24.12.0/bin:$PATH wrangler pages deploy dist/ --project-name jinki-ai --branch main)",
+      "Bash(PATH=/Users/aa/.nvm/versions/node/v24.12.0/bin:$PATH wrangler pages project list)",
+      "Bash(curl -sI https://jinki.ai)",
+      "Bash(PATH=/Users/aa/.nvm/versions/node/v24.12.0/bin:$PATH wrangler pages deploy dist/ --project-name jinki-ai --branch main --commit-dirty=true)",
+      "Bash(find .git -name \"*.lock\" -delete)",
+      "Bash(wrangler pages:*)",
+      "Bash(grep -rn \"Jinki Team\\\\|author\" src/content/blog/*.md)",
+      "Bash(do sed:*)"
     ]
   }
 }

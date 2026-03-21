@@ -2,7 +2,7 @@
 title: "Autonomous vs. Piloted: Choosing the Right Aerial Intelligence Model"
 description: "When does persistent autonomous monitoring make sense versus one-time piloted assessments? A framework for matching aerial intelligence to operational needs."
 date: 2026-03-20
-author: "Jinki Team"
+author: "Adnan Abdillahi"
 tags: ["inspection", "monitoring", "data centers", "AI"]
 ---
 

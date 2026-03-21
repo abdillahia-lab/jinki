@@ -2,7 +2,7 @@
 title: "The Future of Autonomous Aerial Inspection"
 description: "How AI-powered aerial systems are transforming infrastructure inspection from reactive maintenance to predictive intelligence."
 date: 2026-03-15
-author: "Jinki Team"
+author: "Adnan Abdillahi"
 tags: ["infrastructure", "AI", "inspection"]
 ---
 

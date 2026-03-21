@@ -2,7 +2,7 @@
 title: "Thermal Intelligence for Data Centers"
 description: "How aerial thermal imaging provides a new layer of monitoring for data center facilities, catching hotspots before they become outages."
 date: 2026-03-10
-author: "Jinki Team"
+author: "Adnan Abdillahi"
 tags: ["data centers", "thermal", "monitoring"]
 ---
 
