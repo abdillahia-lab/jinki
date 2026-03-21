@@ -1,0 +1,1862 @@
+---
+/*
+  TEAM OMEGA — Round 5: Security Vertical Redesign
+  Jinki Aerial Intelligence — Perimeter Security
+
+  Features:
+  1. Surveillance HUD hero with crosshairs, night-vision, timestamp, MONITORING blink
+  2. Interactive perimeter map with animated patrol + click-to-breach zones
+  3. Alert cascade animation — auto-scrolling real-time feed
+  4. Response time bar chart race — Jinki vs guard vs camera-only
+  5. Night operations showcase — day/night toggle
+  6. Integration ecosystem — animated connection diagram
+*/
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import LeadGen from '../../components/LeadGen.astro';
+import Footer from '../../components/Footer.astro';
+
+const stats = [
+  { value: '$4.4B', label: 'Security surveillance aerial market (2025)', source: 'Market Research' },
+  { value: '30s', label: 'Alert-to-airborne response time', source: 'Jinki Ops Data' },
+  { value: '98.7%', label: 'Threat classification accuracy', source: 'AI Model Metrics' },
+  { value: '24/7', label: 'Persistent autonomous patrol', source: 'Platform Capability' },
+];
+
+const services = [
+  {
+    icon: 'radar',
+    title: 'Perimeter Thermal Surveillance',
+    desc: 'Complete thermal and HD coverage of your facility perimeter. Identify blind spots, assess coverage gaps, and detect intrusion attempts that fixed cameras miss.',
+  },
+  {
+    icon: 'speed',
+    title: 'Event-Triggered Response',
+    desc: 'Automated aerial response to perimeter alerts. When sensors detect activity, aerial assets deploy within 30 seconds to verify, classify, and stream live video.',
+  },
+  {
+    icon: 'shield',
+    title: 'Vulnerability Assessment',
+    desc: 'Comprehensive aerial evaluation of your physical security posture. Identifies sight-line gaps, lighting deficiencies, and monitoring blind spots with remediation priorities.',
+  },
+  {
+    icon: 'lock',
+    title: 'VMS & Access Control Integration',
+    desc: 'Aerial surveillance connecting with your existing video management system, access control, and perimeter sensors. Complete Alert-Response-Verify workflow.',
+  },
+  {
+    icon: 'verified_user',
+    title: 'Executive Protection & Events',
+    desc: 'Temporary aerial overwatch for high-value events, executive visits, and elevated threat periods. Real-time situational awareness for your security team.',
+  },
+  {
+    icon: 'security',
+    title: 'Post-Incident Documentation',
+    desc: 'Rapid aerial documentation of security incidents for investigation, insurance claims, and law enforcement. HD and thermal evidence with GPS-tagged imagery.',
+  },
+];
+
+const painPoints = [
+  {
+    problem: 'Guard patrols cannot cover large campuses fast enough',
+    solution: 'Aerial thermal surveillance covers your entire perimeter in minutes. Threats detected and verified before ground teams reach the location.',
+  },
+  {
+    problem: 'Fixed cameras have inherent blind spots',
+    solution: 'Aerial vantage eliminates coverage gaps caused by terrain, structures, and vegetation. Thermal imaging detects concealed activity visible cameras miss.',
+  },
+  {
+    problem: 'False alarm response wastes security resources',
+    solution: 'Aerial verification classifies alerts before dispatching ground teams. Reduce unnecessary responses while ensuring real threats get immediate attention.',
+  },
+  {
+    problem: 'Perimeter monitoring costs escalate with facility size',
+    solution: 'Scale coverage without scaling headcount. One aerial system covers more ground than multiple fixed camera installations and guard posts.',
+  },
+];
+
+const alertEvents = [
+  { time: '22:41:07', severity: 'red', type: 'PERIMETER BREACH', location: 'Sector 7 — East Fence', detail: 'Thermal signature detected, 2 individuals' },
+  { time: '22:41:12', severity: 'yellow', type: 'AERIAL UNIT DISPATCHED', location: 'Dock 3 — Auto-launch', detail: 'ETA to target: 28 seconds' },
+  { time: '22:41:38', severity: 'green', type: 'VISUAL CONFIRMED', location: 'Sector 7 — East Fence', detail: 'HD + thermal lock acquired' },
+  { time: '22:41:44', severity: 'red', type: 'THREAT CLASSIFIED', location: 'Sector 7 — East Fence', detail: 'Unauthorized personnel — SOC notified' },
+  { time: '22:42:01', severity: 'yellow', type: 'GROUND TEAM DISPATCHED', location: 'Patrol Unit 3', detail: 'ETA 4 min — aerial overwatch active' },
+  { time: '22:42:15', severity: 'green', type: 'TRACKING ACTIVE', location: 'Sector 7 → Sector 8', detail: 'Subjects moving northwest, speed 1.2 m/s' },
+  { time: '22:43:02', severity: 'green', type: 'PERIMETER SECURED', location: 'Sector 7–8', detail: 'Ground team on-site, subjects detained' },
+  { time: '22:43:18', severity: 'green', type: 'INCIDENT DOCUMENTED', location: 'All sectors', detail: 'HD evidence package generated, GPS-tagged' },
+];
+
+const integrations = [
+  { id: 'cctv', label: 'CCTV / NVR', icon: 'videocam', x: 15, y: 25 },
+  { id: 'access', label: 'Access Control', icon: 'badge', x: 15, y: 75 },
+  { id: 'alarm', label: 'Alarm Systems', icon: 'notification_important', x: 85, y: 25 },
+  { id: 'siem', label: 'SIEM / SOC', icon: 'hub', x: 85, y: 75 },
+];
+---
+
+<Layout title="Security — Jinki Aerial Intelligence" description="Aerial threat detection, perimeter thermal surveillance, and security intelligence for critical infrastructure. 24/7 autonomous patrol with AI threat classification.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- ==================== 1. SURVEILLANCE HUD HERO ==================== -->
+    <section class="sec-hero" aria-label="Security Intelligence">
+      <div class="sec-hero-inner">
+        <div class="sec-hero-content reveal">
+          <div class="sec-eyebrow">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">Perimeter Security</span>
+          </div>
+          <h1 class="sec-hero-title">
+            Aerial Threat Detection for<br/>
+            <span class="gradient-text-violet">Critical Perimeters</span>
+          </h1>
+          <p class="sec-hero-subtitle">
+            Fixed cameras have blind spots. Guard patrols take minutes. Jinki's aerial
+            thermal surveillance covers your entire perimeter in seconds — verifying threats
+            before they become incidents. A force multiplier, not a replacement.
+          </p>
+          <div class="sec-hero-actions">
+            <a href="#lead-gen" class="btn-premium sec-cta">Schedule Assessment</a>
+            <a href="#services" class="sec-cta-secondary">View Capabilities</a>
+          </div>
+        </div>
+
+        <!-- HUD Visual -->
+        <div class="sec-hero-visual reveal reveal-delay-1" aria-hidden="true">
+          <div class="hud-container">
+            <!-- Night vision green overlay -->
+            <div class="hud-nightvision"></div>
+            <!-- Grid scanlines -->
+            <div class="hud-scanlines"></div>
+            <!-- Crosshairs -->
+            <div class="hud-crosshair">
+              <div class="crosshair-h"></div>
+              <div class="crosshair-v"></div>
+              <div class="crosshair-circle"></div>
+              <div class="crosshair-circle crosshair-circle-inner"></div>
+            </div>
+            <!-- Corner brackets -->
+            <div class="hud-bracket hud-bracket-tl"></div>
+            <div class="hud-bracket hud-bracket-tr"></div>
+            <div class="hud-bracket hud-bracket-bl"></div>
+            <div class="hud-bracket hud-bracket-br"></div>
+            <!-- Timestamp -->
+            <div class="hud-timestamp">
+              <span class="hud-ts-label">CAM-07 // SECTOR EAST</span>
+              <span class="hud-ts-time" id="hud-clock">22:41:07</span>
+            </div>
+            <!-- Monitoring status -->
+            <div class="hud-status">
+              <span class="hud-status-dot"></span>
+              <span class="hud-status-text">MONITORING</span>
+            </div>
+            <!-- Thermal target boxes -->
+            <div class="hud-target hud-target-1">
+              <span class="hud-target-label">SUBJ-01</span>
+            </div>
+            <div class="hud-target hud-target-2">
+              <span class="hud-target-label">SUBJ-02</span>
+            </div>
+            <!-- Telemetry readout bottom-right -->
+            <div class="hud-telemetry">
+              <span>ALT 120m</span>
+              <span>SPD 8.2 m/s</span>
+              <span>HDG 047&deg;</span>
+              <span>THERM ON</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== STATS BAR ==================== -->
+    <div class="stats-bar reveal">
+      <div class="stats-bar-inner">
+        {stats.map(stat => (
+          <div class="stat-item">
+            <span class="stat-value">{stat.value}</span>
+            <span class="stat-label">{stat.label}</span>
+            <span class="stat-source">{stat.source}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- ==================== PAIN / SOLUTION ==================== -->
+    <section class="section" aria-label="Challenges We Solve">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="sec-eyebrow">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">The Challenge</span>
+          </div>
+          <h2>Your Perimeter Has<br/>More Gaps Than You Think</h2>
+          <p class="section-subtitle">
+            Facility security teams face expanding perimeters, sophisticated threats,
+            and shrinking budgets. Static cameras and guard patrols leave critical
+            vulnerabilities that adversaries know how to exploit.
+          </p>
+        </div>
+        <div class="pain-grid">
+          {painPoints.map((pp, i) => (
+            <div class={`pain-card reveal reveal-delay-${(i % 4) + 1}`}>
+              <div class="pain-problem">
+                <span class="pain-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">warning</span>
+                <h3>{pp.problem}</h3>
+              </div>
+              <div class="pain-solution">
+                <span class="pain-arrow">&rarr;</span>
+                <p>{pp.solution}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 2. INTERACTIVE PERIMETER MAP ==================== -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Perimeter Intelligence">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="sec-eyebrow">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">Perimeter Intelligence</span>
+          </div>
+          <h2>Autonomous Patrol Coverage</h2>
+          <p class="section-subtitle">
+            Click any zone to simulate a breach scenario. Watch how Jinki's aerial
+            intelligence responds in real time — from detection to resolution.
+          </p>
+        </div>
+        <div class="perimeter-wrap reveal" role="img" aria-label="Interactive facility perimeter map showing autonomous patrol routes and breach detection zones">
+          <svg class="perimeter-svg" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+            <!-- Facility outline -->
+            <rect class="facility-bg" x="150" y="80" width="500" height="340" rx="8" />
+            <!-- Buildings -->
+            <rect class="building" x="250" y="150" width="120" height="80" rx="4" />
+            <text class="bldg-label" x="310" y="196">DATA CENTER A</text>
+            <rect class="building" x="430" y="150" width="100" height="80" rx="4" />
+            <text class="bldg-label" x="480" y="196">POWER</text>
+            <rect class="building" x="280" y="280" width="160" height="70" rx="4" />
+            <text class="bldg-label" x="360" y="320">DATA CENTER B</text>
+            <rect class="building" x="490" y="280" width="80" height="70" rx="4" />
+            <text class="bldg-label" x="530" y="320">SOC</text>
+            <!-- Perimeter fence -->
+            <rect class="fence-line" x="150" y="80" width="500" height="340" rx="8" />
+            <!-- Patrol path -->
+            <path class="patrol-path" d="M 180,100 L 620,100 L 630,110 L 630,400 L 620,410 L 180,410 L 170,400 L 170,110 Z" />
+            <!-- Animated patrol dot -->
+            <circle class="patrol-dot" r="6">
+              <animateMotion dur="12s" repeatCount="indefinite" path="M 180,100 L 620,100 L 630,110 L 630,400 L 620,410 L 180,410 L 170,400 L 170,110 Z" />
+            </circle>
+            <!-- Patrol trail -->
+            <circle class="patrol-trail" r="12" opacity="0.3">
+              <animateMotion dur="12s" repeatCount="indefinite" path="M 180,100 L 620,100 L 630,110 L 630,400 L 620,410 L 180,410 L 170,400 L 170,110 Z" />
+            </circle>
+            <!-- Click zones -->
+            <g class="zone zone-north" data-zone="north" tabindex="0" role="button" aria-label="Simulate breach at north perimeter">
+              <rect x="300" y="72" width="200" height="24" rx="4" class="zone-hit" />
+              <text class="zone-label" x="400" y="68">NORTH GATE</text>
+            </g>
+            <g class="zone zone-east" data-zone="east" tabindex="0" role="button" aria-label="Simulate breach at east perimeter">
+              <rect x="642" y="200" width="24" height="120" rx="4" class="zone-hit" />
+              <text class="zone-label" x="680" y="265">EAST FENCE</text>
+            </g>
+            <g class="zone zone-south" data-zone="south" tabindex="0" role="button" aria-label="Simulate breach at south perimeter">
+              <rect x="300" y="412" width="200" height="24" rx="4" class="zone-hit" />
+              <text class="zone-label" x="400" y="452">SOUTH LOT</text>
+            </g>
+            <g class="zone zone-west" data-zone="west" tabindex="0" role="button" aria-label="Simulate breach at west perimeter">
+              <rect x="134" y="200" width="24" height="120" rx="4" class="zone-hit" />
+              <text class="zone-label" x="120" y="265">WEST FENCE</text>
+            </g>
+            <!-- Breach flash (hidden by default) -->
+            <circle class="breach-flash" cx="400" cy="84" r="0" />
+          </svg>
+          <!-- Breach info overlay -->
+          <div class="breach-info" id="breach-info" hidden>
+            <span class="breach-title" id="breach-title">BREACH DETECTED</span>
+            <span class="breach-detail" id="breach-detail">Thermal signature — 1 individual</span>
+            <span class="breach-response" id="breach-response">Aerial unit dispatched — ETA 28s</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 3. ALERT CASCADE ==================== -->
+    <section class="section" aria-label="Real-Time Alert Feed">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="sec-eyebrow">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">Live Intelligence</span>
+          </div>
+          <h2>From Detection to Resolution<br/>in Under Two Minutes</h2>
+          <p class="section-subtitle">
+            Watch a complete threat response sequence. Every event is classified,
+            tracked, and documented — automatically.
+          </p>
+        </div>
+        <div class="alert-cascade reveal" role="log" aria-label="Simulated security alert feed" aria-live="polite">
+          <div class="alert-header-bar">
+            <span class="alert-header-dot alert-header-dot-live"></span>
+            <span class="alert-header-title">JINKI SOC FEED — LIVE</span>
+            <span class="alert-header-ts" id="alert-header-ts">22:41:07</span>
+          </div>
+          <div class="alert-feed" id="alert-feed">
+            {alertEvents.map((evt) => (
+              <div class={`alert-row alert-severity-${evt.severity}`} data-severity={evt.severity}>
+                <span class="alert-time">{evt.time}</span>
+                <span class={`alert-badge alert-badge-${evt.severity}`}>{evt.severity === 'red' ? 'CRITICAL' : evt.severity === 'yellow' ? 'ACTION' : 'INFO'}</span>
+                <span class="alert-type">{evt.type}</span>
+                <span class="alert-location">{evt.location}</span>
+                <span class="alert-detail">{evt.detail}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 4. RESPONSE TIME COMPARISON ==================== -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Response Time Comparison">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="sec-eyebrow">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">Performance</span>
+          </div>
+          <h2>Speed Changes Everything</h2>
+          <p class="section-subtitle">
+            Seconds matter in perimeter security. Compare Jinki's autonomous response
+            against traditional security measures.
+          </p>
+        </div>
+        <div class="response-chart reveal" role="img" aria-label="Response time comparison: Jinki 30 seconds, Guard patrol 4.5 minutes, Camera-only 8+ minutes">
+          <div class="chart-row" data-target="30" data-label="30s">
+            <span class="chart-label">Jinki Aerial Intelligence</span>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar chart-bar-jinki" style="--bar-pct: 6.25%;">
+                <span class="chart-bar-value">30s</span>
+              </div>
+            </div>
+          </div>
+          <div class="chart-row" data-target="270" data-label="4.5min">
+            <span class="chart-label">Guard Patrol Response</span>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar chart-bar-guard" style="--bar-pct: 56.25%;">
+                <span class="chart-bar-value">4.5 min</span>
+              </div>
+            </div>
+          </div>
+          <div class="chart-row" data-target="480" data-label="8+min">
+            <span class="chart-label">Camera-Only Detection</span>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar chart-bar-camera" style="--bar-pct: 100%;">
+                <span class="chart-bar-value">8+ min</span>
+              </div>
+            </div>
+          </div>
+          <div class="chart-legend">
+            <span class="chart-legend-label">Detection + Verification + Classification + Response Dispatch</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 5. NIGHT OPERATIONS SHOWCASE ==================== -->
+    <section class="section sec-night-ops" aria-label="Night Operations">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="sec-eyebrow">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">24/7 Capability</span>
+          </div>
+          <h2>Darkness Is Not an Obstacle</h2>
+          <p class="section-subtitle">
+            Thermal imaging turns night into an advantage. Concealment, darkness, and
+            visual obstructions become irrelevant when you see heat.
+          </p>
+        </div>
+        <div class="night-showcase reveal">
+          <div class="night-toggle-wrap">
+            <button class="night-toggle" id="night-toggle" type="button" aria-pressed="false" aria-label="Toggle between day and night view">
+              <span class="night-toggle-label night-toggle-day">DAY</span>
+              <span class="night-toggle-thumb"></span>
+              <span class="night-toggle-label night-toggle-night">NIGHT</span>
+            </button>
+          </div>
+          <div class="night-split" id="night-split">
+            <!-- Day panel -->
+            <div class="night-panel night-panel-day" id="night-panel-day">
+              <div class="night-scene">
+                <div class="night-scene-sky night-sky-day"></div>
+                <div class="night-scene-ground night-ground-day"></div>
+                <div class="night-fence"></div>
+                <div class="night-building night-bldg-day"></div>
+                <div class="night-figure night-figure-visible"></div>
+                <div class="night-figure night-figure-hidden" style="left: 68%; opacity: 0.15;"></div>
+              </div>
+              <div class="night-caption">
+                <span class="night-caption-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">light_mode</span>
+                <div>
+                  <span class="night-caption-title">Visible Light — Daytime</span>
+                  <span class="night-caption-desc">1 of 2 subjects visible. Second subject concealed behind vegetation.</span>
+                </div>
+              </div>
+            </div>
+            <!-- Night panel -->
+            <div class="night-panel night-panel-night" id="night-panel-night">
+              <div class="night-scene night-scene-dark">
+                <div class="night-scene-sky night-sky-night"></div>
+                <div class="night-scene-ground night-ground-night"></div>
+                <div class="night-fence night-fence-thermal"></div>
+                <div class="night-building night-bldg-night"></div>
+                <div class="night-figure night-figure-thermal" style="left: 42%;"></div>
+                <div class="night-figure night-figure-thermal" style="left: 68%;"></div>
+                <div class="thermal-tag" style="left: 40%; top: 30%;">37.2&deg;C</div>
+                <div class="thermal-tag" style="left: 66%; top: 30%;">36.8&deg;C</div>
+              </div>
+              <div class="night-caption">
+                <span class="night-caption-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">thermostat</span>
+                <div>
+                  <span class="night-caption-title">Thermal Imaging — Nighttime</span>
+                  <span class="night-caption-desc">Both subjects clearly visible. Heat signatures cannot be concealed.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SERVICES GRID ==================== -->
+    <section id="services" class="section" style="background: var(--surface-dim);" aria-label="Services">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="sec-eyebrow">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">Services</span>
+          </div>
+          <h2>Complete Perimeter Intelligence<br/>from Alert to Resolution</h2>
+          <p class="section-subtitle">
+            Every engagement delivers actionable security intelligence — not raw video feeds.
+            Threat classifications, vulnerability assessments, and remediation priorities
+            your team can act on immediately.
+          </p>
+        </div>
+        <div class="services-grid">
+          {services.map((svc, i) => (
+            <div class={`service-card metallic-gloss reveal reveal-delay-${(i % 3) + 1}`}>
+              <div class="service-icon-wrap">
+                <span class="material-symbols-outlined service-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{svc.icon}</span>
+              </div>
+              <h3 class="service-title">{svc.title}</h3>
+              <p class="service-desc">{svc.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== 6. INTEGRATION ECOSYSTEM ==================== -->
+    <section class="section" aria-label="Integration Ecosystem">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="sec-eyebrow">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">Ecosystem</span>
+          </div>
+          <h2>Plugs Into Your<br/>Existing Security Stack</h2>
+          <p class="section-subtitle">
+            Jinki does not replace your security infrastructure — it completes it.
+            Bidirectional integration with the systems you already rely on.
+          </p>
+        </div>
+        <div class="integration-diagram reveal" role="img" aria-label="Diagram showing Jinki connecting to CCTV, Access Control, Alarm Systems, and SIEM/SOC">
+          <div class="integ-ring">
+            <div class="integ-center">
+              <span class="material-symbols-outlined" style="font-size: 40px; font-variation-settings: 'FILL' 1; color: #7B61FF;" aria-hidden="true">flight</span>
+              <span class="integ-center-label">JINKI</span>
+            </div>
+            <!-- Connection lines animated via CSS -->
+            <svg class="integ-lines" viewBox="0 0 600 400" aria-hidden="true">
+              <line class="integ-line integ-line-1" x1="300" y1="200" x2="90" y2="100" />
+              <line class="integ-line integ-line-2" x1="300" y1="200" x2="90" y2="300" />
+              <line class="integ-line integ-line-3" x1="300" y1="200" x2="510" y2="100" />
+              <line class="integ-line integ-line-4" x1="300" y1="200" x2="510" y2="300" />
+            </svg>
+            {integrations.map((integ, i) => (
+              <div class={`integ-node integ-node-${integ.id}`} style={`left: ${integ.x}%; top: ${integ.y}%;`}>
+                <span class="material-symbols-outlined integ-node-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{integ.icon}</span>
+                <span class="integ-node-label">{integ.label}</span>
+              </div>
+            ))}
+          </div>
+          <!-- Data flow pulses -->
+          <div class="integ-pulse-track">
+            <div class="integ-pulse integ-pulse-1"></div>
+            <div class="integ-pulse integ-pulse-2"></div>
+            <div class="integ-pulse integ-pulse-3"></div>
+            <div class="integ-pulse integ-pulse-4"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== DIFFERENTIATORS ==================== -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Why Jinki">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="sec-eyebrow">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">Why Jinki</span>
+          </div>
+          <h2>Intelligence, Not Just Footage</h2>
+        </div>
+        <div class="diff-grid">
+          <div class="diff-card reveal">
+            <span class="diff-number">01</span>
+            <h3>Intelligence, Not Surveillance</h3>
+            <p>We analyze, not just watch. Every engagement includes a security posture assessment with vulnerability findings, coverage gap analysis, and improvement recommendations.</p>
+          </div>
+          <div class="diff-card reveal reveal-delay-1">
+            <span class="diff-number">02</span>
+            <h3>Thermal Advantage</h3>
+            <p>Darkness and concealment are irrelevant. Thermal imaging detects body heat, vehicle signatures, and equipment activity regardless of lighting or visual obstructions.</p>
+          </div>
+          <div class="diff-card reveal reveal-delay-2">
+            <span class="diff-number">03</span>
+            <h3>CISSP-Led Operations</h3>
+            <p>Our founder holds the CISSP certification — the same credential trusted to architect enterprise cybersecurity. Physical security deserves the same rigor.</p>
+          </div>
+          <div class="diff-card reveal reveal-delay-3">
+            <span class="diff-number">04</span>
+            <h3>Critical Infrastructure Focus</h3>
+            <p>Purpose-built for data centers, energy facilities, and high-value campuses. We understand the threat profiles and compliance requirements of critical infrastructure.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <LeadGen />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ==========================================================
+     TEAM OMEGA — Security Vertical Styles
+     Accent: #7B61FF / #4F46E5 (violet)
+     ========================================================== */
+
+  /* ---- Eyebrow ---- */
+  .sec-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .sec-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: #7B61FF;
+  }
+  .sec-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #7B61FF;
+  }
+
+  /* ---- Gradient Text ---- */
+  .gradient-text-violet {
+    background: linear-gradient(135deg, #7B61FF, #4F46E5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ================================================================
+     1. SURVEILLANCE HUD HERO
+     ================================================================ */
+  .sec-hero {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    padding: 140px clamp(20px, 5vw, 80px) 60px;
+    background: var(--surface-container-lowest);
+    position: relative;
+  }
+  .sec-hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .sec-hero-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+  .sec-hero-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 540px;
+    margin-bottom: 32px;
+  }
+  .sec-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .sec-cta {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    color: #fff;
+    background: linear-gradient(135deg, #7B61FF, #4F46E5);
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(123, 97, 255, 0.3);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .sec-cta:hover {
+    box-shadow: 0 8px 32px rgba(123, 97, 255, 0.5);
+    transform: translateY(-2px);
+  }
+  .sec-cta-secondary {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .sec-cta-secondary:hover { color: #7B61FF; }
+
+  /* HUD Container */
+  .hud-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: #0a0f0a;
+    border-radius: 16px;
+    border: 1px solid rgba(123, 97, 255, 0.15);
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 0 60px rgba(123, 97, 255, 0.08);
+  }
+  .hud-nightvision {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(0, 255, 65, 0.06) 0%, rgba(0, 20, 0, 0.4) 100%);
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .hud-scanlines {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 255, 65, 0.015) 2px,
+      rgba(0, 255, 65, 0.015) 4px
+    );
+    pointer-events: none;
+    animation: scanline-scroll 8s linear infinite;
+  }
+  @keyframes scanline-scroll {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 100px; }
+  }
+
+  /* Crosshairs */
+  .hud-crosshair {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    pointer-events: none;
+  }
+  .crosshair-h, .crosshair-v {
+    position: absolute;
+    background: rgba(0, 255, 65, 0.4);
+  }
+  .crosshair-h {
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    transform: translateY(-0.5px);
+  }
+  .crosshair-v {
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    transform: translateX(-0.5px);
+  }
+  .crosshair-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .crosshair-circle-inner {
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Corner brackets */
+  .hud-bracket {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: rgba(0, 255, 65, 0.5);
+    border-style: solid;
+    border-width: 0;
+    pointer-events: none;
+  }
+  .hud-bracket-tl { top: 16px; left: 16px; border-top-width: 2px; border-left-width: 2px; }
+  .hud-bracket-tr { top: 16px; right: 16px; border-top-width: 2px; border-right-width: 2px; }
+  .hud-bracket-bl { bottom: 16px; left: 16px; border-bottom-width: 2px; border-left-width: 2px; }
+  .hud-bracket-br { bottom: 16px; right: 16px; border-bottom-width: 2px; border-right-width: 2px; }
+
+  /* HUD Timestamp */
+  .hud-timestamp {
+    position: absolute;
+    top: 20px;
+    left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    pointer-events: none;
+  }
+  .hud-ts-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: rgba(0, 255, 65, 0.5);
+    text-transform: uppercase;
+  }
+  .hud-ts-time {
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 700;
+    color: rgba(0, 255, 65, 0.8);
+  }
+
+  /* HUD Status */
+  .hud-status {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+  }
+  .hud-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00ff41;
+    box-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
+    animation: status-blink 1.5s ease-in-out infinite;
+  }
+  @keyframes status-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .hud-status-text {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: rgba(0, 255, 65, 0.8);
+    text-transform: uppercase;
+  }
+
+  /* Thermal targets */
+  .hud-target {
+    position: absolute;
+    width: 50px;
+    height: 60px;
+    border: 1px solid rgba(255, 60, 60, 0.6);
+    border-radius: 4px;
+    pointer-events: none;
+    animation: target-pulse 2s ease-in-out infinite;
+  }
+  .hud-target-1 { top: 40%; left: 35%; animation-delay: 0s; }
+  .hud-target-2 { top: 38%; left: 55%; animation-delay: 0.8s; }
+  @keyframes target-pulse {
+    0%, 100% { border-color: rgba(255, 60, 60, 0.6); box-shadow: 0 0 8px rgba(255, 60, 60, 0.2); }
+    50% { border-color: rgba(255, 60, 60, 0.9); box-shadow: 0 0 16px rgba(255, 60, 60, 0.4); }
+  }
+  .hud-target-label {
+    position: absolute;
+    top: -16px;
+    left: 0;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(255, 60, 60, 0.8);
+  }
+
+  /* Telemetry */
+  .hud-telemetry {
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    pointer-events: none;
+    text-align: right;
+  }
+  .hud-telemetry span {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: rgba(0, 255, 65, 0.5);
+  }
+
+  /* ---- Stats Bar ---- */
+  .stats-bar {
+    background: var(--surface-container-low);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .stats-bar-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px clamp(20px, 5vw, 80px);
+    gap: 32px;
+  }
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+  .stat-value {
+    font-family: var(--font-headline);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #7B61FF;
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+  .stat-source {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ---- Sections ---- */
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+  @media (min-width: 768px) {
+    .section { padding: 8rem clamp(20px, 5vw, 80px); }
+  }
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  .section-header {
+    margin-bottom: 56px;
+  }
+  .section-header h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
+  .section-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-top: 16px;
+  }
+
+  /* ---- Pain Points ---- */
+  .pain-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  @media (min-width: 768px) { .pain-grid { grid-template-columns: repeat(2, 1fr); } }
+  .pain-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .pain-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  }
+  .pain-problem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .pain-icon { color: #FF6B35; font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+  .pain-problem h3 {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+  }
+  .pain-solution {
+    display: flex;
+    gap: 12px;
+    padding-left: 32px;
+  }
+  .pain-arrow { color: #7B61FF; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .pain-solution p { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.7; }
+
+  /* ================================================================
+     2. INTERACTIVE PERIMETER MAP
+     ================================================================ */
+  .perimeter-wrap {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+  }
+  .perimeter-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .facility-bg {
+    fill: rgba(123, 97, 255, 0.03);
+    stroke: rgba(123, 97, 255, 0.08);
+    stroke-width: 1;
+  }
+  .building {
+    fill: rgba(123, 97, 255, 0.06);
+    stroke: rgba(123, 97, 255, 0.15);
+    stroke-width: 1;
+  }
+  .bldg-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    fill: var(--text-tertiary);
+    text-anchor: middle;
+    letter-spacing: 0.1em;
+    dominant-baseline: middle;
+  }
+  .fence-line {
+    fill: none;
+    stroke: rgba(123, 97, 255, 0.25);
+    stroke-width: 2;
+    stroke-dasharray: 8 4;
+    transition: stroke 0.5s ease, filter 0.5s ease;
+  }
+  .fence-line.fence-breach {
+    stroke: #ff3c3c;
+    filter: drop-shadow(0 0 8px rgba(255, 60, 60, 0.6));
+    stroke-dasharray: none;
+    animation: fence-alarm 0.5s ease-in-out 3;
+  }
+  @keyframes fence-alarm {
+    0%, 100% { stroke: #ff3c3c; }
+    50% { stroke: #ff8c00; }
+  }
+  .patrol-path {
+    fill: none;
+    stroke: rgba(123, 97, 255, 0.12);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 3;
+  }
+  .patrol-dot {
+    fill: #7B61FF;
+    filter: drop-shadow(0 0 6px rgba(123, 97, 255, 0.8));
+  }
+  .patrol-trail {
+    fill: rgba(123, 97, 255, 0.15);
+  }
+  /* Click zones */
+  .zone-hit {
+    fill: rgba(123, 97, 255, 0.04);
+    stroke: rgba(123, 97, 255, 0.1);
+    stroke-width: 1;
+    cursor: pointer;
+    transition: fill 0.3s ease, stroke 0.3s ease;
+  }
+  .zone:hover .zone-hit, .zone:focus .zone-hit {
+    fill: rgba(123, 97, 255, 0.12);
+    stroke: rgba(123, 97, 255, 0.4);
+  }
+  .zone:focus { outline: none; }
+  .zone:focus-visible .zone-hit { stroke: #7B61FF; stroke-width: 2; }
+  .zone-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    fill: var(--text-tertiary);
+    text-anchor: middle;
+    letter-spacing: 0.15em;
+    pointer-events: none;
+  }
+  .breach-flash {
+    fill: rgba(255, 60, 60, 0.6);
+    opacity: 0;
+    transition: r 0.5s ease, opacity 0.5s ease;
+  }
+  .breach-flash.active {
+    opacity: 1;
+    r: 30;
+  }
+
+  /* Breach info overlay */
+  .breach-info {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    padding: 16px 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 60, 60, 0.3);
+    max-width: 340px;
+    animation: breach-fadein 0.4s ease;
+  }
+  @keyframes breach-fadein {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .breach-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #ff3c3c;
+    text-transform: uppercase;
+  }
+  .breach-detail {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+  }
+  .breach-response {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: #7B61FF;
+    letter-spacing: 0.05em;
+  }
+
+  /* ================================================================
+     3. ALERT CASCADE
+     ================================================================ */
+  .alert-cascade {
+    background: #0a0a10;
+    border: 1px solid rgba(123, 97, 255, 0.12);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  }
+  .alert-header-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    background: rgba(123, 97, 255, 0.06);
+    border-bottom: 1px solid rgba(123, 97, 255, 0.1);
+  }
+  .alert-header-dot-live {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff3c3c;
+    box-shadow: 0 0 8px rgba(255, 60, 60, 0.5);
+    animation: status-blink 1s ease-in-out infinite;
+  }
+  .alert-header-title {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--text-tertiary);
+    flex: 1;
+  }
+  .alert-header-ts {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(123, 97, 255, 0.6);
+  }
+
+  .alert-feed {
+    max-height: 360px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(123, 97, 255, 0.2) transparent;
+  }
+  .alert-feed::-webkit-scrollbar { width: 4px; }
+  .alert-feed::-webkit-scrollbar-track { background: transparent; }
+  .alert-feed::-webkit-scrollbar-thumb { background: rgba(123, 97, 255, 0.2); border-radius: 2px; }
+
+  .alert-row {
+    display: grid;
+    grid-template-columns: 72px 72px 1fr 1fr 1.2fr;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: alert-slide-in 0.4s ease forwards;
+    animation-play-state: paused;
+  }
+  .alert-row.animate { animation-play-state: running; }
+  @keyframes alert-slide-in {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .alert-time {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+  }
+  .alert-badge {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+    text-align: center;
+  }
+  .alert-badge-red { background: rgba(255, 60, 60, 0.15); color: #ff3c3c; }
+  .alert-badge-yellow { background: rgba(255, 180, 0, 0.15); color: #ffb400; }
+  .alert-badge-green { background: rgba(0, 200, 80, 0.15); color: #00c850; }
+  .alert-type {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .alert-location {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-secondary);
+    letter-spacing: 0.03em;
+  }
+  .alert-detail {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+  }
+
+  /* ================================================================
+     4. RESPONSE TIME CHART
+     ================================================================ */
+  .response-chart {
+    max-width: 800px;
+  }
+  .chart-row {
+    margin-bottom: 32px;
+  }
+  .chart-label {
+    display: block;
+    font-family: var(--font-headline);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+  }
+  .chart-bar-wrap {
+    background: rgba(123, 97, 255, 0.06);
+    border-radius: 8px;
+    height: 44px;
+    overflow: hidden;
+    position: relative;
+  }
+  .chart-bar {
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 16px;
+    width: 0%;
+    transition: width 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .chart-bar.animate { width: var(--bar-pct); }
+  .chart-bar-jinki {
+    background: linear-gradient(90deg, #7B61FF, #4F46E5);
+    box-shadow: 0 0 20px rgba(123, 97, 255, 0.3);
+    min-width: 80px;
+  }
+  .chart-bar-guard {
+    background: linear-gradient(90deg, #ff8c00, #cc6600);
+    box-shadow: 0 0 20px rgba(255, 140, 0, 0.2);
+  }
+  .chart-bar-camera {
+    background: linear-gradient(90deg, #ff3c3c, #cc2222);
+    box-shadow: 0 0 20px rgba(255, 60, 60, 0.2);
+  }
+  .chart-bar-value {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .chart-legend {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--glass-border);
+  }
+  .chart-legend-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.08em;
+  }
+
+  /* ================================================================
+     5. NIGHT OPERATIONS SHOWCASE
+     ================================================================ */
+  .night-showcase {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .night-toggle-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+  .night-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 40px;
+    padding: 8px 24px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    position: relative;
+  }
+  .night-toggle:hover { border-color: rgba(123, 97, 255, 0.3); }
+  .night-toggle-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--text-tertiary);
+    transition: color 0.3s ease;
+  }
+  .night-toggle-day { color: #ffb400; }
+  .night-toggle[aria-pressed="true"] .night-toggle-day { color: var(--text-tertiary); }
+  .night-toggle[aria-pressed="true"] .night-toggle-night { color: #7B61FF; }
+  .night-toggle-thumb {
+    width: 28px;
+    height: 16px;
+    border-radius: 8px;
+    background: #7B61FF;
+    position: relative;
+    transition: background 0.3s ease;
+  }
+  .night-toggle-thumb::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.3s ease;
+  }
+  .night-toggle[aria-pressed="true"] .night-toggle-thumb::after {
+    transform: translateX(12px);
+  }
+
+  .night-split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    transition: all 0.5s ease;
+  }
+  .night-split.night-mode .night-panel-day { opacity: 0.4; transform: scale(0.96); }
+  .night-split.night-mode .night-panel-night { opacity: 1; transform: scale(1); box-shadow: 0 0 40px rgba(123, 97, 255, 0.15); }
+
+  .night-panel {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    background: var(--bg-card);
+    transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
+  }
+  .night-panel-night { opacity: 0.6; transform: scale(0.96); }
+
+  .night-scene {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+  }
+  .night-scene-sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 55%;
+  }
+  .night-sky-day { background: linear-gradient(180deg, #87CEEB, #B0E0E6); }
+  .night-sky-night { background: linear-gradient(180deg, #0a0a18, #141428); }
+  .night-scene-ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+  }
+  .night-ground-day { background: linear-gradient(180deg, #4a7c59, #3d6b4e); }
+  .night-ground-night { background: linear-gradient(180deg, #0f1a14, #0a120e); }
+
+  .night-fence {
+    position: absolute;
+    bottom: 40%;
+    left: 10%;
+    right: 10%;
+    height: 3px;
+    background: rgba(150, 150, 150, 0.4);
+  }
+  .night-fence-thermal {
+    background: rgba(123, 97, 255, 0.3);
+    box-shadow: 0 0 8px rgba(123, 97, 255, 0.2);
+  }
+
+  .night-building {
+    position: absolute;
+    bottom: 40%;
+    left: 15%;
+    width: 25%;
+    height: 40%;
+    border-radius: 4px 4px 0 0;
+  }
+  .night-bldg-day { background: #8899aa; }
+  .night-bldg-night { background: #1a1a2e; border: 1px solid rgba(123, 97, 255, 0.1); }
+
+  .night-figure {
+    position: absolute;
+    bottom: 42%;
+    width: 16px;
+    height: 32px;
+    border-radius: 8px 8px 4px 4px;
+    left: 42%;
+  }
+  .night-figure-visible { background: #555; }
+  .night-figure-hidden { background: #555; }
+  .night-figure-thermal {
+    background: linear-gradient(180deg, #ff4444, #ff8800);
+    box-shadow: 0 0 12px rgba(255, 68, 68, 0.5);
+  }
+
+  .thermal-tag {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    color: #ff4444;
+    text-shadow: 0 0 4px rgba(255, 68, 68, 0.5);
+    pointer-events: none;
+  }
+
+  .night-caption {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 20px;
+    border-top: 1px solid var(--glass-border);
+  }
+  .night-caption-icon { font-size: 20px; color: #7B61FF; flex-shrink: 0; margin-top: 2px; }
+  .night-caption-title {
+    display: block;
+    font-family: var(--font-headline);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .night-caption-desc {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* ---- Services Grid ---- */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+  .service-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(123, 97, 255, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(123, 97, 255, 0.08);
+  }
+  .service-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(123, 97, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+  }
+  .service-card:hover .service-icon-wrap { box-shadow: 0 0 20px rgba(123, 97, 255, 0.15); }
+  .service-icon { color: #7B61FF; font-size: 24px; }
+  .service-title {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+  .service-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ================================================================
+     6. INTEGRATION ECOSYSTEM
+     ================================================================ */
+  .integration-diagram {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+    aspect-ratio: 3 / 2;
+  }
+  .integ-ring {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .integ-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(123, 97, 255, 0.15), rgba(79, 70, 229, 0.08));
+    border: 2px solid rgba(123, 97, 255, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    z-index: 2;
+    box-shadow: 0 0 40px rgba(123, 97, 255, 0.15);
+    animation: center-glow 3s ease-in-out infinite;
+  }
+  @keyframes center-glow {
+    0%, 100% { box-shadow: 0 0 40px rgba(123, 97, 255, 0.15); }
+    50% { box-shadow: 0 0 60px rgba(123, 97, 255, 0.3); }
+  }
+  .integ-center-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: #7B61FF;
+  }
+  .integ-lines {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  .integ-line {
+    stroke: rgba(123, 97, 255, 0.15);
+    stroke-width: 1.5;
+    stroke-dasharray: 6 4;
+    animation: line-dash 2s linear infinite;
+  }
+  .integ-line-1 { animation-delay: 0s; }
+  .integ-line-2 { animation-delay: 0.5s; }
+  .integ-line-3 { animation-delay: 1s; }
+  .integ-line-4 { animation-delay: 1.5s; }
+  @keyframes line-dash {
+    0% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -20; }
+  }
+  .integ-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 2;
+  }
+  .integ-node-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: var(--text-secondary);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .integ-node:hover .integ-node-icon {
+    border-color: rgba(123, 97, 255, 0.3);
+    box-shadow: 0 0 20px rgba(123, 97, 255, 0.12);
+  }
+  .integ-node-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Data flow pulses */
+  .integ-pulse-track {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .integ-pulse {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #7B61FF;
+    box-shadow: 0 0 8px rgba(123, 97, 255, 0.6);
+    opacity: 0;
+  }
+  .integ-pulse-1 { animation: pulse-tl 3s ease-in-out infinite 0s; }
+  .integ-pulse-2 { animation: pulse-bl 3s ease-in-out infinite 0.8s; }
+  .integ-pulse-3 { animation: pulse-tr 3s ease-in-out infinite 1.5s; }
+  .integ-pulse-4 { animation: pulse-br 3s ease-in-out infinite 2.2s; }
+  @keyframes pulse-tl {
+    0% { top: 50%; left: 50%; opacity: 0; }
+    10% { opacity: 1; }
+    50% { top: 25%; left: 15%; opacity: 1; }
+    60% { opacity: 0; }
+    100% { top: 25%; left: 15%; opacity: 0; }
+  }
+  @keyframes pulse-bl {
+    0% { top: 50%; left: 50%; opacity: 0; }
+    10% { opacity: 1; }
+    50% { top: 75%; left: 15%; opacity: 1; }
+    60% { opacity: 0; }
+    100% { top: 75%; left: 15%; opacity: 0; }
+  }
+  @keyframes pulse-tr {
+    0% { top: 50%; left: 50%; opacity: 0; }
+    10% { opacity: 1; }
+    50% { top: 25%; left: 85%; opacity: 1; }
+    60% { opacity: 0; }
+    100% { top: 25%; left: 85%; opacity: 0; }
+  }
+  @keyframes pulse-br {
+    0% { top: 50%; left: 50%; opacity: 0; }
+    10% { opacity: 1; }
+    50% { top: 75%; left: 85%; opacity: 1; }
+    60% { opacity: 0; }
+    100% { top: 75%; left: 85%; opacity: 0; }
+  }
+
+  /* ---- Differentiators ---- */
+  .diff-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  @media (min-width: 768px) { .diff-grid { grid-template-columns: repeat(2, 1fr); } }
+  .diff-card {
+    padding: 32px;
+    border-left: 2px solid #7B61FF;
+    transition: background 0.3s ease;
+  }
+  .diff-card:hover { background: rgba(123, 97, 255, 0.04); }
+  .diff-number {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #7B61FF;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .diff-card h3 {
+    font-family: var(--font-headline);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+  .diff-card p {
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ================================================================
+     RESPONSIVE
+     ================================================================ */
+  @media (max-width: 768px) {
+    .sec-hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .sec-hero { min-height: auto; padding-top: 120px; }
+    .stats-bar-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .sec-hero-actions { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .alert-row { grid-template-columns: 60px 60px 1fr; gap: 8px; }
+    .alert-location, .alert-detail { display: none; }
+    .night-split { grid-template-columns: 1fr; }
+    .integ-node-icon { width: 44px; height: 44px; font-size: 22px; }
+    .integ-center { width: 72px; height: 72px; }
+    .integ-center .material-symbols-outlined { font-size: 28px !important; }
+  }
+
+  /* ================================================================
+     LIGHT MODE OVERRIDES
+     ================================================================ */
+  :global([data-theme="light"]) .hud-container {
+    background: #e8eee8;
+    border-color: rgba(79, 70, 229, 0.15);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+  }
+  :global([data-theme="light"]) .hud-nightvision {
+    background: radial-gradient(ellipse at center, rgba(0, 180, 50, 0.04) 0%, rgba(200, 220, 200, 0.3) 100%);
+  }
+  :global([data-theme="light"]) .hud-scanlines {
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 100, 30, 0.02) 2px, rgba(0, 100, 30, 0.02) 4px);
+  }
+  :global([data-theme="light"]) .crosshair-h,
+  :global([data-theme="light"]) .crosshair-v { background: rgba(0, 120, 40, 0.3); }
+  :global([data-theme="light"]) .crosshair-circle { border-color: rgba(0, 120, 40, 0.2); }
+  :global([data-theme="light"]) .hud-bracket { border-color: rgba(0, 120, 40, 0.3); }
+  :global([data-theme="light"]) .hud-ts-label { color: rgba(0, 100, 30, 0.4); }
+  :global([data-theme="light"]) .hud-ts-time { color: rgba(0, 100, 30, 0.6); }
+  :global([data-theme="light"]) .hud-status-dot { background: #00a030; box-shadow: 0 0 8px rgba(0, 160, 48, 0.4); }
+  :global([data-theme="light"]) .hud-status-text { color: rgba(0, 100, 30, 0.6); }
+  :global([data-theme="light"]) .hud-telemetry span { color: rgba(0, 100, 30, 0.3); }
+
+  :global([data-theme="light"]) .alert-cascade {
+    background: #f8f9fa;
+    border-color: rgba(79, 70, 229, 0.1);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+  }
+  :global([data-theme="light"]) .alert-header-bar {
+    background: rgba(79, 70, 229, 0.04);
+    border-bottom-color: rgba(79, 70, 229, 0.08);
+  }
+  :global([data-theme="light"]) .alert-row { border-bottom-color: rgba(0, 0, 0, 0.04); }
+
+  :global([data-theme="light"]) .perimeter-wrap {
+    background: var(--bg-card);
+    box-shadow: var(--glass-shadow);
+  }
+  :global([data-theme="light"]) .facility-bg { fill: rgba(79, 70, 229, 0.03); stroke: rgba(79, 70, 229, 0.08); }
+  :global([data-theme="light"]) .building { fill: rgba(79, 70, 229, 0.06); stroke: rgba(79, 70, 229, 0.12); }
+
+  :global([data-theme="light"]) .breach-info {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(255, 60, 60, 0.2);
+  }
+</style>
+
+<script>
+  // ---- HUD Clock ----
+  function updateHudClock() {
+    const el = document.getElementById('hud-clock');
+    if (!el) return;
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    el.textContent = `${h}:${m}:${s}`;
+  }
+  setInterval(updateHudClock, 1000);
+  updateHudClock();
+
+  // ---- Perimeter breach simulation ----
+  const breachData: Record<string, { cx: string; cy: string; title: string; detail: string; response: string }> = {
+    north: { cx: '400', cy: '84', title: 'BREACH — NORTH GATE', detail: 'Vehicle approaching gate without credentials', response: 'Aerial unit dispatched — ETA 22s' },
+    east: { cx: '654', cy: '260', title: 'BREACH — EAST FENCE', detail: 'Thermal signature — 2 individuals scaling fence', response: 'Aerial unit dispatched — ETA 28s' },
+    south: { cx: '400', cy: '424', title: 'BREACH — SOUTH LOT', detail: 'Unauthorized vehicle in restricted zone', response: 'Aerial unit dispatched — ETA 19s' },
+    west: { cx: '146', cy: '260', title: 'BREACH — WEST FENCE', detail: 'Thermal anomaly — possible cut in fence line', response: 'Aerial unit dispatched — ETA 25s' },
+  };
+
+  document.querySelectorAll('.zone').forEach(zone => {
+    const handler = () => {
+      const key = (zone as HTMLElement).dataset.zone;
+      if (!key || !breachData[key]) return;
+      const data = breachData[key];
+
+      // Flash
+      const flash = document.querySelector('.breach-flash') as SVGCircleElement;
+      if (flash) {
+        flash.setAttribute('cx', data.cx);
+        flash.setAttribute('cy', data.cy);
+        flash.classList.add('active');
+        setTimeout(() => flash.classList.remove('active'), 1500);
+      }
+
+      // Fence alarm
+      const fence = document.querySelector('.fence-line') as SVGRectElement;
+      if (fence) {
+        fence.classList.add('fence-breach');
+        setTimeout(() => fence.classList.remove('fence-breach'), 3000);
+      }
+
+      // Info overlay
+      const info = document.getElementById('breach-info');
+      const titleEl = document.getElementById('breach-title');
+      const detailEl = document.getElementById('breach-detail');
+      const responseEl = document.getElementById('breach-response');
+      if (info && titleEl && detailEl && responseEl) {
+        titleEl.textContent = data.title;
+        detailEl.textContent = data.detail;
+        responseEl.textContent = data.response;
+        info.hidden = false;
+        setTimeout(() => { info.hidden = true; }, 5000);
+      }
+    };
+    zone.addEventListener('click', handler);
+    zone.addEventListener('keydown', (e: Event) => {
+      if ((e as KeyboardEvent).key === 'Enter' || (e as KeyboardEvent).key === ' ') {
+        (e as KeyboardEvent).preventDefault();
+        handler();
+      }
+    });
+  });
+
+  // ---- Alert cascade auto-scroll ----
+  const alertRows = document.querySelectorAll('.alert-row');
+  let alertIndex = 0;
+  function showNextAlert() {
+    if (alertIndex < alertRows.length) {
+      (alertRows[alertIndex] as HTMLElement).style.animationDelay = `${alertIndex * 0.15}s`;
+      alertRows[alertIndex].classList.add('animate');
+      alertIndex++;
+    }
+  }
+
+  const alertObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const interval = setInterval(() => {
+          showNextAlert();
+          if (alertIndex >= alertRows.length) clearInterval(interval);
+        }, 400);
+        alertObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  const alertFeed = document.querySelector('.alert-cascade');
+  if (alertFeed) alertObserver.observe(alertFeed);
+
+  // ---- Response time bar chart ----
+  const chartObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('.chart-bar').forEach((bar, i) => {
+          setTimeout(() => bar.classList.add('animate'), i * 300);
+        });
+        chartObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  const chart = document.querySelector('.response-chart');
+  if (chart) chartObserver.observe(chart);
+
+  // ---- Night toggle ----
+  const nightToggle = document.getElementById('night-toggle');
+  const nightSplit = document.getElementById('night-split');
+  if (nightToggle && nightSplit) {
+    nightToggle.addEventListener('click', () => {
+      const pressed = nightToggle.getAttribute('aria-pressed') === 'true';
+      nightToggle.setAttribute('aria-pressed', String(!pressed));
+      nightSplit.classList.toggle('night-mode', !pressed);
+    });
+  }
+</script>

@@ -1,0 +1,1778 @@
+---
+/*
+  COMMAND DECK NAVIGATION — Team Alpha
+  Mega-menu, spotlight search, breadcrumbs, scroll progress,
+  full-screen mobile with gestures, logo animation, active page indicator.
+  Astro v5 + Tailwind CSS v4 + vanilla JS.
+*/
+
+const verticals = [
+  {
+    href: '/verticals/data-centers',
+    label: 'Data Centers',
+    icon: 'dns',
+    accent: '#00E5FF',
+    desc: 'Thermal monitoring and infrastructure intelligence for mission-critical facilities.',
+  },
+  {
+    href: '/verticals/energy-grid',
+    label: 'Energy Grid',
+    icon: 'electric_bolt',
+    accent: '#FF8C00',
+    desc: 'Transmission line and substation inspection at grid scale.',
+  },
+  {
+    href: '/verticals/security',
+    label: 'Security',
+    icon: 'shield',
+    accent: '#7B61FF',
+    desc: 'Autonomous perimeter surveillance and intrusion detection.',
+  },
+  {
+    href: '/verticals/agriculture',
+    label: 'Agriculture',
+    icon: 'grass',
+    accent: '#34D399',
+    desc: 'NDVI crop health mapping and precision agriculture analytics.',
+  },
+];
+
+const navItems = [
+  {
+    label: 'About Us',
+    children: [
+      { href: '/about', label: 'Our Mission', icon: 'flag' },
+      { href: '/about/team', label: 'Team', icon: 'groups' },
+    ],
+  },
+  {
+    label: 'Verticals',
+    mega: true,
+    children: verticals,
+  },
+  {
+    label: 'Services',
+    children: [
+      { href: '/services/audit', label: 'Facility Audit', icon: 'search_insights' },
+      { href: '/services/deployment', label: 'Autonomous Deployment', icon: 'flight_takeoff' },
+    ],
+  },
+  {
+    label: 'Careers',
+    children: [
+      { href: '/careers', label: 'Open Roles', icon: 'work' },
+    ],
+  },
+  {
+    label: 'Blog',
+    children: [
+      { href: '/blog', label: 'Insights', icon: 'article' },
+    ],
+  },
+];
+
+/* Determine current path for breadcrumbs and active state */
+const currentPath = Astro.url.pathname;
+const isHome = currentPath === '/' || currentPath === '';
+
+/* Build breadcrumb segments */
+const pathSegments = currentPath.split('/').filter(Boolean);
+const breadcrumbs = pathSegments.map((seg, i) => {
+  const href = '/' + pathSegments.slice(0, i + 1).join('/');
+  const label = seg.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  return { href, label };
+});
+---
+
+<!-- Scroll Progress Indicator -->
+<div id="nav-scroll-progress" class="nav-scroll-progress" aria-hidden="true"></div>
+
+<!-- Main Header -->
+<header id="site-nav" class="command-deck" role="banner">
+  <div class="command-deck__inner">
+
+    <!-- Logo -->
+    <a href="/" class="command-deck__logo" aria-label="Jinki — Home">
+      <span class="command-deck__logo-icon material-symbols-outlined" aria-hidden="true">radar</span>
+      <span class="command-deck__logo-text">Jinki</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="command-deck__nav" aria-label="Main navigation">
+      <!-- Active indicator (slides between items) -->
+      <div class="nav-active-indicator" id="nav-active-indicator" aria-hidden="true"></div>
+
+      {navItems.map((item, idx) => (
+        <div
+          class="nav-group"
+          data-nav-group={idx}
+          data-has-mega={item.mega ? 'true' : 'false'}
+        >
+          <button
+            type="button"
+            class="nav-trigger"
+            aria-haspopup="true"
+            aria-expanded="false"
+            data-nav-idx={idx}
+          >
+            <span class="nav-trigger__label">{item.label}</span>
+            <span class="nav-trigger__chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
+          </button>
+
+          {/* Mega menu for Verticals */}
+          {item.mega ? (
+            <div class="mega-panel" role="menu" aria-label={`${item.label} submenu`}>
+              <div class="mega-panel__grid">
+                {item.children.map((v) => (
+                  <a
+                    href={v.href}
+                    class="mega-card"
+                    role="menuitem"
+                    style={`--card-accent: ${v.accent};`}
+                  >
+                    <span
+                      class="mega-card__icon material-symbols-outlined"
+                      aria-hidden="true"
+                      style={`color: ${v.accent};`}
+                    >{v.icon}</span>
+                    <span class="mega-card__title">{v.label}</span>
+                    <span class="mega-card__desc">{v.desc}</span>
+                    <span class="mega-card__arrow material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            /* Standard dropdown */
+            <div class="dropdown-panel" role="menu" aria-label={`${item.label} submenu`}>
+              {item.children.map((child) => (
+                <a href={child.href} class="dropdown-item" role="menuitem">
+                  <span class="dropdown-item__icon material-symbols-outlined" aria-hidden="true">{child.icon}</span>
+                  <span class="dropdown-item__label">{child.label}</span>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </nav>
+
+    <!-- Actions cluster -->
+    <div class="command-deck__actions">
+
+      <!-- Search trigger -->
+      <button
+        id="search-trigger"
+        class="action-btn"
+        type="button"
+        aria-label="Search (Cmd+K)"
+      >
+        <span class="material-symbols-outlined" aria-hidden="true">search</span>
+        <kbd class="search-kbd">K</kbd>
+      </button>
+
+      <!-- Theme toggle -->
+      <button
+        id="theme-toggle"
+        class="action-btn action-btn--theme"
+        type="button"
+        aria-label="Toggle dark/light mode"
+      >
+        <span class="material-symbols-outlined icon-dark" aria-hidden="true">dark_mode</span>
+        <span class="material-symbols-outlined icon-light" aria-hidden="true">light_mode</span>
+      </button>
+
+      <!-- CTA -->
+      <a href="#lead-gen" class="command-deck__cta btn-premium">
+        Get in Touch
+      </a>
+
+      <!-- Mobile hamburger -->
+      <button
+        id="mobile-toggle"
+        class="mobile-hamburger"
+        type="button"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Breadcrumb trail (inner pages only) -->
+  {!isHome && breadcrumbs.length > 0 && (
+    <nav class="breadcrumb-trail" aria-label="Breadcrumb">
+      <ol class="breadcrumb-trail__list">
+        <li class="breadcrumb-trail__item">
+          <a href="/" class="breadcrumb-trail__link">
+            <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 14px;">home</span>
+          </a>
+        </li>
+        {breadcrumbs.map((crumb, i) => (
+          <li class="breadcrumb-trail__item">
+            <span class="breadcrumb-trail__sep" aria-hidden="true">/</span>
+            {i === breadcrumbs.length - 1 ? (
+              <span class="breadcrumb-trail__current" aria-current="page">{crumb.label}</span>
+            ) : (
+              <a href={crumb.href} class="breadcrumb-trail__link">{crumb.label}</a>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+  )}
+</header>
+
+<!-- Spotlight Search Overlay -->
+<div id="search-overlay" class="spotlight" role="dialog" aria-modal="true" aria-label="Site search" aria-hidden="true">
+  <div class="spotlight__backdrop"></div>
+  <div class="spotlight__panel">
+    <div class="spotlight__input-row">
+      <span class="material-symbols-outlined spotlight__icon" aria-hidden="true">search</span>
+      <input
+        id="search-input"
+        class="spotlight__input"
+        type="search"
+        placeholder="Search Jinki..."
+        autocomplete="off"
+        aria-label="Search"
+      />
+      <kbd class="spotlight__esc">ESC</kbd>
+    </div>
+    <div id="search-suggestions" class="spotlight__suggestions" role="listbox">
+      <div class="spotlight__category">
+        <span class="spotlight__category-label">Quick Links</span>
+        <a href="/verticals/data-centers" class="spotlight__result" role="option">
+          <span class="material-symbols-outlined" aria-hidden="true">dns</span>
+          <span>Data Centers</span>
+          <span class="spotlight__result-type">Vertical</span>
+        </a>
+        <a href="/verticals/energy-grid" class="spotlight__result" role="option">
+          <span class="material-symbols-outlined" aria-hidden="true">electric_bolt</span>
+          <span>Energy Grid</span>
+          <span class="spotlight__result-type">Vertical</span>
+        </a>
+        <a href="/verticals/security" class="spotlight__result" role="option">
+          <span class="material-symbols-outlined" aria-hidden="true">shield</span>
+          <span>Security</span>
+          <span class="spotlight__result-type">Vertical</span>
+        </a>
+        <a href="/verticals/agriculture" class="spotlight__result" role="option">
+          <span class="material-symbols-outlined" aria-hidden="true">grass</span>
+          <span>Agriculture</span>
+          <span class="spotlight__result-type">Vertical</span>
+        </a>
+      </div>
+      <div class="spotlight__category">
+        <span class="spotlight__category-label">Services</span>
+        <a href="/services/audit" class="spotlight__result" role="option">
+          <span class="material-symbols-outlined" aria-hidden="true">search_insights</span>
+          <span>Facility Audit</span>
+          <span class="spotlight__result-type">Service</span>
+        </a>
+        <a href="/services/deployment" class="spotlight__result" role="option">
+          <span class="material-symbols-outlined" aria-hidden="true">flight_takeoff</span>
+          <span>Autonomous Deployment</span>
+          <span class="spotlight__result-type">Service</span>
+        </a>
+      </div>
+      <div class="spotlight__category">
+        <span class="spotlight__category-label">Company</span>
+        <a href="/about" class="spotlight__result" role="option">
+          <span class="material-symbols-outlined" aria-hidden="true">flag</span>
+          <span>About / Mission</span>
+          <span class="spotlight__result-type">Page</span>
+        </a>
+        <a href="/careers" class="spotlight__result" role="option">
+          <span class="material-symbols-outlined" aria-hidden="true">work</span>
+          <span>Careers</span>
+          <span class="spotlight__result-type">Page</span>
+        </a>
+        <a href="/blog" class="spotlight__result" role="option">
+          <span class="material-symbols-outlined" aria-hidden="true">article</span>
+          <span>Blog</span>
+          <span class="spotlight__result-type">Page</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Full-screen Mobile Menu -->
+<div
+  id="mobile-menu"
+  class="mobile-overlay"
+  aria-hidden="true"
+  role="dialog"
+  aria-label="Mobile navigation"
+>
+  <!-- Noise canvas for animated background -->
+  <canvas id="mobile-noise-canvas" class="mobile-overlay__noise" aria-hidden="true"></canvas>
+
+  <div class="mobile-overlay__content">
+    <nav class="mobile-overlay__nav" aria-label="Mobile navigation">
+      {navItems.map((item, idx) => (
+        <div class="mobile-accordion" data-accordion={idx}>
+          <button
+            type="button"
+            class="mobile-accordion__trigger"
+            aria-expanded="false"
+            data-accordion-trigger={idx}
+          >
+            <span class="mobile-accordion__label">{item.label}</span>
+            <span class="mobile-accordion__chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
+          </button>
+          <div class="mobile-accordion__panel" data-accordion-panel={idx}>
+            {item.mega ? (
+              item.children.map((v) => (
+                <a href={v.href} class="mobile-accordion__link" style={`--link-accent: ${v.accent};`}>
+                  <span class="material-symbols-outlined" aria-hidden="true" style={`color: ${v.accent};`}>{v.icon}</span>
+                  <span>{v.label}</span>
+                </a>
+              ))
+            ) : (
+              item.children.map((child) => (
+                <a href={child.href} class="mobile-accordion__link">
+                  <span class="material-symbols-outlined" aria-hidden="true">{child.icon}</span>
+                  <span>{child.label}</span>
+                </a>
+              ))
+            )}
+          </div>
+        </div>
+      ))}
+    </nav>
+
+    <!-- Quick action cards at bottom -->
+    <div class="mobile-overlay__actions">
+      <a href="#lead-gen" class="mobile-action-card mobile-action-card--primary">
+        <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+        <span class="mobile-action-card__label">Get in Touch</span>
+      </a>
+      <a href="#lead-gen" class="mobile-action-card">
+        <span class="material-symbols-outlined" aria-hidden="true">play_circle</span>
+        <span class="mobile-action-card__label">Request Demo</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* =============================================================
+     COMMAND DECK NAVIGATION — Scoped Styles
+     Tailwind v4 spacing utilities broken — all spacing is inline/CSS.
+     ============================================================= */
+
+  /* ---- Scroll Progress ---- */
+  .nav-scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(90deg, #00E5FF, #7B61FF);
+    z-index: 1002;
+    pointer-events: none;
+    will-change: width;
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+  }
+
+  :global([data-theme="light"]) .nav-scroll-progress {
+    background: linear-gradient(90deg, #00838f, #4F46E5);
+    box-shadow: 0 0 8px rgba(0, 131, 143, 0.3);
+  }
+
+  /* ---- Header Shell ---- */
+  .command-deck {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    border-bottom: 1px solid transparent;
+    transition: background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.3s ease;
+  }
+
+  .command-deck.scrolled {
+    background: var(--nav-bg);
+    backdrop-filter: blur(24px) saturate(1.6);
+    -webkit-backdrop-filter: blur(24px) saturate(1.6);
+    border-bottom-color: var(--border);
+  }
+
+  .command-deck__inner {
+    max-width: 1280px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem clamp(20px, 5vw, 80px);
+  }
+
+  /* ---- Logo ---- */
+  .command-deck__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    z-index: 10;
+    position: relative;
+  }
+
+  .command-deck__logo-icon {
+    font-size: 30px;
+    font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 28;
+    color: var(--accent);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
+    display: inline-block;
+  }
+
+  .command-deck__logo:hover .command-deck__logo-icon {
+    transform: rotate(90deg);
+  }
+
+  .command-deck__logo-text {
+    font-family: var(--font-headline);
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--text-primary);
+    transition: text-shadow 0.4s ease, color 0.3s ease;
+  }
+
+  .command-deck__logo:hover .command-deck__logo-text {
+    text-shadow: 0 0 20px var(--accent-glow-strong), 0 0 40px var(--accent-glow);
+  }
+
+  :global([data-theme="light"]) .command-deck__logo-icon { color: var(--accent); }
+  :global([data-theme="light"]) .command-deck__logo-text { color: var(--text-primary); }
+
+  /* ---- Desktop Nav ---- */
+  .command-deck__nav {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .command-deck__nav { display: flex; }
+  }
+
+  /* ---- Nav Group (each top-level item) ---- */
+  .nav-group {
+    position: relative;
+  }
+
+  .nav-trigger {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-headline);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+    position: relative;
+    white-space: nowrap;
+  }
+
+  .nav-trigger:hover,
+  .nav-trigger[aria-expanded="true"] {
+    color: var(--text-primary);
+  }
+
+  .nav-trigger__chevron {
+    font-size: 16px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .nav-trigger[aria-expanded="true"] .nav-trigger__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Active page highlight on trigger */
+  .nav-trigger.is-active {
+    color: var(--accent);
+  }
+
+  /* ---- Active Indicator (sliding underline) ---- */
+  .nav-active-indicator {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+    transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.25s ease;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 0 8px var(--accent-glow);
+  }
+
+  .nav-active-indicator.visible {
+    opacity: 1;
+  }
+
+  /* ---- Standard Dropdown ---- */
+  .dropdown-panel {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    min-width: 200px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px) saturate(1.8);
+    -webkit-backdrop-filter: blur(24px) saturate(1.8);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-highlight);
+    border-radius: 12px;
+    padding: 6px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.25s;
+    z-index: 100;
+  }
+
+  .dropdown-panel.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.625rem 1rem;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+  }
+
+  .dropdown-item:hover,
+  .dropdown-item:focus-visible {
+    color: var(--text-primary);
+    background: var(--surface-container-high);
+    transform: translateX(2px);
+  }
+
+  .dropdown-item__icon {
+    font-size: 18px;
+    color: var(--accent);
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+  }
+
+  /* ---- Mega Menu (Verticals) ---- */
+  .mega-panel {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    width: max-content;
+    max-width: 780px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(32px) saturate(1.8);
+    -webkit-backdrop-filter: blur(32px) saturate(1.8);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), inset 0 1px 0 var(--glass-highlight);
+    border-radius: 16px;
+    padding: 8px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.3s;
+    z-index: 100;
+  }
+
+  .mega-panel.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .mega-panel__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+
+  @media (max-width: 900px) {
+    .mega-panel__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .mega-panel {
+      max-width: 420px;
+    }
+  }
+
+  .mega-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 16px 14px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    min-width: 170px;
+  }
+
+  .mega-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    background: radial-gradient(circle at 30% 30%, var(--card-accent), transparent 70%);
+    transition: opacity 0.3s ease;
+  }
+
+  .mega-card:hover::before,
+  .mega-card:focus-visible::before {
+    opacity: 0.08;
+  }
+
+  .mega-card:hover,
+  .mega-card:focus-visible {
+    background: var(--surface-container-high);
+    transform: translateY(-2px);
+  }
+
+  .mega-card__icon {
+    font-size: 26px;
+    font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    position: relative;
+    z-index: 1;
+  }
+
+  .mega-card__title {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .mega-card__desc {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+    line-height: 1.4;
+    position: relative;
+    z-index: 1;
+  }
+
+  .mega-card__arrow {
+    font-size: 16px;
+    color: var(--text-tertiary);
+    transition: transform 0.2s ease, color 0.2s ease;
+    position: relative;
+    z-index: 1;
+    align-self: flex-start;
+  }
+
+  .mega-card:hover .mega-card__arrow,
+  .mega-card:focus-visible .mega-card__arrow {
+    transform: translateX(4px);
+    color: var(--card-accent);
+  }
+
+  /* ---- Actions cluster ---- */
+  .command-deck__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+
+  .action-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 16px var(--accent-glow);
+  }
+
+  .action-btn:active {
+    transform: scale(0.92);
+  }
+
+  .action-btn .material-symbols-outlined {
+    font-size: 18px;
+  }
+
+  /* Search kbd badge */
+  .search-kbd {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    font-weight: 600;
+    background: var(--surface-container-high);
+    color: var(--text-tertiary);
+    padding: 1px 4px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    line-height: 1.3;
+    pointer-events: none;
+  }
+
+  /* Theme toggle icons */
+  .icon-light { display: none; }
+  :global([data-theme="light"]) .icon-dark { display: none; }
+  :global([data-theme="light"]) .icon-light { display: inline-block; }
+
+  /* CTA */
+  .command-deck__cta {
+    display: none;
+    align-items: center;
+    font-family: var(--font-headline);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.55rem 1.2rem;
+    border-radius: 10px;
+    text-decoration: none;
+    background: linear-gradient(135deg, #00E5FF 0%, #00a8b5 50%, #00626e 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 12px rgba(0, 229, 255, 0.3), 0 0 40px rgba(0, 229, 255, 0.08), inset 0 1px 0 rgba(255,255,255,0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+  }
+
+  @media (min-width: 1024px) {
+    .command-deck__cta { display: inline-flex; }
+  }
+
+  .command-deck__cta:hover {
+    background: linear-gradient(135deg, #33ecff 0%, #00c4d4 50%, #007a8a 100%);
+    box-shadow: 0 4px 20px rgba(0, 229, 255, 0.4), 0 0 60px rgba(0, 229, 255, 0.12), inset 0 1px 0 rgba(255,255,255,0.25);
+    transform: translateY(-1px);
+  }
+
+  :global([data-theme="light"]) .command-deck__cta {
+    background: #00838f;
+    box-shadow: 0 0 20px rgba(0, 131, 143, 0.2);
+  }
+
+  :global([data-theme="light"]) .command-deck__cta:hover {
+    background: #00969e;
+    box-shadow: 0 0 30px rgba(0, 131, 143, 0.3);
+  }
+
+  /* ---- Hamburger ---- */
+  .mobile-hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 10;
+  }
+
+  @media (min-width: 768px) {
+    .mobile-hamburger { display: none; }
+  }
+
+  .hamburger-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--text-primary);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+  }
+
+  .mobile-hamburger[aria-expanded="true"] .hamburger-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .mobile-hamburger[aria-expanded="true"] .hamburger-bar:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  .mobile-hamburger[aria-expanded="true"] .hamburger-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* ---- Breadcrumb Trail ---- */
+  .breadcrumb-trail {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 clamp(20px, 5vw, 80px);
+    overflow: hidden;
+  }
+
+  .breadcrumb-trail__list {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    list-style: none;
+    padding: 6px 0 10px;
+    margin: 0;
+    animation: breadcrumb-slide-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes breadcrumb-slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .breadcrumb-trail__item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .breadcrumb-trail__link {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .breadcrumb-trail__link:hover {
+    color: var(--accent);
+  }
+
+  .breadcrumb-trail__sep {
+    font-size: 0.625rem;
+    color: var(--text-tertiary);
+    opacity: 0.5;
+  }
+
+  .breadcrumb-trail__current {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: capitalize;
+  }
+
+  /* ---- Spotlight Search ---- */
+  .spotlight {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 120px 20px 20px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s;
+  }
+
+  .spotlight.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .spotlight__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  :global([data-theme="light"]) .spotlight__backdrop {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  .spotlight__panel {
+    position: relative;
+    width: 100%;
+    max-width: 580px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(32px) saturate(1.8);
+    -webkit-backdrop-filter: blur(32px) saturate(1.8);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow), 0 0 80px rgba(0, 229, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    transform: translateY(12px) scale(0.97);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .spotlight.open .spotlight__panel {
+    transform: translateY(0) scale(1);
+  }
+
+  .spotlight__input-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .spotlight__icon {
+    font-size: 22px;
+    color: var(--text-tertiary);
+  }
+
+  .spotlight__input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--text-primary);
+    caret-color: var(--accent);
+  }
+
+  .spotlight__input::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  .spotlight__esc {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    background: var(--surface-container-high);
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+  }
+
+  .spotlight__suggestions {
+    max-height: 360px;
+    overflow-y: auto;
+    padding: 8px;
+  }
+
+  .spotlight__category {
+    margin-bottom: 8px;
+  }
+
+  .spotlight__category:last-child {
+    margin-bottom: 0;
+  }
+
+  .spotlight__category-label {
+    display: block;
+    font-family: var(--font-headline);
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+    padding: 8px 12px 4px;
+  }
+
+  .spotlight__result {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    transition: all 0.15s ease;
+  }
+
+  .spotlight__result:hover,
+  .spotlight__result:focus-visible,
+  .spotlight__result.highlighted {
+    background: var(--surface-container-high);
+    color: var(--text-primary);
+  }
+
+  .spotlight__result .material-symbols-outlined {
+    font-size: 18px;
+    color: var(--accent);
+  }
+
+  .spotlight__result-type {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ---- Mobile Overlay ---- */
+  .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: var(--bg-primary);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 0.35s;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-overlay.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .mobile-overlay__noise {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    z-index: 0;
+  }
+
+  :global([data-theme="light"]) .mobile-overlay__noise {
+    opacity: 0.015;
+  }
+
+  .mobile-overlay__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 100px 24px 40px;
+  }
+
+  .mobile-overlay__nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  /* ---- Mobile Accordion ---- */
+  .mobile-accordion {
+    border-bottom: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-overlay.open .mobile-accordion {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-overlay.open .mobile-accordion:nth-child(1) { transition-delay: 0.05s; }
+  .mobile-overlay.open .mobile-accordion:nth-child(2) { transition-delay: 0.1s; }
+  .mobile-overlay.open .mobile-accordion:nth-child(3) { transition-delay: 0.15s; }
+  .mobile-overlay.open .mobile-accordion:nth-child(4) { transition-delay: 0.2s; }
+  .mobile-overlay.open .mobile-accordion:nth-child(5) { transition-delay: 0.25s; }
+
+  .mobile-accordion__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 18px 4px;
+    font-family: var(--font-headline);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    transition: color 0.2s ease;
+  }
+
+  .mobile-accordion__trigger:hover {
+    color: var(--accent);
+  }
+
+  .mobile-accordion__chevron {
+    font-size: 22px;
+    color: var(--text-tertiary);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .mobile-accordion__trigger[aria-expanded="true"] .mobile-accordion__chevron {
+    transform: rotate(180deg);
+  }
+
+  .mobile-accordion__panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .mobile-accordion__panel.expanded {
+    max-height: 400px;
+  }
+
+  .mobile-accordion__link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-accordion__link:hover {
+    color: var(--text-primary);
+    background: var(--surface-container-high);
+  }
+
+  .mobile-accordion__link .material-symbols-outlined {
+    font-size: 20px;
+    color: var(--accent);
+  }
+
+  /* ---- Mobile Quick Action Cards ---- */
+  .mobile-overlay__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 32px;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: 0.3s;
+  }
+
+  .mobile-overlay.open .mobile-overlay__actions {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-action-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 16px;
+    border-radius: 14px;
+    background: var(--surface-container);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-action-card .material-symbols-outlined {
+    font-size: 24px;
+    color: var(--text-secondary);
+  }
+
+  .mobile-action-card__label {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+  }
+
+  .mobile-action-card--primary {
+    background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(0, 229, 255, 0.02));
+    border-color: rgba(0, 229, 255, 0.2);
+  }
+
+  .mobile-action-card--primary .material-symbols-outlined {
+    color: var(--accent);
+  }
+
+  :global([data-theme="light"]) .mobile-action-card--primary {
+    background: linear-gradient(135deg, rgba(0, 131, 143, 0.08), rgba(0, 131, 143, 0.02));
+    border-color: rgba(0, 131, 143, 0.15);
+  }
+
+  .mobile-action-card:active {
+    transform: scale(0.97);
+  }
+
+  /* ---- Reduced Motion ---- */
+  @media (prefers-reduced-motion: reduce) {
+    .nav-scroll-progress,
+    .command-deck,
+    .nav-trigger__chevron,
+    .nav-active-indicator,
+    .dropdown-panel,
+    .mega-panel,
+    .spotlight,
+    .spotlight__panel,
+    .mobile-overlay,
+    .mobile-accordion,
+    .mobile-overlay__actions,
+    .command-deck__logo-icon,
+    .mega-card,
+    .breadcrumb-trail__list {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+
+    .command-deck__logo:hover .command-deck__logo-icon {
+      transform: none;
+    }
+  }
+
+  /* ---- Print ---- */
+  @media print {
+    .command-deck,
+    .nav-scroll-progress,
+    .spotlight,
+    .mobile-overlay {
+      display: none !important;
+    }
+  }
+</style>
+
+<script is:inline>
+(function () {
+  'use strict';
+
+  /* ============================================================
+     COMMAND DECK — Runtime Controller
+     ============================================================ */
+
+  var nav = document.getElementById('site-nav');
+  var scrollProgress = document.getElementById('nav-scroll-progress');
+  var mobileToggle = document.getElementById('mobile-toggle');
+  var mobileMenu = document.getElementById('mobile-menu');
+  var searchTrigger = document.getElementById('search-trigger');
+  var searchOverlay = document.getElementById('search-overlay');
+  var searchInput = document.getElementById('search-input');
+  var activeIndicator = document.getElementById('nav-active-indicator');
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* ---- 1. Scroll: progress bar + nav background ---- */
+  function onScroll() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    scrollProgress.style.width = pct + '%';
+
+    if (scrollTop > 40) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ---- 2. Desktop dropdown & mega-menu management ---- */
+  var navGroups = nav.querySelectorAll('.nav-group');
+  var openGroup = null;
+  var closeTimer = null;
+
+  function openDropdown(group) {
+    if (openGroup && openGroup !== group) closeDropdown(openGroup);
+    var panel = group.querySelector('.mega-panel, .dropdown-panel');
+    var trigger = group.querySelector('.nav-trigger');
+    if (panel) {
+      clearTimeout(closeTimer);
+      panel.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
+      openGroup = group;
+    }
+  }
+
+  function closeDropdown(group) {
+    var panel = group.querySelector('.mega-panel, .dropdown-panel');
+    var trigger = group.querySelector('.nav-trigger');
+    if (panel) {
+      panel.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+    if (openGroup === group) openGroup = null;
+  }
+
+  function closeAllDropdowns() {
+    navGroups.forEach(function (g) { closeDropdown(g); });
+    openGroup = null;
+  }
+
+  navGroups.forEach(function (group) {
+    var trigger = group.querySelector('.nav-trigger');
+
+    // Hover
+    group.addEventListener('mouseenter', function () {
+      clearTimeout(closeTimer);
+      openDropdown(group);
+    });
+
+    group.addEventListener('mouseleave', function () {
+      closeTimer = setTimeout(function () {
+        closeDropdown(group);
+      }, 200);
+    });
+
+    // Click toggle (for touch-screen laptops)
+    trigger.addEventListener('click', function (e) {
+      e.preventDefault();
+      var panel = group.querySelector('.mega-panel, .dropdown-panel');
+      if (panel && panel.classList.contains('open')) {
+        closeDropdown(group);
+      } else {
+        openDropdown(group);
+      }
+    });
+
+    // Keyboard: Enter / Space / ArrowDown opens, Escape closes
+    trigger.addEventListener('keydown', function (e) {
+      var panel = group.querySelector('.mega-panel, .dropdown-panel');
+      var links = panel ? panel.querySelectorAll('a') : [];
+
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        openDropdown(group);
+        if (links.length) links[0].focus();
+      }
+      if (e.key === 'Escape') {
+        closeDropdown(group);
+        trigger.focus();
+      }
+    });
+
+    // Arrow navigation within dropdown
+    var panel = group.querySelector('.mega-panel, .dropdown-panel');
+    if (panel) {
+      var links = panel.querySelectorAll('a');
+      links.forEach(function (link, idx) {
+        link.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (idx < links.length - 1) links[idx + 1].focus();
+          } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (idx > 0) links[idx - 1].focus();
+            else trigger.focus();
+          } else if (e.key === 'Escape') {
+            closeDropdown(group);
+            trigger.focus();
+          } else if (e.key === 'ArrowRight' && group.dataset.hasMega === 'true') {
+            // Navigate between mega columns
+            e.preventDefault();
+            if (idx < links.length - 1) links[idx + 1].focus();
+          } else if (e.key === 'ArrowLeft' && group.dataset.hasMega === 'true') {
+            e.preventDefault();
+            if (idx > 0) links[idx - 1].focus();
+          }
+        });
+      });
+
+      // Close on focus leaving
+      group.addEventListener('focusout', function (e) {
+        setTimeout(function () {
+          if (!group.contains(document.activeElement)) {
+            closeDropdown(group);
+          }
+        }, 10);
+      });
+    }
+  });
+
+  // Left/Right arrow keys between top-level triggers
+  var triggers = Array.from(nav.querySelectorAll('.nav-trigger'));
+  triggers.forEach(function (trigger, idx) {
+    trigger.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        closeAllDropdowns();
+        var next = triggers[(idx + 1) % triggers.length];
+        next.focus();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        closeAllDropdowns();
+        var prev = triggers[(idx - 1 + triggers.length) % triggers.length];
+        prev.focus();
+      }
+    });
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function (e) {
+    if (openGroup && !nav.contains(e.target)) {
+      closeAllDropdowns();
+    }
+  });
+
+  /* ---- 3. Active page indicator (sliding underline) ---- */
+  function updateActiveIndicator() {
+    var path = window.location.pathname;
+    var activeGroup = null;
+
+    navGroups.forEach(function (group) {
+      var links = group.querySelectorAll('a');
+      var trigger = group.querySelector('.nav-trigger');
+      var isActive = false;
+
+      links.forEach(function (link) {
+        if (path.startsWith(link.getAttribute('href'))) {
+          isActive = true;
+        }
+      });
+
+      if (isActive) {
+        trigger.classList.add('is-active');
+        activeGroup = group;
+      } else {
+        trigger.classList.remove('is-active');
+      }
+    });
+
+    if (activeGroup && activeIndicator) {
+      var trigger = activeGroup.querySelector('.nav-trigger');
+      var navRect = nav.querySelector('.command-deck__nav').getBoundingClientRect();
+      var triggerRect = trigger.getBoundingClientRect();
+      activeIndicator.style.left = (triggerRect.left - navRect.left) + 'px';
+      activeIndicator.style.width = triggerRect.width + 'px';
+      activeIndicator.classList.add('visible');
+    }
+  }
+
+  // Run after fonts settle
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(updateActiveIndicator);
+  } else {
+    setTimeout(updateActiveIndicator, 200);
+  }
+
+  /* ---- 4. Hover indicator tracking ---- */
+  triggers.forEach(function (trigger) {
+    trigger.addEventListener('mouseenter', function () {
+      var navEl = nav.querySelector('.command-deck__nav');
+      if (!navEl) return;
+      var navRect = navEl.getBoundingClientRect();
+      var rect = trigger.getBoundingClientRect();
+      activeIndicator.style.left = (rect.left - navRect.left) + 'px';
+      activeIndicator.style.width = rect.width + 'px';
+      activeIndicator.classList.add('visible');
+    });
+  });
+
+  var navEl = nav.querySelector('.command-deck__nav');
+  if (navEl) {
+    navEl.addEventListener('mouseleave', function () {
+      // Snap back to active item or hide
+      updateActiveIndicator();
+    });
+  }
+
+  /* ---- 5. Theme toggle ---- */
+  var themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', function () {
+      var html = document.documentElement;
+      var current = html.getAttribute('data-theme') || 'dark';
+      var next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('jinki-theme', next);
+      themeToggle.style.transform = 'rotate(180deg) scale(0.85)';
+      setTimeout(function () {
+        themeToggle.style.transform = '';
+      }, 300);
+    });
+  }
+
+  /* ---- 6. Spotlight Search ---- */
+  function openSearch() {
+    searchOverlay.classList.add('open');
+    searchOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function () { searchInput.focus(); }, 100);
+    filterResults('');
+  }
+
+  function closeSearch() {
+    searchOverlay.classList.remove('open');
+    searchOverlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    searchInput.value = '';
+    searchTrigger.focus();
+  }
+
+  if (searchTrigger) {
+    searchTrigger.addEventListener('click', openSearch);
+  }
+
+  // Cmd/Ctrl + K shortcut
+  document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      if (searchOverlay.classList.contains('open')) {
+        closeSearch();
+      } else {
+        openSearch();
+      }
+    }
+  });
+
+  if (searchOverlay) {
+    // Close on backdrop click
+    searchOverlay.querySelector('.spotlight__backdrop').addEventListener('click', closeSearch);
+
+    // Close on Escape
+    searchOverlay.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        e.stopPropagation();
+        closeSearch();
+      }
+    });
+
+    // Filter search results
+    var allResults = searchOverlay.querySelectorAll('.spotlight__result');
+    var allCategories = searchOverlay.querySelectorAll('.spotlight__category');
+
+    function filterResults(query) {
+      var q = query.toLowerCase().trim();
+      var highlightIdx = -1;
+
+      allCategories.forEach(function (cat) {
+        var results = cat.querySelectorAll('.spotlight__result');
+        var anyVisible = false;
+
+        results.forEach(function (r) {
+          var text = r.textContent.toLowerCase();
+          var show = !q || text.indexOf(q) !== -1;
+          r.style.display = show ? 'flex' : 'none';
+          r.classList.remove('highlighted');
+          if (show) anyVisible = true;
+        });
+
+        cat.style.display = anyVisible ? 'block' : 'none';
+      });
+
+      // Highlight first visible result
+      var visibleResults = searchOverlay.querySelectorAll('.spotlight__result[style*="flex"], .spotlight__result:not([style*="none"])');
+      if (visibleResults.length > 0) {
+        visibleResults[0].classList.add('highlighted');
+      }
+    }
+
+    searchInput.addEventListener('input', function () {
+      filterResults(this.value);
+    });
+
+    // Arrow key navigation in search results
+    searchInput.addEventListener('keydown', function (e) {
+      var visible = Array.from(allResults).filter(function (r) {
+        return r.style.display !== 'none';
+      });
+      var currentIdx = visible.findIndex(function (r) {
+        return r.classList.contains('highlighted');
+      });
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        visible.forEach(function (r) { r.classList.remove('highlighted'); });
+        var nextIdx = (currentIdx + 1) % visible.length;
+        visible[nextIdx].classList.add('highlighted');
+        visible[nextIdx].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        visible.forEach(function (r) { r.classList.remove('highlighted'); });
+        var prevIdx = (currentIdx - 1 + visible.length) % visible.length;
+        visible[prevIdx].classList.add('highlighted');
+        visible[prevIdx].scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        var highlighted = searchOverlay.querySelector('.spotlight__result.highlighted');
+        if (highlighted) {
+          closeSearch();
+          window.location.href = highlighted.getAttribute('href');
+        }
+      }
+    });
+  }
+
+  /* ---- 7. Mobile Menu ---- */
+  var touchStartX = 0;
+  var touchStartY = 0;
+  var swipeThreshold = 80;
+
+  function openMobile() {
+    mobileMenu.classList.add('open');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    mobileToggle.setAttribute('aria-expanded', 'true');
+    mobileToggle.setAttribute('aria-label', 'Close menu');
+    document.body.style.overflow = 'hidden';
+    initNoiseCanvas();
+  }
+
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    mobileToggle.setAttribute('aria-expanded', 'false');
+    mobileToggle.setAttribute('aria-label', 'Open menu');
+    document.body.style.overflow = '';
+    // Close all accordions
+    document.querySelectorAll('.mobile-accordion__panel').forEach(function (p) {
+      p.classList.remove('expanded');
+    });
+    document.querySelectorAll('.mobile-accordion__trigger').forEach(function (t) {
+      t.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', function () {
+      if (mobileToggle.getAttribute('aria-expanded') === 'true') {
+        closeMobile();
+      } else {
+        openMobile();
+      }
+    });
+  }
+
+  // Swipe-to-close gesture
+  if (mobileMenu) {
+    mobileMenu.addEventListener('touchstart', function (e) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    mobileMenu.addEventListener('touchend', function (e) {
+      var deltaX = e.changedTouches[0].clientX - touchStartX;
+      var deltaY = Math.abs(e.changedTouches[0].clientY - touchStartY);
+      // Swipe right to close
+      if (deltaX > swipeThreshold && deltaY < 100) {
+        closeMobile();
+      }
+    }, { passive: true });
+  }
+
+  // Close mobile menu on Escape
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      if (mobileToggle.getAttribute('aria-expanded') === 'true') {
+        closeMobile();
+        mobileToggle.focus();
+      }
+    }
+  });
+
+  // Close mobile on link click
+  if (mobileMenu) {
+    mobileMenu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closeMobile);
+    });
+  }
+
+  /* ---- 8. Mobile Accordion ---- */
+  document.querySelectorAll('.mobile-accordion__trigger').forEach(function (trigger) {
+    trigger.addEventListener('click', function () {
+      var idx = trigger.dataset.accordionTrigger;
+      var panel = document.querySelector('[data-accordion-panel="' + idx + '"]');
+      var expanded = trigger.getAttribute('aria-expanded') === 'true';
+
+      // Close other panels
+      document.querySelectorAll('.mobile-accordion__trigger').forEach(function (t) {
+        if (t !== trigger) {
+          t.setAttribute('aria-expanded', 'false');
+          var otherPanel = document.querySelector('[data-accordion-panel="' + t.dataset.accordionTrigger + '"]');
+          if (otherPanel) otherPanel.classList.remove('expanded');
+        }
+      });
+
+      trigger.setAttribute('aria-expanded', !expanded);
+      panel.classList.toggle('expanded');
+    });
+  });
+
+  /* ---- 9. Animated noise background for mobile menu ---- */
+  var noiseFrame = null;
+
+  function initNoiseCanvas() {
+    if (prefersReducedMotion.matches) return;
+    var canvas = document.getElementById('mobile-noise-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    canvas.width = 200;
+    canvas.height = 200;
+
+    function drawNoise() {
+      var imgData = ctx.createImageData(canvas.width, canvas.height);
+      var data = imgData.data;
+      for (var i = 0; i < data.length; i += 4) {
+        var v = Math.random() * 255;
+        data[i] = v;
+        data[i + 1] = v;
+        data[i + 2] = v;
+        data[i + 3] = 12;
+      }
+      ctx.putImageData(imgData, 0, 0);
+      if (mobileMenu.classList.contains('open')) {
+        noiseFrame = requestAnimationFrame(drawNoise);
+      }
+    }
+
+    cancelAnimationFrame(noiseFrame);
+    drawNoise();
+  }
+
+})();
+</script>

@@ -1,0 +1,1200 @@
+---
+/*
+  Hero-Alpha — "Cinematic Command Center"
+  Team Alpha competition entry for Jinki Aerial Intelligence.
+  Pure CSS + vanilla JS. No external dependencies.
+*/
+---
+
+<section id="hero-alpha" class="ha-hero" aria-label="Jinki Aerial Intelligence hero">
+  <!-- === LAYER 0: Data Stream Background === -->
+  <div class="ha-data-streams" aria-hidden="true">
+    <canvas id="ha-stream-canvas"></canvas>
+  </div>
+
+  <!-- === LAYER 1: Particle Field === -->
+  <div class="ha-particle-field" aria-hidden="true">
+    <canvas id="ha-particle-canvas"></canvas>
+  </div>
+
+  <!-- === LAYER 2: Parallax Grid Overlay === -->
+  <div class="ha-parallax-grid" id="ha-parallax-grid" aria-hidden="true"></div>
+
+  <!-- === LAYER 3: Scan Line === -->
+  <div class="ha-scanline" aria-hidden="true"></div>
+
+  <!-- === LAYER 4: Radial Vignette === -->
+  <div class="ha-vignette" aria-hidden="true"></div>
+
+  <!-- === CONTENT === -->
+  <div class="ha-content-wrap">
+    <div class="ha-content" id="ha-content">
+      <!-- Eyebrow -->
+      <div class="ha-eyebrow" id="ha-eyebrow">
+        <span class="ha-eyebrow-dot"></span>
+        <span class="ha-eyebrow-line"></span>
+        <span class="ha-eyebrow-text">Aerial Intelligence Platform</span>
+      </div>
+
+      <!-- Headline with typewriter -->
+      <h1 class="ha-headline" id="ha-headline" aria-label="See What You Can't. Act Before It Fails.">
+        <span class="ha-line ha-line-1">
+          <span class="ha-word" data-delay="0">See</span>
+          <span class="ha-word" data-delay="80">What</span>
+          <span class="ha-word" data-delay="160">You</span>
+          <span class="ha-word ha-word-accent" data-delay="240">Can't.</span>
+        </span>
+        <span class="ha-line ha-line-2">
+          <span class="ha-word" data-delay="400">Act</span>
+          <span class="ha-word" data-delay="480">Before</span>
+          <span class="ha-word" data-delay="560">It</span>
+          <span class="ha-word ha-word-accent" data-delay="640">Fails.</span>
+        </span>
+        <span class="ha-cursor" aria-hidden="true"></span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="ha-subtitle" id="ha-subtitle">
+        Jinki turns aerial data into prioritized maintenance recommendations
+        for infrastructure you can't easily reach — power lines, rooftops,
+        data centers, and farmland.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="ha-actions" id="ha-actions">
+        <a href="#lead-gen" class="ha-cta ha-cta-primary" data-magnetic>
+          <span class="ha-cta-text">Get a Free Assessment</span>
+          <span class="ha-cta-ring" aria-hidden="true"></span>
+          <span class="ha-cta-ring ha-cta-ring-2" aria-hidden="true"></span>
+        </a>
+        <a href="#verticals" class="ha-cta ha-cta-secondary" data-magnetic>
+          <span class="ha-cta-text">See How It Works</span>
+          <span class="ha-cta-ring" aria-hidden="true"></span>
+        </a>
+      </div>
+    </div>
+
+    <!-- HUD Corner Decorations -->
+    <div class="ha-hud-corner ha-hud-tl" aria-hidden="true"></div>
+    <div class="ha-hud-corner ha-hud-br" aria-hidden="true"></div>
+  </div>
+
+  <!-- === STATS TICKER === -->
+  <div class="ha-ticker-wrap" aria-label="Company statistics">
+    <div class="ha-ticker" id="ha-ticker">
+      <div class="ha-ticker-track">
+        <span class="ha-ticker-item"><span class="ha-ticker-value">2,847</span> inspections completed</span>
+        <span class="ha-ticker-sep"></span>
+        <span class="ha-ticker-item"><span class="ha-ticker-value">99.7%</span> uptime</span>
+        <span class="ha-ticker-sep"></span>
+        <span class="ha-ticker-item"><span class="ha-ticker-value">12ms</span> response time</span>
+        <span class="ha-ticker-sep"></span>
+        <span class="ha-ticker-item"><span class="ha-ticker-value">4</span> continents</span>
+        <span class="ha-ticker-sep"></span>
+        <span class="ha-ticker-item"><span class="ha-ticker-value">2,847</span> inspections completed</span>
+        <span class="ha-ticker-sep"></span>
+        <span class="ha-ticker-item"><span class="ha-ticker-value">99.7%</span> uptime</span>
+        <span class="ha-ticker-sep"></span>
+        <span class="ha-ticker-item"><span class="ha-ticker-value">12ms</span> response time</span>
+        <span class="ha-ticker-sep"></span>
+        <span class="ha-ticker-item"><span class="ha-ticker-value">4</span> continents</span>
+        <span class="ha-ticker-sep"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="ha-scroll" id="ha-scroll" aria-hidden="true">
+    <div class="ha-scroll-mouse">
+      <div class="ha-scroll-wheel"></div>
+    </div>
+    <span class="ha-scroll-label">Scroll</span>
+  </div>
+</section>
+
+<style>
+  /* ============================================================
+     HERO ALPHA — Cinematic Command Center
+     ============================================================ */
+
+  .ha-hero {
+    position: relative;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0, 229, 255, 0.04) 0%, transparent 70%),
+                var(--bg-primary);
+  }
+
+  :global([data-theme="light"]) .ha-hero {
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0, 131, 143, 0.05) 0%, transparent 70%),
+                var(--bg-primary);
+  }
+
+  /* --- Data Stream Canvas --- */
+  .ha-data-streams {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  :global([data-theme="light"]) .ha-data-streams {
+    opacity: 0.2;
+  }
+
+  .ha-data-streams canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* --- Particle Canvas --- */
+  .ha-particle-field {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  :global([data-theme="light"]) .ha-particle-field {
+    opacity: 0.4;
+  }
+
+  .ha-particle-field canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* --- Parallax Grid --- */
+  .ha-parallax-grid {
+    position: absolute;
+    inset: -50px;
+    z-index: 3;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+    transform: perspective(500px) rotateX(2deg);
+    transition: transform 0.2s ease-out;
+  }
+
+  :global([data-theme="light"]) .ha-parallax-grid {
+    background-image:
+      linear-gradient(rgba(0, 131, 143, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 131, 143, 0.04) 1px, transparent 1px);
+  }
+
+  /* --- Scan Line --- */
+  .ha-scanline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(0, 229, 255, 0.3) 20%, rgba(0, 229, 255, 0.6) 50%, rgba(0, 229, 255, 0.3) 80%, transparent 100%);
+    z-index: 5;
+    animation: ha-scan 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    opacity: 0.5;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2), 0 0 60px rgba(0, 229, 255, 0.1);
+  }
+
+  :global([data-theme="light"]) .ha-scanline {
+    background: linear-gradient(90deg, transparent 0%, rgba(0, 131, 143, 0.2) 20%, rgba(0, 131, 143, 0.4) 50%, rgba(0, 131, 143, 0.2) 80%, transparent 100%);
+    box-shadow: 0 0 20px rgba(0, 131, 143, 0.1);
+    opacity: 0.3;
+  }
+
+  @keyframes ha-scan {
+    0% { top: -2px; opacity: 0; }
+    5% { opacity: 0.5; }
+    95% { opacity: 0.5; }
+    100% { top: 100%; opacity: 0; }
+  }
+
+  /* --- Vignette --- */
+  .ha-vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.4) 100%);
+  }
+
+  :global([data-theme="light"]) .ha-vignette {
+    background: radial-gradient(ellipse 70% 70% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.06) 100%);
+  }
+
+  /* --- Content Wrapper --- */
+  .ha-content-wrap {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 8rem;
+    padding-bottom: 6rem;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .ha-content-wrap {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .ha-content-wrap {
+      padding-left: 5rem;
+      padding-right: 5rem;
+    }
+  }
+
+  /* --- HUD Corner Decorations --- */
+  .ha-hud-corner {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    pointer-events: none;
+    opacity: 0;
+    animation: ha-hud-in 0.6s ease-out 1.2s forwards;
+  }
+
+  .ha-hud-tl {
+    top: 7rem;
+    left: 1.5rem;
+    border-top: 2px solid rgba(0, 229, 255, 0.3);
+    border-left: 2px solid rgba(0, 229, 255, 0.3);
+  }
+
+  .ha-hud-br {
+    bottom: 6rem;
+    right: 1.5rem;
+    border-bottom: 2px solid rgba(0, 229, 255, 0.3);
+    border-right: 2px solid rgba(0, 229, 255, 0.3);
+  }
+
+  :global([data-theme="light"]) .ha-hud-tl,
+  :global([data-theme="light"]) .ha-hud-br {
+    border-color: rgba(0, 131, 143, 0.2);
+  }
+
+  @media (min-width: 768px) {
+    .ha-hud-tl { left: 3rem; }
+    .ha-hud-br { right: 3rem; }
+  }
+
+  @media (min-width: 1024px) {
+    .ha-hud-tl { left: 5rem; }
+    .ha-hud-br { right: 5rem; }
+    .ha-hud-corner { width: 80px; height: 80px; }
+  }
+
+  @keyframes ha-hud-in {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* --- Content --- */
+  .ha-content {
+    max-width: 48rem;
+  }
+
+  /* --- Eyebrow --- */
+  .ha-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: ha-slide-in-left 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+  }
+
+  .ha-eyebrow-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00E5FF;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.6);
+    animation: ha-dot-pulse 2s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  :global([data-theme="light"]) .ha-eyebrow-dot {
+    background: var(--accent);
+    box-shadow: 0 0 12px rgba(0, 131, 143, 0.4);
+  }
+
+  @keyframes ha-dot-pulse {
+    0%, 100% { box-shadow: 0 0 8px rgba(0, 229, 255, 0.4); }
+    50% { box-shadow: 0 0 20px rgba(0, 229, 255, 0.8), 0 0 40px rgba(0, 229, 255, 0.2); }
+  }
+
+  .ha-eyebrow-line {
+    width: 2.5rem;
+    height: 1px;
+    background: linear-gradient(90deg, #00E5FF, transparent);
+    flex-shrink: 0;
+  }
+
+  :global([data-theme="light"]) .ha-eyebrow-line {
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .ha-eyebrow-text {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 0.7rem;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  @keyframes ha-slide-in-left {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* --- Headline --- */
+  .ha-headline {
+    font-family: var(--font-headline);
+    font-size: clamp(2.4rem, 5vw + 0.5rem, 5.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    margin-bottom: 1.75rem;
+    position: relative;
+  }
+
+  .ha-line {
+    display: block;
+  }
+
+  .ha-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    animation: ha-word-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-play-state: paused;
+    margin-right: 0.15em;
+  }
+
+  .ha-word.ha-animate {
+    animation-play-state: running;
+  }
+
+  @keyframes ha-word-in {
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .ha-word-accent {
+    background: linear-gradient(135deg, #00E5FF 0%, #7B61FF 50%, #00E5FF 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-style: italic;
+    animation: ha-word-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+               ha-shimmer 4s ease-in-out infinite 1.5s;
+    animation-play-state: paused, paused;
+  }
+
+  .ha-word-accent.ha-animate {
+    animation-play-state: running, running;
+  }
+
+  :global([data-theme="light"]) .ha-word-accent {
+    background: linear-gradient(135deg, #00838f 0%, #5B4BC9 50%, #00838f 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @keyframes ha-shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* Typewriter cursor */
+  .ha-cursor {
+    display: inline-block;
+    width: 3px;
+    height: 1em;
+    background: #00E5FF;
+    margin-left: 4px;
+    vertical-align: text-bottom;
+    animation: ha-blink 0.8s step-end infinite;
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+    opacity: 0;
+  }
+
+  .ha-cursor.ha-active {
+    opacity: 1;
+  }
+
+  :global([data-theme="light"]) .ha-cursor {
+    background: var(--accent);
+    box-shadow: 0 0 8px rgba(0, 131, 143, 0.4);
+  }
+
+  @keyframes ha-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .ha-cursor.ha-active {
+    animation: ha-blink 0.8s step-end infinite;
+  }
+
+  /* --- Subtitle --- */
+  .ha-subtitle {
+    font-size: clamp(1.05rem, 1.3vw + 0.4rem, 1.35rem);
+    color: var(--text-secondary);
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 36rem;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: ha-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
+  }
+
+  @keyframes ha-fade-up {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* --- CTA Buttons --- */
+  .ha-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: ha-fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
+  }
+
+  .ha-cta {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-headline);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    padding: 1.1rem 2.5rem;
+    border-radius: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: visible;
+    isolation: isolate;
+  }
+
+  .ha-cta-text {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Pulse rings */
+  .ha-cta-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    opacity: 0;
+    transform: scale(1);
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .ha-cta-ring-2 {
+    inset: -8px;
+    border-radius: 20px;
+    border-color: rgba(0, 229, 255, 0.15);
+  }
+
+  .ha-cta:hover .ha-cta-ring {
+    opacity: 1;
+    animation: ha-ring-pulse 1.5s ease-out infinite;
+  }
+
+  .ha-cta:hover .ha-cta-ring-2 {
+    opacity: 1;
+    animation: ha-ring-pulse 1.5s ease-out 0.3s infinite;
+  }
+
+  @keyframes ha-ring-pulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.1); opacity: 0; }
+  }
+
+  /* Primary CTA */
+  .ha-cta-primary {
+    background: linear-gradient(135deg, #00E5FF 0%, #00a8b5 50%, #006670 100%);
+    color: #fff;
+    box-shadow:
+      0 4px 16px rgba(0, 229, 255, 0.3),
+      0 8px 32px rgba(0, 229, 255, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  .ha-cta-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.15), transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .ha-cta-primary:hover {
+    box-shadow:
+      0 6px 24px rgba(0, 229, 255, 0.45),
+      0 12px 48px rgba(0, 229, 255, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+
+  .ha-cta-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 229, 255, 0.3);
+  }
+
+  /* Secondary CTA */
+  .ha-cta-secondary {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-primary);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(16px) saturate(1.8);
+    -webkit-backdrop-filter: blur(16px) saturate(1.8);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .ha-cta-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 8px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .ha-cta-secondary:active {
+    transform: translateY(0);
+  }
+
+  /* Light mode CTAs */
+  :global([data-theme="light"]) .ha-cta-primary {
+    background: linear-gradient(135deg, #00838f, #006670);
+    box-shadow: 0 4px 20px rgba(0, 131, 143, 0.25);
+  }
+
+  :global([data-theme="light"]) .ha-cta-primary:hover {
+    box-shadow: 0 8px 32px rgba(0, 131, 143, 0.35);
+  }
+
+  :global([data-theme="light"]) .ha-cta-secondary {
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--text-primary);
+    border-color: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  :global([data-theme="light"]) .ha-cta-secondary:hover {
+    background: var(--text-primary);
+    color: #fff;
+    border-color: var(--text-primary);
+  }
+
+  :global([data-theme="light"]) .ha-cta-ring {
+    border-color: rgba(0, 131, 143, 0.3);
+  }
+
+  :global([data-theme="light"]) .ha-cta-ring-2 {
+    border-color: rgba(0, 131, 143, 0.15);
+  }
+
+  /* --- Stats Ticker --- */
+  .ha-ticker-wrap {
+    position: relative;
+    z-index: 10;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    overflow: hidden;
+  }
+
+  :global([data-theme="light"]) .ha-ticker-wrap {
+    border-color: rgba(0, 0, 0, 0.06);
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .ha-ticker {
+    overflow: hidden;
+    white-space: nowrap;
+    opacity: 0;
+    animation: ha-fade-up 0.6s ease 1.6s forwards;
+  }
+
+  .ha-ticker-track {
+    display: inline-flex;
+    align-items: center;
+    animation: ha-ticker-scroll 30s linear infinite;
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+  }
+
+  @keyframes ha-ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .ha-ticker-item {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    flex-shrink: 0;
+  }
+
+  .ha-ticker-value {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .ha-ticker-sep {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.4;
+    flex-shrink: 0;
+  }
+
+  /* --- Scroll Indicator --- */
+  .ha-scroll {
+    position: absolute;
+    bottom: 5.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    animation: ha-fade-up 0.5s ease 2s forwards, ha-float 3s ease-in-out 2.5s infinite;
+  }
+
+  .ha-scroll-mouse {
+    width: 24px;
+    height: 38px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+  }
+
+  :global([data-theme="light"]) .ha-scroll-mouse {
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .ha-scroll-wheel {
+    width: 3px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin-top: 7px;
+    animation: ha-wheel 2s ease-in-out infinite;
+  }
+
+  .ha-scroll-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--text-tertiary);
+  }
+
+  @keyframes ha-wheel {
+    0% { opacity: 1; transform: translateY(0); }
+    50% { opacity: 0.2; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes ha-float {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-6px); }
+  }
+
+  @media (max-width: 767px) {
+    .ha-scroll {
+      bottom: 4.5rem;
+    }
+  }
+
+  /* --- Mobile Responsive --- */
+  @media (max-width: 767px) {
+    .ha-content-wrap {
+      padding-top: 6.5rem;
+      padding-bottom: 4rem;
+    }
+
+    .ha-actions {
+      flex-direction: column;
+    }
+
+    .ha-cta {
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .ha-hud-corner {
+      display: none;
+    }
+
+    .ha-ticker-item {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+  }
+
+  /* --- Reduced Motion --- */
+  @media (prefers-reduced-motion: reduce) {
+    .ha-word {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+
+    .ha-eyebrow {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+
+    .ha-subtitle,
+    .ha-actions,
+    .ha-ticker,
+    .ha-scroll,
+    .ha-hud-corner {
+      opacity: 1;
+      transform: none;
+      animation: none;
+    }
+
+    .ha-cursor {
+      display: none;
+    }
+
+    .ha-scanline {
+      animation: none;
+      opacity: 0;
+    }
+
+    .ha-ticker-track {
+      animation: none;
+    }
+
+    .ha-cta:hover .ha-cta-ring,
+    .ha-cta:hover .ha-cta-ring-2 {
+      animation: none;
+      opacity: 0;
+    }
+
+    .ha-parallax-grid {
+      transform: none;
+    }
+
+    .ha-eyebrow-dot {
+      animation: none;
+    }
+  }
+</style>
+
+<script is:inline>
+(function () {
+  'use strict';
+
+  /* ---- Bail on reduced motion ---- */
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ========================================
+     1. TYPEWRITER WORD ANIMATION
+     ======================================== */
+  function initTypewriter() {
+    var words = document.querySelectorAll('.ha-word');
+    var cursor = document.querySelector('.ha-cursor');
+    if (!words.length) return;
+
+    if (reducedMotion) {
+      words.forEach(function (w) {
+        w.style.opacity = '1';
+        w.style.transform = 'none';
+      });
+      return;
+    }
+
+    // Show cursor
+    if (cursor) cursor.classList.add('ha-active');
+
+    words.forEach(function (word) {
+      var delay = parseInt(word.getAttribute('data-delay') || '0', 10);
+      setTimeout(function () {
+        word.style.animationDelay = '0ms';
+        word.classList.add('ha-animate');
+      }, 300 + delay);
+    });
+
+    // Hide cursor after all words are in
+    setTimeout(function () {
+      if (cursor) cursor.classList.remove('ha-active');
+    }, 1800);
+  }
+
+  /* ========================================
+     2. PARTICLE FIELD (forms infrastructure shapes)
+     ======================================== */
+  function initParticles() {
+    var canvas = document.getElementById('ha-particle-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var particles = [];
+    var mouseX = -1000, mouseY = -1000;
+    var width, height;
+    var frame = 0;
+    var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
+    function resize() {
+      width = canvas.parentElement.offsetWidth;
+      height = canvas.parentElement.offsetHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    // Infrastructure shape targets (power tower outline)
+    function getTargetPoints() {
+      var cx = width * 0.72;
+      var cy = height * 0.45;
+      var s = Math.min(width, height) * 0.22;
+      var pts = [];
+
+      // Tower shape
+      pts.push({ x: cx, y: cy - s * 0.8 });
+      pts.push({ x: cx - s * 0.15, y: cy - s * 0.6 });
+      pts.push({ x: cx + s * 0.15, y: cy - s * 0.6 });
+      pts.push({ x: cx - s * 0.4, y: cy - s * 0.35 });
+      pts.push({ x: cx + s * 0.4, y: cy - s * 0.35 });
+      // Cross arms
+      pts.push({ x: cx - s * 0.6, y: cy - s * 0.35 });
+      pts.push({ x: cx + s * 0.6, y: cy - s * 0.35 });
+      pts.push({ x: cx - s * 0.5, y: cy - s * 0.1 });
+      pts.push({ x: cx + s * 0.5, y: cy - s * 0.1 });
+      pts.push({ x: cx - s * 0.7, y: cy - s * 0.1 });
+      pts.push({ x: cx + s * 0.7, y: cy - s * 0.1 });
+      // Body
+      pts.push({ x: cx - s * 0.2, y: cy + s * 0.2 });
+      pts.push({ x: cx + s * 0.2, y: cy + s * 0.2 });
+      pts.push({ x: cx - s * 0.25, y: cy + s * 0.7 });
+      pts.push({ x: cx + s * 0.25, y: cy + s * 0.7 });
+      // Base
+      pts.push({ x: cx - s * 0.35, y: cy + s * 0.9 });
+      pts.push({ x: cx + s * 0.35, y: cy + s * 0.9 });
+
+      return pts;
+    }
+
+    function createParticles() {
+      var count = Math.min(120, Math.floor(width * height / 8000));
+      particles = [];
+      var targets = getTargetPoints();
+
+      for (var i = 0; i < count; i++) {
+        var hasTarget = i < targets.length;
+        var target = hasTarget ? targets[i % targets.length] : null;
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          tx: target ? target.x : Math.random() * width,
+          ty: target ? target.y : Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.3,
+          vy: (Math.random() - 0.5) * 0.3,
+          size: Math.random() * 2 + 0.5,
+          alpha: Math.random() * 0.5 + 0.2,
+          hasTarget: hasTarget,
+          speed: 0.003 + Math.random() * 0.005,
+          phase: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+      frame++;
+      isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
+      var accentR = isLight ? 0 : 0;
+      var accentG = isLight ? 131 : 229;
+      var accentB = isLight ? 143 : 255;
+
+      for (var i = 0; i < particles.length; i++) {
+        var p = particles[i];
+
+        if (p.hasTarget) {
+          p.x += (p.tx - p.x) * p.speed;
+          p.y += (p.ty - p.y) * p.speed;
+          // Add subtle float
+          p.x += Math.sin(frame * 0.01 + p.phase) * 0.15;
+          p.y += Math.cos(frame * 0.012 + p.phase) * 0.15;
+        } else {
+          p.x += p.vx + Math.sin(frame * 0.005 + p.phase) * 0.1;
+          p.y += p.vy + Math.cos(frame * 0.006 + p.phase) * 0.1;
+          if (p.x < 0 || p.x > width) p.vx *= -1;
+          if (p.y < 0 || p.y > height) p.vy *= -1;
+        }
+
+        // Mouse repulsion
+        var dx = p.x - mouseX;
+        var dy = p.y - mouseY;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120) {
+          var force = (120 - dist) / 120;
+          p.x += dx * force * 0.03;
+          p.y += dy * force * 0.03;
+        }
+
+        var flicker = 0.7 + Math.sin(frame * 0.03 + p.phase) * 0.3;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(' + accentR + ',' + accentG + ',' + accentB + ',' + (p.alpha * flicker) + ')';
+        ctx.fill();
+
+        // Draw connections
+        for (var j = i + 1; j < particles.length; j++) {
+          var q = particles[j];
+          var ddx = p.x - q.x;
+          var ddy = p.y - q.y;
+          var d = Math.sqrt(ddx * ddx + ddy * ddy);
+          if (d < 100 && p.hasTarget && q.hasTarget) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.strokeStyle = 'rgba(' + accentR + ',' + accentG + ',' + accentB + ',' + (0.08 * (1 - d / 100)) + ')';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      if (!reducedMotion) requestAnimationFrame(draw);
+    }
+
+    resize();
+    createParticles();
+    if (!reducedMotion) draw();
+
+    window.addEventListener('resize', function () {
+      resize();
+      createParticles();
+    });
+
+    var hero = document.getElementById('hero-alpha');
+    if (hero) {
+      hero.addEventListener('mousemove', function (e) {
+        var rect = hero.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+      });
+      hero.addEventListener('mouseleave', function () {
+        mouseX = -1000;
+        mouseY = -1000;
+      });
+    }
+  }
+
+  /* ========================================
+     3. DATA STREAMS (thin flowing lines)
+     ======================================== */
+  function initDataStreams() {
+    var canvas = document.getElementById('ha-stream-canvas');
+    if (!canvas || reducedMotion) return;
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var streams = [];
+    var width, height;
+
+    function resize() {
+      width = canvas.parentElement.offsetWidth;
+      height = canvas.parentElement.offsetHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function createStreams() {
+      var count = Math.min(8, Math.max(3, Math.floor(width / 200)));
+      streams = [];
+      for (var i = 0; i < count; i++) {
+        streams.push({
+          y: Math.random() * height,
+          speed: 0.5 + Math.random() * 1.5,
+          segments: [],
+          length: 60 + Math.random() * 140,
+          alpha: 0.1 + Math.random() * 0.15,
+          x: -Math.random() * width,
+          thickness: 0.5 + Math.random() * 1
+        });
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
+
+      for (var i = 0; i < streams.length; i++) {
+        var s = streams[i];
+        s.x += s.speed;
+        if (s.x > width + s.length) {
+          s.x = -s.length;
+          s.y = Math.random() * height;
+        }
+
+        var gradient = ctx.createLinearGradient(s.x, s.y, s.x + s.length, s.y);
+        var c = isLight ? '0,131,143' : '0,229,255';
+        gradient.addColorStop(0, 'rgba(' + c + ',0)');
+        gradient.addColorStop(0.3, 'rgba(' + c + ',' + s.alpha + ')');
+        gradient.addColorStop(0.7, 'rgba(' + c + ',' + s.alpha + ')');
+        gradient.addColorStop(1, 'rgba(' + c + ',0)');
+
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x + s.length, s.y);
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = s.thickness;
+        ctx.stroke();
+
+        // Small data node at head
+        ctx.beginPath();
+        ctx.arc(s.x + s.length, s.y, 1.5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(' + c + ',' + (s.alpha * 2) + ')';
+        ctx.fill();
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    resize();
+    createStreams();
+    draw();
+    window.addEventListener('resize', function () { resize(); createStreams(); });
+  }
+
+  /* ========================================
+     4. PARALLAX on mouse move (grid + content)
+     ======================================== */
+  function initParallax() {
+    if (reducedMotion) return;
+    var hero = document.getElementById('hero-alpha');
+    var grid = document.getElementById('ha-parallax-grid');
+    var content = document.getElementById('ha-content');
+    if (!hero || !grid) return;
+
+    var isDesktop = window.matchMedia('(hover: hover) and (min-width: 1024px)').matches;
+    if (!isDesktop) return;
+
+    hero.addEventListener('mousemove', function (e) {
+      var rect = hero.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width - 0.5;
+      var y = (e.clientY - rect.top) / rect.height - 0.5;
+
+      grid.style.transform = 'perspective(500px) rotateX(' + (2 + y * 3) + 'deg) rotateY(' + (x * 2) + 'deg) translate(' + (x * 15) + 'px,' + (y * 10) + 'px)';
+
+      if (content) {
+        content.style.transform = 'translate(' + (x * -6) + 'px,' + (y * -4) + 'px)';
+      }
+    });
+
+    hero.addEventListener('mouseleave', function () {
+      grid.style.transform = 'perspective(500px) rotateX(2deg)';
+      if (content) content.style.transform = '';
+    });
+  }
+
+  /* ========================================
+     5. MAGNETIC CURSOR on CTAs
+     ======================================== */
+  function initMagnetic() {
+    if (reducedMotion) return;
+    var btns = document.querySelectorAll('[data-magnetic]');
+    var isDesktop = window.matchMedia('(hover: hover) and (min-width: 1024px)').matches;
+    if (!isDesktop) return;
+
+    btns.forEach(function (btn) {
+      btn.addEventListener('mousemove', function (e) {
+        var rect = btn.getBoundingClientRect();
+        var x = e.clientX - rect.left - rect.width / 2;
+        var y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = 'translate(' + (x * 0.15) + 'px,' + (y * 0.15) + 'px)';
+      });
+
+      btn.addEventListener('mouseleave', function () {
+        btn.style.transform = '';
+        btn.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+        setTimeout(function () { btn.style.transition = ''; }, 400);
+      });
+    });
+  }
+
+  /* ========================================
+     INIT
+     ======================================== */
+  function init() {
+    initTypewriter();
+    initParticles();
+    initDataStreams();
+    initParallax();
+    initMagnetic();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>

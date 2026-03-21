@@ -1,0 +1,917 @@
+---
+/*
+  SecurityPage-Omega — Jinki Aerial Intelligence
+  Team Omega, Round 24.
+  Vault door hero, interactive security architecture diagram,
+  pentest results, bug bounty program, data residency map.
+*/
+import Layout from '../../src/layouts/Layout.astro';
+import Nav from '../../src/components/Nav.astro';
+import Footer from '../../src/components/Footer.astro';
+
+const pillars = [
+  { icon: 'lock', title: 'Data Protection', desc: 'AES-256 encryption at rest, TLS 1.3 in transit, air-gapped processing options for classified engagements. Your data never touches shared infrastructure.' },
+  { icon: 'shield', title: 'Access Control', desc: 'Role-based access with least-privilege enforcement. Mandatory MFA across all systems. Every action logged and timestamped for client audit.' },
+  { icon: 'verified_user', title: 'Compliance', desc: 'SOC 2 Type II readiness with controls mapped to NIST 800-53. All engagements operate under NDA by default.' },
+  { icon: 'security', title: 'Operational Security', desc: 'Cleared personnel on every mission. Full chain-of-custody from sensor capture to final deliverable. Secure handoff protocols at every stage.' },
+  { icon: 'dns', title: 'Infrastructure Security', desc: 'Hardened cloud architecture with network segmentation, automated vulnerability scanning, and tested incident response plans.' },
+  { icon: 'delete_sweep', title: 'Client Data Handling', desc: 'Defined retention policies. Secure deletion upon project completion. Client-owned data principles: you maintain full ownership at all times.' },
+];
+
+const dataFlow = [
+  { stage: 'Capture', icon: 'flight_takeoff', encryption: 'AES-256', detail: 'Sensor data encrypted on-device before transmission' },
+  { stage: 'Transit', icon: 'swap_horiz', encryption: 'TLS 1.3', detail: 'All data transfers over encrypted channels with certificate pinning' },
+  { stage: 'Processing', icon: 'memory', encryption: 'AES-256', detail: 'Isolated compute environments with no shared tenancy' },
+  { stage: 'Storage', icon: 'database', encryption: 'AES-256', detail: 'Encrypted at rest with customer-managed encryption keys available' },
+  { stage: 'Delivery', icon: 'share', encryption: 'TLS 1.3 + E2E', detail: 'Secure client portal with audit-logged access and download tracking' },
+];
+
+const pentestResults = {
+  date: 'January 2026',
+  firm: 'Independent Third-Party Security Firm',
+  criticalFindings: 0,
+  highFindings: 0,
+  mediumFindings: 2,
+  lowFindings: 5,
+  remediated: '100%',
+  nextScheduled: 'July 2026',
+};
+
+const bountyTiers = [
+  { severity: 'Critical', description: 'Remote code execution, authentication bypass, data exfiltration', reward: '$2,000 - $5,000', color: '#ff4444' },
+  { severity: 'High', description: 'Privilege escalation, stored XSS, SQL injection', reward: '$500 - $2,000', color: '#ff8c00' },
+  { severity: 'Medium', description: 'CSRF, information disclosure, insecure direct object references', reward: '$100 - $500', color: '#ffcc00' },
+  { severity: 'Low', description: 'Reflected XSS, missing security headers, verbose errors', reward: '$50 - $100', color: '#34d399' },
+];
+
+const datacenters = [
+  { region: 'US East (Virginia)', latency: '< 5ms', status: 'Primary' },
+  { region: 'US West (Oregon)', latency: '< 8ms', status: 'Failover' },
+  { region: 'EU West (Frankfurt)', latency: '< 12ms', status: 'Available' },
+];
+
+const commitments = [
+  'Founded by CISSP/CCSP-certified security professional',
+  'Security architecture reviewed before every engagement',
+  'Zero-trust network principles across all operations',
+  'Annual third-party penetration testing',
+  'Documented incident response with defined SLAs',
+  'Continuous security training for all personnel',
+];
+---
+
+<Layout title="Security Architecture — Jinki Aerial Intelligence" description="Enterprise-grade security. AES-256 encryption, SOC 2 readiness, NIST alignment, penetration testing, and bug bounty program.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- Vault Door Hero -->
+    <section class="vault-hero" aria-label="Security Architecture">
+      <div class="vault-visual" aria-hidden="true">
+        <div class="vault-door">
+          <div class="vault-outer-ring">
+            <div class="vault-spoke vault-spoke-1"></div>
+            <div class="vault-spoke vault-spoke-2"></div>
+            <div class="vault-spoke vault-spoke-3"></div>
+            <div class="vault-spoke vault-spoke-4"></div>
+          </div>
+          <div class="vault-inner-ring">
+            <div class="vault-handle"></div>
+          </div>
+          <div class="vault-center">
+            <span class="material-symbols-outlined" style="font-size: 32px; color: var(--accent); font-variation-settings: 'FILL' 1;" aria-hidden="true">shield_lock</span>
+          </div>
+          <div class="vault-glow"></div>
+        </div>
+      </div>
+      <div class="vault-hero-content" style="position: relative; z-index: 2; text-align: center; max-width: 800px; margin: 0 auto;">
+        <div class="vert-eyebrow reveal">
+          <span class="vert-eyebrow-line"></span>
+          <span class="vert-eyebrow-text">Security</span>
+        </div>
+        <h1 class="reveal reveal-delay-1">
+          Your Data,<br />
+          <span class="gradient-text-cyan">Fortified.</span>
+        </h1>
+        <p class="vault-subtitle reveal reveal-delay-2" style="font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem); max-width: 620px; margin: 20px auto 0; line-height: 1.75; color: var(--text-secondary);">
+          Founded by a CISSP/CCSP-certified security professional. Enterprise-grade data protection
+          is not bolted on after the fact — it is embedded in every layer of how we operate.
+        </p>
+      </div>
+    </section>
+
+    <!-- Security Architecture Diagram -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Security Architecture">
+      <div style="max-width: 1280px; margin: 0 auto;">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow" style="justify-content: flex-start;">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Architecture</span>
+          </div>
+          <h2 style="margin-top: 8px;">Data Flow &amp; Encryption</h2>
+          <p style="font-size: 1.0625rem; color: var(--text-secondary); line-height: 1.7; max-width: 640px; margin-top: 16px;">
+            Every stage of data handling is protected with industry-leading encryption and access controls.
+          </p>
+        </div>
+
+        <!-- Interactive Flow Diagram -->
+        <div class="flow-diagram" style="margin-top: 48px;">
+          {dataFlow.map((step, i) => (
+            <Fragment>
+              <div class={`flow-stage reveal reveal-delay-${(i % 4) + 1}`} data-stage={step.stage.toLowerCase()}>
+                <div class="flow-icon-wrap">
+                  <span class="material-symbols-outlined" style="font-size: 24px; color: var(--accent); font-variation-settings: 'FILL' 1;" aria-hidden="true">{step.icon}</span>
+                </div>
+                <h3 style="font-family: var(--font-headline); font-size: 0.9375rem; font-weight: 700; color: var(--text-primary); margin-top: 12px;">{step.stage}</h3>
+                <span class="flow-encryption-badge">{step.encryption}</span>
+                <p style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.6; margin-top: 8px;">{step.detail}</p>
+              </div>
+              {i < dataFlow.length - 1 && (
+                <div class="flow-connector" aria-hidden="true">
+                  <span class="material-symbols-outlined" style="font-size: 16px; color: var(--accent); opacity: 0.5;" aria-hidden="true">chevron_right</span>
+                </div>
+              )}
+            </Fragment>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Six Pillars -->
+    <section class="section" aria-label="Security Pillars">
+      <div style="max-width: 1280px; margin: 0 auto;">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow" style="justify-content: flex-start;">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Foundation</span>
+          </div>
+          <h2 style="margin-top: 8px;">Six Pillars of Protection</h2>
+          <p style="font-size: 1.0625rem; color: var(--text-secondary); line-height: 1.7; max-width: 640px; margin-top: 16px;">
+            Every engagement is governed by a security architecture designed for
+            the most demanding enterprise clients.
+          </p>
+        </div>
+        <div class="pillars-grid" style="margin-top: 48px;">
+          {pillars.map((pillar, i) => (
+            <div class={`pillar-card reveal reveal-delay-${(i % 4) + 1}`}>
+              <div class="pillar-icon-wrap">
+                <span class="material-symbols-outlined" style="font-size: 24px; color: var(--accent); font-variation-settings: 'FILL' 1;" aria-hidden="true">{pillar.icon}</span>
+              </div>
+              <h3 style="font-family: var(--font-headline); font-size: 1.0625rem; font-weight: 700; color: var(--text-primary); margin-top: 20px; margin-bottom: 10px;">{pillar.title}</h3>
+              <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.7;">{pillar.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Pentest Results -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Penetration Test Results">
+      <div style="max-width: 1280px; margin: 0 auto;">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow" style="justify-content: flex-start;">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Assurance</span>
+          </div>
+          <h2 style="margin-top: 8px;">Penetration Test Results</h2>
+          <p style="font-size: 1.0625rem; color: var(--text-secondary); line-height: 1.7; max-width: 640px; margin-top: 16px;">
+            Summary of our most recent independent security assessment.
+          </p>
+        </div>
+        <div class="pentest-card reveal reveal-delay-1" style="margin-top: 48px;">
+          <div class="pentest-header">
+            <div>
+              <p style="font-family: var(--font-label); font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-tertiary);">Last Assessment</p>
+              <p style="font-family: var(--font-headline); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 4px;">{pentestResults.date}</p>
+            </div>
+            <div>
+              <p style="font-family: var(--font-label); font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-tertiary);">Conducted By</p>
+              <p style="font-size: 0.9375rem; color: var(--text-secondary); margin-top: 4px;">{pentestResults.firm}</p>
+            </div>
+            <div>
+              <p style="font-family: var(--font-label); font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-tertiary);">Remediation</p>
+              <p style="font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; color: #34d399; margin-top: 4px;">{pentestResults.remediated}</p>
+            </div>
+          </div>
+          <div class="pentest-findings" style="margin-top: 32px;">
+            <div class="finding-item">
+              <span class="finding-count" style="color: #ff4444;">{pentestResults.criticalFindings}</span>
+              <span class="finding-label">Critical</span>
+            </div>
+            <div class="finding-item">
+              <span class="finding-count" style="color: #ff8c00;">{pentestResults.highFindings}</span>
+              <span class="finding-label">High</span>
+            </div>
+            <div class="finding-item">
+              <span class="finding-count" style="color: #ffcc00;">{pentestResults.mediumFindings}</span>
+              <span class="finding-label">Medium</span>
+            </div>
+            <div class="finding-item">
+              <span class="finding-count" style="color: #34d399;">{pentestResults.lowFindings}</span>
+              <span class="finding-label">Low</span>
+            </div>
+          </div>
+          <p style="font-size: 0.8125rem; color: var(--text-tertiary); margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--glass-border);">
+            Next assessment scheduled: {pentestResults.nextScheduled}. Full report available under NDA upon request.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bug Bounty Program -->
+    <section class="section" aria-label="Bug Bounty Program">
+      <div style="max-width: 1280px; margin: 0 auto;">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow" style="justify-content: flex-start;">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Bug Bounty</span>
+          </div>
+          <h2 style="margin-top: 8px;">Responsible Disclosure Program</h2>
+          <p style="font-size: 1.0625rem; color: var(--text-secondary); line-height: 1.7; max-width: 640px; margin-top: 16px;">
+            We welcome security researchers who help us identify vulnerabilities. Report findings responsibly and get rewarded.
+          </p>
+        </div>
+
+        <div class="bounty-grid" style="margin-top: 48px;">
+          <div class="bounty-rules reveal reveal-delay-1">
+            <h3 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 700; color: var(--text-primary); margin-bottom: 20px;">Rules &amp; Scope</h3>
+            <ul class="bounty-rules-list">
+              <li>In-scope: jinki.ai, *.jinki.ai, client portal, API endpoints</li>
+              <li>Out of scope: social engineering, physical attacks, third-party services</li>
+              <li>Report via <a href="mailto:security@jinki.ai" style="color: var(--accent);">security@jinki.ai</a> with detailed reproduction steps</li>
+              <li>Allow up to 5 business days for initial response</li>
+              <li>Do not access or modify other users' data</li>
+              <li>Do not perform denial-of-service testing</li>
+            </ul>
+          </div>
+          <div class="bounty-rewards reveal reveal-delay-2">
+            <h3 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 700; color: var(--text-primary); margin-bottom: 20px;">Rewards</h3>
+            <div class="rewards-table">
+              {bountyTiers.map((tier) => (
+                <div class="reward-row">
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <span class="severity-dot" style={`background: ${tier.color};`}></span>
+                    <span style="font-family: var(--font-headline); font-size: 0.875rem; font-weight: 700; color: var(--text-primary);">{tier.severity}</span>
+                  </div>
+                  <p style="font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5; margin-top: 4px;">{tier.description}</p>
+                  <p style="font-family: var(--font-mono); font-size: 0.875rem; color: var(--accent); font-weight: 600; margin-top: 6px;">{tier.reward}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Residency -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Data Residency">
+      <div style="max-width: 1280px; margin: 0 auto;">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow" style="justify-content: flex-start;">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Infrastructure</span>
+          </div>
+          <h2 style="margin-top: 8px;">Data Residency</h2>
+          <p style="font-size: 1.0625rem; color: var(--text-secondary); line-height: 1.7; max-width: 640px; margin-top: 16px;">
+            Choose where your data lives. We operate from geographically distributed, SOC 2-compliant data centers.
+          </p>
+        </div>
+
+        <div class="residency-grid" style="margin-top: 48px;">
+          {datacenters.map((dc, i) => (
+            <div class={`dc-card reveal reveal-delay-${i + 1}`}>
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+                <span class={`dc-status dc-status-${dc.status.toLowerCase()}`}>{dc.status}</span>
+                <span class="material-symbols-outlined" style="font-size: 20px; color: var(--text-tertiary);" aria-hidden="true">location_on</span>
+              </div>
+              <h3 style="font-family: var(--font-headline); font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">{dc.region}</h3>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <div class="latency-bar">
+                  <div class="latency-fill" style={`width: ${dc.latency === '< 5ms' ? '25%' : dc.latency === '< 8ms' ? '40%' : '60%'};`}></div>
+                </div>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent);">{dc.latency}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Commitments -->
+    <section class="section" aria-label="Security Commitments">
+      <div style="max-width: 1280px; margin: 0 auto;">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow" style="justify-content: flex-start;">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Commitments</span>
+          </div>
+          <h2 style="margin-top: 8px;">Our Security Commitments</h2>
+        </div>
+        <div class="commitments-grid" style="margin-top: 40px;">
+          {commitments.map((item, i) => (
+            <div class={`commitment-item reveal reveal-delay-${(i % 3) + 1}`}>
+              <span class="material-symbols-outlined" style="font-size: 22px; color: var(--accent); flex-shrink: 0; font-variation-settings: 'FILL' 1;" aria-hidden="true">check_circle</span>
+              <span style="font-family: var(--font-body); font-size: 0.9375rem; color: var(--text-primary); line-height: 1.6; font-weight: 500;">{item}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Request Security Review">
+      <div style="max-width: 640px; margin: 0 auto; text-align: center;">
+        <div class="reveal">
+          <h2 style="font-family: var(--font-headline); font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem); font-weight: 700; color: var(--text-primary); line-height: 1.15;">Need Our Security Documentation?</h2>
+          <p style="font-size: 1.0625rem; color: var(--text-secondary); line-height: 1.7; max-width: 540px; margin: 16px auto 32px;">
+            Detailed security architecture documentation, compliance attestations, and data handling procedures are available under NDA.
+          </p>
+          <a href="/#lead-gen" class="btn-premium security-cta-btn">Request Security Review</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* Vault Hero */
+  .vault-hero {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 140px clamp(20px, 5vw, 80px) 80px;
+    position: relative;
+    background: var(--surface-container-lowest);
+    overflow: hidden;
+  }
+
+  .vault-visual {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.15;
+  }
+
+  .vault-door {
+    width: 320px;
+    height: 320px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vault-outer-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    animation: vaultSpin 60s linear infinite;
+  }
+
+  .vault-spoke {
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    opacity: 0.4;
+  }
+
+  .vault-spoke-1 { transform: translateX(-50%) rotate(0deg); }
+  .vault-spoke-2 { transform: translateX(-50%) rotate(45deg); }
+  .vault-spoke-3 { transform: translateX(-50%) rotate(90deg); }
+  .vault-spoke-4 { transform: translateX(-50%) rotate(135deg); }
+
+  .vault-inner-ring {
+    position: absolute;
+    inset: 40px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent);
+    opacity: 0.6;
+    animation: vaultSpin 40s linear infinite reverse;
+  }
+
+  .vault-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    opacity: 0.5;
+  }
+
+  .vault-center {
+    position: relative;
+    z-index: 2;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vault-glow {
+    position: absolute;
+    inset: -60px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-glow-strong) 0%, transparent 70%);
+    animation: vaultPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes vaultSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes vaultPulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.1); }
+  }
+
+  .gradient-text-cyan {
+    background: linear-gradient(135deg, #00E5FF, #00a8b5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .vault-hero h1 {
+    font-family: var(--font-headline);
+    font-size: clamp(2.5rem, 5vw + 0.5rem, 4rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--text-primary);
+  }
+
+  .vert-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    justify-content: center;
+  }
+
+  .vert-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .vert-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+  }
+
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .section { padding: 6rem clamp(20px, 5vw, 80px); }
+  }
+
+  .section-header {
+    margin-bottom: 0;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+  }
+
+  /* Flow Diagram */
+  .flow-diagram {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    overflow-x: auto;
+    padding-bottom: 16px;
+  }
+
+  .flow-stage {
+    flex: 1;
+    min-width: 180px;
+    text-align: center;
+    padding: 24px 16px;
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .flow-stage::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .flow-stage:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 229, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 20px var(--accent-glow);
+  }
+
+  .flow-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .flow-encryption-badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-glow);
+    padding: 2px 10px;
+    border-radius: 100px;
+    margin-top: 8px;
+  }
+
+  .flow-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    padding-top: 36px;
+  }
+
+  @media (max-width: 768px) {
+    .flow-diagram {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .flow-connector {
+      width: auto;
+      padding-top: 0;
+      padding: 4px 0;
+      transform: rotate(90deg);
+    }
+    .flow-stage { min-width: auto; }
+  }
+
+  /* Pillars Grid */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 1024px) {
+    .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .pillars-grid { grid-template-columns: 1fr; }
+  }
+
+  .pillar-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pillar-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .pillar-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 229, 255, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 30px var(--accent-glow);
+  }
+
+  .pillar-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Pentest Card */
+  .pentest-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pentest-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .pentest-header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  @media (max-width: 640px) {
+    .pentest-header { grid-template-columns: 1fr; gap: 20px; }
+  }
+
+  .pentest-findings {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 640px) {
+    .pentest-findings { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .finding-item {
+    text-align: center;
+    padding: 20px;
+    background: var(--surface-container);
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+  }
+
+  .finding-count {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+    display: block;
+  }
+
+  .finding-label {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* Bug Bounty */
+  .bounty-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  @media (max-width: 768px) {
+    .bounty-grid { grid-template-columns: 1fr; }
+  }
+
+  .bounty-rules,
+  .bounty-rewards {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bounty-rules::before,
+  .bounty-rewards::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .bounty-rules-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .bounty-rules-list li {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--glass-border);
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .bounty-rules-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 18px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+  .bounty-rules-list li:last-child {
+    border-bottom: none;
+  }
+
+  .reward-row {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .reward-row:last-child {
+    border-bottom: none;
+  }
+
+  .severity-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Data Residency */
+  .residency-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .residency-grid { grid-template-columns: 1fr; }
+  }
+
+  .dc-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dc-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .dc-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 229, 255, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .dc-status {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+
+  .dc-status-primary {
+    color: #34d399;
+    background: rgba(52, 211, 153, 0.12);
+  }
+
+  .dc-status-failover {
+    color: #ffcc00;
+    background: rgba(255, 204, 0, 0.12);
+  }
+
+  .dc-status-available {
+    color: var(--accent);
+    background: var(--accent-glow);
+  }
+
+  .latency-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--surface-container);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .latency-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #34d399, var(--accent));
+    border-radius: 2px;
+    transition: width 0.5s ease;
+  }
+
+  /* Commitments */
+  .commitments-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .commitments-grid { grid-template-columns: 1fr; }
+  }
+
+  .commitment-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px 24px;
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .commitment-item:hover {
+    border-color: rgba(0, 229, 255, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Security CTA */
+  .security-cta-btn {
+    display: inline-block;
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 14px 36px;
+    border-radius: 12px;
+    color: #050508;
+    background: linear-gradient(135deg, #00E5FF, #00b8d4);
+    text-decoration: none;
+    box-shadow: 0 4px 24px rgba(0, 229, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .security-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 229, 255, 0.4);
+  }
+
+  :global([data-theme="light"]) .security-cta-btn {
+    color: #fff;
+    background: linear-gradient(135deg, #00838f, #006064);
+    box-shadow: 0 4px 24px rgba(0, 131, 143, 0.3);
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .vault-outer-ring,
+    .vault-inner-ring,
+    .vault-glow { animation: none; }
+  }
+</style>

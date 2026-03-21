@@ -1,0 +1,967 @@
+---
+import '../../styles/global.css';
+const title = 'Mobile Enhancement — Team Alpha | Jinki';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Team Alpha mobile-specific UI showcase for Jinki Aerial Intelligence" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>{title}</title>
+  <link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=download,expand_less,expand_more,home,install_mobile,menu,notifications,phone_iphone,search,settings,swipe,touch_app&display=swap" rel="stylesheet" />
+  <script is:inline>
+    (function() {
+      var theme = localStorage.getItem('jinki-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <style is:inline>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <header class="mob-header" role="banner">
+    <div class="mob-header-inner">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:var(--accent);" aria-hidden="true">phone_iphone</span>
+        <div>
+          <h1 style="font-size:clamp(18px,3vw,24px);line-height:1.2;">Mobile Enhancement</h1>
+          <p style="font-family:var(--font-mono);font-size:12px;color:var(--accent);letter-spacing:0.05em;">Team Alpha &mdash; Round 16</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" role="main" style="max-width:1200px;margin:0 auto;padding:32px 24px 120px;">
+
+    <!-- Section 1: Touch Gestures -->
+    <section id="gestures" class="mob-section" aria-labelledby="gesture-heading">
+      <div class="mob-section-header">
+        <span class="sec-num" aria-hidden="true">01</span>
+        <h2 id="gesture-heading">Touch Gesture Demonstrations</h2>
+      </div>
+      <div class="mob-card glass-panel" style="border-radius:16px;">
+        <p class="mob-desc">Interactive gesture areas with visual feedback for common mobile interactions.</p>
+        <div class="gesture-grid">
+          <div class="gesture-zone" id="swipe-zone" role="application" aria-label="Swipe gesture demo area" tabindex="0">
+            <div class="gesture-icon-wrap">
+              <span class="material-symbols-outlined" style="font-size:36px;color:var(--accent);" aria-hidden="true">swipe</span>
+            </div>
+            <h3>Swipe</h3>
+            <p>Swipe left or right</p>
+            <div class="gesture-feedback" id="swipe-feedback" aria-live="polite"></div>
+            <div class="swipe-indicator" id="swipe-indicator" aria-hidden="true"></div>
+          </div>
+          <div class="gesture-zone" id="tap-zone" role="application" aria-label="Tap gesture demo area" tabindex="0">
+            <div class="gesture-icon-wrap">
+              <span class="material-symbols-outlined" style="font-size:36px;color:var(--accent);" aria-hidden="true">touch_app</span>
+            </div>
+            <h3>Tap &amp; Hold</h3>
+            <p>Tap or long-press</p>
+            <div class="gesture-feedback" id="tap-feedback" aria-live="polite"></div>
+            <div class="tap-ripple" id="tap-ripple" aria-hidden="true"></div>
+          </div>
+          <div class="gesture-zone" id="pinch-zone" role="application" aria-label="Pinch gesture demo area" tabindex="0">
+            <div class="gesture-icon-wrap">
+              <span class="material-symbols-outlined" style="font-size:36px;color:var(--accent);" aria-hidden="true">expand_less</span>
+              <span class="material-symbols-outlined" style="font-size:36px;color:var(--accent);margin-top:-12px;" aria-hidden="true">expand_more</span>
+            </div>
+            <h3>Pinch</h3>
+            <p>Pinch to zoom (touch only)</p>
+            <div class="gesture-feedback" id="pinch-feedback" aria-live="polite"></div>
+            <div class="pinch-visual" id="pinch-visual" aria-hidden="true">
+              <div class="pinch-circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Bottom Navigation -->
+    <section id="bottom-nav" class="mob-section" aria-labelledby="bnav-heading">
+      <div class="mob-section-header">
+        <span class="sec-num" aria-hidden="true">02</span>
+        <h2 id="bnav-heading">Bottom Navigation Bar</h2>
+      </div>
+      <div class="mob-card glass-panel" style="border-radius:16px;">
+        <p class="mob-desc">iOS-style tab bar optimized for thumb reach on mobile devices. Fixed at the bottom within the demo frame.</p>
+        <div class="phone-frame" aria-label="Phone mockup showing bottom navigation">
+          <div class="phone-screen">
+            <div class="phone-status-bar" aria-hidden="true">
+              <span>9:41</span>
+              <div class="status-icons">
+                <div class="signal-bars"><span></span><span></span><span></span><span></span></div>
+                <span style="font-size:11px;">100%</span>
+              </div>
+            </div>
+            <div class="phone-content">
+              <div class="phone-hero">
+                <div class="phone-hero-text">Mission Dashboard</div>
+                <div class="phone-hero-sub">3 active missions</div>
+              </div>
+              <div class="phone-cards">
+                <div class="phone-mini-card">
+                  <div class="mini-dot green" aria-hidden="true"></div>
+                  <span>Thermal Sweep A3</span>
+                  <span class="mini-status">Active</span>
+                </div>
+                <div class="phone-mini-card">
+                  <div class="mini-dot orange" aria-hidden="true"></div>
+                  <span>Perimeter Scan B1</span>
+                  <span class="mini-status">Queued</span>
+                </div>
+                <div class="phone-mini-card">
+                  <div class="mini-dot blue" aria-hidden="true"></div>
+                  <span>NDVI Field D2</span>
+                  <span class="mini-status">Complete</span>
+                </div>
+              </div>
+            </div>
+            <nav class="bottom-tab-bar" aria-label="Bottom navigation demo">
+              <button class="tab-item active" aria-current="page" data-tab="home">
+                <span class="material-symbols-outlined" style="font-size:22px;" aria-hidden="true">home</span>
+                <span class="tab-label">Home</span>
+              </button>
+              <button class="tab-item" data-tab="search">
+                <span class="material-symbols-outlined" style="font-size:22px;" aria-hidden="true">search</span>
+                <span class="tab-label">Search</span>
+              </button>
+              <button class="tab-item" data-tab="alerts">
+                <span class="material-symbols-outlined" style="font-size:22px;" aria-hidden="true">notifications</span>
+                <span class="tab-label">Alerts</span>
+                <span class="tab-badge" aria-label="3 new alerts">3</span>
+              </button>
+              <button class="tab-item" data-tab="settings">
+                <span class="material-symbols-outlined" style="font-size:22px;" aria-hidden="true">settings</span>
+                <span class="tab-label">Settings</span>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Pull-to-Refresh -->
+    <section id="pull-refresh" class="mob-section" aria-labelledby="ptr-heading">
+      <div class="mob-section-header">
+        <span class="sec-num" aria-hidden="true">03</span>
+        <h2 id="ptr-heading">Pull-to-Refresh Animation</h2>
+      </div>
+      <div class="mob-card glass-panel" style="border-radius:16px;">
+        <p class="mob-desc">A native-feeling pull-to-refresh interaction. Drag down inside the demo area.</p>
+        <div class="ptr-container" id="ptr-container" role="application" aria-label="Pull to refresh demo">
+          <div class="ptr-indicator" id="ptr-indicator" aria-hidden="true">
+            <div class="ptr-spinner"></div>
+            <span class="ptr-text">Pull to refresh</span>
+          </div>
+          <div class="ptr-content" id="ptr-content">
+            <div class="ptr-item">
+              <div class="ptr-dot" aria-hidden="true"></div>
+              <div>
+                <strong>Thermal anomaly report</strong>
+                <p>12 hotspots detected in Zone A3</p>
+              </div>
+              <span class="ptr-time">2m ago</span>
+            </div>
+            <div class="ptr-item">
+              <div class="ptr-dot orange" aria-hidden="true"></div>
+              <div>
+                <strong>Battery warning</strong>
+                <p>Unit Alpha-7 at 15% charge</p>
+              </div>
+              <span class="ptr-time">5m ago</span>
+            </div>
+            <div class="ptr-item">
+              <div class="ptr-dot green" aria-hidden="true"></div>
+              <div>
+                <strong>Mission complete</strong>
+                <p>NDVI scan of Field D2 finished</p>
+              </div>
+              <span class="ptr-time">12m ago</span>
+            </div>
+            <div class="ptr-item">
+              <div class="ptr-dot" aria-hidden="true"></div>
+              <div>
+                <strong>Data upload</strong>
+                <p>2.4 GB uploaded to cloud</p>
+              </div>
+              <span class="ptr-time">18m ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Safe Area -->
+    <section id="safe-area" class="mob-section" aria-labelledby="safe-heading">
+      <div class="mob-section-header">
+        <span class="sec-num" aria-hidden="true">04</span>
+        <h2 id="safe-heading">Safe Area Handling</h2>
+      </div>
+      <div class="mob-card glass-panel" style="border-radius:16px;">
+        <p class="mob-desc">Modern devices have notches, Dynamic Island, and rounded corners. <code>env(safe-area-inset-*)</code> ensures content stays visible.</p>
+        <div class="safe-area-demo">
+          <div class="safe-phone">
+            <div class="safe-notch" aria-hidden="true">
+              <div class="dynamic-island"></div>
+            </div>
+            <div class="safe-screen">
+              <div class="safe-zone top" aria-hidden="true">
+                <span>safe-area-inset-top: 59px</span>
+              </div>
+              <div class="safe-content-area">
+                <span style="font-family:var(--font-label);font-size:13px;color:var(--text-secondary);">Content renders within safe boundaries</span>
+              </div>
+              <div class="safe-zone bottom" aria-hidden="true">
+                <span>safe-area-inset-bottom: 34px</span>
+              </div>
+            </div>
+            <div class="safe-home-indicator" aria-hidden="true"></div>
+          </div>
+        </div>
+        <div class="code-block" style="margin-top:24px;">
+          <pre><code>/* Safe area padding */
+.page-content {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Bottom nav with safe area */
+.bottom-nav {
+  padding-bottom: calc(8px + env(safe-area-inset-bottom));
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Mobile Form Inputs -->
+    <section id="forms" class="mob-section" aria-labelledby="form-heading">
+      <div class="mob-section-header">
+        <span class="sec-num" aria-hidden="true">05</span>
+        <h2 id="form-heading">Mobile-Optimized Forms</h2>
+      </div>
+      <div class="mob-card glass-panel" style="border-radius:16px;">
+        <p class="mob-desc">Large touch targets (min 48px), proper input types for mobile keyboards, and autocomplete attributes.</p>
+        <form class="mobile-form" onsubmit="return false;" novalidate>
+          <div class="form-group">
+            <label for="m-name">Full Name</label>
+            <input type="text" id="m-name" autocomplete="name" placeholder="Jane Smith" class="mobile-input" />
+          </div>
+          <div class="form-group">
+            <label for="m-email">Email</label>
+            <input type="email" id="m-email" autocomplete="email" inputmode="email" placeholder="jane@company.com" class="mobile-input" />
+          </div>
+          <div class="form-group">
+            <label for="m-phone">Phone</label>
+            <input type="tel" id="m-phone" autocomplete="tel" inputmode="tel" placeholder="+1 (555) 000-0000" class="mobile-input" />
+          </div>
+          <div class="form-group">
+            <label for="m-company">Company</label>
+            <input type="text" id="m-company" autocomplete="organization" placeholder="Acme Corp" class="mobile-input" />
+          </div>
+          <div class="form-group">
+            <label for="m-message">Message</label>
+            <textarea id="m-message" rows="3" placeholder="Tell us about your facility..." class="mobile-input"></textarea>
+          </div>
+          <button type="submit" class="mobile-submit btn-premium">
+            Get a Free Assessment
+          </button>
+        </form>
+        <div class="form-specs" style="margin-top:20px;">
+          <h3>Mobile Form Best Practices</h3>
+          <ul>
+            <li>Minimum 48px touch target height (we use 52px)</li>
+            <li><code>inputmode="email"</code> triggers email keyboard</li>
+            <li><code>inputmode="tel"</code> triggers phone keypad</li>
+            <li><code>autocomplete</code> enables autofill</li>
+            <li>16px+ font size prevents iOS zoom-on-focus</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: PWA Install Prompt -->
+    <section id="pwa" class="mob-section" aria-labelledby="pwa-heading">
+      <div class="mob-section-header">
+        <span class="sec-num" aria-hidden="true">06</span>
+        <h2 id="pwa-heading">PWA Install Prompt</h2>
+      </div>
+      <div class="mob-card glass-panel" style="border-radius:16px;">
+        <p class="mob-desc">Custom install prompt with branded UI, shown after engagement threshold (e.g., 2nd visit or 30s on page).</p>
+        <div class="pwa-demo">
+          <div class="pwa-prompt glass-panel" style="border-radius:16px;" id="pwa-prompt" role="dialog" aria-labelledby="pwa-title">
+            <div class="pwa-prompt-header">
+              <div class="pwa-app-icon" aria-hidden="true">
+                <span style="font-family:var(--font-headline);font-size:20px;font-weight:700;color:var(--accent);">J</span>
+              </div>
+              <div>
+                <h3 id="pwa-title">Install Jinki</h3>
+                <p style="font-size:13px;color:var(--text-tertiary);">jinki.ai</p>
+              </div>
+            </div>
+            <p class="pwa-benefits" style="color:var(--text-secondary);font-size:14px;line-height:1.6;margin:16px 0;">Get instant access to mission dashboards, offline reports, and push notifications for anomaly alerts.</p>
+            <div class="pwa-features">
+              <div class="pwa-feature">
+                <span class="material-symbols-outlined" style="font-size:18px;color:var(--accent);" aria-hidden="true">download</span>
+                <span>Works offline</span>
+              </div>
+              <div class="pwa-feature">
+                <span class="material-symbols-outlined" style="font-size:18px;color:var(--accent);" aria-hidden="true">notifications</span>
+                <span>Push alerts</span>
+              </div>
+              <div class="pwa-feature">
+                <span class="material-symbols-outlined" style="font-size:18px;color:var(--accent);" aria-hidden="true">install_mobile</span>
+                <span>Home screen</span>
+              </div>
+            </div>
+            <div class="pwa-actions" style="display:flex;gap:12px;margin-top:20px;">
+              <button class="pwa-dismiss" id="pwa-dismiss" style="flex:1;padding:14px;border-radius:10px;border:1px solid var(--outline-variant);background:transparent;color:var(--text-primary);font-family:var(--font-label);font-weight:600;cursor:pointer;font-size:15px;">Not Now</button>
+              <button class="pwa-install btn-premium" id="pwa-install" style="flex:2;padding:14px;border-radius:10px;border:none;background:var(--accent);color:#000;font-family:var(--font-label);font-weight:600;cursor:pointer;font-size:15px;">Install App</button>
+            </div>
+          </div>
+        </div>
+        <div class="code-block" style="margin-top:24px;">
+          <pre><code>// Listen for the browser's install prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  showCustomInstallUI(); // Our branded prompt
+});
+
+// When user clicks "Install"
+installBtn.addEventListener('click', async () => {
+  deferredPrompt.prompt();
+  const result = await deferredPrompt.userChoice;
+  console.log('Install:', result.outcome);
+  deferredPrompt = null;
+});</code></pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .mob-header {
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 24px;
+    }
+    .mob-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .mob-section { margin-bottom: 48px; }
+    .mob-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .sec-num {
+      font-family: var(--font-mono);
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--accent);
+      opacity: 0.25;
+      line-height: 1;
+    }
+    .mob-section-header h2 { font-size: clamp(22px, 4vw, 32px); }
+    .mob-card { padding: 32px; position: relative; z-index: 0; }
+    .mob-desc {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .mob-desc code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      background: var(--surface-container);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+    .code-block {
+      background: var(--surface-container-low);
+      padding: 16px 20px;
+      border-radius: 10px;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+    }
+    .code-block pre { margin: 0; }
+    .code-block code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+      line-height: 1.6;
+      background: transparent;
+    }
+
+    /* Gesture Zones */
+    .gesture-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .gesture-zone {
+      background: var(--surface-container);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+      border: 2px dashed var(--border);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      transition: border-color 0.3s;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .gesture-zone:active, .gesture-zone.active {
+      border-color: var(--accent);
+    }
+    .gesture-icon-wrap { display: flex; flex-direction: column; align-items: center; }
+    .gesture-zone h3 { font-size: 17px; }
+    .gesture-zone p { font-size: 13px; color: var(--text-tertiary); }
+    .gesture-feedback {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+      min-height: 20px;
+      margin-top: 8px;
+    }
+    .swipe-indicator {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0);
+      pointer-events: none;
+      transition: all 0.3s;
+    }
+    .swipe-indicator.show {
+      opacity: 0.2;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    .tap-ripple {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0;
+      transform: scale(0);
+      pointer-events: none;
+    }
+    .tap-ripple.ripple {
+      animation: rippleOut 0.6s ease-out;
+    }
+    @keyframes rippleOut {
+      0% { opacity: 0.4; transform: scale(0); }
+      100% { opacity: 0; transform: scale(2); }
+    }
+    .pinch-circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      transition: all 0.2s;
+    }
+    .pinch-visual {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
+    /* Phone Frame */
+    .phone-frame {
+      max-width: 375px;
+      margin: 0 auto;
+      border-radius: 40px;
+      border: 3px solid var(--outline-variant);
+      background: var(--surface-container-lowest);
+      overflow: hidden;
+      position: relative;
+    }
+    .phone-screen { position: relative; }
+    .phone-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 28px 8px;
+      font-family: var(--font-label);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .status-icons { display: flex; align-items: center; gap: 6px; }
+    .signal-bars { display: flex; align-items: flex-end; gap: 1px; height: 10px; }
+    .signal-bars span {
+      width: 3px;
+      background: var(--text-primary);
+      border-radius: 1px;
+    }
+    .signal-bars span:nth-child(1) { height: 4px; }
+    .signal-bars span:nth-child(2) { height: 6px; }
+    .signal-bars span:nth-child(3) { height: 8px; }
+    .signal-bars span:nth-child(4) { height: 10px; }
+    .phone-content { padding: 8px 20px 16px; }
+    .phone-hero { margin-bottom: 16px; }
+    .phone-hero-text { font-family: var(--font-headline); font-size: 22px; font-weight: 700; }
+    .phone-hero-sub { font-size: 14px; color: var(--text-tertiary); margin-top: 4px; }
+    .phone-cards { display: flex; flex-direction: column; gap: 8px; }
+    .phone-mini-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+    }
+    .mini-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .mini-dot.green { background: #34d399; }
+    .mini-dot.orange { background: #ffa500; }
+    .mini-dot.blue { background: #60a5fa; }
+    .phone-mini-card span:nth-child(2) { flex: 1; font-size: 14px; font-weight: 500; color: var(--text-primary); }
+    .mini-status { font-size: 12px; color: var(--text-tertiary); font-family: var(--font-mono); }
+
+    .bottom-tab-bar {
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 0 20px;
+      background: var(--surface-container);
+      border-top: 1px solid var(--border);
+    }
+    .tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-tertiary);
+      padding: 6px 16px;
+      border-radius: 8px;
+      transition: all 0.2s;
+      position: relative;
+      font-family: var(--font-label);
+    }
+    .tab-item.active { color: var(--accent); }
+    .tab-label { font-size: 11px; font-weight: 600; }
+    .tab-badge {
+      position: absolute;
+      top: 0;
+      right: 6px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ff4757;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Pull to Refresh */
+    .ptr-container {
+      max-width: 400px;
+      margin: 0 auto;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: relative;
+      background: var(--surface-container-lowest);
+      max-height: 360px;
+      overflow-y: auto;
+      touch-action: pan-y;
+    }
+    .ptr-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 0;
+      height: 0;
+      overflow: hidden;
+      transition: height 0.3s, padding 0.3s;
+      background: var(--surface-container);
+    }
+    .ptr-indicator.pulling { height: 60px; padding: 16px; }
+    .ptr-indicator.refreshing .ptr-spinner { animation: ptrSpin 0.8s linear infinite; }
+    .ptr-spinner {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+    }
+    @keyframes ptrSpin {
+      to { transform: rotate(360deg); }
+    }
+    .ptr-text { font-family: var(--font-label); font-size: 13px; color: var(--text-tertiary); }
+    .ptr-content { padding: 8px; }
+    .ptr-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      transition: background 0.2s;
+    }
+    .ptr-item:hover { background: var(--surface-container); }
+    .ptr-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .ptr-dot.orange { background: #ffa500; }
+    .ptr-dot.green { background: #34d399; }
+    .ptr-item div { flex: 1; }
+    .ptr-item strong { font-size: 14px; color: var(--text-primary); display: block; }
+    .ptr-item p { font-size: 13px; color: var(--text-tertiary); margin-top: 2px; }
+    .ptr-time { font-family: var(--font-mono); font-size: 11px; color: var(--text-tertiary); white-space: nowrap; }
+
+    /* Safe Area */
+    .safe-area-demo { display: flex; justify-content: center; }
+    .safe-phone {
+      width: 280px;
+      background: var(--surface-container-lowest);
+      border-radius: 40px;
+      border: 3px solid var(--outline-variant);
+      overflow: hidden;
+      position: relative;
+    }
+    .safe-notch {
+      display: flex;
+      justify-content: center;
+      padding: 12px 0 0;
+      background: var(--surface-container-lowest);
+    }
+    .dynamic-island {
+      width: 100px;
+      height: 28px;
+      border-radius: 20px;
+      background: #000;
+    }
+    .safe-screen { padding: 8px 16px 8px; }
+    .safe-zone {
+      padding: 12px;
+      border: 1px dashed var(--accent);
+      border-radius: 8px;
+      text-align: center;
+      background: var(--accent-glow);
+    }
+    .safe-zone span { font-family: var(--font-mono); font-size: 10px; color: var(--accent); }
+    .safe-content-area {
+      padding: 32px 16px;
+      text-align: center;
+      border-left: 1px dashed var(--border);
+      border-right: 1px dashed var(--border);
+    }
+    .safe-home-indicator {
+      width: 140px;
+      height: 5px;
+      border-radius: 3px;
+      background: var(--text-tertiary);
+      margin: 8px auto 12px;
+    }
+
+    /* Mobile Form */
+    .mobile-form { max-width: 500px; display: flex; flex-direction: column; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    .form-group label {
+      font-family: var(--font-label);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .mobile-input {
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-container);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      transition: all 0.2s;
+      min-height: 52px;
+      -webkit-appearance: none;
+    }
+    .mobile-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .mobile-submit {
+      padding: 16px;
+      border-radius: 12px;
+      border: none;
+      background: var(--accent);
+      color: #000;
+      font-family: var(--font-label);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      min-height: 56px;
+      margin-top: 8px;
+    }
+    .form-specs h3 { font-size: 16px; margin-bottom: 10px; }
+    .form-specs ul { list-style: none; display: grid; gap: 8px; }
+    .form-specs li {
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding-left: 24px;
+      position: relative;
+    }
+    .form-specs li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.6;
+    }
+    .form-specs li code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--surface-container);
+      padding: 1px 6px;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+
+    /* PWA Prompt */
+    .pwa-demo {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .pwa-prompt { padding: 24px; }
+    .pwa-prompt-header { display: flex; align-items: center; gap: 14px; }
+    .pwa-app-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: var(--surface-container);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pwa-prompt-header h3 { font-size: 18px; }
+    .pwa-features {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .pwa-feature {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 768px) {
+      .mob-card { padding: 20px; }
+      .sec-num { font-size: 36px; }
+    }
+  </style>
+
+  <script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    // --- Swipe Gesture ---
+    var swipeZone = document.getElementById('swipe-zone');
+    var swipeFeedback = document.getElementById('swipe-feedback');
+    var swipeIndicator = document.getElementById('swipe-indicator');
+    var startX = 0, startY = 0;
+
+    swipeZone.addEventListener('pointerdown', function(e) {
+      startX = e.clientX;
+      startY = e.clientY;
+      swipeZone.classList.add('active');
+    });
+    swipeZone.addEventListener('pointerup', function(e) {
+      swipeZone.classList.remove('active');
+      var dx = e.clientX - startX;
+      var dy = e.clientY - startY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        var dir = dx > 0 ? 'Right' : 'Left';
+        swipeFeedback.textContent = 'Swiped ' + dir + ' (' + Math.round(Math.abs(dx)) + 'px)';
+        swipeIndicator.classList.add('show');
+        setTimeout(function() { swipeIndicator.classList.remove('show'); }, 400);
+      }
+    });
+
+    // --- Tap & Hold ---
+    var tapZone = document.getElementById('tap-zone');
+    var tapFeedback = document.getElementById('tap-feedback');
+    var tapRipple = document.getElementById('tap-ripple');
+    var holdTimer = null;
+
+    tapZone.addEventListener('pointerdown', function(e) {
+      var rect = tapZone.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      tapRipple.style.left = (x - 40) + 'px';
+      tapRipple.style.top = (y - 40) + 'px';
+      tapRipple.classList.remove('ripple');
+      void tapRipple.offsetWidth;
+      tapRipple.classList.add('ripple');
+
+      holdTimer = setTimeout(function() {
+        tapFeedback.textContent = 'Long press detected!';
+      }, 500);
+    });
+    tapZone.addEventListener('pointerup', function() {
+      if (holdTimer) {
+        clearTimeout(holdTimer);
+        if (!tapFeedback.textContent.includes('Long')) {
+          tapFeedback.textContent = 'Tap detected!';
+        }
+        holdTimer = null;
+      }
+    });
+
+    // --- Pinch (multi-touch) ---
+    var pinchZone = document.getElementById('pinch-zone');
+    var pinchFeedback = document.getElementById('pinch-feedback');
+    var pinchCircle = document.querySelector('.pinch-circle');
+    var initialDist = 0;
+
+    pinchZone.addEventListener('touchstart', function(e) {
+      if (e.touches.length === 2) {
+        initialDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+      }
+    }, { passive: true });
+    pinchZone.addEventListener('touchmove', function(e) {
+      if (e.touches.length === 2 && initialDist) {
+        var currentDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        var scale = currentDist / initialDist;
+        pinchCircle.style.transform = 'scale(' + scale.toFixed(2) + ')';
+        pinchFeedback.textContent = 'Scale: ' + scale.toFixed(2) + 'x';
+      }
+    }, { passive: true });
+    pinchZone.addEventListener('touchend', function() {
+      initialDist = 0;
+      pinchCircle.style.transform = 'scale(1)';
+    });
+
+    // --- Tab Bar ---
+    var tabs = document.querySelectorAll('.tab-item');
+    tabs.forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.forEach(function(t) { t.classList.remove('active'); t.removeAttribute('aria-current'); });
+        tab.classList.add('active');
+        tab.setAttribute('aria-current', 'page');
+      });
+    });
+
+    // --- Pull to Refresh ---
+    var ptrContainer = document.getElementById('ptr-container');
+    var ptrIndicator = document.getElementById('ptr-indicator');
+    var ptrText = ptrIndicator.querySelector('.ptr-text');
+    var ptrStartY = 0;
+    var ptrActive = false;
+
+    ptrContainer.addEventListener('touchstart', function(e) {
+      if (ptrContainer.scrollTop === 0) {
+        ptrStartY = e.touches[0].clientY;
+        ptrActive = true;
+      }
+    }, { passive: true });
+
+    ptrContainer.addEventListener('touchmove', function(e) {
+      if (!ptrActive) return;
+      var dy = e.touches[0].clientY - ptrStartY;
+      if (dy > 10) {
+        ptrIndicator.classList.add('pulling');
+        ptrText.textContent = dy > 80 ? 'Release to refresh' : 'Pull to refresh';
+      }
+    }, { passive: true });
+
+    ptrContainer.addEventListener('touchend', function() {
+      if (ptrIndicator.classList.contains('pulling')) {
+        ptrIndicator.classList.add('refreshing');
+        ptrText.textContent = 'Refreshing...';
+        setTimeout(function() {
+          ptrIndicator.classList.remove('pulling', 'refreshing');
+          ptrText.textContent = 'Pull to refresh';
+        }, 1500);
+      }
+      ptrActive = false;
+    });
+
+    // --- PWA Prompt Demo ---
+    var pwaInstall = document.getElementById('pwa-install');
+    var pwaDismiss = document.getElementById('pwa-dismiss');
+    var pwaPrompt = document.getElementById('pwa-prompt');
+
+    pwaInstall.addEventListener('click', function() {
+      pwaPrompt.style.opacity = '0.5';
+      pwaPrompt.style.transform = 'scale(0.95)';
+      setTimeout(function() {
+        pwaPrompt.style.opacity = '1';
+        pwaPrompt.style.transform = 'scale(1)';
+      }, 600);
+    });
+    pwaDismiss.addEventListener('click', function() {
+      pwaPrompt.style.opacity = '0.3';
+      setTimeout(function() { pwaPrompt.style.opacity = '1'; }, 800);
+    });
+  });
+  </script>
+</body>
+</html>

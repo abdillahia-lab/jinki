@@ -1,0 +1,600 @@
+---
+/**
+ * Effects3D-Alpha.astro — 3D & Visual Effects Showcase
+ * Team Alpha | Jinki Aerial Intelligence
+ *
+ * Six spectacular 3D/visual effects:
+ * 1. CSS 3D Card Flip
+ * 2. Isometric Grid (CSS-only facility view)
+ * 3. Perspective Tunnel (scroll-driven)
+ * 4. Particle Field (canvas + vanilla JS)
+ * 5. 3D Text Extrusion (CSS text-shadow stacking)
+ * 6. Glassmorphism Layers (5 stacked panels)
+ */
+---
+
+<section class="effects3d-showcase" id="effects3d-alpha">
+  <!-- ========== SECTION HEADER ========== -->
+  <div style="text-align:center; max-width:800px; margin:0 auto; padding:80px 24px 60px;">
+    <span style="font-family:var(--font-label); font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:16px;">Effects Library</span>
+    <h2 style="font-family:var(--font-headline); font-size:clamp(2rem,5vw,3.5rem); color:var(--text-primary); margin-bottom:16px;">3D & Visual Effects</h2>
+    <p style="font-family:var(--font-body); font-size:1.1rem; color:var(--text-secondary); line-height:1.7;">CSS 3D transforms, canvas particle systems, perspective illusions, and layered glassmorphism.</p>
+  </div>
+
+  <!-- ========== 1. 3D CARD FLIP ========== -->
+  <div style="max-width:1280px; margin:0 auto; padding:0 24px 80px;">
+    <h3 style="font-family:var(--font-headline); font-size:1.5rem; color:var(--text-primary); margin-bottom:32px;">3D Card Flip</h3>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:24px;">
+
+      <div class="flip-card" style="perspective:1000px; height:300px; cursor:pointer;" tabindex="0" role="button" aria-label="Flip card: Thermal Analysis">
+        <div class="flip-inner" style="position:relative; width:100%; height:100%; transition:transform 0.7s cubic-bezier(0.4,0,0.2,1); transform-style:preserve-3d;">
+          <div class="flip-front" style="position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:32px 24px;">
+            <div style="width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg, var(--accent-glow-strong), transparent); display:flex; justify-content:center; align-items:center; margin-bottom:20px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <h4 style="font-family:var(--font-headline); font-size:1.1rem; color:var(--text-primary); margin-bottom:8px;">Thermal Analysis</h4>
+            <p style="font-family:var(--font-body); font-size:0.85rem; color:var(--text-tertiary);">Click to flip</p>
+          </div>
+          <div class="flip-back" style="position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; background:linear-gradient(135deg, var(--accent), #7B61FF); transform:rotateY(180deg); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:32px 24px;">
+            <h4 style="font-family:var(--font-headline); font-size:1.1rem; color:#000; margin-bottom:12px;">Real-time Detection</h4>
+            <p style="font-family:var(--font-body); font-size:0.85rem; color:rgba(0,0,0,0.7); line-height:1.6;">Autonomous thermal scanning identifies hotspots within milliseconds, preventing equipment failure before it occurs.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" style="perspective:1000px; height:300px; cursor:pointer;" tabindex="0" role="button" aria-label="Flip card: Perimeter Security">
+        <div class="flip-inner" style="position:relative; width:100%; height:100%; transition:transform 0.7s cubic-bezier(0.4,0,0.2,1); transform-style:preserve-3d;">
+          <div class="flip-front" style="position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:32px 24px;">
+            <div style="width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg, rgba(123,97,255,0.2), transparent); display:flex; justify-content:center; align-items:center; margin-bottom:20px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7B61FF" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h4 style="font-family:var(--font-headline); font-size:1.1rem; color:var(--text-primary); margin-bottom:8px;">Perimeter Security</h4>
+            <p style="font-family:var(--font-body); font-size:0.85rem; color:var(--text-tertiary);">Click to flip</p>
+          </div>
+          <div class="flip-back" style="position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; background:linear-gradient(135deg, #7B61FF, #FF61D8); transform:rotateY(180deg); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:32px 24px;">
+            <h4 style="font-family:var(--font-headline); font-size:1.1rem; color:#fff; margin-bottom:12px;">24/7 Autonomous Patrol</h4>
+            <p style="font-family:var(--font-body); font-size:0.85rem; color:rgba(255,255,255,0.8); line-height:1.6;">Persistent aerial intelligence monitors perimeters continuously, detecting intrusions the moment they occur.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" style="perspective:1000px; height:300px; cursor:pointer;" tabindex="0" role="button" aria-label="Flip card: Grid Inspection">
+        <div class="flip-inner" style="position:relative; width:100%; height:100%; transition:transform 0.7s cubic-bezier(0.4,0,0.2,1); transform-style:preserve-3d;">
+          <div class="flip-front" style="position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:32px 24px;">
+            <div style="width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg, rgba(255,140,0,0.2), transparent); display:flex; justify-content:center; align-items:center; margin-bottom:20px;">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF8C00" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <h4 style="font-family:var(--font-headline); font-size:1.1rem; color:var(--text-primary); margin-bottom:8px;">Grid Inspection</h4>
+            <p style="font-family:var(--font-body); font-size:0.85rem; color:var(--text-tertiary);">Click to flip</p>
+          </div>
+          <div class="flip-back" style="position:absolute; inset:0; backface-visibility:hidden; border-radius:16px; background:linear-gradient(135deg, #FF8C00, #FF6B35); transform:rotateY(180deg); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:32px 24px;">
+            <h4 style="font-family:var(--font-headline); font-size:1.1rem; color:#fff; margin-bottom:12px;">Predictive Maintenance</h4>
+            <p style="font-family:var(--font-body); font-size:0.85rem; color:rgba(255,255,255,0.8); line-height:1.6;">Aerial intelligence detects line sag, corrosion, and vegetation encroachment across transmission infrastructure.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 2. ISOMETRIC GRID ========== -->
+  <div style="max-width:1280px; margin:0 auto; padding:0 24px 80px;">
+    <h3 style="font-family:var(--font-headline); font-size:1.5rem; color:var(--text-primary); margin-bottom:32px;">Isometric Facility View</h3>
+    <div class="iso-wrapper" style="display:flex; justify-content:center; padding:40px 0;">
+      <div class="iso-grid" style="transform:rotateX(60deg) rotateZ(-45deg); transform-style:preserve-3d; display:grid; grid-template-columns:repeat(6,60px); grid-template-rows:repeat(4,60px); gap:4px;">
+        <!-- Row 1 -->
+        <div class="iso-cell iso-building" data-label="Server Hall A" style="--h:45px; --color:var(--accent);"></div>
+        <div class="iso-cell iso-building" data-label="Server Hall B" style="--h:55px; --color:var(--accent);"></div>
+        <div class="iso-cell iso-building" data-label="Cooling Tower" style="--h:70px; --color:#7B61FF;"></div>
+        <div class="iso-cell iso-ground"></div>
+        <div class="iso-cell iso-building" data-label="Power Station" style="--h:40px; --color:#FF8C00;"></div>
+        <div class="iso-cell iso-building" data-label="Transformer" style="--h:30px; --color:#FF8C00;"></div>
+        <!-- Row 2 -->
+        <div class="iso-cell iso-building" data-label="Network Ops" style="--h:50px; --color:var(--accent);"></div>
+        <div class="iso-cell iso-ground iso-path"></div>
+        <div class="iso-cell iso-ground iso-path"></div>
+        <div class="iso-cell iso-ground iso-path"></div>
+        <div class="iso-cell iso-ground iso-path"></div>
+        <div class="iso-cell iso-building" data-label="Generator" style="--h:35px; --color:#FF6B35;"></div>
+        <!-- Row 3 -->
+        <div class="iso-cell iso-building" data-label="Security Hub" style="--h:38px; --color:#7B61FF;"></div>
+        <div class="iso-cell iso-ground iso-path"></div>
+        <div class="iso-cell iso-building iso-helipad" data-label="Launch Pad" style="--h:5px; --color:var(--accent);"></div>
+        <div class="iso-cell iso-ground iso-path"></div>
+        <div class="iso-cell iso-ground"></div>
+        <div class="iso-cell iso-building" data-label="Storage" style="--h:25px; --color:#34D399;"></div>
+        <!-- Row 4 -->
+        <div class="iso-cell iso-ground"></div>
+        <div class="iso-cell iso-building" data-label="Admin" style="--h:32px; --color:var(--accent);"></div>
+        <div class="iso-cell iso-ground iso-path"></div>
+        <div class="iso-cell iso-building" data-label="Warehouse" style="--h:48px; --color:#34D399;"></div>
+        <div class="iso-cell iso-building" data-label="Lab" style="--h:42px; --color:#7B61FF;"></div>
+        <div class="iso-cell iso-ground"></div>
+      </div>
+    </div>
+    <p style="text-align:center; font-family:var(--font-body); font-size:0.85rem; color:var(--text-tertiary);">Hover over buildings to identify facilities. CSS-only isometric projection.</p>
+  </div>
+
+  <!-- ========== 3. PERSPECTIVE TUNNEL ========== -->
+  <div style="max-width:1280px; margin:0 auto; padding:0 24px 80px;">
+    <h3 style="font-family:var(--font-headline); font-size:1.5rem; color:var(--text-primary); margin-bottom:32px;">Perspective Tunnel</h3>
+    <div class="tunnel-viewport" style="position:relative; height:400px; overflow:hidden; border-radius:16px; border:1px solid var(--glass-border); background:var(--surface-container-lowest); perspective:500px; display:flex; justify-content:center; align-items:center;">
+      <div class="tunnel-container" style="position:absolute; inset:0; display:flex; justify-content:center; align-items:center; transform-style:preserve-3d;">
+        {Array.from({length: 12}).map((_, i) => (
+          <div class="tunnel-ring" style={`position:absolute; border:1px solid var(--accent); opacity:${0.1 + (i * 0.05)}; width:${600 - i * 40}px; height:${600 - i * 40}px; border-radius:${i % 2 === 0 ? '0' : '50%'}; transform:translateZ(${-i * 80}px) rotate(${i * 15}deg); transition:transform 0.3s ease-out;`}></div>
+        ))}
+      </div>
+      <div style="position:relative; z-index:5; text-align:center; pointer-events:none;">
+        <span style="font-family:var(--font-headline); font-size:1.2rem; color:var(--text-primary); text-shadow:0 0 20px var(--bg-primary);">Scroll to travel</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 4. PARTICLE FIELD ========== -->
+  <div style="max-width:1280px; margin:0 auto; padding:0 24px 80px;">
+    <h3 style="font-family:var(--font-headline); font-size:1.5rem; color:var(--text-primary); margin-bottom:32px;">Particle Field</h3>
+    <div style="position:relative; border-radius:16px; overflow:hidden; border:1px solid var(--glass-border);">
+      <canvas id="particleCanvas" style="display:block; width:100%; height:400px; background:var(--surface-container-lowest);"></canvas>
+      <div style="position:absolute; bottom:16px; left:16px; font-family:var(--font-mono); font-size:0.7rem; color:var(--text-tertiary); pointer-events:none;">
+        <span id="particleCount">0</span> particles | <span id="connectionCount">0</span> connections
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 5. 3D TEXT EXTRUSION ========== -->
+  <div style="max-width:1280px; margin:0 auto; padding:0 24px 80px;">
+    <h3 style="font-family:var(--font-headline); font-size:1.5rem; color:var(--text-primary); margin-bottom:32px;">3D Text Extrusion</h3>
+    <div class="text3d-container" style="text-align:center; padding:60px 24px; border-radius:16px; background:var(--surface-container-lowest); border:1px solid var(--glass-border); overflow:hidden; position:relative;">
+      <div class="text3d-word" data-text="JINKI" style="font-family:var(--font-headline); font-size:clamp(3rem,10vw,8rem); font-weight:700; color:var(--accent); position:relative; display:inline-block; cursor:default; user-select:none; letter-spacing:0.05em;">
+        JINKI
+      </div>
+      <p style="font-family:var(--font-body); font-size:0.85rem; color:var(--text-tertiary); margin-top:24px;">Move your cursor to shift the 3D extrusion angle</p>
+    </div>
+  </div>
+
+  <!-- ========== 6. GLASSMORPHISM LAYERS ========== -->
+  <div style="max-width:1280px; margin:0 auto; padding:0 24px 80px;">
+    <h3 style="font-family:var(--font-headline); font-size:1.5rem; color:var(--text-primary); margin-bottom:32px;">Glassmorphism Layers</h3>
+    <div class="glass-stack-viewport" style="position:relative; height:500px; perspective:1200px; display:flex; justify-content:center; align-items:center; border-radius:16px; border:1px solid var(--glass-border); background:var(--surface-container-lowest); overflow:hidden;">
+      <!-- Background gradient blobs -->
+      <div style="position:absolute; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle, var(--accent-glow-strong), transparent); top:10%; left:15%; filter:blur(40px);"></div>
+      <div style="position:absolute; width:250px; height:250px; border-radius:50%; background:radial-gradient(circle, rgba(123,97,255,0.2), transparent); bottom:15%; right:20%; filter:blur(40px);"></div>
+      <div style="position:absolute; width:200px; height:200px; border-radius:50%; background:radial-gradient(circle, rgba(255,140,0,0.15), transparent); top:40%; left:50%; filter:blur(40px);"></div>
+
+      <!-- 5 Glass panels -->
+      <div class="glass-stack" style="position:relative; transform-style:preserve-3d; width:320px; height:380px;">
+        <div class="glass-layer gl-1" style="position:absolute; inset:0; border-radius:20px; backdrop-filter:blur(24px) saturate(1.8); background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); transform:translateZ(0px) rotateY(-5deg); transition:transform 0.5s cubic-bezier(0.4,0,0.2,1); box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+          <div style="padding:32px 24px;">
+            <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--accent); opacity:0.6;">LAYER 01</span>
+            <h4 style="font-family:var(--font-headline); font-size:1rem; color:var(--text-primary); margin-top:12px;">Data Ingestion</h4>
+          </div>
+        </div>
+        <div class="glass-layer gl-2" style="position:absolute; inset:0; border-radius:20px; backdrop-filter:blur(20px) saturate(1.6); background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); transform:translateZ(30px) rotateY(-3deg); transition:transform 0.5s cubic-bezier(0.4,0,0.2,1) 0.05s; box-shadow:0 8px 32px rgba(0,0,0,0.15);">
+          <div style="padding:32px 24px;">
+            <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--accent); opacity:0.6;">LAYER 02</span>
+            <h4 style="font-family:var(--font-headline); font-size:1rem; color:var(--text-primary); margin-top:12px;">AI Processing</h4>
+          </div>
+        </div>
+        <div class="glass-layer gl-3" style="position:absolute; inset:0; border-radius:20px; backdrop-filter:blur(16px) saturate(1.5); background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); transform:translateZ(60px) rotateY(0deg); transition:transform 0.5s cubic-bezier(0.4,0,0.2,1) 0.1s; box-shadow:0 8px 32px rgba(0,0,0,0.12);">
+          <div style="padding:32px 24px;">
+            <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--accent); opacity:0.6;">LAYER 03</span>
+            <h4 style="font-family:var(--font-headline); font-size:1rem; color:var(--text-primary); margin-top:12px;">Anomaly Detection</h4>
+          </div>
+        </div>
+        <div class="glass-layer gl-4" style="position:absolute; inset:0; border-radius:20px; backdrop-filter:blur(12px) saturate(1.4); background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); transform:translateZ(90px) rotateY(3deg); transition:transform 0.5s cubic-bezier(0.4,0,0.2,1) 0.15s; box-shadow:0 8px 32px rgba(0,0,0,0.1);">
+          <div style="padding:32px 24px;">
+            <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--accent); opacity:0.6;">LAYER 04</span>
+            <h4 style="font-family:var(--font-headline); font-size:1rem; color:var(--text-primary); margin-top:12px;">Recommendation</h4>
+          </div>
+        </div>
+        <div class="glass-layer gl-5" style="position:absolute; inset:0; border-radius:20px; backdrop-filter:blur(8px) saturate(1.3); background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.16); transform:translateZ(120px) rotateY(5deg); transition:transform 0.5s cubic-bezier(0.4,0,0.2,1) 0.2s; box-shadow:0 8px 32px rgba(0,0,0,0.08);">
+          <div style="padding:32px 24px;">
+            <span style="font-family:var(--font-mono); font-size:0.7rem; color:var(--accent); opacity:0.6;">LAYER 05</span>
+            <h4 style="font-family:var(--font-headline); font-size:1rem; color:var(--text-primary); margin-top:12px;">Intelligence Report</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ===== 3D CARD FLIP ===== */
+  .flip-card.flipped .flip-inner {
+    transform: rotateY(180deg);
+  }
+  .flip-front, .flip-back {
+    -webkit-backface-visibility: hidden;
+  }
+  .flip-back::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* ===== ISOMETRIC GRID ===== */
+  .iso-grid {
+    transform-style: preserve-3d;
+  }
+  .iso-cell {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .iso-ground {
+    background: var(--surface-container);
+    border: 1px solid var(--border);
+  }
+  .iso-path {
+    background: var(--surface-container-high) !important;
+    border-color: var(--border-hover) !important;
+  }
+  .iso-building {
+    background: color-mix(in srgb, var(--color) 20%, var(--surface-container));
+    border: 1px solid color-mix(in srgb, var(--color) 30%, transparent);
+    transform: translateZ(var(--h, 30px));
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color) 15%, transparent),
+      0 var(--h, 30px) 0 -1px color-mix(in srgb, var(--color) 8%, var(--surface-container-low));
+    cursor: pointer;
+  }
+  .iso-building:hover {
+    filter: brightness(1.3);
+    transform: translateZ(calc(var(--h, 30px) + 8px));
+    box-shadow:
+      0 0 15px color-mix(in srgb, var(--color) 30%, transparent),
+      0 var(--h, 30px) 0 -1px color-mix(in srgb, var(--color) 12%, var(--surface-container-low));
+  }
+  .iso-building::after {
+    content: attr(data-label);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) rotateZ(45deg) rotateX(-60deg);
+    font-family: var(--font-mono);
+    font-size: 8px;
+    color: var(--text-primary);
+    background: var(--bg-card);
+    border: 1px solid var(--border-hover);
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    z-index: 10;
+  }
+  .iso-building:hover::after {
+    opacity: 1;
+  }
+  .iso-helipad {
+    background: repeating-conic-gradient(var(--accent) 0% 25%, transparent 0% 50%) 50% / 20px 20px;
+    opacity: 0.3;
+  }
+
+  /* ===== TUNNEL RINGS ===== */
+  .tunnel-ring {
+    box-shadow: 0 0 10px var(--accent-glow);
+  }
+
+  /* ===== 3D TEXT ===== */
+  .text3d-word {
+    text-shadow:
+      1px 1px 0 color-mix(in srgb, var(--accent) 80%, #000),
+      2px 2px 0 color-mix(in srgb, var(--accent) 70%, #000),
+      3px 3px 0 color-mix(in srgb, var(--accent) 60%, #000),
+      4px 4px 0 color-mix(in srgb, var(--accent) 50%, #000),
+      5px 5px 0 color-mix(in srgb, var(--accent) 40%, #000),
+      6px 6px 0 color-mix(in srgb, var(--accent) 30%, #000),
+      7px 7px 0 color-mix(in srgb, var(--accent) 20%, #000),
+      8px 8px 0 color-mix(in srgb, var(--accent) 10%, #000),
+      9px 9px 15px rgba(0,0,0,0.4);
+    transition: text-shadow 0.15s ease-out;
+  }
+
+  /* ===== GLASS STACK ===== */
+  .glass-stack-viewport:hover .gl-1 {
+    transform: translateZ(-30px) rotateY(-12deg) rotateX(3deg) !important;
+  }
+  .glass-stack-viewport:hover .gl-2 {
+    transform: translateZ(10px) rotateY(-6deg) rotateX(1deg) !important;
+  }
+  .glass-stack-viewport:hover .gl-3 {
+    transform: translateZ(50px) rotateY(0deg) !important;
+  }
+  .glass-stack-viewport:hover .gl-4 {
+    transform: translateZ(90px) rotateY(6deg) rotateX(-1deg) !important;
+  }
+  .glass-stack-viewport:hover .gl-5 {
+    transform: translateZ(140px) rotateY(12deg) rotateX(-3deg) !important;
+  }
+  .glass-layer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--glossy-shine);
+    pointer-events: none;
+  }
+
+  /* ===== LIGHT THEME ADJUSTMENTS ===== */
+  :global([data-theme="light"]) .iso-building {
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--color) 20%, transparent),
+      0 var(--h, 30px) 0 -1px color-mix(in srgb, var(--color) 10%, #e0e0e0);
+  }
+  :global([data-theme="light"]) .glass-layer {
+    background: rgba(255,255,255,0.35) !important;
+    border-color: rgba(0,0,0,0.08) !important;
+  }
+  :global([data-theme="light"]) .text3d-word {
+    text-shadow:
+      1px 1px 0 color-mix(in srgb, var(--accent) 80%, #fff),
+      2px 2px 0 color-mix(in srgb, var(--accent) 60%, #ddd),
+      3px 3px 0 color-mix(in srgb, var(--accent) 40%, #ccc),
+      4px 4px 0 color-mix(in srgb, var(--accent) 30%, #bbb),
+      5px 5px 0 color-mix(in srgb, var(--accent) 20%, #aaa),
+      6px 6px 10px rgba(0,0,0,0.15);
+  }
+  :global([data-theme="light"]) .tunnel-ring {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 8px var(--accent-glow);
+  }
+
+  /* ===== REDUCED MOTION ===== */
+  @media (prefers-reduced-motion: reduce) {
+    .flip-inner {
+      transition: none !important;
+    }
+    .tunnel-ring {
+      transition: none !important;
+    }
+    .glass-layer {
+      transition: none !important;
+    }
+    .iso-building {
+      transition: none !important;
+    }
+    .text3d-word {
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ===== 1. CARD FLIP =====
+  document.querySelectorAll('.flip-card').forEach(card => {
+    const toggle = () => card.classList.toggle('flipped');
+    card.addEventListener('click', toggle);
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle();
+      }
+    });
+  });
+
+  // ===== 3. PERSPECTIVE TUNNEL =====
+  if (!prefersReducedMotion) {
+    const tunnelViewport = document.querySelector('.tunnel-viewport');
+    if (tunnelViewport) {
+      const rings = tunnelViewport.querySelectorAll('.tunnel-ring');
+      let tunnelProgress = 0;
+
+      window.addEventListener('scroll', () => {
+        const rect = tunnelViewport.getBoundingClientRect();
+        const viewH = window.innerHeight;
+        if (rect.top < viewH && rect.bottom > 0) {
+          const progress = (viewH - rect.top) / (viewH + rect.height);
+          tunnelProgress = progress;
+          rings.forEach((ring, i) => {
+            const baseZ = -i * 80;
+            const moveZ = progress * 300;
+            const rot = i * 15 + progress * 90;
+            ring.style.transform = `translateZ(${baseZ + moveZ}px) rotate(${rot}deg)`;
+          });
+        }
+      }, { passive: true });
+    }
+  }
+
+  // ===== 4. PARTICLE FIELD =====
+  const canvas = document.getElementById('particleCanvas');
+  const pCountEl = document.getElementById('particleCount');
+  const cCountEl = document.getElementById('connectionCount');
+
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let width, height, particles = [], mouse = { x: -1000, y: -1000 };
+    const PARTICLE_COUNT = prefersReducedMotion ? 30 : 80;
+    const CONNECTION_DIST = 120;
+    const MOUSE_RADIUS = 150;
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      width = rect.width;
+      height = rect.height;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.scale(dpr, dpr);
+    }
+
+    function initParticles() {
+      particles = [];
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.8,
+          vy: (Math.random() - 0.5) * 0.8,
+          r: Math.random() * 2 + 1,
+        });
+      }
+    }
+
+    function getAccentColor() {
+      return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#00e5ff';
+    }
+
+    let animId;
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      const accent = getAccentColor();
+      let connections = 0;
+
+      // Update & draw particles
+      particles.forEach(p => {
+        // Mouse repulsion
+        const dx = p.x - mouse.x;
+        const dy = p.y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < MOUSE_RADIUS && dist > 0) {
+          const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
+          p.vx += (dx / dist) * force * 0.5;
+          p.vy += (dy / dist) * force * 0.5;
+        }
+
+        // Damping
+        p.vx *= 0.99;
+        p.vy *= 0.99;
+
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Wrap
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        if (p.y > height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = accent;
+        ctx.globalAlpha = 0.8;
+        ctx.fill();
+      });
+
+      // Draw connections
+      ctx.lineWidth = 0.5;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < CONNECTION_DIST) {
+            connections++;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = accent;
+            ctx.globalAlpha = (1 - dist / CONNECTION_DIST) * 0.3;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Mouse connections
+      ctx.globalAlpha = 1;
+      particles.forEach(p => {
+        const dx = p.x - mouse.x;
+        const dy = p.y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < MOUSE_RADIUS) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = accent;
+          ctx.globalAlpha = (1 - dist / MOUSE_RADIUS) * 0.5;
+          ctx.stroke();
+        }
+      });
+
+      ctx.globalAlpha = 1;
+      if (pCountEl) pCountEl.textContent = String(particles.length);
+      if (cCountEl) cCountEl.textContent = String(connections);
+
+      animId = requestAnimationFrame(animate);
+    }
+
+    // Intersection observer: only animate when visible
+    const particleObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!animId) animate();
+        } else {
+          if (animId) { cancelAnimationFrame(animId); animId = null; }
+        }
+      });
+    }, { threshold: 0.1 });
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    });
+    canvas.addEventListener('mouseleave', () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+    });
+
+    resize();
+    initParticles();
+    particleObserver.observe(canvas);
+    window.addEventListener('resize', () => { resize(); initParticles(); });
+  }
+
+  // ===== 5. 3D TEXT EXTRUSION (mouse tracking) =====
+  if (!prefersReducedMotion) {
+    const textContainer = document.querySelector('.text3d-container');
+    const textWord = document.querySelector('.text3d-word');
+    if (textContainer && textWord) {
+      textContainer.addEventListener('mousemove', (e) => {
+        const rect = textContainer.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+        const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+        const dx = Math.round(x * 8);
+        const dy = Math.round(y * 8);
+        const isDark = !document.documentElement.getAttribute('data-theme') ||
+                        document.documentElement.getAttribute('data-theme') === 'dark';
+        const mix = isDark ? '#000' : '#aaa';
+
+        let shadow = '';
+        for (let i = 1; i <= 8; i++) {
+          const opacity = 1 - (i / 10);
+          shadow += `${dx * i / 8}px ${dy * i / 8}px 0 color-mix(in srgb, var(--accent) ${Math.round(opacity * 80)}%, ${mix})`;
+          if (i < 8) shadow += ', ';
+        }
+        shadow += `, ${dx}px ${dy}px 15px rgba(0,0,0,${isDark ? 0.4 : 0.15})`;
+        textWord.style.textShadow = shadow;
+      });
+
+      textContainer.addEventListener('mouseleave', () => {
+        // Reset to default
+        textWord.style.textShadow = '';
+      });
+    }
+  }
+
+  // ===== 6. GLASS STACK MOUSE PARALLAX =====
+  if (!prefersReducedMotion) {
+    const glassViewport = document.querySelector('.glass-stack-viewport');
+    const glassStack = document.querySelector('.glass-stack');
+    if (glassViewport && glassStack) {
+      glassViewport.addEventListener('mousemove', (e) => {
+        const rect = glassViewport.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+        const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+        glassStack.style.transform = `rotateY(${x * 8}deg) rotateX(${-y * 5}deg)`;
+      });
+      glassViewport.addEventListener('mouseleave', () => {
+        glassStack.style.transform = '';
+      });
+    }
+  }
+</script>

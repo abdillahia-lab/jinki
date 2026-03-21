@@ -1,0 +1,505 @@
+---
+/*  ErrorStates-Alpha.astro — Comprehensive error state components
+    Team Alpha | Rounds 19+20
+    Jinki Aerial Intelligence  */
+---
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Error States — Alpha | Jinki Aerial Intelligence</title>
+  <style>
+    :root{
+      --surface:#121416;--bg-primary:#121416;--bg-elevated:#1a1c1e;--bg-card:#1e2022;
+      --bg-card-hover:#282a2c;
+      --text-primary:#e2e2e5;--text-secondary:#bac9cc;--text-tertiary:#849396;
+      --accent:#00e5ff;--accent-soft:#c3f5ff;--accent-glow:rgba(0,229,255,.15);
+      --error:#ffb4ab;--error-container:#93000a;
+      --border:rgba(59,73,76,.2);--border-hover:rgba(59,73,76,.4);
+      --glass-bg:rgba(30,32,34,.6);--glass-border:rgba(255,255,255,.06);
+      --glass-shadow:0 8px 32px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.2);
+      --glossy-shine:linear-gradient(135deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,0) 40%,rgba(255,255,255,.04) 100%);
+      --font-headline:'Space Grotesk',system-ui,sans-serif;
+      --font-body:'Inter',system-ui,sans-serif;
+      --font-mono:'JetBrains Mono','SF Mono',monospace;
+      --success:#4ade80;--warning:#fbbf24;
+    }
+    [data-theme="light"]{
+      --surface:#fff;--bg-primary:#fafbfc;--bg-elevated:#fff;--bg-card:#f0f1f3;
+      --bg-card-hover:#e8e9eb;
+      --text-primary:#1a1c1e;--text-secondary:#3b494c;--text-tertiary:#6f7979;
+      --accent:#00838f;--accent-soft:#004f58;--accent-glow:rgba(0,131,143,.1);
+      --error:#ba1a1a;--error-container:#ffdad6;
+      --border:rgba(0,0,0,.08);--border-hover:rgba(0,0,0,.15);
+      --glass-bg:rgba(255,255,255,.7);--glass-border:rgba(0,0,0,.06);
+      --glass-shadow:0 8px 32px rgba(0,0,0,.08),0 2px 8px rgba(0,0,0,.04);
+      --glossy-shine:linear-gradient(135deg,rgba(255,255,255,.6) 0%,rgba(255,255,255,0) 40%,rgba(255,255,255,.2) 100%);
+    }
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased;font-family:var(--font-body);color:var(--text-primary);background:var(--bg-primary)}
+    body{min-height:100vh;line-height:1.7}
+
+    /* ── Page shell ── */
+    .page{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
+    .page-title{
+      font-family:var(--font-headline);font-size:clamp(28px,4vw,40px);
+      font-weight:700;text-align:center;margin:0 0 8px;
+    }
+    .page-subtitle{
+      font-family:var(--font-body);font-size:16px;color:var(--text-tertiary);
+      text-align:center;margin:0 0 56px;
+    }
+
+    .section{margin:0 0 64px}
+    .section-label{
+      font-family:var(--font-mono);font-size:11px;text-transform:uppercase;
+      letter-spacing:.12em;color:var(--accent);margin:0 0 8px;
+    }
+    .section-title{
+      font-family:var(--font-headline);font-size:clamp(20px,3vw,28px);
+      font-weight:700;margin:0 0 24px;
+    }
+
+    /* ── Theme toggle ── */
+    .theme-toggle{
+      position:fixed;top:16px;right:16px;z-index:100;
+      background:var(--glass-bg);border:1px solid var(--glass-border);
+      border-radius:10px;padding:10px 14px;cursor:pointer;
+      color:var(--text-primary);font-size:18px;
+      backdrop-filter:blur(12px);transition:border-color .2s;
+    }
+    .theme-toggle:hover{border-color:var(--accent)}
+
+    /* ════════════════════════════════════
+       1. EMPTY STATE
+    ════════════════════════════════════ */
+    .empty-state{
+      display:flex;flex-direction:column;align-items:center;
+      text-align:center;padding:64px 24px;
+      background:var(--glass-bg);border:1px solid var(--glass-border);
+      border-radius:16px;position:relative;overflow:hidden;
+    }
+    .empty-state::before{
+      content:'';position:absolute;inset:0;border-radius:inherit;
+      background:var(--glossy-shine);pointer-events:none;
+    }
+    /* Animated illustration placeholder — pulsing radar rings */
+    .empty-illustration{
+      width:160px;height:160px;position:relative;margin:0 0 32px;
+    }
+    .empty-ring{
+      position:absolute;border:2px dashed var(--accent);border-radius:50%;
+      top:50%;left:50%;transform:translate(-50%,-50%);opacity:0;
+      animation:emptyPulse 3s ease-out infinite;
+    }
+    .empty-ring:nth-child(1){width:40px;height:40px;animation-delay:0s}
+    .empty-ring:nth-child(2){width:80px;height:80px;animation-delay:.6s}
+    .empty-ring:nth-child(3){width:120px;height:120px;animation-delay:1.2s}
+    .empty-ring:nth-child(4){width:160px;height:160px;animation-delay:1.8s}
+    @keyframes emptyPulse{
+      0%{opacity:.6;transform:translate(-50%,-50%) scale(.8)}
+      100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}
+    }
+    .empty-dot{
+      position:absolute;top:50%;left:50%;width:12px;height:12px;
+      background:var(--accent);border-radius:50%;transform:translate(-50%,-50%);
+      box-shadow:0 0 16px var(--accent);
+    }
+    .empty-title{
+      font-family:var(--font-headline);font-size:22px;font-weight:700;
+      margin:0 0 8px;
+    }
+    .empty-desc{
+      font-family:var(--font-body);font-size:15px;color:var(--text-tertiary);
+      max-width:360px;margin:0 0 24px;line-height:1.6;
+    }
+    .empty-cta{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--accent);color:#000;border:none;border-radius:10px;
+      font-family:var(--font-headline);font-weight:600;font-size:14px;
+      padding:12px 28px;cursor:pointer;transition:all .25s;
+      text-decoration:none;
+    }
+    .empty-cta:hover{box-shadow:0 0 24px var(--accent-glow)}
+
+    /* ════════════════════════════════════
+       2. LOADING / SKELETON
+    ════════════════════════════════════ */
+    .loading-section{display:flex;flex-direction:column;gap:24px}
+
+    /* Custom loader */
+    .loader-wrap{display:flex;align-items:center;gap:16px;margin:0 0 24px}
+    .loader-spinner{
+      width:32px;height:32px;border:3px solid var(--border);
+      border-top-color:var(--accent);border-radius:50%;
+      animation:spin .8s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loader-text{
+      font-family:var(--font-mono);font-size:13px;color:var(--text-tertiary);
+    }
+    .loader-dots::after{content:'';animation:dots 1.5s steps(4,end) infinite}
+    @keyframes dots{
+      0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}
+    }
+
+    /* Skeleton cards */
+    .skeleton-grid{
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
+    }
+    .skeleton-card{
+      background:var(--bg-card);border:1px solid var(--glass-border);
+      border-radius:12px;padding:24px;position:relative;overflow:hidden;
+    }
+    .skeleton-card::after{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent);
+      animation:skeletonShimmer 1.5s infinite;
+    }
+    [data-theme="light"] .skeleton-card::after{
+      background:linear-gradient(90deg,transparent,rgba(0,0,0,.03),transparent);
+    }
+    @keyframes skeletonShimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+    .skel-line{
+      background:var(--border);border-radius:6px;
+    }
+    .skel-title{width:60%;height:18px;margin:0 0 16px}
+    .skel-text{height:12px;margin:0 0 10px}
+    .skel-text.short{width:45%}
+    .skel-text.med{width:75%}
+    .skel-text.long{width:90%}
+    .skel-avatar{width:40px;height:40px;border-radius:50%;background:var(--border);margin:0 0 16px}
+    .skel-badge{width:80px;height:24px;border-radius:20px;background:var(--border);margin:16px 0 0}
+
+    /* ════════════════════════════════════
+       3. FORM ERROR
+    ════════════════════════════════════ */
+    .form-demo{
+      max-width:480px;
+      background:var(--glass-bg);border:1px solid var(--glass-border);
+      border-radius:16px;padding:32px;position:relative;overflow:hidden;
+    }
+    .form-demo::before{
+      content:'';position:absolute;inset:0;border-radius:inherit;
+      background:var(--glossy-shine);pointer-events:none;
+    }
+    .form-title{
+      font-family:var(--font-headline);font-size:20px;font-weight:700;
+      margin:0 0 24px;
+    }
+    .field{margin:0 0 20px;position:relative}
+    .field label{
+      display:block;font-family:var(--font-label, var(--font-headline));
+      font-size:13px;font-weight:600;color:var(--text-secondary);
+      margin:0 0 6px;
+    }
+    .field input,.field textarea{
+      width:100%;background:var(--bg-card);border:1.5px solid var(--border);
+      border-radius:10px;padding:12px 16px;color:var(--text-primary);
+      font-family:var(--font-body);font-size:15px;
+      transition:border-color .2s,box-shadow .2s;outline:none;
+    }
+    .field input:focus,.field textarea:focus{
+      border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);
+    }
+    /* Error state */
+    .field.has-error input,.field.has-error textarea{
+      border-color:var(--error);
+      animation:fieldShake .4s ease;
+      box-shadow:0 0 0 3px rgba(255,180,171,.15);
+    }
+    [data-theme="light"] .field.has-error input,[data-theme="light"] .field.has-error textarea{
+      box-shadow:0 0 0 3px rgba(186,26,26,.1);
+    }
+    @keyframes fieldShake{
+      0%,100%{transform:translateX(0)}
+      20%{transform:translateX(-6px)}
+      40%{transform:translateX(5px)}
+      60%{transform:translateX(-4px)}
+      80%{transform:translateX(2px)}
+    }
+    .field-error{
+      display:flex;align-items:center;gap:6px;
+      font-family:var(--font-body);font-size:13px;color:var(--error);
+      margin:6px 0 0;animation:errorFadeIn .3s ease;
+    }
+    @keyframes errorFadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+    .field-error svg{flex-shrink:0}
+    .form-submit{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--accent);color:#000;border:none;border-radius:10px;
+      font-family:var(--font-headline);font-weight:600;font-size:14px;
+      padding:12px 28px;cursor:pointer;margin:8px 0 0;
+      transition:opacity .2s;
+    }
+    .form-submit:hover{opacity:.85}
+
+    /* ════════════════════════════════════
+       4. CONNECTION ERROR / OFFLINE
+    ════════════════════════════════════ */
+    .offline-banner{
+      display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:16px;
+      background:linear-gradient(135deg,rgba(255,180,171,.08),rgba(255,180,171,.03));
+      border:1px solid rgba(255,180,171,.2);
+      border-radius:12px;padding:20px 24px;
+    }
+    [data-theme="light"] .offline-banner{
+      background:linear-gradient(135deg,rgba(186,26,26,.06),rgba(186,26,26,.02));
+      border-color:rgba(186,26,26,.15);
+    }
+    .offline-left{display:flex;align-items:center;gap:16px}
+    .offline-icon{
+      width:44px;height:44px;border-radius:10px;
+      background:rgba(255,180,171,.1);display:flex;align-items:center;justify-content:center;
+      color:var(--error);flex-shrink:0;
+    }
+    [data-theme="light"] .offline-icon{background:rgba(186,26,26,.08)}
+    .offline-title{
+      font-family:var(--font-headline);font-size:16px;font-weight:700;
+      color:var(--text-primary);margin:0 0 2px;
+    }
+    .offline-desc{font-family:var(--font-body);font-size:13px;color:var(--text-tertiary)}
+    .offline-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
+    .retry-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--error);color:#000;border:none;border-radius:10px;
+      font-family:var(--font-headline);font-weight:600;font-size:13px;
+      padding:10px 20px;cursor:pointer;transition:opacity .2s;
+    }
+    .retry-btn:hover{opacity:.85}
+    .countdown{
+      font-family:var(--font-mono);font-size:12px;color:var(--text-tertiary);
+      white-space:nowrap;
+    }
+
+    /* ════════════════════════════════════
+       5. TIMEOUT
+    ════════════════════════════════════ */
+    .timeout-card{
+      display:flex;flex-direction:column;align-items:center;text-align:center;
+      background:var(--glass-bg);border:1px solid var(--glass-border);
+      border-radius:16px;padding:48px 32px;max-width:480px;
+      position:relative;overflow:hidden;
+    }
+    .timeout-card::before{
+      content:'';position:absolute;inset:0;border-radius:inherit;
+      background:var(--glossy-shine);pointer-events:none;
+    }
+    /* Hourglass animation */
+    .timeout-icon{
+      width:64px;height:64px;margin:0 0 24px;
+      display:flex;align-items:center;justify-content:center;
+      color:var(--warning);font-size:32px;
+      animation:hourglassRotate 3s ease-in-out infinite;
+    }
+    @keyframes hourglassRotate{
+      0%,40%{transform:rotate(0deg)}
+      50%,90%{transform:rotate(180deg)}
+      100%{transform:rotate(360deg)}
+    }
+    .timeout-title{
+      font-family:var(--font-headline);font-size:20px;font-weight:700;margin:0 0 8px;
+    }
+    .timeout-desc{
+      font-family:var(--font-body);font-size:15px;color:var(--text-tertiary);
+      max-width:360px;margin:0 0 28px;line-height:1.6;
+    }
+    /* Progress bar */
+    .progress-track{
+      width:100%;max-width:320px;height:6px;
+      background:var(--border);border-radius:3px;overflow:hidden;margin:0 0 12px;
+    }
+    .progress-fill{
+      height:100%;background:linear-gradient(90deg,var(--accent),var(--warning));
+      border-radius:3px;width:60%;
+      animation:progressPulse 2s ease-in-out infinite;
+    }
+    @keyframes progressPulse{
+      0%{width:40%}50%{width:75%}100%{width:40%}
+    }
+    .progress-label{
+      font-family:var(--font-mono);font-size:11px;color:var(--text-tertiary);
+    }
+
+    /* ── Reduced motion ── */
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{
+        animation-duration:.01ms!important;animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+      }
+    }
+    :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  </style>
+</head>
+<body>
+  <!-- Theme toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <span id="themeIcon">&#9790;</span>
+  </button>
+
+  <div class="page">
+    <h1 class="page-title">Error States</h1>
+    <p class="page-subtitle">Team Alpha &mdash; graceful failure, beautiful recovery</p>
+
+    <!-- ─── 1. EMPTY STATE ─── -->
+    <section class="section" aria-labelledby="empty-heading">
+      <p class="section-label">01</p>
+      <h2 class="section-title" id="empty-heading">Empty State</h2>
+      <div class="empty-state">
+        <div class="empty-illustration" aria-hidden="true">
+          <div class="empty-ring"></div>
+          <div class="empty-ring"></div>
+          <div class="empty-ring"></div>
+          <div class="empty-ring"></div>
+          <div class="empty-dot"></div>
+        </div>
+        <h3 class="empty-title">No Data Yet</h3>
+        <p class="empty-desc">
+          Your aerial intelligence dashboard is ready. Schedule your first mission to begin collecting actionable insights.
+        </p>
+        <a href="#" class="empty-cta">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Schedule First Mission
+        </a>
+      </div>
+    </section>
+
+    <!-- ─── 2. LOADING / SKELETON ─── -->
+    <section class="section" aria-labelledby="loading-heading">
+      <p class="section-label">02</p>
+      <h2 class="section-title" id="loading-heading">Loading State</h2>
+      <div class="loading-section" role="status" aria-label="Loading content">
+        <div class="loader-wrap">
+          <div class="loader-spinner" aria-hidden="true"></div>
+          <span class="loader-text">Acquiring data feed<span class="loader-dots"></span></span>
+        </div>
+        <div class="skeleton-grid" aria-hidden="true">
+          <div class="skeleton-card">
+            <div class="skel-avatar skel-line"></div>
+            <div class="skel-title skel-line"></div>
+            <div class="skel-text long skel-line"></div>
+            <div class="skel-text med skel-line"></div>
+            <div class="skel-text short skel-line"></div>
+            <div class="skel-badge skel-line"></div>
+          </div>
+          <div class="skeleton-card">
+            <div class="skel-avatar skel-line"></div>
+            <div class="skel-title skel-line"></div>
+            <div class="skel-text long skel-line"></div>
+            <div class="skel-text med skel-line"></div>
+            <div class="skel-text short skel-line"></div>
+            <div class="skel-badge skel-line"></div>
+          </div>
+          <div class="skeleton-card">
+            <div class="skel-avatar skel-line"></div>
+            <div class="skel-title skel-line"></div>
+            <div class="skel-text long skel-line"></div>
+            <div class="skel-text med skel-line"></div>
+            <div class="skel-text short skel-line"></div>
+            <div class="skel-badge skel-line"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 3. FORM ERROR ─── -->
+    <section class="section" aria-labelledby="form-heading">
+      <p class="section-label">03</p>
+      <h2 class="section-title" id="form-heading">Form Error State</h2>
+      <div class="form-demo">
+        <h3 class="form-title">Get in Touch</h3>
+        <div class="field has-error">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" value="" placeholder="Enter your name" aria-invalid="true" aria-describedby="name-error" />
+          <div class="field-error" id="name-error" role="alert">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+            Name is required
+          </div>
+        </div>
+        <div class="field has-error">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" value="invalid-email" aria-invalid="true" aria-describedby="email-error" />
+          <div class="field-error" id="email-error" role="alert">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+            Please enter a valid email address
+          </div>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" rows="3" placeholder="How can we help?"></textarea>
+        </div>
+        <button class="form-submit" type="button">Submit</button>
+      </div>
+    </section>
+
+    <!-- ─── 4. CONNECTION ERROR ─── -->
+    <section class="section" aria-labelledby="connection-heading">
+      <p class="section-label">04</p>
+      <h2 class="section-title" id="connection-heading">Connection Error</h2>
+      <div class="offline-banner" role="alert">
+        <div class="offline-left">
+          <div class="offline-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="1" y1="1" x2="23" y2="23"/><path d="M16.72 11.06A10.94 10.94 0 0119 12.55"/><path d="M5 12.55a10.94 10.94 0 015.17-2.39"/><path d="M10.71 5.05A16 16 0 0122.56 9"/><path d="M1.42 9a15.91 15.91 0 014.7-2.88"/><path d="M8.53 16.11a6 6 0 016.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+          </div>
+          <div>
+            <div class="offline-title">Connection Lost</div>
+            <div class="offline-desc">Unable to reach Jinki servers. Check your network connection.</div>
+          </div>
+        </div>
+        <div class="offline-right">
+          <span class="countdown" id="retryCountdown" aria-live="polite">Retry in 12s</span>
+          <button class="retry-btn" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+            Retry Now
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 5. TIMEOUT ─── -->
+    <section class="section" aria-labelledby="timeout-heading">
+      <p class="section-label">05</p>
+      <h2 class="section-title" id="timeout-heading">Timeout State</h2>
+      <div class="timeout-card">
+        <div class="timeout-icon" aria-hidden="true">&#9203;</div>
+        <h3 class="timeout-title">Taking Longer Than Expected</h3>
+        <p class="timeout-desc">
+          The data processing pipeline is still running. Large inspection datasets may require additional time.
+        </p>
+        <div class="progress-track" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" aria-label="Processing progress">
+          <div class="progress-fill"></div>
+        </div>
+        <span class="progress-label">Processing thermal imagery&hellip;</span>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Theme toggle
+    const toggle = document.getElementById('themeToggle');
+    const icon = document.getElementById('themeIcon');
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      icon.textContent = t === 'light' ? '\u2600' : '\u263E';
+      localStorage.setItem('theme', t);
+    }
+    toggle.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      setTheme(next);
+    });
+    const saved = localStorage.getItem('theme');
+    if (saved) setTheme(saved);
+
+    // Countdown demo
+    let seconds = 12;
+    const cd = document.getElementById('retryCountdown');
+    setInterval(() => {
+      seconds = seconds <= 1 ? 30 : seconds - 1;
+      if (cd) cd.textContent = 'Retry in ' + seconds + 's';
+    }, 1000);
+  </script>
+</body>
+</html>

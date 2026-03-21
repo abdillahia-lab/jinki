@@ -1,0 +1,772 @@
+---
+import '../../styles/global.css';
+const title = 'Content Strategy — Team Omega | Jinki';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Team Omega content strategy: storytelling, social proof, urgency, FAQs, and content calendar for Jinki Aerial Intelligence" />
+  <title>{title}</title>
+  <link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=calendar_month,campaign,check_circle,edit_note,groups,help_outline,lightbulb,menu_book,psychology,question_answer,schedule,star,trending_up,verified&display=swap" rel="stylesheet" />
+  <script is:inline>
+    (function() {
+      var theme = localStorage.getItem('jinki-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <style is:inline>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <header class="omc-header" role="banner">
+    <div class="omc-header-inner">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:#7B61FF;" aria-hidden="true">campaign</span>
+        <div>
+          <h1 style="font-size:clamp(18px,3vw,24px);line-height:1.2;">Content Strategy</h1>
+          <p style="font-family:var(--font-mono);font-size:12px;color:#7B61FF;letter-spacing:0.05em;">Team Omega &mdash; Round 21</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" role="main" style="max-width:1200px;margin:0 auto;padding:32px 24px 80px;">
+
+    <!-- Section 1: PAS Storytelling Framework -->
+    <section id="storytelling" class="omc-section" aria-labelledby="pas-heading">
+      <div class="omc-section-header">
+        <span class="sec-num" aria-hidden="true">01</span>
+        <h2 id="pas-heading">Storytelling Framework: Problem &rarr; Agitate &rarr; Solve</h2>
+      </div>
+      <div class="omc-card glass-panel" style="border-radius:16px;">
+        <p class="omc-desc">Each vertical page uses the PAS framework to connect emotionally before presenting the solution.</p>
+
+        <div class="pas-grid">
+          <div class="pas-card" style="border-top:3px solid #00e5ff;">
+            <h3>Data Centers</h3>
+            <div class="pas-step">
+              <span class="pas-tag problem">Problem</span>
+              <p>Your thermal team inspects the roof quarterly. Between visits, hotspots develop silently. By the time you find them, the damage is done.</p>
+            </div>
+            <div class="pas-step">
+              <span class="pas-tag agitate">Agitate</span>
+              <p>One undetected CRAC unit failure costs $8,500/minute in a Tier III facility. That quarterly gap is not a schedule &mdash; it is a gamble.</p>
+            </div>
+            <div class="pas-step">
+              <span class="pas-tag solve">Solve</span>
+              <p>Jinki runs autonomous thermal sweeps weekly. Anomalies are flagged within 24 hours with GPS coordinates, severity scores, and recommended actions. No more gambling between inspections.</p>
+            </div>
+          </div>
+
+          <div class="pas-card" style="border-top:3px solid #FF8C00;">
+            <h3>Energy &amp; Utilities</h3>
+            <div class="pas-step">
+              <span class="pas-tag problem">Problem</span>
+              <p>Hundreds of miles of transmission lines. Your inspection crews cover 3-5 miles per day. It takes months to complete a full survey.</p>
+            </div>
+            <div class="pas-step">
+              <span class="pas-tag agitate">Agitate</span>
+              <p>Vegetation encroachment does not wait for your schedule. Neither does corrosion. Every day of delay adds cumulative risk to the grid.</p>
+            </div>
+            <div class="pas-step">
+              <span class="pas-tag solve">Solve</span>
+              <p>Jinki covers 30+ miles per day with thermal and visual sensors. Vegetation clearance zones, insulator damage, and hot joints are flagged in a single flyover &mdash; with recommendations attached.</p>
+            </div>
+          </div>
+
+          <div class="pas-card" style="border-top:3px solid #7B61FF;">
+            <h3>Perimeter Security</h3>
+            <div class="pas-step">
+              <span class="pas-tag problem">Problem</span>
+              <p>Your fixed cameras cover entry points but not the miles of fence line between them. Blind spots exist, and adversaries know it.</p>
+            </div>
+            <div class="pas-step">
+              <span class="pas-tag agitate">Agitate</span>
+              <p>A breach in a blind spot does not trigger an alarm. By the time patrol discovers it, the window of response has closed.</p>
+            </div>
+            <div class="pas-step">
+              <span class="pas-tag solve">Solve</span>
+              <p>Jinki runs scheduled and on-demand perimeter sweeps that cover every meter. When an anomaly is detected, your team gets an alert with visual evidence and GPS location &mdash; in real time.</p>
+            </div>
+          </div>
+
+          <div class="pas-card" style="border-top:3px solid #34D399;">
+            <h3>Agriculture</h3>
+            <div class="pas-step">
+              <span class="pas-tag problem">Problem</span>
+              <p>From the ground, every row looks the same. Stress, disease, and irrigation issues are invisible until yield drops.</p>
+            </div>
+            <div class="pas-step">
+              <span class="pas-tag agitate">Agitate</span>
+              <p>By the time stress is visible at eye level, you have already lost 10-20% of potential yield. The window for intervention has shrunk.</p>
+            </div>
+            <div class="pas-step">
+              <span class="pas-tag solve">Solve</span>
+              <p>Jinki's NDVI and thermal imaging detects stress weeks before it is visible. You get field-level prescriptions: irrigate here, apply nitrogen there, investigate this zone. Precision, not guesswork.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Social Proof Integration -->
+    <section id="social-proof" class="omc-section" aria-labelledby="proof-heading">
+      <div class="omc-section-header">
+        <span class="sec-num" aria-hidden="true">02</span>
+        <h2 id="proof-heading">Social Proof Integration Points</h2>
+      </div>
+      <div class="omc-card glass-panel" style="border-radius:16px;">
+        <p class="omc-desc">Strategic placement of social proof throughout the user journey to build trust at each decision point.</p>
+
+        <div class="proof-journey">
+          <div class="proof-point">
+            <div class="proof-stage">
+              <span class="stage-badge awareness">Awareness</span>
+              <h3>Homepage Hero</h3>
+            </div>
+            <div class="proof-content">
+              <h4>Trust Bar</h4>
+              <p>Client logos + aggregate stat: "Trusted by 40+ facilities across 4 industries"</p>
+              <div class="proof-mockup trust-bar-mock">
+                <div class="mock-logo" aria-hidden="true"></div>
+                <div class="mock-logo" aria-hidden="true"></div>
+                <div class="mock-logo" aria-hidden="true"></div>
+                <div class="mock-logo" aria-hidden="true"></div>
+                <div class="mock-logo" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="proof-point">
+            <div class="proof-stage">
+              <span class="stage-badge consideration">Consideration</span>
+              <h3>Vertical Pages</h3>
+            </div>
+            <div class="proof-content">
+              <h4>Industry-Specific Testimonial</h4>
+              <p>One testimonial per vertical from a relevant role (e.g., VP of Ops for data centers).</p>
+              <div class="proof-mockup testimonial-mock">
+                <div class="testimonial-avatar" aria-hidden="true">JD</div>
+                <div>
+                  <p class="testimonial-quote">"Jinki found 14 thermal anomalies our quarterly inspection missed. Two were critical."</p>
+                  <span class="testimonial-attr">&mdash; VP of Operations, Tier III Data Center</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="proof-point">
+            <div class="proof-stage">
+              <span class="stage-badge decision">Decision</span>
+              <h3>Lead Gen Form</h3>
+            </div>
+            <div class="proof-content">
+              <h4>Result Metrics</h4>
+              <p>Specific numbers next to the form: "Average client sees 3.2x ROI in Q1"</p>
+              <div class="proof-mockup metrics-mock">
+                <div class="metric-chip"><strong>3.2x</strong> avg. ROI</div>
+                <div class="metric-chip"><strong>48hr</strong> first report</div>
+                <div class="metric-chip"><strong>97%</strong> satisfaction</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="proof-point">
+            <div class="proof-stage">
+              <span class="stage-badge retention">Retention</span>
+              <h3>Blog / Resources</h3>
+            </div>
+            <div class="proof-content">
+              <h4>Case Study CTAs</h4>
+              <p>End each blog post with a related case study: "See how [Company] reduced inspection costs by 60%"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Urgency & Scarcity -->
+    <section id="urgency" class="omc-section" aria-labelledby="urgency-heading">
+      <div class="omc-section-header">
+        <span class="sec-num" aria-hidden="true">03</span>
+        <h2 id="urgency-heading">Urgency &amp; Scarcity Copy Patterns</h2>
+      </div>
+      <div class="omc-card glass-panel" style="border-radius:16px;">
+        <p class="omc-desc">Ethical urgency patterns that create motivation without manipulation.</p>
+
+        <div class="urgency-grid">
+          <div class="urgency-card good">
+            <span class="urgency-verdict">Ethical</span>
+            <h3>Natural Deadline</h3>
+            <p>"Q2 inspection season starts April 1. Book your audit now to ensure availability."</p>
+            <span class="urgency-why">Real constraint, transparent timeline</span>
+          </div>
+          <div class="urgency-card good">
+            <span class="urgency-verdict">Ethical</span>
+            <h3>Cost of Inaction</h3>
+            <p>"Every week without monitoring costs an average facility $12,000 in undetected maintenance."</p>
+            <span class="urgency-why">Data-backed, no pressure</span>
+          </div>
+          <div class="urgency-card good">
+            <span class="urgency-verdict">Ethical</span>
+            <h3>Limited Capacity</h3>
+            <p>"We deploy in 8 regions. Currently accepting 3 new clients in the Western US for Q2."</p>
+            <span class="urgency-why">Genuine capacity constraint</span>
+          </div>
+          <div class="urgency-card bad">
+            <span class="urgency-verdict avoid">Avoid</span>
+            <h3>Fake Countdown</h3>
+            <p>"Only 2 hours left! Price goes up at midnight!"</p>
+            <span class="urgency-why">Manipulative, damages trust in B2B</span>
+          </div>
+          <div class="urgency-card good">
+            <span class="urgency-verdict">Ethical</span>
+            <h3>Regulatory Trigger</h3>
+            <p>"New NFPA 70B guidelines take effect July 2026. Is your facility compliant?"</p>
+            <span class="urgency-why">External deadline, genuinely helpful</span>
+          </div>
+          <div class="urgency-card bad">
+            <span class="urgency-verdict avoid">Avoid</span>
+            <h3>False Scarcity</h3>
+            <p>"Only 5 spots remaining this month!"</p>
+            <span class="urgency-why">If untrue, instantly destroys credibility</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: FAQ Content -->
+    <section id="faq" class="omc-section" aria-labelledby="faq-heading">
+      <div class="omc-section-header">
+        <span class="sec-num" aria-hidden="true">04</span>
+        <h2 id="faq-heading">FAQ Content &mdash; Objection Handling</h2>
+      </div>
+      <div class="omc-card glass-panel" style="border-radius:16px;">
+        <p class="omc-desc">FAQs structured to address the top buying objections before they become deal-blockers.</p>
+
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-1">
+              <span class="material-symbols-outlined" style="font-size:20px;color:#7B61FF;" aria-hidden="true">help_outline</span>
+              <span>"We already have an inspection team. Why do we need Jinki?"</span>
+              <span class="faq-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq-1" hidden>
+              <span class="objection-tag">Objection: Status quo bias</span>
+              <p>Your inspection team is essential for hands-on remediation. Jinki does not replace them &mdash; it makes them more effective. We identify issues between scheduled inspections, prioritize by severity, and give your team GPS coordinates so they walk directly to the problem. Result: your team spends less time searching and more time fixing.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-2">
+              <span class="material-symbols-outlined" style="font-size:20px;color:#7B61FF;" aria-hidden="true">help_outline</span>
+              <span>"How much does it cost?"</span>
+              <span class="faq-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq-2" hidden>
+              <span class="objection-tag">Objection: Price sensitivity</span>
+              <p>Pricing depends on facility size and inspection frequency. A one-time Facility Intelligence Audit starts at a fraction of what an undetected failure costs. Most clients see 3-5x ROI within the first quarter. We provide a detailed cost-benefit analysis during your free assessment &mdash; no commitment required.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-3">
+              <span class="material-symbols-outlined" style="font-size:20px;color:#7B61FF;" aria-hidden="true">help_outline</span>
+              <span>"Is the data secure?"</span>
+              <span class="faq-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq-3" hidden>
+              <span class="objection-tag">Objection: Security concern</span>
+              <p>Your data never leaves your control. We use AES-256 encryption at rest and TLS 1.3 in transit. All imagery is stored in SOC 2 Type II certified infrastructure. We offer data residency options and provide full audit logs. See our security architecture page for technical details.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-4">
+              <span class="material-symbols-outlined" style="font-size:20px;color:#7B61FF;" aria-hidden="true">help_outline</span>
+              <span>"What if the weather is bad?"</span>
+              <span class="faq-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq-4" hidden>
+              <span class="objection-tag">Objection: Reliability doubt</span>
+              <p>Our platforms operate in winds up to 33 mph and light rain. Autonomous missions are weather-aware &mdash; they reschedule automatically and notify your team. In practice, weather delays fewer than 8% of scheduled missions. Persistent deployment means missed days are made up within the same week.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-5">
+              <span class="material-symbols-outlined" style="font-size:20px;color:#7B61FF;" aria-hidden="true">help_outline</span>
+              <span>"We tried aerial services before and just got raw data we could not use."</span>
+              <span class="faq-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq-5" hidden>
+              <span class="objection-tag">Objection: Past bad experience</span>
+              <p>That is exactly the problem we built Jinki to solve. We are not a data collection service. Our intelligence team analyzes every dataset and delivers a prioritized action report &mdash; not a folder of images. Each finding includes severity, location, recommended action, and estimated cost impact. You receive intelligence, not homework.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-trigger" aria-expanded="false" aria-controls="faq-6">
+              <span class="material-symbols-outlined" style="font-size:20px;color:#7B61FF;" aria-hidden="true">help_outline</span>
+              <span>"Do you work with government facilities?"</span>
+              <span class="faq-arrow" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-answer" id="faq-6" hidden>
+              <span class="objection-tag">Objection: Compliance requirement</span>
+              <p>Our current operations focus on private-sector infrastructure: data centers, energy facilities, commercial agriculture, and corporate campuses. We are purpose-built for the private sector where our platforms deliver maximum value. For government-specific requirements, we recommend contacting us to discuss your compliance needs.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Blog Content Calendar -->
+    <section id="calendar" class="omc-section" aria-labelledby="cal-heading">
+      <div class="omc-section-header">
+        <span class="sec-num" aria-hidden="true">05</span>
+        <h2 id="cal-heading">Blog Content Calendar</h2>
+      </div>
+      <div class="omc-card glass-panel" style="border-radius:16px;">
+        <p class="omc-desc">A 12-week content plan targeting each stage of the buyer journey, with one post per week.</p>
+
+        <div class="calendar-grid">
+          <div class="cal-month">
+            <h3>April 2026</h3>
+            <div class="cal-weeks">
+              <div class="cal-week">
+                <span class="cal-week-num">W1</span>
+                <div class="cal-post">
+                  <span class="cal-stage awareness-tag">Awareness</span>
+                  <strong>5 Infrastructure Risks You Cannot See from the Ground</strong>
+                  <p>SEO pillar. Targets "infrastructure inspection" keywords. Introduces aerial intelligence concept.</p>
+                </div>
+              </div>
+              <div class="cal-week">
+                <span class="cal-week-num">W2</span>
+                <div class="cal-post">
+                  <span class="cal-stage consideration-tag">Consideration</span>
+                  <strong>Thermal Imaging vs. Visual Inspection: What Each Reveals</strong>
+                  <p>Educational comparison. Positions thermal as complementary, not replacement.</p>
+                </div>
+              </div>
+              <div class="cal-week">
+                <span class="cal-week-num">W3</span>
+                <div class="cal-post">
+                  <span class="cal-stage awareness-tag">Awareness</span>
+                  <strong>The Real Cost of Reactive Maintenance</strong>
+                  <p>Data-driven argument for predictive approach. Links to ROI calculator.</p>
+                </div>
+              </div>
+              <div class="cal-week">
+                <span class="cal-week-num">W4</span>
+                <div class="cal-post">
+                  <span class="cal-stage decision-tag">Decision</span>
+                  <strong>What to Expect from a Jinki Facility Intelligence Audit</strong>
+                  <p>Process walkthrough. Reduces unknowns for prospects considering an engagement.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cal-month">
+            <h3>May 2026</h3>
+            <div class="cal-weeks">
+              <div class="cal-week">
+                <span class="cal-week-num">W5</span>
+                <div class="cal-post">
+                  <span class="cal-stage awareness-tag">Awareness</span>
+                  <strong>NDVI Explained: How Aerial Imaging Detects Crop Stress Early</strong>
+                  <p>Agriculture vertical. SEO targeting "NDVI crop monitoring."</p>
+                </div>
+              </div>
+              <div class="cal-week">
+                <span class="cal-week-num">W6</span>
+                <div class="cal-post">
+                  <span class="cal-stage consideration-tag">Consideration</span>
+                  <strong>Autonomous vs. Piloted: Choosing the Right Aerial Platform</strong>
+                  <p>Educates on Jinki's two service tiers. Helps prospects self-qualify.</p>
+                </div>
+              </div>
+              <div class="cal-week">
+                <span class="cal-week-num">W7</span>
+                <div class="cal-post">
+                  <span class="cal-stage awareness-tag">Awareness</span>
+                  <strong>How Data Centers Are Using Thermal Intelligence to Prevent Outages</strong>
+                  <p>Vertical-specific thought leadership. Cites industry data.</p>
+                </div>
+              </div>
+              <div class="cal-week">
+                <span class="cal-week-num">W8</span>
+                <div class="cal-post">
+                  <span class="cal-stage decision-tag">Decision</span>
+                  <strong>Sample Report: What a Jinki Intelligence Deliverable Looks Like</strong>
+                  <p>Shows the actual deliverable. Strongest conversion content in the calendar.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cal-month">
+            <h3>June 2026</h3>
+            <div class="cal-weeks">
+              <div class="cal-week">
+                <span class="cal-week-num">W9</span>
+                <div class="cal-post">
+                  <span class="cal-stage awareness-tag">Awareness</span>
+                  <strong>Perimeter Security Beyond Cameras: The Case for Aerial Monitoring</strong>
+                  <p>Security vertical deep-dive. Targets CISO and physical security teams.</p>
+                </div>
+              </div>
+              <div class="cal-week">
+                <span class="cal-week-num">W10</span>
+                <div class="cal-post">
+                  <span class="cal-stage consideration-tag">Consideration</span>
+                  <strong>ROI Calculator: Is Aerial Intelligence Worth It for Your Facility?</strong>
+                  <p>Interactive content. Embedded calculator with email gate for detailed report.</p>
+                </div>
+              </div>
+              <div class="cal-week">
+                <span class="cal-week-num">W11</span>
+                <div class="cal-post">
+                  <span class="cal-stage awareness-tag">Awareness</span>
+                  <strong>Power Grid Inspection: What Utilities Need to Know About NFPA 70B Changes</strong>
+                  <p>Regulatory-triggered content. Natural urgency from compliance deadline.</p>
+                </div>
+              </div>
+              <div class="cal-week">
+                <span class="cal-week-num">W12</span>
+                <div class="cal-post">
+                  <span class="cal-stage decision-tag">Decision</span>
+                  <strong>Frequently Asked Questions About Working with Jinki</strong>
+                  <p>Compiles FAQ into long-form SEO asset. Addresses all top objections.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cal-summary" style="margin-top:24px;">
+          <h3 style="margin-bottom:12px;">Content Mix</h3>
+          <div class="mix-bars">
+            <div class="mix-row">
+              <span class="mix-label">Awareness (5 posts)</span>
+              <div class="mix-track"><div class="mix-fill" style="width:42%;background:rgba(0,229,255,0.6);"></div></div>
+              <span class="mix-pct">42%</span>
+            </div>
+            <div class="mix-row">
+              <span class="mix-label">Consideration (4 posts)</span>
+              <div class="mix-track"><div class="mix-fill" style="width:33%;background:rgba(255,165,0,0.6);"></div></div>
+              <span class="mix-pct">33%</span>
+            </div>
+            <div class="mix-row">
+              <span class="mix-label">Decision (3 posts)</span>
+              <div class="mix-track"><div class="mix-fill" style="width:25%;background:rgba(52,211,153,0.6);"></div></div>
+              <span class="mix-pct">25%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .omc-header {
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 24px;
+    }
+    .omc-header-inner { max-width: 1200px; margin: 0 auto; }
+    .omc-section { margin-bottom: 48px; }
+    .omc-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .sec-num {
+      font-family: var(--font-mono);
+      font-size: 48px;
+      font-weight: 700;
+      color: #7B61FF;
+      opacity: 0.25;
+      line-height: 1;
+    }
+    .omc-section-header h2 { font-size: clamp(22px, 4vw, 32px); }
+    .omc-card { padding: 32px; position: relative; z-index: 0; }
+    .omc-desc {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    /* PAS Framework */
+    .pas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .pas-card {
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--border);
+    }
+    .pas-card h3 { font-size: 17px; margin-bottom: 14px; }
+    .pas-step { margin-bottom: 12px; }
+    .pas-step:last-child { margin-bottom: 0; }
+    .pas-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      font-family: var(--font-label);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .pas-tag.problem { background: rgba(255,71,87,0.15); color: #ff4757; }
+    .pas-tag.agitate { background: rgba(255,165,0,0.15); color: #ffa500; }
+    .pas-tag.solve { background: rgba(52,211,153,0.15); color: #34d399; }
+    .pas-step p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* Social Proof */
+    .proof-journey { display: grid; gap: 16px; }
+    .proof-point {
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 640px) { .proof-point { grid-template-columns: 1fr; } }
+    .proof-stage { display: flex; flex-direction: column; gap: 8px; }
+    .stage-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-label);
+      text-transform: uppercase;
+      width: fit-content;
+    }
+    .stage-badge.awareness { background: rgba(0,229,255,0.15); color: var(--accent); }
+    .stage-badge.consideration { background: rgba(255,165,0,0.15); color: #ffa500; }
+    .stage-badge.decision { background: rgba(52,211,153,0.15); color: #34d399; }
+    .stage-badge.retention { background: rgba(123,97,255,0.15); color: #7B61FF; }
+    .proof-stage h3 { font-size: 16px; }
+    .proof-content h4 { font-size: 15px; margin-bottom: 6px; }
+    .proof-content p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 12px; }
+    .proof-mockup { padding: 16px; border-radius: 10px; background: var(--surface-container-low); border: 1px solid var(--border); }
+    .trust-bar-mock { display: flex; gap: 16px; align-items: center; justify-content: center; flex-wrap: wrap; }
+    .mock-logo {
+      width: 60px;
+      height: 24px;
+      border-radius: 4px;
+      background: var(--text-tertiary);
+      opacity: 0.2;
+    }
+    .testimonial-mock { display: flex; gap: 14px; align-items: flex-start; }
+    .testimonial-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(123,97,255,0.2);
+      color: #7B61FF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .testimonial-quote { font-style: italic; color: var(--text-primary); font-size: 14px; line-height: 1.5; margin-bottom: 4px; }
+    .testimonial-attr { font-size: 12px; color: var(--text-tertiary); }
+    .metrics-mock { display: flex; gap: 12px; flex-wrap: wrap; }
+    .metric-chip {
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: var(--surface-container);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .metric-chip strong { color: #34d399; font-family: var(--font-mono); }
+
+    /* Urgency */
+    .urgency-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 12px;
+    }
+    .urgency-card {
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+    .urgency-card.good { background: var(--surface-container); }
+    .urgency-card.bad { background: rgba(255,71,87,0.04); border-color: rgba(255,71,87,0.15); }
+    .urgency-verdict {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      font-family: var(--font-label);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      background: rgba(52,211,153,0.15);
+      color: #34d399;
+    }
+    .urgency-verdict.avoid { background: rgba(255,71,87,0.15); color: #ff4757; }
+    .urgency-card h3 { font-size: 15px; margin-bottom: 6px; }
+    .urgency-card > p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; font-style: italic; }
+    .urgency-why { display: block; margin-top: 8px; font-size: 12px; color: var(--text-tertiary); }
+
+    /* FAQ */
+    .faq-list { display: grid; gap: 8px; }
+    .faq-item {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .faq-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 20px;
+      background: var(--surface-container);
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .faq-trigger:hover { background: var(--surface-container-high); }
+    .faq-trigger span:nth-child(2) { flex: 1; }
+    .faq-arrow {
+      font-size: 20px;
+      color: #7B61FF;
+      transition: transform 0.2s;
+      font-weight: 700;
+    }
+    .faq-trigger[aria-expanded="true"] .faq-arrow { transform: rotate(45deg); }
+    .faq-answer {
+      padding: 0 20px 20px;
+      background: var(--surface-container);
+    }
+    .faq-answer[hidden] { display: none; }
+    .faq-answer p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+    .objection-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      font-family: var(--font-label);
+      text-transform: uppercase;
+      background: rgba(123,97,255,0.1);
+      color: #7B61FF;
+      margin-bottom: 8px;
+    }
+
+    /* Calendar */
+    .calendar-grid { display: grid; gap: 24px; }
+    .cal-month h3 { font-size: 18px; margin-bottom: 12px; color: var(--text-primary); }
+    .cal-weeks { display: grid; gap: 8px; }
+    .cal-week {
+      display: flex;
+      gap: 14px;
+      padding: 16px;
+      background: var(--surface-container);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .cal-week-num {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-tertiary);
+      background: var(--surface-container-low);
+      padding: 4px 8px;
+      border-radius: 4px;
+      align-self: flex-start;
+      flex-shrink: 0;
+    }
+    .cal-post { flex: 1; }
+    .cal-stage {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      font-family: var(--font-label);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .awareness-tag { background: rgba(0,229,255,0.15); color: var(--accent); }
+    .consideration-tag { background: rgba(255,165,0,0.15); color: #ffa500; }
+    .decision-tag { background: rgba(52,211,153,0.15); color: #34d399; }
+    .cal-post strong { display: block; font-size: 14px; color: var(--text-primary); margin-bottom: 4px; }
+    .cal-post p { font-size: 12px; color: var(--text-tertiary); line-height: 1.5; }
+
+    .mix-bars { display: grid; gap: 8px; }
+    .mix-row { display: flex; align-items: center; gap: 10px; }
+    .mix-label { font-family: var(--font-label); font-size: 13px; color: var(--text-secondary); width: 160px; flex-shrink: 0; }
+    .mix-track { flex: 1; height: 16px; background: var(--surface-container); border-radius: 4px; overflow: hidden; }
+    .mix-fill { height: 100%; border-radius: 4px; }
+    .mix-pct { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--text-primary); width: 40px; text-align: right; }
+
+    @media (max-width: 768px) {
+      .omc-card { padding: 20px; }
+      .sec-num { font-size: 36px; }
+    }
+  </style>
+
+  <script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    // FAQ accordion
+    var faqTriggers = document.querySelectorAll('.faq-trigger');
+    faqTriggers.forEach(function(trigger) {
+      trigger.addEventListener('click', function() {
+        var expanded = trigger.getAttribute('aria-expanded') === 'true';
+        // Close all
+        faqTriggers.forEach(function(t) {
+          t.setAttribute('aria-expanded', 'false');
+          var panel = document.getElementById(t.getAttribute('aria-controls'));
+          if (panel) panel.hidden = true;
+        });
+        // Toggle clicked
+        if (!expanded) {
+          trigger.setAttribute('aria-expanded', 'true');
+          var answer = document.getElementById(trigger.getAttribute('aria-controls'));
+          if (answer) answer.hidden = false;
+        }
+      });
+    });
+  });
+  </script>
+</body>
+</html>

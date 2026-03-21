@@ -1,0 +1,892 @@
+---
+/**
+ * Animations-Alpha.astro — Micro-interactions Library
+ * Team Alpha | Jinki Aerial Intelligence
+ *
+ * Comprehensive showcase of CSS + vanilla JS animation capabilities:
+ * - 8 card hover effects
+ * - 6 premium button styles
+ * - 4 scroll-triggered animations
+ * - 4 loading animations
+ */
+---
+
+<section class="animations-showcase" id="animations-alpha">
+  <!-- ========== SECTION HEADER ========== -->
+  <div class="showcase-header" style="text-align:center; max-width:800px; margin:0 auto; padding:80px 24px 60px;">
+    <span class="section-label" style="font-family:var(--font-label); font-size:13px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); display:block; margin-bottom:16px;">Effects Library</span>
+    <h2 style="font-family:var(--font-headline); font-size:clamp(2rem,5vw,3.5rem); color:var(--text-primary); margin-bottom:16px;">Micro-interactions</h2>
+    <p style="font-family:var(--font-body); font-size:1.1rem; color:var(--text-secondary); line-height:1.7;">Eight card hover effects, six button styles, scroll animations, and loading states — all CSS + vanilla JS.</p>
+  </div>
+
+  <!-- ========== 1. HOVER EFFECTS COLLECTION ========== -->
+  <div style="max-width:1280px; margin:0 auto; padding:0 24px 80px;">
+    <h3 class="sub-heading" style="font-family:var(--font-headline); font-size:1.5rem; color:var(--text-primary); margin-bottom:32px;">Card Hover Effects</h3>
+    <div class="hover-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:24px;">
+
+      <!-- 1a: Magnetic Tilt -->
+      <div class="hover-card magnetic-tilt" data-effect="tilt" style="perspective:800px;">
+        <div class="tilt-inner" style="padding:40px 24px; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px); transition:transform 0.15s ease; transform-style:preserve-3d; min-height:220px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; position:relative; overflow:hidden;">
+          <div class="tilt-shine" style="position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity 0.3s;"></div>
+          <span class="card-icon" style="font-size:2.5rem; margin-bottom:16px; display:block;">&#9670;</span>
+          <h4 style="font-family:var(--font-headline); font-size:1.1rem; color:var(--text-primary); margin-bottom:8px;">Magnetic Tilt</h4>
+          <p style="font-family:var(--font-body); font-size:0.85rem; color:var(--text-tertiary);">CSS perspective + JS mouse tracking creates a 3D tilt that follows your cursor.</p>
+        </div>
+      </div>
+
+      <!-- 1b: Glow Follow -->
+      <div class="hover-card glow-follow" data-effect="glow" style="position:relative; border-radius:16px; overflow:hidden; min-height:220px;">
+        <div class="glow-gradient" style="position:absolute; width:300px; height:300px; border-radius:50%; pointer-events:none; opacity:0; transition:opacity 0.3s; background:radial-gradient(circle, var(--accent-glow-strong) 0%, transparent 70%); transform:translate(-50%,-50%); z-index:1;"></div>
+        <div style="padding:40px 24px; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px); min-height:220px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; position:relative; z-index:2;">
+          <span class="card-icon" style="font-size:2.5rem; margin-bottom:16px; display:block;">&#9673;</span>
+          <h4 style="font-family:var(--font-headline); font-size:1.1rem; color:var(--text-primary); margin-bottom:8px;">Glow Follow</h4>
+          <p style="font-family:var(--font-body); font-size:0.85rem; color:var(--text-tertiary);">Radial gradient follows cursor position across the card surface.</p>
+        </div>
+      </div>
+
+      <!-- 1c: Border Gradient Animation -->
+      <div class="hover-card border-gradient" data-effect="border" style="position:relative; border-radius:16px; min-height:220px;">
+        <div class="border-gradient-inner" style="padding:40px 24px; border-radius:16px; background:var(--bg-card); min-height:220px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; position:relative; z-index:1;">
+          <span class="card-icon" style="font-size:2.5rem; margin-bottom:16px; display:block;">&#9672;</span>
+          <h4 style="font-family:var(--font-headline); font-size:1.1rem; color:var(--text-primary); margin-bottom:8px;">Border Gradient</h4>
+          <p style="font-family:var(--font-body); font-size:0.85rem; color:var(--text-tertiary);">Rotating conic gradient animates around the card border on hover.</p>
+        </div>
+      </div>
+
+      <!-- 1d: Glass Shatter -->
+      <div class="hover-card glass-shatter" data-effect="shatter" style="position:relative; border-radius:16px; min-height:220px; cursor:pointer;">
+        <div class="shatter-container" style="padding:40px 24px; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px); min-height:220px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; position:relative; overflow:hidden;">
+          <span class="card-icon" style="font-size:2.5rem; margin-bottom:16px; display:block;">&#9671;</span>
+          <h4 style="font-family:var(--font-headline); font-size:1.1rem; color:var(--text-primary); margin-bottom:8px;">Glass Shatter</h4>
+          <p style="font-family:var(--font-body); font-size:0.85rem; color:var(--text-tertiary);">Click to shatter the card into fragments, then watch it reassemble.</p>
+          <span class="shatter-hint" style="font-family:var(--font-mono); font-size:0.7rem; color:var(--accent); margin-top:12px; opacity:0.7;">[ CLICK ME ]</span>
+        </div>
+        <div class="shatter-fragments" style="position:absolute; inset:0; pointer-events:none; z-index:10;"></div>
+      </div>
+
+      <!-- 1e: Parallax Depth Layers -->
+      <div class="hover-card parallax-depth" data-effect="parallax" style="perspective:600px; border-radius:16px; min-height:220px; position:relative; overflow:hidden;">
+        <div class="parallax-layer parallax-layer-3" style="position:absolute; inset:0; display:flex; justify-content:center; align-items:center; transition:transform 0.2s ease-out;">
+          <div style="width:120px; height:120px; border-radius:50%; border:1px solid var(--border); opacity:0.15;"></div>
+        </div>
+        <div class="parallax-layer parallax-layer-2" style="position:absolute; inset:0; display:flex; justify-content:center; align-items:center; transition:transform 0.2s ease-out;">
+          <div style="width:80px; height:80px; border-radius:50%; border:1px solid var(--accent); opacity:0.25;"></div>
+        </div>
+        <div class="parallax-layer parallax-layer-1" style="position:relative; z-index:3; padding:40px 24px; min-height:220px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; transition:transform 0.2s ease-out; background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:16px; backdrop-filter:blur(20px);">
+          <span class="card-icon" style="font-size:2.5rem; margin-bottom:16px; display:block;">&#9683;</span>
+          <h4 style="font-family:var(--font-headline); font-size:1.1rem; color:var(--text-primary); margin-bottom:8px;">Parallax Depth</h4>
+          <p style="font-family:var(--font-body); font-size:0.85rem; color:var(--text-tertiary);">Three stacked layers shift at different speeds for depth illusion.</p>
+        </div>
+      </div>
+
+      <!-- 1f: Morphing Blob -->
+      <div class="hover-card morphing-blob" data-effect="blob" style="position:relative; border-radius:16px; min-height:220px; overflow:hidden;">
+        <div class="blob-bg" style="position:absolute; inset:-20px; z-index:0; transition:clip-path 0.5s cubic-bezier(0.4,0,0.2,1); clip-path:polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); background:linear-gradient(135deg, var(--accent-glow-strong), rgba(123,97,255,0.15));"></div>
+        <div style="padding:40px 24px; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px); min-height:220px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; position:relative; z-index:1;">
+          <span class="card-icon" style="font-size:2.5rem; margin-bottom:16px; display:block;">&#9676;</span>
+          <h4 style="font-family:var(--font-headline); font-size:1.1rem; color:var(--text-primary); margin-bottom:8px;">Morphing Blob</h4>
+          <p style="font-family:var(--font-body); font-size:0.85rem; color:var(--text-tertiary);">Animated clip-path morphs the background shape on hover.</p>
+        </div>
+      </div>
+
+      <!-- 1g: Neon Sign Flicker -->
+      <div class="hover-card neon-flicker" data-effect="neon" style="position:relative; border-radius:16px; min-height:220px;">
+        <div style="padding:40px 24px; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px); min-height:220px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; position:relative;">
+          <span class="neon-text" style="font-family:var(--font-headline); font-size:2rem; font-weight:700; color:var(--accent); display:block; margin-bottom:16px;">JINKI</span>
+          <h4 style="font-family:var(--font-headline); font-size:1.1rem; color:var(--text-primary); margin-bottom:8px;">Neon Flicker</h4>
+          <p style="font-family:var(--font-body); font-size:0.85rem; color:var(--text-tertiary);">Text shadow animation simulates a neon sign flickering to life.</p>
+        </div>
+      </div>
+
+      <!-- 1h: Holographic Shine -->
+      <div class="hover-card holographic" data-effect="holo" style="position:relative; border-radius:16px; min-height:220px; overflow:hidden;">
+        <div class="holo-shine" style="position:absolute; inset:0; pointer-events:none; z-index:3; opacity:0; transition:opacity 0.4s; background:linear-gradient(105deg, transparent 20%, rgba(255,0,0,0.05) 30%, rgba(255,165,0,0.05) 35%, rgba(255,255,0,0.05) 40%, rgba(0,255,0,0.05) 45%, rgba(0,229,255,0.08) 50%, rgba(123,97,255,0.05) 55%, rgba(255,0,255,0.05) 60%, transparent 80%); background-size:200% 100%;"></div>
+        <div style="padding:40px 24px; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px); min-height:220px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; position:relative; z-index:1;">
+          <span class="card-icon" style="font-size:2.5rem; margin-bottom:16px; display:block;">&#9830;</span>
+          <h4 style="font-family:var(--font-headline); font-size:1.1rem; color:var(--text-primary); margin-bottom:8px;">Holographic Shine</h4>
+          <p style="font-family:var(--font-body); font-size:0.85rem; color:var(--text-tertiary);">Rainbow gradient sweeps across the card on hover for a holographic effect.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 2. BUTTON EFFECTS ========== -->
+  <div style="max-width:1280px; margin:0 auto; padding:0 24px 80px;">
+    <h3 class="sub-heading" style="font-family:var(--font-headline); font-size:1.5rem; color:var(--text-primary); margin-bottom:32px;">Button Effects</h3>
+    <div class="button-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:24px; justify-items:center;">
+
+      <!-- Ripple -->
+      <button class="fx-btn ripple-btn" data-btn="ripple" style="position:relative; overflow:hidden; padding:14px 32px; border:1px solid var(--accent); background:transparent; color:var(--accent); font-family:var(--font-label); font-size:0.9rem; font-weight:600; letter-spacing:0.05em; border-radius:10px; cursor:pointer; transition:all 0.3s;">
+        Ripple Effect
+      </button>
+
+      <!-- Magnetic -->
+      <button class="fx-btn magnetic-btn" data-btn="magnetic" style="position:relative; padding:14px 32px; border:1px solid var(--accent); background:transparent; color:var(--accent); font-family:var(--font-label); font-size:0.9rem; font-weight:600; letter-spacing:0.05em; border-radius:10px; cursor:pointer; transition:transform 0.2s ease-out;">
+        Magnetic Pull
+      </button>
+
+      <!-- Glitch -->
+      <button class="fx-btn glitch-btn" data-btn="glitch" style="position:relative; padding:14px 32px; border:1px solid var(--accent); background:transparent; color:var(--accent); font-family:var(--font-label); font-size:0.9rem; font-weight:600; letter-spacing:0.05em; border-radius:10px; cursor:pointer; transition:all 0.3s;">
+        <span class="glitch-text" data-text="Glitch RGB">Glitch RGB</span>
+      </button>
+
+      <!-- Liquid Fill -->
+      <button class="fx-btn liquid-btn" data-btn="liquid" style="position:relative; overflow:hidden; padding:14px 32px; border:1px solid var(--accent); background:transparent; color:var(--accent); font-family:var(--font-label); font-size:0.9rem; font-weight:600; letter-spacing:0.05em; border-radius:10px; cursor:pointer; transition:color 0.4s;">
+        <span class="liquid-fill" style="position:absolute; bottom:0; left:0; right:0; height:0; background:var(--accent); transition:height 0.4s cubic-bezier(0.4,0,0.2,1); z-index:0;"></span>
+        <span style="position:relative; z-index:1;">Liquid Fill</span>
+      </button>
+
+      <!-- Pulse Ring -->
+      <button class="fx-btn pulse-ring-btn" data-btn="pulse" style="position:relative; padding:14px 32px; border:1px solid var(--accent); background:transparent; color:var(--accent); font-family:var(--font-label); font-size:0.9rem; font-weight:600; letter-spacing:0.05em; border-radius:10px; cursor:pointer; transition:all 0.3s;">
+        Pulse Ring
+        <span class="pulse-ring" style="position:absolute; inset:-4px; border-radius:14px; border:2px solid var(--accent); opacity:0; pointer-events:none;"></span>
+      </button>
+
+      <!-- Typewriter -->
+      <button class="fx-btn typewriter-btn" data-btn="typewriter" style="position:relative; padding:14px 32px; border:1px solid var(--accent); background:transparent; color:var(--accent); font-family:var(--font-mono); font-size:0.85rem; font-weight:600; letter-spacing:0.05em; border-radius:10px; cursor:pointer; transition:all 0.3s; min-width:180px;">
+        <span class="tw-text">Typewriter_</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========== 3. SCROLL ANIMATIONS ========== -->
+  <div style="max-width:1280px; margin:0 auto; padding:0 24px 80px;">
+    <h3 class="sub-heading" style="font-family:var(--font-headline); font-size:1.5rem; color:var(--text-primary); margin-bottom:32px;">Scroll Animations</h3>
+
+    <!-- 3a: Counter Animation -->
+    <div class="scroll-counter-row" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(160px, 1fr)); gap:24px; margin-bottom:60px;">
+      <div class="counter-item scroll-trigger" data-counter="98.7" data-suffix="%" style="text-align:center; padding:32px 16px; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px);">
+        <span class="counter-value" style="font-family:var(--font-mono); font-size:2.5rem; font-weight:700; color:var(--accent); display:block;">0</span>
+        <span style="font-family:var(--font-label); font-size:0.8rem; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em;">Uptime</span>
+      </div>
+      <div class="counter-item scroll-trigger" data-counter="12400" data-suffix="+" style="text-align:center; padding:32px 16px; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px);">
+        <span class="counter-value" style="font-family:var(--font-mono); font-size:2.5rem; font-weight:700; color:var(--accent); display:block;">0</span>
+        <span style="font-family:var(--font-label); font-size:0.8rem; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em;">Missions</span>
+      </div>
+      <div class="counter-item scroll-trigger" data-counter="340" data-suffix="TB" style="text-align:center; padding:32px 16px; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px);">
+        <span class="counter-value" style="font-family:var(--font-mono); font-size:2.5rem; font-weight:700; color:var(--accent); display:block;">0</span>
+        <span style="font-family:var(--font-label); font-size:0.8rem; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em;">Data Processed</span>
+      </div>
+      <div class="counter-item scroll-trigger" data-counter="47" data-suffix="ms" style="text-align:center; padding:32px 16px; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px);">
+        <span class="counter-value" style="font-family:var(--font-mono); font-size:2.5rem; font-weight:700; color:var(--accent); display:block;">0</span>
+        <span style="font-family:var(--font-label); font-size:0.8rem; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em;">Latency</span>
+      </div>
+    </div>
+
+    <!-- 3b: Text Reveal -->
+    <div class="text-reveal-container scroll-trigger" data-reveal="text" style="margin-bottom:60px; text-align:center; overflow:hidden;">
+      <h3 class="text-reveal-line" style="font-family:var(--font-headline); font-size:clamp(1.5rem,4vw,3rem); color:var(--text-primary); clip-path:inset(0 100% 0 0); transition:clip-path 0.8s cubic-bezier(0.16,1,0.3,1);">
+        Intelligence at the speed of light.
+      </h3>
+      <p class="text-reveal-line" style="font-family:var(--font-body); font-size:1.1rem; color:var(--text-secondary); margin-top:16px; clip-path:inset(0 100% 0 0); transition:clip-path 0.8s cubic-bezier(0.16,1,0.3,1) 0.2s;">
+        Autonomous aerial operations delivering actionable data in real time.
+      </p>
+    </div>
+
+    <!-- 3c: Stagger Grid -->
+    <div class="stagger-grid scroll-trigger" data-reveal="stagger" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); gap:16px; margin-bottom:60px;">
+      {Array.from({length: 12}).map((_, i) => (
+        <div class="stagger-card" style={`padding:32px 16px; border-radius:12px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(16px); text-align:center; opacity:0; transform:translateY(30px) scale(0.9); transition:all 0.6s cubic-bezier(0.16,1,0.3,1) ${i * 0.06}s;`}>
+          <span style="font-family:var(--font-mono); font-size:0.8rem; color:var(--accent);">NODE-{String(i + 1).padStart(2, '0')}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- 3d: Parallax Sections -->
+    <div class="parallax-scroll-demo" style="position:relative; height:300px; overflow:hidden; border-radius:16px; border:1px solid var(--glass-border);">
+      <div class="parallax-bg-layer" style="position:absolute; inset:-50px; background:radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 60%); transition:transform 0.1s linear;"></div>
+      <div class="parallax-mid-layer" style="position:absolute; inset:0; display:flex; justify-content:center; align-items:center; transition:transform 0.1s linear;">
+        <div style="width:200px; height:200px; border-radius:50%; border:1px dashed var(--border-hover); opacity:0.3;"></div>
+      </div>
+      <div class="parallax-fg-layer" style="position:absolute; inset:0; display:flex; justify-content:center; align-items:center; transition:transform 0.1s linear;">
+        <div style="text-align:center;">
+          <span style="font-family:var(--font-headline); font-size:1.3rem; color:var(--text-primary); display:block;">Parallax Depth</span>
+          <span style="font-family:var(--font-body); font-size:0.85rem; color:var(--text-tertiary);">Scroll to see layers move at different speeds</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== 4. LOADING ANIMATIONS ========== -->
+  <div style="max-width:1280px; margin:0 auto; padding:0 24px 80px;">
+    <h3 class="sub-heading" style="font-family:var(--font-headline); font-size:1.5rem; color:var(--text-primary); margin-bottom:32px;">Loading Animations</h3>
+    <div class="loader-grid" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:24px;">
+
+      <!-- Orbital Dots -->
+      <div style="padding:48px 24px; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px); text-align:center;">
+        <div class="loader-orbital" style="position:relative; width:60px; height:60px; margin:0 auto 20px;">
+          <div class="orbital-dot od-1"></div>
+          <div class="orbital-dot od-2"></div>
+          <div class="orbital-dot od-3"></div>
+        </div>
+        <span style="font-family:var(--font-label); font-size:0.8rem; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em;">Orbital Dots</span>
+      </div>
+
+      <!-- Scan Line -->
+      <div style="padding:48px 24px; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px); text-align:center;">
+        <div class="loader-scanline" style="position:relative; width:120px; height:60px; margin:0 auto 20px; border:1px solid var(--border-hover); border-radius:8px; overflow:hidden;">
+          <div class="scan-beam"></div>
+          <div class="scan-grid"></div>
+        </div>
+        <span style="font-family:var(--font-label); font-size:0.8rem; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em;">Scan Line</span>
+      </div>
+
+      <!-- Pulse Radar -->
+      <div style="padding:48px 24px; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px); text-align:center;">
+        <div class="loader-radar" style="position:relative; width:60px; height:60px; margin:0 auto 20px;">
+          <div class="radar-ring r1"></div>
+          <div class="radar-ring r2"></div>
+          <div class="radar-ring r3"></div>
+          <div class="radar-sweep"></div>
+          <div class="radar-center"></div>
+        </div>
+        <span style="font-family:var(--font-label); font-size:0.8rem; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em;">Pulse Radar</span>
+      </div>
+
+      <!-- Data Stream -->
+      <div style="padding:48px 24px; border-radius:16px; background:var(--glass-bg); border:1px solid var(--glass-border); backdrop-filter:blur(20px); text-align:center;">
+        <div class="loader-datastream" style="position:relative; width:120px; height:60px; margin:0 auto 20px; overflow:hidden; font-family:var(--font-mono); font-size:0.65rem; color:var(--accent); line-height:1.4; opacity:0.7;">
+          <div class="datastream-col dc-1"></div>
+          <div class="datastream-col dc-2"></div>
+          <div class="datastream-col dc-3"></div>
+          <div class="datastream-col dc-4"></div>
+          <div class="datastream-col dc-5"></div>
+        </div>
+        <span style="font-family:var(--font-label); font-size:0.8rem; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.1em;">Data Stream</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ===== BORDER GRADIENT CARD ===== */
+  .border-gradient {
+    background: conic-gradient(from 0deg, var(--accent), #7B61FF, #FF61D8, var(--accent));
+    background-size: 100% 100%;
+    padding: 2px;
+    animation: none;
+  }
+  .border-gradient:hover {
+    animation: borderSpin 2s linear infinite;
+  }
+  @keyframes borderSpin {
+    to { background: conic-gradient(from 360deg, var(--accent), #7B61FF, #FF61D8, var(--accent)); }
+  }
+  /* Use pseudo-element for rotating border */
+  .border-gradient {
+    position: relative;
+    background: transparent;
+    padding: 0;
+  }
+  .border-gradient::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 2px;
+    background: conic-gradient(from var(--border-angle, 0deg), var(--accent), #7B61FF, #FF61D8, var(--accent));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .border-gradient:hover::before {
+    opacity: 1;
+    animation: borderAngle 2s linear infinite;
+  }
+  @keyframes borderAngle {
+    to { --border-angle: 360deg; }
+  }
+  @property --border-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  /* ===== NEON FLICKER ===== */
+  .neon-flicker:hover .neon-text {
+    animation: neonFlicker 1.5s ease-in-out infinite alternate;
+  }
+  @keyframes neonFlicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+      text-shadow:
+        0 0 4px var(--accent),
+        0 0 11px var(--accent),
+        0 0 19px var(--accent),
+        0 0 40px var(--accent),
+        0 0 80px var(--accent);
+    }
+    20%, 24%, 55% {
+      text-shadow: none;
+    }
+  }
+
+  /* ===== HOLOGRAPHIC ===== */
+  .holographic:hover .holo-shine {
+    opacity: 1;
+    animation: holoSweep 1.5s ease-in-out infinite alternate;
+  }
+  @keyframes holoSweep {
+    0% { background-position: -100% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* ===== MORPHING BLOB ===== */
+  .morphing-blob:hover .blob-bg {
+    clip-path: polygon(20% 5%, 80% 5%, 95% 20%, 100% 50%, 95% 80%, 75% 95%, 25% 95%, 5% 80%, 0% 50%, 5% 20%);
+    animation: blobMorph 3s ease-in-out infinite alternate;
+  }
+  @keyframes blobMorph {
+    0% { clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); }
+    25% { clip-path: polygon(20% 10%, 80% 5%, 95% 25%, 100% 60%, 80% 90%, 40% 100%, 5% 75%, 0% 40%); }
+    50% { clip-path: polygon(35% 5%, 75% 0%, 100% 35%, 95% 65%, 75% 95%, 25% 100%, 0% 65%, 5% 35%); }
+    75% { clip-path: polygon(25% 0%, 80% 10%, 100% 40%, 90% 70%, 65% 100%, 30% 95%, 0% 60%, 10% 25%); }
+    100% { clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); }
+  }
+
+  /* ===== GLITCH BUTTON ===== */
+  .glitch-btn:hover .glitch-text {
+    animation: glitchText 0.3s ease-in-out;
+  }
+  .glitch-text {
+    position: relative;
+    display: inline-block;
+  }
+  .glitch-text::before,
+  .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+  .glitch-btn:hover .glitch-text::before {
+    animation: glitchR 0.3s ease-in-out;
+    color: #ff0040;
+    opacity: 0.7;
+  }
+  .glitch-btn:hover .glitch-text::after {
+    animation: glitchB 0.3s ease-in-out;
+    color: #00e5ff;
+    opacity: 0.7;
+  }
+  @keyframes glitchText {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 1px); }
+    40% { transform: translate(2px, -1px); }
+    60% { transform: translate(-1px, -1px); }
+    80% { transform: translate(1px, 1px); }
+  }
+  @keyframes glitchR {
+    0%, 100% { transform: translate(0); opacity: 0; }
+    20% { transform: translate(3px, -1px); opacity: 0.7; }
+    40% { transform: translate(-2px, 1px); opacity: 0.7; }
+    60% { transform: translate(2px, 1px); opacity: 0; }
+  }
+  @keyframes glitchB {
+    0%, 100% { transform: translate(0); opacity: 0; }
+    20% { transform: translate(-3px, 1px); opacity: 0.7; }
+    40% { transform: translate(2px, -1px); opacity: 0.7; }
+    60% { transform: translate(-2px, -1px); opacity: 0; }
+  }
+
+  /* ===== PULSE RING BUTTON ===== */
+  .pulse-ring-btn:hover .pulse-ring {
+    animation: pulseExpand 0.8s ease-out infinite;
+  }
+  @keyframes pulseExpand {
+    0% { opacity: 0.6; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.3); }
+  }
+
+  /* ===== RIPPLE ===== */
+  .ripple-btn .ripple-circle {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.3;
+    transform: scale(0);
+    animation: rippleAnim 0.6s ease-out forwards;
+    pointer-events: none;
+  }
+  @keyframes rippleAnim {
+    to { transform: scale(4); opacity: 0; }
+  }
+
+  /* ===== LIQUID FILL BUTTON ===== */
+  .liquid-btn:hover .liquid-fill {
+    height: 100% !important;
+  }
+  .liquid-btn:hover {
+    color: var(--bg-primary) !important;
+  }
+
+  /* ===== ORBITAL DOTS LOADER ===== */
+  .loader-orbital {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .orbital-dot {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .od-1 { animation: orbit1 1.4s ease-in-out infinite; }
+  .od-2 { animation: orbit2 1.4s ease-in-out infinite 0.15s; }
+  .od-3 { animation: orbit3 1.4s ease-in-out infinite 0.3s; }
+  @keyframes orbit1 {
+    0%, 100% { transform: translate(0, -20px); opacity: 1; }
+    33% { transform: translate(17px, 10px); opacity: 0.6; }
+    66% { transform: translate(-17px, 10px); opacity: 0.6; }
+  }
+  @keyframes orbit2 {
+    0%, 100% { transform: translate(17px, 10px); opacity: 0.6; }
+    33% { transform: translate(-17px, 10px); opacity: 0.6; }
+    66% { transform: translate(0, -20px); opacity: 1; }
+  }
+  @keyframes orbit3 {
+    0%, 100% { transform: translate(-17px, 10px); opacity: 0.6; }
+    33% { transform: translate(0, -20px); opacity: 1; }
+    66% { transform: translate(17px, 10px); opacity: 0.6; }
+  }
+
+  /* ===== SCAN LINE LOADER ===== */
+  .scan-beam {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    animation: scanMove 1.5s ease-in-out infinite;
+    box-shadow: 0 0 12px var(--accent-glow-strong);
+  }
+  @keyframes scanMove {
+    0%, 100% { top: 0; }
+    50% { top: calc(100% - 3px); }
+  }
+  .scan-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 20px 12px;
+    opacity: 0.3;
+  }
+
+  /* ===== RADAR LOADER ===== */
+  .loader-radar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .radar-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    opacity: 0.2;
+  }
+  .r1 { width: 100%; height: 100%; }
+  .r2 { width: 66%; height: 66%; }
+  .r3 { width: 33%; height: 33%; }
+  .radar-sweep {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 0;
+    left: 50%;
+    transform-origin: bottom left;
+    background: conic-gradient(from 0deg, transparent, var(--accent-glow-strong));
+    animation: radarSpin 2s linear infinite;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+    border-radius: 0;
+  }
+  @keyframes radarSpin {
+    to { transform: rotate(360deg); }
+  }
+  .radar-center {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  /* ===== DATA STREAM LOADER ===== */
+  .loader-datastream {
+    display: flex;
+    gap: 2px;
+    justify-content: center;
+  }
+  .datastream-col {
+    width: 20px;
+    overflow: hidden;
+    height: 60px;
+    position: relative;
+  }
+  .datastream-col::before {
+    content: '01001101 10110010 11100101 00110111 01010010 11001011';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    word-break: break-all;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    line-height: 1.2;
+    color: var(--accent);
+    animation: streamDown 2s linear infinite;
+  }
+  .dc-1::before { animation-delay: 0s; }
+  .dc-2::before { animation-delay: 0.3s; }
+  .dc-3::before { animation-delay: 0.1s; }
+  .dc-4::before { animation-delay: 0.5s; }
+  .dc-5::before { animation-delay: 0.2s; }
+  @keyframes streamDown {
+    0% { transform: translateY(-50%); }
+    100% { transform: translateY(0%); }
+  }
+
+  /* ===== GLASS SHATTER FRAGMENTS ===== */
+  .shatter-fragment {
+    position: absolute;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(8px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .shatter-fragment.explode {
+    opacity: 0;
+  }
+
+  /* ===== STAGGER REVEAL ===== */
+  .stagger-grid.revealed .stagger-card {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1) !important;
+  }
+
+  /* ===== TEXT REVEAL ===== */
+  .text-reveal-container.revealed .text-reveal-line {
+    clip-path: inset(0 0% 0 0) !important;
+  }
+
+  /* ===== REDUCED MOTION ===== */
+  @media (prefers-reduced-motion: reduce) {
+    .orbital-dot,
+    .scan-beam,
+    .radar-sweep,
+    .datastream-col::before,
+    .neon-text,
+    .holo-shine,
+    .blob-bg,
+    .pulse-ring,
+    .glitch-text::before,
+    .glitch-text::after {
+      animation: none !important;
+    }
+    .border-gradient::before {
+      animation: none !important;
+      opacity: 0.5;
+    }
+    .stagger-card {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    .text-reveal-line {
+      clip-path: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  // === Reduced motion check ===
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // =========================================
+  // 1. CARD HOVER EFFECTS
+  // =========================================
+
+  // 1a. Magnetic Tilt
+  document.querySelectorAll('.magnetic-tilt').forEach(card => {
+    const inner = card.querySelector('.tilt-inner');
+    const shine = card.querySelector('.tilt-shine');
+    if (!inner || prefersReducedMotion) return;
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      inner.style.transform = `rotateY(${x * 20}deg) rotateX(${-y * 20}deg)`;
+      if (shine) {
+        shine.style.opacity = '1';
+        shine.style.background = `radial-gradient(circle at ${(x + 0.5) * 100}% ${(y + 0.5) * 100}%, rgba(255,255,255,0.15), transparent 60%)`;
+      }
+    });
+    card.addEventListener('mouseleave', () => {
+      inner.style.transform = 'rotateY(0) rotateX(0)';
+      if (shine) shine.style.opacity = '0';
+    });
+  });
+
+  // 1b. Glow Follow
+  document.querySelectorAll('.glow-follow').forEach(card => {
+    const glow = card.querySelector('.glow-gradient');
+    if (!glow || prefersReducedMotion) return;
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      glow.style.left = `${e.clientX - rect.left}px`;
+      glow.style.top = `${e.clientY - rect.top}px`;
+      glow.style.opacity = '1';
+    });
+    card.addEventListener('mouseleave', () => {
+      glow.style.opacity = '0';
+    });
+  });
+
+  // 1d. Glass Shatter
+  document.querySelectorAll('.glass-shatter').forEach(card => {
+    const container = card.querySelector('.shatter-container');
+    const fragContainer = card.querySelector('.shatter-fragments');
+    if (!container || !fragContainer) return;
+    let isShattered = false;
+
+    card.addEventListener('click', () => {
+      if (prefersReducedMotion) return;
+      if (isShattered) {
+        // Reassemble
+        fragContainer.innerHTML = '';
+        container.style.opacity = '1';
+        isShattered = false;
+        return;
+      }
+
+      isShattered = true;
+      container.style.opacity = '0';
+      const rect = card.getBoundingClientRect();
+      const cols = 4;
+      const rows = 4;
+      const w = rect.width / cols;
+      const h = rect.height / rows;
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const frag = document.createElement('div');
+          frag.className = 'shatter-fragment';
+          frag.style.width = `${w}px`;
+          frag.style.height = `${h}px`;
+          frag.style.left = `${c * w}px`;
+          frag.style.top = `${r * h}px`;
+          fragContainer.appendChild(frag);
+
+          requestAnimationFrame(() => {
+            const dx = (Math.random() - 0.5) * 200;
+            const dy = (Math.random() - 0.5) * 200;
+            const rot = (Math.random() - 0.5) * 90;
+            frag.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg)`;
+            frag.style.opacity = '0';
+          });
+        }
+      }
+
+      // Auto-reassemble after 1.5s
+      setTimeout(() => {
+        if (isShattered) {
+          fragContainer.innerHTML = '';
+          container.style.opacity = '1';
+          isShattered = false;
+        }
+      }, 1500);
+    });
+  });
+
+  // 1e. Parallax Depth
+  document.querySelectorAll('.parallax-depth').forEach(card => {
+    if (prefersReducedMotion) return;
+    const layers = card.querySelectorAll('.parallax-layer');
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      if (layers[0]) layers[0].style.transform = `translate(${x * 5}px, ${y * 5}px)`;
+      if (layers[1]) layers[1].style.transform = `translate(${x * 15}px, ${y * 15}px)`;
+      if (layers[2]) layers[2].style.transform = `translate(${x * 30}px, ${y * 30}px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      layers.forEach(l => l.style.transform = 'translate(0,0)');
+    });
+  });
+
+  // =========================================
+  // 2. BUTTON EFFECTS
+  // =========================================
+
+  // Ripple
+  document.querySelectorAll('.ripple-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      if (prefersReducedMotion) return;
+      const rect = btn.getBoundingClientRect();
+      const circle = document.createElement('span');
+      circle.className = 'ripple-circle';
+      const size = Math.max(rect.width, rect.height);
+      circle.style.width = circle.style.height = `${size}px`;
+      circle.style.left = `${e.clientX - rect.left - size / 2}px`;
+      circle.style.top = `${e.clientY - rect.top - size / 2}px`;
+      btn.appendChild(circle);
+      setTimeout(() => circle.remove(), 600);
+    });
+  });
+
+  // Magnetic button
+  document.querySelectorAll('.magnetic-btn').forEach(btn => {
+    if (prefersReducedMotion) return;
+    const parent = btn.parentElement;
+    if (!parent) return;
+
+    parent.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        const pull = (120 - dist) / 120;
+        btn.style.transform = `translate(${dx * pull * 0.3}px, ${dy * pull * 0.3}px)`;
+      } else {
+        btn.style.transform = 'translate(0,0)';
+      }
+    });
+    parent.addEventListener('mouseleave', () => {
+      btn.style.transform = 'translate(0,0)';
+    });
+  });
+
+  // Typewriter button
+  document.querySelectorAll('.typewriter-btn').forEach(btn => {
+    const textEl = btn.querySelector('.tw-text');
+    if (!textEl) return;
+    const fullText = 'Typewriter_';
+    let timeout;
+
+    btn.addEventListener('mouseenter', () => {
+      if (prefersReducedMotion) return;
+      textEl.textContent = '';
+      let i = 0;
+      const type = () => {
+        if (i < fullText.length) {
+          textEl.textContent = fullText.substring(0, i + 1);
+          i++;
+          timeout = setTimeout(type, 60);
+        }
+      };
+      type();
+    });
+    btn.addEventListener('mouseleave', () => {
+      clearTimeout(timeout);
+      textEl.textContent = fullText;
+    });
+  });
+
+  // =========================================
+  // 3. SCROLL ANIMATIONS
+  // =========================================
+
+  // Counter animation
+  function animateCounter(el) {
+    const target = parseFloat(el.dataset.counter);
+    const suffix = el.dataset.suffix || '';
+    const valueEl = el.querySelector('.counter-value');
+    if (!valueEl) return;
+
+    const isDecimal = target % 1 !== 0;
+    const duration = 2000;
+    const start = performance.now();
+
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // ease out cubic
+      const current = target * eased;
+      valueEl.textContent = (isDecimal ? current.toFixed(1) : Math.floor(current).toLocaleString()) + suffix;
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // Scroll observer for all scroll-triggered effects
+  const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      const el = entry.target;
+
+      // Counter items
+      if (el.classList.contains('counter-item')) {
+        animateCounter(el);
+        scrollObserver.unobserve(el);
+      }
+
+      // Text reveal
+      if (el.dataset.reveal === 'text') {
+        el.classList.add('revealed');
+        scrollObserver.unobserve(el);
+      }
+
+      // Stagger grid
+      if (el.dataset.reveal === 'stagger') {
+        el.classList.add('revealed');
+        scrollObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.scroll-trigger').forEach(el => {
+    if (prefersReducedMotion) {
+      // Immediately reveal for reduced motion
+      el.classList.add('revealed');
+      if (el.classList.contains('counter-item')) {
+        const valueEl = el.querySelector('.counter-value');
+        const suffix = el.dataset.suffix || '';
+        if (valueEl) {
+          const target = parseFloat(el.dataset.counter);
+          valueEl.textContent = (target % 1 !== 0 ? target.toFixed(1) : Math.floor(target).toLocaleString()) + suffix;
+        }
+      }
+    } else {
+      scrollObserver.observe(el);
+    }
+  });
+
+  // 3d. Parallax scroll sections
+  if (!prefersReducedMotion) {
+    const parallaxDemo = document.querySelector('.parallax-scroll-demo');
+    if (parallaxDemo) {
+      const bgLayer = parallaxDemo.querySelector('.parallax-bg-layer');
+      const midLayer = parallaxDemo.querySelector('.parallax-mid-layer');
+      const fgLayer = parallaxDemo.querySelector('.parallax-fg-layer');
+
+      window.addEventListener('scroll', () => {
+        const rect = parallaxDemo.getBoundingClientRect();
+        const viewH = window.innerHeight;
+        if (rect.top < viewH && rect.bottom > 0) {
+          const progress = (viewH - rect.top) / (viewH + rect.height);
+          const offset = (progress - 0.5) * 60;
+          if (bgLayer) bgLayer.style.transform = `translateY(${offset * 0.8}px)`;
+          if (midLayer) midLayer.style.transform = `translateY(${offset * 0.4}px)`;
+          if (fgLayer) fgLayer.style.transform = `translateY(${offset * 0.1}px)`;
+        }
+      }, { passive: true });
+    }
+  }
+</script>

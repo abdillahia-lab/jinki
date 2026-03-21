@@ -1,0 +1,708 @@
+---
+import '../../styles/global.css';
+const title = 'Content Strategy — Team Alpha | Jinki';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Team Alpha content strategy and copywriting showcase for Jinki Aerial Intelligence" />
+  <title>{title}</title>
+  <link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=auto_awesome,campaign,check_circle,compare,edit_note,email,format_quote,lightbulb,psychology,star,verified,visibility&display=swap" rel="stylesheet" />
+  <script is:inline>
+    (function() {
+      var theme = localStorage.getItem('jinki-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <style is:inline>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <header class="cnt-header" role="banner">
+    <div class="cnt-header-inner">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:var(--accent);" aria-hidden="true">edit_note</span>
+        <div>
+          <h1 style="font-size:clamp(18px,3vw,24px);line-height:1.2;">Content Strategy</h1>
+          <p style="font-family:var(--font-mono);font-size:12px;color:var(--accent);letter-spacing:0.05em;">Team Alpha &mdash; Round 21</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" role="main" style="max-width:1200px;margin:0 auto;padding:32px 24px 80px;">
+
+    <!-- Section 1: Hero Copy A/B Variants -->
+    <section id="hero-copy" class="cnt-section" aria-labelledby="hero-heading">
+      <div class="cnt-section-header">
+        <span class="sec-num" aria-hidden="true">01</span>
+        <h2 id="hero-heading">Hero Copy A/B Variants</h2>
+      </div>
+      <div class="cnt-card glass-panel" style="border-radius:16px;">
+        <p class="cnt-desc">Two distinct hero messaging approaches tested for clarity, urgency, and conversion.</p>
+
+        <div class="ab-grid">
+          <div class="ab-variant" id="variant-a">
+            <div class="ab-badge a">Variant A &mdash; Outcome-Led</div>
+            <div class="ab-hero-preview">
+              <h3 class="ab-headline">See What Your Infrastructure<br/>Is Trying to Tell You</h3>
+              <p class="ab-subline">Jinki transforms aerial sensor data into prioritized maintenance actions. You get a clear report of what to fix, when, and why &mdash; before small issues become expensive failures.</p>
+              <div class="ab-cta-row">
+                <button class="ab-cta-btn btn-premium">Get a Free Assessment</button>
+              </div>
+            </div>
+            <div class="ab-notes">
+              <h4>Rationale</h4>
+              <ul>
+                <li>Personifies infrastructure to create curiosity</li>
+                <li>Immediately frames Jinki as an intelligence provider, not a hardware vendor</li>
+                <li>Emphasis on outcomes: "clear report" and "what to fix"</li>
+                <li>Loss aversion: "before small issues become expensive failures"</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="ab-variant" id="variant-b">
+            <div class="ab-badge b">Variant B &mdash; Authority-Led</div>
+            <div class="ab-hero-preview">
+              <h3 class="ab-headline">Aerial Intelligence for<br/>the Assets You Cannot Reach</h3>
+              <p class="ab-subline">From thermal hotspots on data center roofs to vegetation encroachment on power lines, Jinki delivers inspection-grade intelligence with recommended next steps &mdash; no field crew required.</p>
+              <div class="ab-cta-row">
+                <button class="ab-cta-btn btn-premium">Schedule a Consultation</button>
+              </div>
+            </div>
+            <div class="ab-notes">
+              <h4>Rationale</h4>
+              <ul>
+                <li>Positions Jinki in the "aerial intelligence" category instantly</li>
+                <li>Concrete examples create credibility</li>
+                <li>"Inspection-grade intelligence" differentiates from raw data providers</li>
+                <li>Efficiency angle: "no field crew required"</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="ab-toggle-row" style="margin-top:24px;">
+          <button class="ab-toggle active" data-variant="a">Variant A</button>
+          <button class="ab-toggle" data-variant="b">Variant B</button>
+          <span class="ab-vote-status" id="vote-status" aria-live="polite" style="color:var(--text-tertiary);font-size:13px;margin-left:auto;">Select your preference</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Service Descriptions -->
+    <section id="services" class="cnt-section" aria-labelledby="svc-heading">
+      <div class="cnt-section-header">
+        <span class="sec-num" aria-hidden="true">02</span>
+        <h2 id="svc-heading">Benefits-Focused Service Descriptions</h2>
+      </div>
+      <div class="cnt-card glass-panel" style="border-radius:16px;">
+        <p class="cnt-desc">Rewritten service copy that leads with the benefit the customer receives, not the feature Jinki provides.</p>
+
+        <div class="svc-comparison-grid">
+          <div class="svc-compare">
+            <div class="svc-before">
+              <span class="svc-tag before-tag">Before (Feature-led)</span>
+              <p>Our Facility Intelligence Audit uses thermal and LiDAR sensors to scan your entire facility and produce a comprehensive report.</p>
+            </div>
+            <div class="svc-after">
+              <span class="svc-tag after-tag">After (Benefit-led)</span>
+              <p>Know exactly where your facility is losing money. Our one-time audit pinpoints thermal leaks, structural risks, and maintenance priorities &mdash; ranked by cost impact so you fix what matters first.</p>
+            </div>
+          </div>
+          <div class="svc-compare">
+            <div class="svc-before">
+              <span class="svc-tag before-tag">Before (Feature-led)</span>
+              <p>Autonomous Deployment provides persistent aerial monitoring using DJI Dock 3 with the M4TD platform, running 150-200 missions per month.</p>
+            </div>
+            <div class="svc-after">
+              <span class="svc-tag after-tag">After (Benefit-led)</span>
+              <p>Stop scheduling manual inspections. Jinki's autonomous platform watches your facility around the clock &mdash; detecting anomalies the moment they appear and alerting your team with recommended actions.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="copywriting-rule" style="margin-top:24px;">
+          <h3 style="margin-bottom:10px;">The Rewrite Formula</h3>
+          <div class="formula-steps">
+            <div class="formula-step">
+              <span class="step-num">1</span>
+              <p><strong>Start with the pain.</strong> What problem does the customer feel today?</p>
+            </div>
+            <div class="formula-step">
+              <span class="step-num">2</span>
+              <p><strong>Show the outcome.</strong> What does life look like after Jinki?</p>
+            </div>
+            <div class="formula-step">
+              <span class="step-num">3</span>
+              <p><strong>Name the mechanism.</strong> Briefly explain how (but keep it secondary).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: CTA Variations -->
+    <section id="ctas" class="cnt-section" aria-labelledby="cta-heading">
+      <div class="cnt-section-header">
+        <span class="sec-num" aria-hidden="true">03</span>
+        <h2 id="cta-heading">CTA Copy Variations</h2>
+      </div>
+      <div class="cnt-card glass-panel" style="border-radius:16px;">
+        <p class="cnt-desc">Multiple CTA alternatives with reasoning for each, optimized for different conversion goals.</p>
+
+        <div class="cta-grid">
+          <div class="cta-option">
+            <button class="cta-demo-btn btn-premium" disabled>Get a Free Assessment</button>
+            <div class="cta-meta">
+              <span class="cta-intent">Low friction</span>
+              <p>Zero commitment, high perceived value. Best for top-of-funnel visitors who are still researching.</p>
+            </div>
+          </div>
+          <div class="cta-option">
+            <button class="cta-demo-btn btn-premium" disabled>See What We Would Find</button>
+            <div class="cta-meta">
+              <span class="cta-intent">Curiosity-driven</span>
+              <p>Triggers the "curiosity gap." Implies Jinki will discover something the prospect does not yet know.</p>
+            </div>
+          </div>
+          <div class="cta-option">
+            <button class="cta-demo-btn btn-premium" disabled>Request a Site Analysis</button>
+            <div class="cta-meta">
+              <span class="cta-intent">Professional tone</span>
+              <p>Best for enterprise buyers and procurement teams who respond to formal language.</p>
+            </div>
+          </div>
+          <div class="cta-option">
+            <button class="cta-demo-btn btn-premium" disabled>Start Saving on Maintenance</button>
+            <div class="cta-meta">
+              <span class="cta-intent">ROI-focused</span>
+              <p>Directly connects the CTA to a financial outcome. Strong for cost-conscious decision makers.</p>
+            </div>
+          </div>
+          <div class="cta-option">
+            <button class="cta-demo-btn btn-premium" disabled>Talk to an Intelligence Specialist</button>
+            <div class="cta-meta">
+              <span class="cta-intent">Human connection</span>
+              <p>Reassures that there is a real expert, not just a form. Good for complex sales cycles.</p>
+            </div>
+          </div>
+          <div class="cta-option">
+            <button class="cta-demo-btn btn-premium" disabled>Show Me a Sample Report</button>
+            <div class="cta-meta">
+              <span class="cta-intent">Proof-first</span>
+              <p>Offers tangible proof before asking for commitment. Strong for skeptical or analytical buyers.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Vertical Value Propositions -->
+    <section id="verticals" class="cnt-section" aria-labelledby="vert-heading">
+      <div class="cnt-section-header">
+        <span class="sec-num" aria-hidden="true">04</span>
+        <h2 id="vert-heading">Vertical-Specific Value Propositions</h2>
+      </div>
+      <div class="cnt-card glass-panel" style="border-radius:16px;">
+        <p class="cnt-desc">Tailored messaging for each industry vertical, speaking directly to that audience's priorities.</p>
+
+        <div class="vert-grid">
+          <div class="vert-card" style="border-left:3px solid #00e5ff;">
+            <h3>Data Centers</h3>
+            <p>Uptime is revenue. Jinki's thermal intelligence identifies cooling failures, hotspots, and roof integrity issues before they trigger downtime. You get a prioritized action plan &mdash; not raw sensor data &mdash; so your ops team knows exactly where to intervene.</p>
+          </div>
+          <div class="vert-card" style="border-left:3px solid #FF8C00;">
+            <h3>Energy &amp; Utilities</h3>
+            <p>Miles of transmission lines and thousands of poles are expensive to inspect on foot. Jinki covers more ground in a day than a field crew covers in a month &mdash; flagging vegetation encroachment, insulator damage, and thermal anomalies with GPS-tagged recommendations.</p>
+          </div>
+          <div class="vert-card" style="border-left:3px solid #7B61FF;">
+            <h3>Perimeter Security</h3>
+            <p>Static cameras have blind spots. Jinki provides autonomous, scheduled perimeter sweeps that adapt to threats in real time. When the system detects an anomaly, your security team receives an alert with visual context &mdash; not just a sensor trigger.</p>
+          </div>
+          <div class="vert-card" style="border-left:3px solid #34D399;">
+            <h3>Agriculture</h3>
+            <p>Healthy fields look the same from the ground. From the air, NDVI and thermal imaging reveal irrigation inefficiencies, disease pressure, and nutrient gaps invisible at ground level. Jinki delivers field-specific prescriptions, not just pretty maps.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Email Capture Microcopy -->
+    <section id="email" class="cnt-section" aria-labelledby="email-heading">
+      <div class="cnt-section-header">
+        <span class="sec-num" aria-hidden="true">05</span>
+        <h2 id="email-heading">Email Capture Microcopy</h2>
+      </div>
+      <div class="cnt-card glass-panel" style="border-radius:16px;">
+        <p class="cnt-desc">Microcopy around form fields that reduces friction and sets expectations.</p>
+
+        <div class="email-examples">
+          <div class="email-example">
+            <h3>Newsletter Signup</h3>
+            <div class="email-mock">
+              <div class="email-mock-text">
+                <strong>The Infrastructure Brief</strong>
+                <p>A monthly digest of aerial intelligence trends, case studies, and maintenance insights. No spam. Unsubscribe anytime.</p>
+              </div>
+              <div class="email-mock-form">
+                <input type="email" placeholder="work@company.com" class="email-mock-input" disabled aria-label="Demo email input" />
+                <button class="email-mock-btn btn-premium" disabled>Subscribe</button>
+              </div>
+              <span class="email-micro">Join 2,400+ infrastructure professionals</span>
+            </div>
+          </div>
+
+          <div class="email-example">
+            <h3>Lead Magnet</h3>
+            <div class="email-mock">
+              <div class="email-mock-text">
+                <strong>Free: Data Center Thermal Inspection Checklist</strong>
+                <p>The same 47-point checklist our intelligence team uses before every mission. Yours free &mdash; no call required.</p>
+              </div>
+              <div class="email-mock-form">
+                <input type="email" placeholder="you@company.com" class="email-mock-input" disabled aria-label="Demo email input" />
+                <button class="email-mock-btn btn-premium" disabled>Get the Checklist</button>
+              </div>
+              <span class="email-micro">Delivered instantly to your inbox. We respect your time.</span>
+            </div>
+          </div>
+
+          <div class="email-example">
+            <h3>Assessment Request</h3>
+            <div class="email-mock">
+              <div class="email-mock-text">
+                <strong>See what aerial intelligence reveals about your facility</strong>
+                <p>Our team will review your site and outline what an inspection would cover, what we would look for, and the expected ROI.</p>
+              </div>
+              <div class="email-mock-form">
+                <input type="email" placeholder="name@company.com" class="email-mock-input" disabled aria-label="Demo email input" />
+                <button class="email-mock-btn btn-premium" disabled>Request Assessment</button>
+              </div>
+              <span class="email-micro">Takes 2 minutes. We respond within 1 business day.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Trust-Building Language -->
+    <section id="trust" class="cnt-section" aria-labelledby="trust-heading">
+      <div class="cnt-section-header">
+        <span class="sec-num" aria-hidden="true">06</span>
+        <h2 id="trust-heading">Trust-Building Language Patterns</h2>
+      </div>
+      <div class="cnt-card glass-panel" style="border-radius:16px;">
+        <p class="cnt-desc">Language patterns that build credibility without sounding salesy.</p>
+
+        <div class="trust-grid">
+          <div class="trust-item">
+            <span class="material-symbols-outlined" style="font-size:24px;color:var(--accent);" aria-hidden="true">verified</span>
+            <h3>Specificity Over Superlatives</h3>
+            <div class="trust-example">
+              <span class="trust-bad">We are the best aerial company</span>
+              <span class="trust-good">We have completed 1,200+ facility inspections across 4 verticals since 2025</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <span class="material-symbols-outlined" style="font-size:24px;color:var(--accent);" aria-hidden="true">psychology</span>
+            <h3>Acknowledge Objections</h3>
+            <div class="trust-example">
+              <span class="trust-bad">Our service is affordable</span>
+              <span class="trust-good">Most clients see 3-5x ROI within the first quarter. Here is how we calculate that.</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <span class="material-symbols-outlined" style="font-size:24px;color:var(--accent);" aria-hidden="true">format_quote</span>
+            <h3>Social Proof Integration</h3>
+            <div class="trust-example">
+              <span class="trust-bad">Our customers love us</span>
+              <span class="trust-good">Trusted by operations teams at 40+ data centers and energy facilities</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <span class="material-symbols-outlined" style="font-size:24px;color:var(--accent);" aria-hidden="true">lightbulb</span>
+            <h3>Transparent Process</h3>
+            <div class="trust-example">
+              <span class="trust-bad">Contact us to learn more</span>
+              <span class="trust-good">Here is exactly what happens after you reach out: 1) We review your site 2) We propose a scope 3) You approve and we fly</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <span class="material-symbols-outlined" style="font-size:24px;color:var(--accent);" aria-hidden="true">star</span>
+            <h3>Risk Reversal</h3>
+            <div class="trust-example">
+              <span class="trust-bad">Try our services</span>
+              <span class="trust-good">If our initial audit does not identify at least 3 actionable findings, the assessment is free</span>
+            </div>
+          </div>
+          <div class="trust-item">
+            <span class="material-symbols-outlined" style="font-size:24px;color:var(--accent);" aria-hidden="true">campaign</span>
+            <h3>Authority Without Arrogance</h3>
+            <div class="trust-example">
+              <span class="trust-bad">We are industry leaders</span>
+              <span class="trust-good">Our intelligence team includes certified thermographers, licensed remote pilots, and infrastructure engineers</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .cnt-header {
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 24px;
+    }
+    .cnt-header-inner { max-width: 1200px; margin: 0 auto; }
+    .cnt-section { margin-bottom: 48px; }
+    .cnt-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .sec-num {
+      font-family: var(--font-mono);
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--accent);
+      opacity: 0.25;
+      line-height: 1;
+    }
+    .cnt-section-header h2 { font-size: clamp(22px, 4vw, 32px); }
+    .cnt-card { padding: 32px; position: relative; z-index: 0; }
+    .cnt-desc {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    /* A/B Variants */
+    .ab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .ab-variant {
+      background: var(--surface-container);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      transition: border-color 0.3s;
+    }
+    .ab-variant.selected { border-color: var(--accent); }
+    .ab-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: var(--font-label);
+      margin-bottom: 16px;
+    }
+    .ab-badge.a { background: rgba(0,229,255,0.15); color: var(--accent); }
+    .ab-badge.b { background: rgba(123,97,255,0.15); color: #7B61FF; }
+    .ab-hero-preview {
+      background: var(--surface-container-low);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .ab-headline {
+      font-size: clamp(20px, 3vw, 26px);
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .ab-subline {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .ab-cta-btn {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .ab-notes h4 { font-size: 14px; margin-bottom: 8px; color: var(--text-primary); }
+    .ab-notes ul { list-style: none; display: grid; gap: 6px; }
+    .ab-notes li {
+      font-size: 13px;
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .ab-notes li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 6px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.5;
+    }
+    .ab-toggle-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .ab-toggle {
+      padding: 8px 20px;
+      border-radius: 8px;
+      border: 1px solid var(--outline-variant);
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .ab-toggle.active { background: var(--accent); color: #000; border-color: var(--accent); }
+
+    /* Service Comparison */
+    .svc-comparison-grid { display: grid; gap: 24px; }
+    .svc-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 640px) { .svc-compare { grid-template-columns: 1fr; } }
+    .svc-before, .svc-after {
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .svc-before { background: var(--surface-container); border: 1px solid var(--border); }
+    .svc-after { background: var(--accent-glow); border: 1px solid rgba(0,229,255,0.2); }
+    .svc-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-label);
+      margin-bottom: 10px;
+    }
+    .before-tag { background: rgba(255,71,87,0.15); color: #ff4757; }
+    .after-tag { background: rgba(52,211,153,0.15); color: #34d399; }
+    .svc-before p, .svc-after p { font-size: 14px; line-height: 1.6; color: var(--text-secondary); }
+
+    .formula-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .formula-step {
+      background: var(--surface-container);
+      border-radius: 10px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #000;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .formula-step p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+    /* CTA Grid */
+    .cta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    .cta-option {
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .cta-demo-btn {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: 15px;
+      cursor: default;
+      text-align: center;
+    }
+    .cta-meta { display: flex; flex-direction: column; gap: 4px; }
+    .cta-intent {
+      font-family: var(--font-label);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .cta-meta p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+    /* Verticals */
+    .vert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .vert-card {
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+    .vert-card h3 { font-size: 17px; margin-bottom: 10px; }
+    .vert-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+
+    /* Email Examples */
+    .email-examples { display: grid; gap: 20px; }
+    .email-example h3 { font-size: 16px; margin-bottom: 12px; }
+    .email-mock {
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--border);
+    }
+    .email-mock-text { margin-bottom: 16px; }
+    .email-mock-text strong { display: block; font-size: 16px; margin-bottom: 4px; color: var(--text-primary); }
+    .email-mock-text p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+    .email-mock-form {
+      display: flex;
+      gap: 8px;
+    }
+    .email-mock-input {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-container-low);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 14px;
+    }
+    .email-mock-btn {
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
+      background: var(--accent);
+      color: #000;
+      font-family: var(--font-label);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: default;
+      white-space: nowrap;
+    }
+    .email-micro {
+      display: block;
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      font-family: var(--font-body);
+    }
+
+    /* Trust */
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+    .trust-item {
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .trust-item h3 { font-size: 15px; }
+    .trust-example { display: flex; flex-direction: column; gap: 8px; }
+    .trust-bad, .trust-good {
+      display: block;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .trust-bad {
+      background: rgba(255,71,87,0.08);
+      color: var(--text-tertiary);
+      text-decoration: line-through;
+      border: 1px solid rgba(255,71,87,0.1);
+    }
+    .trust-good {
+      background: var(--accent-glow);
+      color: var(--text-primary);
+      border: 1px solid rgba(0,229,255,0.15);
+    }
+
+    @media (max-width: 768px) {
+      .cnt-card { padding: 20px; }
+      .sec-num { font-size: 36px; }
+      .ab-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    // A/B Toggle
+    var toggles = document.querySelectorAll('.ab-toggle');
+    var variantA = document.getElementById('variant-a');
+    var variantB = document.getElementById('variant-b');
+    var voteStatus = document.getElementById('vote-status');
+
+    toggles.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        toggles.forEach(function(t) { t.classList.remove('active'); });
+        btn.classList.add('active');
+        var v = btn.getAttribute('data-variant');
+        if (v === 'a') {
+          variantA.classList.add('selected');
+          variantB.classList.remove('selected');
+          voteStatus.textContent = 'You prefer Variant A (Outcome-Led)';
+        } else {
+          variantB.classList.add('selected');
+          variantA.classList.remove('selected');
+          voteStatus.textContent = 'You prefer Variant B (Authority-Led)';
+        }
+      });
+    });
+  });
+  </script>
+</body>
+</html>

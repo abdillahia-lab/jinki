@@ -1,0 +1,1452 @@
+---
+/*
+  LeadGen-Omega — "Mission Briefing" Contact Form
+  Team Omega, Round 7
+
+  Single-page smart form with:
+  - Interactive vertical selector cards
+  - Floating label underline inputs
+  - Live mission briefing preview card
+  - Drag-and-drop file upload zone
+  - Date/time consultation picker
+  - Radar-ping success animation
+  - Dark/light theme support
+  - Full accessibility (ARIA, keyboard, reduced motion)
+*/
+---
+
+<section id="lead-gen" class="relative" style="padding-top: 5rem; padding-bottom: 5rem;" aria-label="Request a Mission Briefing">
+  <!-- Radar grid background -->
+  <div class="omega-radar-bg" aria-hidden="true"></div>
+
+  <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; position: relative; z-index: 1;">
+
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 1rem;">
+        <span style="display: block; height: 1px; width: 2rem; background: var(--accent);"></span>
+        <span class="omega-eyebrow">Mission Briefing</span>
+        <span style="display: block; height: 1px; width: 2rem; background: var(--accent);"></span>
+      </div>
+      <h2 style="font-family: var(--font-headline); font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 700; color: var(--text-primary); line-height: 1.05; letter-spacing: -0.02em;">
+        Start Your <span class="omega-headline-accent">Intelligence Operation</span>
+      </h2>
+      <p style="font-family: var(--font-body); font-size: 1.125rem; font-weight: 300; color: var(--text-secondary); margin-top: 1rem; max-width: 36rem; margin-left: auto; margin-right: auto;">
+        Select your sector, brief us on your facility, and we'll design a tailored aerial intelligence strategy.
+      </p>
+    </div>
+
+    <!-- Vertical Selector Cards -->
+    <fieldset id="omega-vertical-selector" style="border: none; margin-bottom: 2.5rem;" role="radiogroup" aria-label="Select your industry vertical">
+      <legend class="sr-only">Choose your industry sector</legend>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; max-width: 56rem; margin-left: auto; margin-right: auto;">
+
+        <label class="omega-vcard" data-vertical="data-centers" tabindex="0" role="radio" aria-checked="false">
+          <input type="radio" name="vertical" value="data-centers" class="sr-only" />
+          <div class="omega-vcard-icon" style="--vcard-color: #00E5FF;">
+            <span class="material-symbols-outlined" aria-hidden="true">memory</span>
+          </div>
+          <span class="omega-vcard-label">Data Centers</span>
+          <span class="omega-vcard-check" aria-hidden="true">
+            <span class="material-symbols-outlined" style="font-size: 16px;">check</span>
+          </span>
+        </label>
+
+        <label class="omega-vcard" data-vertical="energy" tabindex="0" role="radio" aria-checked="false">
+          <input type="radio" name="vertical" value="energy" class="sr-only" />
+          <div class="omega-vcard-icon" style="--vcard-color: #FF8C00;">
+            <span class="material-symbols-outlined" aria-hidden="true">bolt</span>
+          </div>
+          <span class="omega-vcard-label">Energy Grid</span>
+          <span class="omega-vcard-check" aria-hidden="true">
+            <span class="material-symbols-outlined" style="font-size: 16px;">check</span>
+          </span>
+        </label>
+
+        <label class="omega-vcard" data-vertical="security" tabindex="0" role="radio" aria-checked="false">
+          <input type="radio" name="vertical" value="security" class="sr-only" />
+          <div class="omega-vcard-icon" style="--vcard-color: #7B61FF;">
+            <span class="material-symbols-outlined" aria-hidden="true">shield</span>
+          </div>
+          <span class="omega-vcard-label">Security</span>
+          <span class="omega-vcard-check" aria-hidden="true">
+            <span class="material-symbols-outlined" style="font-size: 16px;">check</span>
+          </span>
+        </label>
+
+        <label class="omega-vcard" data-vertical="agriculture" tabindex="0" role="radio" aria-checked="false">
+          <input type="radio" name="vertical" value="agriculture" class="sr-only" />
+          <div class="omega-vcard-icon" style="--vcard-color: #34D399;">
+            <span class="material-symbols-outlined" aria-hidden="true">eco</span>
+          </div>
+          <span class="omega-vcard-label">Agriculture</span>
+          <span class="omega-vcard-check" aria-hidden="true">
+            <span class="material-symbols-outlined" style="font-size: 16px;">check</span>
+          </span>
+        </label>
+
+      </div>
+    </fieldset>
+
+    <!-- Main form + preview layout -->
+    <div class="omega-form-layout">
+
+      <!-- Form Panel -->
+      <div class="omega-form-panel glass-panel" style="border-radius: 16px; padding: 2.5rem;">
+        <form id="omega-form" novalidate autocomplete="on">
+
+          <!-- Section: Contact Info -->
+          <div class="omega-section" data-section="contact" style="margin-bottom: 2.5rem;">
+            <div class="omega-section-header" style="margin-bottom: 1.75rem;">
+              <span class="omega-section-num">01</span>
+              <span class="omega-section-title">Contact Information</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem;">
+              <div class="omega-field">
+                <input type="text" id="omega-fname" name="first_name" required autocomplete="given-name" placeholder=" " />
+                <label for="omega-fname">First Name</label>
+                <div class="omega-underline"></div>
+                <span class="omega-field-error" aria-live="polite"></span>
+              </div>
+              <div class="omega-field">
+                <input type="text" id="omega-lname" name="last_name" required autocomplete="family-name" placeholder=" " />
+                <label for="omega-lname">Last Name</label>
+                <div class="omega-underline"></div>
+                <span class="omega-field-error" aria-live="polite"></span>
+              </div>
+              <div class="omega-field" style="grid-column: 1 / -1;">
+                <input type="email" id="omega-email" name="email" required autocomplete="email" placeholder=" " />
+                <label for="omega-email">Business Email</label>
+                <div class="omega-underline"></div>
+                <span class="omega-field-error" aria-live="polite"></span>
+              </div>
+              <div class="omega-field" style="grid-column: 1 / -1;">
+                <input type="tel" id="omega-phone" name="phone" autocomplete="tel" placeholder=" " />
+                <label for="omega-phone">Phone <span style="color: var(--text-tertiary); font-weight: 400;">(optional)</span></label>
+                <div class="omega-underline"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Facility Details -->
+          <div class="omega-section" data-section="facility" style="margin-bottom: 2.5rem;">
+            <div class="omega-section-header" style="margin-bottom: 1.75rem;">
+              <span class="omega-section-num">02</span>
+              <span class="omega-section-title">Facility Details</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem;">
+              <div class="omega-field" style="grid-column: 1 / -1;">
+                <input type="text" id="omega-company" name="company" required placeholder=" " autocomplete="organization" />
+                <label for="omega-company">Company / Organization</label>
+                <div class="omega-underline"></div>
+                <span class="omega-field-error" aria-live="polite"></span>
+              </div>
+              <div class="omega-field">
+                <input type="text" id="omega-location" name="location" placeholder=" " />
+                <label for="omega-location">Facility Location</label>
+                <div class="omega-underline"></div>
+              </div>
+              <div class="omega-field">
+                <input type="text" id="omega-size" name="facility_size" placeholder=" " />
+                <label for="omega-size">Facility Size (approx.)</label>
+                <div class="omega-underline"></div>
+              </div>
+
+              <!-- Dynamic vertical-specific field -->
+              <div class="omega-field" id="omega-dynamic-field" style="grid-column: 1 / -1; display: none;">
+                <input type="text" id="omega-dynamic-input" name="vertical_detail" placeholder=" " />
+                <label for="omega-dynamic-input" id="omega-dynamic-label">Additional Detail</label>
+                <div class="omega-underline"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section: Mission Scope -->
+          <div class="omega-section" data-section="scope" style="margin-bottom: 2.5rem;">
+            <div class="omega-section-header" style="margin-bottom: 1.75rem;">
+              <span class="omega-section-num">03</span>
+              <span class="omega-section-title">Mission Scope</span>
+            </div>
+
+            <!-- Service type checkboxes -->
+            <div style="margin-bottom: 1.5rem;">
+              <span class="omega-mini-label" style="display: block; margin-bottom: 0.75rem;">Services of Interest</span>
+              <div style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                <label class="omega-chip">
+                  <input type="checkbox" name="services" value="audit" class="sr-only" />
+                  <span>Facility Audit</span>
+                </label>
+                <label class="omega-chip">
+                  <input type="checkbox" name="services" value="deployment" class="sr-only" />
+                  <span>Autonomous Deployment</span>
+                </label>
+                <label class="omega-chip">
+                  <input type="checkbox" name="services" value="thermal" class="sr-only" />
+                  <span>Thermal Analysis</span>
+                </label>
+                <label class="omega-chip">
+                  <input type="checkbox" name="services" value="lidar" class="sr-only" />
+                  <span>LiDAR Mapping</span>
+                </label>
+                <label class="omega-chip">
+                  <input type="checkbox" name="services" value="security-ops" class="sr-only" />
+                  <span>Security Operations</span>
+                </label>
+                <label class="omega-chip">
+                  <input type="checkbox" name="services" value="crop-intel" class="sr-only" />
+                  <span>Crop Intelligence</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Textarea -->
+            <div class="omega-field omega-field-area">
+              <textarea id="omega-message" name="message" rows="4" placeholder=" "></textarea>
+              <label for="omega-message">Describe your challenge or objective</label>
+              <div class="omega-underline"></div>
+            </div>
+          </div>
+
+          <!-- Section: File Upload -->
+          <div class="omega-section" data-section="files" style="margin-bottom: 2.5rem;">
+            <div class="omega-section-header" style="margin-bottom: 1.25rem;">
+              <span class="omega-section-num">04</span>
+              <span class="omega-section-title">Attachments <span style="color: var(--text-tertiary); font-weight: 400; font-size: 0.8rem;">(optional)</span></span>
+            </div>
+            <div class="omega-dropzone" id="omega-dropzone" role="button" tabindex="0" aria-label="Upload facility photos or documents. Drag and drop or click to browse.">
+              <input type="file" id="omega-file-input" multiple accept="image/*,.pdf,.doc,.docx" class="sr-only" aria-label="Upload files" />
+              <div class="omega-dropzone-inner">
+                <span class="material-symbols-outlined" style="font-size: 2rem; color: var(--text-tertiary);" aria-hidden="true">cloud_upload</span>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.5rem;">
+                  Drag facility photos or documents here
+                </p>
+                <p style="color: var(--text-tertiary); font-size: 0.75rem; margin-top: 0.25rem;">
+                  PNG, JPG, PDF, DOC up to 10 MB each
+                </p>
+              </div>
+            </div>
+            <div id="omega-file-list" style="margin-top: 0.75rem;"></div>
+          </div>
+
+          <!-- Section: Scheduling -->
+          <div class="omega-section" data-section="schedule" style="margin-bottom: 2.5rem;">
+            <div class="omega-section-header" style="margin-bottom: 1.25rem;">
+              <span class="omega-section-num">05</span>
+              <span class="omega-section-title">Preferred Consultation <span style="color: var(--text-tertiary); font-weight: 400; font-size: 0.8rem;">(optional)</span></span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+              <div class="omega-field">
+                <input type="date" id="omega-date" name="preferred_date" placeholder=" " />
+                <label for="omega-date">Preferred Date</label>
+                <div class="omega-underline"></div>
+              </div>
+              <div class="omega-field">
+                <select id="omega-time" name="preferred_time" class="omega-select-input">
+                  <option value="">Select a time slot</option>
+                  <option value="09:00">09:00 AM</option>
+                  <option value="10:00">10:00 AM</option>
+                  <option value="11:00">11:00 AM</option>
+                  <option value="13:00">01:00 PM</option>
+                  <option value="14:00">02:00 PM</option>
+                  <option value="15:00">03:00 PM</option>
+                  <option value="16:00">04:00 PM</option>
+                </select>
+                <label for="omega-time" class="omega-select-label">Time Slot</label>
+                <div class="omega-underline"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div style="margin-top: 2rem;">
+            <button type="submit" id="omega-submit-btn" class="omega-submit btn-premium" style="width: 100%; padding: 1.25rem 2rem; border: none; border-radius: 12px; cursor: pointer; font-family: var(--font-headline); font-weight: 700; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.25em; color: #fff; position: relative; overflow: hidden;">
+              <span class="omega-submit-text">Submit Mission Briefing</span>
+              <span class="omega-submit-loading" style="display: none;" aria-hidden="true">
+                <span class="omega-spinner"></span>
+                Transmitting...
+              </span>
+            </button>
+            <p style="text-align: center; margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-tertiary);">
+              <span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle; color: var(--accent);" aria-hidden="true">lock</span>
+              Encrypted. No commitment. Response within one business day.
+            </p>
+          </div>
+        </form>
+
+        <!-- Success State -->
+        <div id="omega-success" class="omega-success-state" hidden>
+          <div class="omega-radar-ping" aria-hidden="true">
+            <div class="omega-ping-ring omega-ping-ring-1"></div>
+            <div class="omega-ping-ring omega-ping-ring-2"></div>
+            <div class="omega-ping-ring omega-ping-ring-3"></div>
+            <div class="omega-ping-center">
+              <span class="material-symbols-outlined" style="font-size: 2.5rem; color: #4ADE80;">check_circle</span>
+            </div>
+          </div>
+          <h3 style="font-family: var(--font-headline); font-size: 1.75rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; letter-spacing: -0.01em;">
+            Mission <span style="color: #4ADE80;">Accepted</span>
+          </h3>
+          <p style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.75rem; max-width: 28rem; margin-left: auto; margin-right: auto;">
+            Your briefing has been received. Our operations team will contact you within one business day to discuss your intelligence strategy.
+          </p>
+          <div class="omega-ticket" style="margin-top: 1.5rem;">
+            <span class="omega-mini-label">Reference</span>
+            <span id="omega-ticket-id" style="font-family: var(--font-mono); font-size: 1rem; color: var(--accent); letter-spacing: 0.05em;"></span>
+          </div>
+          <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <div class="omega-next-step">
+              <span class="material-symbols-outlined" style="font-size: 1.125rem; color: var(--accent);" aria-hidden="true">schedule</span>
+              <span>Confirmation email sent</span>
+            </div>
+            <div class="omega-next-step">
+              <span class="material-symbols-outlined" style="font-size: 1.125rem; color: var(--accent);" aria-hidden="true">person</span>
+              <span>Specialist assigned</span>
+            </div>
+            <div class="omega-next-step">
+              <span class="material-symbols-outlined" style="font-size: 1.125rem; color: var(--accent);" aria-hidden="true">call</span>
+              <span>Consultation scheduled</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Preview Card -->
+      <aside class="omega-preview glass-panel" style="border-radius: 16px; padding: 2rem;" aria-label="Live mission briefing summary" aria-live="polite">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+          <span class="omega-preview-dot"></span>
+          <span class="omega-mini-label" style="color: var(--accent);">Live Preview</span>
+        </div>
+
+        <h3 style="font-family: var(--font-headline); font-size: 1.125rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1.25rem; letter-spacing: -0.01em;">
+          Mission Briefing Summary
+        </h3>
+
+        <div class="omega-preview-fields">
+          <div class="omega-preview-row">
+            <span class="omega-preview-key">Operative</span>
+            <span class="omega-preview-val" id="omega-prev-name">---</span>
+          </div>
+          <div class="omega-preview-row">
+            <span class="omega-preview-key">Organization</span>
+            <span class="omega-preview-val" id="omega-prev-company">---</span>
+          </div>
+          <div class="omega-preview-row">
+            <span class="omega-preview-key">Sector</span>
+            <span class="omega-preview-val" id="omega-prev-sector">
+              <span style="color: var(--text-tertiary);">Not selected</span>
+            </span>
+          </div>
+          <div class="omega-preview-row">
+            <span class="omega-preview-key">Location</span>
+            <span class="omega-preview-val" id="omega-prev-location">---</span>
+          </div>
+          <div class="omega-preview-row">
+            <span class="omega-preview-key">Services</span>
+            <span class="omega-preview-val" id="omega-prev-services">
+              <span style="color: var(--text-tertiary);">None selected</span>
+            </span>
+          </div>
+          <div class="omega-preview-row">
+            <span class="omega-preview-key">Consultation</span>
+            <span class="omega-preview-val" id="omega-prev-schedule">
+              <span style="color: var(--text-tertiary);">Not scheduled</span>
+            </span>
+          </div>
+          <div class="omega-preview-row omega-preview-row-msg">
+            <span class="omega-preview-key">Objective</span>
+            <span class="omega-preview-val" id="omega-prev-message">
+              <span style="color: var(--text-tertiary);">---</span>
+            </span>
+          </div>
+          <div class="omega-preview-row">
+            <span class="omega-preview-key">Attachments</span>
+            <span class="omega-preview-val" id="omega-prev-files">
+              <span style="color: var(--text-tertiary);">0 files</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="omega-preview-status" style="margin-top: 1.5rem;">
+          <div class="omega-status-bar">
+            <div class="omega-status-fill" id="omega-status-fill" style="width: 0%;"></div>
+          </div>
+          <span class="omega-status-text" id="omega-status-text" style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 0.5rem; display: block;">
+            0% complete
+          </span>
+        </div>
+      </aside>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ====== SCREEN-READER ONLY ====== */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* ====== RADAR BACKGROUND ====== */
+  .omega-radar-bg {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    z-index: 0;
+    opacity: 0.04;
+    background-image:
+      radial-gradient(circle at 50% 50%, transparent 0%, transparent 29.5%, var(--accent) 30%, transparent 30.5%),
+      radial-gradient(circle at 50% 50%, transparent 0%, transparent 49.5%, var(--accent) 50%, transparent 50.5%),
+      radial-gradient(circle at 50% 50%, transparent 0%, transparent 69.5%, var(--accent) 70%, transparent 70.5%),
+      linear-gradient(0deg, transparent 49.5%, var(--accent) 50%, transparent 50.5%),
+      linear-gradient(90deg, transparent 49.5%, var(--accent) 50%, transparent 50.5%);
+    background-size: 600px 600px;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  :global([data-theme="light"]) .omega-radar-bg {
+    opacity: 0.035;
+  }
+
+  /* ====== TYPOGRAPHY HELPERS ====== */
+  .omega-eyebrow {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+  }
+
+  .omega-headline-accent {
+    background: linear-gradient(135deg, #00E5FF, #7B61FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  :global([data-theme="light"]) .omega-headline-accent {
+    background: linear-gradient(135deg, #00838f, #5B4ACF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .omega-mini-label {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-tertiary);
+  }
+
+  /* ====== VERTICAL SELECTOR CARDS ====== */
+  .omega-vcard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 1.25rem 0.75rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    outline: none;
+  }
+
+  .omega-vcard:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+  }
+
+  .omega-vcard:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .omega-vcard[aria-checked="true"] {
+    border-color: var(--vcard-color, var(--accent));
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.12), inset 0 0 0 1px rgba(0, 229, 255, 0.08);
+  }
+
+  :global([data-theme="light"]) .omega-vcard[aria-checked="true"] {
+    box-shadow: 0 0 20px rgba(0, 131, 143, 0.1), inset 0 0 0 1px rgba(0, 131, 143, 0.08);
+  }
+
+  .omega-vcard-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--vcard-color, var(--accent));
+    transition: all 0.3s ease;
+  }
+
+  .omega-vcard[aria-checked="true"] .omega-vcard-icon {
+    background: color-mix(in srgb, var(--vcard-color, var(--accent)) 12%, transparent);
+  }
+
+  .omega-vcard-label {
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
+  }
+
+  .omega-vcard[aria-checked="true"] .omega-vcard-label {
+    color: var(--text-primary);
+  }
+
+  .omega-vcard-check {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: #000;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .omega-vcard[aria-checked="true"] .omega-vcard-check {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Mobile: 2x2 grid for vertical cards */
+  @media (max-width: 640px) {
+    #omega-vertical-selector > div {
+      grid-template-columns: 1fr 1fr !important;
+    }
+  }
+
+  /* ====== FORM LAYOUT ====== */
+  .omega-form-layout {
+    display: grid;
+    grid-template-columns: 1fr 22rem;
+    gap: 2rem;
+    align-items: start;
+    max-width: 72rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (max-width: 1024px) {
+    .omega-form-layout {
+      grid-template-columns: 1fr;
+    }
+    .omega-preview {
+      order: -1;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .omega-form-panel {
+      padding: 3rem !important;
+    }
+  }
+
+  /* ====== SECTION HEADERS ====== */
+  .omega-section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .omega-section-num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+
+  .omega-section-title {
+    font-family: var(--font-label);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-primary);
+  }
+
+  /* ====== FLOATING LABEL FIELDS ====== */
+  .omega-field {
+    position: relative;
+  }
+
+  .omega-field input,
+  .omega-field textarea {
+    width: 100%;
+    padding: 1.25rem 0 0.5rem 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--outline-variant);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+  }
+
+  .omega-field textarea {
+    resize: vertical;
+    min-height: 5rem;
+    line-height: 1.6;
+  }
+
+  .omega-field label {
+    position: absolute;
+    left: 0;
+    top: 1rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--text-tertiary);
+    pointer-events: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: left top;
+  }
+
+  /* Float label up when focused or has value */
+  .omega-field input:focus + label,
+  .omega-field input:not(:placeholder-shown) + label,
+  .omega-field textarea:focus + label,
+  .omega-field textarea:not(:placeholder-shown) + label {
+    top: 0;
+    font-size: 0.6875rem;
+    font-family: var(--font-label);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+  }
+
+  /* Underline animation */
+  .omega-underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .omega-field input:focus ~ .omega-underline,
+  .omega-field textarea:focus ~ .omega-underline {
+    width: 100%;
+  }
+
+  /* Valid state: green underline */
+  .omega-field.field-valid input:not(:focus) ~ .omega-underline,
+  .omega-field.field-valid textarea:not(:focus) ~ .omega-underline {
+    width: 100%;
+    background: #4ADE80;
+  }
+
+  :global([data-theme="light"]) .omega-field.field-valid input:not(:focus) ~ .omega-underline,
+  :global([data-theme="light"]) .omega-field.field-valid textarea:not(:focus) ~ .omega-underline {
+    background: #16a34a;
+  }
+
+  /* Error state */
+  .omega-field.field-error input ~ .omega-underline,
+  .omega-field.field-error textarea ~ .omega-underline {
+    width: 100%;
+    background: var(--error);
+  }
+
+  .omega-field-error {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--error);
+    min-height: 1.125rem;
+    margin-top: 0.25rem;
+  }
+
+  /* Select input styling */
+  .omega-select-input {
+    width: 100%;
+    padding: 1.25rem 0 0.5rem 0;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--outline-variant);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+  }
+
+  .omega-select-label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+    pointer-events: none;
+  }
+
+  /* Mobile: single column for form fields */
+  @media (max-width: 640px) {
+    .omega-section > div[style*="grid-template-columns: 1fr 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+    .omega-field[style*="grid-column: 1 / -1"] {
+      grid-column: auto !important;
+    }
+  }
+
+  /* ====== CHIP / TOGGLE CHECKBOXES ====== */
+  .omega-chip {
+    display: inline-flex;
+    cursor: pointer;
+  }
+
+  .omega-chip span {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    border: 1px solid var(--outline-variant);
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    background: transparent;
+    transition: all 0.25s ease;
+    user-select: none;
+  }
+
+  .omega-chip:hover span {
+    border-color: var(--text-tertiary);
+  }
+
+  .omega-chip input:checked + span {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .omega-chip input:focus-visible + span {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* ====== DROPZONE ====== */
+  .omega-dropzone {
+    border: 2px dashed var(--outline-variant);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+  }
+
+  .omega-dropzone:hover,
+  .omega-dropzone.dragover {
+    border-color: var(--accent);
+    background: rgba(0, 229, 255, 0.03);
+  }
+
+  :global([data-theme="light"]) .omega-dropzone:hover,
+  :global([data-theme="light"]) .omega-dropzone.dragover {
+    background: rgba(0, 131, 143, 0.03);
+  }
+
+  .omega-dropzone:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .omega-file-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.75rem;
+    border-radius: 8px;
+    background: var(--surface-container-low);
+    margin-bottom: 0.5rem;
+    animation: omega-slide-in 0.3s ease;
+  }
+
+  .omega-file-item-name {
+    flex: 1;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .omega-file-item-size {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+  }
+
+  .omega-file-remove {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+  }
+
+  .omega-file-remove:hover {
+    color: var(--error);
+  }
+
+  .omega-file-progress {
+    height: 2px;
+    background: var(--outline-variant);
+    border-radius: 1px;
+    overflow: hidden;
+    margin-top: 0.375rem;
+  }
+
+  .omega-file-progress-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 1px;
+    transition: width 0.3s ease;
+  }
+
+  /* ====== SUBMIT BUTTON ====== */
+  .omega-submit {
+    background: linear-gradient(135deg, #00E5FF 0%, #00a8b5 50%, #00626e 100%);
+    box-shadow: 0 4px 16px rgba(0, 229, 255, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  }
+
+  .omega-submit:hover {
+    background: linear-gradient(135deg, #33ecff 0%, #00c4d4 50%, #007a8a 100%);
+    box-shadow: 0 6px 24px rgba(0, 229, 255, 0.4), 0 0 60px rgba(0, 229, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+
+  .omega-submit:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 229, 255, 0.3);
+  }
+
+  .omega-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  :global([data-theme="light"]) .omega-submit {
+    background: linear-gradient(135deg, #00838f, #005f6b);
+    box-shadow: 0 4px 16px rgba(0, 131, 143, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  :global([data-theme="light"]) .omega-submit:hover {
+    background: linear-gradient(135deg, #00969e, #00727e);
+    box-shadow: 0 6px 24px rgba(0, 131, 143, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  }
+
+  .omega-spinner {
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: omega-spin 0.6s linear infinite;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+  }
+
+  /* ====== LIVE PREVIEW CARD ====== */
+  .omega-preview {
+    position: sticky;
+    top: 6rem;
+  }
+
+  .omega-preview-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: omega-blink 2s ease-in-out infinite;
+  }
+
+  .omega-preview-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .omega-preview-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0.625rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .omega-preview-row:last-child {
+    border-bottom: none;
+  }
+
+  .omega-preview-key {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+    min-width: 5.5rem;
+  }
+
+  .omega-preview-val {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-primary);
+    text-align: right;
+    word-break: break-word;
+  }
+
+  .omega-preview-row-msg {
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .omega-preview-row-msg .omega-preview-val {
+    text-align: left;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Status bar */
+  .omega-status-bar {
+    width: 100%;
+    height: 3px;
+    background: var(--outline-variant);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .omega-status-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #4ADE80);
+    border-radius: 2px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* ====== SUCCESS STATE ====== */
+  .omega-success-state {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    animation: omega-fade-in 0.5s ease;
+  }
+
+  .omega-radar-ping {
+    position: relative;
+    width: 8rem;
+    height: 8rem;
+    margin: 0 auto;
+  }
+
+  .omega-ping-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid #4ADE80;
+    opacity: 0;
+    animation: omega-ping-expand 2s ease-out infinite;
+  }
+
+  .omega-ping-ring-2 { animation-delay: 0.5s; }
+  .omega-ping-ring-3 { animation-delay: 1s; }
+
+  .omega-ping-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: omega-fade-in 0.6s 0.3s ease both;
+  }
+
+  .omega-ticket {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    background: var(--surface-container-low);
+    border: 1px solid var(--border);
+  }
+
+  .omega-next-step {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    padding: 0.375rem 0.75rem;
+    border-radius: 6px;
+    background: var(--surface-container-low);
+  }
+
+  /* ====== ANIMATIONS ====== */
+  @keyframes omega-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes omega-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  @keyframes omega-fade-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes omega-slide-in {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes omega-ping-expand {
+    0% {
+      transform: scale(0.3);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+
+  :global([data-theme="light"]) .omega-ping-ring {
+    border-color: #16a34a;
+  }
+
+  /* ====== REDUCED MOTION ====== */
+  @media (prefers-reduced-motion: reduce) {
+    .omega-ping-ring,
+    .omega-preview-dot,
+    .omega-spinner {
+      animation: none !important;
+    }
+    .omega-ping-ring { opacity: 0.2; transform: scale(1); }
+    .omega-preview-dot { opacity: 1; }
+    .omega-underline { transition: none; }
+    .omega-vcard { transition: none; }
+    .omega-status-fill { transition: none; }
+  }
+
+  /* ====== RESPONSIVE: MEDIUM ====== */
+  @media (min-width: 768px) {
+    #lead-gen {
+      padding-top: 8rem !important;
+      padding-bottom: 8rem !important;
+    }
+  }
+</style>
+
+<script is:inline>
+(function () {
+  /* ---- Refs ---- */
+  var form = document.getElementById('omega-form');
+  var successEl = document.getElementById('omega-success');
+  var submitBtn = document.getElementById('omega-submit-btn');
+  var submitText = submitBtn.querySelector('.omega-submit-text');
+  var submitLoading = submitBtn.querySelector('.omega-submit-loading');
+  var dropzone = document.getElementById('omega-dropzone');
+  var fileInput = document.getElementById('omega-file-input');
+  var fileListEl = document.getElementById('omega-file-list');
+  if (!form) return;
+
+  var uploadedFiles = [];
+
+  /* ---- Vertical-specific dynamic questions ---- */
+  var verticalQuestions = {
+    'data-centers': { label: 'Rack Count / Total kW', placeholder: ' ' },
+    'energy': { label: 'Total Line Miles / MW Capacity', placeholder: ' ' },
+    'security': { label: 'Perimeter Length / Camera Count', placeholder: ' ' },
+    'agriculture': { label: 'Acreage / Crop Type', placeholder: ' ' }
+  };
+
+  /* ---- Vertical Selector ---- */
+  var vcards = document.querySelectorAll('.omega-vcard');
+  var selectedVertical = '';
+
+  vcards.forEach(function (card) {
+    function select() {
+      vcards.forEach(function (c) { c.setAttribute('aria-checked', 'false'); });
+      card.setAttribute('aria-checked', 'true');
+      card.querySelector('input[type="radio"]').checked = true;
+      selectedVertical = card.dataset.vertical;
+
+      // Update dynamic field
+      var dynField = document.getElementById('omega-dynamic-field');
+      var dynInput = document.getElementById('omega-dynamic-input');
+      var dynLabel = document.getElementById('omega-dynamic-label');
+      if (verticalQuestions[selectedVertical]) {
+        dynLabel.textContent = verticalQuestions[selectedVertical].label;
+        dynField.style.display = '';
+        dynInput.value = '';
+      } else {
+        dynField.style.display = 'none';
+      }
+
+      // Accent color on selected card
+      var color = card.querySelector('.omega-vcard-icon').style.getPropertyValue('--vcard-color');
+      card.style.setProperty('--vcard-color', color);
+
+      updatePreview();
+    }
+
+    card.addEventListener('click', select);
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        select();
+      }
+    });
+  });
+
+  /* ---- Live Preview Updates ---- */
+  var prevName = document.getElementById('omega-prev-name');
+  var prevCompany = document.getElementById('omega-prev-company');
+  var prevSector = document.getElementById('omega-prev-sector');
+  var prevLocation = document.getElementById('omega-prev-location');
+  var prevServices = document.getElementById('omega-prev-services');
+  var prevSchedule = document.getElementById('omega-prev-schedule');
+  var prevMessage = document.getElementById('omega-prev-message');
+  var prevFiles = document.getElementById('omega-prev-files');
+  var statusFill = document.getElementById('omega-status-fill');
+  var statusText = document.getElementById('omega-status-text');
+
+  var sectorNames = {
+    'data-centers': 'Data Centers',
+    'energy': 'Energy Grid',
+    'security': 'Security',
+    'agriculture': 'Agriculture'
+  };
+
+  function updatePreview() {
+    var fname = form.querySelector('#omega-fname').value.trim();
+    var lname = form.querySelector('#omega-lname').value.trim();
+    var name = (fname + ' ' + lname).trim();
+    prevName.textContent = name || '---';
+
+    var company = form.querySelector('#omega-company').value.trim();
+    prevCompany.textContent = company || '---';
+
+    prevSector.innerHTML = selectedVertical
+      ? '<span style="color: var(--accent);">' + (sectorNames[selectedVertical] || selectedVertical) + '</span>'
+      : '<span style="color: var(--text-tertiary);">Not selected</span>';
+
+    var location = form.querySelector('#omega-location').value.trim();
+    prevLocation.textContent = location || '---';
+
+    var checks = form.querySelectorAll('input[name="services"]:checked');
+    var serviceList = [];
+    checks.forEach(function (cb) {
+      serviceList.push(cb.parentElement.querySelector('span').textContent);
+    });
+    prevServices.innerHTML = serviceList.length
+      ? serviceList.join(', ')
+      : '<span style="color: var(--text-tertiary);">None selected</span>';
+
+    var date = form.querySelector('#omega-date').value;
+    var time = form.querySelector('#omega-time').value;
+    if (date || time) {
+      var parts = [];
+      if (date) {
+        var d = new Date(date + 'T00:00:00');
+        parts.push(d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }));
+      }
+      if (time) {
+        var h = parseInt(time.split(':')[0]);
+        parts.push((h > 12 ? (h - 12) : h) + ':00 ' + (h >= 12 ? 'PM' : 'AM'));
+      }
+      prevSchedule.textContent = parts.join(' at ');
+    } else {
+      prevSchedule.innerHTML = '<span style="color: var(--text-tertiary);">Not scheduled</span>';
+    }
+
+    var message = form.querySelector('#omega-message').value.trim();
+    prevMessage.innerHTML = message
+      ? message.substring(0, 120) + (message.length > 120 ? '...' : '')
+      : '<span style="color: var(--text-tertiary);">---</span>';
+
+    prevFiles.innerHTML = uploadedFiles.length
+      ? uploadedFiles.length + ' file' + (uploadedFiles.length > 1 ? 's' : '')
+      : '<span style="color: var(--text-tertiary);">0 files</span>';
+
+    // Calculate completion %
+    var filled = 0;
+    var total = 6;
+    if (fname) filled++;
+    if (lname) filled++;
+    if (form.querySelector('#omega-email').value.trim()) filled++;
+    if (company) filled++;
+    if (selectedVertical) filled++;
+    if (message) filled++;
+    var pct = Math.round((filled / total) * 100);
+    statusFill.style.width = pct + '%';
+    statusText.textContent = pct + '% complete';
+  }
+
+  // Attach live preview listeners to all inputs
+  form.querySelectorAll('input, textarea, select').forEach(function (el) {
+    el.addEventListener('input', updatePreview);
+    el.addEventListener('change', updatePreview);
+  });
+
+  /* ---- Field Validation Helpers ---- */
+  function setFieldState(field, state) {
+    var wrap = field.closest('.omega-field');
+    if (!wrap) return;
+    wrap.classList.remove('field-valid', 'field-error');
+    if (state) wrap.classList.add(state);
+  }
+
+  function showFieldError(field, msg) {
+    setFieldState(field, 'field-error');
+    var err = field.closest('.omega-field').querySelector('.omega-field-error');
+    if (err) err.textContent = msg;
+  }
+
+  function clearFieldError(field) {
+    var wrap = field.closest('.omega-field');
+    if (!wrap) return;
+    wrap.classList.remove('field-error');
+    var err = wrap.querySelector('.omega-field-error');
+    if (err) err.textContent = '';
+  }
+
+  // Live validation on blur
+  var requiredFields = ['#omega-fname', '#omega-lname', '#omega-email', '#omega-company'];
+  requiredFields.forEach(function (sel) {
+    var el = form.querySelector(sel);
+    if (!el) return;
+    el.addEventListener('blur', function () {
+      if (el.type === 'email') {
+        if (el.value.trim() && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value)) {
+          setFieldState(el, 'field-valid');
+        } else if (el.value.trim()) {
+          showFieldError(el, 'Enter a valid business email');
+        }
+      } else if (el.value.trim()) {
+        setFieldState(el, 'field-valid');
+      }
+    });
+    el.addEventListener('input', function () {
+      clearFieldError(el);
+    });
+  });
+
+  /* ---- File Upload / Drag & Drop ---- */
+  dropzone.addEventListener('click', function () { fileInput.click(); });
+  dropzone.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      fileInput.click();
+    }
+  });
+
+  dropzone.addEventListener('dragover', function (e) {
+    e.preventDefault();
+    dropzone.classList.add('dragover');
+  });
+  dropzone.addEventListener('dragleave', function () {
+    dropzone.classList.remove('dragover');
+  });
+  dropzone.addEventListener('drop', function (e) {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    handleFiles(e.dataTransfer.files);
+  });
+
+  fileInput.addEventListener('change', function () {
+    handleFiles(fileInput.files);
+    fileInput.value = '';
+  });
+
+  function handleFiles(fileList) {
+    for (var i = 0; i < fileList.length; i++) {
+      var f = fileList[i];
+      if (f.size > 10 * 1024 * 1024) continue; // skip >10MB
+      if (uploadedFiles.length >= 5) break; // max 5 files
+      uploadedFiles.push(f);
+      renderFileItem(f, uploadedFiles.length - 1);
+    }
+    updatePreview();
+  }
+
+  function renderFileItem(file, idx) {
+    var div = document.createElement('div');
+    div.className = 'omega-file-item';
+    div.dataset.idx = idx;
+
+    var icon = document.createElement('span');
+    icon.className = 'material-symbols-outlined';
+    icon.style.fontSize = '1.125rem';
+    icon.style.color = 'var(--text-tertiary)';
+    icon.setAttribute('aria-hidden', 'true');
+    icon.textContent = file.type.indexOf('image') === 0 ? 'image' : 'description';
+
+    var nameSpan = document.createElement('span');
+    nameSpan.className = 'omega-file-item-name';
+    nameSpan.textContent = file.name;
+
+    var sizeSpan = document.createElement('span');
+    sizeSpan.className = 'omega-file-item-size';
+    sizeSpan.textContent = formatBytes(file.size);
+
+    var removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'omega-file-remove';
+    removeBtn.setAttribute('aria-label', 'Remove ' + file.name);
+    removeBtn.innerHTML = '<span class="material-symbols-outlined" style="font-size:1rem;">close</span>';
+    removeBtn.addEventListener('click', function () {
+      uploadedFiles.splice(idx, 1);
+      div.remove();
+      updatePreview();
+    });
+
+    div.appendChild(icon);
+    div.appendChild(nameSpan);
+    div.appendChild(sizeSpan);
+    div.appendChild(removeBtn);
+
+    // Simulated progress bar
+    var progress = document.createElement('div');
+    progress.className = 'omega-file-progress';
+    progress.innerHTML = '<div class="omega-file-progress-bar" style="width: 0%;"></div>';
+    div.appendChild(progress);
+
+    fileListEl.appendChild(div);
+
+    // Animate progress
+    var bar = progress.querySelector('.omega-file-progress-bar');
+    var w = 0;
+    var intv = setInterval(function () {
+      w += Math.random() * 30 + 10;
+      if (w >= 100) {
+        w = 100;
+        clearInterval(intv);
+        setTimeout(function () { progress.style.display = 'none'; }, 300);
+      }
+      bar.style.width = w + '%';
+    }, 150);
+  }
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+  }
+
+  /* ---- Form Submission ---- */
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var valid = true;
+
+    // Validate required fields
+    var fname = form.querySelector('#omega-fname');
+    var lname = form.querySelector('#omega-lname');
+    var email = form.querySelector('#omega-email');
+    var company = form.querySelector('#omega-company');
+
+    if (!fname.value.trim()) {
+      showFieldError(fname, 'First name is required');
+      valid = false;
+    } else { setFieldState(fname, 'field-valid'); }
+
+    if (!lname.value.trim()) {
+      showFieldError(lname, 'Last name is required');
+      valid = false;
+    } else { setFieldState(lname, 'field-valid'); }
+
+    if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+      showFieldError(email, 'Valid business email required');
+      valid = false;
+    } else { setFieldState(email, 'field-valid'); }
+
+    if (!company.value.trim()) {
+      showFieldError(company, 'Company name is required');
+      valid = false;
+    } else { setFieldState(company, 'field-valid'); }
+
+    if (!valid) {
+      // Focus first error
+      var firstErr = form.querySelector('.field-error input');
+      if (firstErr) firstErr.focus();
+      return;
+    }
+
+    // Show loading state
+    submitBtn.disabled = true;
+    submitText.style.display = 'none';
+    submitLoading.style.display = 'inline-flex';
+
+    // Simulate submit
+    setTimeout(function () {
+      form.style.display = 'none';
+      successEl.hidden = false;
+
+      // Generate ticket ID
+      var ticketEl = document.getElementById('omega-ticket-id');
+      var ticket = 'JNK-' + Date.now().toString(36).toUpperCase().slice(-6) + '-' + Math.random().toString(36).substring(2, 5).toUpperCase();
+      ticketEl.textContent = ticket;
+
+      // Reset button state for if shown again
+      submitBtn.disabled = false;
+      submitText.style.display = '';
+      submitLoading.style.display = 'none';
+    }, 1800);
+  });
+
+})();
+</script>

@@ -1,0 +1,540 @@
+---
+/*  ErrorStates-Omega.astro — Comprehensive error state components
+    Team Omega | Rounds 19+20
+    Jinki Aerial Intelligence  */
+---
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Error States — Omega | Jinki Aerial Intelligence</title>
+  <style>
+    :root{
+      --surface:#121416;--bg-primary:#121416;--bg-elevated:#1a1c1e;--bg-card:#1e2022;
+      --bg-card-hover:#282a2c;
+      --text-primary:#e2e2e5;--text-secondary:#bac9cc;--text-tertiary:#849396;
+      --accent:#00e5ff;--accent-soft:#c3f5ff;--accent-glow:rgba(0,229,255,.15);
+      --error:#ffb4ab;--error-container:#93000a;
+      --border:rgba(59,73,76,.2);--border-hover:rgba(59,73,76,.4);
+      --glass-bg:rgba(30,32,34,.6);--glass-border:rgba(255,255,255,.06);
+      --glass-shadow:0 8px 32px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.2);
+      --glossy-shine:linear-gradient(135deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,0) 40%,rgba(255,255,255,.04) 100%);
+      --font-headline:'Space Grotesk',system-ui,sans-serif;
+      --font-body:'Inter',system-ui,sans-serif;
+      --font-mono:'JetBrains Mono','SF Mono',monospace;
+      --success:#4ade80;--warning:#fbbf24;
+    }
+    [data-theme="light"]{
+      --surface:#fff;--bg-primary:#fafbfc;--bg-elevated:#fff;--bg-card:#f0f1f3;
+      --bg-card-hover:#e8e9eb;
+      --text-primary:#1a1c1e;--text-secondary:#3b494c;--text-tertiary:#6f7979;
+      --accent:#00838f;--accent-soft:#004f58;--accent-glow:rgba(0,131,143,.1);
+      --error:#ba1a1a;--error-container:#ffdad6;
+      --border:rgba(0,0,0,.08);--border-hover:rgba(0,0,0,.15);
+      --glass-bg:rgba(255,255,255,.7);--glass-border:rgba(0,0,0,.06);
+      --glass-shadow:0 8px 32px rgba(0,0,0,.08),0 2px 8px rgba(0,0,0,.04);
+    }
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased;font-family:var(--font-body);color:var(--text-primary);background:var(--bg-primary)}
+    body{min-height:100vh;line-height:1.7}
+
+    .page{max-width:1120px;margin:0 auto;padding:48px 24px 80px}
+    .page-title{font-family:var(--font-headline);font-size:clamp(28px,4vw,40px);font-weight:700;text-align:center;margin:0 0 8px}
+    .page-subtitle{font-family:var(--font-body);font-size:16px;color:var(--text-tertiary);text-align:center;margin:0 0 56px}
+
+    .section{margin:0 0 64px}
+    .section-label{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin:0 0 8px}
+    .section-title{font-family:var(--font-headline);font-size:clamp(20px,3vw,28px);font-weight:700;margin:0 0 24px}
+
+    .theme-toggle{
+      position:fixed;top:16px;right:16px;z-index:100;
+      background:var(--glass-bg);border:1px solid var(--glass-border);
+      border-radius:10px;padding:10px 14px;cursor:pointer;
+      color:var(--text-primary);font-size:18px;
+      backdrop-filter:blur(12px);transition:border-color .2s;
+    }
+    .theme-toggle:hover{border-color:var(--accent)}
+
+    /* ════════════════════════════════════
+       1. EMPTY STATE — Topographic Map
+    ════════════════════════════════════ */
+    .empty-state{
+      position:relative;overflow:hidden;
+      background:var(--glass-bg);border:1px solid var(--glass-border);
+      border-radius:16px;padding:64px 32px;text-align:center;
+    }
+    .empty-state::before{content:'';position:absolute;inset:0;background:var(--glossy-shine);pointer-events:none;border-radius:inherit}
+
+    /* Topo lines — animated concentric shapes */
+    .topo-container{
+      position:relative;width:200px;height:200px;margin:0 auto 32px;
+    }
+    .topo-line{
+      position:absolute;border:1px solid var(--accent);border-radius:50%;
+      top:50%;left:50%;transform:translate(-50%,-50%);
+      opacity:0;animation:topoExpand 4s ease-out infinite;
+    }
+    .topo-line:nth-child(1){width:40px;height:30px;border-radius:60% 40% 50% 50%;animation-delay:0s}
+    .topo-line:nth-child(2){width:70px;height:55px;border-radius:50% 60% 40% 55%;animation-delay:.5s}
+    .topo-line:nth-child(3){width:105px;height:85px;border-radius:45% 55% 60% 40%;animation-delay:1s}
+    .topo-line:nth-child(4){width:140px;height:115px;border-radius:55% 45% 50% 55%;animation-delay:1.5s}
+    .topo-line:nth-child(5){width:175px;height:150px;border-radius:50% 50% 45% 55%;animation-delay:2s}
+    @keyframes topoExpand{
+      0%{opacity:0;transform:translate(-50%,-50%) scale(.7)}
+      30%{opacity:.5}
+      100%{opacity:0;transform:translate(-50%,-50%) scale(1.3)}
+    }
+
+    /* Pin marker */
+    .topo-pin{
+      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      width:16px;height:16px;
+    }
+    .topo-pin::before{
+      content:'';position:absolute;inset:4px;background:var(--accent);border-radius:50%;
+      box-shadow:0 0 12px var(--accent);
+    }
+    .topo-pin::after{
+      content:'';position:absolute;top:50%;left:50%;width:32px;height:32px;
+      border:2px solid var(--accent);border-radius:50%;
+      transform:translate(-50%,-50%);opacity:.3;
+      animation:pingRing 2s ease-out infinite;
+    }
+    @keyframes pingRing{0%{transform:translate(-50%,-50%) scale(.5);opacity:.6}100%{transform:translate(-50%,-50%) scale(1.5);opacity:0}}
+
+    .empty-title{font-family:var(--font-headline);font-size:24px;font-weight:700;margin:0 0 8px}
+    .empty-subtitle{font-family:var(--font-body);font-size:15px;color:var(--text-tertiary);max-width:400px;margin:0 auto 24px;line-height:1.6}
+    .empty-cta{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--accent);color:#000;border:none;border-radius:10px;
+      font-family:var(--font-headline);font-weight:600;font-size:14px;
+      padding:12px 28px;cursor:pointer;transition:all .25s;text-decoration:none;
+    }
+    .empty-cta:hover{box-shadow:0 0 24px var(--accent-glow)}
+
+    /* ════════════════════════════════════
+       2. LOADING — Scanning Animation
+    ════════════════════════════════════ */
+    .loading-demo{display:flex;flex-direction:column;gap:24px}
+
+    /* Scan line */
+    .scan-area{
+      position:relative;overflow:hidden;
+      background:var(--bg-card);border:1px solid var(--glass-border);
+      border-radius:12px;height:200px;
+    }
+    .scan-line{
+      position:absolute;left:0;right:0;height:2px;
+      background:linear-gradient(90deg,transparent 0%,var(--accent) 50%,transparent 100%);
+      box-shadow:0 0 16px var(--accent),0 0 40px var(--accent-glow);
+      animation:scanDown 2.5s ease-in-out infinite;
+    }
+    @keyframes scanDown{0%{top:-2px}50%{top:100%}100%{top:-2px}}
+
+    /* Skeleton cards within scan area */
+    .scan-skeletons{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+      padding:16px;height:100%;
+    }
+    @media(max-width:600px){.scan-skeletons{grid-template-columns:1fr 1fr}}
+    .scan-skel{
+      background:var(--bg-card-hover);border-radius:10px;
+      position:relative;overflow:hidden;
+    }
+    .scan-skel::after{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.03),transparent);
+      animation:skelShimmer 1.5s infinite;
+    }
+    @keyframes skelShimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+    .scan-label{
+      display:flex;align-items:center;gap:10px;
+      font-family:var(--font-mono);font-size:13px;color:var(--text-tertiary);
+    }
+    .scan-spinner{
+      width:18px;height:18px;border:2px solid var(--border);
+      border-top-color:var(--accent);border-radius:50%;
+      animation:spin .7s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ════════════════════════════════════
+       3. FORM ERROR — Tooltip-style
+    ════════════════════════════════════ */
+    .form-demo{
+      max-width:480px;
+      background:var(--glass-bg);border:1px solid var(--glass-border);
+      border-radius:16px;padding:32px;position:relative;overflow:hidden;
+    }
+    .form-demo::before{content:'';position:absolute;inset:0;border-radius:inherit;background:var(--glossy-shine);pointer-events:none}
+
+    .form-title{font-family:var(--font-headline);font-size:20px;font-weight:700;margin:0 0 24px}
+
+    .field{margin:0 0 28px;position:relative}
+    .field label{
+      display:block;font-family:var(--font-headline);font-size:13px;
+      font-weight:600;color:var(--text-secondary);margin:0 0 6px;
+    }
+    .field input{
+      width:100%;background:var(--bg-card);border:2px solid var(--border);
+      border-radius:10px;padding:12px 16px;color:var(--text-primary);
+      font-family:var(--font-body);font-size:15px;
+      transition:border-color .2s,box-shadow .2s;outline:none;
+    }
+    .field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+
+    /* Error: pulse border */
+    .field.has-error input{
+      border-color:var(--error);
+      animation:pulseBorder 1.5s ease infinite;
+    }
+    @keyframes pulseBorder{
+      0%,100%{box-shadow:0 0 0 0 rgba(255,180,171,0)}
+      50%{box-shadow:0 0 0 4px rgba(255,180,171,.2)}
+    }
+    [data-theme="light"] .field.has-error input{
+      animation-name:pulseBorderLight;
+    }
+    @keyframes pulseBorderLight{
+      0%,100%{box-shadow:0 0 0 0 rgba(186,26,26,0)}
+      50%{box-shadow:0 0 0 4px rgba(186,26,26,.1)}
+    }
+
+    /* Tooltip error */
+    .tooltip-error{
+      position:absolute;left:16px;bottom:calc(100% - 22px);
+      background:var(--error);color:#1a0000;
+      font-family:var(--font-body);font-size:12px;font-weight:600;
+      padding:6px 12px;border-radius:6px;white-space:nowrap;
+      transform:translateY(8px);opacity:0;
+      animation:tooltipIn .3s ease forwards;
+      z-index:10;
+    }
+    .tooltip-error::after{
+      content:'';position:absolute;top:100%;left:16px;
+      border:6px solid transparent;border-top-color:var(--error);
+    }
+    @keyframes tooltipIn{to{transform:translateY(0);opacity:1}}
+
+    .form-submit{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--accent);color:#000;border:none;border-radius:10px;
+      font-family:var(--font-headline);font-weight:600;font-size:14px;
+      padding:12px 28px;cursor:pointer;transition:opacity .2s;
+    }
+    .form-submit:hover{opacity:.85}
+
+    /* ════════════════════════════════════
+       4. NETWORK ERROR
+    ════════════════════════════════════ */
+    .network-card{
+      background:var(--glass-bg);border:1px solid var(--glass-border);
+      border-radius:16px;padding:32px;text-align:center;
+      position:relative;overflow:hidden;max-width:500px;
+    }
+    .network-card::before{content:'';position:absolute;inset:0;border-radius:inherit;background:var(--glossy-shine);pointer-events:none}
+
+    .network-icon{
+      width:64px;height:64px;border-radius:50%;margin:0 auto 20px;
+      background:rgba(255,180,171,.08);display:flex;align-items:center;justify-content:center;
+    }
+    [data-theme="light"] .network-icon{background:rgba(186,26,26,.06)}
+    .network-title{font-family:var(--font-headline);font-size:20px;font-weight:700;margin:0 0 8px}
+    .network-desc{font-family:var(--font-body);font-size:14px;color:var(--text-tertiary);margin:0 0 20px;line-height:1.6}
+
+    /* Animated reconnecting dots */
+    .reconnect-status{
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      font-family:var(--font-mono);font-size:13px;color:var(--text-tertiary);
+      margin:0 0 20px;
+    }
+    .reconnect-dots{display:flex;gap:4px}
+    .reconnect-dot{
+      width:6px;height:6px;background:var(--accent);border-radius:50%;
+      animation:dotBounce 1.2s ease-in-out infinite;
+    }
+    .reconnect-dot:nth-child(2){animation-delay:.2s}
+    .reconnect-dot:nth-child(3){animation-delay:.4s}
+    @keyframes dotBounce{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+
+    /* Backoff visual */
+    .backoff-track{
+      width:100%;max-width:300px;height:6px;background:var(--border);
+      border-radius:3px;overflow:hidden;margin:0 auto 12px;
+    }
+    .backoff-fill{
+      height:100%;background:var(--accent);border-radius:3px;
+      width:0%;transition:width .3s ease;
+    }
+    .backoff-label{
+      font-family:var(--font-mono);font-size:11px;color:var(--text-tertiary);
+    }
+
+    .retry-btn{
+      display:inline-flex;align-items:center;gap:8px;margin:20px 0 0;
+      background:var(--accent);color:#000;border:none;border-radius:10px;
+      font-family:var(--font-headline);font-weight:600;font-size:14px;
+      padding:12px 24px;cursor:pointer;transition:all .25s;
+    }
+    .retry-btn:hover{box-shadow:0 0 20px var(--accent-glow)}
+
+    /* ════════════════════════════════════
+       5. MAINTENANCE
+    ════════════════════════════════════ */
+    .maintenance-card{
+      background:var(--glass-bg);border:1px solid var(--glass-border);
+      border-radius:16px;padding:48px 32px;text-align:center;
+      position:relative;overflow:hidden;max-width:560px;
+    }
+    .maintenance-card::before{content:'';position:absolute;inset:0;border-radius:inherit;background:var(--glossy-shine);pointer-events:none}
+
+    /* Gear animation */
+    .gear-wrap{position:relative;width:80px;height:80px;margin:0 auto 28px}
+    .gear{
+      position:absolute;color:var(--accent);opacity:.6;
+    }
+    .gear-lg{top:0;left:0;width:56px;height:56px;animation:gearSpin 6s linear infinite}
+    .gear-sm{bottom:0;right:0;width:36px;height:36px;animation:gearSpin 4s linear infinite reverse}
+    @keyframes gearSpin{to{transform:rotate(360deg)}}
+
+    .maint-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      font-family:var(--font-mono);font-size:11px;text-transform:uppercase;
+      letter-spacing:.08em;color:var(--warning);
+      background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.2);
+      border-radius:20px;padding:6px 14px;margin:0 0 16px;
+    }
+    .maint-badge-dot{width:6px;height:6px;background:var(--warning);border-radius:50%;animation:maintPulse 1.5s ease infinite}
+    @keyframes maintPulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+    .maint-title{font-family:var(--font-headline);font-size:24px;font-weight:700;margin:0 0 8px}
+    .maint-desc{font-family:var(--font-body);font-size:15px;color:var(--text-tertiary);max-width:400px;margin:0 auto 28px;line-height:1.6}
+
+    /* Progress bar */
+    .maint-progress{width:100%;max-width:360px;margin:0 auto 8px}
+    .maint-progress-track{
+      width:100%;height:8px;background:var(--border);border-radius:4px;overflow:hidden;
+    }
+    .maint-progress-fill{
+      height:100%;border-radius:4px;
+      background:linear-gradient(90deg,var(--accent),var(--success));
+      width:67%;animation:maintProgress 8s ease-in-out infinite;
+    }
+    @keyframes maintProgress{0%{width:60%}50%{width:78%}100%{width:60%}}
+
+    .maint-eta{
+      display:flex;justify-content:space-between;align-items:baseline;
+      width:100%;max-width:360px;margin:0 auto 0;
+    }
+    .maint-eta-label{font-family:var(--font-body);font-size:12px;color:var(--text-tertiary)}
+    .maint-eta-value{font-family:var(--font-mono);font-size:14px;color:var(--accent);font-weight:600}
+
+    /* Checklist */
+    .maint-checklist{
+      text-align:left;max-width:320px;margin:24px auto 0;
+      list-style:none;
+    }
+    .maint-checklist li{
+      display:flex;align-items:center;gap:10px;
+      font-family:var(--font-body);font-size:13px;color:var(--text-secondary);
+      padding:8px 0;border-bottom:1px solid var(--border);
+    }
+    .maint-checklist li:last-child{border-bottom:none}
+    .check-done{color:var(--success);flex-shrink:0}
+    .check-pending{color:var(--text-tertiary);flex-shrink:0}
+    .check-active{color:var(--warning);flex-shrink:0;animation:spinCheck .8s linear infinite}
+    @keyframes spinCheck{to{transform:rotate(360deg)}}
+
+    /* ── Reduced motion ── */
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+    :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><span id="themeIcon">&#9790;</span></button>
+
+  <div class="page">
+    <h1 class="page-title">Error States</h1>
+    <p class="page-subtitle">Team Omega &mdash; resilient interfaces, informed users</p>
+
+    <!-- ─── 1. EMPTY STATE ─── -->
+    <section class="section" aria-labelledby="empty-heading">
+      <p class="section-label">01</p>
+      <h2 class="section-title" id="empty-heading">Empty State &mdash; Uncharted Territory</h2>
+      <div class="empty-state">
+        <div class="topo-container" aria-hidden="true">
+          <div class="topo-line"></div>
+          <div class="topo-line"></div>
+          <div class="topo-line"></div>
+          <div class="topo-line"></div>
+          <div class="topo-line"></div>
+          <div class="topo-pin"></div>
+        </div>
+        <h3 class="empty-title">Uncharted Territory</h3>
+        <p class="empty-subtitle">No inspection data has been mapped for this area yet. Begin your first aerial survey to populate the intelligence feed.</p>
+        <a href="#" class="empty-cta">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+          Start First Survey
+        </a>
+      </div>
+    </section>
+
+    <!-- ─── 2. LOADING ─── -->
+    <section class="section" aria-labelledby="loading-heading">
+      <p class="section-label">02</p>
+      <h2 class="section-title" id="loading-heading">Loading &mdash; Scanning</h2>
+      <div class="loading-demo" role="status" aria-label="Content loading">
+        <div class="scan-area">
+          <div class="scan-line" aria-hidden="true"></div>
+          <div class="scan-skeletons" aria-hidden="true">
+            <div class="scan-skel"></div>
+            <div class="scan-skel"></div>
+            <div class="scan-skel"></div>
+          </div>
+        </div>
+        <div class="scan-label">
+          <div class="scan-spinner" aria-hidden="true"></div>
+          Scanning facility data&hellip;
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 3. FORM ERROR ─── -->
+    <section class="section" aria-labelledby="form-heading">
+      <p class="section-label">03</p>
+      <h2 class="section-title" id="form-heading">Form Error &mdash; Tooltip Style</h2>
+      <div class="form-demo">
+        <h3 class="form-title">Request Assessment</h3>
+        <div class="field has-error">
+          <label for="company">Company Name</label>
+          <div class="tooltip-error" role="alert">Company name is required</div>
+          <input type="text" id="company" value="" placeholder="Acme Corp" aria-invalid="true" aria-describedby="company-err" />
+        </div>
+        <div class="field has-error">
+          <label for="email">Work Email</label>
+          <div class="tooltip-error" role="alert">Enter a valid work email</div>
+          <input type="email" id="email" value="john@" placeholder="john@company.com" aria-invalid="true" aria-describedby="email-err" />
+        </div>
+        <div class="field">
+          <label for="facility">Facility Type</label>
+          <input type="text" id="facility" value="Data Center" placeholder="e.g., Data Center" />
+        </div>
+        <button class="form-submit" type="button">Request Assessment</button>
+      </div>
+    </section>
+
+    <!-- ─── 4. NETWORK ERROR ─── -->
+    <section class="section" aria-labelledby="network-heading">
+      <p class="section-label">04</p>
+      <h2 class="section-title" id="network-heading">Network Error &mdash; Reconnecting</h2>
+      <div class="network-card" role="alert">
+        <div class="network-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--error)" stroke-width="2" stroke-linecap="round"><path d="M1 1l22 22"/><path d="M16.72 11.06A10.94 10.94 0 0119 12.55"/><path d="M5 12.55a10.94 10.94 0 015.17-2.39"/><path d="M10.71 5.05A16 16 0 0122.56 9"/><path d="M1.42 9a15.91 15.91 0 014.7-2.88"/><path d="M8.53 16.11a6 6 0 016.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+        </div>
+        <h3 class="network-title">Connection Interrupted</h3>
+        <p class="network-desc">Unable to establish a secure link to Jinki intelligence servers. Attempting automatic reconnection with exponential backoff.</p>
+        <div class="reconnect-status">
+          Reconnecting
+          <div class="reconnect-dots"><div class="reconnect-dot"></div><div class="reconnect-dot"></div><div class="reconnect-dot"></div></div>
+        </div>
+        <div class="backoff-track"><div class="backoff-fill" id="backoffFill"></div></div>
+        <div class="backoff-label" id="backoffLabel">Attempt 3 of 5 &bull; Next retry in 8s</div>
+        <button class="retry-btn" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+          Retry Now
+        </button>
+      </div>
+    </section>
+
+    <!-- ─── 5. MAINTENANCE ─── -->
+    <section class="section" aria-labelledby="maint-heading">
+      <p class="section-label">05</p>
+      <h2 class="section-title" id="maint-heading">Maintenance &mdash; Systems Upgrading</h2>
+      <div class="maintenance-card">
+        <div class="gear-wrap" aria-hidden="true">
+          <svg class="gear gear-lg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.5A3.5 3.5 0 018.5 12 3.5 3.5 0 0112 8.5a3.5 3.5 0 013.5 3.5 3.5 3.5 0 01-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97s-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1s.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.58 1.69-.98l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66z"/></svg>
+          <svg class="gear gear-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.5A3.5 3.5 0 018.5 12 3.5 3.5 0 0112 8.5a3.5 3.5 0 013.5 3.5 3.5 3.5 0 01-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97s-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1s.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.58 1.69-.98l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66z"/></svg>
+        </div>
+        <div class="maint-badge"><span class="maint-badge-dot"></span>Scheduled Maintenance</div>
+        <h3 class="maint-title">Systems Upgrading</h3>
+        <p class="maint-desc">We are performing scheduled upgrades to improve platform performance and intelligence processing capabilities.</p>
+        <div class="maint-progress">
+          <div class="maint-progress-track">
+            <div class="maint-progress-fill" role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+        <div class="maint-eta">
+          <span class="maint-eta-label">Estimated completion</span>
+          <span class="maint-eta-value" id="etaTime">~23 min remaining</span>
+        </div>
+        <ul class="maint-checklist" aria-label="Upgrade progress">
+          <li>
+            <svg class="check-done" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Database migration
+          </li>
+          <li>
+            <svg class="check-done" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            API gateway update
+          </li>
+          <li>
+            <svg class="check-active" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg>
+            Intelligence engine v4.2
+          </li>
+          <li>
+            <svg class="check-pending" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+            Thermal processing pipeline
+          </li>
+          <li>
+            <svg class="check-pending" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+            System health verification
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Theme toggle
+    const toggle = document.getElementById('themeToggle');
+    const icon = document.getElementById('themeIcon');
+    function setTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      icon.textContent = t === 'light' ? '\u2600' : '\u263E';
+      localStorage.setItem('theme', t);
+    }
+    toggle.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      setTheme(next);
+    });
+    const saved = localStorage.getItem('theme');
+    if (saved) setTheme(saved);
+
+    // Backoff simulation
+    const attempts = [
+      { attempt: 1, delay: 2 },
+      { attempt: 2, delay: 4 },
+      { attempt: 3, delay: 8 },
+      { attempt: 4, delay: 16 },
+      { attempt: 5, delay: 32 },
+    ];
+    let currentAttempt = 2;
+    let countdown = 8;
+    const fill = document.getElementById('backoffFill');
+    const label = document.getElementById('backoffLabel');
+
+    setInterval(() => {
+      const a = attempts[currentAttempt];
+      countdown--;
+      const pct = ((a.delay - countdown) / a.delay * 100);
+      fill.style.width = pct + '%';
+      label.textContent = `Attempt ${a.attempt} of 5 \u2022 Next retry in ${Math.max(0, countdown)}s`;
+      if (countdown <= 0) {
+        currentAttempt = (currentAttempt + 1) % attempts.length;
+        countdown = attempts[currentAttempt].delay;
+      }
+    }, 1000);
+  </script>
+</body>
+</html>

@@ -4,7 +4,7 @@
     {
       "name": "jinki-dev",
       "runtimeExecutable": "/bin/bash",
-      "runtimeArgs": ["-c", "export PATH=$HOME/.nvm/versions/node/v24.12.0/bin:$PATH && npx astro dev --host"],
+      "runtimeArgs": ["-c", "export PATH=/Users/aa/.nvm/versions/node/v24.12.0/bin:$PATH && npx astro dev --host"],
       "port": 4321
     }
   ]

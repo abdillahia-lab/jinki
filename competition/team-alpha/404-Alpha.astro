@@ -1,0 +1,418 @@
+---
+/*  404-Alpha.astro — "Signal Lost" radar-themed 404 page
+    Team Alpha | Rounds 19+20
+    Jinki Aerial Intelligence  */
+---
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Signal Lost | Jinki Aerial Intelligence</title>
+  <style>
+    /* ── Reset + Tokens ── */
+    @import url('/styles/global.css');
+
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+    :root{
+      --surface:#121416;--bg-primary:#121416;--bg-elevated:#1a1c1e;--bg-card:#1e2022;
+      --text-primary:#e2e2e5;--text-secondary:#bac9cc;--text-tertiary:#849396;
+      --accent:#00e5ff;--accent-soft:#c3f5ff;--accent-glow:rgba(0,229,255,.15);
+      --error:#ffb4ab;--border:rgba(59,73,76,.2);
+      --glass-bg:rgba(30,32,34,.6);--glass-border:rgba(255,255,255,.06);
+      --glass-shadow:0 8px 32px rgba(0,0,0,.3),0 2px 8px rgba(0,0,0,.2);
+      --glossy-shine:linear-gradient(135deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,0) 40%,rgba(255,255,255,.04) 100%);
+      --font-headline:'Space Grotesk',system-ui,sans-serif;
+      --font-body:'Inter',system-ui,sans-serif;
+      --font-mono:'JetBrains Mono','SF Mono',monospace;
+    }
+    [data-theme="light"]{
+      --surface:#fff;--bg-primary:#fafbfc;--bg-elevated:#fff;--bg-card:#f0f1f3;
+      --text-primary:#1a1c1e;--text-secondary:#3b494c;--text-tertiary:#6f7979;
+      --accent:#00838f;--accent-soft:#004f58;--accent-glow:rgba(0,131,143,.1);
+      --error:#ba1a1a;--border:rgba(0,0,0,.08);
+      --glass-bg:rgba(255,255,255,.7);--glass-border:rgba(0,0,0,.06);
+      --glass-shadow:0 8px 32px rgba(0,0,0,.08),0 2px 8px rgba(0,0,0,.04);
+      --glossy-shine:linear-gradient(135deg,rgba(255,255,255,.6) 0%,rgba(255,255,255,0) 40%,rgba(255,255,255,.2) 100%);
+    }
+
+    html{-webkit-font-smoothing:antialiased;font-family:var(--font-body);color:var(--text-primary);background:var(--bg-primary)}
+    body{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;position:relative}
+
+    /* ── Animated grid background ── */
+    .grid-bg{
+      position:fixed;inset:0;z-index:0;
+      background-image:
+        linear-gradient(var(--border) 1px,transparent 1px),
+        linear-gradient(90deg,var(--border) 1px,transparent 1px);
+      background-size:60px 60px;
+      opacity:.4;animation:gridScroll 20s linear infinite;
+    }
+    @keyframes gridScroll{to{background-position:60px 60px}}
+
+    /* ── Radar container ── */
+    .radar-wrap{
+      position:relative;width:320px;height:320px;
+      margin:0 auto 40px;flex-shrink:0;
+    }
+    @media(max-width:600px){.radar-wrap{width:240px;height:240px}}
+
+    .radar-ring{
+      position:absolute;border-radius:50%;border:1px solid var(--accent);
+      opacity:.25;top:50%;left:50%;transform:translate(-50%,-50%);
+    }
+    .radar-ring:nth-child(1){width:100%;height:100%}
+    .radar-ring:nth-child(2){width:66%;height:66%;opacity:.35}
+    .radar-ring:nth-child(3){width:33%;height:33%;opacity:.5}
+
+    .radar-crosshair-h,.radar-crosshair-v{
+      position:absolute;background:var(--accent);opacity:.12;
+    }
+    .radar-crosshair-h{width:100%;height:1px;top:50%;left:0}
+    .radar-crosshair-v{height:100%;width:1px;left:50%;top:0}
+
+    /* Sweep arm */
+    .radar-sweep{
+      position:absolute;top:50%;left:50%;width:50%;height:2px;
+      transform-origin:0 50%;
+      background:linear-gradient(90deg,var(--accent),transparent);
+      animation:sweep 3s linear infinite;
+      filter:drop-shadow(0 0 6px var(--accent));
+    }
+    @keyframes sweep{to{transform:rotate(360deg)}}
+
+    /* Sweep trail (conic gradient) */
+    .radar-trail{
+      position:absolute;inset:0;border-radius:50%;
+      background:conic-gradient(from 0deg,transparent 0deg,rgba(0,229,255,.12) 0deg,transparent 60deg);
+      animation:sweep 3s linear infinite;
+    }
+    [data-theme="light"] .radar-trail{
+      background:conic-gradient(from 0deg,transparent 0deg,rgba(0,131,143,.1) 0deg,transparent 60deg);
+    }
+
+    /* Center dot */
+    .radar-center{
+      position:absolute;top:50%;left:50%;width:8px;height:8px;
+      background:var(--accent);border-radius:50%;transform:translate(-50%,-50%);
+      box-shadow:0 0 12px var(--accent),0 0 24px var(--accent-glow);
+    }
+
+    /* Blips that appear and fade */
+    .radar-blip{
+      position:absolute;width:6px;height:6px;border-radius:50%;
+      background:var(--accent);opacity:0;
+      animation:blipFade 3s ease-out infinite;
+    }
+    .radar-blip:nth-child(1){top:25%;left:60%;animation-delay:0.5s}
+    .radar-blip:nth-child(2){top:70%;left:35%;animation-delay:1.2s}
+    .radar-blip:nth-child(3){top:40%;left:75%;animation-delay:2.1s}
+    @keyframes blipFade{
+      0%{opacity:0;transform:scale(0)}
+      20%{opacity:.7;transform:scale(1)}
+      100%{opacity:0;transform:scale(2)}
+    }
+
+    /* ── Glitch heading ── */
+    .glitch-wrap{text-align:center;position:relative;z-index:2}
+
+    .glitch-404{
+      font-family:var(--font-headline);font-size:clamp(80px,15vw,160px);
+      font-weight:700;color:var(--accent);line-height:1;
+      position:relative;display:inline-block;
+      text-shadow:0 0 30px var(--accent-glow);
+    }
+    .glitch-404::before,.glitch-404::after{
+      content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%;
+    }
+    .glitch-404::before{
+      animation:glitch1 2.5s infinite;color:var(--accent);
+      clip-path:polygon(0 0,100% 0,100% 35%,0 35%);
+      transform:translate(-2px,-1px);opacity:.7;
+    }
+    .glitch-404::after{
+      animation:glitch2 2.5s infinite;color:var(--error);
+      clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%);
+      transform:translate(2px,1px);opacity:.7;
+    }
+    @keyframes glitch1{
+      0%,100%{transform:translate(0)}
+      20%{transform:translate(-3px,2px)}
+      40%{transform:translate(3px,-1px)}
+      60%{transform:translate(-1px,1px)}
+      80%{transform:translate(2px,-2px)}
+    }
+    @keyframes glitch2{
+      0%,100%{transform:translate(0)}
+      25%{transform:translate(2px,1px)}
+      50%{transform:translate(-3px,-1px)}
+      75%{transform:translate(1px,2px)}
+    }
+
+    .subtitle{
+      font-family:var(--font-headline);font-size:clamp(20px,3vw,32px);
+      color:var(--text-primary);font-weight:600;
+      margin:16px 0 0;
+    }
+    .message{
+      font-family:var(--font-body);font-size:clamp(14px,1.8vw,18px);
+      color:var(--text-tertiary);max-width:480px;
+      margin:12px auto 0;line-height:1.6;
+    }
+    .message .mono{
+      font-family:var(--font-mono);color:var(--accent);font-size:.85em;
+    }
+
+    /* ── Search bar ── */
+    .search-section{
+      position:relative;z-index:2;width:100%;max-width:480px;
+      margin:32px auto 0;
+    }
+    .search-bar{
+      display:flex;align-items:center;
+      background:var(--glass-bg);border:1px solid var(--glass-border);
+      border-radius:12px;overflow:hidden;
+      box-shadow:var(--glass-shadow);
+      transition:border-color .2s;
+    }
+    .search-bar:focus-within{border-color:var(--accent)}
+    .search-bar svg{margin:0 0 0 16px;color:var(--text-tertiary);flex-shrink:0}
+    .search-bar input{
+      flex:1;background:none;border:none;color:var(--text-primary);
+      font-family:var(--font-body);font-size:15px;
+      padding:14px 16px;outline:none;
+    }
+    .search-bar input::placeholder{color:var(--text-tertiary)}
+    .search-bar button{
+      background:var(--accent);color:#000;border:none;
+      font-family:var(--font-headline);font-weight:600;font-size:14px;
+      padding:14px 20px;cursor:pointer;transition:opacity .2s;
+    }
+    .search-bar button:hover{opacity:.85}
+
+    /* ── Actions row ── */
+    .actions{
+      display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+      margin:24px 0 0;position:relative;z-index:2;
+    }
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      font-family:var(--font-headline);font-size:14px;font-weight:600;
+      padding:12px 24px;border-radius:10px;cursor:pointer;
+      text-decoration:none;transition:all .25s;border:none;
+    }
+    .btn-primary{
+      background:var(--accent);color:#000;
+      box-shadow:0 0 20px var(--accent-glow);
+    }
+    .btn-primary:hover{box-shadow:0 0 30px var(--accent-glow),0 0 60px var(--accent-glow)}
+    .btn-ghost{
+      background:transparent;color:var(--text-primary);
+      border:1px solid var(--border);
+    }
+    .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* ── Suggested pages ── */
+    .suggestions{
+      position:relative;z-index:2;width:100%;max-width:640px;
+      margin:48px auto 0;
+    }
+    .suggestions-label{
+      font-family:var(--font-mono);font-size:11px;text-transform:uppercase;
+      letter-spacing:.1em;color:var(--text-tertiary);margin:0 0 16px;
+      text-align:center;
+    }
+    .suggestions-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:12px;
+    }
+    .suggestion-card{
+      display:flex;align-items:center;gap:12px;
+      background:var(--glass-bg);border:1px solid var(--glass-border);
+      border-radius:12px;padding:16px;text-decoration:none;
+      transition:all .25s;position:relative;overflow:hidden;
+    }
+    .suggestion-card::before{
+      content:'';position:absolute;inset:0;border-radius:inherit;
+      background:var(--glossy-shine);pointer-events:none;
+    }
+    .suggestion-card:hover{
+      border-color:var(--accent);transform:translateY(-2px);
+      box-shadow:0 8px 24px var(--accent-glow);
+    }
+    .suggestion-card .icon{
+      width:36px;height:36px;border-radius:8px;
+      background:var(--accent-glow);display:flex;align-items:center;justify-content:center;
+      color:var(--accent);font-size:18px;flex-shrink:0;
+    }
+    .suggestion-card .info .title{
+      font-family:var(--font-headline);font-size:14px;font-weight:600;
+      color:var(--text-primary);
+    }
+    .suggestion-card .info .path{
+      font-family:var(--font-mono);font-size:11px;color:var(--text-tertiary);
+    }
+
+    /* ── Status bar (bottom) ── */
+    .status-bar{
+      position:fixed;bottom:0;left:0;right:0;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:8px 24px;font-family:var(--font-mono);font-size:11px;
+      color:var(--text-tertiary);background:var(--bg-elevated);
+      border-top:1px solid var(--border);z-index:10;
+    }
+    .status-dot{
+      display:inline-block;width:6px;height:6px;border-radius:50%;
+      background:var(--error);margin:0 8px 0 0;
+      animation:statusPulse 2s ease infinite;
+    }
+    @keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+    /* ── Scanline overlay ── */
+    .scanlines{
+      position:fixed;inset:0;z-index:1;pointer-events:none;
+      background:repeating-linear-gradient(
+        0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px
+      );
+    }
+
+    /* ── Reduced motion ── */
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after{
+        animation-duration:.01ms!important;animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+      }
+    }
+
+    /* ── Focus ── */
+    :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  </style>
+</head>
+<body>
+  <!-- Grid background -->
+  <div class="grid-bg" aria-hidden="true"></div>
+  <!-- Scanlines -->
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- Radar -->
+  <div class="radar-wrap" aria-hidden="true" role="presentation">
+    <div class="radar-trail"></div>
+    <div class="radar-ring"></div>
+    <div class="radar-ring"></div>
+    <div class="radar-ring"></div>
+    <div class="radar-crosshair-h"></div>
+    <div class="radar-crosshair-v"></div>
+    <div class="radar-sweep"></div>
+    <div class="radar-center"></div>
+    <div class="radar-blip"></div>
+    <div class="radar-blip"></div>
+    <div class="radar-blip"></div>
+  </div>
+
+  <!-- Glitch 404 -->
+  <div class="glitch-wrap">
+    <h1 class="glitch-404" data-text="404" aria-label="Error 404">404</h1>
+    <p class="subtitle">Signal Lost</p>
+    <p class="message">
+      Our aerial systems scanned everywhere. This page wasn't found.<br>
+      <span class="mono">ERR::TARGET_NOT_ACQUIRED</span>
+    </p>
+  </div>
+
+  <!-- Search -->
+  <div class="search-section">
+    <form class="search-bar" role="search" aria-label="Search the site" action="/" method="get">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" name="q" placeholder="Search Jinki.ai..." aria-label="Search" autocomplete="off" />
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+  <!-- Action buttons -->
+  <nav class="actions" aria-label="Error page navigation">
+    <a href="/" class="btn btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Return Home
+    </a>
+    <a href="/blog" class="btn btn-ghost">Blog</a>
+    <a href="/careers" class="btn btn-ghost">Careers</a>
+  </nav>
+
+  <!-- Suggested pages -->
+  <section class="suggestions" aria-label="Suggested pages">
+    <p class="suggestions-label">Popular destinations</p>
+    <div class="suggestions-grid">
+      <a href="/verticals/data-centers" class="suggestion-card">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><circle cx="6" cy="6" r="1"/><circle cx="6" cy="18" r="1"/></svg>
+        </div>
+        <div class="info">
+          <div class="title">Data Centers</div>
+          <div class="path">/verticals/data-centers</div>
+        </div>
+      </a>
+      <a href="/verticals/energy-grid" class="suggestion-card">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="info">
+          <div class="title">Energy Grid</div>
+          <div class="path">/verticals/energy-grid</div>
+        </div>
+      </a>
+      <a href="/verticals/security" class="suggestion-card">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="info">
+          <div class="title">Security</div>
+          <div class="path">/verticals/security</div>
+        </div>
+      </a>
+      <a href="/services/audit" class="suggestion-card">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <div class="info">
+          <div class="title">Facility Audit</div>
+          <div class="path">/services/audit</div>
+        </div>
+      </a>
+      <a href="/services/deployment" class="suggestion-card">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        </div>
+        <div class="info">
+          <div class="title">Deployment</div>
+          <div class="path">/services/deployment</div>
+        </div>
+      </a>
+      <a href="/about" class="suggestion-card">
+        <div class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </div>
+        <div class="info">
+          <div class="title">About</div>
+          <div class="path">/about</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Status bar -->
+  <div class="status-bar" aria-hidden="true">
+    <span><span class="status-dot"></span>SIGNAL LOST</span>
+    <span id="timestamp"></span>
+  </div>
+
+  <script>
+    // Live timestamp
+    function updateTimestamp() {
+      const el = document.getElementById('timestamp');
+      if (el) el.textContent = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+    }
+    updateTimestamp();
+    setInterval(updateTimestamp, 1000);
+  </script>
+</body>
+</html>

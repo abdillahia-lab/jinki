@@ -1,0 +1,851 @@
+---
+/**
+ * Effects3D-Omega.astro — 3D Visual Effects Showcase
+ * TEAM OMEGA | Jinki Aerial Intelligence
+ *
+ * CSS 3D carousel, folding panels, depth scroll parallax,
+ * floating elements, hologram effect, animated mesh gradient.
+ * Dark/light theme aware. Respects prefers-reduced-motion.
+ */
+---
+
+<section class="omega-3d" id="effects3d-omega" style="padding: 80px 0; position: relative; overflow: hidden;">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 0 24px;">
+
+    <!-- ============================================================
+         SECTION HEADER
+         ============================================================ -->
+    <header style="text-align: center; margin-bottom: 64px;">
+      <span class="omega-label" style="display: inline-block; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; padding: 6px 16px; border: 1px solid var(--accent); border-radius: 100px;">Spatial Design System</span>
+      <h2 style="font-family: var(--font-headline); font-size: clamp(2rem, 5vw, 3.5rem); color: var(--text-primary); margin-bottom: 16px; letter-spacing: -0.03em;">
+        3D <span style="background: linear-gradient(135deg, #7B61FF, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Visual Effects</span>
+      </h2>
+      <p style="font-family: var(--font-body); color: var(--text-secondary); font-size: 1.125rem; max-width: 600px; margin: 0 auto;">Depth, dimension, and spatial awareness. Interfaces that exist in three-dimensional space.</p>
+    </header>
+
+    <!-- ============================================================
+         1. CSS 3D CAROUSEL
+         ============================================================ -->
+    <div style="margin-bottom: 96px;">
+      <h3 class="section-subtitle" style="font-family: var(--font-headline); font-size: 1.5rem; color: var(--text-primary); margin-bottom: 12px;">3D Carousel</h3>
+      <p style="font-family: var(--font-body); color: var(--text-tertiary); font-size: 0.875rem; margin-bottom: 32px;">Cards orbit in true 3D space. Drag to rotate or use the controls below.</p>
+
+      <div class="carousel-viewport" style="perspective: 1200px; height: 360px; display: flex; align-items: center; justify-content: center; position: relative; overflow: visible;">
+        <div class="carousel-ring" style="position: relative; width: 240px; height: 300px; transform-style: preserve-3d; transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+
+          <div class="carousel-card" style="position: absolute; width: 240px; height: 300px; border-radius: 16px; backface-visibility: hidden; transform: rotateY(0deg) translateZ(320px); overflow: hidden;">
+            <div class="carousel-card-inner" style="width: 100%; height: 100%; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: 24px; left: 24px; width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, var(--accent), rgba(0,229,255,0.3)); display: flex; align-items: center; justify-content: center;">
+                <span style="font-family: 'Material Symbols Outlined'; font-size: 24px; color: #fff;">sensors</span>
+              </div>
+              <h4 style="font-family: var(--font-headline); font-size: 1rem; color: var(--text-primary); margin-bottom: 6px;">Thermal Sensing</h4>
+              <p style="font-family: var(--font-body); font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.5;">Infrared analysis for hotspot detection across critical infrastructure.</p>
+            </div>
+          </div>
+
+          <div class="carousel-card" style="position: absolute; width: 240px; height: 300px; border-radius: 16px; backface-visibility: hidden; transform: rotateY(60deg) translateZ(320px); overflow: hidden;">
+            <div class="carousel-card-inner" style="width: 100%; height: 100%; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: 24px; left: 24px; width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #7B61FF, rgba(123,97,255,0.3)); display: flex; align-items: center; justify-content: center;">
+                <span style="font-family: 'Material Symbols Outlined'; font-size: 24px; color: #fff;">security</span>
+              </div>
+              <h4 style="font-family: var(--font-headline); font-size: 1rem; color: var(--text-primary); margin-bottom: 6px;">Perimeter Watch</h4>
+              <p style="font-family: var(--font-body); font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.5;">Autonomous surveillance with AI-driven anomaly detection algorithms.</p>
+            </div>
+          </div>
+
+          <div class="carousel-card" style="position: absolute; width: 240px; height: 300px; border-radius: 16px; backface-visibility: hidden; transform: rotateY(120deg) translateZ(320px); overflow: hidden;">
+            <div class="carousel-card-inner" style="width: 100%; height: 100%; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: 24px; left: 24px; width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #34D399, rgba(52,211,153,0.3)); display: flex; align-items: center; justify-content: center;">
+                <span style="font-family: 'Material Symbols Outlined'; font-size: 24px; color: #fff;">grass</span>
+              </div>
+              <h4 style="font-family: var(--font-headline); font-size: 1rem; color: var(--text-primary); margin-bottom: 6px;">Crop Analysis</h4>
+              <p style="font-family: var(--font-body); font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.5;">NDVI mapping and multispectral imagery for precision agriculture.</p>
+            </div>
+          </div>
+
+          <div class="carousel-card" style="position: absolute; width: 240px; height: 300px; border-radius: 16px; backface-visibility: hidden; transform: rotateY(180deg) translateZ(320px); overflow: hidden;">
+            <div class="carousel-card-inner" style="width: 100%; height: 100%; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: 24px; left: 24px; width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #FF8C00, rgba(255,140,0,0.3)); display: flex; align-items: center; justify-content: center;">
+                <span style="font-family: 'Material Symbols Outlined'; font-size: 24px; color: #fff;">bolt</span>
+              </div>
+              <h4 style="font-family: var(--font-headline); font-size: 1rem; color: var(--text-primary); margin-bottom: 6px;">Grid Inspection</h4>
+              <p style="font-family: var(--font-body); font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.5;">Power line and substation monitoring for energy infrastructure.</p>
+            </div>
+          </div>
+
+          <div class="carousel-card" style="position: absolute; width: 240px; height: 300px; border-radius: 16px; backface-visibility: hidden; transform: rotateY(240deg) translateZ(320px); overflow: hidden;">
+            <div class="carousel-card-inner" style="width: 100%; height: 100%; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: 24px; left: 24px; width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, var(--accent), #7B61FF); display: flex; align-items: center; justify-content: center;">
+                <span style="font-family: 'Material Symbols Outlined'; font-size: 24px; color: #fff;">analytics</span>
+              </div>
+              <h4 style="font-family: var(--font-headline); font-size: 1rem; color: var(--text-primary); margin-bottom: 6px;">Data Fusion</h4>
+              <p style="font-family: var(--font-body); font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.5;">Multi-sensor data integration for comprehensive intelligence reports.</p>
+            </div>
+          </div>
+
+          <div class="carousel-card" style="position: absolute; width: 240px; height: 300px; border-radius: 16px; backface-visibility: hidden; transform: rotateY(300deg) translateZ(320px); overflow: hidden;">
+            <div class="carousel-card-inner" style="width: 100%; height: 100%; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; display: flex; flex-direction: column; justify-content: flex-end; padding: 24px; position: relative; overflow: hidden;">
+              <div style="position: absolute; top: 24px; left: 24px; width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #FF4F5E, rgba(255,79,94,0.3)); display: flex; align-items: center; justify-content: center;">
+                <span style="font-family: 'Material Symbols Outlined'; font-size: 24px; color: #fff;">deployed_code</span>
+              </div>
+              <h4 style="font-family: var(--font-headline); font-size: 1rem; color: var(--text-primary); margin-bottom: 6px;">Autonomous Ops</h4>
+              <p style="font-family: var(--font-body); font-size: 0.75rem; color: var(--text-tertiary); line-height: 1.5;">Persistent autonomous deployment with dock-based operations.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Carousel Controls -->
+      <div style="display: flex; justify-content: center; gap: 16px; margin-top: 24px;">
+        <button class="carousel-prev" style="width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; font-size: 0;" aria-label="Previous card">
+          <span style="font-family: 'Material Symbols Outlined'; font-size: 20px;">chevron_left</span>
+        </button>
+        <button class="carousel-auto" style="height: 48px; border-radius: 24px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 20px; transition: all 0.2s ease; font-family: var(--font-mono); font-size: 0.75rem;" aria-label="Toggle auto-rotate">
+          <span class="auto-icon" style="font-family: 'Material Symbols Outlined'; font-size: 18px;">play_arrow</span>
+          <span class="auto-label">Auto</span>
+        </button>
+        <button class="carousel-next" style="width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; font-size: 0;" aria-label="Next card">
+          <span style="font-family: 'Material Symbols Outlined'; font-size: 20px;">chevron_right</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         2. FOLDING PANELS
+         ============================================================ -->
+    <div style="margin-bottom: 96px;">
+      <h3 class="section-subtitle" style="font-family: var(--font-headline); font-size: 1.5rem; color: var(--text-primary); margin-bottom: 12px;">Folding Panels</h3>
+      <p style="font-family: var(--font-body); color: var(--text-tertiary); font-size: 0.875rem; margin-bottom: 32px;">Click a panel to unfold it in 3D space, revealing content beneath.</p>
+
+      <div class="folding-accordion" style="max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 2px;">
+
+        <div class="fold-item" data-fold="1">
+          <button class="fold-trigger" style="width: 100%; padding: 20px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: all 0.3s ease; font-size: 0;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <span style="font-family: 'Material Symbols Outlined'; font-size: 24px; color: var(--accent);">flight_takeoff</span>
+              <span style="font-family: var(--font-headline); font-size: 1rem; color: var(--text-primary);">Autonomous Flight Operations</span>
+            </div>
+            <span class="fold-chevron" style="font-family: 'Material Symbols Outlined'; font-size: 20px; color: var(--text-tertiary); transition: transform 0.4s ease;">expand_more</span>
+          </button>
+          <div class="fold-content" style="perspective: 800px; max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+            <div class="fold-panel" style="transform-origin: top center; transform: rotateX(-90deg); opacity: 0; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s, opacity 0.3s ease 0.1s; padding: 24px; background: var(--surface-container); border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px;">
+              <p style="font-family: var(--font-body); font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.7;">Pre-programmed flight paths execute with centimeter-level precision. AI-powered obstacle avoidance and real-time route adaptation ensure safe, efficient operations across any terrain or facility layout.</p>
+              <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); padding: 4px 12px; border: 1px solid var(--accent); border-radius: 100px; opacity: 0.8;">RTK GPS</span>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); padding: 4px 12px; border: 1px solid var(--accent); border-radius: 100px; opacity: 0.8;">AI Avoidance</span>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent); padding: 4px 12px; border: 1px solid var(--accent); border-radius: 100px; opacity: 0.8;">Auto-Return</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fold-item" data-fold="2">
+          <button class="fold-trigger" style="width: 100%; padding: 20px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: all 0.3s ease; font-size: 0;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <span style="font-family: 'Material Symbols Outlined'; font-size: 24px; color: #7B61FF;">hub</span>
+              <span style="font-family: var(--font-headline); font-size: 1rem; color: var(--text-primary);">Multi-Sensor Fusion</span>
+            </div>
+            <span class="fold-chevron" style="font-family: 'Material Symbols Outlined'; font-size: 20px; color: var(--text-tertiary); transition: transform 0.4s ease;">expand_more</span>
+          </button>
+          <div class="fold-content" style="perspective: 800px; max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+            <div class="fold-panel" style="transform-origin: top center; transform: rotateX(-90deg); opacity: 0; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s, opacity 0.3s ease 0.1s; padding: 24px; background: var(--surface-container); border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px;">
+              <p style="font-family: var(--font-body); font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.7;">Thermal, visual, LiDAR, and multispectral data streams converge into a unified intelligence layer. Cross-referencing multiple sensor inputs reveals patterns invisible to any single modality.</p>
+              <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #7B61FF; padding: 4px 12px; border: 1px solid #7B61FF; border-radius: 100px; opacity: 0.8;">Thermal</span>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #7B61FF; padding: 4px 12px; border: 1px solid #7B61FF; border-radius: 100px; opacity: 0.8;">LiDAR</span>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #7B61FF; padding: 4px 12px; border: 1px solid #7B61FF; border-radius: 100px; opacity: 0.8;">NDVI</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fold-item" data-fold="3">
+          <button class="fold-trigger" style="width: 100%; padding: 20px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: all 0.3s ease; font-size: 0;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <span style="font-family: 'Material Symbols Outlined'; font-size: 24px; color: #FF8C00;">shield</span>
+              <span style="font-family: var(--font-headline); font-size: 1rem; color: var(--text-primary);">Edge AI Processing</span>
+            </div>
+            <span class="fold-chevron" style="font-family: 'Material Symbols Outlined'; font-size: 20px; color: var(--text-tertiary); transition: transform 0.4s ease;">expand_more</span>
+          </button>
+          <div class="fold-content" style="perspective: 800px; max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+            <div class="fold-panel" style="transform-origin: top center; transform: rotateX(-90deg); opacity: 0; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s, opacity 0.3s ease 0.1s; padding: 24px; background: var(--surface-container); border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px;">
+              <p style="font-family: var(--font-body); font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.7;">Onboard AI compute modules process data in real-time at the edge. Anomaly detection, classification, and alerting happen mid-flight without reliance on cloud connectivity.</p>
+              <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #FF8C00; padding: 4px 12px; border: 1px solid #FF8C00; border-radius: 100px; opacity: 0.8;">Manifold 3</span>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #FF8C00; padding: 4px 12px; border: 1px solid #FF8C00; border-radius: 100px; opacity: 0.8;">Real-time</span>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #FF8C00; padding: 4px 12px; border: 1px solid #FF8C00; border-radius: 100px; opacity: 0.8;">On-device</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="fold-item" data-fold="4">
+          <button class="fold-trigger" style="width: 100%; padding: 20px 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: all 0.3s ease; font-size: 0;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <span style="font-family: 'Material Symbols Outlined'; font-size: 24px; color: #34D399;">insights</span>
+              <span style="font-family: var(--font-headline); font-size: 1rem; color: var(--text-primary);">Intelligence Delivery</span>
+            </div>
+            <span class="fold-chevron" style="font-family: 'Material Symbols Outlined'; font-size: 20px; color: var(--text-tertiary); transition: transform 0.4s ease;">expand_more</span>
+          </button>
+          <div class="fold-content" style="perspective: 800px; max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);">
+            <div class="fold-panel" style="transform-origin: top center; transform: rotateX(-90deg); opacity: 0; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s, opacity 0.3s ease 0.1s; padding: 24px; background: var(--surface-container); border: 1px solid var(--border); border-top: none; border-radius: 0 0 12px 12px;">
+              <p style="font-family: var(--font-body); font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.7;">Raw data transforms into actionable intelligence. Prioritized findings, trend analysis, and predictive recommendations delivered through interactive dashboards and automated reports.</p>
+              <div style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #34D399; padding: 4px 12px; border: 1px solid #34D399; border-radius: 100px; opacity: 0.8;">Dashboards</span>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #34D399; padding: 4px 12px; border: 1px solid #34D399; border-radius: 100px; opacity: 0.8;">Alerts</span>
+                <span style="font-family: var(--font-mono); font-size: 0.75rem; color: #34D399; padding: 4px 12px; border: 1px solid #34D399; border-radius: 100px; opacity: 0.8;">Predictive</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============================================================
+         3. DEPTH SCROLL — Parallax layers at different z-depths
+         ============================================================ -->
+    <div style="margin-bottom: 96px;">
+      <h3 class="section-subtitle" style="font-family: var(--font-headline); font-size: 1.5rem; color: var(--text-primary); margin-bottom: 12px;">Depth Scroll</h3>
+      <p style="font-family: var(--font-body); color: var(--text-tertiary); font-size: 0.875rem; margin-bottom: 32px;">Layers move at different speeds as you scroll, creating a sense of depth.</p>
+
+      <div class="depth-container" style="position: relative; height: 400px; overflow: hidden; border-radius: 16px; background: var(--surface-container-lowest); border: 1px solid var(--border);">
+        <!-- Background layer (slowest) -->
+        <div class="depth-layer depth-bg" data-speed="0.2" style="position: absolute; inset: -40px; display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(6, 1fr); gap: 2px; opacity: 0.15;">
+          <!-- Grid pattern for background -->
+        </div>
+
+        <!-- Middle layer -->
+        <div class="depth-layer depth-mid" data-speed="0.5" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none;">
+          <div style="display: flex; gap: 40px; align-items: center;">
+            <div class="depth-orb" style="width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, var(--accent), rgba(0,229,255,0.1)); opacity: 0.3; filter: blur(1px);"></div>
+            <div class="depth-orb" style="width: 80px; height: 80px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #7B61FF, rgba(123,97,255,0.1)); opacity: 0.25; filter: blur(1px);"></div>
+            <div class="depth-orb" style="width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #FF8C00, rgba(255,140,0,0.1)); opacity: 0.2; filter: blur(1px);"></div>
+          </div>
+        </div>
+
+        <!-- Foreground layer (fastest) -->
+        <div class="depth-layer depth-fg" data-speed="0.9" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none;">
+          <div style="text-align: center;">
+            <div style="font-family: var(--font-headline); font-size: clamp(1.5rem, 4vw, 3rem); color: var(--text-primary); font-weight: 700; letter-spacing: -0.03em;">Parallax Depth</div>
+            <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); margin-top: 8px; letter-spacing: 0.1em;">SCROLL TO EXPERIENCE</div>
+          </div>
+        </div>
+
+        <!-- Floating particles -->
+        <div class="depth-layer depth-particles" data-speed="0.35" style="position: absolute; inset: 0; pointer-events: none;">
+          <div class="particle" style="position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); top: 20%; left: 15%; opacity: 0.5;"></div>
+          <div class="particle" style="position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #7B61FF; top: 60%; left: 30%; opacity: 0.4;"></div>
+          <div class="particle" style="position: absolute; width: 5px; height: 5px; border-radius: 50%; background: #34D399; top: 35%; left: 70%; opacity: 0.3;"></div>
+          <div class="particle" style="position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #FF8C00; top: 75%; left: 85%; opacity: 0.5;"></div>
+          <div class="particle" style="position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); top: 45%; left: 50%; opacity: 0.35;"></div>
+          <div class="particle" style="position: absolute; width: 6px; height: 6px; border-radius: 50%; background: #7B61FF; top: 15%; left: 80%; opacity: 0.25;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         4. FLOATING ELEMENTS — Pure CSS float and bob
+         ============================================================ -->
+    <div style="margin-bottom: 96px;">
+      <h3 class="section-subtitle" style="font-family: var(--font-headline); font-size: 1.5rem; color: var(--text-primary); margin-bottom: 12px;">Floating Elements</h3>
+      <p style="font-family: var(--font-body); color: var(--text-tertiary); font-size: 0.875rem; margin-bottom: 32px;">Objects drift weightlessly with subtle rotation, all powered by pure CSS.</p>
+
+      <div class="float-stage" style="position: relative; height: 360px; border-radius: 16px; background: var(--surface-container-lowest); border: 1px solid var(--border); overflow: hidden;">
+
+        <div class="float-obj float-1" style="position: absolute; top: 15%; left: 10%; animation: floatA 6s ease-in-out infinite;">
+          <div style="width: 80px; height: 80px; border-radius: 16px; background: linear-gradient(135deg, var(--accent), rgba(0,229,255,0.4)); border: 1px solid rgba(0,229,255,0.3); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(0,229,255,0.15);">
+            <span style="font-family: 'Material Symbols Outlined'; font-size: 32px; color: #fff;">sensors</span>
+          </div>
+        </div>
+
+        <div class="float-obj float-2" style="position: absolute; top: 50%; left: 25%; animation: floatB 8s ease-in-out infinite 1s;">
+          <div style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #7B61FF, rgba(123,97,255,0.4)); border: 1px solid rgba(123,97,255,0.3); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(123,97,255,0.15);">
+            <span style="font-family: 'Material Symbols Outlined'; font-size: 24px; color: #fff;">radar</span>
+          </div>
+        </div>
+
+        <div class="float-obj float-3" style="position: absolute; top: 25%; left: 55%; animation: floatC 7s ease-in-out infinite 0.5s;">
+          <div style="width: 96px; height: 96px; border-radius: 20px; background: linear-gradient(135deg, #34D399, rgba(52,211,153,0.4)); border: 1px solid rgba(52,211,153,0.3); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(52,211,153,0.15);">
+            <span style="font-family: 'Material Symbols Outlined'; font-size: 40px; color: #fff;">satellite_alt</span>
+          </div>
+        </div>
+
+        <div class="float-obj float-4" style="position: absolute; top: 60%; left: 70%; animation: floatA 9s ease-in-out infinite 2s;">
+          <div style="width: 56px; height: 56px; border-radius: 14px; background: linear-gradient(135deg, #FF8C00, rgba(255,140,0,0.4)); border: 1px solid rgba(255,140,0,0.3); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(255,140,0,0.15);">
+            <span style="font-family: 'Material Symbols Outlined'; font-size: 24px; color: #fff;">bolt</span>
+          </div>
+        </div>
+
+        <div class="float-obj float-5" style="position: absolute; top: 10%; left: 80%; animation: floatB 7.5s ease-in-out infinite 3s;">
+          <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #FF4F5E, rgba(255,79,94,0.4)); border: 1px solid rgba(255,79,94,0.3); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(255,79,94,0.15);">
+            <span style="font-family: 'Material Symbols Outlined'; font-size: 20px; color: #fff;">emergency</span>
+          </div>
+        </div>
+
+        <div class="float-obj float-6" style="position: absolute; top: 70%; left: 45%; animation: floatC 10s ease-in-out infinite 1.5s;">
+          <div style="width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), #7B61FF); border: 1px solid rgba(0,229,255,0.3); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 32px rgba(0,229,255,0.15);">
+            <span style="font-family: 'Material Symbols Outlined'; font-size: 28px; color: #fff;">auto_awesome</span>
+          </div>
+        </div>
+
+        <!-- Connecting lines (decorative) -->
+        <svg class="float-lines" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.1;">
+          <line x1="14%" y1="25%" x2="30%" y2="58%" stroke="var(--accent)" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="30%" y1="58%" x2="59%" y2="35%" stroke="#7B61FF" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="59%" y1="35%" x2="74%" y2="68%" stroke="#34D399" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="74%" y1="68%" x2="84%" y2="18%" stroke="#FF8C00" stroke-width="1" stroke-dasharray="4 4"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         5. HOLOGRAM EFFECT
+         ============================================================ -->
+    <div style="margin-bottom: 96px;">
+      <h3 class="section-subtitle" style="font-family: var(--font-headline); font-size: 1.5rem; color: var(--text-primary); margin-bottom: 12px;">Hologram Effect</h3>
+      <p style="font-family: var(--font-body); color: var(--text-tertiary); font-size: 0.875rem; margin-bottom: 32px;">Translucent, flickering holographic projection with scan lines and chromatic distortion.</p>
+
+      <div style="display: flex; justify-content: center;">
+        <div class="holo-container" style="position: relative; width: 100%; max-width: 600px; padding: 48px; border-radius: 16px; background: var(--surface-container-lowest); border: 1px solid var(--border); overflow: hidden;">
+          <!-- Scanline overlay -->
+          <div class="holo-scanlines" style="position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,229,255,0.03) 2px, rgba(0,229,255,0.03) 4px); pointer-events: none; z-index: 3;"></div>
+
+          <!-- Flicker overlay -->
+          <div class="holo-flicker" style="position: absolute; inset: 0; pointer-events: none; z-index: 4; opacity: 0;"></div>
+
+          <!-- Hologram content -->
+          <div class="holo-content" style="position: relative; z-index: 2; text-align: center;">
+            <div class="holo-text-main" style="font-family: var(--font-headline); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; color: var(--accent); text-shadow: 0 0 20px rgba(0,229,255,0.5), 0 0 40px rgba(0,229,255,0.3), 0 0 80px rgba(0,229,255,0.1); line-height: 1.1; letter-spacing: -0.02em; position: relative;">
+              <span class="holo-text-r" style="position: absolute; left: 2px; top: 0; color: rgba(255,0,0,0.4); clip-path: inset(0); z-index: -1;">JINKI.AI</span>
+              <span class="holo-text-b" style="position: absolute; left: -2px; top: 0; color: rgba(0,100,255,0.4); clip-path: inset(0); z-index: -1;">JINKI.AI</span>
+              JINKI.AI
+            </div>
+            <div style="margin-top: 16px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); opacity: 0.6; letter-spacing: 0.2em; text-transform: uppercase;">Aerial Intelligence Platform</div>
+
+            <div class="holo-stats" style="display: flex; justify-content: center; gap: 32px; margin-top: 32px; flex-wrap: wrap;">
+              <div style="text-align: center;">
+                <div style="font-family: var(--font-mono); font-size: 1.75rem; color: var(--accent); font-weight: 700; text-shadow: 0 0 12px rgba(0,229,255,0.5);">99.7%</div>
+                <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); opacity: 0.5; letter-spacing: 0.1em; margin-top: 4px;">UPTIME</div>
+              </div>
+              <div style="text-align: center;">
+                <div style="font-family: var(--font-mono); font-size: 1.75rem; color: var(--accent); font-weight: 700; text-shadow: 0 0 12px rgba(0,229,255,0.5);">4.2ms</div>
+                <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); opacity: 0.5; letter-spacing: 0.1em; margin-top: 4px;">LATENCY</div>
+              </div>
+              <div style="text-align: center;">
+                <div style="font-family: var(--font-mono); font-size: 1.75rem; color: var(--accent); font-weight: 700; text-shadow: 0 0 12px rgba(0,229,255,0.5);">200+</div>
+                <div style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent); opacity: 0.5; letter-spacing: 0.1em; margin-top: 4px;">MISSIONS/MO</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Base glow -->
+          <div style="position: absolute; bottom: 0; left: 10%; right: 10%; height: 2px; background: var(--accent); box-shadow: 0 0 20px var(--accent), 0 0 60px rgba(0,229,255,0.3); z-index: 5; opacity: 0.6;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         6. ANIMATED MESH GRADIENT — Canvas-based
+         ============================================================ -->
+    <div style="margin-bottom: 48px;">
+      <h3 class="section-subtitle" style="font-family: var(--font-headline); font-size: 1.5rem; color: var(--text-primary); margin-bottom: 12px;">Mesh Gradient</h3>
+      <p style="font-family: var(--font-body); color: var(--text-tertiary); font-size: 0.875rem; margin-bottom: 32px;">An organic, flowing gradient mesh animated on canvas. Move your cursor to influence the flow.</p>
+
+      <div class="mesh-wrapper" style="position: relative; height: 400px; border-radius: 16px; overflow: hidden; border: 1px solid var(--border);">
+        <canvas class="mesh-canvas" style="position: absolute; inset: 0; width: 100%; height: 100%;"></canvas>
+        <!-- Overlay text -->
+        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 2; pointer-events: none;">
+          <div style="text-align: center; mix-blend-mode: overlay;">
+            <div style="font-family: var(--font-headline); font-size: clamp(2rem, 5vw, 4rem); font-weight: 700; color: #fff; letter-spacing: -0.03em; text-shadow: 0 2px 20px rgba(0,0,0,0.3);">Fluid Intelligence</div>
+            <div style="font-family: var(--font-mono); font-size: 0.8rem; color: rgba(255,255,255,0.7); letter-spacing: 0.15em; margin-top: 8px;">CANVAS-POWERED MESH GRADIENT</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* ============================================================
+     FLOATING KEYFRAMES
+     ============================================================ */
+  @keyframes floatA {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-18px) rotate(3deg); }
+    50% { transform: translateY(-8px) rotate(-2deg); }
+    75% { transform: translateY(-22px) rotate(1deg); }
+  }
+
+  @keyframes floatB {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    30% { transform: translateY(-14px) rotate(-4deg); }
+    60% { transform: translateY(-24px) rotate(2deg); }
+  }
+
+  @keyframes floatC {
+    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+    33% { transform: translateY(-16px) rotate(3deg) scale(1.02); }
+    66% { transform: translateY(-10px) rotate(-2deg) scale(0.98); }
+  }
+
+  /* ============================================================
+     HOLOGRAM
+     ============================================================ */
+  @keyframes holoFlicker {
+    0%, 100% { opacity: 0; }
+    5% { opacity: 0.1; }
+    5.5% { opacity: 0; }
+    10% { opacity: 0.05; }
+    10.5% { opacity: 0; }
+    50% { opacity: 0; }
+    50.5% { opacity: 0.08; }
+    51% { opacity: 0; }
+    75% { opacity: 0; }
+    75.2% { opacity: 0.12; }
+    75.5% { opacity: 0; }
+  }
+
+  @keyframes holoGlitch {
+    0%, 100% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+    20% { clip-path: inset(10% 0 80% 0); transform: translateX(3px); }
+    21% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+    40% { clip-path: inset(60% 0 10% 0); transform: translateX(-2px); }
+    41% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+    60% { clip-path: inset(30% 0 50% 0); transform: translateX(4px); }
+    61% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+  }
+
+  .holo-flicker {
+    animation: holoFlicker 4s ease-in-out infinite;
+    background: rgba(0, 229, 255, 0.1);
+  }
+
+  .holo-text-r {
+    animation: holoGlitch 8s step-end infinite;
+  }
+
+  .holo-text-b {
+    animation: holoGlitch 8s step-end infinite reverse;
+  }
+
+  /* ============================================================
+     CAROUSEL
+     ============================================================ */
+  .carousel-card-inner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--glossy-shine);
+    pointer-events: none;
+  }
+
+  .carousel-prev:hover,
+  .carousel-next:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  .carousel-auto:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .carousel-auto.playing {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-glow);
+  }
+
+  /* ============================================================
+     FOLDING
+     ============================================================ */
+  .fold-trigger:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+  }
+
+  .fold-item.open .fold-trigger {
+    border-radius: 12px 12px 0 0;
+  }
+
+  .fold-item.open .fold-chevron {
+    transform: rotate(180deg);
+  }
+
+  .fold-item.open .fold-content {
+    max-height: 300px;
+  }
+
+  .fold-item.open .fold-panel {
+    transform: rotateX(0deg);
+    opacity: 1;
+  }
+
+  /* ============================================================
+     DEPTH SCROLL bg grid
+     ============================================================ */
+  .depth-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.5;
+  }
+
+  /* ============================================================
+     LIGHT THEME
+     ============================================================ */
+  :global([data-theme="light"]) .holo-container {
+    background: rgba(240, 241, 243, 1);
+  }
+
+  :global([data-theme="light"]) .holo-scanlines {
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,131,143,0.03) 2px, rgba(0,131,143,0.03) 4px);
+  }
+
+  :global([data-theme="light"]) .holo-flicker {
+    background: rgba(0, 131, 143, 0.05);
+  }
+
+  :global([data-theme="light"]) .float-obj div {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+
+  :global([data-theme="light"]) .depth-container,
+  :global([data-theme="light"]) .float-stage {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  /* ============================================================
+     REDUCED MOTION
+     ============================================================ */
+  @media (prefers-reduced-motion: reduce) {
+    .float-obj {
+      animation: none !important;
+    }
+
+    .holo-flicker,
+    .holo-text-r,
+    .holo-text-b {
+      animation: none !important;
+    }
+
+    .carousel-ring {
+      transition: none !important;
+    }
+
+    .fold-panel,
+    .fold-content,
+    .fold-chevron {
+      transition: none !important;
+    }
+
+    .depth-layer {
+      transform: none !important;
+    }
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 640px) {
+    .carousel-viewport {
+      height: 300px !important;
+    }
+
+    .carousel-card {
+      width: 180px !important;
+      height: 240px !important;
+    }
+
+    .holo-stats {
+      gap: 16px !important;
+    }
+
+    .float-stage {
+      height: 280px !important;
+    }
+  }
+</style>
+
+<script>
+  /* ============================================================
+     EFFECTS3D-OMEGA CONTROLLER
+     ============================================================ */
+  (function() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ---- 1. 3D CAROUSEL ----
+    const ring = document.querySelector('.carousel-ring') as HTMLElement;
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+    const autoBtn = document.querySelector('.carousel-auto');
+    let carouselAngle = 0;
+    let autoRotating = false;
+    let autoInterval: ReturnType<typeof setInterval>;
+
+    function rotateCarousel(angle: number) {
+      carouselAngle = angle;
+      if (ring) ring.style.transform = `rotateY(${angle}deg)`;
+    }
+
+    prevBtn?.addEventListener('click', () => {
+      rotateCarousel(carouselAngle + 60);
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      rotateCarousel(carouselAngle - 60);
+    });
+
+    autoBtn?.addEventListener('click', () => {
+      autoRotating = !autoRotating;
+      autoBtn.classList.toggle('playing', autoRotating);
+      const icon = autoBtn.querySelector('.auto-icon');
+      const label = autoBtn.querySelector('.auto-label');
+      if (autoRotating) {
+        if (icon) icon.textContent = 'pause';
+        if (label) label.textContent = 'Pause';
+        autoInterval = setInterval(() => rotateCarousel(carouselAngle - 60), 2500);
+      } else {
+        if (icon) icon.textContent = 'play_arrow';
+        if (label) label.textContent = 'Auto';
+        clearInterval(autoInterval);
+      }
+    });
+
+    // Drag to rotate
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartAngle = 0;
+    const viewport = document.querySelector('.carousel-viewport');
+
+    viewport?.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      dragStartX = (e as PointerEvent).clientX;
+      dragStartAngle = carouselAngle;
+      (viewport as HTMLElement).style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('pointermove', (e) => {
+      if (!isDragging || !ring) return;
+      const dx = e.clientX - dragStartX;
+      ring.style.transition = 'none';
+      rotateCarousel(dragStartAngle + dx * 0.3);
+    });
+
+    window.addEventListener('pointerup', () => {
+      if (!isDragging || !ring) return;
+      isDragging = false;
+      ring.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      // Snap to nearest 60deg
+      const snapped = Math.round(carouselAngle / 60) * 60;
+      rotateCarousel(snapped);
+      if (viewport) (viewport as HTMLElement).style.cursor = 'grab';
+    });
+
+    if (viewport) (viewport as HTMLElement).style.cursor = 'grab';
+
+    // ---- 2. FOLDING PANELS ----
+    document.querySelectorAll('.fold-item').forEach(item => {
+      const trigger = item.querySelector('.fold-trigger');
+      trigger?.addEventListener('click', () => {
+        const wasOpen = item.classList.contains('open');
+        // Close all
+        document.querySelectorAll('.fold-item').forEach(i => i.classList.remove('open'));
+        // Open clicked if it was closed
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+
+    // ---- 3. DEPTH SCROLL PARALLAX ----
+    const depthContainer = document.querySelector('.depth-container') as HTMLElement;
+    if (depthContainer && !prefersReducedMotion) {
+      const layers = depthContainer.querySelectorAll('.depth-layer');
+
+      function updateDepth() {
+        const rect = depthContainer.getBoundingClientRect();
+        const containerCenter = rect.top + rect.height / 2;
+        const viewCenter = window.innerHeight / 2;
+        const offset = (containerCenter - viewCenter) / window.innerHeight;
+
+        layers.forEach(layer => {
+          const speed = parseFloat((layer as HTMLElement).dataset.speed || '0.5');
+          const translate = offset * speed * 80;
+          (layer as HTMLElement).style.transform = `translateY(${translate}px)`;
+        });
+      }
+
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            updateDepth();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+      updateDepth();
+    }
+
+    // Generate background grid
+    const depthBg = document.querySelector('.depth-bg');
+    if (depthBg) {
+      for (let i = 0; i < 48; i++) {
+        const cell = document.createElement('div');
+        cell.style.background = 'var(--border)';
+        cell.style.borderRadius = '2px';
+        cell.style.opacity = `${0.1 + Math.random() * 0.3}`;
+        depthBg.appendChild(cell);
+      }
+    }
+
+    // ---- 4. HOLOGRAM GLITCH intensification on hover ----
+    const holoContainer = document.querySelector('.holo-container');
+    if (holoContainer) {
+      holoContainer.addEventListener('mouseenter', () => {
+        const r = holoContainer.querySelector('.holo-text-r') as HTMLElement;
+        const b = holoContainer.querySelector('.holo-text-b') as HTMLElement;
+        if (r) r.style.animationDuration = '2s';
+        if (b) b.style.animationDuration = '2s';
+      });
+      holoContainer.addEventListener('mouseleave', () => {
+        const r = holoContainer.querySelector('.holo-text-r') as HTMLElement;
+        const b = holoContainer.querySelector('.holo-text-b') as HTMLElement;
+        if (r) r.style.animationDuration = '8s';
+        if (b) b.style.animationDuration = '8s';
+      });
+    }
+
+    // ---- 5. ANIMATED MESH GRADIENT ----
+    const meshCanvas = document.querySelector('.mesh-canvas') as HTMLCanvasElement;
+    if (meshCanvas) {
+      const ctx = meshCanvas.getContext('2d');
+      if (ctx) {
+        let mouseX = 0.5;
+        let mouseY = 0.5;
+        let animFrame: number;
+        let time = 0;
+
+        const meshWrapper = meshCanvas.parentElement;
+        meshWrapper?.addEventListener('mousemove', (e) => {
+          const rect = meshWrapper.getBoundingClientRect();
+          mouseX = (e.clientX - rect.left) / rect.width;
+          mouseY = (e.clientY - rect.top) / rect.height;
+        });
+
+        // Color palette
+        const colors = [
+          { r: 0, g: 229, b: 255 },   // accent cyan
+          { r: 123, g: 97, b: 255 },   // violet
+          { r: 52, g: 211, b: 153 },   // green
+          { r: 255, g: 140, b: 0 },    // orange
+          { r: 0, g: 100, b: 180 },    // deep blue
+        ];
+
+        interface Blob {
+          x: number; y: number; vx: number; vy: number; r: number; color: {r:number;g:number;b:number};
+        }
+
+        const blobs: Blob[] = colors.map((color, i) => ({
+          x: (i + 1) / (colors.length + 1),
+          y: 0.3 + Math.random() * 0.4,
+          vx: (Math.random() - 0.5) * 0.003,
+          vy: (Math.random() - 0.5) * 0.003,
+          r: 0.25 + Math.random() * 0.15,
+          color
+        }));
+
+        function resizeMesh() {
+          const dpr = window.devicePixelRatio || 1;
+          const rect = meshCanvas.getBoundingClientRect();
+          meshCanvas.width = rect.width * dpr;
+          meshCanvas.height = rect.height * dpr;
+          ctx!.scale(dpr, dpr);
+        }
+
+        function drawMesh() {
+          if (!ctx) return;
+          time += 0.005;
+          const w = meshCanvas.getBoundingClientRect().width;
+          const h = meshCanvas.getBoundingClientRect().height;
+
+          // Update blob positions
+          blobs.forEach(blob => {
+            blob.x += blob.vx + (mouseX - 0.5) * 0.001;
+            blob.y += blob.vy + (mouseY - 0.5) * 0.001;
+
+            // Organic movement
+            blob.x += Math.sin(time * 2 + blob.color.r) * 0.001;
+            blob.y += Math.cos(time * 1.5 + blob.color.g) * 0.001;
+
+            // Bounce off edges
+            if (blob.x < -0.1 || blob.x > 1.1) blob.vx *= -1;
+            if (blob.y < -0.1 || blob.y > 1.1) blob.vy *= -1;
+            blob.x = Math.max(-0.2, Math.min(1.2, blob.x));
+            blob.y = Math.max(-0.2, Math.min(1.2, blob.y));
+          });
+
+          // Clear
+          ctx.clearRect(0, 0, w, h);
+
+          // Draw blobs with radial gradients
+          blobs.forEach(blob => {
+            const gradient = ctx!.createRadialGradient(
+              blob.x * w, blob.y * h, 0,
+              blob.x * w, blob.y * h, blob.r * Math.max(w, h)
+            );
+            gradient.addColorStop(0, `rgba(${blob.color.r}, ${blob.color.g}, ${blob.color.b}, 0.6)`);
+            gradient.addColorStop(0.5, `rgba(${blob.color.r}, ${blob.color.g}, ${blob.color.b}, 0.2)`);
+            gradient.addColorStop(1, `rgba(${blob.color.r}, ${blob.color.g}, ${blob.color.b}, 0)`);
+
+            ctx!.fillStyle = gradient;
+            ctx!.fillRect(0, 0, w, h);
+          });
+
+          // Noise-like texture overlay
+          const imageData = ctx.getImageData(0, 0, meshCanvas.width, meshCanvas.height);
+          const data = imageData.data;
+          for (let i = 0; i < data.length; i += 16) {
+            const noise = (Math.random() - 0.5) * 8;
+            data[i] = Math.max(0, Math.min(255, data[i] + noise));
+            data[i + 1] = Math.max(0, Math.min(255, data[i + 1] + noise));
+            data[i + 2] = Math.max(0, Math.min(255, data[i + 2] + noise));
+          }
+          ctx.putImageData(imageData, 0, 0);
+
+          if (!prefersReducedMotion) {
+            animFrame = requestAnimationFrame(drawMesh);
+          }
+        }
+
+        // Start when visible
+        const meshObserver = new IntersectionObserver(entries => {
+          if (entries[0].isIntersecting) {
+            resizeMesh();
+            drawMesh();
+            meshObserver.disconnect();
+          }
+        }, { threshold: 0.1 });
+        meshObserver.observe(meshCanvas);
+
+        window.addEventListener('resize', resizeMesh);
+
+        // For reduced motion, draw once
+        if (prefersReducedMotion) {
+          resizeMesh();
+          drawMesh();
+        }
+      }
+    }
+
+  })();
+</script>

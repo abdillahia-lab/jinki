@@ -1,0 +1,1026 @@
+---
+import '../../styles/global.css';
+const title = 'Performance & SEO — Team Alpha | Jinki';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Team Alpha performance and SEO optimization showcase for Jinki Aerial Intelligence" />
+  <title>{title}</title>
+  <link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=bolt,code,image,link,network_check,rocket_launch,search,speed,storage,timer,trending_up,web&display=swap" rel="stylesheet" />
+  <script is:inline>
+    (function() {
+      var theme = localStorage.getItem('jinki-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <style is:inline>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <header class="perf-header" role="banner">
+    <div class="perf-header-inner">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:var(--accent);" aria-hidden="true">speed</span>
+        <div>
+          <h1 style="font-size:clamp(18px,3vw,24px);line-height:1.2;">Performance &amp; SEO</h1>
+          <p style="font-family:var(--font-mono);font-size:12px;color:var(--accent);letter-spacing:0.05em;">Team Alpha &mdash; Round 15</p>
+        </div>
+      </div>
+      <nav aria-label="Page sections">
+        <ul class="perf-nav" role="list">
+          <li><a href="#images">Images</a></li>
+          <li><a href="#critical-css">CSS</a></li>
+          <li><a href="#resource-hints">Hints</a></li>
+          <li><a href="#structured-data">Schema</a></li>
+          <li><a href="#meta-tags">Meta</a></li>
+          <li><a href="#web-vitals">Vitals</a></li>
+          <li><a href="#service-worker">SW</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content" role="main" style="max-width:1200px;margin:0 auto;padding:32px 24px 80px;">
+
+    <!-- Section 1: Optimized Image Loading -->
+    <section id="images" class="perf-section" aria-labelledby="img-heading">
+      <div class="perf-section-header">
+        <span class="sec-num" aria-hidden="true">01</span>
+        <h2 id="img-heading">Optimized Image Loading</h2>
+      </div>
+      <div class="perf-card glass-panel" style="border-radius:16px;">
+        <p class="perf-desc">Responsive images with srcset/sizes, lazy loading, and blur-up placeholders reduce LCP and bandwidth.</p>
+
+        <div class="img-demo-grid">
+          <div class="img-demo-item">
+            <div class="img-placeholder blur-up" id="blur-demo-1">
+              <div class="blur-overlay" aria-hidden="true"></div>
+              <div class="img-loaded-indicator">
+                <span class="material-symbols-outlined" style="font-size:18px;" aria-hidden="true">image</span>
+                Loaded
+              </div>
+            </div>
+            <span class="img-demo-label">Blur-up Placeholder</span>
+          </div>
+          <div class="img-demo-item">
+            <div class="img-placeholder lazy-demo" id="lazy-demo-1">
+              <div class="lazy-skeleton" aria-hidden="true"></div>
+              <span class="lazy-badge">loading="lazy"</span>
+            </div>
+            <span class="img-demo-label">Native Lazy Loading</span>
+          </div>
+          <div class="img-demo-item">
+            <div class="img-placeholder srcset-demo">
+              <div class="srcset-visual" aria-hidden="true">
+                <div class="srcset-bar" style="width:30%"><span>400w</span></div>
+                <div class="srcset-bar" style="width:60%"><span>800w</span></div>
+                <div class="srcset-bar" style="width:100%"><span>1600w</span></div>
+              </div>
+            </div>
+            <span class="img-demo-label">srcset / sizes</span>
+          </div>
+        </div>
+
+        <div class="code-block" style="margin-top:24px;">
+          <pre><code>&lt;img
+  src="thermal-800.webp"
+  srcset="thermal-400.webp 400w,
+          thermal-800.webp 800w,
+          thermal-1600.webp 1600w"
+  sizes="(max-width: 640px) 100vw,
+         (max-width: 1024px) 50vw,
+         33vw"
+  loading="lazy"
+  decoding="async"
+  alt="Thermal scan of data center roof"
+  width="800" height="600"
+/&gt;</code></pre>
+        </div>
+
+        <div class="perf-tips" style="margin-top:20px;">
+          <h3>Optimization Checklist</h3>
+          <ul>
+            <li>Use WebP/AVIF with JPEG fallback</li>
+            <li>Always set explicit <code>width</code> and <code>height</code> to prevent CLS</li>
+            <li><code>loading="lazy"</code> for below-fold images</li>
+            <li><code>fetchpriority="high"</code> for hero/LCP images</li>
+            <li>Inline 20x20 blur placeholder as data URI</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Critical CSS -->
+    <section id="critical-css" class="perf-section" aria-labelledby="css-heading">
+      <div class="perf-section-header">
+        <span class="sec-num" aria-hidden="true">02</span>
+        <h2 id="css-heading">Critical CSS Strategy</h2>
+      </div>
+      <div class="perf-card glass-panel" style="border-radius:16px;">
+        <p class="perf-desc">Inlining above-the-fold CSS eliminates render-blocking requests and reduces First Contentful Paint.</p>
+
+        <div class="css-flow">
+          <div class="css-flow-step">
+            <div class="flow-icon">
+              <span class="material-symbols-outlined" style="font-size:24px;color:var(--accent);" aria-hidden="true">code</span>
+            </div>
+            <h3>Extract</h3>
+            <p>Identify CSS rules needed for above-the-fold content (nav, hero, first section).</p>
+          </div>
+          <div class="css-flow-arrow" aria-hidden="true">&rarr;</div>
+          <div class="css-flow-step">
+            <div class="flow-icon">
+              <span class="material-symbols-outlined" style="font-size:24px;color:var(--accent);" aria-hidden="true">bolt</span>
+            </div>
+            <h3>Inline</h3>
+            <p>Place critical CSS in a <code>&lt;style&gt;</code> tag in the <code>&lt;head&gt;</code>. Eliminates round-trip.</p>
+          </div>
+          <div class="css-flow-arrow" aria-hidden="true">&rarr;</div>
+          <div class="css-flow-step">
+            <div class="flow-icon">
+              <span class="material-symbols-outlined" style="font-size:24px;color:var(--accent);" aria-hidden="true">timer</span>
+            </div>
+            <h3>Defer Rest</h3>
+            <p>Load full stylesheet with <code>media="print"</code> + <code>onload</code> swap for non-blocking load.</p>
+          </div>
+        </div>
+
+        <div class="code-block" style="margin-top:24px;">
+          <pre><code>&lt;!-- Critical CSS inlined --&gt;
+&lt;style&gt;
+  :root { --accent: #00e5ff; }
+  body { background: #121416; color: #e2e2e5; }
+  .nav { ... } .hero { ... }
+&lt;/style&gt;
+
+&lt;!-- Deferred full stylesheet --&gt;
+&lt;link rel="stylesheet" href="/styles.css"
+  media="print" onload="this.media='all'" /&gt;</code></pre>
+        </div>
+
+        <div class="size-comparison" style="margin-top:20px;">
+          <div class="size-bar-row">
+            <span class="size-label">Full CSS</span>
+            <div class="size-bar-track">
+              <div class="size-bar-fill" style="width:100%;background:var(--error);"></div>
+            </div>
+            <span class="size-value">42 KB</span>
+          </div>
+          <div class="size-bar-row">
+            <span class="size-label">Critical CSS</span>
+            <div class="size-bar-track">
+              <div class="size-bar-fill" style="width:18%;background:var(--accent);"></div>
+            </div>
+            <span class="size-value">7.5 KB</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Resource Hints -->
+    <section id="resource-hints" class="perf-section" aria-labelledby="hints-heading">
+      <div class="perf-section-header">
+        <span class="sec-num" aria-hidden="true">03</span>
+        <h2 id="hints-heading">Resource Hints</h2>
+      </div>
+      <div class="perf-card glass-panel" style="border-radius:16px;">
+        <p class="perf-desc">Preload, prefetch, and preconnect directives tell the browser what resources to fetch early.</p>
+
+        <div class="hints-grid">
+          <div class="hint-card">
+            <div class="hint-badge preload-bg">preload</div>
+            <h3>Preload</h3>
+            <p>Forces immediate download of critical resources (fonts, hero image, key scripts).</p>
+            <code class="hint-code">&lt;link rel="preload" href="/fonts/Space.woff2" as="font" crossorigin /&gt;</code>
+          </div>
+          <div class="hint-card">
+            <div class="hint-badge prefetch-bg">prefetch</div>
+            <h3>Prefetch</h3>
+            <p>Low-priority fetch for resources likely needed on the next navigation.</p>
+            <code class="hint-code">&lt;link rel="prefetch" href="/verticals/data-centers" /&gt;</code>
+          </div>
+          <div class="hint-card">
+            <div class="hint-badge preconnect-bg">preconnect</div>
+            <h3>Preconnect</h3>
+            <p>Establishes early connections (DNS, TCP, TLS) to third-party origins.</p>
+            <code class="hint-code">&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /&gt;</code>
+          </div>
+          <div class="hint-card">
+            <div class="hint-badge dns-bg">dns-prefetch</div>
+            <h3>DNS Prefetch</h3>
+            <p>Resolves DNS for third-party domains ahead of time. Broader support than preconnect.</p>
+            <code class="hint-code">&lt;link rel="dns-prefetch" href="https://analytics.jinki.ai" /&gt;</code>
+          </div>
+        </div>
+
+        <div class="timing-visual" style="margin-top:24px;">
+          <h3 style="margin-bottom:12px;">Resource Loading Timeline</h3>
+          <div class="timeline">
+            <div class="timeline-row">
+              <span class="timeline-label">Without hints</span>
+              <div class="timeline-track">
+                <div class="timeline-bar" style="left:0;width:20%;background:var(--text-tertiary);opacity:0.5;"></div>
+                <div class="timeline-bar" style="left:20%;width:15%;background:var(--text-tertiary);opacity:0.7;"></div>
+                <div class="timeline-bar" style="left:35%;width:30%;background:var(--error);"></div>
+                <div class="timeline-bar" style="left:65%;width:35%;background:var(--accent);opacity:0.5;"></div>
+              </div>
+              <span class="timeline-time">1.8s</span>
+            </div>
+            <div class="timeline-row">
+              <span class="timeline-label">With hints</span>
+              <div class="timeline-track">
+                <div class="timeline-bar" style="left:0;width:10%;background:var(--accent);opacity:0.5;"></div>
+                <div class="timeline-bar" style="left:0;width:15%;background:var(--accent);opacity:0.3;"></div>
+                <div class="timeline-bar" style="left:10%;width:20%;background:var(--accent);"></div>
+                <div class="timeline-bar" style="left:30%;width:20%;background:var(--accent);opacity:0.7;"></div>
+              </div>
+              <span class="timeline-time" style="color:var(--accent);">0.9s</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Structured Data -->
+    <section id="structured-data" class="perf-section" aria-labelledby="schema-heading">
+      <div class="perf-section-header">
+        <span class="sec-num" aria-hidden="true">04</span>
+        <h2 id="schema-heading">Structured Data (JSON-LD)</h2>
+      </div>
+      <div class="perf-card glass-panel" style="border-radius:16px;">
+        <p class="perf-desc">Schema.org structured data helps search engines understand our content and enables rich results.</p>
+
+        <div class="schema-cards">
+          <div class="schema-card">
+            <h3>Organization</h3>
+            <pre class="schema-code"><code>{
+  "@type": "Organization",
+  "name": "Jinki",
+  "url": "https://jinki.ai",
+  "description": "Aerial intelligence...",
+  "foundingDate": "2025",
+  "serviceType": [
+    "Aerial Intelligence",
+    "Infrastructure Inspection"
+  ]
+}</code></pre>
+          </div>
+          <div class="schema-card">
+            <h3>WebSite + SearchAction</h3>
+            <pre class="schema-code"><code>{
+  "@type": "WebSite",
+  "name": "Jinki",
+  "url": "https://jinki.ai",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://jinki.ai/search?q={q}",
+    "query-input": "required name=q"
+  }
+}</code></pre>
+          </div>
+          <div class="schema-card">
+            <h3>BreadcrumbList</h3>
+            <pre class="schema-code"><code>{
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "position": 1,
+      "name": "Home",
+      "item": "https://jinki.ai" },
+    { "position": 2,
+      "name": "Data Centers",
+      "item": "https://jinki.ai/verticals/data-centers" }
+  ]
+}</code></pre>
+          </div>
+        </div>
+
+        <div class="perf-tips" style="margin-top:20px;">
+          <h3>Implementation Notes</h3>
+          <ul>
+            <li>Use <code>@graph</code> array to combine multiple schemas in one block</li>
+            <li>Always validate with Google Rich Results Test</li>
+            <li>Include <code>BreadcrumbList</code> on all pages except home</li>
+            <li>Add <code>Service</code> schema for each vertical page</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Meta Tag Optimization -->
+    <section id="meta-tags" class="perf-section" aria-labelledby="meta-heading">
+      <div class="perf-section-header">
+        <span class="sec-num" aria-hidden="true">05</span>
+        <h2 id="meta-heading">Meta Tag Optimization</h2>
+      </div>
+      <div class="perf-card glass-panel" style="border-radius:16px;">
+        <p class="perf-desc">Complete meta tags ensure correct rendering in search results and social media shares.</p>
+
+        <div class="meta-preview">
+          <div class="meta-preview-card">
+            <h3 style="margin-bottom:16px;">Google Search Preview</h3>
+            <div class="serp-preview">
+              <div class="serp-url">https://jinki.ai/verticals/data-centers</div>
+              <div class="serp-title">Data Center Aerial Intelligence | Jinki</div>
+              <div class="serp-desc">Thermal imaging and predictive analytics for data center infrastructure. Detect hotspots before they cause downtime.</div>
+            </div>
+          </div>
+          <div class="meta-preview-card">
+            <h3 style="margin-bottom:16px;">Social Card Preview</h3>
+            <div class="social-preview">
+              <div class="social-image" aria-hidden="true">
+                <span class="material-symbols-outlined" style="font-size:48px;color:var(--accent);opacity:0.3;">image</span>
+              </div>
+              <div class="social-body">
+                <div class="social-domain">jinki.ai</div>
+                <div class="social-title">Data Center Aerial Intelligence | Jinki</div>
+                <div class="social-desc">Thermal imaging and predictive analytics for critical infrastructure.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block" style="margin-top:24px;">
+          <pre><code>&lt;!-- Essential Meta --&gt;
+&lt;meta name="description" content="..." /&gt;
+&lt;link rel="canonical" href="https://jinki.ai/verticals/data-centers" /&gt;
+
+&lt;!-- Open Graph --&gt;
+&lt;meta property="og:title" content="Data Center Intelligence | Jinki" /&gt;
+&lt;meta property="og:description" content="..." /&gt;
+&lt;meta property="og:image" content="https://jinki.ai/og/data-centers.jpg" /&gt;
+&lt;meta property="og:image:width" content="1200" /&gt;
+&lt;meta property="og:image:height" content="630" /&gt;
+&lt;meta property="og:url" content="https://jinki.ai/verticals/data-centers" /&gt;
+
+&lt;!-- Twitter Card --&gt;
+&lt;meta name="twitter:card" content="summary_large_image" /&gt;</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Web Vitals Dashboard -->
+    <section id="web-vitals" class="perf-section" aria-labelledby="vitals-heading">
+      <div class="perf-section-header">
+        <span class="sec-num" aria-hidden="true">06</span>
+        <h2 id="vitals-heading">Web Vitals Dashboard</h2>
+      </div>
+      <div class="perf-card glass-panel" style="border-radius:16px;">
+        <p class="perf-desc">Core Web Vitals are Google's key metrics for page experience. Targets shown below.</p>
+
+        <div class="vitals-grid">
+          <div class="vital-card" id="vital-lcp">
+            <div class="vital-ring lcp-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120" width="120" height="120">
+                <circle cx="60" cy="60" r="54" fill="none" stroke="var(--surface-container)" stroke-width="8" />
+                <circle cx="60" cy="60" r="54" fill="none" stroke="#34d399" stroke-width="8"
+                  stroke-dasharray="339.3" stroke-dashoffset="50" stroke-linecap="round"
+                  transform="rotate(-90 60 60)" class="vital-progress" />
+              </svg>
+              <span class="vital-value">1.2s</span>
+            </div>
+            <div class="vital-info">
+              <h3>LCP</h3>
+              <p>Largest Contentful Paint</p>
+              <div class="vital-thresholds">
+                <span class="threshold good">Good &lt; 2.5s</span>
+                <span class="threshold warn">Needs Work &lt; 4s</span>
+                <span class="threshold poor">Poor &gt; 4s</span>
+              </div>
+            </div>
+          </div>
+          <div class="vital-card" id="vital-inp">
+            <div class="vital-ring inp-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120" width="120" height="120">
+                <circle cx="60" cy="60" r="54" fill="none" stroke="var(--surface-container)" stroke-width="8" />
+                <circle cx="60" cy="60" r="54" fill="none" stroke="#34d399" stroke-width="8"
+                  stroke-dasharray="339.3" stroke-dashoffset="30" stroke-linecap="round"
+                  transform="rotate(-90 60 60)" class="vital-progress" />
+              </svg>
+              <span class="vital-value">45ms</span>
+            </div>
+            <div class="vital-info">
+              <h3>INP</h3>
+              <p>Interaction to Next Paint</p>
+              <div class="vital-thresholds">
+                <span class="threshold good">Good &lt; 200ms</span>
+                <span class="threshold warn">Needs Work &lt; 500ms</span>
+                <span class="threshold poor">Poor &gt; 500ms</span>
+              </div>
+            </div>
+          </div>
+          <div class="vital-card" id="vital-cls">
+            <div class="vital-ring cls-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120" width="120" height="120">
+                <circle cx="60" cy="60" r="54" fill="none" stroke="var(--surface-container)" stroke-width="8" />
+                <circle cx="60" cy="60" r="54" fill="none" stroke="#34d399" stroke-width="8"
+                  stroke-dasharray="339.3" stroke-dashoffset="20" stroke-linecap="round"
+                  transform="rotate(-90 60 60)" class="vital-progress" />
+              </svg>
+              <span class="vital-value">0.02</span>
+            </div>
+            <div class="vital-info">
+              <h3>CLS</h3>
+              <p>Cumulative Layout Shift</p>
+              <div class="vital-thresholds">
+                <span class="threshold good">Good &lt; 0.1</span>
+                <span class="threshold warn">Needs Work &lt; 0.25</span>
+                <span class="threshold poor">Poor &gt; 0.25</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="perf-tips" style="margin-top:24px;">
+          <h3>Optimization Wins</h3>
+          <ul>
+            <li><strong>LCP:</strong> Preload hero image, inline critical CSS, use CDN</li>
+            <li><strong>INP:</strong> Minimize JS, use <code>requestIdleCallback</code>, debounce handlers</li>
+            <li><strong>CLS:</strong> Set dimensions on media, reserve space for dynamic content</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 7: Service Worker -->
+    <section id="service-worker" class="perf-section" aria-labelledby="sw-heading">
+      <div class="perf-section-header">
+        <span class="sec-num" aria-hidden="true">07</span>
+        <h2 id="sw-heading">Service Worker Registration</h2>
+      </div>
+      <div class="perf-card glass-panel" style="border-radius:16px;">
+        <p class="perf-desc">A service worker enables offline support, background sync, and intelligent caching strategies.</p>
+
+        <div class="sw-flow">
+          <div class="sw-step">
+            <span class="sw-step-num">1</span>
+            <h3>Register</h3>
+            <p>Register SW after page load to avoid competing for bandwidth.</p>
+          </div>
+          <div class="sw-step">
+            <span class="sw-step-num">2</span>
+            <h3>Install</h3>
+            <p>Pre-cache app shell: HTML, CSS, key fonts, hero images.</p>
+          </div>
+          <div class="sw-step">
+            <span class="sw-step-num">3</span>
+            <h3>Activate</h3>
+            <p>Clean old caches, claim clients for immediate control.</p>
+          </div>
+          <div class="sw-step">
+            <span class="sw-step-num">4</span>
+            <h3>Fetch</h3>
+            <p>Network-first for HTML, cache-first for assets, stale-while-revalidate for API.</p>
+          </div>
+        </div>
+
+        <div class="code-block" style="margin-top:24px;">
+          <pre><code>// Registration (in main bundle)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.error('SW failed:', err));
+  });
+}
+
+// sw.js — Install event
+const CACHE = 'jinki-v1';
+const PRECACHE = ['/', '/styles.css', '/fonts/SpaceGrotesk-Variable.woff2'];
+
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE)
+      .then(cache => cache.addAll(PRECACHE))
+      .then(() => self.skipWaiting())
+  );
+});</code></pre>
+        </div>
+
+        <div class="sw-status" style="margin-top:20px;">
+          <h3 style="margin-bottom:12px;">Caching Strategy Matrix</h3>
+          <div class="strategy-table-wrap" tabindex="0" role="region" aria-label="Caching strategies">
+            <table class="strategy-table">
+              <thead>
+                <tr>
+                  <th scope="col">Resource</th>
+                  <th scope="col">Strategy</th>
+                  <th scope="col">TTL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>HTML pages</td>
+                  <td>Network-first</td>
+                  <td>1 hour</td>
+                </tr>
+                <tr>
+                  <td>CSS / JS bundles</td>
+                  <td>Cache-first (hashed)</td>
+                  <td>1 year</td>
+                </tr>
+                <tr>
+                  <td>Fonts</td>
+                  <td>Cache-first</td>
+                  <td>1 year</td>
+                </tr>
+                <tr>
+                  <td>Images</td>
+                  <td>Stale-while-revalidate</td>
+                  <td>30 days</td>
+                </tr>
+                <tr>
+                  <td>API responses</td>
+                  <td>Network-first</td>
+                  <td>5 min</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .perf-header {
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 24px;
+    }
+    .perf-header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .perf-nav {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+    .perf-nav a {
+      display: block;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: var(--font-label);
+      color: var(--text-secondary);
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .perf-nav a:hover, .perf-nav a:focus-visible {
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+
+    .perf-section { margin-bottom: 48px; }
+    .perf-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .sec-num {
+      font-family: var(--font-mono);
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--accent);
+      opacity: 0.25;
+      line-height: 1;
+    }
+    .perf-section-header h2 { font-size: clamp(22px, 4vw, 32px); }
+    .perf-card { padding: 32px; position: relative; z-index: 0; }
+    .perf-desc {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .perf-desc code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      background: var(--surface-container);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+    .code-block {
+      background: var(--surface-container-low);
+      padding: 16px 20px;
+      border-radius: 10px;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+    }
+    .code-block pre { margin: 0; }
+    .code-block code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+      line-height: 1.6;
+      background: transparent;
+    }
+    .perf-tips { margin-top: 20px; }
+    .perf-tips h3 { font-size: 16px; margin-bottom: 10px; }
+    .perf-tips ul { list-style: none; display: grid; gap: 8px; }
+    .perf-tips li {
+      font-size: 14px;
+      color: var(--text-secondary);
+      padding-left: 24px;
+      position: relative;
+    }
+    .perf-tips li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      opacity: 0.6;
+    }
+    .perf-tips li code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--surface-container);
+      padding: 1px 6px;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+
+    /* Image Demo */
+    .img-demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .img-demo-item { display: flex; flex-direction: column; gap: 8px; }
+    .img-placeholder {
+      aspect-ratio: 4/3;
+      border-radius: 12px;
+      background: var(--surface-container);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .img-demo-label {
+      font-family: var(--font-label);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+    .blur-up { background: linear-gradient(135deg, #1a3a4a, #0a1a2a, #1a2a3a); filter: blur(0); transition: filter 0.5s; }
+    .blur-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #1a3a4a, #0a1a2a, #1a2a3a);
+      filter: blur(20px);
+      transform: scale(1.1);
+      animation: blurReveal 3s ease-in-out infinite alternate;
+    }
+    @keyframes blurReveal {
+      0% { opacity: 1; filter: blur(20px); }
+      100% { opacity: 0; filter: blur(0); }
+    }
+    .img-loaded-indicator {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-label);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .lazy-demo { position: relative; }
+    .lazy-skeleton {
+      position: absolute;
+      inset: 12px;
+      border-radius: 8px;
+      background: linear-gradient(90deg, var(--surface-container-low) 25%, var(--surface-container-high) 50%, var(--surface-container-low) 75%);
+      background-size: 200% 100%;
+      animation: skeleton 1.5s ease-in-out infinite;
+    }
+    @keyframes skeleton {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .lazy-badge {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      background: var(--surface-container);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+    .srcset-visual { width: 80%; display: flex; flex-direction: column; gap: 6px; }
+    .srcset-bar {
+      height: 24px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, var(--accent), rgba(0,229,255,0.3));
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 10px;
+    }
+    .srcset-bar span {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: #000;
+    }
+
+    /* Critical CSS Flow */
+    .css-flow {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .css-flow-step {
+      flex: 1;
+      min-width: 180px;
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+    .flow-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--accent-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .css-flow-step h3 { font-size: 16px; margin-bottom: 6px; }
+    .css-flow-step p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    .css-flow-step code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+    }
+    .css-flow-arrow {
+      font-size: 24px;
+      color: var(--accent);
+      opacity: 0.4;
+      align-self: center;
+      flex-shrink: 0;
+    }
+
+    .size-comparison { display: grid; gap: 10px; }
+    .size-bar-row { display: flex; align-items: center; gap: 12px; }
+    .size-label { font-family: var(--font-label); font-size: 13px; color: var(--text-secondary); width: 100px; flex-shrink: 0; }
+    .size-bar-track { flex: 1; height: 20px; background: var(--surface-container); border-radius: 6px; overflow: hidden; }
+    .size-bar-fill { height: 100%; border-radius: 6px; transition: width 1s ease; }
+    .size-value { font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--text-primary); width: 60px; text-align: right; }
+
+    /* Resource Hints */
+    .hints-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 16px;
+    }
+    .hint-card {
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .hint-badge {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+    }
+    .preload-bg { background: rgba(0,229,255,0.15); color: var(--accent); }
+    .prefetch-bg { background: rgba(123,97,255,0.15); color: #7B61FF; }
+    .preconnect-bg { background: rgba(52,211,153,0.15); color: #34d399; }
+    .dns-bg { background: rgba(255,165,0,0.15); color: #ffa500; }
+    .hint-card h3 { font-size: 16px; }
+    .hint-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    .hint-code {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      background: var(--surface-container-low);
+      padding: 8px 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin-top: auto;
+    }
+
+    /* Timeline */
+    .timeline { display: grid; gap: 12px; }
+    .timeline-row { display: flex; align-items: center; gap: 12px; }
+    .timeline-label { font-family: var(--font-label); font-size: 13px; color: var(--text-secondary); width: 120px; flex-shrink: 0; }
+    .timeline-track { flex: 1; height: 24px; background: var(--surface-container); border-radius: 6px; position: relative; overflow: hidden; }
+    .timeline-bar { position: absolute; top: 2px; bottom: 2px; border-radius: 4px; }
+    .timeline-time { font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--text-primary); width: 50px; text-align: right; }
+
+    /* Schema Cards */
+    .schema-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .schema-card {
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+    .schema-card h3 { font-size: 15px; margin-bottom: 12px; }
+    .schema-code {
+      background: var(--surface-container-low);
+      padding: 14px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 0;
+    }
+    .schema-code code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      line-height: 1.5;
+    }
+
+    /* Meta Previews */
+    .meta-preview {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .meta-preview-card {
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border);
+    }
+    .meta-preview-card h3 { font-size: 15px; }
+    .serp-preview {
+      background: #fff;
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .serp-url { font-size: 12px; color: #202124; font-family: var(--font-body); }
+    .serp-title { font-size: 18px; color: #1a0dab; font-family: var(--font-body); margin: 4px 0; }
+    .serp-desc { font-size: 13px; color: #4d5156; font-family: var(--font-body); line-height: 1.4; }
+    .social-preview { border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+    .social-image {
+      height: 120px;
+      background: var(--surface-container-low);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .social-body { padding: 12px 16px; }
+    .social-domain { font-size: 11px; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em; }
+    .social-title { font-size: 15px; font-weight: 600; color: var(--text-primary); margin: 4px 0; }
+    .social-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+
+    /* Vitals */
+    .vitals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .vital-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--border);
+    }
+    .vital-ring { position: relative; flex-shrink: 0; }
+    .vital-value {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: #34d399;
+    }
+    .vital-info h3 { font-size: 20px; color: var(--text-primary); }
+    .vital-info p { font-size: 13px; color: var(--text-secondary); margin: 2px 0 10px; }
+    .vital-thresholds { display: flex; flex-direction: column; gap: 4px; }
+    .threshold {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      width: fit-content;
+    }
+    .threshold.good { background: rgba(52,211,153,0.15); color: #34d399; }
+    .threshold.warn { background: rgba(255,165,0,0.15); color: #ffa500; }
+    .threshold.poor { background: rgba(255,71,87,0.15); color: #ff4757; }
+
+    /* Service Worker */
+    .sw-flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .sw-step {
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .sw-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #000;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .sw-step h3 { font-size: 16px; margin-bottom: 6px; }
+    .sw-step p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+    .strategy-table-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+    .strategy-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .strategy-table thead th {
+      text-align: left;
+      padding: 12px 16px;
+      font-family: var(--font-label);
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-tertiary);
+      background: var(--surface-container-low);
+      border-bottom: 1px solid var(--border);
+    }
+    .strategy-table td {
+      padding: 10px 16px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border);
+    }
+    .strategy-table tbody tr:last-child td { border-bottom: none; }
+    .strategy-table tbody tr:hover td { background: var(--accent-glow); }
+
+    @media (max-width: 768px) {
+      .perf-header-inner { flex-direction: column; align-items: flex-start; }
+      .perf-nav { display: none; }
+      .perf-card { padding: 20px; }
+      .sec-num { font-size: 36px; }
+      .css-flow-arrow { display: none; }
+      .vital-card { flex-direction: column; text-align: center; }
+    }
+  </style>
+</body>
+</html>

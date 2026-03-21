@@ -1,0 +1,624 @@
+---
+/*
+  ThemeToggle-Omega — Day/night scene transition toggle
+  4 themes: Dark, Light, Midnight (OLED), Sepia (reading)
+  Time-of-day scheduling + accent color customizer.
+  Mini landscape scene morphs between day and night.
+*/
+---
+
+<!-- Preload script: prevents flash -->
+<script is:inline>
+(function() {
+  const STORAGE_KEY = 'jinki-theme-omega';
+  const ACCENT_KEY  = 'jinki-accent-omega';
+  const stored = localStorage.getItem(STORAGE_KEY);
+  let mode = stored || 'dark';
+
+  // Time-of-day scheduling
+  if (mode === 'scheduled') {
+    const hour = new Date().getHours();
+    if (hour >= 7 && hour < 18) mode = 'light';
+    else if (hour >= 18 && hour < 22) mode = 'dark';
+    else mode = 'midnight';
+  }
+
+  // Map modes to data-theme
+  const themeMap = { dark: 'dark', light: 'light', midnight: 'dark', sepia: 'light' };
+  document.documentElement.setAttribute('data-theme', themeMap[mode] || 'dark');
+  document.documentElement.setAttribute('data-theme-variant', mode);
+
+  // Midnight extras
+  if (mode === 'midnight') {
+    document.documentElement.style.setProperty('--bg-primary', '#000000');
+    document.documentElement.style.setProperty('--surface', '#000000');
+    document.documentElement.style.setProperty('--surface-container-lowest', '#000000');
+    document.documentElement.style.setProperty('--background', '#000000');
+  }
+
+  // Sepia extras
+  if (mode === 'sepia') {
+    document.documentElement.style.setProperty('--bg-primary', '#f5f0e8');
+    document.documentElement.style.setProperty('--surface', '#f5f0e8');
+    document.documentElement.style.setProperty('--background', '#f5f0e8');
+    document.documentElement.style.setProperty('--text-primary', '#3d3526');
+    document.documentElement.style.setProperty('--text-secondary', '#5c5040');
+  }
+
+  // Accent color
+  const accent = localStorage.getItem(ACCENT_KEY);
+  if (accent) {
+    document.documentElement.style.setProperty('--accent', accent);
+    document.documentElement.style.setProperty('--accent-glow', accent + '26');
+  }
+})();
+</script>
+
+<div class="theme-toggle-omega" role="group" aria-label="Theme and accent selection">
+  <!-- Theme cycle button with mini landscape scene -->
+  <button
+    class="toggle-btn-omega"
+    id="theme-toggle-omega"
+    type="button"
+    aria-label="Toggle theme"
+    title="Switch theme"
+  >
+    <div class="scene-viewport">
+      <div class="scene" id="omega-scene">
+        <!-- Sky gradient background -->
+        <div class="sky"></div>
+        <!-- Sun -->
+        <div class="celestial sun-orb">
+          <div class="sun-glow"></div>
+        </div>
+        <!-- Moon -->
+        <div class="celestial moon-orb">
+          <div class="moon-crater crater-1"></div>
+          <div class="moon-crater crater-2"></div>
+        </div>
+        <!-- Stars -->
+        <div class="stars">
+          <div class="star" style="left: 15%; top: 20%; animation-delay: 0s;"></div>
+          <div class="star" style="left: 45%; top: 12%; animation-delay: 0.8s;"></div>
+          <div class="star" style="left: 75%; top: 25%; animation-delay: 1.6s;"></div>
+          <div class="star" style="left: 30%; top: 35%; animation-delay: 0.4s;"></div>
+          <div class="star" style="left: 85%; top: 15%; animation-delay: 1.2s;"></div>
+        </div>
+        <!-- Ground / hills -->
+        <div class="ground">
+          <svg viewBox="0 0 100 30" preserveAspectRatio="none" class="hills">
+            <path d="M0,30 L0,18 Q15,8 30,16 Q45,6 60,14 Q75,4 90,12 Q95,10 100,14 L100,30 Z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <span class="toggle-label-omega" id="theme-label-omega">Dark</span>
+  </button>
+
+  <!-- Accent color customizer -->
+  <div class="accent-picker" id="omega-accent-picker">
+    <button class="accent-trigger" id="omega-accent-trigger" type="button" aria-label="Change accent color" title="Accent color">
+      <span class="accent-swatch" id="omega-accent-swatch"></span>
+    </button>
+    <div class="accent-dropdown" id="omega-accent-dropdown" role="listbox" aria-label="Choose accent color" hidden>
+      <button class="accent-option" data-color="#00E5FF" aria-label="Cyan" style="--swatch: #00E5FF;" role="option"></button>
+      <button class="accent-option" data-color="#7B61FF" aria-label="Violet" style="--swatch: #7B61FF;" role="option"></button>
+      <button class="accent-option" data-color="#FF8C00" aria-label="Orange" style="--swatch: #FF8C00;" role="option"></button>
+      <button class="accent-option" data-color="#34D399" aria-label="Green" style="--swatch: #34D399;" role="option"></button>
+      <button class="accent-option" data-color="#F472B6" aria-label="Pink" style="--swatch: #F472B6;" role="option"></button>
+      <button class="accent-option" data-color="#FBBF24" aria-label="Gold" style="--swatch: #FBBF24;" role="option"></button>
+      <button class="accent-option reset-accent" data-color="" aria-label="Reset to default" role="option">
+        <span class="material-symbols-outlined" style="font-size: 14px;" aria-hidden="true">restart_alt</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .theme-toggle-omega {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    z-index: 200;
+  }
+
+  /* ── Scene Toggle Button ── */
+  .toggle-btn-omega {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface-container);
+    border: 1px solid var(--glass-border);
+    border-radius: 9999px;
+    padding: 4px 14px 4px 4px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: background 250ms ease, border-color 250ms ease, color 250ms ease;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .toggle-btn-omega::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--glossy-shine);
+    pointer-events: none;
+  }
+
+  .toggle-btn-omega:hover {
+    background: var(--surface-container-high);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+  }
+
+  .toggle-btn-omega:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .toggle-btn-omega:active {
+    transform: scale(0.96);
+  }
+
+  /* ── Mini Scene ── */
+  .scene-viewport {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    border: 1px solid var(--glass-border);
+  }
+
+  .scene {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    transition: none;
+  }
+
+  .sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, #0a1628 0%, #1a2744 50%, #2d3a56 100%);
+    transition: background 600ms ease;
+  }
+
+  /* Light sky */
+  :global([data-theme-variant="light"]) .sky {
+    background: linear-gradient(180deg, #87ceeb 0%, #b8e4f9 50%, #e0f2ff 100%);
+  }
+
+  /* Sepia sky */
+  :global([data-theme-variant="sepia"]) .sky {
+    background: linear-gradient(180deg, #d4a574 0%, #e8c9a0 50%, #f0dcc0 100%);
+  }
+
+  /* Midnight sky */
+  :global([data-theme-variant="midnight"]) .sky {
+    background: linear-gradient(180deg, #000000 0%, #050510 50%, #0a0a1a 100%);
+  }
+
+  /* Celestial bodies */
+  .celestial {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    transition: transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1), opacity 400ms ease;
+  }
+
+  .sun-orb {
+    background: #ffd700;
+    top: 6px;
+    right: 6px;
+    transform: translateY(30px);
+    opacity: 0;
+    box-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+  }
+
+  .sun-glow {
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: rgba(255, 215, 0, 0.3);
+    animation: sun-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes sun-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.3); opacity: 0.3; }
+  }
+
+  .moon-orb {
+    background: #e0e0e0;
+    top: 6px;
+    left: 7px;
+    transform: translateY(0);
+    opacity: 1;
+    box-shadow: 0 0 4px rgba(224, 224, 224, 0.4);
+  }
+
+  .moon-crater {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  .crater-1 { width: 2px; height: 2px; top: 2px; left: 1px; }
+  .crater-2 { width: 1.5px; height: 1.5px; top: 4px; left: 4px; }
+
+  /* Light: show sun, hide moon */
+  :global([data-theme-variant="light"]) .sun-orb,
+  :global([data-theme-variant="sepia"]) .sun-orb {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  :global([data-theme-variant="light"]) .moon-orb,
+  :global([data-theme-variant="sepia"]) .moon-orb {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+
+  :global([data-theme-variant="sepia"]) .sun-orb {
+    background: #e8a040;
+    box-shadow: 0 0 6px rgba(232, 160, 64, 0.6);
+  }
+
+  /* Stars */
+  .stars {
+    position: absolute;
+    inset: 0;
+    transition: opacity 400ms ease;
+  }
+
+  :global([data-theme-variant="light"]) .stars,
+  :global([data-theme-variant="sepia"]) .stars {
+    opacity: 0;
+  }
+
+  .star {
+    position: absolute;
+    width: 1.5px;
+    height: 1.5px;
+    background: #ffffff;
+    border-radius: 50%;
+    animation: twinkle-omega 2.5s ease-in-out infinite;
+  }
+
+  @keyframes twinkle-omega {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  /* Ground */
+  .ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+  }
+
+  .hills {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .hills path {
+    fill: #1a2744;
+    transition: fill 600ms ease;
+  }
+
+  :global([data-theme-variant="light"]) .hills path {
+    fill: #4ade80;
+  }
+
+  :global([data-theme-variant="sepia"]) .hills path {
+    fill: #8b7355;
+  }
+
+  :global([data-theme-variant="midnight"]) .hills path {
+    fill: #050510;
+  }
+
+  .toggle-label-omega {
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── Accent Picker ── */
+  .accent-picker {
+    position: relative;
+  }
+
+  .accent-trigger {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: var(--surface-container);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 250ms ease, transform 250ms ease;
+    padding: 0;
+  }
+
+  .accent-trigger:hover {
+    border-color: var(--border-hover);
+    transform: scale(1.1);
+  }
+
+  .accent-trigger:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .accent-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+    transition: background 250ms ease;
+  }
+
+  .accent-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: var(--surface-container-high);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 140px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    z-index: 600;
+    opacity: 0;
+    transform: translateY(-4px) scale(0.95);
+    transition: opacity 200ms ease, transform 200ms ease;
+    pointer-events: none;
+  }
+
+  .accent-dropdown[aria-expanded="true"] {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .accent-option {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    background: var(--swatch);
+    cursor: pointer;
+    transition: border-color 200ms ease, transform 200ms ease;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .accent-option:hover {
+    transform: scale(1.15);
+    border-color: var(--text-primary);
+  }
+
+  .accent-option:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+  }
+
+  .accent-option.active {
+    border-color: var(--text-primary);
+    box-shadow: 0 0 0 2px var(--surface-container-high), 0 0 0 4px var(--text-primary);
+  }
+
+  .reset-accent {
+    background: var(--surface-container);
+    border: 1px dashed var(--outline-variant);
+    color: var(--text-tertiary);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 767px) {
+    .accent-dropdown {
+      right: auto;
+      left: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sky, .celestial, .stars, .hills path {
+      transition-duration: 0ms !important;
+    }
+    .star, .sun-glow {
+      animation: none !important;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const STORAGE_KEY = 'jinki-theme-omega';
+    const ACCENT_KEY  = 'jinki-accent-omega';
+
+    const btn = document.getElementById('theme-toggle-omega');
+    const label = document.getElementById('theme-label-omega');
+    const accentTrigger = document.getElementById('omega-accent-trigger');
+    const accentDropdown = document.getElementById('omega-accent-dropdown');
+    if (!btn || !label || !accentTrigger || !accentDropdown) return;
+
+    const MODES = ['dark', 'light', 'midnight', 'sepia'] as const;
+    type ThemeVariant = typeof MODES[number];
+
+    const MODE_LABELS: Record<string, string> = {
+      dark: 'Dark',
+      light: 'Light',
+      midnight: 'Midnight',
+      sepia: 'Sepia',
+    };
+
+    const themeMap: Record<string, 'dark' | 'light'> = {
+      dark: 'dark',
+      light: 'light',
+      midnight: 'dark',
+      sepia: 'light',
+    };
+
+    function getCurrentMode(): ThemeVariant {
+      const stored = localStorage.getItem(STORAGE_KEY) as ThemeVariant | null;
+      if (stored && MODES.includes(stored)) return stored;
+      return 'dark';
+    }
+
+    function applyVariant(mode: ThemeVariant) {
+      const base = themeMap[mode] || 'dark';
+      document.documentElement.setAttribute('data-theme', base);
+      document.documentElement.setAttribute('data-theme-variant', mode);
+
+      // Reset overrides
+      const el = document.documentElement;
+      el.style.removeProperty('--bg-primary');
+      el.style.removeProperty('--surface');
+      el.style.removeProperty('--surface-container-lowest');
+      el.style.removeProperty('--background');
+      el.style.removeProperty('--text-primary');
+      el.style.removeProperty('--text-secondary');
+
+      if (mode === 'midnight') {
+        el.style.setProperty('--bg-primary', '#000000');
+        el.style.setProperty('--surface', '#000000');
+        el.style.setProperty('--surface-container-lowest', '#000000');
+        el.style.setProperty('--background', '#000000');
+      }
+
+      if (mode === 'sepia') {
+        el.style.setProperty('--bg-primary', '#f5f0e8');
+        el.style.setProperty('--surface', '#f5f0e8');
+        el.style.setProperty('--background', '#f5f0e8');
+        el.style.setProperty('--text-primary', '#3d3526');
+        el.style.setProperty('--text-secondary', '#5c5040');
+      }
+
+      localStorage.setItem(STORAGE_KEY, mode);
+      label!.textContent = MODE_LABELS[mode] || mode;
+      btn!.setAttribute('aria-label', `Current theme: ${MODE_LABELS[mode]}. Click to switch.`);
+    }
+
+    // Cycle on click
+    btn.addEventListener('click', () => {
+      const current = getCurrentMode();
+      const nextIndex = (MODES.indexOf(current) + 1) % MODES.length;
+      applyVariant(MODES[nextIndex]);
+    });
+
+    // ── Accent Color Picker ──
+    let dropdownOpen = false;
+
+    function toggleDropdown(open?: boolean) {
+      dropdownOpen = open !== undefined ? open : !dropdownOpen;
+      if (dropdownOpen) {
+        accentDropdown.removeAttribute('hidden');
+        // Force reflow for animation
+        void accentDropdown.offsetHeight;
+        accentDropdown.setAttribute('aria-expanded', 'true');
+      } else {
+        accentDropdown.setAttribute('aria-expanded', 'false');
+        setTimeout(() => accentDropdown.setAttribute('hidden', ''), 200);
+      }
+    }
+
+    accentTrigger.addEventListener('click', (e: Event) => {
+      e.stopPropagation();
+      toggleDropdown();
+    });
+
+    function applyAccent(color: string) {
+      const el = document.documentElement;
+      if (color) {
+        el.style.setProperty('--accent', color);
+        el.style.setProperty('--accent-glow', color + '26');
+        el.style.setProperty('--accent-glow-strong', color + '40');
+        localStorage.setItem(ACCENT_KEY, color);
+      } else {
+        el.style.removeProperty('--accent');
+        el.style.removeProperty('--accent-glow');
+        el.style.removeProperty('--accent-glow-strong');
+        localStorage.removeItem(ACCENT_KEY);
+      }
+      updateActiveAccent(color);
+    }
+
+    function updateActiveAccent(color: string) {
+      accentDropdown.querySelectorAll('.accent-option').forEach((opt) => {
+        const optColor = (opt as HTMLElement).dataset.color || '';
+        opt.classList.toggle('active', optColor === color);
+      });
+    }
+
+    accentDropdown.querySelectorAll('.accent-option').forEach((opt) => {
+      opt.addEventListener('click', (e: Event) => {
+        e.stopPropagation();
+        const color = (opt as HTMLElement).dataset.color || '';
+        applyAccent(color);
+        toggleDropdown(false);
+      });
+    });
+
+    // Close dropdown on outside click
+    document.addEventListener('click', () => {
+      if (dropdownOpen) toggleDropdown(false);
+    });
+
+    // Escape to close
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && dropdownOpen) toggleDropdown(false);
+    });
+
+    // ── Time-of-day scheduling check (runs every 30 min) ──
+    function checkSchedule() {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored !== 'scheduled') return;
+
+      const hour = new Date().getHours();
+      let autoMode: ThemeVariant;
+      if (hour >= 7 && hour < 18) autoMode = 'light';
+      else if (hour >= 18 && hour < 22) autoMode = 'dark';
+      else autoMode = 'midnight';
+
+      const currentVariant = document.documentElement.getAttribute('data-theme-variant');
+      if (currentVariant !== autoMode) {
+        applyVariant(autoMode);
+      }
+    }
+
+    setInterval(checkSchedule, 1800000); // 30 minutes
+
+    // Initialize
+    const mode = getCurrentMode();
+    label.textContent = MODE_LABELS[mode] || mode;
+    btn.setAttribute('aria-label', `Current theme: ${MODE_LABELS[mode]}. Click to switch.`);
+
+    // Initialize accent indicator
+    const savedAccent = localStorage.getItem(ACCENT_KEY);
+    if (savedAccent) updateActiveAccent(savedAccent);
+  });
+</script>

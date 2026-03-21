@@ -1,0 +1,1202 @@
+---
+/*
+  Careers Page — Team Omega Round 11
+  Jinki Aerial Intelligence
+
+  "Join the Mission" hero with flight path animation, department tabs,
+  day-in-the-life expandables, bento benefits grid, hiring process
+  timeline, employee testimonials.
+*/
+import Layout from '../../src/layouts/Layout.astro';
+import Nav from '../../src/components/Nav.astro';
+import Footer from '../../src/components/Footer.astro';
+
+const departments = [
+  {
+    id: 'engineering',
+    name: 'Engineering',
+    icon: 'code',
+    roles: [
+      { title: 'Computer Vision Engineer', type: 'Full-time', location: 'Hybrid — NoVA', desc: 'Build and optimize CV models for thermal anomaly detection, object classification, and geospatial feature extraction from aerial sensor data.' },
+      { title: 'Platform Engineer', type: 'Full-time', location: 'Hybrid — NoVA', desc: 'Design and maintain the data pipelines, cloud infrastructure, and deployment tooling that power our intelligence platform.' },
+      { title: 'Frontend Engineer', type: 'Full-time', location: 'Remote', desc: 'Craft client-facing dashboards and visualization tools that turn complex aerial intelligence into intuitive, actionable interfaces.' },
+    ],
+  },
+  {
+    id: 'operations',
+    name: 'Operations',
+    icon: 'flight_takeoff',
+    roles: [
+      { title: 'Aerial Operations Specialist', type: 'Full-time', location: 'On-site — NoVA', desc: 'Plan, execute, and QA autonomous and piloted aerial missions across data centers, energy facilities, and perimeter security sites.' },
+      { title: 'Sensor Calibration Technician', type: 'Full-time', location: 'On-site — NoVA', desc: 'Maintain and calibrate thermal, multispectral, and LiDAR sensors to ensure sub-meter accuracy on every capture.' },
+    ],
+  },
+  {
+    id: 'business',
+    name: 'Business',
+    icon: 'handshake',
+    roles: [
+      { title: 'Enterprise Account Executive', type: 'Full-time', location: 'Hybrid — NoVA', desc: 'Build relationships with data center operators, energy utilities, and facility managers to deliver intelligence solutions at scale.' },
+      { title: 'Marketing Lead', type: 'Full-time', location: 'Hybrid — NoVA', desc: 'Own brand narrative, content strategy, and demand generation for an aerial intelligence company selling to critical infrastructure.' },
+    ],
+  },
+  {
+    id: 'research',
+    name: 'Research',
+    icon: 'science',
+    roles: [
+      { title: 'AI Research Scientist', type: 'Full-time', location: 'Hybrid — NoVA', desc: 'Push the boundaries of aerial AI — multi-modal sensor fusion, predictive anomaly models, and autonomous mission planning algorithms.' },
+      { title: 'Geospatial Analyst', type: 'Contract', location: 'Remote', desc: 'Transform raw geospatial captures into high-fidelity intelligence products — orthomosaics, thermal maps, change detection reports.' },
+    ],
+  },
+];
+
+const dayInLife = [
+  {
+    role: 'Aerial Operations Specialist',
+    icon: 'flight_takeoff',
+    schedule: [
+      { time: '07:00', activity: 'Weather check and mission pre-brief' },
+      { time: '08:00', activity: 'Sensor calibration and platform prep' },
+      { time: '09:00', activity: 'Execute autonomous thermal scan — data center campus' },
+      { time: '11:00', activity: 'Post-flight QA and data upload' },
+      { time: '13:00', activity: 'Mission debrief with intelligence team' },
+      { time: '14:30', activity: 'Plan next-day multi-site deployment' },
+      { time: '16:00', activity: 'Equipment maintenance and battery cycling' },
+    ],
+  },
+  {
+    role: 'Computer Vision Engineer',
+    icon: 'code',
+    schedule: [
+      { time: '09:00', activity: 'Standup — review model performance metrics' },
+      { time: '09:30', activity: 'Train thermal anomaly detection model on new captures' },
+      { time: '12:00', activity: 'Evaluate model outputs against ground truth' },
+      { time: '13:30', activity: 'Optimize inference pipeline for edge deployment' },
+      { time: '15:00', activity: 'Cross-team review with operations on data quality' },
+      { time: '16:30', activity: 'Write documentation and push model updates' },
+    ],
+  },
+  {
+    role: 'Enterprise Account Executive',
+    icon: 'handshake',
+    schedule: [
+      { time: '08:30', activity: 'Pipeline review and deal prioritization' },
+      { time: '09:30', activity: 'Discovery call with energy utility prospect' },
+      { time: '11:00', activity: 'Build custom proposal with intelligence team' },
+      { time: '13:00', activity: 'On-site demo at data center facility' },
+      { time: '15:00', activity: 'Follow-up and contract review' },
+      { time: '16:30', activity: 'CRM updates and next-day prep' },
+    ],
+  },
+];
+
+const benefits = [
+  { icon: 'medical_services', title: 'Health & Dental', desc: 'Comprehensive medical, dental, and vision coverage from day one.', size: 'large' },
+  { icon: 'savings', title: '401(k) Match', desc: 'Competitive retirement matching to build your future.', size: 'small' },
+  { icon: 'laptop_mac', title: 'Premium Gear', desc: 'Top-tier hardware and tools — whatever you need to do your best work.', size: 'small' },
+  { icon: 'school', title: 'Learning Budget', desc: '$3,000/year for courses, certifications, and conferences.', size: 'medium' },
+  { icon: 'flight', title: 'Flexible PTO', desc: 'Take what you need. We trust you to manage your time.', size: 'medium' },
+  { icon: 'home', title: 'Hybrid Work', desc: 'Office in Northern Virginia with flexible remote days.', size: 'small' },
+  { icon: 'emoji_events', title: 'Equity', desc: 'Stock options so you share in what we build together.', size: 'large' },
+  { icon: 'fitness_center', title: 'Wellness', desc: 'Gym stipend and mental health support included.', size: 'small' },
+];
+
+const hiringSteps = [
+  { step: 1, title: 'Apply', desc: 'Submit your resume and a brief note about what excites you.', icon: 'description' },
+  { step: 2, title: 'Screen', desc: 'A 30-minute conversation to understand your background and goals.', icon: 'call' },
+  { step: 3, title: 'Interview', desc: 'Technical deep-dive and team culture fit — no trick questions.', icon: 'groups' },
+  { step: 4, title: 'Offer', desc: 'We move fast. Expect a decision within one week of final interview.', icon: 'verified' },
+];
+
+const testimonials = [
+  {
+    quote: 'Working at Jinki means your code flies — literally. Seeing a model I trained detect a thermal anomaly in real-time on a live mission is unlike anything else.',
+    name: 'Engineering Team Member',
+    dept: 'Engineering',
+    deptColor: '#00E5FF',
+  },
+  {
+    quote: 'The security-first culture is not lip service. When your CEO holds a CISSP, rigor is just how things get done. It makes the work feel meaningful.',
+    name: 'Operations Team Member',
+    dept: 'Operations',
+    deptColor: '#34D399',
+  },
+  {
+    quote: 'I joined because the pitch was honest: hard problems, small team, massive impact. Six months in, every word held up.',
+    name: 'Business Team Member',
+    dept: 'Business',
+    deptColor: '#FF8C00',
+  },
+];
+---
+
+<Layout title="Careers — Jinki Aerial Intelligence" description="Join the team building aerial intelligence for critical infrastructure. Open roles in engineering, operations, business, and research.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- ============ JOIN THE MISSION HERO ============ -->
+    <section class="careers-hero" aria-label="Join Jinki">
+      <div class="flight-path-bg" aria-hidden="true">
+        <svg class="flight-svg" viewBox="0 0 1200 600" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <!-- Flight path curve -->
+          <path class="flight-path-line" d="M-50 500 Q200 400 350 300 T600 200 T850 250 T1100 100 T1300 50"
+            stroke="url(#pathGrad)" stroke-width="2" fill="none" stroke-dasharray="8 12" />
+          <!-- Waypoints -->
+          <circle class="waypoint wp-1" cx="350" cy="300" r="6" fill="var(--accent)" opacity="0" />
+          <circle class="waypoint wp-2" cx="600" cy="200" r="6" fill="var(--accent)" opacity="0" />
+          <circle class="waypoint wp-3" cx="850" cy="250" r="6" fill="var(--accent)" opacity="0" />
+          <circle class="waypoint wp-4" cx="1100" cy="100" r="8" fill="var(--accent)" opacity="0" />
+          <!-- Waypoint labels -->
+          <text class="wp-label" x="350" y="330" fill="var(--text-tertiary)" font-size="10" text-anchor="middle" font-family="var(--font-mono)">APPLY</text>
+          <text class="wp-label" x="600" y="230" fill="var(--text-tertiary)" font-size="10" text-anchor="middle" font-family="var(--font-mono)">GROW</text>
+          <text class="wp-label" x="850" y="280" fill="var(--text-tertiary)" font-size="10" text-anchor="middle" font-family="var(--font-mono)">LEAD</text>
+          <text class="wp-label" x="1100" y="130" fill="var(--text-tertiary)" font-size="10" text-anchor="middle" font-family="var(--font-mono)">IMPACT</text>
+          <defs>
+            <linearGradient id="pathGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.1" />
+              <stop offset="50%" stop-color="var(--accent)" stop-opacity="0.6" />
+              <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="hero-content">
+        <span class="label reveal">Careers</span>
+        <h1 class="reveal reveal-delay-1">Join the<br/><span class="hero-gradient">Mission</span></h1>
+        <p class="hero-subtitle reveal reveal-delay-2">
+          We are building the team that will define how critical infrastructure is
+          monitored, maintained, and protected. If hard problems at the intersection of
+          aerial systems, AI, and real-world impact excite you — we want to talk.
+        </p>
+        <a href="#open-roles" class="btn-premium hero-cta reveal reveal-delay-3">View Open Roles</a>
+      </div>
+    </section>
+
+    <!-- ============ DEPARTMENT TABS ============ -->
+    <section id="open-roles" class="section" style="background: var(--surface-dim);" aria-label="Open Roles">
+      <div class="section-inner">
+        <div class="dept-header reveal" style="text-align: center; margin-bottom: 48px;">
+          <span class="label">Open Roles</span>
+          <h2>Find Your Team</h2>
+          <p style="max-width: 560px; margin: 16px auto 0; color: var(--text-secondary);">
+            Select a department to explore current openings.
+          </p>
+        </div>
+
+        <!-- Tab buttons -->
+        <div class="dept-tabs reveal" role="tablist" aria-label="Department filter">
+          {departments.map((dept, i) => (
+            <button
+              role="tab"
+              aria-selected={i === 0 ? 'true' : 'false'}
+              aria-controls={`panel-${dept.id}`}
+              id={`tab-${dept.id}`}
+              class={`dept-tab ${i === 0 ? 'dept-tab--active' : ''}`}
+              data-dept={dept.id}
+            >
+              <span class="material-symbols-outlined" style="font-size: 20px; font-variation-settings: 'FILL' 1;" aria-hidden="true">{dept.icon}</span>
+              <span>{dept.name}</span>
+            </button>
+          ))}
+        </div>
+
+        <!-- Tab panels -->
+        {departments.map((dept, i) => (
+          <div
+            role="tabpanel"
+            id={`panel-${dept.id}`}
+            aria-labelledby={`tab-${dept.id}`}
+            class={`dept-panel ${i === 0 ? 'dept-panel--active' : ''}`}
+            data-panel={dept.id}
+          >
+            <div class="roles-list">
+              {dept.roles.map((role, j) => (
+                <div class={`role-card reveal reveal-delay-${j + 1}`}>
+                  <div class="role-info">
+                    <h3 class="role-title">{role.title}</h3>
+                    <div class="role-meta">
+                      <span class="role-badge">{role.type}</span>
+                      <span class="role-location">
+                        <span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 0;" aria-hidden="true">location_on</span>
+                        {role.location}
+                      </span>
+                    </div>
+                    <p class="role-desc">{role.desc}</p>
+                  </div>
+                  <a href="mailto:careers@jinki.ai" class="role-apply-btn btn-premium" aria-label={`Apply for ${role.title}`}>Apply</a>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ============ DAY IN THE LIFE ============ -->
+    <section class="section" aria-label="Day in the Life">
+      <div class="section-inner">
+        <div class="dil-header reveal" style="text-align: center; margin-bottom: 48px;">
+          <span class="label">Day in the Life</span>
+          <h2>What a Typical Day Looks Like</h2>
+        </div>
+
+        <div class="dil-grid">
+          {dayInLife.map((item, i) => (
+            <div class={`dil-card reveal reveal-delay-${i + 1}`}>
+              <button
+                class="dil-toggle"
+                aria-expanded="false"
+                aria-controls={`dil-schedule-${i}`}
+              >
+                <span class="material-symbols-outlined" style="font-size: 24px; color: var(--accent); font-variation-settings: 'FILL' 1;" aria-hidden="true">{item.icon}</span>
+                <span class="dil-role-name">{item.role}</span>
+                <span class="dil-chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
+              </button>
+              <div class="dil-schedule" id={`dil-schedule-${i}`} aria-hidden="true">
+                <div class="dil-timeline">
+                  {item.schedule.map(entry => (
+                    <div class="dil-entry">
+                      <span class="dil-time">{entry.time}</span>
+                      <span class="dil-dot" aria-hidden="true"></span>
+                      <span class="dil-activity">{entry.activity}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BENEFITS BENTO GRID ============ -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Benefits">
+      <div class="section-inner">
+        <div class="benefits-header reveal" style="text-align: center; margin-bottom: 48px;">
+          <span class="label">Benefits</span>
+          <h2>What We Offer</h2>
+        </div>
+        <div class="bento-grid">
+          {benefits.map((b, i) => (
+            <div class={`bento-card bento-card--${b.size} reveal reveal-delay-${(i % 4) + 1}`}>
+              <span class="material-symbols-outlined bento-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{b.icon}</span>
+              <h3 class="bento-title">{b.title}</h3>
+              <p class="bento-desc">{b.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HIRING PROCESS ============ -->
+    <section class="section" aria-label="Hiring Process">
+      <div class="section-inner">
+        <div class="hiring-header reveal" style="text-align: center; margin-bottom: 56px;">
+          <span class="label">Hiring Process</span>
+          <h2>Four Steps to Joining</h2>
+          <p style="max-width: 560px; margin: 16px auto 0; color: var(--text-secondary);">
+            We respect your time. Our process is designed to be thorough, transparent, and fast.
+          </p>
+        </div>
+        <div class="hiring-timeline">
+          {hiringSteps.map((step, i) => (
+            <div class={`hiring-step reveal reveal-delay-${i + 1}`}>
+              <div class="hiring-step-icon">
+                <span class="material-symbols-outlined" style="font-size: 28px; font-variation-settings: 'FILL' 1;" aria-hidden="true">{step.icon}</span>
+                <span class="hiring-step-num">{step.step}</span>
+              </div>
+              {i < hiringSteps.length - 1 && <div class="hiring-connector" aria-hidden="true"></div>}
+              <h3 class="hiring-step-title">{step.title}</h3>
+              <p class="hiring-step-desc">{step.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS ============ -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Employee Testimonials">
+      <div class="section-inner">
+        <div class="testimonials-header reveal" style="text-align: center; margin-bottom: 48px;">
+          <span class="label">From the Team</span>
+          <h2>Why They Chose Jinki</h2>
+        </div>
+        <div class="testimonials-grid">
+          {testimonials.map((t, i) => (
+            <div class={`testimonial-card reveal reveal-delay-${i + 1}`}>
+              <div class="testimonial-quote-mark" aria-hidden="true">"</div>
+              <p class="testimonial-text">{t.quote}</p>
+              <div class="testimonial-footer">
+                <span class="testimonial-name">{t.name}</span>
+                <span class="testimonial-dept-badge" style={`background: ${t.deptColor}20; color: ${t.deptColor}; border: 1px solid ${t.deptColor}30;`}>{t.dept}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BOTTOM CTA ============ -->
+    <section class="section" aria-label="Apply" style="text-align: center;">
+      <div class="section-inner" style="max-width: 640px; margin: 0 auto;">
+        <div class="reveal">
+          <span class="label">Ready?</span>
+          <h2 style="margin-bottom: 16px;">Your Next Mission Starts Here</h2>
+          <p style="margin-bottom: 32px; color: var(--text-secondary); line-height: 1.8;">
+            Send your resume and a brief note about what excites you about aerial intelligence.
+            We read every submission.
+          </p>
+          <a href="mailto:careers@jinki.ai" class="btn-premium cta-btn">careers@jinki.ai</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ==================== HERO ==================== */
+  .careers-hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px clamp(20px, 5vw, 80px) 80px;
+  }
+
+  .flight-path-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .flight-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .flight-path-line {
+    stroke-dashoffset: 1000;
+    animation: draw-path 3s ease-out forwards 0.5s;
+  }
+
+  @keyframes draw-path {
+    to { stroke-dashoffset: 0; }
+  }
+
+  .waypoint {
+    animation: waypoint-pop 0.4s ease-out forwards;
+  }
+
+  .wp-1 { animation-delay: 1.2s; }
+  .wp-2 { animation-delay: 1.6s; }
+  .wp-3 { animation-delay: 2.0s; }
+  .wp-4 { animation-delay: 2.4s; }
+
+  @keyframes waypoint-pop {
+    from { opacity: 0; r: 0; }
+    to { opacity: 0.8; r: 6; }
+  }
+
+  .wp-label {
+    opacity: 0;
+    animation: label-fade 0.5s ease-out forwards;
+  }
+
+  .wp-label:nth-of-type(1) { animation-delay: 1.4s; }
+  .wp-label:nth-of-type(2) { animation-delay: 1.8s; }
+  .wp-label:nth-of-type(3) { animation-delay: 2.2s; }
+  .wp-label:nth-of-type(4) { animation-delay: 2.6s; }
+
+  @keyframes label-fade {
+    to { opacity: 0.5; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 800px;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(2.5rem, 6vw + 0.5rem, 4.5rem);
+    margin-bottom: 24px;
+    line-height: 1.05;
+  }
+
+  .hero-gradient {
+    background: linear-gradient(135deg, #00E5FF 0%, #7B61FF 50%, #00E5FF 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 6s ease infinite;
+  }
+
+  :global([data-theme="light"]) .hero-gradient {
+    background: linear-gradient(135deg, #00838f 0%, #4F46E5 50%, #00838f 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 6s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 1.5vw + 0.5rem, 1.2rem);
+    max-width: 620px;
+    margin: 0 auto;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .hero-cta {
+    display: inline-block;
+    margin-top: 32px;
+    padding: 14px 36px;
+    background: linear-gradient(135deg, var(--accent), #0091a1);
+    color: #000;
+    font-family: var(--font-headline);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  :global([data-theme="light"]) .hero-cta {
+    color: #fff;
+  }
+
+  .hero-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px var(--accent-glow-strong);
+  }
+
+  /* ==================== DEPARTMENT TABS ==================== */
+  .dept-tabs {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .dept-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    color: var(--text-secondary);
+    font-family: var(--font-headline);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+  }
+
+  .dept-tab:hover {
+    background: var(--bg-card-hover);
+    color: var(--text-primary);
+  }
+
+  .dept-tab--active {
+    background: var(--accent-glow);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .dept-panel {
+    display: none;
+  }
+
+  .dept-panel--active {
+    display: block;
+    animation: panel-in 0.35s ease-out;
+  }
+
+  @keyframes panel-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .roles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .role-card {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 28px 32px;
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .role-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .role-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .role-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .role-title {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .role-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .role-badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: var(--accent-glow);
+    color: var(--accent);
+  }
+
+  .role-location {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    font-family: var(--font-mono);
+  }
+
+  .role-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .role-apply-btn {
+    flex-shrink: 0;
+    padding: 10px 24px;
+    background: linear-gradient(135deg, var(--accent), #0091a1);
+    color: #000;
+    font-family: var(--font-headline);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  :global([data-theme="light"]) .role-apply-btn {
+    color: #fff;
+  }
+
+  .role-apply-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px var(--accent-glow-strong);
+  }
+
+  @media (max-width: 640px) {
+    .role-card {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 24px 20px;
+    }
+
+    .role-apply-btn {
+      align-self: flex-start;
+    }
+  }
+
+  /* ==================== DAY IN THE LIFE ==================== */
+  .dil-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .dil-card {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+  }
+
+  .dil-card:hover {
+    border-color: var(--border-hover);
+  }
+
+  .dil-toggle {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 20px 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    font-family: inherit;
+    transition: background 0.2s ease;
+  }
+
+  .dil-toggle:hover {
+    background: var(--bg-card-hover);
+  }
+
+  .dil-role-name {
+    flex: 1;
+    text-align: left;
+    font-family: var(--font-headline);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .dil-chevron {
+    font-size: 22px;
+    color: var(--text-tertiary);
+    transition: transform 0.3s ease;
+  }
+
+  .dil-toggle[aria-expanded="true"] .dil-chevron {
+    transform: rotate(180deg);
+  }
+
+  .dil-schedule {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dil-schedule.is-open {
+    max-height: 500px;
+  }
+
+  .dil-timeline {
+    padding: 0 24px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .dil-entry {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dil-entry:last-child {
+    border-bottom: none;
+  }
+
+  .dil-time {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    flex-shrink: 0;
+    width: 48px;
+  }
+
+  .dil-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.4;
+    flex-shrink: 0;
+  }
+
+  .dil-activity {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* ==================== BENTO BENEFITS ==================== */
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(140px, auto);
+    gap: 16px;
+  }
+
+  .bento-card {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bento-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .bento-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-hover);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  }
+
+  .bento-card--large {
+    grid-column: span 2;
+  }
+
+  .bento-card--medium {
+    grid-column: span 2;
+  }
+
+  .bento-card--small {
+    grid-column: span 1;
+  }
+
+  .bento-icon {
+    font-size: 28px;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .bento-title {
+    font-family: var(--font-headline);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+
+  .bento-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 768px) {
+    .bento-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .bento-card--large,
+    .bento-card--medium {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .bento-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .bento-card--large,
+    .bento-card--medium,
+    .bento-card--small {
+      grid-column: span 1;
+    }
+  }
+
+  /* ==================== HIRING PROCESS ==================== */
+  .hiring-timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .hiring-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 0 16px;
+  }
+
+  .hiring-step-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  .hiring-step:hover .hiring-step-icon {
+    transform: scale(1.1);
+    box-shadow: 0 0 32px var(--accent-glow-strong);
+  }
+
+  .hiring-step-num {
+    position: absolute;
+    top: -8px;
+    right: -4px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #000;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3;
+  }
+
+  .hiring-connector {
+    position: absolute;
+    top: 32px;
+    left: calc(50% + 32px);
+    right: calc(-50% + 32px);
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--border-hover));
+    z-index: 1;
+    opacity: 0.4;
+  }
+
+  .hiring-step-title {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+
+  .hiring-step-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 200px;
+  }
+
+  @media (max-width: 768px) {
+    .hiring-timeline {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .hiring-connector {
+      display: none;
+    }
+
+    .hiring-step {
+      flex-direction: row;
+      text-align: left;
+      gap: 20px;
+      padding: 0;
+    }
+
+    .hiring-step-icon {
+      flex-shrink: 0;
+    }
+
+    .hiring-step-title {
+      margin-top: 0;
+    }
+
+    .hiring-step-desc {
+      max-width: none;
+    }
+  }
+
+  /* ==================== TESTIMONIALS ==================== */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .testimonial-card {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .testimonial-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .testimonial-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-hover);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  }
+
+  .testimonial-quote-mark {
+    font-family: var(--font-headline);
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .testimonial-text {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    font-style: italic;
+    flex: 1;
+    margin-bottom: 20px;
+  }
+
+  .testimonial-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .testimonial-name {
+    font-family: var(--font-headline);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .testimonial-dept-badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+
+  @media (max-width: 768px) {
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ==================== BOTTOM CTA ==================== */
+  .cta-btn {
+    display: inline-block;
+    padding: 14px 36px;
+    background: linear-gradient(135deg, var(--accent), #0091a1);
+    color: #000;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  :global([data-theme="light"]) .cta-btn {
+    color: #fff;
+  }
+
+  .cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px var(--accent-glow-strong);
+  }
+
+  /* ==================== SHARED ==================== */
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .section { padding: 8rem clamp(20px, 5vw, 80px); }
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .label {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+    line-height: 1.1;
+  }
+</style>
+
+<script>
+  // Department tab switching
+  function initTabs() {
+    const tabs = document.querySelectorAll('.dept-tab');
+    const panels = document.querySelectorAll('.dept-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const dept = (tab as HTMLElement).dataset.dept;
+
+        tabs.forEach(t => {
+          t.classList.remove('dept-tab--active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('dept-tab--active');
+        tab.setAttribute('aria-selected', 'true');
+
+        panels.forEach(p => {
+          const panelEl = p as HTMLElement;
+          if (panelEl.dataset.panel === dept) {
+            panelEl.classList.add('dept-panel--active');
+          } else {
+            panelEl.classList.remove('dept-panel--active');
+          }
+        });
+      });
+    });
+
+    // Keyboard navigation for tabs
+    const tabList = document.querySelector('[role="tablist"]');
+    if (tabList) {
+      tabList.addEventListener('keydown', (e: Event) => {
+        const event = e as KeyboardEvent;
+        const tabsArr = Array.from(tabs);
+        const currentIndex = tabsArr.findIndex(t => t.getAttribute('aria-selected') === 'true');
+
+        let nextIndex = currentIndex;
+        if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % tabsArr.length;
+        else if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + tabsArr.length) % tabsArr.length;
+        else return;
+
+        event.preventDefault();
+        (tabsArr[nextIndex] as HTMLElement).click();
+        (tabsArr[nextIndex] as HTMLElement).focus();
+      });
+    }
+  }
+
+  // Day in the life expandables
+  function initDayInLife() {
+    document.querySelectorAll('.dil-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const expanded = btn.getAttribute('aria-expanded') === 'true';
+        const controlsId = btn.getAttribute('aria-controls');
+        if (!controlsId) return;
+        const schedule = document.getElementById(controlsId);
+        if (!schedule) return;
+
+        btn.setAttribute('aria-expanded', String(!expanded));
+        schedule.setAttribute('aria-hidden', String(expanded));
+        schedule.classList.toggle('is-open', !expanded);
+      });
+    });
+  }
+
+  // Waypoint animation on scroll
+  function initFlightPath() {
+    const hero = document.querySelector('.careers-hero');
+    if (!hero) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          hero.classList.add('animate-path');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(hero);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initTabs();
+    initDayInLife();
+    initFlightPath();
+  });
+</script>

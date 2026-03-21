@@ -1,0 +1,866 @@
+---
+/*
+  SocialProof-Alpha — Full social proof section
+  1. Animated testimonial carousel (5 testimonials)
+  2. Logo ticker (infinite auto-scroll)
+  3. Trust badges with hover tooltips (FAA, SOC 2, ISO, etc.)
+  4. Case study teasers (3 mini cards)
+  5. Counter section (animated large numbers)
+*/
+
+const testimonials = [
+  {
+    quote: "Jinki transformed our facility inspections from a 3-week manual process to a 48-hour automated intelligence report. The thermal anomaly detection alone prevented two critical failures.",
+    author: "VP of Operations",
+    company: "Fortune 500 Data Center Provider",
+    metric: "95% faster inspections",
+  },
+  {
+    quote: "The persistent aerial monitoring caught a perimeter breach attempt at 2:47 AM that our fixed cameras completely missed. The real-time alerts gave our team a 6-minute response advantage.",
+    author: "Director of Security",
+    company: "National Logistics Campus",
+    metric: "6-min faster response",
+  },
+  {
+    quote: "We switched from annual aerial surveys to Jinki's continuous intelligence platform. Within the first quarter, we identified irrigation inefficiencies saving over 2 million gallons of water.",
+    author: "Head of AgTech",
+    company: "Regional Agricultural Cooperative",
+    metric: "2M gal water saved",
+  },
+  {
+    quote: "Their autonomous deployment covers our 12-mile transmission corridor weekly. The AI-powered defect classification eliminated 80% of false positives we got from manual review.",
+    author: "Grid Reliability Manager",
+    company: "Midwest Energy Utility",
+    metric: "80% fewer false positives",
+  },
+  {
+    quote: "The deliverable quality is exceptional. Every inspection comes with a prioritized action matrix — not just raw imagery. Our maintenance team executes directly from Jinki's recommendations.",
+    author: "Facilities Director",
+    company: "Enterprise Cloud Infrastructure",
+    metric: "Direct-to-action reports",
+  },
+];
+
+const partnerLogos = [
+  { name: 'TechCorp', width: 120 },
+  { name: 'GridWorks', width: 110 },
+  { name: 'SecureNet', width: 100 },
+  { name: 'AgriFlow', width: 115 },
+  { name: 'DataVault', width: 105 },
+  { name: 'PowerGrid', width: 125 },
+  { name: 'CloudBase', width: 110 },
+  { name: 'SafeGuard', width: 100 },
+];
+
+const trustBadges = [
+  { icon: 'flight_takeoff', label: 'FAA Part 107', tooltip: 'All operations conducted under FAA Part 107 certification with fully licensed remote pilots.' },
+  { icon: 'verified_user', label: 'SOC 2 Type II', tooltip: 'SOC 2 Type II compliant — audited security controls for data handling and privacy.' },
+  { icon: 'workspace_premium', label: 'ISO 27001', tooltip: 'ISO 27001 certified information security management system.' },
+  { icon: 'shield', label: 'ITAR Aware', tooltip: 'Trained personnel and procedures for facilities with export-controlled materials.' },
+  { icon: 'health_and_safety', label: 'OSHA Compliant', tooltip: 'Full OSHA compliance for all field operations and site safety protocols.' },
+];
+
+const caseStudies = [
+  {
+    metric: '47%',
+    metricLabel: 'cost reduction',
+    company: 'Tier-1 Data Center Operator',
+    description: 'Replaced quarterly manual thermal inspections with weekly autonomous intelligence flights.',
+    link: '#',
+  },
+  {
+    metric: '12 min',
+    metricLabel: 'avg. response time',
+    company: 'Critical Infrastructure Campus',
+    description: 'Persistent perimeter intelligence with real-time anomaly detection and automated alerts.',
+    link: '#',
+  },
+  {
+    metric: '3,200 mi',
+    metricLabel: 'of grid inspected',
+    company: 'Regional Energy Provider',
+    description: 'Annual transmission corridor assessment with AI defect classification and priority scoring.',
+    link: '#',
+  },
+];
+
+const counters = [
+  { value: 15000, suffix: '+', label: 'Inspections Completed' },
+  { value: 99.7, suffix: '%', label: 'Platform Uptime' },
+  { value: 340, suffix: '+', label: 'Facilities Monitored' },
+  { value: 98, suffix: '%', label: 'Client Satisfaction' },
+];
+---
+
+<section class="social-proof-alpha" aria-label="Social proof and testimonials">
+
+  <!-- ── Counter Section ── -->
+  <div class="counters-section reveal">
+    <div class="counters-grid">
+      {counters.map((c) => (
+        <div class="counter-card glass-panel" data-target={c.value} data-suffix={c.suffix}>
+          <span class="counter-value" aria-label={`${c.value}${c.suffix}`}>0{c.suffix}</span>
+          <span class="counter-label">{c.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- ── Trust Badges ── -->
+  <div class="badges-section reveal">
+    <p class="badges-heading">Certifications & Compliance</p>
+    <div class="badges-row">
+      {trustBadges.map((b) => (
+        <div class="badge-item" data-tooltip={b.tooltip}>
+          <span class="material-symbols-outlined badge-icon" aria-hidden="true">{b.icon}</span>
+          <span class="badge-label">{b.label}</span>
+          <div class="badge-tooltip" role="tooltip">{b.tooltip}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- ── Testimonial Carousel ── -->
+  <div class="testimonials-section reveal">
+    <h2 class="section-heading">Trusted by Industry Leaders</h2>
+    <div class="carousel-wrapper">
+      <div class="carousel-track" id="alpha-carousel-track">
+        {testimonials.map((t, i) => (
+          <div class="testimonial-card glass-panel" data-index={i} aria-hidden={i !== 0 ? 'true' : 'false'}>
+            <div class="testimonial-metric">{t.metric}</div>
+            <blockquote class="testimonial-quote">{t.quote}</blockquote>
+            <div class="testimonial-author">
+              <div class="author-avatar" aria-hidden="true">
+                <span class="material-symbols-outlined">person</span>
+              </div>
+              <div class="author-info">
+                <span class="author-name">{t.author}</span>
+                <span class="author-company">{t.company}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn carousel-prev" id="alpha-carousel-prev" aria-label="Previous testimonial" type="button">
+          <span class="material-symbols-outlined" aria-hidden="true">chevron_left</span>
+        </button>
+        <div class="carousel-dots" id="alpha-carousel-dots">
+          {testimonials.map((_, i) => (
+            <button
+              class={`dot ${i === 0 ? 'active' : ''}`}
+              data-slide={i}
+              aria-label={`Go to testimonial ${i + 1}`}
+              type="button"
+            />
+          ))}
+        </div>
+        <button class="carousel-btn carousel-next" id="alpha-carousel-next" aria-label="Next testimonial" type="button">
+          <span class="material-symbols-outlined" aria-hidden="true">chevron_right</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Logo Ticker ── -->
+  <div class="logo-ticker-section reveal" aria-label="Our partners">
+    <p class="ticker-heading">Trusted Partners</p>
+    <div class="ticker-wrapper">
+      <div class="ticker-track">
+        {/* Doubled for seamless loop */}
+        {[...partnerLogos, ...partnerLogos].map((logo) => (
+          <div class="ticker-logo" style={`width: ${logo.width}px`}>
+            <div class="logo-placeholder">
+              <span class="logo-text">{logo.name}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Case Study Teasers ── -->
+  <div class="case-studies-section reveal">
+    <h2 class="section-heading">Results That Speak</h2>
+    <div class="case-studies-grid">
+      {caseStudies.map((cs) => (
+        <a href={cs.link} class="case-card glass-panel metallic-gloss">
+          <div class="case-metric-wrapper">
+            <span class="case-metric">{cs.metric}</span>
+            <span class="case-metric-label">{cs.metricLabel}</span>
+          </div>
+          <p class="case-company">{cs.company}</p>
+          <p class="case-description">{cs.description}</p>
+          <span class="case-cta">
+            Read case study
+            <span class="material-symbols-outlined case-arrow" aria-hidden="true">arrow_forward</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+</section>
+
+<style>
+  .social-proof-alpha {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .section-heading {
+    font-family: var(--font-headline);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    letter-spacing: -0.02em;
+  }
+
+  /* ─── Counters ─── */
+  .counters-section {
+    padding: 80px 24px;
+    background: var(--surface-container-lowest);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .counters-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .counter-card {
+    text-align: center;
+    padding: 32px 16px;
+    border-radius: 12px;
+  }
+
+  .counter-value {
+    display: block;
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .counter-label {
+    display: block;
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+    margin-top: 8px;
+  }
+
+  /* ─── Trust Badges ─── */
+  .badges-section {
+    padding: 56px 24px;
+    text-align: center;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .badges-heading {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+    margin-bottom: 24px;
+  }
+
+  .badges-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .badge-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    background: var(--surface-container);
+    cursor: default;
+    transition: background 250ms ease, border-color 250ms ease, transform 250ms ease;
+  }
+
+  .badge-item:hover {
+    background: var(--accent-glow);
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+
+  .badge-icon {
+    font-size: 1.125rem;
+    color: var(--accent);
+    font-variation-settings: 'FILL' 1;
+  }
+
+  .badge-label {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+  }
+
+  .badge-tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%) translateY(4px);
+    background: var(--surface-container-highest);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    line-height: 1.5;
+    padding: 10px 14px;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    width: max-content;
+    max-width: 280px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease, transform 200ms ease;
+    z-index: 600;
+  }
+
+  .badge-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: var(--surface-container-highest);
+  }
+
+  .badge-item:hover .badge-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+
+  /* ─── Testimonial Carousel ─── */
+  .testimonials-section {
+    padding: 80px 24px;
+    overflow: hidden;
+  }
+
+  .carousel-wrapper {
+    max-width: 720px;
+    margin: 40px auto 0;
+    position: relative;
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .testimonial-card {
+    min-width: 100%;
+    padding: 40px 32px;
+    border-radius: 16px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .testimonial-metric {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    padding: 4px 10px;
+    background: var(--accent-glow);
+    border-radius: 9999px;
+    width: fit-content;
+  }
+
+  .testimonial-quote {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    position: relative;
+    padding-left: 20px;
+    border-left: 2px solid var(--accent-glow-strong);
+    border-left-color: rgba(0, 229, 255, 0.3);
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+  }
+
+  .author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--surface-container-high);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+  }
+
+  .author-avatar .material-symbols-outlined {
+    font-size: 1.25rem;
+  }
+
+  .author-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .author-name {
+    font-family: var(--font-label);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .author-company {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+  }
+
+  .carousel-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .carousel-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: var(--surface-container);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 250ms ease;
+  }
+
+  .carousel-btn:hover {
+    background: var(--accent-glow);
+    border-color: var(--border-hover);
+    color: var(--accent);
+  }
+
+  .carousel-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .carousel-btn .material-symbols-outlined {
+    font-size: 1.25rem;
+  }
+
+  .carousel-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: var(--outline-variant);
+    cursor: pointer;
+    transition: background 250ms ease, transform 250ms ease;
+    padding: 0;
+  }
+
+  .dot.active {
+    background: var(--accent);
+    transform: scale(1.3);
+  }
+
+  .dot:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* ─── Logo Ticker ─── */
+  .logo-ticker-section {
+    padding: 48px 0;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    overflow: hidden;
+  }
+
+  .ticker-heading {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .ticker-wrapper {
+    position: relative;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  }
+
+  .ticker-track {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    width: max-content;
+    animation: ticker-scroll 30s linear infinite;
+  }
+
+  @keyframes ticker-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .ticker-logo {
+    flex-shrink: 0;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .logo-placeholder {
+    padding: 6px 16px;
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    background: var(--surface-container);
+  }
+
+  .logo-text {
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-tertiary);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* ─── Case Studies ─── */
+  .case-studies-section {
+    padding: 80px 24px;
+  }
+
+  .case-studies-grid {
+    max-width: 1100px;
+    margin: 40px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .case-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 28px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
+  }
+
+  .case-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-glow-cyan, 0 0 24px rgba(0, 229, 255, 0.15));
+    border-color: var(--border-hover);
+  }
+
+  .case-metric-wrapper {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .case-metric {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+
+  .case-metric-label {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-tertiary);
+  }
+
+  .case-company {
+    font-family: var(--font-label);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .case-description {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .case-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: auto;
+    padding-top: 8px;
+    transition: gap 250ms ease;
+  }
+
+  .case-card:hover .case-cta {
+    gap: 8px;
+  }
+
+  .case-arrow {
+    font-size: 1rem;
+    transition: transform 250ms ease;
+  }
+
+  .case-card:hover .case-arrow {
+    transform: translateX(2px);
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 1023px) {
+    .counters-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .case-studies-grid {
+      grid-template-columns: 1fr;
+      max-width: 520px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .counters-section,
+    .testimonials-section,
+    .case-studies-section {
+      padding: 56px 16px;
+    }
+
+    .counters-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .counter-card {
+      padding: 24px 12px;
+    }
+
+    .testimonial-card {
+      padding: 28px 20px;
+    }
+
+    .badges-row {
+      gap: 8px 12px;
+    }
+
+    .badge-tooltip {
+      display: none;
+    }
+  }
+
+  /* ─── Reduced Motion ─── */
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-track {
+      animation: none !important;
+    }
+    .carousel-track {
+      transition-duration: 0ms !important;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    // ── Carousel Logic ──
+    const track = document.getElementById('alpha-carousel-track') as HTMLElement | null;
+    const prevBtn = document.getElementById('alpha-carousel-prev');
+    const nextBtn = document.getElementById('alpha-carousel-next');
+    const dotsContainer = document.getElementById('alpha-carousel-dots');
+    if (!track || !prevBtn || !nextBtn || !dotsContainer) return;
+
+    const cards = track.querySelectorAll('.testimonial-card');
+    const dots = dotsContainer.querySelectorAll('.dot');
+    const total = cards.length;
+    let current = 0;
+    let autoplayTimer: ReturnType<typeof setInterval>;
+
+    function goTo(index: number) {
+      current = ((index % total) + total) % total;
+      track!.style.transform = `translateX(-${current * 100}%)`;
+
+      cards.forEach((card, i) => {
+        card.setAttribute('aria-hidden', i === current ? 'false' : 'true');
+      });
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === current);
+      });
+    }
+
+    function next() { goTo(current + 1); }
+    function prev() { goTo(current - 1); }
+
+    function startAutoplay() {
+      stopAutoplay();
+      autoplayTimer = setInterval(next, 6000);
+    }
+
+    function stopAutoplay() {
+      clearInterval(autoplayTimer);
+    }
+
+    nextBtn.addEventListener('click', () => { next(); startAutoplay(); });
+    prevBtn.addEventListener('click', () => { prev(); startAutoplay(); });
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const slide = parseInt((dot as HTMLElement).dataset.slide || '0', 10);
+        goTo(slide);
+        startAutoplay();
+      });
+    });
+
+    // Pause on hover / focus
+    const wrapper = track.closest('.carousel-wrapper');
+    if (wrapper) {
+      wrapper.addEventListener('mouseenter', stopAutoplay);
+      wrapper.addEventListener('mouseleave', startAutoplay);
+      wrapper.addEventListener('focusin', stopAutoplay);
+      wrapper.addEventListener('focusout', startAutoplay);
+    }
+
+    // Touch / swipe support
+    let touchStartX = 0;
+    let touchDelta = 0;
+
+    track.addEventListener('touchstart', (e: TouchEvent) => {
+      touchStartX = e.touches[0].clientX;
+      stopAutoplay();
+    }, { passive: true });
+
+    track.addEventListener('touchmove', (e: TouchEvent) => {
+      touchDelta = e.touches[0].clientX - touchStartX;
+    }, { passive: true });
+
+    track.addEventListener('touchend', () => {
+      if (Math.abs(touchDelta) > 50) {
+        touchDelta < 0 ? next() : prev();
+      }
+      touchDelta = 0;
+      startAutoplay();
+    });
+
+    // Keyboard navigation
+    track.closest('.carousel-wrapper')?.addEventListener('keydown', (e: Event) => {
+      const ke = e as KeyboardEvent;
+      if (ke.key === 'ArrowLeft') { prev(); startAutoplay(); }
+      if (ke.key === 'ArrowRight') { next(); startAutoplay(); }
+    });
+
+    startAutoplay();
+
+    // ── Animated Counters ──
+    const counterCards = document.querySelectorAll('.counter-card');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target as HTMLElement);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    counterCards.forEach(card => counterObserver.observe(card));
+
+    function animateCounter(card: HTMLElement) {
+      const target = parseFloat(card.dataset.target || '0');
+      const suffix = card.dataset.suffix || '';
+      const valueEl = card.querySelector('.counter-value');
+      if (!valueEl) return;
+
+      const isFloat = target % 1 !== 0;
+      const duration = 2000;
+      const start = performance.now();
+
+      // Respect reduced motion
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        valueEl.textContent = (isFloat ? target.toFixed(1) : target.toLocaleString()) + suffix;
+        return;
+      }
+
+      function tick(now: number) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = target * eased;
+
+        if (isFloat) {
+          valueEl!.textContent = current.toFixed(1) + suffix;
+        } else {
+          valueEl!.textContent = Math.floor(current).toLocaleString() + suffix;
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          valueEl!.textContent = (isFloat ? target.toFixed(1) : target.toLocaleString()) + suffix;
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+  });
+</script>

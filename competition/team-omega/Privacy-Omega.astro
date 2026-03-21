@@ -1,0 +1,542 @@
+---
+/*
+  Privacy-Omega — Jinki Aerial Intelligence
+  Team Omega, Round 24.
+  Dual-pane layout: plain language left, legal text right.
+  Highlight changes, print/PDF buttons, cookie preference toggle.
+*/
+import Layout from '../../src/layouts/Layout.astro';
+import Nav from '../../src/components/Nav.astro';
+import Footer from '../../src/components/Footer.astro';
+
+const lastUpdated = 'March 2026';
+const previousVersion = 'January 2026';
+
+const sections = [
+  {
+    id: 'information-collection',
+    title: 'Information We Collect',
+    plain: 'We collect info you give us (name, email, company) plus standard website analytics. For aerial intelligence projects, we also collect geospatial and thermal data as outlined in your service agreement.',
+    legal: 'We collect information you provide directly when you request a consultation, submit a contact form, or communicate with our team. This includes your name, email address, phone number, company name, and details about your infrastructure or facility. When you visit our website, we automatically collect technical data such as your IP address, browser type, operating system, referring URL, pages viewed, and timestamps. In the course of delivering aerial intelligence services, we collect geospatial data, thermal imagery, visual spectrum imagery, and derived analytics related to client facilities and infrastructure. This operational data is governed by individual client service agreements.',
+    changed: false,
+  },
+  {
+    id: 'use-of-data',
+    title: 'How We Use Your Data',
+    plain: 'We use your contact info to respond to you and deliver services. Website analytics help us improve the site. Aerial survey data is used only for what your contract specifies — nothing more.',
+    legal: 'We use contact information to respond to inquiries, deliver requested services, provide project updates, and send relevant communications about our aerial intelligence capabilities. Website analytics data is used to monitor site performance, identify technical issues, understand visitor behavior, and improve our content and user experience. Aerial survey data and derived analytics are processed exclusively for the purposes outlined in each client engagement — such as infrastructure condition assessment, thermal anomaly detection, perimeter monitoring, and asset documentation. We do not use client operational data for any purpose beyond the contracted scope without explicit written consent.',
+    changed: false,
+  },
+  {
+    id: 'data-sharing',
+    title: 'Data Sharing',
+    plain: 'We never sell your data. We share with trusted service providers (hosting, analytics, email) under strict confidentiality. Client aerial survey data is never shared without your written OK.',
+    legal: 'We do not sell, rent, or trade your personal information to third parties. We may share data with trusted service providers who assist in operating our website, conducting our business, or delivering services to you — provided those parties agree to keep your information confidential. These include cloud hosting providers, analytics platforms, and email delivery services. We may disclose information when required by law, regulation, or legal process, or when we believe disclosure is necessary to protect our rights, your safety, or the safety of others. Client aerial survey data is never shared with third parties unless explicitly authorized by the client in writing.',
+    changed: false,
+  },
+  {
+    id: 'security',
+    title: 'Security',
+    plain: 'We encrypt everything in transit and at rest. Our founder holds CISSP and CCSP certifications. Role-based access controls protect all data. No security is absolute, but we take it very seriously.',
+    legal: 'We implement industry-standard technical and organizational measures to protect your data against unauthorized access, alteration, disclosure, or destruction. These measures include encryption in transit and at rest, access controls, regular security assessments, and secure data storage practices. Aerial survey data and client deliverables are stored in encrypted environments with role-based access controls. Our security practices reflect the sensitive nature of infrastructure intelligence — our founding team holds CISSP and CCSP certifications, and security is embedded in our operations from the ground up. No method of transmission or storage is completely secure. While we strive to protect your information, we cannot guarantee absolute security.',
+    changed: false,
+  },
+  {
+    id: 'cookies',
+    title: 'Cookies',
+    plain: 'We use essential cookies for the site to work and analytics cookies to understand traffic. No advertising or cross-site tracking. You control cookies via your browser or the toggle below.',
+    legal: 'Our website uses cookies and similar technologies to enhance your browsing experience, remember your preferences (such as theme selection), and collect aggregate analytics data. Essential cookies are required for basic site functionality. Analytics cookies help us understand traffic patterns and site usage. You can control cookie preferences through your browser settings. We do not use cookies for advertising or cross-site tracking purposes.',
+    changed: true,
+    changeNote: 'Added inline cookie preference controls.',
+  },
+  {
+    id: 'data-retention',
+    title: 'Data Retention',
+    plain: 'Contact form data is kept up to 3 years unless you ask us to delete it sooner. Client aerial data is retained per your service agreement and securely deleted when the contract ends.',
+    legal: 'We retain personal information for as long as necessary to fulfill the purposes described in this policy, comply with legal obligations, resolve disputes, and enforce our agreements. Contact form submissions and inquiry records are retained for up to three years unless you request earlier deletion. Client aerial survey data is retained according to the terms of each service agreement. Upon contract completion or termination, data is either returned to the client or securely destroyed, per the agreed-upon terms.',
+    changed: true,
+    changeNote: 'Clarified deletion timelines for contact form data.',
+  },
+  {
+    id: 'your-rights',
+    title: 'Your Rights',
+    plain: 'You can access, correct, delete, or export your data. Virginia residents have additional VCDPA rights. Email us and we will respond within 30 days.',
+    legal: 'Depending on your jurisdiction, you may have the right to access, correct, delete, or port your personal data. You may also have the right to restrict or object to certain processing activities. To exercise any of these rights, contact us at the email address below. We will respond to verified requests within 30 days. If you are a Virginia resident, you have specific rights under the Virginia Consumer Data Protection Act (VCDPA), including the right to access, correct, delete, and obtain a copy of your personal data, as well as the right to opt out of targeted advertising and profiling.',
+    changed: false,
+  },
+  {
+    id: 'third-party-services',
+    title: 'Third-Party Services',
+    plain: 'Our site may link to other websites. We are not responsible for their privacy practices. We use third-party tools for analytics, forms, and email — each governed by their own policies.',
+    legal: 'Our website may contain links to third-party websites or services that are not operated by us. We have no control over the content, privacy policies, or practices of third-party sites and accept no responsibility for them. We use third-party tools for website analytics, form processing, and email communications. These services have their own privacy policies governing their use of your data.',
+    changed: false,
+  },
+];
+---
+
+<Layout title="Privacy Policy — Jinki Aerial Intelligence" description="Privacy policy for Jinki Aerial Intelligence. How we collect, use, and protect your data.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="privacy-hero" aria-label="Privacy Policy">
+      <div class="privacy-hero-inner" style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <div class="vert-eyebrow reveal">
+          <span class="vert-eyebrow-line"></span>
+          <span class="vert-eyebrow-text">Legal</span>
+        </div>
+        <h1 class="reveal reveal-delay-1">Privacy Policy</h1>
+        <p class="privacy-subtitle reveal reveal-delay-2" style="font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem); max-width: 560px; margin: 20px auto 0; line-height: 1.75; color: var(--text-secondary);">
+          Effective {lastUpdated}. This policy describes how Jinki Aerial Intelligence
+          collects, uses, and protects your information.
+        </p>
+        <!-- Action Buttons -->
+        <div class="hero-actions reveal reveal-delay-3" style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 32px; flex-wrap: wrap;">
+          <button class="action-btn" onclick="window.print()" aria-label="Print this page">
+            <span class="material-symbols-outlined" style="font-size: 18px;" aria-hidden="true">print</span>
+            Print
+          </button>
+          <button class="action-btn" onclick="window.print()" aria-label="Download as PDF">
+            <span class="material-symbols-outlined" style="font-size: 18px;" aria-hidden="true">download</span>
+            Download PDF
+          </button>
+          <span class="version-badge">
+            Updated from {previousVersion}
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dual-Pane Policy Content -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Privacy Policy Details">
+      <div style="max-width: 1280px; margin: 0 auto;">
+
+        <!-- View Toggle -->
+        <div class="view-toggle reveal" style="display: flex; align-items: center; gap: 16px; margin-bottom: 48px; flex-wrap: wrap;">
+          <span style="font-family: var(--font-label); font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-tertiary);">View:</span>
+          <button class="toggle-btn active" data-view="dual" aria-pressed="true">Dual Pane</button>
+          <button class="toggle-btn" data-view="plain" aria-pressed="false">Plain Language</button>
+          <button class="toggle-btn" data-view="legal" aria-pressed="false">Full Legal</button>
+        </div>
+
+        <!-- Policy Sections -->
+        {sections.map((section, i) => (
+          <div id={section.id} class={`policy-row reveal reveal-delay-${(i % 3) + 1}`} data-changed={section.changed ? 'true' : 'false'}>
+            {section.changed && (
+              <div class="change-indicator">
+                <span class="material-symbols-outlined" style="font-size: 14px;" aria-hidden="true">edit_note</span>
+                <span>{section.changeNote}</span>
+              </div>
+            )}
+            <h2 style="font-family: var(--font-headline); font-size: clamp(1.25rem, 2vw + 0.25rem, 1.5rem); font-weight: 700; color: var(--text-primary); margin-bottom: 20px;">
+              {section.title}
+            </h2>
+            <div class="dual-pane">
+              <div class="pane-plain">
+                <div class="pane-label">
+                  <span class="material-symbols-outlined" style="font-size: 14px;" aria-hidden="true">translate</span>
+                  Plain Language
+                </div>
+                <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.8;">{section.plain}</p>
+              </div>
+              <div class="pane-legal">
+                <div class="pane-label">
+                  <span class="material-symbols-outlined" style="font-size: 14px;" aria-hidden="true">gavel</span>
+                  Legal Text
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.8;">{section.legal}</p>
+              </div>
+            </div>
+
+            {/* Cookie toggle inline */}
+            {section.id === 'cookies' && (
+              <div class="cookie-controls" style="margin-top: 24px;">
+                <h3 style="font-family: var(--font-headline); font-size: 0.9375rem; font-weight: 700; color: var(--text-primary); margin-bottom: 16px;">Cookie Preferences</h3>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                  <div class="cookie-toggle-row">
+                    <div>
+                      <span style="font-size: 0.875rem; font-weight: 600; color: var(--text-primary);">Essential Cookies</span>
+                      <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 2px;">Required for basic site functionality</p>
+                    </div>
+                    <label class="toggle-switch" aria-label="Essential cookies (always on)">
+                      <input type="checkbox" checked disabled />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                  <div class="cookie-toggle-row">
+                    <div>
+                      <span style="font-size: 0.875rem; font-weight: 600; color: var(--text-primary);">Analytics Cookies</span>
+                      <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 2px;">Help us understand traffic patterns</p>
+                    </div>
+                    <label class="toggle-switch" aria-label="Toggle analytics cookies">
+                      <input type="checkbox" id="analytics-toggle" />
+                      <span class="toggle-slider"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+
+        <!-- Contact -->
+        <div class="policy-row reveal" style="border-bottom: none;">
+          <h2 style="font-family: var(--font-headline); font-size: clamp(1.25rem, 2vw + 0.25rem, 1.5rem); font-weight: 700; color: var(--text-primary); margin-bottom: 20px;">Contact</h2>
+          <p style="font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.8; margin-bottom: 20px;">
+            Questions about this Privacy Policy or our data practices? Reach out:
+          </p>
+          <div class="contact-card">
+            <a href="mailto:privacy@jinki.ai" class="privacy-email-link">privacy@jinki.ai</a>
+            <p style="font-size: 0.875rem; color: var(--text-tertiary); line-height: 1.7; margin-top: 12px;">
+              Jinki Aerial Intelligence<br />Virginia, USA
+            </p>
+          </div>
+        </div>
+
+        <!-- Policy Footer Note -->
+        <div class="policy-footnote reveal" style="margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--glass-border);">
+          <p style="font-size: 0.8125rem; color: var(--text-tertiary); line-height: 1.8;">
+            This policy may be updated periodically. Changes will be posted on this page with a revised effective date. Continued use of our website or services after changes constitutes acceptance of the updated policy.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  // View toggle functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggleBtns = document.querySelectorAll('.toggle-btn');
+    const policyRows = document.querySelectorAll('.policy-row');
+
+    toggleBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        toggleBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+
+        const view = btn.dataset.view;
+        policyRows.forEach(row => {
+          const plain = row.querySelector('.pane-plain') as HTMLElement;
+          const legal = row.querySelector('.pane-legal') as HTMLElement;
+          if (!plain || !legal) return;
+
+          if (view === 'dual') {
+            plain.style.display = '';
+            legal.style.display = '';
+          } else if (view === 'plain') {
+            plain.style.display = '';
+            legal.style.display = 'none';
+          } else if (view === 'legal') {
+            plain.style.display = 'none';
+            legal.style.display = '';
+          }
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .privacy-hero {
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 140px clamp(20px, 5vw, 80px) 64px;
+    text-align: center;
+    background: var(--surface-container-lowest);
+    position: relative;
+  }
+
+  .privacy-hero h1 {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+  }
+
+  .vert-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    justify-content: center;
+  }
+
+  .vert-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .vert-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+  }
+
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .section { padding: 6rem clamp(20px, 5vw, 80px); }
+  }
+
+  /* Action Buttons */
+  .action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 10px 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .action-btn:hover {
+    color: var(--accent);
+    border-color: rgba(0, 229, 255, 0.15);
+    transform: translateY(-1px);
+  }
+
+  .version-badge {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--accent);
+    background: var(--accent-glow);
+    padding: 6px 14px;
+    border-radius: 100px;
+  }
+
+  /* View Toggle */
+  .toggle-btn {
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-tertiary);
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .toggle-btn:hover {
+    color: var(--text-secondary);
+    border-color: var(--text-tertiary);
+  }
+
+  .toggle-btn.active {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-glow);
+  }
+
+  /* Policy Rows */
+  .policy-row {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--glass-border);
+    position: relative;
+  }
+
+  .policy-row[data-changed="true"] {
+    border-left: 3px solid var(--accent);
+    padding-left: 24px;
+  }
+
+  .change-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--accent);
+    background: var(--accent-glow);
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+  }
+
+  /* Dual Pane */
+  .dual-pane {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  @media (max-width: 768px) {
+    .dual-pane { grid-template-columns: 1fr; gap: 20px; }
+  }
+
+  .pane-plain,
+  .pane-legal {
+    padding: 24px;
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .pane-plain {
+    background: var(--accent-glow);
+    border: 1px solid rgba(0, 229, 255, 0.1);
+  }
+
+  .pane-legal {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+  }
+
+  .pane-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+  }
+
+  /* Cookie Controls */
+  .cookie-controls {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .cookie-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .cookie-toggle-row:last-child {
+    border-bottom: none;
+  }
+
+  /* Toggle Switch */
+  .toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  .toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: var(--surface-container-high);
+    border-radius: 24px;
+    transition: background 0.3s ease;
+  }
+
+  .toggle-slider::before {
+    content: '';
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+  }
+
+  .toggle-switch input:checked + .toggle-slider {
+    background: var(--accent);
+  }
+
+  .toggle-switch input:checked + .toggle-slider::before {
+    transform: translateX(20px);
+  }
+
+  .toggle-switch input:disabled + .toggle-slider {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .toggle-switch input:focus-visible + .toggle-slider {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Contact */
+  .contact-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 24px;
+    display: inline-block;
+  }
+
+  .privacy-email-link {
+    font-family: var(--font-mono);
+    font-size: 1.125rem;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    display: inline-block;
+    transition: all 0.3s ease;
+  }
+
+  .privacy-email-link:hover {
+    background: var(--accent-glow);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  /* Print styles */
+  @media print {
+    .hero-actions,
+    .view-toggle,
+    .cookie-controls,
+    .toggle-switch { display: none !important; }
+
+    .dual-pane { grid-template-columns: 1fr; }
+    .pane-plain { display: none; }
+
+    .policy-row[data-changed="true"] {
+      border-left-color: #000;
+    }
+  }
+</style>

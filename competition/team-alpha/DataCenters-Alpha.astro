@@ -1,0 +1,2081 @@
+---
+/*
+  TEAM ALPHA — Data Centers Vertical Page Redesign
+  Round 3 Competitive Web Design Challenge
+
+  Features:
+  1. Interactive thermal heatmap hero with hoverable hotspots
+  2. Before/After comparison slider
+  3. ROI Calculator
+  4. Animated process flow timeline
+  5. Counter-animated stats
+  6. Glass-morphism case study card
+  7. Service comparison table (Jinki vs Traditional)
+*/
+import Layout from '../../src/layouts/Layout.astro';
+import Nav from '../../src/components/Nav.astro';
+import LeadGen from '../../src/components/LeadGen.astro';
+import Footer from '../../src/components/Footer.astro';
+
+const hotspots = [
+  { id: 'hs-1', x: 22, y: 28, temp: '72.4', label: 'CRAH Unit #7', desc: 'Failing compressor bearing — estimated 14 days to failure. Replacement cost: $8,200 vs $340K unplanned outage.', severity: 'critical' },
+  { id: 'hs-2', x: 58, y: 35, temp: '54.1', label: 'Roof Section B3', desc: 'Moisture intrusion beneath membrane — 12 sq ft affected area. Schedule repair before next rain event.', severity: 'warning' },
+  { id: 'hs-3', x: 75, y: 55, temp: '61.8', label: 'Generator Exhaust', desc: 'Elevated exhaust temperature indicating fuel injection timing drift. Service within 30 days.', severity: 'warning' },
+  { id: 'hs-4', x: 38, y: 62, temp: '83.2', label: 'Transformer T-4', desc: 'Hot spot on bushing connection — loose connection risk. Immediate inspection recommended per NFPA 70B.', severity: 'critical' },
+  { id: 'hs-5', x: 85, y: 25, temp: '47.6', label: 'Cooling Tower #2', desc: 'Fill media degradation reducing efficiency by ~18%. Schedule replacement during next maintenance window.', severity: 'moderate' },
+];
+
+const processSteps = [
+  { icon: 'rocket_launch', title: 'Deploy', desc: 'Aerial platform arrives on-site and begins pre-flight calibration. Zero disruption to your operations.' },
+  { icon: 'radar', title: 'Scan', desc: 'Full-campus thermal and visual survey — every rooftop, mechanical system, and perimeter section in under 4 hours.' },
+  { icon: 'psychology', title: 'Analyze', desc: 'AI-assisted thermal analysis cross-references findings against equipment baselines and failure pattern databases.' },
+  { icon: 'verified_user', title: 'Report', desc: 'Severity-ranked report with remediation priorities, cost estimates, and suggested maintenance timelines delivered within 48 hours.' },
+  { icon: 'speed', title: 'Act', desc: 'Your facilities team receives a work order — not a data dump. Every finding is actionable and quantified.' },
+];
+
+const stats = [
+  { value: '47', suffix: '%', label: 'Average cost reduction in unplanned maintenance', icon: 'trending_down' },
+  { value: '4', prefix: '<', suffix: 'hr', label: 'Full facility scan completion time', icon: 'speed' },
+  { value: '99.2', suffix: '%', label: 'Thermal defect detection accuracy rate', icon: 'thermostat' },
+  { value: '2.3', prefix: '$', suffix: 'M', label: 'Average prevented downtime costs per year', icon: 'shield' },
+];
+
+const comparisonRows = [
+  { feature: 'Full campus coverage in one engagement', jinki: true, traditional: false },
+  { feature: 'AI-prioritized severity rankings', jinki: true, traditional: false },
+  { feature: 'Remediation cost estimates included', jinki: true, traditional: false },
+  { feature: 'No roof access permits required', jinki: true, traditional: false },
+  { feature: 'NFPA 70B compliance documentation', jinki: true, traditional: true },
+  { feature: 'Sub-4-hour facility scan time', jinki: true, traditional: false },
+  { feature: 'Thermal + visual + LiDAR fusion', jinki: true, traditional: false },
+  { feature: 'Persistent autonomous monitoring option', jinki: true, traditional: false },
+  { feature: 'Available same-day in Virginia market', jinki: true, traditional: false },
+];
+---
+
+<Layout title="Data Centers — Jinki Aerial Intelligence" description="Interactive thermal intelligence for data center operations. Explore our thermal heatmap, ROI calculator, and see how Jinki transforms facility maintenance.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- ============================================================
+         SECTION 1: Interactive Thermal Heatmap Hero
+         ============================================================ -->
+    <section class="alpha-hero" aria-label="Data Center Thermal Intelligence">
+      <div class="alpha-hero-inner">
+        <div class="alpha-hero-content reveal">
+          <div class="alpha-eyebrow">
+            <span class="alpha-eyebrow-line"></span>
+            <span class="alpha-eyebrow-text">Data Centers</span>
+          </div>
+          <h1 class="alpha-hero-title">
+            See What Your<br/>
+            <span class="gradient-text-cyan">Facilities Team Can't</span>
+          </h1>
+          <p class="alpha-hero-subtitle">
+            Every hotspot on this map is a real-world failure pattern found during
+            aerial thermal inspections. Hover to explore what our sensors detect —
+            and what goes unnoticed until it costs you millions.
+          </p>
+          <div class="alpha-hero-actions">
+            <a href="#lead-gen" class="btn-premium alpha-cta">Schedule Assessment</a>
+            <a href="#roi-calculator" class="alpha-cta-secondary">Calculate Your ROI</a>
+          </div>
+        </div>
+
+        <!-- Interactive Thermal Heatmap -->
+        <div class="alpha-heatmap-wrap reveal reveal-delay-1" role="img" aria-label="Interactive thermal heatmap of a data center rooftop showing detected anomalies">
+          <div class="alpha-heatmap">
+            <div class="heatmap-grid"></div>
+            <div class="heatmap-scanline" aria-hidden="true"></div>
+
+            <!-- Thermal gradient overlay -->
+            <div class="heatmap-thermal-layer" aria-hidden="true"></div>
+
+            <!-- Building outlines -->
+            <svg class="heatmap-buildings" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect x="10" y="15" width="35" height="50" rx="1" stroke="rgba(0,229,255,0.2)" stroke-width="0.3" fill="rgba(0,229,255,0.03)"/>
+              <rect x="50" y="20" width="40" height="40" rx="1" stroke="rgba(0,229,255,0.2)" stroke-width="0.3" fill="rgba(0,229,255,0.03)"/>
+              <rect x="55" y="65" width="30" height="20" rx="1" stroke="rgba(0,229,255,0.15)" stroke-width="0.3" fill="rgba(0,229,255,0.02)"/>
+              <line x1="45" y1="40" x2="50" y2="40" stroke="rgba(0,229,255,0.1)" stroke-width="0.2" stroke-dasharray="1,1"/>
+            </svg>
+
+            {hotspots.map(hs => (
+              <button
+                class={`heatmap-hotspot hotspot-${hs.severity}`}
+                style={`left: ${hs.x}%; top: ${hs.y}%;`}
+                data-hotspot-id={hs.id}
+                aria-label={`${hs.label}: ${hs.temp} degrees Celsius — ${hs.severity} severity`}
+                type="button"
+              >
+                <span class="hotspot-pulse" aria-hidden="true"></span>
+                <span class="hotspot-core" aria-hidden="true"></span>
+              </button>
+            ))}
+
+            <!-- Hotspot tooltip (positioned via JS) -->
+            <div class="heatmap-tooltip" id="heatmap-tooltip" role="tooltip" aria-hidden="true">
+              <div class="tooltip-header">
+                <span class="tooltip-severity" id="tooltip-severity"></span>
+                <span class="tooltip-label" id="tooltip-label"></span>
+              </div>
+              <div class="tooltip-temp" id="tooltip-temp"></div>
+              <p class="tooltip-desc" id="tooltip-desc"></p>
+            </div>
+
+            <!-- HUD readout -->
+            <div class="heatmap-hud" aria-hidden="true">
+              <div class="hud-line"><span class="hud-key">MODE</span><span class="hud-val">THERMAL IR</span></div>
+              <div class="hud-line"><span class="hud-key">ALT</span><span class="hud-val">120m AGL</span></div>
+              <div class="hud-line"><span class="hud-key">SENSOR</span><span class="hud-val">H30T</span></div>
+              <div class="hud-line"><span class="hud-key">DETECTIONS</span><span class="hud-val hud-val-accent">5 ANOMALIES</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 2: Animated Stats Counters
+         ============================================================ -->
+    <section class="alpha-stats reveal" aria-label="Key Performance Metrics">
+      <div class="alpha-stats-inner">
+        {stats.map((stat, i) => (
+          <div class={`alpha-stat-item reveal reveal-delay-${i + 1}`}>
+            <span class="material-symbols-outlined alpha-stat-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{stat.icon}</span>
+            <div class="alpha-stat-value-wrap">
+              {stat.prefix && <span class="alpha-stat-prefix">{stat.prefix}</span>}
+              <span class="alpha-stat-value" data-count={stat.value} data-suffix={stat.suffix}>{stat.prefix === '<' ? '< ' : ''}{stat.value}{stat.suffix}</span>
+            </div>
+            <span class="alpha-stat-label">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 3: Before / After Comparison Slider
+         ============================================================ -->
+    <section class="alpha-section" aria-label="Before and After Comparison" id="comparison">
+      <div class="alpha-section-inner">
+        <div class="alpha-section-header reveal">
+          <div class="alpha-eyebrow">
+            <span class="alpha-eyebrow-line"></span>
+            <span class="alpha-eyebrow-text">Visual Intelligence</span>
+          </div>
+          <h2>Standard Aerial View vs.<br/>Thermal Analysis</h2>
+          <p class="alpha-section-subtitle">
+            Drag the slider to see the difference between a standard visual inspection
+            and Jinki's thermal intelligence layer. What looks normal to the eye hides
+            critical failures visible only in the thermal spectrum.
+          </p>
+        </div>
+
+        <div class="alpha-slider-container reveal reveal-delay-1" role="group" aria-label="Comparison slider between standard and thermal views">
+          <div class="alpha-slider" id="comparison-slider">
+            <!-- "Before" layer (standard view) -->
+            <div class="slider-layer slider-before" aria-label="Standard aerial view">
+              <div class="slider-scene slider-scene-normal">
+                <div class="scene-grid" aria-hidden="true"></div>
+                <svg class="scene-buildings" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="10" y="15" width="35" height="50" rx="1" stroke="rgba(150,160,170,0.4)" stroke-width="0.5" fill="rgba(150,160,170,0.08)"/>
+                  <rect x="50" y="20" width="40" height="40" rx="1" stroke="rgba(150,160,170,0.4)" stroke-width="0.5" fill="rgba(150,160,170,0.08)"/>
+                  <rect x="55" y="65" width="30" height="20" rx="1" stroke="rgba(150,160,170,0.3)" stroke-width="0.5" fill="rgba(150,160,170,0.05)"/>
+                  <!-- HVAC units -->
+                  <rect x="15" y="20" width="6" height="6" fill="rgba(150,160,170,0.15)"/>
+                  <rect x="25" y="20" width="6" height="6" fill="rgba(150,160,170,0.15)"/>
+                  <rect x="35" y="20" width="6" height="6" fill="rgba(150,160,170,0.15)"/>
+                  <rect x="55" y="25" width="8" height="8" fill="rgba(150,160,170,0.15)"/>
+                  <rect x="72" y="25" width="8" height="8" fill="rgba(150,160,170,0.15)"/>
+                </svg>
+                <div class="scene-label">STANDARD VIEW</div>
+                <div class="scene-caption">Everything looks operational</div>
+              </div>
+            </div>
+
+            <!-- "After" layer (thermal view) -->
+            <div class="slider-layer slider-after" aria-label="Thermal analysis view">
+              <div class="slider-scene slider-scene-thermal">
+                <div class="scene-grid scene-grid-thermal" aria-hidden="true"></div>
+                <svg class="scene-buildings" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <rect x="10" y="15" width="35" height="50" rx="1" stroke="rgba(0,229,255,0.3)" stroke-width="0.5" fill="rgba(0,100,200,0.05)"/>
+                  <rect x="50" y="20" width="40" height="40" rx="1" stroke="rgba(0,229,255,0.3)" stroke-width="0.5" fill="rgba(0,100,200,0.05)"/>
+                  <rect x="55" y="65" width="30" height="20" rx="1" stroke="rgba(0,229,255,0.2)" stroke-width="0.5" fill="rgba(0,100,200,0.03)"/>
+                </svg>
+                <!-- Thermal anomalies -->
+                <div class="thermal-anomaly anomaly-critical" style="left: 22%; top: 28%; width: 50px; height: 50px;"></div>
+                <div class="thermal-anomaly anomaly-warning" style="left: 58%; top: 35%; width: 40px; height: 40px;"></div>
+                <div class="thermal-anomaly anomaly-critical" style="left: 38%; top: 62%; width: 45px; height: 45px;"></div>
+                <div class="thermal-anomaly anomaly-warning" style="left: 75%; top: 55%; width: 35px; height: 35px;"></div>
+                <div class="thermal-anomaly anomaly-moderate" style="left: 85%; top: 25%; width: 30px; height: 30px;"></div>
+                <div class="scene-label scene-label-thermal">THERMAL ANALYSIS</div>
+                <div class="scene-caption scene-caption-thermal">5 anomalies detected — 2 critical</div>
+              </div>
+            </div>
+
+            <!-- Slider handle -->
+            <div class="slider-handle" id="slider-handle" role="slider" aria-label="Drag to compare standard and thermal views" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
+              <div class="slider-handle-line"></div>
+              <div class="slider-handle-grip">
+                <span class="material-symbols-outlined" style="font-size: 20px; font-variation-settings: 'FILL' 1;" aria-hidden="true">drag_indicator</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 4: Animated Process Flow
+         ============================================================ -->
+    <section class="alpha-section alpha-section-dim" aria-label="Our Process" id="process">
+      <div class="alpha-section-inner">
+        <div class="alpha-section-header reveal">
+          <div class="alpha-eyebrow">
+            <span class="alpha-eyebrow-line"></span>
+            <span class="alpha-eyebrow-text">How It Works</span>
+          </div>
+          <h2>From Deployment to<br/>Actionable Intelligence</h2>
+          <p class="alpha-section-subtitle">
+            A complete facility assessment in five steps. No platforms to learn,
+            no data to interpret, no guesswork involved.
+          </p>
+        </div>
+
+        <div class="alpha-process" id="process-flow">
+          <div class="process-connector" aria-hidden="true">
+            <div class="process-connector-fill" id="process-connector-fill"></div>
+          </div>
+          {processSteps.map((step, i) => (
+            <div class={`process-step reveal reveal-delay-${i + 1}`} data-step-index={i}>
+              <div class="process-step-marker">
+                <span class="process-step-number">{String(i + 1).padStart(2, '0')}</span>
+                <div class="process-step-dot">
+                  <span class="material-symbols-outlined" style="font-size: 24px; font-variation-settings: 'FILL' 1;" aria-hidden="true">{step.icon}</span>
+                </div>
+              </div>
+              <div class="process-step-content">
+                <h3 class="process-step-title">{step.title}</h3>
+                <p class="process-step-desc">{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 5: ROI Calculator
+         ============================================================ -->
+    <section class="alpha-section" aria-label="ROI Calculator" id="roi-calculator">
+      <div class="alpha-section-inner">
+        <div class="alpha-section-header reveal">
+          <div class="alpha-eyebrow">
+            <span class="alpha-eyebrow-line"></span>
+            <span class="alpha-eyebrow-text">ROI Calculator</span>
+          </div>
+          <h2>Quantify Your<br/>Risk Reduction</h2>
+          <p class="alpha-section-subtitle">
+            Input your facility details and see estimated savings from proactive
+            aerial thermal intelligence versus reactive maintenance.
+          </p>
+        </div>
+
+        <div class="alpha-roi-container reveal reveal-delay-1">
+          <div class="alpha-roi-inputs glass-panel" style="border-radius: 16px;">
+            <h3 class="roi-input-title">Your Facility</h3>
+
+            <div class="roi-field">
+              <label for="roi-sqft" class="roi-label">Total Facility Size (sq ft)</label>
+              <input type="range" id="roi-sqft" min="50000" max="2000000" step="50000" value="500000" class="roi-range" aria-describedby="roi-sqft-val"/>
+              <div class="roi-range-labels">
+                <span>50K</span>
+                <span class="roi-range-current" id="roi-sqft-val">500,000 sq ft</span>
+                <span>2M</span>
+              </div>
+            </div>
+
+            <div class="roi-field">
+              <label for="roi-buildings" class="roi-label">Number of Buildings</label>
+              <input type="range" id="roi-buildings" min="1" max="20" step="1" value="4" class="roi-range" aria-describedby="roi-buildings-val"/>
+              <div class="roi-range-labels">
+                <span>1</span>
+                <span class="roi-range-current" id="roi-buildings-val">4 buildings</span>
+                <span>20</span>
+              </div>
+            </div>
+
+            <div class="roi-field">
+              <label for="roi-tier" class="roi-label">Tier Classification</label>
+              <select id="roi-tier" class="roi-select">
+                <option value="2">Tier II</option>
+                <option value="3" selected>Tier III</option>
+                <option value="4">Tier IV</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="alpha-roi-results" id="roi-results">
+            <h3 class="roi-results-title">Estimated Annual Impact</h3>
+
+            <div class="roi-result-card roi-result-savings">
+              <span class="material-symbols-outlined roi-result-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">trending_down</span>
+              <div class="roi-result-data">
+                <span class="roi-result-value" id="roi-savings">$1.2M</span>
+                <span class="roi-result-label">Estimated Prevented Downtime Costs</span>
+              </div>
+            </div>
+
+            <div class="roi-result-card roi-result-time">
+              <span class="material-symbols-outlined roi-result-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">speed</span>
+              <div class="roi-result-data">
+                <span class="roi-result-value" id="roi-time">87%</span>
+                <span class="roi-result-label">Inspection Time Reduction</span>
+              </div>
+            </div>
+
+            <div class="roi-result-card roi-result-risk">
+              <span class="material-symbols-outlined roi-result-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">shield</span>
+              <div class="roi-result-data">
+                <span class="roi-result-value" id="roi-risk">73%</span>
+                <span class="roi-result-label">Unplanned Outage Risk Reduction</span>
+              </div>
+            </div>
+
+            <div class="roi-result-card roi-result-roi">
+              <span class="material-symbols-outlined roi-result-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">trending_up</span>
+              <div class="roi-result-data">
+                <span class="roi-result-value" id="roi-return">14x</span>
+                <span class="roi-result-label">Return on Assessment Investment</span>
+              </div>
+            </div>
+
+            <p class="roi-disclaimer">Estimates based on industry benchmarks and Jinki engagement data. Actual results vary by facility condition and operational profile.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 6: Case Study Card
+         ============================================================ -->
+    <section class="alpha-section alpha-section-dim" aria-label="Case Study" id="case-study">
+      <div class="alpha-section-inner">
+        <div class="alpha-section-header reveal">
+          <div class="alpha-eyebrow">
+            <span class="alpha-eyebrow-line"></span>
+            <span class="alpha-eyebrow-text">Case Study</span>
+          </div>
+          <h2>From Reactive to Proactive</h2>
+        </div>
+
+        <div class="alpha-case-study glass-panel reveal reveal-delay-1" style="border-radius: 16px;">
+          <div class="case-study-badge">Featured Engagement</div>
+
+          <div class="case-study-grid">
+            <div class="case-study-main">
+              <h3 class="case-study-title">Fortune 100 Cloud Provider — Northern Virginia Campus</h3>
+              <p class="case-study-context">
+                A hyperscale operator with 6 buildings across 1.2 million square feet
+                was experiencing recurring HVAC failures and unexpected roof leaks.
+                Manual inspections were taking 3 weeks per building and missing
+                subsurface defects entirely.
+              </p>
+
+              <div class="case-study-challenge">
+                <h4>Challenge</h4>
+                <p>
+                  After two unplanned outages in Q3 — one caused by a failed CRAH unit,
+                  another by storm water ingress through an undetected membrane breach —
+                  the facilities team needed a systematic way to identify every thermal
+                  and structural risk across the campus before winter.
+                </p>
+              </div>
+
+              <div class="case-study-solution">
+                <h4>Jinki's Approach</h4>
+                <p>
+                  A single-day aerial thermal and visual survey covered all six buildings,
+                  every rooftop mechanical system, and the full perimeter. AI-assisted
+                  analysis cross-referenced 47,000+ thermal data points against equipment
+                  baselines, producing a severity-ranked report within 48 hours.
+                </p>
+              </div>
+            </div>
+
+            <div class="case-study-results">
+              <h4>Results</h4>
+              <div class="case-result-item">
+                <span class="case-result-number">23</span>
+                <span class="case-result-text">Thermal anomalies identified (3 critical)</span>
+              </div>
+              <div class="case-result-item">
+                <span class="case-result-number">$4.1M</span>
+                <span class="case-result-text">Estimated prevented downtime costs</span>
+              </div>
+              <div class="case-result-item">
+                <span class="case-result-number">1 day</span>
+                <span class="case-result-text">vs. 18 weeks traditional inspection</span>
+              </div>
+              <div class="case-result-item">
+                <span class="case-result-number">100%</span>
+                <span class="case-result-text">Campus coverage including inaccessible areas</span>
+              </div>
+
+              <blockquote class="case-study-quote">
+                "For the first time, we had a complete picture of every thermal and structural risk across our campus — ranked by severity with clear remediation steps."
+                <cite>— VP of Facilities Engineering</cite>
+              </blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SECTION 7: Service Comparison Table
+         ============================================================ -->
+    <section class="alpha-section" aria-label="Service Comparison" id="comparison-table">
+      <div class="alpha-section-inner">
+        <div class="alpha-section-header reveal">
+          <div class="alpha-eyebrow">
+            <span class="alpha-eyebrow-line"></span>
+            <span class="alpha-eyebrow-text">Why Jinki</span>
+          </div>
+          <h2>Aerial Intelligence vs.<br/>Traditional Inspection</h2>
+          <p class="alpha-section-subtitle">
+            Manual roof walks and spot-check thermography cover a fraction of your
+            campus. Jinki delivers complete coverage with prioritized intelligence.
+          </p>
+        </div>
+
+        <div class="alpha-comparison-table-wrap reveal reveal-delay-1">
+          <table class="alpha-comparison-table" role="table">
+            <thead>
+              <tr>
+                <th scope="col" class="comp-th-feature">Capability</th>
+                <th scope="col" class="comp-th-jinki">
+                  <span class="comp-brand">Jinki</span>
+                  <span class="comp-brand-sub">Aerial Intelligence</span>
+                </th>
+                <th scope="col" class="comp-th-trad">
+                  <span class="comp-brand">Traditional</span>
+                  <span class="comp-brand-sub">Manual Inspection</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {comparisonRows.map(row => (
+                <tr>
+                  <td class="comp-feature">{row.feature}</td>
+                  <td class="comp-cell comp-cell-jinki">
+                    {row.jinki ? (
+                      <span class="comp-check" aria-label="Yes">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="rgba(0,229,255,0.15)"/><path d="M6 10l3 3 5-6" stroke="#00E5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </span>
+                    ) : (
+                      <span class="comp-x" aria-label="No">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="rgba(255,75,75,0.1)"/><path d="M7 7l6 6M13 7l-6 6" stroke="#FF4B4B" stroke-width="2" stroke-linecap="round"/></svg>
+                      </span>
+                    )}
+                  </td>
+                  <td class="comp-cell comp-cell-trad">
+                    {row.traditional ? (
+                      <span class="comp-check-dim" aria-label="Yes">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="rgba(150,160,170,0.1)"/><path d="M6 10l3 3 5-6" stroke="rgba(150,160,170,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </span>
+                    ) : (
+                      <span class="comp-x" aria-label="No">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="rgba(255,75,75,0.1)"/><path d="M7 7l6 6M13 7l-6 6" stroke="#FF4B4B" stroke-width="2" stroke-linecap="round"/></svg>
+                      </span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <LeadGen />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ================================================================
+     TEAM ALPHA — DATA CENTERS REDESIGN STYLES
+     ================================================================ */
+
+  /* ---- Shared Section Tokens ---- */
+  .alpha-section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .alpha-section { padding: 8rem clamp(20px, 5vw, 80px); }
+  }
+
+  .alpha-section-dim {
+    background: var(--surface-dim);
+  }
+
+  .alpha-section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .alpha-section-header {
+    margin-bottom: 56px;
+  }
+
+  .alpha-section-header h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
+
+  .alpha-section-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-top: 16px;
+  }
+
+  .alpha-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .alpha-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .alpha-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+  }
+
+  /* ================================================================
+     HERO
+     ================================================================ */
+  .alpha-hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    padding: 140px clamp(20px, 5vw, 80px) 60px;
+    background: var(--surface-container-lowest);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .alpha-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 48px;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .alpha-hero-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+
+  .gradient-text-cyan {
+    background: linear-gradient(135deg, #00E5FF, #00a8b5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .alpha-hero-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 540px;
+    margin-bottom: 32px;
+  }
+
+  .alpha-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .alpha-cta {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #00E5FF 0%, #00a8b5 50%, #00626e 100%);
+    box-shadow: 0 2px 12px rgba(0, 229, 255, 0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+
+  .alpha-cta:hover {
+    box-shadow: 0 4px 20px rgba(0, 229, 255, 0.4), 0 0 60px rgba(0, 229, 255, 0.12), inset 0 1px 0 rgba(255,255,255,0.25);
+    transform: translateY(-1px);
+  }
+
+  .alpha-cta-secondary {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .alpha-cta-secondary:hover {
+    color: var(--accent);
+  }
+
+  /* ---- Interactive Thermal Heatmap ---- */
+  .alpha-heatmap-wrap {
+    position: relative;
+  }
+
+  .alpha-heatmap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 11;
+    background: linear-gradient(145deg, #080a10, #0c1018, #101420);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow), 0 0 80px rgba(0, 229, 255, 0.05);
+    cursor: crosshair;
+  }
+
+  .heatmap-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .heatmap-scanline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.4), transparent);
+    animation: scanline 4s linear infinite;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.2), 0 4px 40px rgba(0, 229, 255, 0.1);
+  }
+
+  @keyframes scanline {
+    0% { top: 0; }
+    100% { top: 100%; }
+  }
+
+  .heatmap-thermal-layer {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 120px 100px at 22% 28%, rgba(255, 50, 0, 0.12), transparent),
+      radial-gradient(ellipse 80px 70px at 58% 35%, rgba(255, 150, 0, 0.08), transparent),
+      radial-gradient(ellipse 90px 80px at 38% 62%, rgba(255, 50, 0, 0.1), transparent),
+      radial-gradient(ellipse 70px 60px at 75% 55%, rgba(255, 150, 0, 0.07), transparent),
+      radial-gradient(ellipse 60px 50px at 85% 25%, rgba(255, 200, 0, 0.06), transparent);
+    mix-blend-mode: screen;
+  }
+
+  .heatmap-buildings {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ---- Hotspots ---- */
+  .heatmap-hotspot {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    transform: translate(-50%, -50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 5;
+    padding: 0;
+  }
+
+  .hotspot-pulse {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    animation: hotspot-pulse 2.5s ease-in-out infinite;
+  }
+
+  .hotspot-core {
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    border: 2px solid;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .hotspot-critical .hotspot-pulse {
+    background: rgba(255, 70, 50, 0.2);
+  }
+  .hotspot-critical .hotspot-core {
+    background: radial-gradient(circle, rgba(255, 70, 50, 0.8), rgba(255, 50, 0, 0.4));
+    border-color: rgba(255, 70, 50, 0.6);
+    box-shadow: 0 0 12px rgba(255, 70, 50, 0.4);
+  }
+
+  .hotspot-warning .hotspot-pulse {
+    background: rgba(255, 180, 0, 0.2);
+  }
+  .hotspot-warning .hotspot-core {
+    background: radial-gradient(circle, rgba(255, 180, 0, 0.8), rgba(255, 150, 0, 0.4));
+    border-color: rgba(255, 180, 0, 0.6);
+    box-shadow: 0 0 12px rgba(255, 180, 0, 0.4);
+  }
+
+  .hotspot-moderate .hotspot-pulse {
+    background: rgba(255, 220, 50, 0.15);
+  }
+  .hotspot-moderate .hotspot-core {
+    background: radial-gradient(circle, rgba(255, 220, 50, 0.7), rgba(255, 200, 0, 0.3));
+    border-color: rgba(255, 220, 50, 0.5);
+    box-shadow: 0 0 10px rgba(255, 220, 50, 0.3);
+  }
+
+  .heatmap-hotspot:hover .hotspot-core,
+  .heatmap-hotspot:focus-visible .hotspot-core {
+    transform: scale(1.3);
+    box-shadow: 0 0 24px rgba(255, 100, 50, 0.6);
+  }
+
+  @keyframes hotspot-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(1.6); opacity: 0; }
+  }
+
+  /* ---- Tooltip ---- */
+  .heatmap-tooltip {
+    position: absolute;
+    z-index: 20;
+    width: 280px;
+    background: rgba(10, 12, 16, 0.92);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 229, 255, 0.15);
+    border-radius: 12px;
+    padding: 16px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  }
+
+  .heatmap-tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tooltip-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .tooltip-severity {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .tooltip-severity.severity-critical { background: #FF4632; box-shadow: 0 0 8px rgba(255,70,50,0.5); }
+  .tooltip-severity.severity-warning { background: #FFB400; box-shadow: 0 0 8px rgba(255,180,0,0.5); }
+  .tooltip-severity.severity-moderate { background: #FFDC32; box-shadow: 0 0 8px rgba(255,220,50,0.4); }
+
+  .tooltip-label {
+    font-family: var(--font-headline);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .tooltip-temp {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FF6B35;
+    margin-bottom: 8px;
+  }
+
+  .tooltip-desc {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  /* ---- HUD ---- */
+  .heatmap-hud {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 229, 255, 0.1);
+    z-index: 3;
+  }
+
+  .hud-line {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .hud-key {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    min-width: 72px;
+  }
+
+  .hud-val {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
+  }
+
+  .hud-val-accent {
+    color: var(--accent);
+  }
+
+  /* ================================================================
+     STATS
+     ================================================================ */
+  .alpha-stats {
+    background: var(--surface-container-low);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .alpha-stats-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 56px clamp(20px, 5vw, 80px);
+    gap: 32px;
+  }
+
+  .alpha-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .alpha-stat-icon {
+    font-size: 28px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .alpha-stat-value-wrap {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .alpha-stat-prefix {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .alpha-stat-value {
+    font-family: var(--font-headline);
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .alpha-stat-label {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    max-width: 200px;
+  }
+
+  /* ================================================================
+     BEFORE/AFTER SLIDER
+     ================================================================ */
+  .alpha-slider-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .alpha-slider {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    cursor: col-resize;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .slider-layer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .slider-before {
+    z-index: 1;
+    clip-path: inset(0 50% 0 0);
+  }
+
+  .slider-after {
+    z-index: 0;
+  }
+
+  .slider-scene {
+    position: absolute;
+    inset: 0;
+  }
+
+  .slider-scene-normal {
+    background: linear-gradient(135deg, #1a1e26, #252a34);
+  }
+
+  .slider-scene-thermal {
+    background: linear-gradient(135deg, #080a14, #0c1020);
+  }
+
+  .scene-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(150, 160, 170, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(150, 160, 170, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .scene-grid-thermal {
+    background-image:
+      linear-gradient(rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 229, 255, 0.04) 1px, transparent 1px);
+  }
+
+  .scene-buildings {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .scene-label {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(150, 160, 170, 0.6);
+    padding: 6px 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+    border: 1px solid rgba(150, 160, 170, 0.1);
+  }
+
+  .scene-label-thermal {
+    color: rgba(0, 229, 255, 0.7);
+    border-color: rgba(0, 229, 255, 0.15);
+  }
+
+  .scene-caption {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(150, 160, 170, 0.5);
+  }
+
+  .scene-caption-thermal {
+    color: rgba(0, 229, 255, 0.6);
+  }
+
+  .thermal-anomaly {
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: anomaly-glow 3s ease-in-out infinite;
+  }
+
+  .anomaly-critical {
+    background: radial-gradient(circle, rgba(255, 70, 50, 0.5), rgba(255, 50, 0, 0.15), transparent);
+    box-shadow: 0 0 20px rgba(255, 70, 50, 0.3);
+  }
+
+  .anomaly-warning {
+    background: radial-gradient(circle, rgba(255, 180, 0, 0.4), rgba(255, 150, 0, 0.1), transparent);
+    box-shadow: 0 0 15px rgba(255, 180, 0, 0.2);
+  }
+
+  .anomaly-moderate {
+    background: radial-gradient(circle, rgba(255, 220, 50, 0.3), rgba(255, 200, 0, 0.08), transparent);
+    box-shadow: 0 0 12px rgba(255, 220, 50, 0.15);
+  }
+
+  @keyframes anomaly-glow {
+    0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+  }
+
+  /* Slider handle */
+  .slider-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 4px;
+    z-index: 10;
+    transform: translateX(-50%);
+    cursor: col-resize;
+  }
+
+  .slider-handle-line {
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
+  }
+
+  .slider-handle-grip {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+  }
+
+  .slider-handle:hover .slider-handle-grip,
+  .slider-handle:focus-visible .slider-handle-grip {
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+
+  /* ================================================================
+     PROCESS FLOW
+     ================================================================ */
+  .alpha-process {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .process-connector {
+    position: absolute;
+    left: 23px;
+    top: 40px;
+    bottom: 40px;
+    width: 2px;
+    background: var(--border);
+    border-radius: 1px;
+  }
+
+  .process-connector-fill {
+    width: 100%;
+    height: 0%;
+    background: linear-gradient(to bottom, var(--accent), rgba(0, 229, 255, 0.3));
+    border-radius: 1px;
+    transition: height 0.3s ease;
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+  }
+
+  .process-step {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    padding: 24px 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .process-step-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .process-step-number {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.1em;
+  }
+
+  .process-step-dot {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--surface-container);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+    transition: all 0.4s ease;
+  }
+
+  .process-step.step-active .process-step-dot {
+    background: var(--accent-glow);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  .process-step-content {
+    flex: 1;
+    padding-top: 4px;
+  }
+
+  .process-step-title {
+    font-family: var(--font-headline);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+  }
+
+  .process-step.step-active .process-step-title {
+    color: var(--accent);
+  }
+
+  .process-step-desc {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 560px;
+  }
+
+  @media (min-width: 768px) {
+    .process-connector {
+      left: 23px;
+    }
+  }
+
+  /* ================================================================
+     ROI CALCULATOR
+     ================================================================ */
+  .alpha-roi-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .alpha-roi-container {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+  }
+
+  .alpha-roi-inputs {
+    padding: 32px;
+  }
+
+  .roi-input-title {
+    font-family: var(--font-headline);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 28px;
+  }
+
+  .roi-field {
+    margin-bottom: 28px;
+  }
+
+  .roi-field:last-child {
+    margin-bottom: 0;
+  }
+
+  .roi-label {
+    display: block;
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+  }
+
+  .roi-range {
+    width: 100%;
+    height: 6px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--surface-container-high);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  .roi-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .roi-range::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+  }
+
+  .roi-range::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
+    cursor: pointer;
+    border: none;
+  }
+
+  .roi-range-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+
+  .roi-range-current {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .roi-select {
+    width: 100%;
+    padding: 14px 16px;
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23849396' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    transition: border-color 0.2s ease;
+  }
+
+  .roi-select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+
+  /* ROI Results */
+  .alpha-roi-results {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .roi-results-title {
+    font-family: var(--font-headline);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .roi-result-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .roi-result-card:hover {
+    border-color: rgba(0, 229, 255, 0.15);
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  .roi-result-icon {
+    font-size: 24px;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .roi-result-data {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .roi-result-value {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    transition: all 0.3s ease;
+  }
+
+  .roi-result-label {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+  }
+
+  .roi-disclaimer {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  /* ================================================================
+     CASE STUDY
+     ================================================================ */
+  .alpha-case-study {
+    position: relative;
+    padding: 40px;
+    overflow: hidden;
+  }
+
+  .case-study-badge {
+    display: inline-block;
+    font-family: var(--font-label);
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    background: var(--accent-glow);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 229, 255, 0.15);
+    margin-bottom: 28px;
+  }
+
+  .case-study-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  @media (min-width: 768px) {
+    .case-study-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 48px;
+    }
+  }
+
+  .case-study-title {
+    font-family: var(--font-headline);
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .case-study-context {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .case-study-challenge,
+  .case-study-solution {
+    margin-bottom: 20px;
+  }
+
+  .case-study-challenge h4,
+  .case-study-solution h4,
+  .case-study-results h4 {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .case-study-challenge p,
+  .case-study-solution p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .case-study-results {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .case-result-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 16px;
+    background: var(--accent-glow);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 229, 255, 0.08);
+  }
+
+  .case-result-number {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .case-result-text {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+  }
+
+  .case-study-quote {
+    margin-top: 8px;
+    padding: 16px;
+    border-left: 2px solid var(--accent);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .case-study-quote cite {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    font-style: normal;
+    letter-spacing: 0.05em;
+  }
+
+  /* ================================================================
+     COMPARISON TABLE
+     ================================================================ */
+  .alpha-comparison-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .alpha-comparison-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 600px;
+  }
+
+  .alpha-comparison-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  .alpha-comparison-table th {
+    padding: 20px 24px;
+    text-align: left;
+    font-family: var(--font-headline);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    background: var(--surface-container-low);
+    border-bottom: 2px solid var(--glass-border);
+  }
+
+  .comp-th-feature {
+    width: 50%;
+  }
+
+  .comp-th-jinki,
+  .comp-th-trad {
+    text-align: center;
+    width: 25%;
+  }
+
+  .comp-brand {
+    display: block;
+    font-size: 0.9375rem;
+  }
+
+  .comp-brand-sub {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    color: var(--text-tertiary);
+    margin-top: 2px;
+  }
+
+  .comp-th-jinki .comp-brand {
+    color: var(--accent);
+  }
+
+  .alpha-comparison-table td {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--glass-border);
+    vertical-align: middle;
+  }
+
+  .alpha-comparison-table tbody tr {
+    transition: background 0.2s ease;
+  }
+
+  .alpha-comparison-table tbody tr:hover {
+    background: var(--accent-glow);
+  }
+
+  .comp-feature {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--text-primary);
+  }
+
+  .comp-cell {
+    text-align: center;
+  }
+
+  .comp-check,
+  .comp-x,
+  .comp-check-dim {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ================================================================
+     RESPONSIVE
+     ================================================================ */
+  @media (max-width: 768px) {
+    .alpha-hero-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .alpha-hero {
+      min-height: auto;
+      padding-top: 120px;
+    }
+
+    .alpha-hero-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .alpha-stats-inner {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      padding: 40px clamp(20px, 5vw, 80px);
+    }
+
+    .alpha-stat-value {
+      font-size: 2rem;
+    }
+
+    .process-step {
+      gap: 20px;
+    }
+
+    .alpha-case-study {
+      padding: 24px;
+    }
+
+    .heatmap-hud {
+      display: none;
+    }
+
+    .heatmap-tooltip {
+      width: 220px;
+      padding: 12px;
+    }
+
+    .tooltip-temp {
+      font-size: 1.25rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .alpha-stats-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .alpha-slider {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  /* ================================================================
+     LIGHT MODE OVERRIDES
+     ================================================================ */
+  :global([data-theme="light"]) .alpha-heatmap {
+    background: linear-gradient(145deg, #e8eaed, #f0f2f5, #f5f7fa);
+    border-color: var(--glass-border);
+  }
+
+  :global([data-theme="light"]) .heatmap-grid {
+    background-image:
+      linear-gradient(rgba(0, 131, 143, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 131, 143, 0.05) 1px, transparent 1px);
+  }
+
+  :global([data-theme="light"]) .heatmap-hud {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 131, 143, 0.15);
+  }
+
+  :global([data-theme="light"]) .heatmap-tooltip {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: rgba(0, 131, 143, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  :global([data-theme="light"]) .tooltip-label {
+    color: var(--text-primary);
+  }
+
+  :global([data-theme="light"]) .tooltip-desc {
+    color: var(--text-secondary);
+  }
+
+  :global([data-theme="light"]) .slider-scene-normal {
+    background: linear-gradient(135deg, #e8eaed, #f0f2f5);
+  }
+
+  :global([data-theme="light"]) .slider-scene-thermal {
+    background: linear-gradient(135deg, #dde0e5, #e5e8ed);
+  }
+
+  :global([data-theme="light"]) .scene-label {
+    background: rgba(255, 255, 255, 0.6);
+    color: rgba(80, 90, 100, 0.7);
+    border-color: rgba(80, 90, 100, 0.15);
+  }
+
+  :global([data-theme="light"]) .roi-range {
+    background: var(--surface-container-high);
+  }
+
+  :global([data-theme="light"]) .roi-range::-webkit-slider-thumb {
+    background: var(--accent);
+    box-shadow: 0 0 8px rgba(0, 131, 143, 0.3);
+  }
+
+  :global([data-theme="light"]) .alpha-cta {
+    background: #00838f;
+    box-shadow: 0 2px 12px rgba(0, 131, 143, 0.3);
+  }
+
+  :global([data-theme="light"]) .alpha-cta:hover {
+    background: #00969e;
+    box-shadow: 0 4px 20px rgba(0, 131, 143, 0.4);
+  }
+
+  /* ================================================================
+     REDUCED MOTION
+     ================================================================ */
+  @media (prefers-reduced-motion: reduce) {
+    .heatmap-scanline,
+    .hotspot-pulse,
+    .thermal-anomaly {
+      animation: none;
+    }
+
+    .heatmap-scanline {
+      display: none;
+    }
+
+    .hotspot-pulse {
+      opacity: 0.3;
+      transform: scale(1.2);
+    }
+
+    .process-connector-fill {
+      transition: none;
+      height: 100% !important;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    /* ================================================================
+       HOTSPOT INTERACTIONS
+       ================================================================ */
+    var hotspotData = {
+      'hs-1': { temp: '72.4\u00B0C', label: 'CRAH Unit #7', desc: 'Failing compressor bearing \u2014 estimated 14 days to failure. Replacement cost: $8,200 vs $340K unplanned outage.', severity: 'critical' },
+      'hs-2': { temp: '54.1\u00B0C', label: 'Roof Section B3', desc: 'Moisture intrusion beneath membrane \u2014 12 sq ft affected area. Schedule repair before next rain event.', severity: 'warning' },
+      'hs-3': { temp: '61.8\u00B0C', label: 'Generator Exhaust', desc: 'Elevated exhaust temperature indicating fuel injection timing drift. Service within 30 days.', severity: 'warning' },
+      'hs-4': { temp: '83.2\u00B0C', label: 'Transformer T-4', desc: 'Hot spot on bushing connection \u2014 loose connection risk. Immediate inspection recommended per NFPA 70B.', severity: 'critical' },
+      'hs-5': { temp: '47.6\u00B0C', label: 'Cooling Tower #2', desc: 'Fill media degradation reducing efficiency by ~18%. Schedule replacement during next maintenance window.', severity: 'moderate' },
+    };
+
+    var tooltip = document.getElementById('heatmap-tooltip');
+    var tooltipLabel = document.getElementById('tooltip-label');
+    var tooltipTemp = document.getElementById('tooltip-temp');
+    var tooltipDesc = document.getElementById('tooltip-desc');
+    var tooltipSeverity = document.getElementById('tooltip-severity');
+
+    if (!tooltip) return;
+
+    var hotspotBtns = document.querySelectorAll('.heatmap-hotspot');
+    var heatmapEl = document.querySelector('.alpha-heatmap');
+    var activeHotspot = null;
+
+    hotspotBtns.forEach(function(btn) {
+      btn.addEventListener('mouseenter', function() { showTooltip(btn); });
+      btn.addEventListener('mouseleave', function() { hideTooltip(); });
+      btn.addEventListener('focus', function() { showTooltip(btn); });
+      btn.addEventListener('blur', function() { hideTooltip(); });
+      btn.addEventListener('click', function() {
+        if (activeHotspot === btn) {
+          hideTooltip();
+          activeHotspot = null;
+        } else {
+          showTooltip(btn);
+          activeHotspot = btn;
+        }
+      });
+    });
+
+    function showTooltip(btn) {
+      var id = btn.getAttribute('data-hotspot-id');
+      var data = hotspotData[id];
+      if (!data) return;
+
+      tooltipLabel.textContent = data.label;
+      tooltipTemp.textContent = data.temp;
+      tooltipDesc.textContent = data.desc;
+      tooltipSeverity.className = 'tooltip-severity severity-' + data.severity;
+
+      // Position tooltip
+      var heatmapRect = heatmapEl.getBoundingClientRect();
+      var btnRect = btn.getBoundingClientRect();
+      var tooltipWidth = 280;
+
+      var left = btnRect.left - heatmapRect.left + btnRect.width / 2;
+      var top = btnRect.top - heatmapRect.top - 10;
+
+      // Keep within bounds
+      if (left + tooltipWidth / 2 > heatmapRect.width) {
+        left = heatmapRect.width - tooltipWidth - 10;
+      } else if (left - tooltipWidth / 2 < 0) {
+        left = 10;
+      } else {
+        left = left - tooltipWidth / 2;
+      }
+
+      // Show above or below
+      if (top > 200) {
+        tooltip.style.top = 'auto';
+        tooltip.style.bottom = (heatmapRect.height - btnRect.top + heatmapRect.top + 10) + 'px';
+      } else {
+        tooltip.style.top = (btnRect.bottom - heatmapRect.top + 10) + 'px';
+        tooltip.style.bottom = 'auto';
+      }
+      tooltip.style.left = left + 'px';
+
+      tooltip.classList.add('visible');
+      tooltip.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideTooltip() {
+      if (activeHotspot) return;
+      tooltip.classList.remove('visible');
+      tooltip.setAttribute('aria-hidden', 'true');
+    }
+
+    // Close tooltip on outside click
+    document.addEventListener('click', function(e) {
+      if (activeHotspot && !e.target.closest('.heatmap-hotspot')) {
+        activeHotspot = null;
+        tooltip.classList.remove('visible');
+        tooltip.setAttribute('aria-hidden', 'true');
+      }
+    });
+
+    /* ================================================================
+       BEFORE/AFTER SLIDER
+       ================================================================ */
+    var slider = document.getElementById('comparison-slider');
+    var handle = document.getElementById('slider-handle');
+    if (!slider || !handle) return;
+
+    var beforeLayer = slider.querySelector('.slider-before');
+    var isDragging = false;
+
+    function updateSliderPosition(clientX) {
+      var rect = slider.getBoundingClientRect();
+      var x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+      var pct = (x / rect.width) * 100;
+
+      beforeLayer.style.clipPath = 'inset(0 ' + (100 - pct) + '% 0 0)';
+      handle.style.left = pct + '%';
+      handle.setAttribute('aria-valuenow', Math.round(pct));
+    }
+
+    slider.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      updateSliderPosition(e.clientX);
+      e.preventDefault();
+    });
+
+    slider.addEventListener('touchstart', function(e) {
+      isDragging = true;
+      updateSliderPosition(e.touches[0].clientX);
+    }, { passive: true });
+
+    document.addEventListener('mousemove', function(e) {
+      if (isDragging) updateSliderPosition(e.clientX);
+    });
+
+    document.addEventListener('touchmove', function(e) {
+      if (isDragging) updateSliderPosition(e.touches[0].clientX);
+    }, { passive: true });
+
+    document.addEventListener('mouseup', function() { isDragging = false; });
+    document.addEventListener('touchend', function() { isDragging = false; });
+
+    // Keyboard support
+    handle.addEventListener('keydown', function(e) {
+      var current = parseInt(handle.getAttribute('aria-valuenow') || '50', 10);
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        current = Math.max(0, current - 2);
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        current = Math.min(100, current + 2);
+      }
+      beforeLayer.style.clipPath = 'inset(0 ' + (100 - current) + '% 0 0)';
+      handle.style.left = current + '%';
+      handle.setAttribute('aria-valuenow', current);
+    });
+
+    /* ================================================================
+       PROCESS FLOW ANIMATION
+       ================================================================ */
+    var processFlow = document.getElementById('process-flow');
+    var connectorFill = document.getElementById('process-connector-fill');
+    if (processFlow && connectorFill) {
+      var processSteps = processFlow.querySelectorAll('.process-step');
+
+      var processObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var idx = parseInt(entry.target.getAttribute('data-step-index'), 10);
+            entry.target.classList.add('step-active');
+            var pct = Math.min(100, ((idx + 1) / processSteps.length) * 100);
+            connectorFill.style.height = pct + '%';
+          }
+        });
+      }, { threshold: 0.5, rootMargin: '0px 0px -20% 0px' });
+
+      processSteps.forEach(function(step) {
+        processObserver.observe(step);
+      });
+    }
+
+    /* ================================================================
+       ROI CALCULATOR
+       ================================================================ */
+    var roiSqft = document.getElementById('roi-sqft');
+    var roiBuildings = document.getElementById('roi-buildings');
+    var roiTier = document.getElementById('roi-tier');
+    var roiSqftVal = document.getElementById('roi-sqft-val');
+    var roiBuildingsVal = document.getElementById('roi-buildings-val');
+    var roiSavings = document.getElementById('roi-savings');
+    var roiTime = document.getElementById('roi-time');
+    var roiRisk = document.getElementById('roi-risk');
+    var roiReturn = document.getElementById('roi-return');
+
+    if (roiSqft && roiBuildings && roiTier) {
+      function formatCurrency(val) {
+        if (val >= 1000000) return '$' + (val / 1000000).toFixed(1) + 'M';
+        if (val >= 1000) return '$' + Math.round(val / 1000) + 'K';
+        return '$' + Math.round(val);
+      }
+
+      function calculateROI() {
+        var sqft = parseInt(roiSqft.value, 10);
+        var buildings = parseInt(roiBuildings.value, 10);
+        var tier = parseInt(roiTier.value, 10);
+
+        // Display current values
+        roiSqftVal.textContent = sqft.toLocaleString() + ' sq ft';
+        roiBuildingsVal.textContent = buildings + ' building' + (buildings > 1 ? 's' : '');
+
+        // Tier multipliers
+        var tierMultiplier = tier === 4 ? 2.2 : (tier === 3 ? 1.5 : 1.0);
+        var downtimeCostPerMin = tier === 4 ? 15000 : (tier === 3 ? 9000 : 5000);
+
+        // Estimated savings: based on typical 2 prevented incidents per year
+        var baseSavings = downtimeCostPerMin * 45 * 2; // 45 min avg outage, 2 incidents
+        var facilitySizeMultiplier = sqft / 500000;
+        var buildingMultiplier = Math.log2(buildings + 1);
+        var totalSavings = Math.round(baseSavings * facilitySizeMultiplier * buildingMultiplier * tierMultiplier);
+
+        // Time reduction: aerial vs manual
+        var manualWeeksPerBuilding = 2.5;
+        var aerialHoursPerBuilding = 0.75;
+        var totalManualWeeks = manualWeeksPerBuilding * buildings;
+        var totalAerialHours = aerialHoursPerBuilding * buildings;
+        var timeReduction = Math.min(95, Math.round((1 - (totalAerialHours / (totalManualWeeks * 40))) * 100));
+
+        // Risk reduction
+        var riskReduction = Math.min(85, Math.round(55 + (buildings * 2) + (tier * 3)));
+
+        // ROI multiplier
+        var assessmentCost = 15000 + (buildings * 5000);
+        var roiMultiplier = Math.round(totalSavings / assessmentCost);
+
+        // Update display
+        roiSavings.textContent = formatCurrency(totalSavings);
+        roiTime.textContent = timeReduction + '%';
+        roiRisk.textContent = riskReduction + '%';
+        roiReturn.textContent = roiMultiplier + 'x';
+      }
+
+      roiSqft.addEventListener('input', calculateROI);
+      roiBuildings.addEventListener('input', calculateROI);
+      roiTier.addEventListener('change', calculateROI);
+
+      // Initial calculation
+      calculateROI();
+    }
+
+    /* ================================================================
+       COUNTER ANIMATION (for stats)
+       ================================================================ */
+    var statValues = document.querySelectorAll('.alpha-stat-value[data-count]');
+    if (statValues.length) {
+      var counterObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            animateCounter(entry.target);
+            counterObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      statValues.forEach(function(el) { counterObserver.observe(el); });
+    }
+
+    function animateCounter(el) {
+      var target = el.getAttribute('data-count');
+      var suffix = el.getAttribute('data-suffix') || '';
+      var num = parseFloat(target);
+      var isDecimal = target.indexOf('.') !== -1;
+      var duration = 1800;
+      var start = performance.now();
+
+      // Check reduced motion
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        el.textContent = (isDecimal ? num.toFixed(1) : Math.round(num)) + suffix;
+        return;
+      }
+
+      function update(now) {
+        var elapsed = now - start;
+        var progress = Math.min(elapsed / duration, 1);
+        // Ease out cubic
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = num * eased;
+        el.textContent = (isDecimal ? current.toFixed(1) : Math.round(current)) + suffix;
+        if (progress < 1) requestAnimationFrame(update);
+      }
+      requestAnimationFrame(update);
+    }
+  })();
+</script>

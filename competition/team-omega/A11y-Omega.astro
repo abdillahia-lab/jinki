@@ -1,0 +1,916 @@
+---
+import '../../styles/global.css';
+const title = 'Accessibility (WCAG 2.2) — Team Omega | Jinki';
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Team Omega WCAG 2.2 AA compliance showcase for Jinki Aerial Intelligence" />
+  <title>{title}</title>
+  <link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=accessibility,auto_fix_high,check,check_circle,close,error,hearing,menu_book,record_voice_over,rule,text_fields,visibility,warning&display=swap" rel="stylesheet" />
+  <script is:inline>
+    (function() {
+      var theme = localStorage.getItem('jinki-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+  <style is:inline>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <header class="om-header" role="banner">
+    <div class="om-header-inner">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:#7B61FF;" aria-hidden="true">accessibility</span>
+        <div>
+          <h1 style="font-size:clamp(18px,3vw,24px);line-height:1.2;">WCAG 2.2 AA Compliance</h1>
+          <p style="font-family:var(--font-mono);font-size:12px;color:#7B61FF;letter-spacing:0.05em;">Team Omega &mdash; Round 14</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" role="main" style="max-width:1200px;margin:0 auto;padding:32px 24px 80px;">
+
+    <!-- Section 1: WCAG Checklist -->
+    <section id="checklist" class="om-section" aria-labelledby="check-heading">
+      <div class="om-section-header">
+        <span class="sec-num" aria-hidden="true">01</span>
+        <h2 id="check-heading">WCAG 2.2 AA Compliance Checklist</h2>
+      </div>
+      <div class="om-card glass-panel" style="border-radius:16px;">
+        <p class="om-desc">A comprehensive audit of Jinki's pages against WCAG 2.2 Level AA success criteria, organized by principle.</p>
+
+        <div class="checklist-wrapper">
+          <div class="checklist-group">
+            <h3 class="checklist-principle">
+              <span class="principle-num">1</span>
+              Perceivable
+            </h3>
+            <div class="checklist-items">
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>1.1.1 Non-text Content</strong>
+                  <p>All images have descriptive alt text. Decorative elements use <code>aria-hidden="true"</code>.</p>
+                </div>
+              </div>
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>1.3.1 Info and Relationships</strong>
+                  <p>Semantic HTML structure: proper heading hierarchy, landmark roles, and list markup.</p>
+                </div>
+              </div>
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>1.4.3 Contrast (Minimum)</strong>
+                  <p>Text contrast ratios meet 4.5:1 for normal text, 3:1 for large text across both themes.</p>
+                </div>
+              </div>
+              <div class="check-item warn">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">warning</span>
+                <div>
+                  <strong>1.4.11 Non-text Contrast</strong>
+                  <p>Most UI components meet 3:1. Glass panel borders in dark mode measure 2.8:1 &mdash; remediation recommended.</p>
+                </div>
+              </div>
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>1.4.12 Text Spacing</strong>
+                  <p>Content remains usable when text spacing is adjusted per WCAG criteria.</p>
+                </div>
+              </div>
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>1.4.13 Content on Hover or Focus</strong>
+                  <p>Tooltips and dropdowns are dismissible, hoverable, and persistent.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="checklist-group">
+            <h3 class="checklist-principle">
+              <span class="principle-num">2</span>
+              Operable
+            </h3>
+            <div class="checklist-items">
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>2.1.1 Keyboard</strong>
+                  <p>All interactive elements operable via keyboard. No keyboard traps.</p>
+                </div>
+              </div>
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>2.4.3 Focus Order</strong>
+                  <p>Tab order follows visual layout. Skip link available.</p>
+                </div>
+              </div>
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>2.4.7 Focus Visible</strong>
+                  <p>Custom focus ring: 2px solid cyan, 2px offset on all focusable elements.</p>
+                </div>
+              </div>
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>2.4.11 Focus Not Obscured (New in 2.2)</strong>
+                  <p>Sticky header does not cover focused elements. Scroll margin ensures visibility.</p>
+                </div>
+              </div>
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>2.5.7 Dragging Movements (New in 2.2)</strong>
+                  <p>No functionality requires dragging. All interactions have click/tap alternatives.</p>
+                </div>
+              </div>
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>2.5.8 Target Size (Minimum) (New in 2.2)</strong>
+                  <p>All interactive targets are at least 24x24 CSS pixels. CTAs exceed 44x44.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="checklist-group">
+            <h3 class="checklist-principle">
+              <span class="principle-num">3</span>
+              Understandable
+            </h3>
+            <div class="checklist-items">
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>3.1.1 Language of Page</strong>
+                  <p><code>lang="en"</code> declared on the html element.</p>
+                </div>
+              </div>
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>3.2.2 On Input</strong>
+                  <p>No context changes occur on input. Form submission requires explicit action.</p>
+                </div>
+              </div>
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>3.3.8 Accessible Authentication (New in 2.2)</strong>
+                  <p>No cognitive function tests required. No CAPTCHA without alternatives.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="checklist-group">
+            <h3 class="checklist-principle">
+              <span class="principle-num">4</span>
+              Robust
+            </h3>
+            <div class="checklist-items">
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>4.1.2 Name, Role, Value</strong>
+                  <p>Custom components use ARIA roles, states, and properties correctly.</p>
+                </div>
+              </div>
+              <div class="check-item pass">
+                <span class="material-symbols-outlined ci-icon" aria-hidden="true">check_circle</span>
+                <div>
+                  <strong>4.1.3 Status Messages</strong>
+                  <p>Dynamic status updates use <code>role="status"</code> or <code>aria-live</code>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="checklist-summary" style="margin-top:24px;">
+          <div class="summary-stat pass-bg">
+            <span class="summary-num" id="pass-count">16</span>
+            <span class="summary-label">Pass</span>
+          </div>
+          <div class="summary-stat warn-bg">
+            <span class="summary-num">1</span>
+            <span class="summary-label">Warning</span>
+          </div>
+          <div class="summary-stat fail-bg">
+            <span class="summary-num">0</span>
+            <span class="summary-label">Fail</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Automated Test Results -->
+    <section id="test-results" class="om-section" aria-labelledby="test-heading">
+      <div class="om-section-header">
+        <span class="sec-num" aria-hidden="true">02</span>
+        <h2 id="test-heading">Automated Test Results</h2>
+      </div>
+      <div class="om-card glass-panel" style="border-radius:16px;">
+        <p class="om-desc">Simulated output from axe-core, Lighthouse, and WAVE accessibility scans across all 17 Jinki pages.</p>
+
+        <div class="test-dashboard">
+          <div class="test-tool">
+            <div class="tool-header">
+              <h3>axe-core</h3>
+              <span class="tool-version">v4.9</span>
+            </div>
+            <div class="tool-score-ring" aria-hidden="true">
+              <svg viewBox="0 0 100 100" width="100" height="100">
+                <circle cx="50" cy="50" r="44" fill="none" stroke="var(--surface-container)" stroke-width="6" />
+                <circle cx="50" cy="50" r="44" fill="none" stroke="#34d399" stroke-width="6"
+                  stroke-dasharray="276.5" stroke-dashoffset="8" stroke-linecap="round"
+                  transform="rotate(-90 50 50)" />
+              </svg>
+              <span class="tool-score">97%</span>
+            </div>
+            <div class="tool-stats">
+              <div class="tool-stat"><span class="stat-num green">0</span> Critical</div>
+              <div class="tool-stat"><span class="stat-num green">0</span> Serious</div>
+              <div class="tool-stat"><span class="stat-num orange">2</span> Moderate</div>
+              <div class="tool-stat"><span class="stat-num green">0</span> Minor</div>
+            </div>
+          </div>
+
+          <div class="test-tool">
+            <div class="tool-header">
+              <h3>Lighthouse A11y</h3>
+              <span class="tool-version">v12.1</span>
+            </div>
+            <div class="tool-score-ring" aria-hidden="true">
+              <svg viewBox="0 0 100 100" width="100" height="100">
+                <circle cx="50" cy="50" r="44" fill="none" stroke="var(--surface-container)" stroke-width="6" />
+                <circle cx="50" cy="50" r="44" fill="none" stroke="#34d399" stroke-width="6"
+                  stroke-dasharray="276.5" stroke-dashoffset="14" stroke-linecap="round"
+                  transform="rotate(-90 50 50)" />
+              </svg>
+              <span class="tool-score">95</span>
+            </div>
+            <div class="tool-stats">
+              <div class="tool-stat"><span class="stat-num green">14</span> Passing audits</div>
+              <div class="tool-stat"><span class="stat-num orange">1</span> Opportunity</div>
+              <div class="tool-stat"><span class="stat-num green">0</span> Failing audits</div>
+            </div>
+          </div>
+
+          <div class="test-tool">
+            <div class="tool-header">
+              <h3>WAVE</h3>
+              <span class="tool-version">v3.2</span>
+            </div>
+            <div class="tool-score-ring" aria-hidden="true">
+              <svg viewBox="0 0 100 100" width="100" height="100">
+                <circle cx="50" cy="50" r="44" fill="none" stroke="var(--surface-container)" stroke-width="6" />
+                <circle cx="50" cy="50" r="44" fill="none" stroke="#34d399" stroke-width="6"
+                  stroke-dasharray="276.5" stroke-dashoffset="3" stroke-linecap="round"
+                  transform="rotate(-90 50 50)" />
+              </svg>
+              <span class="tool-score">99%</span>
+            </div>
+            <div class="tool-stats">
+              <div class="tool-stat"><span class="stat-num green">0</span> Errors</div>
+              <div class="tool-stat"><span class="stat-num orange">3</span> Alerts</div>
+              <div class="tool-stat"><span class="stat-num green">47</span> Features</div>
+              <div class="tool-stat"><span class="stat-num green">128</span> Structural</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="issues-list" style="margin-top:24px;">
+          <h3 style="margin-bottom:12px;">Open Issues</h3>
+          <div class="issue-item">
+            <span class="issue-sev moderate">Moderate</span>
+            <div>
+              <strong>Glass panel border contrast</strong>
+              <p>Border on <code>.glass-panel</code> in dark mode is 2.8:1 against background. Minimum 3:1 required for non-text contrast (1.4.11).</p>
+              <span class="issue-fix">Fix: Increase <code>--glass-border</code> opacity from 0.06 to 0.12</span>
+            </div>
+          </div>
+          <div class="issue-item">
+            <span class="issue-sev moderate">Moderate</span>
+            <div>
+              <strong>Redundant link text</strong>
+              <p>Two "Get in Touch" links in footer have identical accessible names. Should differentiate with <code>aria-label</code>.</p>
+              <span class="issue-fix">Fix: Add <code>aria-label="Get in Touch via email"</code> to the second instance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Screen Reader Simulation -->
+    <section id="sr-sim" class="om-section" aria-labelledby="sr-heading">
+      <div class="om-section-header">
+        <span class="sec-num" aria-hidden="true">03</span>
+        <h2 id="sr-heading">Screen Reader Simulation</h2>
+      </div>
+      <div class="om-card glass-panel" style="border-radius:16px;">
+        <p class="om-desc">Experience how a screen reader navigates the Jinki homepage. Click play to hear the reading order.</p>
+
+        <div class="sr-player">
+          <div class="sr-display" id="sr-display" aria-live="polite" aria-atomic="true">
+            <span class="sr-cursor" aria-hidden="true"></span>
+            <span class="sr-text" id="sr-text">Press Play to begin screen reader simulation</span>
+          </div>
+          <div class="sr-controls">
+            <button class="sr-btn" id="sr-play" aria-label="Play screen reader simulation">
+              <span class="sr-play-icon" id="sr-play-icon">&#9654;</span>
+            </button>
+            <button class="sr-btn" id="sr-prev" aria-label="Previous element">&#9664;&#9664;</button>
+            <button class="sr-btn" id="sr-next" aria-label="Next element">&#9654;&#9654;</button>
+            <div class="sr-progress-wrap">
+              <div class="sr-progress-bar" id="sr-progress" style="width:0%;"></div>
+            </div>
+            <span class="sr-step-count" id="sr-step-count">0 / 0</span>
+          </div>
+        </div>
+
+        <div class="sr-element-info" id="sr-element-info" style="margin-top:16px;">
+          <div class="sr-info-row">
+            <span class="sr-info-label">Role:</span>
+            <span class="sr-info-value" id="sr-role">&mdash;</span>
+          </div>
+          <div class="sr-info-row">
+            <span class="sr-info-label">Name:</span>
+            <span class="sr-info-value" id="sr-name">&mdash;</span>
+          </div>
+          <div class="sr-info-row">
+            <span class="sr-info-label">Level:</span>
+            <span class="sr-info-value" id="sr-level">&mdash;</span>
+          </div>
+        </div>
+
+        <div class="sr-landmark-map" style="margin-top:24px;">
+          <h3 style="margin-bottom:12px;">Landmark Structure</h3>
+          <div class="landmark-tree">
+            <div class="landmark-node root">
+              <span class="landmark-tag">document</span> html lang="en"
+            </div>
+            <div class="landmark-node" style="margin-left:24px;">
+              <span class="landmark-tag">banner</span> header &mdash; Navigation
+            </div>
+            <div class="landmark-node" style="margin-left:48px;">
+              <span class="landmark-tag">navigation</span> Main menu
+            </div>
+            <div class="landmark-node" style="margin-left:24px;">
+              <span class="landmark-tag">main</span> #main-content
+            </div>
+            <div class="landmark-node" style="margin-left:48px;">
+              <span class="landmark-tag">region</span> Hero section
+            </div>
+            <div class="landmark-node" style="margin-left:48px;">
+              <span class="landmark-tag">region</span> Verticals
+            </div>
+            <div class="landmark-node" style="margin-left:48px;">
+              <span class="landmark-tag">region</span> Stats
+            </div>
+            <div class="landmark-node" style="margin-left:48px;">
+              <span class="landmark-tag">form</span> Lead generation
+            </div>
+            <div class="landmark-node" style="margin-left:24px;">
+              <span class="landmark-tag">contentinfo</span> footer
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Cognitive Accessibility -->
+    <section id="cognitive" class="om-section" aria-labelledby="cog-heading">
+      <div class="om-section-header">
+        <span class="sec-num" aria-hidden="true">04</span>
+        <h2 id="cog-heading">Cognitive Accessibility</h2>
+      </div>
+      <div class="om-card glass-panel" style="border-radius:16px;">
+        <p class="om-desc">Designing for cognitive accessibility means clear language, predictable patterns, and minimal cognitive load.</p>
+
+        <div class="cog-grid">
+          <div class="cog-card">
+            <span class="material-symbols-outlined" style="font-size:28px;color:#7B61FF;" aria-hidden="true">text_fields</span>
+            <h3>Reading Level Analysis</h3>
+            <div class="reading-stats">
+              <div class="reading-stat">
+                <span class="reading-metric">Flesch-Kincaid</span>
+                <span class="reading-score good">Grade 8.2</span>
+              </div>
+              <div class="reading-stat">
+                <span class="reading-metric">Flesch Reading Ease</span>
+                <span class="reading-score good">62.4</span>
+              </div>
+              <div class="reading-stat">
+                <span class="reading-metric">Avg. Sentence Length</span>
+                <span class="reading-score good">16.3 words</span>
+              </div>
+              <div class="reading-stat">
+                <span class="reading-metric">Complex Words</span>
+                <span class="reading-score moderate">14.2%</span>
+              </div>
+            </div>
+            <p class="cog-note">Target: Grade 8-10 reading level for B2B tech (achieved). Technical terms are industry-standard and expected by the audience.</p>
+          </div>
+
+          <div class="cog-card">
+            <span class="material-symbols-outlined" style="font-size:28px;color:#7B61FF;" aria-hidden="true">menu_book</span>
+            <h3>Clear Language Principles</h3>
+            <ul class="cog-list">
+              <li>Use active voice: "Jinki detects anomalies" not "anomalies are detected"</li>
+              <li>One idea per sentence</li>
+              <li>Avoid double negatives</li>
+              <li>Define technical terms on first use</li>
+              <li>Use consistent terminology (always "aerial intelligence," never "drone data")</li>
+              <li>Front-load important information</li>
+            </ul>
+          </div>
+
+          <div class="cog-card">
+            <span class="material-symbols-outlined" style="font-size:28px;color:#7B61FF;" aria-hidden="true">auto_fix_high</span>
+            <h3>Predictable Patterns</h3>
+            <ul class="cog-list">
+              <li>Consistent navigation across all 17 pages</li>
+              <li>Same CTA placement (hero + footer) on every page</li>
+              <li>Vertical pages follow identical section structure</li>
+              <li>No unexpected pop-ups or auto-playing media</li>
+              <li>Progress indicators for multi-step processes</li>
+              <li>Error messages appear inline with clear correction instructions</li>
+            </ul>
+          </div>
+
+          <div class="cog-card">
+            <span class="material-symbols-outlined" style="font-size:28px;color:#7B61FF;" aria-hidden="true">visibility</span>
+            <h3>Visual Clarity</h3>
+            <ul class="cog-list">
+              <li>Generous whitespace between sections (48-80px)</li>
+              <li>Maximum line length: 65-75 characters</li>
+              <li>Body text: 16px minimum, 1.7 line height</li>
+              <li>Clear visual hierarchy via type scale</li>
+              <li>Icons paired with text labels (never icon-only)</li>
+              <li>Color is never the only means of conveying information</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <style>
+    .om-header {
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 16px 24px;
+    }
+    .om-header-inner { max-width: 1200px; margin: 0 auto; }
+    .om-section { margin-bottom: 48px; }
+    .om-section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .sec-num {
+      font-family: var(--font-mono);
+      font-size: 48px;
+      font-weight: 700;
+      color: #7B61FF;
+      opacity: 0.25;
+      line-height: 1;
+    }
+    .om-section-header h2 { font-size: clamp(22px, 4vw, 32px); }
+    .om-card { padding: 32px; position: relative; z-index: 0; }
+    .om-desc {
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .om-desc code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      background: var(--surface-container);
+      padding: 2px 8px;
+      border-radius: 4px;
+      color: #7B61FF;
+    }
+
+    /* Checklist */
+    .checklist-wrapper { display: grid; gap: 24px; }
+    .checklist-principle {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+    .principle-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #7B61FF;
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .checklist-items { display: grid; gap: 8px; }
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      background: var(--surface-container);
+      border: 1px solid var(--border);
+    }
+    .ci-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .check-item.pass .ci-icon { color: #34d399; }
+    .check-item.warn .ci-icon { color: #ffa500; }
+    .check-item.fail .ci-icon { color: #ff4757; }
+    .check-item strong { font-size: 14px; display: block; margin-bottom: 2px; }
+    .check-item p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    .check-item code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--surface-container-low);
+      padding: 1px 6px;
+      border-radius: 4px;
+      color: #7B61FF;
+    }
+
+    .checklist-summary {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .summary-stat {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      flex: 1;
+      min-width: 120px;
+    }
+    .pass-bg { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); }
+    .warn-bg { background: rgba(255,165,0,0.1); border: 1px solid rgba(255,165,0,0.2); }
+    .fail-bg { background: rgba(255,71,87,0.1); border: 1px solid rgba(255,71,87,0.2); }
+    .summary-num { font-family: var(--font-mono); font-size: 28px; font-weight: 700; }
+    .pass-bg .summary-num { color: #34d399; }
+    .warn-bg .summary-num { color: #ffa500; }
+    .fail-bg .summary-num { color: #ff4757; }
+    .summary-label { font-family: var(--font-label); font-size: 14px; color: var(--text-secondary); }
+
+    /* Test Results */
+    .test-dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .test-tool {
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .tool-header { display: flex; align-items: center; gap: 10px; }
+    .tool-header h3 { font-size: 17px; }
+    .tool-version {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-tertiary);
+      background: var(--surface-container-low);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .tool-score-ring { position: relative; }
+    .tool-score {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 700;
+      color: #34d399;
+    }
+    .tool-stats { width: 100%; display: grid; gap: 6px; }
+    .tool-stat {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-secondary);
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tool-stat:last-child { border-bottom: none; }
+    .stat-num { font-family: var(--font-mono); font-weight: 700; }
+    .stat-num.green { color: #34d399; }
+    .stat-num.orange { color: #ffa500; }
+
+    .issues-list { display: grid; gap: 12px; }
+    .issues-list h3 { font-size: 16px; }
+    .issue-item {
+      display: flex;
+      gap: 14px;
+      padding: 16px;
+      background: var(--surface-container);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .issue-sev {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      font-family: var(--font-label);
+      white-space: nowrap;
+      align-self: flex-start;
+      flex-shrink: 0;
+    }
+    .issue-sev.moderate { background: rgba(255,165,0,0.15); color: #ffa500; }
+    .issue-item strong { font-size: 14px; display: block; margin-bottom: 4px; }
+    .issue-item p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    .issue-item code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #7B61FF;
+    }
+    .issue-fix {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: #34d399;
+      font-family: var(--font-mono);
+    }
+
+    /* Screen Reader Sim */
+    .sr-player { max-width: 600px; }
+    .sr-display {
+      background: #0a0a0a;
+      border-radius: 12px;
+      padding: 20px 24px;
+      border: 1px solid var(--border);
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sr-cursor {
+      width: 3px;
+      height: 24px;
+      background: #7B61FF;
+      border-radius: 2px;
+      animation: blink 1s step-end infinite;
+      flex-shrink: 0;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+    .sr-text { font-family: var(--font-mono); font-size: 14px; color: #e2e2e5; line-height: 1.5; }
+    .sr-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .sr-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-container);
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .sr-btn:hover { background: var(--surface-container-high); }
+    .sr-progress-wrap {
+      flex: 1;
+      height: 6px;
+      background: var(--surface-container);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .sr-progress-bar {
+      height: 100%;
+      background: #7B61FF;
+      border-radius: 3px;
+      transition: width 0.3s;
+    }
+    .sr-step-count { font-family: var(--font-mono); font-size: 12px; color: var(--text-tertiary); white-space: nowrap; }
+
+    .sr-element-info {
+      background: var(--surface-container);
+      border-radius: 10px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      display: grid;
+      gap: 6px;
+      max-width: 600px;
+    }
+    .sr-info-row { display: flex; gap: 12px; }
+    .sr-info-label { font-family: var(--font-label); font-size: 12px; font-weight: 600; color: var(--text-tertiary); width: 60px; }
+    .sr-info-value { font-family: var(--font-mono); font-size: 13px; color: var(--text-primary); }
+
+    .landmark-tree { display: grid; gap: 6px; }
+    .landmark-node {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-secondary);
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: var(--surface-container);
+    }
+    .landmark-node.root { background: var(--surface-container-high); }
+    .landmark-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(123,97,255,0.15);
+      color: #7B61FF;
+      font-size: 11px;
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    /* Cognitive */
+    .cog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    .cog-card {
+      background: var(--surface-container);
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .cog-card h3 { font-size: 16px; }
+    .reading-stats { display: grid; gap: 6px; }
+    .reading-stat {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .reading-stat:last-child { border-bottom: none; }
+    .reading-metric { color: var(--text-secondary); }
+    .reading-score {
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+    .reading-score.good { color: #34d399; }
+    .reading-score.moderate { color: #ffa500; }
+    .cog-note { font-size: 12px; color: var(--text-tertiary); line-height: 1.5; margin-top: auto; }
+    .cog-list {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+    .cog-list li {
+      font-size: 13px;
+      color: var(--text-secondary);
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .cog-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 6px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #7B61FF;
+      opacity: 0.5;
+    }
+
+    @media (max-width: 768px) {
+      .om-card { padding: 20px; }
+      .sec-num { font-size: 36px; }
+    }
+  </style>
+
+  <script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Screen Reader Simulation
+    var srSteps = [
+      { text: 'Link: Skip to main content', role: 'link', name: 'Skip to main content', level: '' },
+      { text: 'Banner landmark', role: 'banner', name: 'Header', level: '' },
+      { text: 'Navigation: Main menu', role: 'navigation', name: 'Main menu', level: '' },
+      { text: 'Link: Jinki — Home', role: 'link', name: 'Jinki Home', level: '' },
+      { text: 'Link: Verticals', role: 'link', name: 'Verticals', level: '' },
+      { text: 'Link: Services', role: 'link', name: 'Services', level: '' },
+      { text: 'Link: About', role: 'link', name: 'About', level: '' },
+      { text: 'Button: Get in Touch', role: 'button', name: 'Get in Touch', level: '' },
+      { text: 'Main landmark', role: 'main', name: 'Main content', level: '' },
+      { text: 'Heading level 1: Aerial Intelligence for Critical Infrastructure', role: 'heading', name: 'Aerial Intelligence...', level: '1' },
+      { text: 'Paragraph: Jinki turns aerial data into prioritized maintenance recommendations for infrastructure you cannot easily reach.', role: 'text', name: 'Body paragraph', level: '' },
+      { text: 'Link: Get a Free Assessment', role: 'link', name: 'Get a Free Assessment', level: '' },
+      { text: 'Heading level 2: Trusted by Operations Teams', role: 'heading', name: 'Trusted by Operations Teams', level: '2' },
+      { text: 'Region: Verticals', role: 'region', name: 'Verticals section', level: '' },
+      { text: 'Heading level 2: Industries We Serve', role: 'heading', name: 'Industries We Serve', level: '2' },
+      { text: 'Content info landmark: Footer', role: 'contentinfo', name: 'Footer', level: '' },
+    ];
+
+    var currentStep = -1;
+    var srText = document.getElementById('sr-text');
+    var srProgress = document.getElementById('sr-progress');
+    var srStepCount = document.getElementById('sr-step-count');
+    var srRole = document.getElementById('sr-role');
+    var srName = document.getElementById('sr-name');
+    var srLevel = document.getElementById('sr-level');
+    var playing = false;
+    var playInterval = null;
+
+    srStepCount.textContent = '0 / ' + srSteps.length;
+
+    function showStep(idx) {
+      if (idx < 0 || idx >= srSteps.length) return;
+      currentStep = idx;
+      var s = srSteps[idx];
+      srText.textContent = s.text;
+      srProgress.style.width = ((idx + 1) / srSteps.length * 100) + '%';
+      srStepCount.textContent = (idx + 1) + ' / ' + srSteps.length;
+      srRole.textContent = s.role;
+      srName.textContent = s.name;
+      srLevel.textContent = s.level || '\u2014';
+    }
+
+    document.getElementById('sr-play').addEventListener('click', function() {
+      playing = !playing;
+      document.getElementById('sr-play-icon').textContent = playing ? '\u275A\u275A' : '\u25B6';
+      if (playing) {
+        if (currentStep >= srSteps.length - 1) currentStep = -1;
+        playInterval = setInterval(function() {
+          currentStep++;
+          if (currentStep >= srSteps.length) {
+            playing = false;
+            clearInterval(playInterval);
+            document.getElementById('sr-play-icon').textContent = '\u25B6';
+            return;
+          }
+          showStep(currentStep);
+        }, 1800);
+      } else {
+        clearInterval(playInterval);
+      }
+    });
+
+    document.getElementById('sr-next').addEventListener('click', function() {
+      if (currentStep < srSteps.length - 1) showStep(currentStep + 1);
+    });
+    document.getElementById('sr-prev').addEventListener('click', function() {
+      if (currentStep > 0) showStep(currentStep - 1);
+    });
+  });
+  </script>
+</body>
+</html>

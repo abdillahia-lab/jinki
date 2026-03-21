@@ -1,0 +1,336 @@
+/* ============================================================
+   JINKI AERIAL INTELLIGENCE — Extended Design System (Team Alpha)
+   Rounds 12 / 17 / 18: Expanded token set, component tokens,
+   responsive breakpoints, and print-specific tokens.
+   ============================================================ */
+
+/* ─── Spacing Scale (4px base) ─── */
+:root {
+  --space-0:   0px;
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-8:   32px;
+  --space-10:  40px;
+  --space-12:  48px;
+  --space-16:  64px;
+  --space-20:  80px;
+  --space-24:  96px;
+  --space-32:  128px;
+  --space-40:  160px;
+  --space-48:  192px;
+  --space-section: clamp(64px, 10vw, 128px);
+}
+
+/* ─── Enhanced Shadow System ─── */
+:root {
+  --shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-md:   0 4px 12px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.15);
+  --shadow-lg:   0 8px 32px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-xl:   0 16px 48px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.25);
+  --shadow-glow-cyan:   0 0 24px rgba(0, 229, 255, 0.2), 0 0 56px rgba(0, 229, 255, 0.08);
+  --shadow-glow-strong: 0 0 32px rgba(0, 229, 255, 0.35), 0 0 80px rgba(0, 229, 255, 0.12);
+  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] {
+  --shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md:   0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-lg:   0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-xl:   0 16px 48px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-glow-cyan:   0 0 24px rgba(0, 131, 143, 0.12), 0 0 56px rgba(0, 131, 143, 0.05);
+  --shadow-glow-strong: 0 0 32px rgba(0, 131, 143, 0.2), 0 0 80px rgba(0, 131, 143, 0.08);
+  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* ─── Animation Timing Tokens ─── */
+:root {
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in:      cubic-bezier(0.4, 0, 1, 1);
+  --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-bounce:  cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  --duration-fast:    120ms;
+  --duration-normal:  250ms;
+  --duration-slow:    500ms;
+  --duration-spring:  600ms;
+  --duration-reveal:  800ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast:    0ms;
+    --duration-normal:  0ms;
+    --duration-slow:    0ms;
+    --duration-spring:  0ms;
+    --duration-reveal:  0ms;
+  }
+}
+
+/* ─── Z-Index Scale ─── */
+:root {
+  --z-base:      1;
+  --z-raised:    10;
+  --z-dropdown:  100;
+  --z-sticky:    200;
+  --z-overlay:   300;
+  --z-modal:     400;
+  --z-toast:     500;
+  --z-tooltip:   600;
+  --z-top:       9999;
+}
+
+/* ─── Border Radius Scale ─── */
+:root {
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-2xl:  24px;
+  --radius-full: 9999px;
+}
+
+/* ─── Component-Level Tokens: Card ─── */
+:root {
+  --card-bg:             var(--bg-card);
+  --card-bg-hover:       var(--bg-card-hover);
+  --card-border:         var(--border);
+  --card-border-hover:   var(--border-hover);
+  --card-radius:         var(--radius-lg);
+  --card-padding:        var(--space-6);
+  --card-shadow:         var(--shadow-md);
+  --card-shadow-hover:   var(--shadow-lg);
+  --card-transition:     background var(--duration-normal) var(--ease-default),
+                         box-shadow var(--duration-normal) var(--ease-default),
+                         border-color var(--duration-normal) var(--ease-default),
+                         transform var(--duration-normal) var(--ease-default);
+}
+
+/* ─── Component-Level Tokens: Button ─── */
+:root {
+  --btn-height-sm:       32px;
+  --btn-height-md:       40px;
+  --btn-height-lg:       48px;
+  --btn-height-xl:       56px;
+  --btn-padding-x-sm:    var(--space-3);
+  --btn-padding-x-md:    var(--space-5);
+  --btn-padding-x-lg:    var(--space-6);
+  --btn-padding-x-xl:    var(--space-8);
+  --btn-radius:          var(--radius-md);
+  --btn-font-family:     var(--font-label);
+  --btn-font-weight:     600;
+  --btn-font-size-sm:    0.75rem;
+  --btn-font-size-md:    0.875rem;
+  --btn-font-size-lg:    1rem;
+  --btn-transition:      all var(--duration-normal) var(--ease-default);
+
+  /* Primary variant */
+  --btn-primary-bg:           var(--accent);
+  --btn-primary-text:         #050508;
+  --btn-primary-hover-bg:     #00f0ff;
+  --btn-primary-active-bg:    #00c8d4;
+  --btn-primary-shadow:       var(--shadow-glow-cyan);
+
+  /* Ghost variant */
+  --btn-ghost-text:           var(--text-secondary);
+  --btn-ghost-hover-bg:       var(--accent-glow);
+  --btn-ghost-hover-text:     var(--accent);
+
+  /* Outline variant */
+  --btn-outline-border:       var(--border-hover);
+  --btn-outline-text:         var(--text-primary);
+  --btn-outline-hover-border: var(--accent);
+  --btn-outline-hover-text:   var(--accent);
+}
+
+[data-theme="light"] {
+  --btn-primary-bg:        var(--accent);
+  --btn-primary-text:      #ffffff;
+  --btn-primary-hover-bg:  #009ba8;
+  --btn-primary-active-bg: #007a85;
+}
+
+/* ─── Component-Level Tokens: Input ─── */
+:root {
+  --input-height:           44px;
+  --input-padding-x:        var(--space-4);
+  --input-radius:           var(--radius-md);
+  --input-bg:               var(--surface-container-low);
+  --input-border:           var(--outline-variant);
+  --input-border-focus:     var(--accent);
+  --input-text:             var(--text-primary);
+  --input-placeholder:      var(--text-tertiary);
+  --input-shadow-focus:     0 0 0 3px var(--accent-glow);
+  --input-font-size:        0.9375rem;
+  --input-transition:       border-color var(--duration-fast) var(--ease-default),
+                            box-shadow var(--duration-fast) var(--ease-default);
+}
+
+/* ─── Component-Level Tokens: Badge ─── */
+:root {
+  --badge-height:           22px;
+  --badge-padding-x:        var(--space-2);
+  --badge-radius:           var(--radius-full);
+  --badge-font-size:        0.6875rem;
+  --badge-font-weight:      700;
+  --badge-letter-spacing:   0.04em;
+  --badge-text-transform:   uppercase;
+
+  /* Variants */
+  --badge-default-bg:       var(--surface-container-high);
+  --badge-default-text:     var(--text-secondary);
+  --badge-accent-bg:        var(--accent-glow);
+  --badge-accent-text:      var(--accent);
+  --badge-success-bg:       rgba(52, 211, 153, 0.15);
+  --badge-success-text:     #34d399;
+  --badge-warning-bg:       rgba(251, 191, 36, 0.15);
+  --badge-warning-text:     #fbbf24;
+  --badge-error-bg:         rgba(248, 113, 113, 0.15);
+  --badge-error-text:       #f87171;
+}
+
+[data-theme="light"] {
+  --badge-success-text: #059669;
+  --badge-warning-text: #d97706;
+  --badge-error-text:   #dc2626;
+}
+
+/* ─── Component-Level Tokens: Tooltip ─── */
+:root {
+  --tooltip-bg:             var(--surface-container-highest);
+  --tooltip-text:           var(--text-primary);
+  --tooltip-radius:         var(--radius-sm);
+  --tooltip-padding:        var(--space-2) var(--space-3);
+  --tooltip-font-size:      0.75rem;
+  --tooltip-shadow:         var(--shadow-lg);
+  --tooltip-arrow-size:     6px;
+  --tooltip-max-width:      280px;
+  --tooltip-z:              var(--z-tooltip);
+}
+
+/* ─── Responsive Breakpoint Tokens ─── */
+:root {
+  --bp-sm:   640px;
+  --bp-md:   768px;
+  --bp-lg:   1024px;
+  --bp-xl:   1280px;
+  --bp-2xl:  1536px;
+}
+
+/* Container widths */
+:root {
+  --container-sm:   640px;
+  --container-md:   768px;
+  --container-lg:   1024px;
+  --container-xl:   1200px;
+  --container-2xl:  1400px;
+  --container-prose: 65ch;
+}
+
+/* ─── Print-Specific Tokens ─── */
+@media print {
+  :root {
+    --print-text:        #000000;
+    --print-bg:          #ffffff;
+    --print-link:        #0056b3;
+    --print-border:      #cccccc;
+    --print-muted:       #666666;
+    --print-font-body:   Georgia, 'Times New Roman', serif;
+    --print-font-mono:   'Courier New', Courier, monospace;
+    --print-page-margin: 1.5cm;
+    --print-line-height: 1.5;
+  }
+
+  @page {
+    margin: var(--print-page-margin);
+    size: A4;
+  }
+
+  * {
+    color: var(--print-text) !important;
+    background: var(--print-bg) !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    font-family: var(--print-font-body) !important;
+    line-height: var(--print-line-height) !important;
+    font-size: 11pt !important;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+    break-after: avoid;
+  }
+
+  img, figure, table, pre {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: var(--print-muted) !important;
+  }
+
+  a[href^="#"]::after,
+  a[href^="javascript"]::after {
+    content: "";
+  }
+
+  nav, footer, .theme-toggle, .scroll-progress, .trust-bar {
+    display: none !important;
+  }
+}
+
+/* ─── Utility Classes ─── */
+
+/* Focus ring utility */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Visually hidden (accessible) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Truncate text */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Line clamp */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

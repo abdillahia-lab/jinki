@@ -1,0 +1,1581 @@
+---
+/*
+  TEAM OMEGA — Autonomous Deployment | Jinki Aerial Intelligence
+  Redesigned: animated dock deployment, mission control dashboard,
+  autonomous schedule, weather adaptability, ROI timeline.
+*/
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import LeadGen from '../../components/LeadGen.astro';
+import Footer from '../../components/Footer.astro';
+
+const scheduleData = [
+  { day: 'Mon', missions: [
+    { time: '02:00', type: 'thermal', label: 'Thermal Patrol — Zone A' },
+    { time: '06:00', type: 'security', label: 'Perimeter Sweep' },
+    { time: '14:00', type: 'thermal', label: 'Thermal Patrol — Zone B' },
+    { time: '22:00', type: 'security', label: 'Night Perimeter' },
+  ]},
+  { day: 'Tue', missions: [
+    { time: '02:00', type: 'thermal', label: 'Thermal Patrol — Zone C' },
+    { time: '10:00', type: 'survey', label: 'Roof Survey — Bldg D' },
+    { time: '18:00', type: 'environmental', label: 'Environmental Scan' },
+    { time: '22:00', type: 'security', label: 'Night Perimeter' },
+  ]},
+  { day: 'Wed', missions: [
+    { time: '02:00', type: 'thermal', label: 'Thermal Patrol — Zone A' },
+    { time: '06:00', type: 'security', label: 'Perimeter Sweep' },
+    { time: '14:00', type: 'thermal', label: 'Thermal Patrol — Zone B' },
+    { time: '22:00', type: 'security', label: 'Night Perimeter' },
+  ]},
+  { day: 'Thu', missions: [
+    { time: '02:00', type: 'thermal', label: 'Thermal Patrol — Zone C' },
+    { time: '08:00', type: 'construction', label: 'Construction Progress' },
+    { time: '14:00', type: 'survey', label: 'Roof Survey — Bldg A' },
+    { time: '22:00', type: 'security', label: 'Night Perimeter' },
+  ]},
+  { day: 'Fri', missions: [
+    { time: '02:00', type: 'thermal', label: 'Thermal Patrol — Full' },
+    { time: '06:00', type: 'security', label: 'Perimeter Sweep' },
+    { time: '14:00', type: 'environmental', label: 'Environmental Scan' },
+    { time: '22:00', type: 'security', label: 'Night Perimeter' },
+  ]},
+  { day: 'Sat', missions: [
+    { time: '02:00', type: 'thermal', label: 'Thermal Patrol — Zone A' },
+    { time: '22:00', type: 'security', label: 'Night Perimeter' },
+  ]},
+  { day: 'Sun', missions: [
+    { time: '02:00', type: 'thermal', label: 'Thermal Patrol — Zone B' },
+    { time: '22:00', type: 'security', label: 'Night Perimeter' },
+  ]},
+];
+
+const missionTypeColors: Record<string, { bg: string; text: string; label: string }> = {
+  thermal: { bg: 'rgba(255, 107, 53, 0.15)', text: '#FF6B35', label: 'Thermal' },
+  security: { bg: 'rgba(123, 97, 255, 0.15)', text: '#7B61FF', label: 'Security' },
+  survey: { bg: 'rgba(0, 201, 167, 0.15)', text: '#00C9A7', label: 'Survey' },
+  environmental: { bg: 'rgba(52, 211, 153, 0.15)', text: '#34D399', label: 'Env.' },
+  construction: { bg: 'rgba(255, 189, 46, 0.15)', text: '#FFBD2E', label: 'Construction' },
+};
+
+const weatherConditions = [
+  { condition: 'Clear', icon: 'wb_sunny', response: 'Full Operations', status: 'active', color: '#27C93F' },
+  { condition: 'Light Wind', icon: 'air', response: 'Adjusted Flight Path', status: 'adjusted', color: '#FFBD2E' },
+  { condition: 'Rain', icon: 'rainy', response: 'Auto-Dock & Wait', status: 'docked', color: '#FF6B35' },
+  { condition: 'Storm', icon: 'thunderstorm', response: 'Secured in Dock', status: 'secured', color: '#FF3B30' },
+];
+
+const roiData = [
+  { month: 'Month 1', guard: 45000, jinki: 28000, savings: 17000 },
+  { month: 'Month 3', guard: 135000, jinki: 84000, savings: 51000 },
+  { month: 'Month 6', guard: 270000, jinki: 168000, savings: 102000 },
+  { month: 'Month 9', guard: 405000, jinki: 252000, savings: 153000 },
+  { month: 'Month 12', guard: 540000, jinki: 336000, savings: 204000 },
+];
+---
+
+<Layout title="Autonomous Deployment — Jinki Aerial Intelligence" description="Persistent autonomous aerial monitoring. Scheduled patrols, event-triggered response, and real-time analytics.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- ============ HERO — Dock Deployment Animation ============ -->
+    <section class="deploy-hero" aria-label="Autonomous Deployment">
+      <div class="deploy-hero-inner">
+        <div class="deploy-hero-content reveal">
+          <div class="deploy-eyebrow">
+            <span class="deploy-eyebrow-line"></span>
+            <span class="deploy-eyebrow-text">Autonomous Deployment</span>
+          </div>
+          <h1 class="deploy-hero-title">
+            Persistent Intelligence.<br/>
+            <span class="gradient-text-teal">Autonomous Operations.</span>
+          </h1>
+          <p class="deploy-hero-subtitle">
+            For facilities requiring more than periodic assessments, Jinki deploys autonomous
+            aerial systems that launch, capture, analyze, and report — without human intervention.
+            Scheduled thermal patrols, event-triggered security response, and continuous environmental
+            monitoring from a permanent on-site installation.
+          </p>
+          <div class="deploy-hero-actions">
+            <a href="#lead-gen" class="btn-premium deploy-cta-btn">Plan Your Deployment</a>
+            <a href="#mission-control" class="deploy-cta-secondary">View Dashboard</a>
+          </div>
+        </div>
+        <div class="deploy-hero-visual reveal reveal-delay-1" aria-hidden="true">
+          <div class="dock-animation-card">
+            <div class="dock-grid-overlay"></div>
+            <!-- Dock base -->
+            <div class="dock-base">
+              <div class="dock-lid dock-lid-left"></div>
+              <div class="dock-lid dock-lid-right"></div>
+              <div class="dock-interior"></div>
+            </div>
+            <!-- Platform ascending -->
+            <div class="dock-platform">
+              <div class="platform-body"></div>
+              <div class="platform-propellers">
+                <div class="propeller prop-1"></div>
+                <div class="propeller prop-2"></div>
+                <div class="propeller prop-3"></div>
+                <div class="propeller prop-4"></div>
+              </div>
+            </div>
+            <!-- Orbit path -->
+            <div class="patrol-orbit-path">
+              <svg viewBox="0 0 200 100" class="orbit-svg">
+                <ellipse cx="100" cy="50" rx="80" ry="30" fill="none" stroke="rgba(0,201,167,0.15)" stroke-width="1" stroke-dasharray="4,4" />
+              </svg>
+              <div class="orbit-dot"></div>
+            </div>
+            <!-- Status readouts -->
+            <div class="dock-status-badge">
+              <span class="dock-status-dot"></span>
+              <span>PATROL ACTIVE</span>
+            </div>
+            <div class="dock-readout">
+              <span class="dock-readout-label">ALTITUDE</span>
+              <span class="dock-readout-val">120m AGL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MISSION CONTROL DASHBOARD ============ -->
+    <section id="mission-control" class="deploy-section" style="background: var(--surface-dim);" aria-label="Mission Control">
+      <div class="deploy-section-inner">
+        <div class="deploy-section-header reveal">
+          <div class="deploy-eyebrow">
+            <span class="deploy-eyebrow-line"></span>
+            <span class="deploy-eyebrow-text">Mission Control</span>
+          </div>
+          <h2>Real-Time Operations<br/>Intelligence</h2>
+          <p class="deploy-section-subtitle">
+            A live operational view of your autonomous aerial system: flight status, sensor feeds,
+            coverage mapping, and alert management — all in one interface.
+          </p>
+        </div>
+
+        <div class="dashboard-mockup reveal">
+          <div class="dashboard-header-bar">
+            <span class="dash-dot" style="background: #FF6B35;"></span>
+            <span class="dash-dot" style="background: #FFBD2E;"></span>
+            <span class="dash-dot" style="background: #27C93F;"></span>
+            <span class="dash-title">Jinki Mission Control</span>
+            <div class="dash-live-badge">
+              <span class="dash-live-dot"></span>
+              <span>LIVE</span>
+            </div>
+          </div>
+          <div class="dashboard-body">
+            <!-- Top stats row -->
+            <div class="dash-stats-row">
+              <div class="dash-stat">
+                <span class="dash-stat-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">flight</span>
+                <div class="dash-stat-info">
+                  <span class="dash-stat-value">IN FLIGHT</span>
+                  <span class="dash-stat-label">Thermal Patrol — Zone A</span>
+                </div>
+              </div>
+              <div class="dash-stat">
+                <span class="dash-stat-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">battery_5_bar</span>
+                <div class="dash-stat-info">
+                  <span class="dash-stat-value">78%</span>
+                  <span class="dash-stat-label">Battery Remaining</span>
+                </div>
+              </div>
+              <div class="dash-stat">
+                <span class="dash-stat-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">speed</span>
+                <div class="dash-stat-info">
+                  <span class="dash-stat-value">12.4 m/s</span>
+                  <span class="dash-stat-label">Wind Speed</span>
+                </div>
+              </div>
+              <div class="dash-stat">
+                <span class="dash-stat-icon material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">calendar_month</span>
+                <div class="dash-stat-info">
+                  <span class="dash-stat-value">187</span>
+                  <span class="dash-stat-label">Missions This Month</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main area: coverage + alerts -->
+            <div class="dash-main-grid">
+              <!-- Coverage map -->
+              <div class="dash-coverage-map">
+                <div class="dash-panel-title">
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 14px;" aria-hidden="true">map</span>
+                  Coverage Map
+                </div>
+                <div class="coverage-visual">
+                  <div class="coverage-zone zone-a">
+                    <span>Zone A</span>
+                    <span class="coverage-pct">92%</span>
+                  </div>
+                  <div class="coverage-zone zone-b">
+                    <span>Zone B</span>
+                    <span class="coverage-pct">87%</span>
+                  </div>
+                  <div class="coverage-zone zone-c">
+                    <span>Zone C</span>
+                    <span class="coverage-pct">94%</span>
+                  </div>
+                  <div class="coverage-zone zone-d">
+                    <span>Zone D</span>
+                    <span class="coverage-pct">78%</span>
+                  </div>
+                  <div class="coverage-flight-path"></div>
+                </div>
+              </div>
+
+              <!-- Alert feed -->
+              <div class="dash-alert-feed">
+                <div class="dash-panel-title">
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 14px;" aria-hidden="true">notifications</span>
+                  Alert Feed
+                </div>
+                <div class="alert-list">
+                  <div class="alert-item alert-critical">
+                    <span class="alert-time">14:23</span>
+                    <span class="alert-severity sev-critical">CRITICAL</span>
+                    <span class="alert-msg">Thermal anomaly: Cooling unit T-7</span>
+                  </div>
+                  <div class="alert-item alert-high">
+                    <span class="alert-time">13:45</span>
+                    <span class="alert-severity sev-high">HIGH</span>
+                    <span class="alert-msg">Perimeter breach: NE sector</span>
+                  </div>
+                  <div class="alert-item alert-medium">
+                    <span class="alert-time">12:01</span>
+                    <span class="alert-severity sev-medium">MEDIUM</span>
+                    <span class="alert-msg">Roof ponding detected: Bldg C</span>
+                  </div>
+                  <div class="alert-item alert-info">
+                    <span class="alert-time">11:30</span>
+                    <span class="alert-severity sev-info">INFO</span>
+                    <span class="alert-msg">Mission complete: Thermal Zone B</span>
+                  </div>
+                  <div class="alert-item alert-info">
+                    <span class="alert-time">10:15</span>
+                    <span class="alert-severity sev-info">INFO</span>
+                    <span class="alert-msg">Auto-calibration complete</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ AUTONOMOUS SCHEDULE ============ -->
+    <section class="deploy-section" aria-label="Autonomous Schedule">
+      <div class="deploy-section-inner">
+        <div class="deploy-section-header reveal">
+          <div class="deploy-eyebrow">
+            <span class="deploy-eyebrow-line"></span>
+            <span class="deploy-eyebrow-text">Autonomous Schedule</span>
+          </div>
+          <h2>Automated Flight Calendar</h2>
+          <p class="deploy-section-subtitle">
+            Every mission is pre-programmed, automatically executed, and dynamically adjusted
+            based on weather conditions and priority triggers.
+          </p>
+        </div>
+
+        <div class="schedule-container reveal">
+          <!-- Legend -->
+          <div class="schedule-legend">
+            {Object.entries(missionTypeColors).map(([key, val]) => (
+              <div class="legend-item">
+                <span class="legend-dot" style={`background: ${val.text};`}></span>
+                <span class="legend-label">{val.label}</span>
+              </div>
+            ))}
+          </div>
+
+          <!-- Calendar grid -->
+          <div class="schedule-grid">
+            {scheduleData.map(day => (
+              <div class="schedule-day">
+                <div class="schedule-day-header">{day.day}</div>
+                <div class="schedule-missions">
+                  {day.missions.map(m => {
+                    const colors = missionTypeColors[m.type] || missionTypeColors.thermal;
+                    return (
+                      <div class="schedule-mission" style={`background: ${colors.bg}; border-left: 3px solid ${colors.text};`} title={m.label}>
+                        <span class="sched-time">{m.time}</span>
+                        <span class="sched-label" style={`color: ${colors.text};`}>{m.label}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WEATHER ADAPTABILITY ============ -->
+    <section class="deploy-section" style="background: var(--surface-dim);" aria-label="Weather Adaptability">
+      <div class="deploy-section-inner">
+        <div class="deploy-section-header reveal">
+          <div class="deploy-eyebrow">
+            <span class="deploy-eyebrow-line"></span>
+            <span class="deploy-eyebrow-text">All-Weather Operations</span>
+          </div>
+          <h2>Intelligent Weather<br/>Response</h2>
+          <p class="deploy-section-subtitle">
+            The autonomous platform continuously monitors weather conditions and dynamically
+            adjusts operations — launching, adapting, or docking as conditions require.
+          </p>
+        </div>
+
+        <div class="weather-grid reveal">
+          {weatherConditions.map((w, i) => (
+            <div class={`weather-card weather-${w.status} reveal reveal-delay-${(i % 4) + 1}`}>
+              <div class="weather-icon-area">
+                <span class="material-symbols-outlined weather-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{w.icon}</span>
+                <div class="weather-pulse-ring" style={`border-color: ${w.color};`}></div>
+              </div>
+              <h3 class="weather-condition">{w.condition}</h3>
+              <div class="weather-response-badge" style={`background: ${w.color}20; color: ${w.color}; border-color: ${w.color}40;`}>
+                {w.response}
+              </div>
+              <div class="weather-indicator">
+                <span class="weather-status-dot" style={`background: ${w.color}; box-shadow: 0 0 8px ${w.color}80;`}></span>
+                <span class="weather-status-text" style={`color: ${w.color};`}>{w.status === 'active' ? 'All Systems Go' : w.status === 'adjusted' ? 'Modified Path' : w.status === 'docked' ? 'Standby Mode' : 'Safe & Secured'}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ROI TIMELINE ============ -->
+    <section class="deploy-section" aria-label="ROI Timeline">
+      <div class="deploy-section-inner">
+        <div class="deploy-section-header reveal">
+          <div class="deploy-eyebrow">
+            <span class="deploy-eyebrow-line"></span>
+            <span class="deploy-eyebrow-text">Return on Investment</span>
+          </div>
+          <h2>Cumulative Savings<br/>Over 12 Months</h2>
+          <p class="deploy-section-subtitle">
+            Compare the total cost of traditional guard patrols against Jinki autonomous
+            monitoring — and see cumulative savings grow every month.
+          </p>
+        </div>
+
+        <div class="roi-container reveal">
+          <!-- ROI legend -->
+          <div class="roi-legend">
+            <div class="roi-legend-item">
+              <span class="roi-legend-bar" style="background: #FF6B6B;"></span>
+              <span>Traditional Guard Patrols</span>
+            </div>
+            <div class="roi-legend-item">
+              <span class="roi-legend-bar" style="background: #00C9A7;"></span>
+              <span>Jinki Autonomous Monitoring</span>
+            </div>
+            <div class="roi-legend-item">
+              <span class="roi-legend-bar" style="background: var(--accent);"></span>
+              <span>Cumulative Savings</span>
+            </div>
+          </div>
+
+          <!-- ROI bars chart -->
+          <div class="roi-chart">
+            {roiData.map((d, i) => {
+              const maxVal = 540000;
+              const guardPct = (d.guard / maxVal) * 100;
+              const jinkiPct = (d.jinki / maxVal) * 100;
+              const savingsPct = (d.savings / maxVal) * 100;
+              return (
+                <div class={`roi-column roi-animate-${i}`}>
+                  <div class="roi-bars">
+                    <div class="roi-bar-group">
+                      <div class="roi-bar roi-bar-guard" style={`height: ${guardPct}%;`}>
+                        <span class="roi-bar-val">${(d.guard / 1000).toFixed(0)}K</span>
+                      </div>
+                      <div class="roi-bar roi-bar-jinki" style={`height: ${jinkiPct}%;`}>
+                        <span class="roi-bar-val">${(d.jinki / 1000).toFixed(0)}K</span>
+                      </div>
+                    </div>
+                    <div class="roi-savings-bar" style={`height: ${savingsPct}%;`}>
+                      <span class="roi-savings-val">${(d.savings / 1000).toFixed(0)}K saved</span>
+                    </div>
+                  </div>
+                  <span class="roi-month-label">{d.month}</span>
+                </div>
+              );
+            })}
+          </div>
+
+          <!-- Bottom highlight -->
+          <div class="roi-highlight">
+            <div class="roi-highlight-inner">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 28px; color: #00C9A7;" aria-hidden="true">savings</span>
+              <div>
+                <span class="roi-highlight-value">$204,000</span>
+                <span class="roi-highlight-label">estimated annual savings vs traditional patrols</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <LeadGen />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ================ HERO ================ */
+  .deploy-hero {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    padding: 140px clamp(20px, 5vw, 80px) 60px;
+    background: var(--surface-container-lowest);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .deploy-hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .deploy-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .deploy-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: #00C9A7;
+  }
+
+  .deploy-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #00C9A7;
+  }
+
+  .deploy-hero-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+
+  .gradient-text-teal {
+    background: linear-gradient(135deg, #00C9A7, #00897B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .deploy-hero-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
+    line-height: 1.75;
+    color: var(--text-secondary);
+    max-width: 540px;
+    margin-bottom: 32px;
+  }
+
+  .deploy-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .deploy-cta-btn {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #00C9A7, #00897B) !important;
+  }
+
+  .deploy-cta-btn:hover {
+    box-shadow: 0 0 30px rgba(0, 201, 167, 0.3);
+  }
+
+  .deploy-cta-secondary {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .deploy-cta-secondary:hover { color: #00C9A7; }
+
+  /* Dock Animation Card */
+  .dock-animation-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, #0a0c10, #0f1a18);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+  }
+
+  .dock-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 201, 167, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 201, 167, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Dock base */
+  .dock-base {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 24px;
+    z-index: 2;
+  }
+
+  .dock-interior {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 201, 167, 0.08);
+    border: 1px solid rgba(0, 201, 167, 0.2);
+    border-radius: 4px;
+  }
+
+  .dock-lid {
+    position: absolute;
+    top: -2px;
+    width: 50%;
+    height: 4px;
+    background: rgba(0, 201, 167, 0.4);
+    z-index: 3;
+    animation: lid-open 6s ease-in-out infinite;
+  }
+
+  .dock-lid-left {
+    left: 0;
+    transform-origin: left center;
+    border-radius: 2px 0 0 2px;
+    animation-name: lid-open-left;
+  }
+
+  .dock-lid-right {
+    right: 0;
+    transform-origin: right center;
+    border-radius: 0 2px 2px 0;
+    animation-name: lid-open-right;
+  }
+
+  @keyframes lid-open-left {
+    0%, 10% { transform: rotateY(0deg); }
+    20%, 80% { transform: rotateY(-80deg); }
+    90%, 100% { transform: rotateY(0deg); }
+  }
+
+  @keyframes lid-open-right {
+    0%, 10% { transform: rotateY(0deg); }
+    20%, 80% { transform: rotateY(80deg); }
+    90%, 100% { transform: rotateY(0deg); }
+  }
+
+  /* Platform ascending */
+  .dock-platform {
+    position: absolute;
+    bottom: 22%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    animation: platform-ascend 6s ease-in-out infinite;
+  }
+
+  .platform-body {
+    width: 30px;
+    height: 12px;
+    background: linear-gradient(135deg, #00C9A7, #00897B);
+    border-radius: 4px;
+    box-shadow: 0 0 16px rgba(0, 201, 167, 0.4);
+  }
+
+  .platform-propellers {
+    position: absolute;
+    top: -3px;
+    left: -10px;
+    right: -10px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .propeller {
+    width: 12px;
+    height: 2px;
+    background: rgba(0, 201, 167, 0.6);
+    border-radius: 1px;
+    animation: prop-spin 0.15s linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes prop-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(180deg); }
+  }
+
+  @keyframes platform-ascend {
+    0%, 15% { bottom: 22%; opacity: 1; }
+    15% { opacity: 1; }
+    20% { bottom: 22%; }
+    50% { bottom: 55%; }
+    80% { bottom: 55%; }
+    85% { bottom: 22%; }
+    90%, 100% { bottom: 22%; opacity: 1; }
+  }
+
+  .dock-platform .propeller {
+    animation: prop-spin 0.15s linear infinite;
+  }
+
+  /* Show propellers when ascending */
+  @keyframes prop-visibility {
+    0%, 15% { opacity: 0; }
+    20%, 80% { opacity: 1; }
+    85%, 100% { opacity: 0; }
+  }
+
+  .propeller { animation: prop-spin 0.15s linear infinite, prop-visibility 6s ease-in-out infinite; }
+  .prop-1 { animation-delay: 0s, 0s; }
+  .prop-2 { animation-delay: 0.04s, 0s; }
+  .prop-3 { animation-delay: 0.08s, 0s; }
+  .prop-4 { animation-delay: 0.12s, 0s; }
+
+  /* Patrol orbit */
+  .patrol-orbit-path {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    right: 10%;
+    height: 40%;
+    opacity: 0;
+    animation: orbit-fade 6s ease-in-out infinite;
+  }
+
+  @keyframes orbit-fade {
+    0%, 30% { opacity: 0; }
+    40%, 75% { opacity: 1; }
+    85%, 100% { opacity: 0; }
+  }
+
+  .orbit-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .orbit-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00C9A7;
+    box-shadow: 0 0 12px rgba(0, 201, 167, 0.6);
+    animation: orbit-move 4s linear infinite;
+    top: 20%;
+    left: 10%;
+  }
+
+  @keyframes orbit-move {
+    0% { left: 10%; top: 50%; }
+    25% { left: 50%; top: 20%; }
+    50% { left: 90%; top: 50%; }
+    75% { left: 50%; top: 80%; }
+    100% { left: 10%; top: 50%; }
+  }
+
+  .dock-status-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 201, 167, 0.2);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #00C9A7;
+    z-index: 5;
+  }
+
+  .dock-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00C9A7;
+    box-shadow: 0 0 8px rgba(0, 201, 167, 0.6);
+    animation: blink-live 2s ease-in-out infinite;
+  }
+
+  @keyframes blink-live {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .dock-readout {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 201, 167, 0.12);
+    z-index: 5;
+  }
+
+  .dock-readout-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .dock-readout-val {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: #00C9A7;
+  }
+
+  /* ================ SECTIONS ================ */
+  .deploy-section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .deploy-section { padding: 7rem clamp(20px, 5vw, 80px); }
+  }
+
+  .deploy-section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .deploy-section-header {
+    margin-bottom: 56px;
+  }
+
+  .deploy-section-header h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
+
+  .deploy-section-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-top: 16px;
+  }
+
+  /* ================ DASHBOARD MOCKUP ================ */
+  .dashboard-mockup {
+    background: linear-gradient(135deg, #0a0c10, #0f1a18);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+  }
+
+  .dashboard-header-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .dash-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .dash-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+    margin-left: 8px;
+    flex: 1;
+  }
+
+  .dash-live-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #27C93F;
+  }
+
+  .dash-live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #27C93F;
+    animation: blink-live 2s ease-in-out infinite;
+  }
+
+  .dashboard-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .dash-stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .dash-stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .dash-stat {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 14px;
+    background: rgba(0, 201, 167, 0.04);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 201, 167, 0.08);
+  }
+
+  .dash-stat-icon {
+    font-size: 20px;
+    color: #00C9A7;
+  }
+
+  .dash-stat-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .dash-stat-value {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #00C9A7;
+  }
+
+  .dash-stat-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .dash-main-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  @media (min-width: 768px) {
+    .dash-main-grid { grid-template-columns: 1.2fr 0.8fr; }
+  }
+
+  .dash-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+  }
+
+  /* Coverage Map */
+  .dash-coverage-map {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 201, 167, 0.06);
+    padding: 16px;
+  }
+
+  .coverage-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    position: relative;
+  }
+
+  .coverage-zone {
+    padding: 20px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 201, 167, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: background 0.3s ease;
+  }
+
+  .coverage-zone:hover {
+    background: rgba(0, 201, 167, 0.06);
+  }
+
+  .coverage-pct {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #00C9A7;
+  }
+
+  .zone-a { background: rgba(0, 201, 167, 0.04); }
+  .zone-b { background: rgba(0, 201, 167, 0.02); }
+  .zone-c { background: rgba(0, 201, 167, 0.05); }
+  .zone-d { background: rgba(0, 201, 167, 0.02); }
+
+  .coverage-flight-path {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
+    margin-left: -20px;
+    border: 2px solid rgba(0, 201, 167, 0.3);
+    border-radius: 50%;
+    animation: dash-orbit 8s linear infinite;
+  }
+
+  .coverage-flight-path::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #00C9A7;
+    box-shadow: 0 0 8px rgba(0, 201, 167, 0.6);
+  }
+
+  @keyframes dash-orbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Alert Feed */
+  .dash-alert-feed {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 201, 167, 0.06);
+    padding: 16px;
+  }
+
+  .alert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .alert-item {
+    display: grid;
+    grid-template-columns: 40px 60px 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+  }
+
+  .alert-time {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+  }
+
+  .alert-severity {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    text-align: center;
+  }
+
+  .sev-critical { background: rgba(255, 59, 48, 0.15); color: #FF3B30; }
+  .sev-high { background: rgba(255, 107, 53, 0.15); color: #FF6B35; }
+  .sev-medium { background: rgba(255, 189, 46, 0.15); color: #FFBD2E; }
+  .sev-info { background: rgba(0, 201, 167, 0.12); color: #00C9A7; }
+
+  .alert-msg {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* ================ SCHEDULE ================ */
+  .schedule-container {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 24px;
+    overflow-x: auto;
+  }
+
+  .schedule-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .legend-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    min-width: 700px;
+  }
+
+  .schedule-day {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .schedule-day-header {
+    font-family: var(--font-headline);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .schedule-missions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .schedule-mission {
+    padding: 6px 8px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    transition: transform 0.2s ease;
+    cursor: default;
+  }
+
+  .schedule-mission:hover {
+    transform: scale(1.03);
+  }
+
+  .sched-time {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+  }
+
+  .sched-label {
+    font-family: var(--font-body);
+    font-size: 10px;
+    line-height: 1.3;
+    font-weight: 600;
+  }
+
+  /* ================ WEATHER GRID ================ */
+  .weather-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (min-width: 600px) {
+    .weather-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1024px) {
+    .weather-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .weather-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .weather-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .weather-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  .weather-icon-area {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .weather-icon {
+    font-size: 32px;
+    color: var(--text-primary);
+    position: relative;
+    z-index: 1;
+  }
+
+  .weather-pulse-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid;
+    opacity: 0.3;
+    animation: weather-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes weather-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.2); opacity: 0.1; }
+  }
+
+  .weather-condition {
+    font-family: var(--font-headline);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .weather-response-badge {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid;
+    text-transform: uppercase;
+  }
+
+  .weather-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .weather-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .weather-status-text {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* ================ ROI TIMELINE ================ */
+  .roi-container {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .roi-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .roi-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+  }
+
+  .roi-legend-bar {
+    width: 24px;
+    height: 4px;
+    border-radius: 2px;
+  }
+
+  .roi-chart {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+    min-height: 280px;
+    align-items: flex-end;
+  }
+
+  @media (max-width: 600px) {
+    .roi-chart { gap: 8px; min-height: 200px; }
+  }
+
+  .roi-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .roi-bars {
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+    width: 100%;
+    height: 220px;
+  }
+
+  @media (max-width: 600px) {
+    .roi-bars { height: 160px; }
+  }
+
+  .roi-bar-group {
+    display: flex;
+    gap: 3px;
+    flex: 1;
+    align-items: flex-end;
+    height: 100%;
+  }
+
+  .roi-bar {
+    flex: 1;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    min-height: 4px;
+    transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .roi-bar-guard {
+    background: linear-gradient(to top, #FF6B6B, #FF3B30);
+  }
+
+  .roi-bar-jinki {
+    background: linear-gradient(to top, #00C9A7, #00897B);
+  }
+
+  .roi-bar-val {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    color: #fff;
+    padding-top: 6px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+
+  @media (max-width: 600px) {
+    .roi-bar-val { font-size: 7px; }
+  }
+
+  .roi-savings-bar {
+    width: 24px;
+    flex-shrink: 0;
+    background: linear-gradient(to top, rgba(0, 229, 255, 0.3), rgba(0, 229, 255, 0.1));
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .roi-savings-val {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  @media (max-width: 600px) {
+    .roi-savings-val { font-size: 7px; top: -16px; }
+  }
+
+  .roi-month-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .roi-highlight {
+    background: rgba(0, 201, 167, 0.06);
+    border: 1px solid rgba(0, 201, 167, 0.15);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .roi-highlight-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .roi-highlight-value {
+    display: block;
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #00C9A7;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .roi-highlight-label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+  }
+
+  /* ================ RESPONSIVE ================ */
+  @media (max-width: 768px) {
+    .deploy-hero-inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .deploy-hero {
+      min-height: auto;
+      padding-top: 120px;
+    }
+
+    .deploy-hero-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .dashboard-body {
+      padding: 12px;
+    }
+
+    .alert-item {
+      grid-template-columns: 36px 50px 1fr;
+      gap: 6px;
+    }
+
+    .schedule-container {
+      padding: 16px;
+    }
+
+    .roi-container {
+      padding: 20px;
+    }
+  }
+
+  /* ================ LIGHT MODE ================ */
+  :global([data-theme="light"]) .dock-animation-card {
+    background: linear-gradient(135deg, #e8eaed, #eef5f3);
+  }
+
+  :global([data-theme="light"]) .dock-grid-overlay {
+    background-image:
+      linear-gradient(rgba(0, 137, 123, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 137, 123, 0.04) 1px, transparent 1px);
+  }
+
+  :global([data-theme="light"]) .dock-status-badge {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 137, 123, 0.15);
+  }
+
+  :global([data-theme="light"]) .dock-readout {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(0, 137, 123, 0.15);
+  }
+
+  :global([data-theme="light"]) .dashboard-mockup {
+    background: linear-gradient(135deg, #e8eaed, #eef5f3);
+  }
+
+  :global([data-theme="light"]) .dashboard-header-bar {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  :global([data-theme="light"]) .dash-stat {
+    background: rgba(0, 137, 123, 0.04);
+    border-color: rgba(0, 137, 123, 0.08);
+  }
+
+  :global([data-theme="light"]) .dash-stat-icon,
+  :global([data-theme="light"]) .dash-stat-value {
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .dash-coverage-map,
+  :global([data-theme="light"]) .dash-alert-feed {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+
+  :global([data-theme="light"]) .coverage-pct {
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .alert-item {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: rgba(0, 0, 0, 0.04);
+  }
+
+  :global([data-theme="light"]) .roi-bar-val {
+    color: #fff;
+  }
+
+  :global([data-theme="light"]) .roi-highlight {
+    background: rgba(0, 137, 123, 0.06);
+    border-color: rgba(0, 137, 123, 0.12);
+  }
+
+  :global([data-theme="light"]) .roi-highlight-value {
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .dock-readout-val {
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .weather-card {
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  :global([data-theme="light"]) .schedule-container {
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  :global([data-theme="light"]) .roi-container {
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+</style>

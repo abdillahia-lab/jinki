@@ -1,0 +1,1548 @@
+---
+/*
+  TEAM ALPHA — Autonomous Deployment | Jinki Aerial Intelligence
+
+  Redesigned service page with:
+  1. Animated flight path SVG hero circling a facility
+  2. DJI Dock 3 showcase with animated deployment sequence
+  3. Interactive coverage calculator
+  4. 24/7 day/night cycle visualization
+  5. Integration architecture diagram
+*/
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import LeadGen from '../../components/LeadGen.astro';
+import Footer from '../../components/Footer.astro';
+
+const dockSpecs = [
+  { label: 'Dimensions', value: '1075 x 891 x 525mm', icon: 'straighten' },
+  { label: 'Weight', value: '34.5 kg', icon: 'scale' },
+  { label: 'Operating Temp', value: '-20 to 50 C', icon: 'device_thermostat' },
+  { label: 'IP Rating', value: 'IP55 Weatherproof', icon: 'water_drop' },
+  { label: 'Charging', value: '25 min full charge', icon: 'bolt' },
+  { label: 'Connectivity', value: '4G LTE + WiFi 6', icon: 'cell_tower' },
+];
+
+const deploySequence = [
+  { step: 1, label: 'Dock Opens', icon: 'door_open', desc: 'Automated lid opens, platform prepares for launch' },
+  { step: 2, label: 'Platform Launches', icon: 'flight_takeoff', desc: 'Vertical takeoff, GPS lock confirmed' },
+  { step: 3, label: 'Patrol Active', icon: 'radar', desc: 'Autonomous route execution with real-time telemetry' },
+  { step: 4, label: 'Data Captured', icon: 'photo_camera', desc: 'Thermal + visual data streamed to analytics pipeline' },
+  { step: 5, label: 'Return & Dock', icon: 'flight_land', desc: 'Precision landing, auto-charging begins' },
+];
+
+const integrationNodes = [
+  { id: 'dock', label: 'Dock 3', icon: 'home', desc: 'On-site autonomous station' },
+  { id: 'platform', label: 'M4TD', icon: 'flight', desc: 'Aerial capture platform' },
+  { id: 'cloud', label: 'Cloud AI', icon: 'cloud', desc: 'Processing & analytics' },
+  { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', desc: 'Operations visibility' },
+  { id: 'alerts', label: 'Alerts', icon: 'notification_important', desc: 'Real-time notifications' },
+];
+
+const capabilities = [
+  {
+    icon: 'thermostat',
+    title: 'Scheduled Thermal Patrols',
+    desc: 'Nightly thermal sweeps of every rooftop, mechanical system, and exterior surface. AI anomaly detection triggers alerts before failures escalate.',
+  },
+  {
+    icon: 'security',
+    title: 'Event-Triggered Response',
+    desc: 'Autonomous launch on alarm activation. The platform reaches the alert zone in under 90 seconds, capturing thermal and visual evidence for your SOC.',
+  },
+  {
+    icon: 'monitor_heart',
+    title: 'Asset Health Tracking',
+    desc: 'Continuous trend analysis across every data point. Machine learning models predict maintenance needs weeks before they become emergencies.',
+  },
+  {
+    icon: 'construction',
+    title: 'Progress Monitoring',
+    desc: 'Automated orthomosaic capture and volumetric analysis for construction sites. Daily flyovers keep stakeholders informed without disrupting work zones.',
+  },
+  {
+    icon: 'eco',
+    title: 'Environmental Compliance',
+    desc: 'Thermal plume monitoring, noise documentation, and visual compliance records on schedule. Automated regulatory reporting generation.',
+  },
+  {
+    icon: 'hub',
+    title: 'System Integration',
+    desc: 'Intelligence delivered to SCADA, VMS, BMS, and digital twin environments. No new dashboards. No manual data transfers.',
+  },
+];
+---
+
+<Layout title="Autonomous Deployment — Jinki Aerial Intelligence" description="Persistent autonomous aerial monitoring with DJI Dock 3 and M4TD. 150-200 missions per month, 24/7 operations, zero human intervention required.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- ============ HERO — FLIGHT PATH ============ -->
+    <section class="deploy-hero" aria-label="Autonomous Deployment">
+      <div class="flight-path-bg" aria-hidden="true">
+        <!-- Facility outline -->
+        <svg class="facility-svg" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Facility building -->
+          <rect x="300" y="180" width="200" height="140" rx="4" stroke="rgba(0, 201, 167, 0.12)" stroke-width="1" fill="rgba(0, 201, 167, 0.02)"/>
+          <rect x="320" y="200" width="60" height="40" rx="2" stroke="rgba(0, 201, 167, 0.08)" stroke-width="0.5" fill="none"/>
+          <rect x="420" y="200" width="60" height="40" rx="2" stroke="rgba(0, 201, 167, 0.08)" stroke-width="0.5" fill="none"/>
+          <rect x="320" y="260" width="60" height="40" rx="2" stroke="rgba(0, 201, 167, 0.08)" stroke-width="0.5" fill="none"/>
+          <rect x="420" y="260" width="60" height="40" rx="2" stroke="rgba(0, 201, 167, 0.08)" stroke-width="0.5" fill="none"/>
+          <!-- Perimeter -->
+          <rect x="200" y="100" width="400" height="300" rx="8" stroke="rgba(0, 201, 167, 0.08)" stroke-width="0.5" stroke-dasharray="8 4" fill="none"/>
+          <!-- Dock position -->
+          <rect x="220" y="360" width="30" height="20" rx="4" fill="rgba(0, 201, 167, 0.15)" stroke="rgba(0, 201, 167, 0.3)" stroke-width="1"/>
+          <text x="235" y="395" font-family="monospace" font-size="8" fill="rgba(0, 201, 167, 0.3)" text-anchor="middle">DOCK</text>
+          <!-- Flight path -->
+          <path d="M235,360 L235,120 L580,120 L580,380 L220,380 L220,200 L400,200" stroke="rgba(0, 201, 167, 0.2)" stroke-width="1" stroke-dasharray="6 3" fill="none"/>
+          <!-- Animated platform dot -->
+          <circle r="5" fill="#00C9A7" opacity="0.9">
+            <animateMotion dur="12s" repeatCount="indefinite" path="M235,360 L235,120 L580,120 L580,380 L220,380 L220,200 L400,200 L235,360"/>
+          </circle>
+          <circle r="12" fill="none" stroke="#00C9A7" opacity="0.3">
+            <animateMotion dur="12s" repeatCount="indefinite" path="M235,360 L235,120 L580,120 L580,380 L220,380 L220,200 L400,200 L235,360"/>
+            <animate attributeName="r" values="8;16;8" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.3;0.1;0.3" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Waypoints -->
+          <circle cx="235" cy="120" r="3" fill="none" stroke="rgba(0, 201, 167, 0.25)" stroke-width="1"/>
+          <circle cx="580" cy="120" r="3" fill="none" stroke="rgba(0, 201, 167, 0.25)" stroke-width="1"/>
+          <circle cx="580" cy="380" r="3" fill="none" stroke="rgba(0, 201, 167, 0.25)" stroke-width="1"/>
+          <circle cx="220" cy="380" r="3" fill="none" stroke="rgba(0, 201, 167, 0.25)" stroke-width="1"/>
+        </svg>
+      </div>
+
+      <div class="hero-inner">
+        <div class="hero-content reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">Autonomous Deployment</span>
+          </div>
+          <h1 class="hero-title">
+            Persistent Intelligence.<br/>
+            <span class="gradient-text-teal">Zero Intervention.</span>
+          </h1>
+          <p class="hero-subtitle">
+            For facilities that need more than periodic assessments. Jinki deploys
+            autonomous aerial systems that launch, capture, analyze, and report —
+            150 to 200 missions per month, 24/7, without a single operator on-site.
+          </p>
+          <div class="hero-actions">
+            <a href="#lead-gen" class="btn-premium hero-cta">Plan Your Deployment</a>
+            <a href="#dock" class="hero-cta-secondary">
+              <span class="material-symbols-outlined" style="font-size: 18px; font-variation-settings: 'FILL' 1;" aria-hidden="true">arrow_downward</span>
+              Explore the Platform
+            </a>
+          </div>
+        </div>
+        <div class="hero-stats-bar reveal reveal-delay-1">
+          <div class="hero-stat">
+            <span class="hero-stat-value">150-200</span>
+            <span class="hero-stat-label">Missions / Month</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">99%+</span>
+            <span class="hero-stat-label">Platform Availability</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">24/7</span>
+            <span class="hero-stat-label">Autonomous Ops</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-value">&lt;90s</span>
+            <span class="hero-stat-label">Response Time</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ DOCK 3 SHOWCASE ============ -->
+    <section id="dock" class="section" style="background: var(--surface-dim);" aria-label="DJI Dock 3 Platform">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">The Platform</span>
+          </div>
+          <h2>Dock 3 + M4TD<br/>Autonomous Station</h2>
+          <p class="section-subtitle">
+            A permanent on-site installation that launches, operates, and recovers
+            aerial systems without human intervention. All-weather. All-hours.
+          </p>
+        </div>
+
+        <!-- Deployment Sequence Animation -->
+        <div class="sequence-strip reveal">
+          <div class="sequence-label">DEPLOYMENT SEQUENCE</div>
+          <div class="sequence-steps">
+            {deploySequence.map((seq) => (
+              <div class="seq-step" data-seq={seq.step}>
+                <div class="seq-icon-wrap">
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 28px;" aria-hidden="true">{seq.icon}</span>
+                </div>
+                <div class="seq-connector" aria-hidden="true">
+                  <div class="seq-connector-fill"></div>
+                </div>
+                <span class="seq-step-label">{seq.label}</span>
+                <span class="seq-step-desc">{seq.desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Specs Grid -->
+        <div class="specs-grid" style="margin-top: 48px;">
+          {dockSpecs.map((spec, i) => (
+            <div class={`spec-card reveal reveal-delay-${(i % 3) + 1}`}>
+              <span class="material-symbols-outlined spec-card-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{spec.icon}</span>
+              <div class="spec-card-content">
+                <span class="spec-card-value">{spec.value}</span>
+                <span class="spec-card-label">{spec.label}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COVERAGE CALCULATOR ============ -->
+    <section class="section" aria-label="Coverage Calculator">
+      <div class="section-inner">
+        <div class="calc-layout">
+          <div class="calc-text reveal">
+            <div class="eyebrow">
+              <span class="eyebrow-line"></span>
+              <span class="eyebrow-text">Coverage Calculator</span>
+            </div>
+            <h2>Size Your<br/>Deployment</h2>
+            <p class="calc-lead">
+              Enter your facility perimeter to estimate missions per month,
+              coverage percentage, and typical response time. Results are based
+              on standard Dock 3 operating parameters.
+            </p>
+          </div>
+          <div class="calc-card reveal reveal-delay-2">
+            <div class="calc-card-inner">
+              <label class="calc-input-label" for="perimeter-input">Facility Perimeter (meters)</label>
+              <div class="calc-input-wrap">
+                <input
+                  type="range"
+                  id="perimeter-input"
+                  min="500"
+                  max="10000"
+                  step="100"
+                  value="3000"
+                  class="calc-slider"
+                  aria-label="Facility perimeter in meters"
+                />
+                <div class="calc-input-display">
+                  <span class="calc-perimeter-value" id="perimeter-display">3,000</span>
+                  <span class="calc-unit">meters</span>
+                </div>
+              </div>
+              <div class="calc-results">
+                <div class="calc-result">
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 24px;" aria-hidden="true">flight</span>
+                  <div>
+                    <span class="calc-result-value" id="missions-result">180</span>
+                    <span class="calc-result-label">Missions / Month</span>
+                  </div>
+                </div>
+                <div class="calc-result">
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 24px;" aria-hidden="true">my_location</span>
+                  <div>
+                    <span class="calc-result-value" id="coverage-result">98%</span>
+                    <span class="calc-result-label">Coverage Area</span>
+                  </div>
+                </div>
+                <div class="calc-result">
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #00C9A7; font-size: 24px;" aria-hidden="true">timer</span>
+                  <div>
+                    <span class="calc-result-value" id="response-result">72s</span>
+                    <span class="calc-result-label">Avg Response Time</span>
+                  </div>
+                </div>
+              </div>
+              <div class="calc-note">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--text-tertiary); font-size: 16px;" aria-hidden="true">info</span>
+                <span>Estimates based on single Dock 3 with standard flight parameters. Multi-dock deployments scale linearly.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 24/7 OPERATIONS — DAY/NIGHT ============ -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="24/7 Operations">
+      <div class="section-inner">
+        <div class="section-header reveal" style="text-align: center; max-width: 640px; margin-left: auto; margin-right: auto;">
+          <div class="eyebrow" style="justify-content: center;">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">24/7 Operations</span>
+          </div>
+          <h2>Day Shift. Night Shift.<br/>No Shift Change.</h2>
+          <p class="section-subtitle" style="margin-left: auto; margin-right: auto;">
+            Autonomous systems operate continuously through every condition.
+            Thermal patrols run at night when anomalies are most visible.
+            Security sweeps respond to alarms in seconds, not minutes.
+          </p>
+        </div>
+
+        <div class="daynight-visual reveal" aria-hidden="true">
+          <div class="daynight-track">
+            <div class="daynight-cycle">
+              <div class="dn-segment day-segment">
+                <div class="dn-sky day-sky">
+                  <span class="material-symbols-outlined dn-celestial" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">light_mode</span>
+                </div>
+                <div class="dn-ops">
+                  <div class="dn-mission-tag">
+                    <span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1;" aria-hidden="true">construction</span>
+                    Progress Monitoring
+                  </div>
+                  <div class="dn-mission-tag">
+                    <span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1;" aria-hidden="true">eco</span>
+                    Environmental Survey
+                  </div>
+                </div>
+                <span class="dn-time-label">06:00 - 18:00</span>
+              </div>
+              <div class="dn-segment night-segment">
+                <div class="dn-sky night-sky">
+                  <span class="material-symbols-outlined dn-celestial" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">dark_mode</span>
+                </div>
+                <div class="dn-ops">
+                  <div class="dn-mission-tag night-tag">
+                    <span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1;" aria-hidden="true">thermostat</span>
+                    Thermal Patrol
+                  </div>
+                  <div class="dn-mission-tag night-tag">
+                    <span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1;" aria-hidden="true">security</span>
+                    Security Sweep
+                  </div>
+                </div>
+                <span class="dn-time-label">18:00 - 06:00</span>
+              </div>
+            </div>
+            <div class="dn-cursor" aria-hidden="true">
+              <div class="dn-cursor-line"></div>
+              <div class="dn-cursor-label">NOW</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mission Stats -->
+        <div class="ops-stats-grid reveal" style="margin-top: 48px;">
+          <div class="ops-stat-card">
+            <span class="ops-sc-value">6-8</span>
+            <span class="ops-sc-label">Missions per day</span>
+          </div>
+          <div class="ops-stat-card">
+            <span class="ops-sc-value">4</span>
+            <span class="ops-sc-label">Night thermal patrols</span>
+          </div>
+          <div class="ops-stat-card">
+            <span class="ops-sc-value">365</span>
+            <span class="ops-sc-label">Days per year</span>
+          </div>
+          <div class="ops-stat-card">
+            <span class="ops-sc-value">0</span>
+            <span class="ops-sc-label">Operators required</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ INTEGRATION ARCHITECTURE ============ -->
+    <section class="section" aria-label="Integration Architecture">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">Architecture</span>
+          </div>
+          <h2>From Dock to Dashboard.<br/>Fully Automated Pipeline.</h2>
+          <p class="section-subtitle">
+            Data flows from the on-site dock through AI processing to your existing
+            platforms. Every step is automated. Every integration is bidirectional.
+          </p>
+        </div>
+
+        <div class="arch-diagram reveal">
+          <div class="arch-flow">
+            {integrationNodes.map((node, i) => (
+              <div class="arch-node">
+                <div class="arch-node-icon">
+                  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 28px;" aria-hidden="true">{node.icon}</span>
+                </div>
+                <span class="arch-node-label">{node.label}</span>
+                <span class="arch-node-desc">{node.desc}</span>
+                {i < integrationNodes.length - 1 && (
+                  <div class="arch-arrow" aria-hidden="true">
+                    <span class="material-symbols-outlined" style="font-size: 20px;" aria-hidden="true">arrow_forward</span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <div class="arch-integrations">
+            <span class="arch-int-label">DELIVERS TO</span>
+            <div class="arch-int-tags">
+              <span class="arch-tag">SCADA</span>
+              <span class="arch-tag">VMS</span>
+              <span class="arch-tag">BMS</span>
+              <span class="arch-tag">Digital Twin</span>
+              <span class="arch-tag">SOC</span>
+              <span class="arch-tag">CMMS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CAPABILITIES ============ -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Capabilities">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            <span class="eyebrow-text">Capabilities</span>
+          </div>
+          <h2>Scheduled. Triggered.<br/>Always Watching.</h2>
+          <p class="section-subtitle">
+            Autonomous operations that run on your schedule, respond to your alarms,
+            and deliver intelligence to your existing platforms.
+          </p>
+        </div>
+
+        <div class="cap-grid">
+          {capabilities.map((cap, i) => (
+            <div class={`cap-card metallic-gloss reveal reveal-delay-${(i % 3) + 1}`}>
+              <div class="cap-icon-wrap">
+                <span class="material-symbols-outlined cap-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{cap.icon}</span>
+              </div>
+              <h3 class="cap-title">{cap.title}</h3>
+              <p class="cap-desc">{cap.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <LeadGen />
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  // Coverage Calculator
+  const slider = document.getElementById('perimeter-input') as HTMLInputElement;
+  const perimeterDisplay = document.getElementById('perimeter-display');
+  const missionsResult = document.getElementById('missions-result');
+  const coverageResult = document.getElementById('coverage-result');
+  const responseResult = document.getElementById('response-result');
+
+  function updateCalculator() {
+    if (!slider || !perimeterDisplay || !missionsResult || !coverageResult || !responseResult) return;
+    const perimeter = parseInt(slider.value);
+    perimeterDisplay.textContent = perimeter.toLocaleString();
+
+    // Missions: base 200 for small, scales down as perimeter grows (longer routes = fewer missions)
+    const missions = Math.round(200 - (perimeter - 500) * 0.005);
+    const clampedMissions = Math.max(150, Math.min(200, missions));
+    missionsResult.textContent = String(clampedMissions);
+
+    // Coverage: 99% for small, decreasing slightly for very large
+    const coverage = Math.max(92, Math.round(99 - (perimeter - 500) * 0.0008));
+    coverageResult.textContent = coverage + '%';
+
+    // Response time: increases with perimeter
+    const response = Math.round(45 + (perimeter / 200));
+    responseResult.textContent = response + 's';
+  }
+
+  if (slider) {
+    slider.addEventListener('input', updateCalculator);
+    updateCalculator();
+  }
+
+  // Deployment sequence animation
+  const sequenceSteps = document.querySelectorAll('.seq-step');
+  let currentSeq = 0;
+
+  function animateSequence() {
+    sequenceSteps.forEach((step, i) => {
+      step.classList.toggle('active', i <= currentSeq);
+    });
+    currentSeq = (currentSeq + 1) % sequenceSteps.length;
+  }
+
+  if (sequenceSteps.length > 0) {
+    animateSequence();
+    setInterval(animateSequence, 2000);
+  }
+
+  // Day/Night cursor animation
+  const dnCursor = document.querySelector('.dn-cursor') as HTMLElement;
+  if (dnCursor) {
+    let cursorPos = 0;
+    function moveCursor() {
+      cursorPos = (cursorPos + 0.15) % 100;
+      dnCursor.style.left = cursorPos + '%';
+      requestAnimationFrame(moveCursor);
+    }
+    moveCursor();
+  }
+</script>
+
+<style>
+  /* ============================================================
+     HERO — FLIGHT PATH
+     ============================================================ */
+  .deploy-hero {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    padding: 160px clamp(20px, 5vw, 80px) 80px;
+    background: var(--surface-container-lowest);
+    overflow: hidden;
+  }
+
+  .flight-path-bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  .facility-svg {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+  }
+
+  .hero-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-content {
+    max-width: 640px;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: #00C9A7;
+  }
+
+  .eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #00C9A7;
+  }
+
+  .hero-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2.5rem, 5vw + 0.5rem, 4.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+
+  .gradient-text-teal {
+    background: linear-gradient(135deg, #00C9A7, #00897B);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.1875rem);
+    line-height: 1.8;
+    color: var(--text-secondary);
+    max-width: 580px;
+    margin-bottom: 36px;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .hero-cta {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #00C9A7, #00897B);
+  }
+
+  .hero-cta:hover {
+    box-shadow: 0 0 30px rgba(0, 201, 167, 0.3);
+  }
+
+  .hero-cta-secondary {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-cta-secondary:hover {
+    color: #00C9A7;
+  }
+
+  .hero-stats-bar {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 24px 28px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    max-width: fit-content;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .hero-stat-value {
+    font-family: var(--font-headline);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #00C9A7;
+  }
+
+  .hero-stat-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .hero-stat-divider {
+    width: 1px;
+    height: 36px;
+    background: var(--glass-border);
+  }
+
+  /* ============================================================
+     SECTIONS SHARED
+     ============================================================ */
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .section { padding: 7rem clamp(20px, 5vw, 80px); }
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.12;
+    margin-top: 8px;
+  }
+
+  .section-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-top: 16px;
+  }
+
+  /* ============================================================
+     DEPLOYMENT SEQUENCE
+     ============================================================ */
+  .sequence-strip {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 32px;
+    overflow: hidden;
+  }
+
+  .sequence-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 24px;
+  }
+
+  .sequence-steps {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .sequence-steps::-webkit-scrollbar { display: none; }
+
+  .seq-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 140px;
+    flex: 1;
+    position: relative;
+    opacity: 0.3;
+    transition: opacity 0.6s ease, transform 0.4s ease;
+  }
+
+  .seq-step.active {
+    opacity: 1;
+  }
+
+  .seq-icon-wrap {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 201, 167, 0.08);
+    border: 2px solid rgba(0, 201, 167, 0.15);
+    color: #00C9A7;
+    transition: all 0.4s ease;
+    margin-bottom: 12px;
+  }
+
+  .seq-step.active .seq-icon-wrap {
+    background: rgba(0, 201, 167, 0.15);
+    border-color: #00C9A7;
+    box-shadow: 0 0 24px rgba(0, 201, 167, 0.25);
+  }
+
+  .seq-connector {
+    position: absolute;
+    top: 28px;
+    left: calc(50% + 28px);
+    right: calc(-50% + 28px);
+    height: 2px;
+    background: rgba(0, 201, 167, 0.1);
+    overflow: hidden;
+  }
+
+  .seq-step:last-child .seq-connector { display: none; }
+
+  .seq-connector-fill {
+    height: 100%;
+    width: 0;
+    background: #00C9A7;
+    transition: width 0.6s ease;
+  }
+
+  .seq-step.active .seq-connector-fill {
+    width: 100%;
+  }
+
+  .seq-step-label {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .seq-step-desc {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+    line-height: 1.4;
+    max-width: 120px;
+  }
+
+  /* ============================================================
+     SPECS GRID
+     ============================================================ */
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  @media (min-width: 768px) {
+    .specs-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (min-width: 1024px) {
+    .specs-grid { grid-template-columns: repeat(6, 1fr); }
+  }
+
+  .spec-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 24px 12px;
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .spec-card:hover {
+    border-color: rgba(0, 201, 167, 0.15);
+    transform: translateY(-2px);
+  }
+
+  .spec-card-icon {
+    font-size: 24px;
+    color: #00C9A7;
+  }
+
+  .spec-card-value {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: block;
+  }
+
+  .spec-card-label {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    display: block;
+  }
+
+  /* ============================================================
+     COVERAGE CALCULATOR
+     ============================================================ */
+  .calc-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  @media (min-width: 768px) {
+    .calc-layout {
+      grid-template-columns: 1fr 1.2fr;
+      gap: 64px;
+      align-items: center;
+    }
+  }
+
+  .calc-text h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.12;
+    margin-top: 8px;
+  }
+
+  .calc-lead {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-top: 16px;
+  }
+
+  .calc-card-inner {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .calc-card-inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .calc-input-label {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .calc-input-wrap {
+    margin-bottom: 32px;
+  }
+
+  .calc-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(0, 201, 167, 0.1);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  .calc-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #00C9A7;
+    box-shadow: 0 0 12px rgba(0, 201, 167, 0.4);
+    cursor: pointer;
+    border: 3px solid var(--surface-container-low);
+  }
+
+  .calc-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #00C9A7;
+    box-shadow: 0 0 12px rgba(0, 201, 167, 0.4);
+    cursor: pointer;
+    border: 3px solid var(--surface-container-low);
+  }
+
+  .calc-input-display {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .calc-perimeter-value {
+    font-family: var(--font-headline);
+    font-size: 2rem;
+    font-weight: 700;
+    color: #00C9A7;
+  }
+
+  .calc-unit {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+  }
+
+  .calc-results {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 480px) {
+    .calc-results { grid-template-columns: 1fr; }
+  }
+
+  .calc-result {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: rgba(0, 201, 167, 0.06);
+    border: 1px solid rgba(0, 201, 167, 0.1);
+    border-radius: 12px;
+  }
+
+  .calc-result-value {
+    font-family: var(--font-headline);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: block;
+  }
+
+  .calc-result-label {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    display: block;
+  }
+
+  .calc-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+  }
+
+  /* ============================================================
+     DAY/NIGHT VISUALIZATION
+     ============================================================ */
+  .daynight-visual {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+  }
+
+  .daynight-track {
+    position: relative;
+    display: flex;
+    height: 240px;
+  }
+
+  .daynight-cycle {
+    display: flex;
+    width: 100%;
+  }
+
+  .dn-segment {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 20px;
+    position: relative;
+  }
+
+  .day-segment {
+    background: linear-gradient(180deg, #1a2a3a 0%, #0d1a26 100%);
+  }
+
+  .night-segment {
+    background: linear-gradient(180deg, #0a0c14 0%, #050608 100%);
+  }
+
+  .dn-sky {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .day-sky .dn-celestial {
+    font-size: 36px;
+    color: #FFBD2E;
+    filter: drop-shadow(0 0 12px rgba(255, 189, 46, 0.4));
+  }
+
+  .night-sky .dn-celestial {
+    font-size: 36px;
+    color: #849396;
+    filter: drop-shadow(0 0 8px rgba(132, 147, 150, 0.3));
+  }
+
+  .dn-ops {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .dn-mission-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(0, 201, 167, 0.1);
+    border: 1px solid rgba(0, 201, 167, 0.15);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: #00C9A7;
+  }
+
+  .dn-mission-tag.night-tag {
+    background: rgba(0, 201, 167, 0.15);
+    border-color: rgba(0, 201, 167, 0.25);
+  }
+
+  .dn-time-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text-tertiary);
+  }
+
+  .dn-cursor {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .dn-cursor-line {
+    width: 2px;
+    height: 100%;
+    background: #00C9A7;
+    box-shadow: 0 0 8px rgba(0, 201, 167, 0.5);
+  }
+
+  .dn-cursor-label {
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #00C9A7;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  /* Ops Stats */
+  .ops-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @media (min-width: 768px) {
+    .ops-stats-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .ops-stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 28px 16px;
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    text-align: center;
+  }
+
+  .ops-sc-value {
+    font-family: var(--font-headline);
+    font-size: 2rem;
+    font-weight: 700;
+    color: #00C9A7;
+    line-height: 1;
+  }
+
+  .ops-sc-label {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+  }
+
+  /* ============================================================
+     INTEGRATION ARCHITECTURE
+     ============================================================ */
+  .arch-diagram {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 40px 32px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .arch-diagram::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .arch-flow {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-bottom: 32px;
+  }
+
+  .arch-flow::-webkit-scrollbar { display: none; }
+
+  .arch-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-width: 120px;
+    flex: 1;
+    position: relative;
+    padding: 0 8px;
+  }
+
+  .arch-node-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 201, 167, 0.1);
+    border: 1px solid rgba(0, 201, 167, 0.2);
+    color: #00C9A7;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .arch-node:hover .arch-node-icon {
+    background: rgba(0, 201, 167, 0.15);
+    box-shadow: 0 0 20px rgba(0, 201, 167, 0.2);
+  }
+
+  .arch-node-label {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .arch-node-desc {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.03em;
+  }
+
+  .arch-arrow {
+    position: absolute;
+    top: 20px;
+    right: -12px;
+    color: rgba(0, 201, 167, 0.3);
+    z-index: 1;
+  }
+
+  .arch-integrations {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding-top: 24px;
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .arch-int-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+
+  .arch-int-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .arch-tag {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #00C9A7;
+    background: rgba(0, 201, 167, 0.08);
+    border: 1px solid rgba(0, 201, 167, 0.15);
+    padding: 6px 14px;
+    border-radius: 8px;
+  }
+
+  /* ============================================================
+     CAPABILITIES GRID
+     ============================================================ */
+  .cap-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .cap-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (min-width: 1024px) {
+    .cap-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .cap-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cap-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .cap-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 201, 167, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(0, 201, 167, 0.15);
+  }
+
+  .cap-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(0, 201, 167, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+  }
+
+  .cap-card:hover .cap-icon-wrap {
+    box-shadow: 0 0 20px rgba(0, 201, 167, 0.25);
+  }
+
+  .cap-icon {
+    color: #00C9A7;
+    font-size: 24px;
+  }
+
+  .cap-title {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .cap-desc {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 768px) {
+    .deploy-hero {
+      min-height: auto;
+      padding-top: 120px;
+      padding-bottom: 60px;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .hero-stats-bar {
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .hero-stat-divider:nth-of-type(2) {
+      display: none;
+    }
+
+    .sequence-steps {
+      overflow-x: auto;
+    }
+
+    .arch-flow {
+      overflow-x: auto;
+    }
+
+    .daynight-track {
+      height: 200px;
+    }
+  }
+
+  /* ============================================================
+     LIGHT MODE
+     ============================================================ */
+  :global([data-theme="light"]) .facility-svg rect[fill] {
+    fill: rgba(0, 137, 123, 0.02);
+  }
+
+  :global([data-theme="light"]) .facility-svg rect[stroke] {
+    stroke: rgba(0, 137, 123, 0.12);
+  }
+
+  :global([data-theme="light"]) .facility-svg path {
+    stroke: rgba(0, 137, 123, 0.15);
+  }
+
+  :global([data-theme="light"]) .facility-svg circle[fill="#00C9A7"] {
+    fill: #00897B;
+  }
+
+  :global([data-theme="light"]) .facility-svg text {
+    fill: rgba(0, 137, 123, 0.3);
+  }
+
+  :global([data-theme="light"]) .hero-cta {
+    background: linear-gradient(135deg, #00897B, #006064);
+  }
+
+  :global([data-theme="light"]) .hero-stat-value,
+  :global([data-theme="light"]) .ops-sc-value,
+  :global([data-theme="light"]) .calc-perimeter-value {
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .seq-icon-wrap {
+    background: rgba(0, 137, 123, 0.08);
+    border-color: rgba(0, 137, 123, 0.15);
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .seq-step.active .seq-icon-wrap {
+    background: rgba(0, 137, 123, 0.15);
+    border-color: #00897B;
+    box-shadow: 0 0 24px rgba(0, 137, 123, 0.15);
+  }
+
+  :global([data-theme="light"]) .spec-card:hover,
+  :global([data-theme="light"]) .cap-card:hover {
+    border-color: rgba(0, 137, 123, 0.15);
+  }
+
+  :global([data-theme="light"]) .spec-card-icon,
+  :global([data-theme="light"]) .cap-icon,
+  :global([data-theme="light"]) .arch-tag {
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .arch-node-icon {
+    background: rgba(0, 137, 123, 0.08);
+    border-color: rgba(0, 137, 123, 0.15);
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .calc-slider::-webkit-slider-thumb {
+    background: #00897B;
+    box-shadow: 0 0 12px rgba(0, 137, 123, 0.3);
+  }
+
+  :global([data-theme="light"]) .calc-slider::-moz-range-thumb {
+    background: #00897B;
+    box-shadow: 0 0 12px rgba(0, 137, 123, 0.3);
+  }
+
+  :global([data-theme="light"]) .calc-result {
+    background: rgba(0, 137, 123, 0.06);
+    border-color: rgba(0, 137, 123, 0.1);
+  }
+
+  :global([data-theme="light"]) .dn-mission-tag {
+    background: rgba(0, 137, 123, 0.08);
+    border-color: rgba(0, 137, 123, 0.12);
+    color: #00897B;
+  }
+
+  :global([data-theme="light"]) .day-segment {
+    background: linear-gradient(180deg, #e8eef5, #dce5ed);
+  }
+
+  :global([data-theme="light"]) .night-segment {
+    background: linear-gradient(180deg, #c8d0d8, #b0b8c0);
+  }
+
+  :global([data-theme="light"]) .arch-tag {
+    background: rgba(0, 137, 123, 0.06);
+    border-color: rgba(0, 137, 123, 0.12);
+  }
+
+  :global([data-theme="light"]) .cap-icon-wrap {
+    background: rgba(0, 137, 123, 0.1);
+  }
+
+  :global([data-theme="light"]) .eyebrow-line {
+    background: #00897B;
+  }
+
+  :global([data-theme="light"]) .eyebrow-text {
+    color: #00897B;
+  }
+</style>

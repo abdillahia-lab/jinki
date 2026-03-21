@@ -75,11 +75,8 @@
       "Bash(git add:*)",
       "Bash(rm -f .git/index.lock)",
       "Bash(git commit:*)",
-      "Bash(claude --version)",
-      "Bash(mkdir -p /Users/aa/JInki.ai/.claude/skills)",
-      "Bash(cp -r /Users/aa/.claude/skills/anthropic-skills-repo/skills/algorithmic-art /Users/aa/JInki.ai/.claude/skills/)",
-      "Bash(cp -r /Users/aa/.claude/skills/anthropic-skills-repo/skills/canvas-design /Users/aa/JInki.ai/.claude/skills/)",
-      "Bash(cp -r /Users/aa/.claude/skills/anthropic-skills-repo/skills/theme-factory /Users/aa/JInki.ai/.claude/skills/)"
+      "Bash(git merge:*)",
+      "Bash(\"/Users/aa/.claude/plugins/cache/claude-plugins-official/ralph-loop/6b70f99f769f/scripts/setup-ralph-loop.sh\" \"Iterate on every component page and design element of the Jinki website to achieve luxury tier quality. Pick one element per iteration, read the code, apply premium design patterns from research, make the improvement, build with astro build. Focus on spacing, shadows, easing, typography, micro-interactions, card hover states, section rhythm, mobile UX. Never fabricate claims. Use PATH at nvm node v24. --max-iterations 250\")"
     ]
   }
 }

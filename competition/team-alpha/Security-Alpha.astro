@@ -1,0 +1,1374 @@
+---
+/*
+  TEAM ALPHA — Security Vertical Redesign | Jinki Aerial Intelligence
+  Radar sweep hero, threat detection grid, 24/7 monitoring timeline,
+  security dashboard mockup, guard vs autonomous comparison, compliance badges.
+*/
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import LeadGen from '../../components/LeadGen.astro';
+import Footer from '../../components/Footer.astro';
+
+const detectionTypes = [
+  { icon: 'fence', label: 'Perimeter Breach', severity: 'critical', delay: 0 },
+  { icon: 'directions_car', label: 'Vehicle Approach', severity: 'warning', delay: 0.3 },
+  { icon: 'person', label: 'Personnel Detected', severity: 'info', delay: 0.6 },
+  { icon: 'pets', label: 'Wildlife', severity: 'low', delay: 0.9 },
+  { icon: 'thunderstorm', label: 'Environmental', severity: 'info', delay: 1.2 },
+  { icon: 'build', label: 'Equipment Tamper', severity: 'critical', delay: 1.5 },
+  { icon: 'local_fire_department', label: 'Fire / Smoke', severity: 'critical', delay: 1.8 },
+  { icon: 'visibility', label: 'Loitering', severity: 'warning', delay: 2.1 },
+];
+
+const comparison = [
+  { metric: 'Annual Cost', guard: '$312K+', autonomous: '$48K', icon: 'payments' },
+  { metric: 'Perimeter Coverage', guard: '15%', autonomous: '100%', icon: 'map' },
+  { metric: 'Response Time', guard: '4-8 min', autonomous: '30 sec', icon: 'timer' },
+  { metric: 'Fatigue Factor', guard: 'Degrades 40%+', autonomous: 'Zero', icon: 'battery_alert' },
+  { metric: 'Night Capability', guard: 'Limited', autonomous: 'Full Thermal', icon: 'nightlight' },
+  { metric: 'Documentation', guard: 'Manual logs', autonomous: 'Auto HD + GPS', icon: 'description' },
+];
+
+const stats = [
+  { value: '$4.4B', label: 'Security surveillance aerial market (2025)' },
+  { value: '30s', label: 'Alert-to-airborne response time' },
+  { value: '40+', label: 'Guard patrol hours replaced per week' },
+  { value: '24/7', label: 'Persistent autonomous monitoring' },
+];
+---
+
+<Layout title="Security Intelligence — Jinki Aerial Intelligence" description="Aerial threat detection, perimeter thermal surveillance, and 24/7 autonomous security intelligence for critical infrastructure.">
+  <Nav />
+  <main id="main-content">
+
+    <!-- ===== RADAR SWEEP HERO ===== -->
+    <section class="sec-hero" aria-label="Security Intelligence Hero">
+      <div class="sec-hero-bg" aria-hidden="true">
+        <div class="radar-container">
+          <svg class="radar-svg" viewBox="0 0 500 500" aria-hidden="true">
+            <!-- Grid rings -->
+            <circle cx="250" cy="250" r="60" fill="none" stroke="rgba(123,97,255,0.08)" stroke-width="0.5"/>
+            <circle cx="250" cy="250" r="120" fill="none" stroke="rgba(123,97,255,0.08)" stroke-width="0.5"/>
+            <circle cx="250" cy="250" r="180" fill="none" stroke="rgba(123,97,255,0.08)" stroke-width="0.5"/>
+            <circle cx="250" cy="250" r="240" fill="none" stroke="rgba(123,97,255,0.06)" stroke-width="0.5"/>
+            <!-- Cross lines -->
+            <line x1="250" y1="10" x2="250" y2="490" stroke="rgba(123,97,255,0.05)" stroke-width="0.5"/>
+            <line x1="10" y1="250" x2="490" y2="250" stroke="rgba(123,97,255,0.05)" stroke-width="0.5"/>
+            <line x1="80" y1="80" x2="420" y2="420" stroke="rgba(123,97,255,0.03)" stroke-width="0.5"/>
+            <line x1="420" y1="80" x2="80" y2="420" stroke="rgba(123,97,255,0.03)" stroke-width="0.5"/>
+            <!-- Sweep -->
+            <defs>
+              <linearGradient id="sweepGrad" gradientUnits="userSpaceOnUse" x1="250" y1="250" x2="250" y2="10">
+                <stop offset="0%" stop-color="rgba(123,97,255,0)" />
+                <stop offset="100%" stop-color="rgba(123,97,255,0.5)" />
+              </linearGradient>
+            </defs>
+            <g class="radar-arm">
+              <line x1="250" y1="250" x2="250" y2="10" stroke="url(#sweepGrad)" stroke-width="2"/>
+              <path d="M250,250 L250,10 A240,240 0 0,0 120,45 Z" fill="rgba(123,97,255,0.06)"/>
+            </g>
+            <!-- Blips -->
+            <circle class="radar-blip blip-1" cx="310" cy="130" r="4" fill="#7B61FF"/>
+            <circle class="radar-blip blip-2" cx="170" cy="200" r="3" fill="#FF6B35"/>
+            <circle class="radar-blip blip-3" cx="380" cy="310" r="3.5" fill="#7B61FF"/>
+            <circle class="radar-blip blip-4" cx="200" cy="370" r="3" fill="#4F46E5"/>
+            <circle class="radar-blip blip-5" cx="140" cy="330" r="2.5" fill="#FF6B35"/>
+          </svg>
+        </div>
+      </div>
+      <div class="sec-hero-inner">
+        <div class="sec-hero-content reveal">
+          <div class="sec-eyebrow">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">Perimeter Security</span>
+          </div>
+          <h1 class="sec-hero-title">
+            Autonomous Threat<br/>Detection for<br/>
+            <span class="gradient-text-violet">Critical Infrastructure</span>
+          </h1>
+          <p class="sec-hero-subtitle">
+            Replace 40+ guard patrol hours per week with persistent aerial surveillance.
+            AI-classified threats in real time, thermal imaging through total darkness,
+            30-second alert-to-airborne response. Your perimeter, covered.
+          </p>
+          <div class="sec-hero-actions">
+            <a href="#lead-gen" class="btn-premium sec-cta-primary">Schedule Assessment</a>
+            <a href="#threat-grid" class="sec-cta-ghost">
+              <span class="material-symbols-outlined" style="font-size: 18px; font-variation-settings: 'FILL' 1;" aria-hidden="true">radar</span>
+              View Capabilities
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== STATS BAR ===== -->
+    <div class="sec-stats-bar reveal" aria-label="Key statistics">
+      <div class="sec-stats-inner">
+        {stats.map((s, i) => (
+          <div class={`sec-stat reveal reveal-delay-${i + 1}`}>
+            <span class="sec-stat-value">{s.value}</span>
+            <span class="sec-stat-label">{s.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- ===== THREAT DETECTION GRID ===== -->
+    <section id="threat-grid" class="sec-section" style="background: var(--surface-dim);" aria-label="Threat Detection Types">
+      <div class="sec-section-inner">
+        <div class="sec-section-header reveal">
+          <div class="sec-eyebrow">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">Detection Matrix</span>
+          </div>
+          <h2>Eight Threat Categories.<br/>One Intelligent Platform.</h2>
+          <p class="sec-section-sub">
+            AI-powered classification distinguishes real threats from false alarms. Each detection
+            type triggers a tailored response protocol, eliminating wasted security resources.
+          </p>
+        </div>
+
+        <div class="threat-grid">
+          {detectionTypes.map((dt, i) => (
+            <div
+              class={`threat-card reveal reveal-delay-${(i % 4) + 1}`}
+              data-severity={dt.severity}
+              style={`--card-delay: ${dt.delay}s;`}
+            >
+              <div class="threat-icon-ring" aria-hidden="true">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">{dt.icon}</span>
+                <div class="threat-pulse-ring"></div>
+              </div>
+              <span class="threat-label">{dt.label}</span>
+              <span class={`threat-severity severity-${dt.severity}`}>{dt.severity}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 24/7 MONITORING TIMELINE ===== -->
+    <section class="sec-section" aria-label="24/7 Autonomous Monitoring">
+      <div class="sec-section-inner">
+        <div class="sec-two-col">
+          <div class="sec-section-header reveal" style="max-width: 480px;">
+            <div class="sec-eyebrow">
+              <span class="sec-eyebrow-line"></span>
+              <span class="sec-eyebrow-text">Persistent Coverage</span>
+            </div>
+            <h2>24/7 Autonomous<br/>Patrol Coverage</h2>
+            <p class="sec-section-sub">
+              DJI Dock 3 stations launch automated patrols around the clock. 150-200 missions
+              per month with zero human intervention. Every segment of your perimeter, every hour.
+            </p>
+            <ul class="sec-feature-list" role="list">
+              <li>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #7B61FF; font-size: 20px;" aria-hidden="true">check_circle</span>
+                <span>Automated launch-fly-land-recharge cycle</span>
+              </li>
+              <li>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #7B61FF; font-size: 20px;" aria-hidden="true">check_circle</span>
+                <span>Event-triggered rapid-response sorties</span>
+              </li>
+              <li>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #7B61FF; font-size: 20px;" aria-hidden="true">check_circle</span>
+                <span>HD + thermal dual-sensor simultaneous capture</span>
+              </li>
+              <li>
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #7B61FF; font-size: 20px;" aria-hidden="true">check_circle</span>
+                <span>All-weather operation (IP55 rated)</span>
+              </li>
+            </ul>
+          </div>
+          <div class="clock-visual reveal reveal-delay-1" aria-hidden="true">
+            <div class="clock-ring">
+              <svg viewBox="0 0 300 300" class="clock-svg">
+                <!-- 24-hour marks -->
+                {Array.from({ length: 24 }, (_, i) => {
+                  const angle = (i * 15) - 90;
+                  const rad = angle * Math.PI / 180;
+                  const x1 = 150 + 130 * Math.cos(rad);
+                  const y1 = 150 + 130 * Math.sin(rad);
+                  const x2 = 150 + 140 * Math.cos(rad);
+                  const y2 = 150 + 140 * Math.sin(rad);
+                  const tx = 150 + 118 * Math.cos(rad);
+                  const ty = 150 + 118 * Math.sin(rad);
+                  return (
+                    <g>
+                      <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="rgba(123,97,255,0.3)" stroke-width="1.5"/>
+                      <text x={tx} y={ty} text-anchor="middle" dominant-baseline="central" fill="rgba(123,97,255,0.35)" font-size="8" font-family="var(--font-mono)">{String(i).padStart(2, '0')}</text>
+                    </g>
+                  );
+                })}
+                <!-- Coverage arcs (patrol segments) -->
+                <circle cx="150" cy="150" r="105" fill="none" stroke="rgba(123,97,255,0.06)" stroke-width="20"/>
+                <!-- Day patrols -->
+                <circle class="patrol-arc arc-1" cx="150" cy="150" r="105" fill="none" stroke="rgba(123,97,255,0.35)" stroke-width="20"
+                  stroke-dasharray="110 550" stroke-dashoffset="-5" stroke-linecap="round"/>
+                <circle class="patrol-arc arc-2" cx="150" cy="150" r="105" fill="none" stroke="rgba(123,97,255,0.35)" stroke-width="20"
+                  stroke-dasharray="80 580" stroke-dashoffset="-140" stroke-linecap="round"/>
+                <circle class="patrol-arc arc-3" cx="150" cy="150" r="105" fill="none" stroke="rgba(79,70,229,0.4)" stroke-width="20"
+                  stroke-dasharray="100 560" stroke-dashoffset="-250" stroke-linecap="round"/>
+                <circle class="patrol-arc arc-4" cx="150" cy="150" r="105" fill="none" stroke="rgba(79,70,229,0.4)" stroke-width="20"
+                  stroke-dasharray="90 570" stroke-dashoffset="-380" stroke-linecap="round"/>
+                <circle class="patrol-arc arc-5" cx="150" cy="150" r="105" fill="none" stroke="rgba(123,97,255,0.3)" stroke-width="20"
+                  stroke-dasharray="120 540" stroke-dashoffset="-500" stroke-linecap="round"/>
+                <!-- Rotating indicator -->
+                <g class="clock-hand">
+                  <line x1="150" y1="150" x2="150" y2="40" stroke="#7B61FF" stroke-width="2" stroke-linecap="round"/>
+                  <circle cx="150" cy="40" r="4" fill="#7B61FF"/>
+                </g>
+                <!-- Center -->
+                <circle cx="150" cy="150" r="8" fill="#7B61FF"/>
+                <circle cx="150" cy="150" r="4" fill="var(--surface-container-lowest)"/>
+              </svg>
+              <div class="clock-center-label">
+                <span class="clock-label-value">24/7</span>
+                <span class="clock-label-sub">Coverage</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SECURITY DASHBOARD MOCKUP ===== -->
+    <section class="sec-section" style="background: var(--surface-dim);" aria-label="Security Operations Dashboard">
+      <div class="sec-section-inner">
+        <div class="sec-section-header reveal" style="text-align: center; margin-left: auto; margin-right: auto; max-width: 640px;">
+          <div class="sec-eyebrow" style="justify-content: center;">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">Command Center</span>
+          </div>
+          <h2>Your Security Operations<br/>Dashboard</h2>
+          <p class="sec-section-sub" style="margin-left: auto; margin-right: auto;">
+            Centralized command interface integrating live aerial feeds, perimeter mapping,
+            and AI-classified alert streams into a single glass pane.
+          </p>
+        </div>
+
+        <div class="dashboard-mockup reveal reveal-delay-1" aria-hidden="true">
+          <div class="dash-titlebar">
+            <div class="dash-dots">
+              <span class="dash-dot" style="background: #ff5f57;"></span>
+              <span class="dash-dot" style="background: #febc2e;"></span>
+              <span class="dash-dot" style="background: #28c840;"></span>
+            </div>
+            <span class="dash-title">Jinki Security Operations Center</span>
+            <div class="dash-status">
+              <span class="dash-status-dot"></span>
+              <span>LIVE</span>
+            </div>
+          </div>
+          <div class="dash-body">
+            <!-- Camera Grid -->
+            <div class="dash-cameras">
+              <div class="dash-cam">
+                <div class="dash-cam-feed cam-thermal"></div>
+                <span class="dash-cam-label">CAM 01 - North Gate (Thermal)</span>
+              </div>
+              <div class="dash-cam">
+                <div class="dash-cam-feed cam-hd"></div>
+                <span class="dash-cam-label">CAM 02 - East Perimeter (HD)</span>
+              </div>
+              <div class="dash-cam">
+                <div class="dash-cam-feed cam-aerial"></div>
+                <span class="dash-cam-label">CAM 03 - Aerial Patrol (Live)</span>
+              </div>
+              <div class="dash-cam">
+                <div class="dash-cam-feed cam-night"></div>
+                <span class="dash-cam-label">CAM 04 - South Fence (IR)</span>
+              </div>
+            </div>
+            <!-- Alert Feed -->
+            <div class="dash-sidebar">
+              <div class="dash-alerts">
+                <span class="dash-panel-title">Alert Feed</span>
+                <div class="dash-alert-item alert-critical">
+                  <span class="dash-alert-time">22:14:03</span>
+                  <span class="dash-alert-msg">Perimeter breach - Sector 7N</span>
+                </div>
+                <div class="dash-alert-item alert-warning">
+                  <span class="dash-alert-time">22:11:47</span>
+                  <span class="dash-alert-msg">Vehicle approach - East gate</span>
+                </div>
+                <div class="dash-alert-item alert-info">
+                  <span class="dash-alert-time">22:08:22</span>
+                  <span class="dash-alert-msg">Wildlife detected - SW quadrant</span>
+                </div>
+                <div class="dash-alert-item alert-info">
+                  <span class="dash-alert-time">22:05:09</span>
+                  <span class="dash-alert-msg">Patrol complete - Route Alpha</span>
+                </div>
+                <div class="dash-alert-item alert-warning">
+                  <span class="dash-alert-time">21:58:31</span>
+                  <span class="dash-alert-msg">Loitering detected - Parking B</span>
+                </div>
+              </div>
+              <!-- Mini perimeter map -->
+              <div class="dash-map">
+                <span class="dash-panel-title">Perimeter Map</span>
+                <div class="dash-map-visual">
+                  <svg viewBox="0 0 200 140" class="map-svg">
+                    <rect x="30" y="20" width="140" height="100" rx="4" fill="none" stroke="rgba(123,97,255,0.25)" stroke-width="1.5" stroke-dasharray="4 2"/>
+                    <circle cx="100" cy="70" r="3" fill="#7B61FF" opacity="0.5"/>
+                    <!-- Patrol path -->
+                    <path class="patrol-path" d="M30,20 L170,20 L170,120 L30,120 Z" fill="none" stroke="#7B61FF" stroke-width="1.5" stroke-dasharray="6 4"/>
+                    <!-- Active position -->
+                    <circle class="map-drone" cx="100" cy="20" r="5" fill="#7B61FF"/>
+                    <!-- Alert marker -->
+                    <circle cx="160" cy="35" r="4" fill="#FF6B35" class="map-alert-blink"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== GUARD VS AUTONOMOUS ===== -->
+    <section class="sec-section" aria-label="Guard Patrol vs Autonomous Comparison">
+      <div class="sec-section-inner">
+        <div class="sec-section-header reveal" style="text-align: center; margin-left: auto; margin-right: auto; max-width: 640px;">
+          <div class="sec-eyebrow" style="justify-content: center;">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">The Comparison</span>
+          </div>
+          <h2>Guard Patrols vs.<br/><span class="gradient-text-violet">Autonomous Aerial Security</span></h2>
+          <p class="sec-section-sub" style="margin-left: auto; margin-right: auto;">
+            Side-by-side performance comparison. Autonomous aerial surveillance is not a replacement
+            for your security team; it is a force multiplier that eliminates coverage gaps.
+          </p>
+        </div>
+
+        <div class="compare-table reveal reveal-delay-1" role="table" aria-label="Comparison table">
+          <div class="compare-header" role="row">
+            <div class="compare-cell compare-metric" role="columnheader">Metric</div>
+            <div class="compare-cell compare-guard" role="columnheader">
+              <span class="material-symbols-outlined" style="font-size: 20px; font-variation-settings: 'FILL' 1;" aria-hidden="true">security</span>
+              Guard Patrol
+            </div>
+            <div class="compare-cell compare-auto" role="columnheader">
+              <span class="material-symbols-outlined" style="font-size: 20px; font-variation-settings: 'FILL' 1;" aria-hidden="true">radar</span>
+              Autonomous Aerial
+            </div>
+          </div>
+          {comparison.map((row, i) => (
+            <div class={`compare-row reveal reveal-delay-${(i % 4) + 1}`} role="row">
+              <div class="compare-cell compare-metric" role="cell">
+                <span class="material-symbols-outlined" style="font-size: 18px; font-variation-settings: 'FILL' 1; color: var(--text-tertiary);" aria-hidden="true">{row.icon}</span>
+                {row.metric}
+              </div>
+              <div class="compare-cell compare-guard" role="cell">{row.guard}</div>
+              <div class="compare-cell compare-auto" role="cell">{row.autonomous}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== COMPLIANCE BADGES ===== -->
+    <div class="sec-compliance reveal" aria-label="Compliance and certifications">
+      <div class="sec-compliance-inner">
+        <div class="compliance-badge">
+          <span class="material-symbols-outlined" style="font-size: 28px; font-variation-settings: 'FILL' 1; color: #7B61FF;" aria-hidden="true">verified_user</span>
+          <div class="compliance-info">
+            <span class="compliance-title">SOC 2 Type II</span>
+            <span class="compliance-sub">Audit-ready controls</span>
+          </div>
+        </div>
+        <div class="compliance-divider" aria-hidden="true"></div>
+        <div class="compliance-badge">
+          <span class="material-symbols-outlined" style="font-size: 28px; font-variation-settings: 'FILL' 1; color: #7B61FF;" aria-hidden="true">lock</span>
+          <div class="compliance-info">
+            <span class="compliance-title">AES-256 Encryption</span>
+            <span class="compliance-sub">Data at rest &amp; in transit</span>
+          </div>
+        </div>
+        <div class="compliance-divider" aria-hidden="true"></div>
+        <div class="compliance-badge">
+          <span class="material-symbols-outlined" style="font-size: 28px; font-variation-settings: 'FILL' 1; color: #7B61FF;" aria-hidden="true">gpp_good</span>
+          <div class="compliance-info">
+            <span class="compliance-title">Private Sector Cleared</span>
+            <span class="compliance-sub">No NDAA restrictions apply</span>
+          </div>
+        </div>
+        <div class="compliance-divider" aria-hidden="true"></div>
+        <div class="compliance-badge">
+          <span class="material-symbols-outlined" style="font-size: 28px; font-variation-settings: 'FILL' 1; color: #7B61FF;" aria-hidden="true">cloud_done</span>
+          <div class="compliance-info">
+            <span class="compliance-title">Secure Cloud</span>
+            <span class="compliance-sub">Isolated data pipeline</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <LeadGen />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ================================================================
+     SECURITY ALPHA — FULL REDESIGN STYLES
+     Violet/blue accent: #7B61FF / #4F46E5
+     ================================================================ */
+
+  /* ---- Hero ---- */
+  .sec-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 140px clamp(20px, 5vw, 80px) 80px;
+    background: radial-gradient(ellipse at 50% 40%, rgba(123, 97, 255, 0.08) 0%, var(--surface-container-lowest) 60%);
+  }
+
+  .sec-hero-bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .radar-container {
+    width: min(80vw, 700px);
+    height: min(80vw, 700px);
+    opacity: 0.45;
+  }
+
+  .radar-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .radar-arm {
+    transform-origin: 250px 250px;
+    animation: radar-spin 6s linear infinite;
+  }
+
+  @keyframes radar-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .radar-blip {
+    opacity: 0;
+    animation: blip-appear 6s ease-in-out infinite;
+  }
+  .blip-1 { animation-delay: 0.5s; }
+  .blip-2 { animation-delay: 1.8s; }
+  .blip-3 { animation-delay: 3.0s; }
+  .blip-4 { animation-delay: 4.2s; }
+  .blip-5 { animation-delay: 2.4s; }
+
+  @keyframes blip-appear {
+    0%, 15% { opacity: 0; r: 2; }
+    20% { opacity: 1; r: 5; }
+    40% { opacity: 0.6; r: 3; }
+    100% { opacity: 0; r: 2; }
+  }
+
+  .sec-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .sec-hero-content {
+    max-width: 640px;
+  }
+
+  .sec-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .sec-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: #7B61FF;
+  }
+
+  .sec-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #7B61FF;
+  }
+
+  .sec-hero-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2.25rem, 5vw + 0.5rem, 4rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--text-primary);
+    margin-bottom: 28px;
+  }
+
+  .gradient-text-violet {
+    background: linear-gradient(135deg, #7B61FF, #4F46E5, #7B61FF);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 4s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+  }
+
+  .sec-hero-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin-bottom: 36px;
+    max-width: 540px;
+  }
+
+  .sec-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .sec-cta-primary {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.875rem 2rem;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #7B61FF, #4F46E5);
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 4px 24px rgba(123, 97, 255, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .sec-cta-primary:hover {
+    box-shadow: 0 8px 40px rgba(123, 97, 255, 0.45);
+    transform: translateY(-2px);
+  }
+
+  .sec-cta-ghost {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(123, 97, 255, 0.25);
+    color: #7B61FF;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    background: transparent;
+  }
+
+  .sec-cta-ghost:hover {
+    border-color: rgba(123, 97, 255, 0.5);
+    background: rgba(123, 97, 255, 0.06);
+  }
+
+  /* ---- Stats Bar ---- */
+  .sec-stats-bar {
+    background: var(--surface-container-low);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .sec-stats-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px clamp(20px, 5vw, 80px);
+    gap: 32px;
+  }
+
+  .sec-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .sec-stat-value {
+    font-family: var(--font-headline);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #7B61FF;
+    line-height: 1;
+  }
+
+  .sec-stat-label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+  }
+
+  /* ---- Section Base ---- */
+  .sec-section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .sec-section {
+      padding: 7rem clamp(20px, 5vw, 80px);
+    }
+  }
+
+  .sec-section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .sec-section-header {
+    margin-bottom: 56px;
+  }
+
+  .sec-section-header h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
+
+  .sec-section-sub {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-top: 16px;
+  }
+
+  /* ---- Threat Detection Grid ---- */
+  .threat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  @media (min-width: 768px) {
+    .threat-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .threat-card {
+    position: relative;
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 28px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  .threat-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .threat-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(123, 97, 255, 0.2);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 30px rgba(123, 97, 255, 0.06);
+  }
+
+  .threat-icon-ring {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(123, 97, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7B61FF;
+    font-size: 24px;
+  }
+
+  .threat-pulse-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid rgba(123, 97, 255, 0.15);
+    animation: threat-pulse 3s ease-in-out infinite;
+    animation-delay: var(--card-delay, 0s);
+  }
+
+  @keyframes threat-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(1.15); opacity: 0; }
+  }
+
+  .threat-label {
+    font-family: var(--font-headline);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .threat-severity {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .severity-critical {
+    background: rgba(255, 59, 48, 0.12);
+    color: #FF3B30;
+  }
+
+  .severity-warning {
+    background: rgba(255, 149, 0, 0.12);
+    color: #FF9500;
+  }
+
+  .severity-info {
+    background: rgba(123, 97, 255, 0.12);
+    color: #7B61FF;
+  }
+
+  .severity-low {
+    background: rgba(52, 199, 89, 0.12);
+    color: #34C759;
+  }
+
+  /* ---- 24/7 Clock Visual ---- */
+  .sec-two-col {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .sec-two-col {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .sec-feature-list {
+    list-style: none;
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .sec-feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+  }
+
+  .clock-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .clock-ring {
+    position: relative;
+    width: min(100%, 340px);
+    aspect-ratio: 1;
+  }
+
+  .clock-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .clock-hand {
+    transform-origin: 150px 150px;
+    animation: clock-rotate 24s linear infinite;
+  }
+
+  @keyframes clock-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .patrol-arc {
+    animation: arc-glow 4s ease-in-out infinite alternate;
+  }
+
+  .arc-1 { animation-delay: 0s; }
+  .arc-2 { animation-delay: 0.8s; }
+  .arc-3 { animation-delay: 1.6s; }
+  .arc-4 { animation-delay: 2.4s; }
+  .arc-5 { animation-delay: 3.2s; }
+
+  @keyframes arc-glow {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+
+  .clock-center-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+  }
+
+  .clock-label-value {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #7B61FF;
+    line-height: 1;
+  }
+
+  .clock-label-sub {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+  }
+
+  /* ---- Dashboard Mockup ---- */
+  .dashboard-mockup {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(123, 97, 255, 0.05);
+    margin-top: 8px;
+  }
+
+  .dash-titlebar {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    background: var(--surface-container);
+    border-bottom: 1px solid var(--glass-border);
+    gap: 14px;
+  }
+
+  .dash-dots {
+    display: flex;
+    gap: 7px;
+    flex-shrink: 0;
+  }
+
+  .dash-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .dash-title {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.05em;
+    flex: 1;
+  }
+
+  .dash-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: #34C759;
+    letter-spacing: 0.1em;
+  }
+
+  .dash-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #34C759;
+    animation: status-blink 2s ease-in-out infinite;
+  }
+
+  @keyframes status-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .dash-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: var(--glass-border);
+    min-height: 320px;
+  }
+
+  @media (min-width: 768px) {
+    .dash-body {
+      grid-template-columns: 1fr 280px;
+    }
+  }
+
+  .dash-cameras {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--glass-border);
+  }
+
+  .dash-cam {
+    background: var(--surface-container-lowest);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dash-cam-feed {
+    aspect-ratio: 16 / 10;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cam-thermal {
+    background: linear-gradient(135deg, #0a0020 0%, #1a0040 30%, #3d0066 50%, #cc3300 80%, #ff6600 100%);
+    animation: thermal-shift 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes thermal-shift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(15deg); }
+  }
+
+  .cam-hd {
+    background: linear-gradient(180deg, #0d1117 0%, #1a2332 40%, #0a1628 100%);
+  }
+
+  .cam-aerial {
+    background: linear-gradient(135deg, #050510 0%, #0a0a1a 50%, #0d0520 100%);
+  }
+
+  .cam-aerial::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 60% 40%, rgba(123, 97, 255, 0.1) 0%, transparent 60%);
+  }
+
+  .cam-night {
+    background: linear-gradient(180deg, #000800 0%, #001a00 40%, #000d00 100%);
+  }
+
+  .dash-cam-label {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    color: var(--text-tertiary);
+    padding: 8px 12px;
+    letter-spacing: 0.05em;
+    background: var(--surface-container-lowest);
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .dash-sidebar {
+    background: var(--surface-container-lowest);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dash-panel-title {
+    font-family: var(--font-label);
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--text-tertiary);
+    padding: 14px 16px 10px;
+    display: block;
+  }
+
+  .dash-alerts {
+    flex: 1;
+    border-bottom: 1px solid var(--glass-border);
+    overflow: hidden;
+  }
+
+  .dash-alert-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    align-items: flex-start;
+  }
+
+  .dash-alert-time {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .dash-alert-msg {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: var(--text-secondary);
+  }
+
+  .alert-critical .dash-alert-msg { color: #FF3B30; }
+  .alert-warning .dash-alert-msg { color: #FF9500; }
+  .alert-info .dash-alert-msg { color: var(--text-secondary); }
+
+  .alert-critical {
+    border-left: 2px solid #FF3B30;
+  }
+
+  .dash-map {
+    min-height: 120px;
+  }
+
+  .dash-map-visual {
+    padding: 8px 16px 16px;
+  }
+
+  .map-svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .patrol-path {
+    stroke-dashoffset: 0;
+    animation: patrol-move 8s linear infinite;
+  }
+
+  @keyframes patrol-move {
+    from { stroke-dashoffset: 0; }
+    to { stroke-dashoffset: -40; }
+  }
+
+  .map-drone {
+    animation: drone-orbit 8s linear infinite;
+  }
+
+  @keyframes drone-orbit {
+    0% { cx: 100; cy: 20; }
+    25% { cx: 170; cy: 70; }
+    50% { cx: 100; cy: 120; }
+    75% { cx: 30; cy: 70; }
+    100% { cx: 100; cy: 20; }
+  }
+
+  .map-alert-blink {
+    animation: alert-blink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes alert-blink {
+    0%, 100% { opacity: 1; r: 4; }
+    50% { opacity: 0.3; r: 6; }
+  }
+
+  /* ---- Comparison Table ---- */
+  .compare-table {
+    max-width: 900px;
+    margin: 0 auto;
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--surface-container-low);
+  }
+
+  .compare-header {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    background: var(--surface-container);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .compare-header .compare-cell {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--text-tertiary);
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .compare-row {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    border-bottom: 1px solid var(--glass-border);
+    transition: background 0.2s ease;
+  }
+
+  .compare-row:last-child {
+    border-bottom: none;
+  }
+
+  .compare-row:hover {
+    background: rgba(123, 97, 255, 0.03);
+  }
+
+  .compare-cell {
+    padding: 18px 24px;
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .compare-metric {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-family: var(--font-headline);
+    font-size: 0.875rem;
+  }
+
+  .compare-guard {
+    color: var(--text-tertiary);
+  }
+
+  .compare-auto {
+    color: #7B61FF;
+    font-weight: 600;
+    font-family: var(--font-headline);
+  }
+
+  /* ---- Compliance Strip ---- */
+  .sec-compliance {
+    background: var(--surface-container-low);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .sec-compliance-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 32px;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 40px clamp(20px, 5vw, 80px);
+  }
+
+  .compliance-badge {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .compliance-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .compliance-title {
+    font-family: var(--font-headline);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .compliance-sub {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+  }
+
+  .compliance-divider {
+    width: 1px;
+    height: 32px;
+    background: var(--glass-border);
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 768px) {
+    .sec-hero {
+      min-height: auto;
+      padding-top: 120px;
+      padding-bottom: 60px;
+    }
+
+    .radar-container {
+      opacity: 0.2;
+    }
+
+    .sec-stats-inner {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .sec-hero-actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .compare-header,
+    .compare-row {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .compare-header .compare-metric,
+    .compare-row .compare-metric {
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .compare-cell {
+      padding: 12px 20px;
+    }
+
+    .compare-guard::before {
+      content: 'Guard: ';
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .compare-auto::before {
+      content: 'Autonomous: ';
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .compliance-divider {
+      display: none;
+    }
+
+    .sec-compliance-inner {
+      justify-content: flex-start;
+      gap: 24px;
+    }
+
+    .dash-body {
+      grid-template-columns: 1fr;
+    }
+
+    .sec-two-col {
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .threat-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .dash-cameras {
+      grid-template-columns: 1fr;
+    }
+
+    .sec-stats-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---- Light Mode ---- */
+  :global([data-theme="light"]) .sec-hero {
+    background: radial-gradient(ellipse at 50% 40%, rgba(123, 97, 255, 0.06) 0%, var(--surface-container-lowest) 60%);
+  }
+
+  :global([data-theme="light"]) .radar-container {
+    opacity: 0.25;
+  }
+
+  :global([data-theme="light"]) .threat-card {
+    background: var(--surface-container-low);
+  }
+
+  :global([data-theme="light"]) .dashboard-mockup {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08), 0 0 40px rgba(123, 97, 255, 0.03);
+  }
+
+  :global([data-theme="light"]) .cam-thermal {
+    background: linear-gradient(135deg, #2a1050 0%, #4a2080 30%, #7040a0 50%, #dd6630 80%, #ff9955 100%);
+  }
+
+  :global([data-theme="light"]) .cam-hd {
+    background: linear-gradient(180deg, #c0c8d0 0%, #d8dce2 40%, #b8c0c8 100%);
+  }
+
+  :global([data-theme="light"]) .cam-aerial {
+    background: linear-gradient(135deg, #d0d0e0 0%, #c8c8d8 50%, #d8d0e0 100%);
+  }
+
+  :global([data-theme="light"]) .cam-night {
+    background: linear-gradient(180deg, #b8c8b8 0%, #c0d8c0 40%, #b0c0b0 100%);
+  }
+
+  :global([data-theme="light"]) .compare-row:hover {
+    background: rgba(123, 97, 255, 0.04);
+  }
+
+  :global([data-theme="light"]) .alert-critical {
+    border-left-color: #FF3B30;
+  }
+
+  :global([data-theme="light"]) .dash-alert-item {
+    border-bottom-color: rgba(0, 0, 0, 0.04);
+  }
+
+  :global([data-theme="light"]) .sec-cta-primary {
+    box-shadow: 0 4px 24px rgba(123, 97, 255, 0.2);
+  }
+
+  :global([data-theme="light"]) .sec-cta-primary:hover {
+    box-shadow: 0 8px 40px rgba(123, 97, 255, 0.3);
+  }
+</style>

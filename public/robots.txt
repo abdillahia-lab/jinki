@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jinki.ai/sitemap.xml
+Sitemap: https://jinki.ai/sitemap-index.xml
