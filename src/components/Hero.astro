@@ -284,11 +284,46 @@
   @media (max-width: 767px) {
     .hero-actions { flex-direction: column; }
     .cta-primary, .cta-secondary { width: 100%; max-width: 320px; }
-    .hero-metrics { flex-direction: row; flex-wrap: wrap; }
-    .metric-card { flex: 1 1 calc(50% - .5rem); flex-direction: column; text-align: center; padding: 1rem; margin-bottom: .75rem; }
-    .metric-card:nth-child(odd) { margin-right: .75rem; }
-    .metric-icon { margin-right: 0; margin-bottom: .5rem; }
-    .metric-label { margin-left: 0; text-align: center; font-size: .6875rem; }
+
+    /* Metric cards → compact horizontal strip on mobile */
+    .hero-metrics {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 0;
+      margin-top: 2rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+    .metric-card {
+      flex: 1;
+      flex-direction: column;
+      text-align: center;
+      padding: 0.75rem 0.5rem;
+      margin-bottom: 0;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    .metric-card::before { display: none; }
+    .metric-card:not(:last-child) {
+      border-right: 1px solid var(--glass-border);
+    }
+    .metric-card:hover {
+      box-shadow: none;
+      transform: none;
+      border-color: transparent;
+    }
+    .metric-icon { display: none; }
+    .metric-value { font-size: 1.25rem; }
+    .metric-unit { font-size: 0.75rem; }
+    .metric-label { margin-left: 0; text-align: center; font-size: 0.5625rem; margin-top: 0.25rem; letter-spacing: 0.1em; }
     .scroll-indicator { bottom: 1rem; }
   }
   @media (min-width: 768px) and (max-width: 1023px) {
