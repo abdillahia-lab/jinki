@@ -1080,12 +1080,14 @@ const reportTabs = [
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                border-color 0.4s ease;
   }
 
   .finding-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 229, 255, 0.05);
     border-color: rgba(0, 229, 255, 0.15);
   }
 
