@@ -868,7 +868,7 @@ const storyBlocks = [
     flex-shrink: 0;
     font-size: 24px;
     color: var(--text-tertiary);
-    transition: transform 0.3s ease;
+    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
   }
 
   .pillar-header-btn[aria-expanded="true"] .pillar-chevron {
@@ -926,7 +926,7 @@ const storyBlocks = [
     border-radius: 16px;
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
   }
 
   .split-panel::before {
