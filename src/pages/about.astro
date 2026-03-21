@@ -608,12 +608,15 @@ const storyBlocks = [
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     backdrop-filter: blur(12px);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                border-color 0.4s ease;
   }
 
   .stat-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 229, 255, 0.05);
+    border-color: rgba(0, 229, 255, 0.12);
   }
 
   .stat-value {
@@ -801,7 +804,14 @@ const storyBlocks = [
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     overflow: hidden;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.4s ease,
+                transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+  .pillar-card:hover {
+    border-color: rgba(0, 229, 255, 0.12);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
   }
 
   .pillar-card:hover {

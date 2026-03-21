@@ -473,7 +473,12 @@ const culturePoints = [
     letter-spacing: 0.1em;
     border-radius: 12px;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                background 0.3s ease;
+  }
+  .hero-cta:hover {
+    transform: translateY(-2px);
   }
 
   :global([data-theme="light"]) .hero-cta {
