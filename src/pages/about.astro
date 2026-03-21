@@ -24,6 +24,7 @@ const team = [
     role: 'Founder & CEO',
     bio: 'Enterprise security and project management background. Built Jinki from the intersection of cybersecurity expertise and aerial intelligence to deliver verified answers for critical infrastructure.',
     initials: 'AA',
+    image: '/images/founder-adnan.jpg',
   },
   /* Additional team members will be added as roles are filled */
 ];
@@ -162,7 +163,11 @@ const storyBlocks = [
               <div class="team-card" tabindex="0" aria-label={`${member.name}, ${member.role}. Activate to see bio.`}>
                 <div class="team-card-front">
                   <div class="team-avatar">
-                    <span class="team-initials">{member.initials}</span>
+                    {member.image ? (
+                      <img src={member.image} alt={member.name} class="team-photo" loading="lazy" />
+                    ) : (
+                      <span class="team-initials">{member.initials}</span>
+                    )}
                   </div>
                   <h3 class="team-name">{member.name}</h3>
                   <span class="team-role">{member.role}</span>
@@ -714,8 +719,8 @@ const storyBlocks = [
   }
 
   .team-avatar {
-    width: 80px;
-    height: 80px;
+    width: 96px;
+    height: 96px;
     border-radius: 50%;
     background: var(--accent-glow);
     border: 2px solid var(--accent);
@@ -723,6 +728,13 @@ const storyBlocks = [
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .team-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%;
   }
 
   .team-initials {
