@@ -145,7 +145,8 @@ const company = [
   .footer-col-title::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 28px; height: 1px; background: var(--accent); }
   .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
   .footer-links a { font-family: var(--font-body); font-size: 0.875rem; color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease; display: inline-block; }
-  .footer-links a:hover { color: var(--accent); }
+  .footer-links a:hover { color: var(--accent); transform: translateX(3px); }
+  .footer-links a { transition: color 0.2s ease, transform 0.2s ease; }
 
   .footer-newsletter-desc { font-family: var(--font-body); font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px; }
   .footer-input-row { display: flex; border-radius: 10px; overflow: hidden; border: 1px solid var(--glass-border); background: var(--surface-container-low); transition: border-color 0.3s ease; }
@@ -153,7 +154,8 @@ const company = [
   .footer-email-input { flex: 1; background: transparent; border: none; outline: none; padding: 12px 16px; font-family: var(--font-body); font-size: 0.8125rem; color: var(--text-primary); min-width: 0; }
   .footer-email-input::placeholder { color: var(--text-tertiary); }
   .footer-submit-btn { display: flex; align-items: center; justify-content: center; width: 46px; background: var(--accent); color: #050508; border: none; cursor: pointer; transition: background 0.2s ease; flex-shrink: 0; }
-  .footer-submit-btn:hover { background: #00c8e0; }
+  .footer-submit-btn:hover { background: #00c8e0; transform: scale(1.05); }
+  .footer-submit-btn { transition: background 0.2s ease, transform 0.2s ease; }
   .footer-newsletter-note { font-family: var(--font-body); font-size: 0.6875rem; color: var(--text-tertiary); margin-top: 8px; }
 
   .footer-status-bar { border-top: 1px solid var(--glass-border); background: var(--surface-container-low); position: relative; z-index: 1; }
