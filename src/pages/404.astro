@@ -386,7 +386,9 @@ import Footer from '../components/Footer.astro';
     border-radius: 10px;
     cursor: pointer;
     text-decoration: none;
-    transition: all 0.25s;
+    transition: transform 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                box-shadow 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                background 0.3s ease;
     border: none;
   }
   .btn-primary {
@@ -394,7 +396,7 @@ import Footer from '../components/Footer.astro';
     color: #000;
     box-shadow: 0 0 20px var(--accent-glow);
   }
-  .btn-primary:hover { box-shadow: 0 0 30px var(--accent-glow), 0 0 60px var(--accent-glow); }
+  .btn-primary:hover { box-shadow: 0 0 30px var(--accent-glow), 0 0 60px var(--accent-glow); transform: translateY(-2px); }
   .btn-ghost {
     background: transparent;
     color: var(--text-primary);
