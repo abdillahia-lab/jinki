@@ -156,20 +156,40 @@
 
   var answers = {
     Assessment: {
-      text: 'Our Facility Intelligence Scan is a one-time aerial assessment that delivers a comprehensive report with thermal, structural, and environmental findings.',
+      text: 'Our Facility Intelligence Scan is a one-time aerial assessment that delivers a prioritized report with thermal, structural, and environmental findings — typically within 24 hours.',
       link: '/services/audit', cta: 'Learn about scans'
     },
-    Services: {
-      text: 'We offer two core services: Facility Intelligence Scans (one-time assessments) and Autonomous Deployment (persistent monitoring with recurring missions).',
-      link: '/services/audit', cta: 'Explore services'
+    Deployment: {
+      text: 'Autonomous Deployment stations a DJI Dock 3 at your facility for persistent monitoring — 150 to 200 missions per month with no operator required.',
+      link: '/services/deployment', cta: 'Explore deployment'
     },
-    Industries: {
-      text: 'We serve data centers, energy and utilities, perimeter security, and agriculture. Each vertical receives a tailored intelligence package.',
-      link: '/verticals/data-centers', cta: 'See our verticals'
+    'Data Centers': {
+      text: 'We inspect rooftop HVAC arrays, cooling infrastructure, and electrical systems using 0.5°C thermal precision — identifying failures before they cause downtime.',
+      link: '/verticals/data-centers', cta: 'Data center intelligence'
+    },
+    'Energy': {
+      text: 'Condition assessments for power lines, substations, and solar arrays — inspecting 50+ miles of corridor per day without service interruption.',
+      link: '/verticals/energy-grid', cta: 'Energy intelligence'
+    },
+    Security: {
+      text: 'Persistent aerial perimeter monitoring with thermal threat detection covering 500+ acre perimeters and real-time intrusion alerts.',
+      link: '/verticals/security', cta: 'Security intelligence'
+    },
+    Agriculture: {
+      text: 'NDVI crop health mapping, soil moisture analysis, and yield intelligence across thousands of acres — identifying irrigation issues and crop stress early.',
+      link: '/verticals/agriculture', cta: 'Agriculture intelligence'
+    },
+    Thermal: {
+      text: 'Our H30T thermal sensor detects temperature differences as small as 0.5°C. We identify overheating equipment, insulation gaps, water leaks, and structural weak points.',
+      link: '/#thermal-hud', cta: 'See thermal capabilities'
+    },
+    Process: {
+      text: 'Three steps: (1) We scope your facility and build a mission plan, (2) Our platform captures and analyzes with AI, (3) You receive a prioritized intelligence report within 24 hours.',
+      link: '/#process', cta: 'See our process'
     },
     Contact: {
-      text: 'Ready to get started? Our intelligence team will scope your facility and recommend the right engagement.',
-      link: '#lead-gen', cta: 'Get in touch'
+      text: 'Ready to get started? Fill out our quick form and our intelligence team will scope your facility and recommend the right engagement.',
+      link: '#lead-gen', cta: 'Request a demo'
     }
   };
 
@@ -189,16 +209,17 @@
     msgs.scrollTop = msgs.scrollHeight;
   }
 
+  var quickTopics = ['Assessment', 'Deployment', 'Data Centers', 'Process', 'Contact'];
+
   function addQuickReplies() {
     var wrap = document.createElement('div');
     wrap.className = 'jc-quick';
-    var keys = Object.keys(answers);
-    for (var i = 0; i < keys.length; i++) {
+    for (var i = 0; i < quickTopics.length; i++) {
       var btn = document.createElement('button');
       btn.className = 'jc-qbtn';
       btn.type = 'button';
-      btn.textContent = keys[i];
-      btn.setAttribute('data-key', keys[i]);
+      btn.textContent = quickTopics[i];
+      btn.setAttribute('data-key', quickTopics[i]);
       wrap.appendChild(btn);
     }
     msgs.appendChild(wrap);
@@ -253,11 +274,24 @@
     removeQuickReplies();
     addUser(v);
     var lc = v.toLowerCase();
-    if (/scan|assess|evaluation/.test(lc)) { showAnswer('Assessment'); return; }
-    if (/service|deploy/.test(lc)) { showAnswer('Services'); return; }
-    if (/industr|vertical|data.?center|energy|secur|agri/.test(lc)) { showAnswer('Industries'); return; }
-    if (/contact|touch|start|talk|hello|hi\b/.test(lc)) { showAnswer('Contact'); return; }
-    addBot('I can help with our assessments, services, industries we serve, or getting in touch. Choose a topic below or <a href="#lead-gen">request an assessment</a> directly.');
+    if (/scan|assess|evaluation|inspect|one.?time|report/.test(lc)) { showAnswer('Assessment'); return; }
+    if (/deploy|autonom|persistent|dock|continuous|monitor/.test(lc)) { showAnswer('Deployment'); return; }
+    if (/data.?center|hvac|cooling|rooftop|server/.test(lc)) { showAnswer('Data Centers'); return; }
+    if (/energy|power|grid|solar|substation|transmission|utilit/.test(lc)) { showAnswer('Energy'); return; }
+    if (/secur|perime|surveillance|intru|patrol|fence/.test(lc)) { showAnswer('Security'); return; }
+    if (/agri|farm|crop|ndvi|irrigat|field|harvest/.test(lc)) { showAnswer('Agriculture'); return; }
+    if (/thermal|heat|temperature|infrared|hotspot/.test(lc)) { showAnswer('Thermal'); return; }
+    if (/process|how|work|step|engage|what happen/.test(lc)) { showAnswer('Process'); return; }
+    if (/price|cost|pricing|quote|much/.test(lc)) {
+      addBot('We tailor each engagement to your facility\'s specific needs. <a href="#lead-gen">Request a demo</a> and our team will provide a custom scope and recommendation.');
+      addQuickReplies(); return;
+    }
+    if (/contact|touch|start|talk|demo|call|meet|schedule/.test(lc)) { showAnswer('Contact'); return; }
+    if (/hello|hi\b|hey|good/.test(lc)) {
+      addBot('Hello! I\'m here to help you learn about Jinki\'s aerial intelligence services. What would you like to know about?');
+      addQuickReplies(); return;
+    }
+    addBot('I can help with our intelligence scans, autonomous deployment, the industries we serve, or getting in touch. Choose a topic below or <a href="#lead-gen">request a demo</a> directly.');
     addQuickReplies();
   }
 
