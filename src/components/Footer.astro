@@ -41,6 +41,10 @@ const company = [
           <span class="footer-logo-text">Jinki</span>
         </div>
         <p class="footer-tagline">Aerial intelligence and actionable insights for the infrastructure that keeps the world running.</p>
+        <div class="footer-status" aria-label="System status">
+          <span class="status-dot"></span>
+          <span class="status-text">Systems Operational</span>
+        </div>
         <div class="footer-socials">
           <a href="#" class="footer-social-btn" aria-label="Follow us on X">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -131,6 +135,29 @@ const company = [
   .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1.2fr; gap: 48px; }
   @media (max-width: 1024px) { .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; } }
   @media (max-width: 640px) { .footer-grid { grid-template-columns: 1fr; gap: 36px; } .footer-inner { padding: 56px 20px 32px; } .footer-links { gap: 16px; } .footer-links a { padding: 4px 0; } }
+
+  .footer-status {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 16px; margin-bottom: 8px;
+    padding: 6px 14px; border-radius: 8px;
+    background: rgba(52, 211, 153, 0.06);
+    border: 1px solid rgba(52, 211, 153, 0.15);
+  }
+  .status-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #34D399;
+    box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+    animation: statusPulse 2.5s ease-in-out infinite;
+  }
+  @keyframes statusPulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(52, 211, 153, 0.4); }
+    50% { opacity: 0.6; box-shadow: 0 0 3px rgba(52, 211, 153, 0.2); }
+  }
+  .status-text {
+    font-family: var(--font-mono); font-size: 0.625rem; font-weight: 500;
+    letter-spacing: 0.06em; color: #34D399;
+  }
+  @media (prefers-reduced-motion: reduce) { .status-dot { animation: none; } }
 
   .footer-logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
   .footer-logo-text { font-family: var(--font-headline); font-weight: 700; font-size: 1.25rem; letter-spacing: 0.02em; color: var(--text-primary); }
