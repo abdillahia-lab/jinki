@@ -275,10 +275,16 @@ function estimateReadTime(description: string): number {
   }
 
   .omega-gradient-text {
-    background: linear-gradient(135deg, var(--accent) 0%, #7B61FF 100%);
+    background: linear-gradient(90deg, var(--accent), #7B61FF, var(--accent));
+    background-size: 200% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    animation: gradientShimmer 3s ease-in-out 1;
+  }
+  @keyframes gradientShimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
   .omega-subtitle {
