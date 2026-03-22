@@ -78,7 +78,27 @@ const storyBlocks = [
 ];
 ---
 
-<Layout title="About — Jinki Aerial Intelligence" description="Learn about Jinki's mission, values, and the team behind our aerial intelligence platform.">
+<Layout title="About — Jinki Aerial Intelligence" description="Learn about Jinki's mission, values, and the team behind our aerial intelligence platform." jsonLd={{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Jinki Aerial Intelligence",
+    "url": "https://jinki.ai",
+    "founder": {
+      "@type": "Person",
+      "name": "Adnan Abdillahi",
+      "jobTitle": "Founder & CEO",
+      "image": "https://jinki.ai/images/founder-adnan.jpg",
+      "hasCredential": [
+        { "@type": "EducationalOccupationalCredential", "credentialCategory": "certification", "name": "CISSP" },
+        { "@type": "EducationalOccupationalCredential", "credentialCategory": "certification", "name": "CCSP" },
+        { "@type": "EducationalOccupationalCredential", "credentialCategory": "certification", "name": "AIGP" },
+        { "@type": "EducationalOccupationalCredential", "credentialCategory": "certification", "name": "PMP" }
+      ]
+    }
+  }
+}}>
   <Nav />
   <main id="main-content">
 
