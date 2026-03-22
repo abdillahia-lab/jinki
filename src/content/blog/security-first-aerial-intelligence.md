@@ -12,7 +12,7 @@ Most aerial inspection companies are built by aviation enthusiasts or engineerin
 
 Consider what a comprehensive aerial thermal survey of a data center captures: the exact location and thermal profile of every HVAC unit, the layout of electrical infrastructure, the position of security cameras, access points, and perimeter weaknesses. In the wrong hands, this is a reconnaissance package.
 
-For energy utilities, aerial corridor surveys map the precise GPS coordinates of every transformer, switchgear panel, and junction point — including those in remote, unmonitored locations. For agricultural operations, multispectral data reveals proprietary planting patterns, irrigation infrastructure, and yield predictions.
+For energy utilities, aerial corridor surveys map the precise GPS coordinates of every transformer, switchgear panel, and junction point — including those in remote, unmonitored locations. For agricultural operations, aerial thermal and visual data reveals irrigation patterns, crop health indicators, and field conditions.
 
 This data requires the same protection as any other sensitive operational information. Yet many aerial inspection providers treat data handling as an afterthought — storing imagery on consumer cloud services, transmitting findings over unencrypted channels, and retaining client data indefinitely without formal retention policies.
 
