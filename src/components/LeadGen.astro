@@ -128,9 +128,16 @@
         </fieldset>
       </form>
 
-      <p style="text-align: center; margin-top: 1rem; font-family: var(--font-body); font-size: 0.8125rem; color: var(--text-tertiary);">
-        Prefer to chat? <button type="button" onclick="document.getElementById('jc-launcher')?.click()" style="background: none; border: none; color: var(--accent); cursor: pointer; font-family: inherit; font-size: inherit; text-decoration: underline; text-underline-offset: 2px;">Ask Jinki &rarr;</button>
-      </p>
+      <div style="text-align: center; margin-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; font-family: var(--font-body); font-size: 0.8125rem; color: var(--text-tertiary);">
+        <a href="mailto:info@jinki.ai?subject=Schedule%20a%20Call%20—%20Jinki%20AI&body=I'd%20like%20to%20schedule%20a%20call%20to%20discuss%20aerial%20intelligence%20for%20our%20facility.%0A%0ACompany:%0ARole:%0APreferred%20time:" style="display: inline-flex; align-items: center; gap: 6px; color: var(--accent); text-decoration: none; padding: 8px 16px; border: 1px solid rgba(0,229,255,0.15); border-radius: 8px; transition: background 0.2s ease;">
+          <span class="material-symbols-outlined" style="font-size: 16px;" aria-hidden="true">phone_in_talk</span>
+          Schedule a Call
+        </a>
+        <button type="button" onclick="document.getElementById('jc-launcher')?.click()" style="display: inline-flex; align-items: center; gap: 6px; background: none; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 8px 16px; color: var(--text-tertiary); cursor: pointer; font-family: inherit; font-size: inherit;">
+          <span class="material-symbols-outlined" style="font-size: 16px;" aria-hidden="true">chat</span>
+          Ask Jinki
+        </button>
+      </div>
 
       <!-- Success Message -->
       <div id="lg-success" style="display: none; text-align: center; padding: 2rem 0;">
