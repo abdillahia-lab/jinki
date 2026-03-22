@@ -94,7 +94,15 @@ const integrations = [
 ];
 ---
 
-<Layout title="Security — Jinki Aerial Intelligence" description="Aerial perimeter surveillance and thermal threat detection for critical infrastructure. 24/7 autonomous patrol covering 500+ acre perimeters.">
+<Layout title="Security — Jinki Aerial Intelligence" description="Aerial perimeter surveillance and thermal threat detection for critical infrastructure. Autonomous patrol covering 500+ acre perimeters." jsonLd={{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Perimeter Security Aerial Intelligence",
+  "provider": { "@type": "Organization", "name": "Jinki Aerial Intelligence" },
+  "description": "Persistent aerial thermal surveillance for facility perimeters. Autonomous patrol with real-time intrusion detection covering 500+ acres.",
+  "areaServed": "Mid-Atlantic United States",
+  "serviceType": "Aerial Security Monitoring"
+}}>
   <Nav />
   <main id="main-content">
 

@@ -100,7 +100,15 @@ const pipelineSteps = [
 /* cropOptions removed — fabricated yield/water/pest metrics had no sourcing */
 ---
 
-<Layout title="Agriculture — Jinki Aerial Intelligence" description="Precision agriculture intelligence: NDVI crop health mapping, irrigation analysis, pest detection, and yield forecasting. Aerial multispectral intelligence that transforms how you manage your operation.">
+<Layout title="Agriculture — Jinki Aerial Intelligence" description="Precision agriculture intelligence: NDVI crop health mapping, irrigation analysis, pest detection, and yield forecasting. Aerial multispectral intelligence that transforms how you manage your operation." jsonLd={{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Agriculture Aerial Intelligence",
+  "provider": { "@type": "Organization", "name": "Jinki Aerial Intelligence" },
+  "description": "NDVI crop health mapping, soil moisture analysis, irrigation optimization, and yield intelligence via aerial multispectral imaging.",
+  "areaServed": "Mid-Atlantic United States",
+  "serviceType": "Precision Agriculture Intelligence"
+}}>
   <Nav />
   <main id="main-content">
 

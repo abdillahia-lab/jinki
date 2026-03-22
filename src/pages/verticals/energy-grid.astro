@@ -105,7 +105,15 @@ const techSections = [
 ];
 ---
 
-<Layout title="Energy & Grid Intelligence — Jinki Aerial Intelligence" description="Predictive aerial intelligence for power lines, transmission towers, solar farms, wind turbines, and substations. Severity-ranked findings delivered within 48 hours.">
+<Layout title="Energy & Grid Intelligence — Jinki Aerial Intelligence" description="Predictive aerial intelligence for power lines, transmission towers, solar farms, wind turbines, and substations. Severity-ranked findings delivered within 48 hours." jsonLd={{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Energy Grid Aerial Intelligence",
+  "provider": { "@type": "Organization", "name": "Jinki Aerial Intelligence" },
+  "description": "Aerial thermal and visual inspection for power lines, substations, solar farms, and transmission infrastructure. 50+ miles of corridor coverage per day.",
+  "areaServed": "Mid-Atlantic United States",
+  "serviceType": "Aerial Infrastructure Inspection"
+}}>
   <Nav />
   <main id="main-content">
 
