@@ -25,6 +25,7 @@ const team = [
     bio: 'Enterprise security and project management background. Built Jinki from the intersection of cybersecurity expertise and aerial intelligence to deliver verified answers for critical infrastructure.',
     initials: 'AA',
     image: '/images/founder-adnan.jpg',
+    certs: ['CISSP', 'CCSP', 'AIGP', 'PMP'],
   },
   /* Additional team members will be added as roles are filled */
 ];
@@ -171,6 +172,13 @@ const storyBlocks = [
                   </div>
                   <h3 class="team-name">{member.name}</h3>
                   <span class="team-role">{member.role}</span>
+                  {member.certs && (
+                    <div class="team-certs">
+                      {member.certs.map((cert: string) => (
+                        <span class="team-cert-badge">{cert}</span>
+                      ))}
+                    </div>
+                  )}
                   <span class="team-flip-hint" aria-hidden="true">Hover for bio</span>
                 </div>
                 <div class="team-card-back">
@@ -735,6 +743,27 @@ const storyBlocks = [
     height: 100%;
     object-fit: cover;
     object-position: center 15%;
+  }
+
+  .team-certs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 12px;
+  }
+  .team-cert-badge {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    color: var(--accent);
+    background: rgba(0, 229, 255, 0.06);
+    line-height: 1;
+    white-space: nowrap;
   }
 
   .team-initials {
