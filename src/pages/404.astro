@@ -539,5 +539,6 @@ import Footer from '../components/Footer.astro';
     if (el) el.textContent = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
   }
   updateTimestamp();
-  setInterval(updateTimestamp, 1000);
+  // Update every 10s instead of every 1s to reduce CPU usage
+  setInterval(updateTimestamp, 10000);
 </script>
