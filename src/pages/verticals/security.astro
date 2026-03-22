@@ -652,10 +652,16 @@ const integrations = [
 
   /* ---- Gradient Text ---- */
   .gradient-text-violet {
-    background: linear-gradient(135deg, #7B61FF, #4F46E5);
+    background: linear-gradient(90deg, #7B61FF, #4F46E5, #7B61FF);
+    background-size: 200% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    animation: gradientShimmer 3s ease-in-out 1;
+  }
+  @keyframes gradientShimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
   /* ================================================================

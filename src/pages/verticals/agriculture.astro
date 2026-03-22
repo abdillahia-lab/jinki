@@ -646,10 +646,16 @@ const pipelineSteps = [
   }
 
   .gradient-text-green {
-    background: linear-gradient(135deg, #34D399, #10B981);
+    background: linear-gradient(90deg, #34D399, #10B981, #34D399);
+    background-size: 200% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    animation: gradientShimmer 3s ease-in-out 1;
+  }
+  @keyframes gradientShimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
   .ag-hero-subtitle {

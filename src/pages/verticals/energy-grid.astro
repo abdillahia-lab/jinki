@@ -752,10 +752,16 @@ const techSections = [
   }
 
   .gradient-text-energy {
-    background: linear-gradient(135deg, #FF8C00, #FF6B35);
+    background: linear-gradient(90deg, #FF8C00, #FF6B35, #FF8C00);
+    background-size: 200% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    animation: gradientShimmer 3s ease-in-out 1;
+  }
+  @keyframes gradientShimmer {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
   .eg-hero-subtitle {
