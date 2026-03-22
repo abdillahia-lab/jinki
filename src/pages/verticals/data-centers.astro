@@ -923,8 +923,10 @@ document.addEventListener('DOMContentLoaded', function() {
     z-index: 4;
   }
   @keyframes scan-sweep {
-    0% { top: 0; }
-    100% { top: 100%; }
+    0%, 100% { top: 0; opacity: 0.3; }
+    45% { top: 95%; opacity: 1; }
+    55% { top: 95%; opacity: 1; }
+    95% { top: 0; opacity: 0.3; }
   }
 
   /* Legacy alert-badge fallback (unused but referenced in light mode) */
