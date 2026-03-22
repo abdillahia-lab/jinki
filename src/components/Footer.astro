@@ -124,6 +124,41 @@ const company = [
   </div>
 </footer>
 
+<script is:inline>
+(function() {
+  var form = document.querySelector('.footer-newsletter-form');
+  if (!form) return;
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = form.querySelector('.footer-submit-btn');
+    var note = form.querySelector('.footer-newsletter-note');
+    btn.disabled = true;
+    btn.style.opacity = '0.5';
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(r) { return r.json(); }).then(function(d) {
+      if (d.success) {
+        note.textContent = 'Subscribed! Welcome to Jinki intelligence.';
+        note.style.color = '#34d399';
+        form.querySelector('input[type="email"]').value = '';
+      } else {
+        note.textContent = 'Something went wrong. Try again.';
+        note.style.color = '#ff6b6b';
+      }
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }).catch(function() {
+      note.textContent = 'Connection error. Try again.';
+      note.style.color = '#ff6b6b';
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    });
+  });
+})();
+</script>
+
 <style>
   .footer-divider { height: 1px; background: linear-gradient(to right, transparent, var(--border), transparent); }
   .footer-main { position: relative; background: var(--surface-container-lowest); }
