@@ -217,9 +217,11 @@ h1 {
   line-height: 1.08;
   letter-spacing: -0.03em;
   color: var(--text-primary);
+  text-wrap: balance;
 }
 h2 {
   font-family: var(--font-headline);
+  text-wrap: balance;
   font-weight: 700;
   line-height: 1.12;
   letter-spacing: -0.02em;
