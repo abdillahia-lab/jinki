@@ -114,6 +114,8 @@ const orgSchema = {
           display: block;
           position: fixed;
           bottom: 0;
+          transform: translateY(100%);
+          transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
           left: 0;
           right: 0;
           z-index: 9998;
@@ -145,7 +147,7 @@ const orgSchema = {
           border-top-color: rgba(0,0,0,0.06);
         }
         /* Hide when footer is visible */
-        footer ~ .mobile-sticky-cta { /* always visible on mobile */ }
+        .mobile-sticky-cta.visible { transform: translateY(0); }
       }
     </style>
   </head>
@@ -221,11 +223,19 @@ const orgSchema = {
           requestAnimationFrame(update);
         }
 
+        // Sticky CTA visibility
+        var stickyCta = document.querySelector('.mobile-sticky-cta');
+
         var scrollTicking = false;
         window.addEventListener('scroll', function() {
           if (!scrollTicking) {
             requestAnimationFrame(function() {
               updateProgress();
+              // Show sticky CTA after scrolling 400px
+              if (stickyCta) {
+                if (window.scrollY > 400) { stickyCta.classList.add('visible'); }
+                else { stickyCta.classList.remove('visible'); }
+              }
               scrollTicking = false;
             });
             scrollTicking = true;
