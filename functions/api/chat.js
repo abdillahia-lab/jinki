@@ -42,6 +42,15 @@ export async function onRequestPost(context) {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Basic abuse prevention: check Referer header
+  const referer = request.headers.get('Referer') || '';
+  if (referer && !referer.includes('jinki.ai') && !referer.includes('localhost')) {
+    return new Response(
+      JSON.stringify({ error: 'Unauthorized origin.' }),
+      { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
+  }
+
   const apiKey = env.GROQ_API_KEY;
   if (!apiKey) {
     return new Response(

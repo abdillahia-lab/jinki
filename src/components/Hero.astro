@@ -106,7 +106,7 @@
         rgba(0, 180, 220, 0.08) 0%, transparent 60%);
     filter: blur(60px) saturate(1.5);
     animation: meshDrift 25s ease-in-out infinite alternate;
-    will-change: --mesh-x1, --mesh-y1, --mesh-x2, --mesh-y2;
+    /* will-change on custom properties has no effect — removed */
   }
 
   @keyframes meshDrift {
