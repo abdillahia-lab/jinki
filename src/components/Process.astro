@@ -65,6 +65,19 @@ const steps = [
       ))}
     </div>
 
+    <!-- What You Receive -->
+    <div class="reveal" style="margin-top: 4rem; text-align: center;">
+      <h3 style="font-family: var(--font-headline); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1.5rem;">Your Report Includes</h3>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; max-width: 700px; margin: 0 auto;">
+        <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">pin_drop</span> GPS-located findings</span>
+        <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">thermostat</span> Annotated thermal imagery</span>
+        <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">priority_high</span> Severity rankings</span>
+        <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">payments</span> Estimated repair costs</span>
+        <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">calendar_month</span> Maintenance timeline</span>
+        <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">summarize</span> Executive summary</span>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -164,5 +177,21 @@ const steps = [
 
   @media (prefers-reduced-motion: reduce) {
     .process-step { transition: none; }
+  }
+
+  .deliverable-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: rgba(0, 229, 255, 0.06);
+    border: 1px solid rgba(0, 229, 255, 0.12);
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--accent);
+    white-space: nowrap;
   }
 </style>
