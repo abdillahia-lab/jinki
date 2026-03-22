@@ -859,10 +859,15 @@ function estimateReadTime(description: string): number {
       btn.textContent = 'Sending...';
 
       try {
-        const res = await fetch('https://formspree.io/f/xpznqkdl', {
+        const formData = new FormData();
+        formData.append('access_key', 'b2bd961c-acf2-48a6-bf10-a5717c2dea95');
+        formData.append('email', input.value);
+        formData.append('subject', 'Blog Newsletter Signup — jinki.ai');
+        formData.append('from_name', 'Jinki Blog');
+        const res = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
-          body: JSON.stringify({ email: input.value, _subject: 'Blog Newsletter Signup' }),
-          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: formData,
+          headers: { 'Accept': 'application/json' },
         });
         if (res.ok) {
           input.value = '';

@@ -250,39 +250,4 @@ const company = [
   @media print { .footer-main { background: #fff !important; } .footer-status-bar, .footer-social-btn { display: none !important; } }
 </style>
 
-<script is:inline>
-(function() {
-  var form = document.querySelector('.footer-newsletter-form');
-  if (!form) return;
-  form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    var input = form.querySelector('.footer-email-input');
-    var btn = form.querySelector('.footer-submit-btn');
-    var note = form.querySelector('.footer-newsletter-note');
-    if (!input || !input.value) return;
-
-    btn.disabled = true;
-    btn.style.opacity = '0.5';
-
-    try {
-      var res = await fetch('https://formspree.io/f/xpznqkdl', {
-        method: 'POST',
-        body: JSON.stringify({ email: input.value, _subject: 'Newsletter Signup' }),
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      });
-      if (res.ok) {
-        input.value = '';
-        note.textContent = 'Subscribed! We\'ll be in touch.';
-        note.style.color = '#34D399';
-      } else {
-        throw new Error('fail');
-      }
-    } catch(err) {
-      note.textContent = 'Something went wrong. Try again.';
-      note.style.color = '#FF6B6B';
-    }
-    btn.disabled = false;
-    btn.style.opacity = '1';
-  });
-})();
-</script>
+<!-- Newsletter handled by Web3Forms script above -->
