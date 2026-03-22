@@ -597,6 +597,18 @@ const shareUrl = encodeURIComponent(currentUrl);
     max-width: none;
   }
 
+  /* Drop cap on first paragraph */
+  .omega-article-content :global(p:first-of-type::first-letter) {
+    font-family: var(--font-headline);
+    font-size: 3.5em;
+    font-weight: 700;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.1em;
+    margin-top: 0.05em;
+    color: var(--accent);
+  }
+
   .omega-article-content :global(ul),
   .omega-article-content :global(ol) {
     margin-bottom: 24px;
