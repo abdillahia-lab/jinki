@@ -1,0 +1,17 @@
+/* TEAM */
+Founder: Adnan Abdillahi
+Role: Founder & CEO
+Certifications: CISSP, CCSP, AIGP, PMP
+Location: Northern Virginia, USA
+
+/* SITE */
+Platform: Astro
+Hosting: Cloudflare Pages
+Design System: Custom (Space Grotesk + Inter + JetBrains Mono)
+Last Updated: 2026-03-22
+
+/* TECHNOLOGY */
+Thermal Sensor: DJI H30T
+Platform (Piloted): DJI M400 RTK
+Platform (Autonomous): DJI M4TD + Dock 3
+AI Processing: Manifold 3 Edge Compute
