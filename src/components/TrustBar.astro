@@ -141,7 +141,15 @@ const trustBadges = [
     border-radius: 12px;
     border: 1px solid var(--glass-border);
     background: var(--glass-bg);
+    position: relative;
+    overflow: hidden;
     transition: border-color 0.3s ease, box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+  .outcome-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent 10%, var(--accent) 50%, transparent 90%);
+    opacity: 0.4;
   }
   .outcome-card:hover {
     border-color: rgba(0, 229, 255, 0.2);
