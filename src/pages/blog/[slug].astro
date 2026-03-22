@@ -43,8 +43,9 @@ const shareUrl = encodeURIComponent(currentUrl);
   "@type": "Article",
   "headline": post.data.title,
   "description": post.data.description,
-  "author": { "@type": "Person", "name": post.data.author || "Adnan Abdillahi" },
-  "publisher": { "@type": "Organization", "name": "Jinki Aerial Intelligence", "url": "https://jinki.ai" },
+  "author": { "@type": "Person", "name": post.data.author || "Adnan Abdillahi", "image": "https://jinki.ai/images/founder-adnan.jpg", "url": "https://jinki.ai/about" },
+  "publisher": { "@type": "Organization", "name": "Jinki Aerial Intelligence", "url": "https://jinki.ai", "logo": { "@type": "ImageObject", "url": "https://jinki.ai/images/jinki-logo.png" } },
+  "image": "https://jinki.ai/images/og-default.png",
   "datePublished": post.data.date.toISOString(),
   "url": currentUrl,
   "mainEntityOfPage": currentUrl
