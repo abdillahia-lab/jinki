@@ -334,6 +334,10 @@
     t.style.opacity = '0.5';
     msgs.appendChild(t);
     msgs.scrollTop = msgs.scrollHeight;
+    // Disable input while waiting
+    input.disabled = true;
+    sendBtn.disabled = true;
+    sendBtn.style.opacity = '0.5';
     fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -342,12 +346,20 @@
     .then(function(r) { return r.json(); })
     .then(function(d) {
       t.remove();
+      input.disabled = false;
+      sendBtn.disabled = false;
+      sendBtn.style.opacity = '1';
+      input.focus();
       var reply = escText(d.reply || d.error || 'Please email info@jinki.ai.');
       addBot(reply + ' <a href="#lead-gen">Request a demo &rarr;</a>');
       addQuickReplies();
     })
     .catch(function() {
       t.remove();
+      input.disabled = false;
+      sendBtn.disabled = false;
+      sendBtn.style.opacity = '1';
+      input.focus();
       addBot('I\'m temporarily unavailable. Please <a href="#lead-gen">request a demo</a> or email info@jinki.ai.');
       addQuickReplies();
     });
