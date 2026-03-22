@@ -509,10 +509,7 @@ html {
 }
 
 /* --- Rendering Performance --- */
-section {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 800px;
-}
+/* content-visibility removed — was causing layout jumps on scroll */
 
 /* --- Scroll Reveal --- */
 .reveal {
