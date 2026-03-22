@@ -527,6 +527,22 @@ section {
 .reveal-delay-3 { transition-delay: 0.45s; }
 .reveal-delay-4 { transition-delay: 0.6s; }
 
+/* --- High Contrast --- */
+@media (prefers-contrast: more) {
+  :root {
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --border: rgba(255, 255, 255, 0.25);
+    --text-secondary: #d0d4d8;
+    --text-tertiary: #a0a8b0;
+  }
+  [data-theme="light"] {
+    --glass-border: rgba(0, 0, 0, 0.2);
+    --border: rgba(0, 0, 0, 0.25);
+    --text-secondary: #333;
+    --text-tertiary: #555;
+  }
+}
+
 /* --- Reduced Motion --- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
