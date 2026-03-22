@@ -63,6 +63,24 @@
   .jc-launcher:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 32px rgba(0,212,255,0.4); }
   .jc-launcher[aria-expanded="true"] { display: none; }
 
+  /* Mobile: smaller launcher */
+  @media (max-width: 640px) {
+    .jc-root { bottom: 16px; right: 16px; }
+    .jc-launcher {
+      padding: 8px 14px 8px 10px;
+      font-size: 0.6875rem;
+      gap: 6px;
+      box-shadow: 0 2px 16px rgba(0,212,255,0.25);
+    }
+    .jc-launcher svg { width: 14px; height: 14px; }
+    .jc-panel {
+      bottom: 16px; right: 16px;
+      width: calc(100vw - 32px);
+      height: calc(100dvh - 100px);
+      max-height: 480px;
+    }
+  }
+
   /* Panel */
   .jc-panel {
     position: fixed; bottom: 24px; right: 24px;
