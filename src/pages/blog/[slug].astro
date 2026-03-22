@@ -95,7 +95,7 @@ const shareUrl = encodeURIComponent(currentUrl);
               </div>
               <div>
                 <span class="omega-author-name">{post.data.author}</span>
-                <span class="omega-author-date">{dateFormatted}</span>
+                <time class="omega-author-date" datetime={post.data.date.toISOString()}>{dateFormatted}</time>
               </div>
             </div>
             <div class="omega-reading-stats">
