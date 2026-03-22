@@ -251,9 +251,15 @@
   :global([data-theme="light"]) .lg-field textarea { background: var(--surface-container-low); }
 
   /* Reduced motion */
-  /* Subtle ambient glow around wizard panel */
+  /* Subtle ambient glow + gradient accent line */
   .lg-wizard-glow {
     box-shadow: 0 0 60px rgba(0, 229, 255, 0.04), var(--glass-shadow);
+  }
+  .lg-wizard-glow::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent 10%, var(--accent) 50%, transparent 90%);
+    opacity: 0.5; z-index: 3;
   }
 
   @media (prefers-reduced-motion: reduce) {
