@@ -358,7 +358,7 @@
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     // Honeypot check
-    const hp = (document.getElementById('lg-website') as HTMLInputElement);
+    const hp = (document.getElementById('lg-botcheck') as HTMLInputElement);
     if (hp && hp.value) return;
     if (!validateStep(current)) return;
 

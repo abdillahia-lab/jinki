@@ -385,33 +385,4 @@
   }
 </style>
 
-<script is:inline>
-(function() {
-  'use strict';
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* Metric counter */
-  var els = document.querySelectorAll('.metric-value[data-count]');
-  if (els.length && 'IntersectionObserver' in window) {
-    var done = false;
-    var obs = new IntersectionObserver(function(entries) {
-      if (!entries[0].isIntersecting || done) return;
-      done = true;
-      els.forEach(function(el) {
-        var target = parseFloat(el.getAttribute('data-count'));
-        var isFloat = target % 1 !== 0;
-        if (reduced) { el.textContent = isFloat ? target.toFixed(1) : Math.round(target); return; }
-        var start = performance.now();
-        (function tick(now) {
-          var p = Math.min((now - start) / 1800, 1);
-          var e = 1 - Math.pow(1 - p, 3);
-          el.textContent = isFloat ? (e * target).toFixed(1) : Math.round(e * target);
-          if (p < 1) requestAnimationFrame(tick);
-        })(start);
-      });
-      obs.disconnect();
-    }, { threshold: 0.3 });
-    obs.observe(document.querySelector('.hero-metrics'));
-  }
-})();
-</script>
+<!-- Counter animation handled by Layout.astro -->
