@@ -252,6 +252,11 @@ a:hover {
   color: var(--accent-soft);
 }
 
+/* Fast taps on mobile — remove 300ms delay */
+a, button, [role="button"], input, select, textarea {
+  touch-action: manipulation;
+}
+
 a:visited {
   color: var(--accent-soft);
 }
