@@ -104,6 +104,7 @@ const storyBlocks = [
 
     <!-- ============ PARALLAX HERO ============ -->
     <section class="about-hero" aria-label="About Jinki">
+      <div class="about-mesh" aria-hidden="true"></div>
       <div class="parallax-bg" aria-hidden="true">
         <div class="parallax-layer parallax-layer--grid"></div>
         <div class="parallax-layer parallax-layer--silhouettes"></div>
@@ -582,8 +583,18 @@ const storyBlocks = [
     color: var(--text-secondary);
   }
 
+  .about-mesh {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse at 25% 40%, rgba(0,229,255,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 75% 60%, rgba(123,97,255,0.06) 0%, transparent 50%);
+    filter: blur(60px);
+    pointer-events: none;
+  }
+
   @media (max-width: 768px) {
     .about-hero { min-height: auto !important; padding-top: 120px !important; }
+    .about-mesh { filter: blur(40px); }
     .story-timeline::before {
       left: 28px;
     }
