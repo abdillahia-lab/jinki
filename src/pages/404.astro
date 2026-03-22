@@ -167,7 +167,11 @@ import Footer from '../components/Footer.astro';
     flex-shrink: 0;
     z-index: 2;
   }
-  @media (max-width: 600px) { .radar-wrap { width: 240px; height: 240px; } }
+  @media (max-width: 600px) {
+    .radar-wrap { width: 200px; height: 200px; margin-bottom: 24px; }
+    .error-page { min-height: auto; padding: 100px 20px 100px; justify-content: flex-start; }
+    .glitch-404 { font-size: clamp(3rem, 15vw, 5rem); }
+  }
 
   .radar-ring {
     position: absolute;
