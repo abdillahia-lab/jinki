@@ -154,8 +154,9 @@ const verticals = [
   .card-cta {
     font-family: var(--font-label);
     opacity: 0;
-    transform: translateY(4px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(8px);
+    transition: opacity 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
   }
   .vertical-card:hover .card-cta,
   .vertical-card:focus-within .card-cta {
