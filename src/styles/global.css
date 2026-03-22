@@ -482,6 +482,12 @@ html {
 ::-webkit-scrollbar-thumb { background: var(--text-tertiary); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
 
+/* --- Rendering Performance --- */
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
 /* --- Scroll Reveal --- */
 .reveal {
   opacity: 0;
