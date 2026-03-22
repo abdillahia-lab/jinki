@@ -98,7 +98,9 @@
       "Bash(find .git -name \"*.lock\" -delete)",
       "Bash(wrangler pages:*)",
       "Bash(grep -rn \"Jinki Team\\\\|author\" src/content/blog/*.md)",
-      "Bash(do sed:*)"
+      "Bash(do sed:*)",
+      "Bash(ls -la /Users/aa/JInki.ai/public/images/founder*)",
+      "Bash(xargs ls:*)"
     ]
   }
 }
