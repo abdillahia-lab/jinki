@@ -552,6 +552,10 @@ html {
     padding-top: 4rem !important;
     padding-bottom: 4rem !important;
   }
+  /* Space for sticky CTA bar */
+  footer {
+    padding-bottom: 80px !important;
+  }
 }
 
 /* --- Reduced Motion --- */
