@@ -31,6 +31,44 @@ import Footer from '../components/Footer.astro';
     "query-input": "required name=search_term_string"
   }
 }}>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a Facility Intelligence Scan?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A one-time aerial assessment that delivers a prioritized report with thermal, structural, and environmental findings — typically within 48 hours."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What industries does Jinki serve?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jinki provides aerial intelligence for data centers, energy and utility infrastructure, perimeter security, and agricultural operations across the Mid-Atlantic United States."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What equipment does Jinki use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Jinki operates the DJI M400 RTK with H30T thermal sensor for piloted missions and the DJI M4TD with Dock 3 for autonomous persistent monitoring — capable of 150-200 missions per month."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is my facility data protected?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "All data is encrypted with AES-256 at rest and TLS 1.3 in transit. Every engagement begins with a mutual NDA. Jinki is preparing for SOC 2 Type I certification."
+        }
+      }
+    ]
+  })} />
   <Nav />
   <main id="main-content">
     <Hero />
