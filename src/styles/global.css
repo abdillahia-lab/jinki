@@ -259,6 +259,11 @@ a, button, [role="button"], input, select, textarea {
   touch-action: manipulation;
 }
 
+/* Brand color for native form controls (checkboxes, radios, range) */
+input, select, textarea {
+  accent-color: var(--accent);
+}
+
 a:visited {
   color: var(--accent-soft);
 }
