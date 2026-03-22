@@ -311,6 +311,11 @@ html {
   background: rgba(0, 131, 143, 0.15);
 }
 
+/* --- List Markers --- */
+::marker {
+  color: var(--accent);
+}
+
 /* --- Anchor Offset (account for fixed nav on scroll-to) --- */
 [id] {
   scroll-margin-top: 5.5rem;
