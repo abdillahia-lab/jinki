@@ -11,3 +11,7 @@
 
 /images/*
   Cache-Control: public, max-age=2592000
+
+/api/*
+  X-Robots-Tag: noindex
+  Cache-Control: no-store
