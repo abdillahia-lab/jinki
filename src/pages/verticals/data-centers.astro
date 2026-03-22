@@ -119,7 +119,15 @@ const faqs = [
 ];
 ---
 
-<Layout title="Data Centers — Jinki Aerial Intelligence" description="Aerial thermal inspection, roof assessment, and autonomous monitoring for data center operations. Identify cooling failures and structural risks before they cause downtime.">
+<Layout title="Data Centers — Jinki Aerial Intelligence" description="Aerial thermal inspection, roof assessment, and autonomous monitoring for data center operations. Identify cooling failures and structural risks before they cause downtime." jsonLd={{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Data Center Aerial Intelligence",
+  "provider": { "@type": "Organization", "name": "Jinki Aerial Intelligence" },
+  "description": "Aerial thermal inspection and autonomous monitoring for data center rooftop infrastructure — HVAC, cooling systems, electrical, and liquid cooling.",
+  "areaServed": "Mid-Atlantic United States",
+  "serviceType": "Aerial Thermal Inspection"
+}}>
   <Nav />
   <main id="main-content">
 
