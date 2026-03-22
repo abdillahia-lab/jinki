@@ -173,6 +173,7 @@ body {
   min-height: 100vh;
   line-height: 1.7;
   font-size: 16px;
+  hanging-punctuation: first last;
   overflow-x: hidden;
   position: relative;
 }
