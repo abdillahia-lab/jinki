@@ -165,7 +165,7 @@ const storyBlocks = [
                 <div class="team-card-front">
                   <div class="team-avatar">
                     {member.image ? (
-                      <img src={member.image} alt={member.name} class="team-photo" loading="lazy" />
+                      <img src={member.image} alt={member.name} class="team-photo" loading="lazy" decoding="async" />
                     ) : (
                       <span class="team-initials">{member.initials}</span>
                     )}
