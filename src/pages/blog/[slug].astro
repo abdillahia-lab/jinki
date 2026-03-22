@@ -38,7 +38,17 @@ const shareTitle = encodeURIComponent(post.data.title);
 const shareUrl = encodeURIComponent(currentUrl);
 ---
 
-<Layout title={`${post.data.title} — Jinki Blog`} description={post.data.description}>
+<Layout title={`${post.data.title} — Jinki Blog`} description={post.data.description} jsonLd={{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": post.data.title,
+  "description": post.data.description,
+  "author": { "@type": "Person", "name": post.data.author || "Adnan Abdillahi" },
+  "publisher": { "@type": "Organization", "name": "Jinki Aerial Intelligence", "url": "https://jinki.ai" },
+  "datePublished": post.data.date.toISOString(),
+  "url": currentUrl,
+  "mainEntityOfPage": currentUrl
+}}>
   <Nav />
 
   <main id="main-content" class="omega-post-page">
