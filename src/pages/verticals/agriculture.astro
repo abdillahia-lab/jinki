@@ -170,7 +170,7 @@ const pipelineSteps = [
             <div class="hud-metrics">
               <div class="hud-metric">
                 <span class="hud-metric-val">0.82</span>
-                <span class="hud-metric-lbl">Avg NDVI</span>
+                <span class="hud-metric-lbl">Crop Health</span>
               </div>
               <div class="hud-metric">
                 <span class="hud-metric-val">94%</span>
@@ -276,8 +276,8 @@ const pipelineSteps = [
                 <div class="dash-zone" style="background: rgba(52,211,153,0.5); grid-area: 3/3/4/5;" data-zone="C3-C4" data-score="0.85"></div>
               </div>
               <div class="dash-trend">
-                <span class="dash-trend-title">NDVI Trend — 30 Days</span>
-                <div class="dash-trend-chart" aria-label="NDVI trend line showing improvement over 30 days">
+                <span class="dash-trend-title">Crop Health Trend — 30 Days</span>
+                <div class="dash-trend-chart" aria-label="Crop health trend line showing improvement over 30 days">
                   <svg viewBox="0 0 300 80" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Upward trending chart line">
                     <defs>
                       <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
@@ -392,7 +392,7 @@ const pipelineSteps = [
           </p>
         </div>
 
-        <div class="comparison-container reveal reveal-delay-1" role="img" aria-label="Comparison slider showing raw field view versus NDVI analysis overlay">
+        <div class="comparison-container reveal reveal-delay-1" role="img" aria-label="Comparison slider showing raw field view versus thermal analysis overlay">
           <div class="comparison-slider" id="comparisonSlider">
             <div class="comparison-side comparison-before">
               <div class="comp-field comp-field--raw">
@@ -429,7 +429,7 @@ const pipelineSteps = [
                   <span class="comp-zone-tag" style="top: 80%; left: 20%; color: #34D399;">0.85</span>
                 </div>
               </div>
-              <span class="comparison-label">NDVI Analysis</span>
+              <span class="comparison-label">Thermal Analysis</span>
             </div>
 
             <div class="comparison-handle" id="comparisonHandle" role="slider" aria-label="Comparison slider handle" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" tabindex="0">
@@ -463,7 +463,7 @@ const pipelineSteps = [
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%; max-width: 600px;">
               <div class="roi-result-card">
                 <span class="material-symbols-outlined roi-result-icon" style="color: #34D399; font-variation-settings: 'FILL' 1;" aria-hidden="true">satellite_alt</span>
-                <span class="roi-result-label" style="font-size: 0.8125rem;">NDVI Crop Health</span>
+                <span class="roi-result-label" style="font-size: 0.8125rem;">Thermal Crop Health</span>
                 <span class="roi-result-detail">Field-level stress mapping</span>
               </div>
               <div class="roi-result-card">
