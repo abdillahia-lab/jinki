@@ -254,6 +254,9 @@ a:hover {
   color: var(--accent-soft);
 }
 
+/* iOS tap highlight — branded cyan */
+* { -webkit-tap-highlight-color: rgba(0, 229, 255, 0.1); }
+
 /* Fast taps on mobile — remove 300ms delay */
 a, button, [role="button"], input, select, textarea {
   touch-action: manipulation;
