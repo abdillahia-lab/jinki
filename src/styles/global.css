@@ -484,6 +484,11 @@ html {
 ::-webkit-scrollbar-thumb { background: var(--text-tertiary); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
 
+/* --- Tabular Numbers (for counters and stats) --- */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
 /* --- Rendering Performance --- */
 section {
   content-visibility: auto;
