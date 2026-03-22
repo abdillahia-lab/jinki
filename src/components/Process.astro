@@ -86,9 +86,16 @@ const steps = [
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     padding: 2rem;
+    overflow: hidden;
     transition: border-color 0.4s ease,
                 box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
                 transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+  .process-step::after {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent 10%, var(--accent) 50%, transparent 90%);
+    opacity: 0.3;
   }
 
   .process-step:hover {
