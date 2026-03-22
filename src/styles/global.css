@@ -311,6 +311,11 @@ html {
   background: rgba(0, 131, 143, 0.15);
 }
 
+/* --- Anchor Offset (account for fixed nav on scroll-to) --- */
+[id] {
+  scroll-margin-top: 5.5rem;
+}
+
 /* --- Section Eyebrow (design system component) --- */
 .section-eyebrow {
   font-family: var(--font-label);
