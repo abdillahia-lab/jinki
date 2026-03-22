@@ -546,6 +546,14 @@ html {
   }
 }
 
+/* --- Mobile Section Spacing --- */
+@media (max-width: 767px) {
+  section {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+}
+
 /* --- Reduced Motion --- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
