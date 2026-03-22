@@ -13,7 +13,7 @@ import LeadGen from '../../components/LeadGen.astro';
 import Footer from '../../components/Footer.astro';
 
 const stats = [
-  { value: 'NDVI', label: 'Multispectral Crop Health Mapping', icon: 'trending_up' },
+  { value: 'Thermal', label: 'Crop Stress & Irrigation Analysis', icon: 'trending_up' },
   { value: '0.1m', label: 'Spatial Resolution', icon: 'water_drop' },
   { value: 'AI', label: 'Anomaly Detection & Classification', icon: 'biotech' },
   { value: '1000+', label: 'Acres Per Mission', icon: 'landscape' },
@@ -73,14 +73,14 @@ const seasons = [
 const pipelineSteps = [
   {
     icon: 'satellite_alt',
-    title: 'Multispectral Capture',
-    desc: 'DJI M400 RTK platform with thermal and visual sensors captures high-resolution aerial data for NDVI analysis and crop health assessment.',
+    title: 'Aerial Capture',
+    desc: 'DJI M400 RTK platform with thermal and high-resolution visual sensors captures aerial data for crop health assessment, irrigation analysis, and field mapping.',
     color: '#60A5FA',
   },
   {
     icon: 'image',
-    title: 'NDVI Processing',
-    desc: 'Raw spectral data processed into normalized difference vegetation indices, chlorophyll maps, and moisture stress layers.',
+    title: 'Thermal Crop Analysis',
+    desc: 'Thermal imaging identifies irrigation irregularities, crop stress patterns, and drainage issues through temperature differential analysis across fields.',
     color: '#34D399',
   },
   {

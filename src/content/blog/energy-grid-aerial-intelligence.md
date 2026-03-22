@@ -16,7 +16,7 @@ These are the failures that cause unplanned outages, wildfire ignitions, and reg
 
 ## What Aerial Intelligence Changes
 
-An autonomous aerial platform equipped with a radiometric thermal sensor can cover 50+ miles of corridor in a single day. Every connection, every insulator, every transformer gets a thermal profile — not a glance from a helicopter window, but a quantified measurement with GPS coordinates and severity classification.
+An aerial platform equipped with a radiometric thermal sensor can cover 50+ miles of corridor in a single day. Every connection, every insulator, every transformer gets a thermal profile — not a glance from a helicopter window, but a quantified measurement with GPS coordinates and severity classification.
 
 The output isn't raw imagery. It's a prioritized intelligence report: which components are trending toward failure, ranked by severity, with cost estimates for remediation and recommended maintenance windows. Operations teams receive clear next steps, not another folder of photos to interpret.
 
