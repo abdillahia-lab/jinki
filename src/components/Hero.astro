@@ -249,6 +249,14 @@
 
   /* === Metric Cards === */
   .hero-metrics { display: flex; flex-direction: column; margin-top: 2.5rem; }
+  @media (max-width: 767px) {
+    .hero-metrics { flex-direction: row; flex-wrap: wrap; gap: 0.5rem; }
+    .metric-card { flex: 1 1 calc(50% - 0.5rem); margin-bottom: 0 !important; padding: 0.75rem 1rem !important; }
+    .metric-card .metric-value { font-size: 1.25rem !important; }
+    .metric-card .metric-unit { font-size: 0.75rem !important; }
+    .metric-card .metric-label { font-size: 0.5rem !important; }
+    .metric-card .metric-icon { display: none; }
+  }
   @media (min-width: 1024px) { .hero-metrics { margin-top: 0; } }
   .metric-card {
     background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px;
