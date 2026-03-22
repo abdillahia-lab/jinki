@@ -59,6 +59,13 @@
     background: var(--surface-container); padding: 2rem; min-height: 400px;
     border-radius: 1rem; border: 1px solid var(--glass-border);
     display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+  .bento-main::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent 10%, var(--accent) 50%, transparent 90%);
+    opacity: 0.6;
   }
   @media (min-width: 768px) { .bento-main { padding: 4rem; min-height: 550px; } }
   .bento-eyebrow { font-family: var(--font-label); font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3em; color: var(--accent); }
