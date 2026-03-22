@@ -138,6 +138,10 @@
   :global([data-theme="light"]) .jc-panel { box-shadow: 0 16px 48px rgba(0,0,0,0.12); }
   :global([data-theme="light"]) .jc-bot { background: var(--surface-container-low); }
 
+  /* Typing indicator */
+  .jc-typing { font-family: var(--font-mono); letter-spacing: 0.2em; animation: typingPulse 1s ease-in-out infinite; }
+  @keyframes typingPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) { .jc-launcher, .jc-hdr-btn, .jc-qbtn, .jc-send-btn { transition: none; } }
   @media print { .jc-root { display: none !important; } }
@@ -291,8 +295,36 @@
       addBot('Hello! I\'m here to help you learn about Jinki\'s aerial intelligence services. What would you like to know about?');
       addQuickReplies(); return;
     }
-    addBot('I can help with our intelligence scans, autonomous deployment, the industries we serve, or getting in touch. Choose a topic below or <a href="#lead-gen">request a demo</a> directly.');
-    addQuickReplies();
+    // No keyword match — call LLM
+    askLLM(v);
+  }
+
+  function escText(s) { var d = document.createElement('div'); d.textContent = s; return d.textContent; }
+
+  function askLLM(q) {
+    var t = document.createElement('div');
+    t.className = 'jc-msg jc-bot jc-typing';
+    t.textContent = '...';
+    t.style.opacity = '0.5';
+    msgs.appendChild(t);
+    msgs.scrollTop = msgs.scrollHeight;
+    fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: q })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      t.remove();
+      var reply = escText(d.reply || d.error || 'Please email info@jinki.ai.');
+      addBot(reply + ' <a href="#lead-gen">Request a demo &rarr;</a>');
+      addQuickReplies();
+    })
+    .catch(function() {
+      t.remove();
+      addBot('I\'m temporarily unavailable. Please <a href="#lead-gen">request a demo</a> or email info@jinki.ai.');
+      addQuickReplies();
+    });
   }
 
   sendBtn.addEventListener('click', handleSend);

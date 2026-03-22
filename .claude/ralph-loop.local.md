@@ -2,21 +2,9 @@
 active: true
 iteration: 1
 session_id: 
-max_iterations: 250
+max_iterations: 0
+completion_promise: null
+started_at: "2026-03-22T01:06:20Z"
 ---
 
-RALPH WIGGUM QUALITY LOOP — JINKI.AI CONTINUOUS IMPROVEMENT
-
-For each iteration:
-1. Pick ONE specific element, component, or page
-2. Read the actual code
-3. Check for: inconsistencies, fabrications, design flaws, mobile issues, accessibility gaps, broken links, missing hover states, typography problems, spacing issues, content errors, duplicate claims, conflicting numbers
-4. Fix what you find
-5. Build with PATH=/Users/aa/.nvm/versions/node/v24.12.0/bin:$PATH npx astro build
-6. Deploy with PATH=/Users/aa/.nvm/versions/node/v24.12.0/bin:$PATH wrangler pages deploy dist/ --project-name jinki-ai --branch main --commit-dirty=true
-7. Commit the fix
-8. Move to next element
-
-Priority order: content accuracy > design consistency > mobile UX > micro-interactions > performance
-
-NEVER fabricate claims. NEVER use parallel execution. Supreme sequential focus.
+Supreme focus 4-hour sprint on jinki.ai. Each iteration: pick ONE element, read the code, improve it, build with PATH=/Users/aa/.nvm/versions/node/v24.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin npx astro build, deploy with PATH=/Users/aa/.nvm/versions/node/v24.12.0/bin:/usr/bin:/bin:/usr/sbin:/sbin wrangler pages deploy dist/ --project-name jinki-ai --branch main --commit-dirty=true, then move to next element. PRIORITIES IN ORDER: 1) Wire chatbot frontend to call /api/chat endpoint with Groq LLM 2) Mobile fixes on every vertical page 3) Light mode polish 4) Creative micro-interactions 5) Footer social links placeholder 6) Blog content 7) Design polish on every card shadow and hover state. RULES: Never stop. Never fabricate claims. Build and deploy after every change. Use git add and git commit for each. Maximum capacity. --max-iterations 500
