@@ -1,0 +1,10 @@
+# Redirect old/alternative paths to canonical pages
+/contact /services/audit 301
+/demo /#lead-gen 302
+/request-demo /#lead-gen 302
+/get-started /#lead-gen 302
+/drones /about 301
+/drone /about 301
+/team /about 301
+/mission /about 301
+/services /services/audit 301
