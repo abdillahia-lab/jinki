@@ -1,0 +1,37 @@
+# Jinki.ai Lessons Learned
+
+## Content Accuracy
+- NEVER claim multispectral capability — H30T is thermal+visual only
+- NEVER claim NDVI — requires near-infrared sensor not in our payload
+- M400 RTK (piloted): H30T, Manifold 3, L3 LiDAR, S1 spotlight
+- M4TD + Dock 3 (autonomous): integrated thermal+visual ONLY — no H30T, no LiDAR, no Manifold
+- 200x zoom is HYBRID (40x optical + digital), not "200x optical"
+- Report turnaround is 48 hours — standardized sitewide
+- "Real-time processing" is inaccurate — say "edge AI" or "post-flight analysis"
+
+## Design System
+- Border-radius scale: 4/8/12/16px ONLY (no 6, 10, 14, 20)
+- Never use transition: all (specify exact properties)
+- Premium easing: cubic-bezier(0.16, 1, 0.3, 1) for transform/shadow
+- Form inputs must be 16px font-size minimum (iOS auto-zoom prevention)
+- Mobile sections: 4rem padding (not 7rem)
+
+## Security
+- CORS must be restricted to jinki.ai (not *)
+- Honeypot field IDs must match between HTML and JS
+- Web3Forms key is public by design but noted
+- Footer heading tags must match (h3 open = h3 close)
+
+## Conversion
+- "Request a Demo" → "Get Your Facility Report" (outcome, not process)
+- LeadGen: "Start Your Intelligence Scan" → "See What's Hiding on Your Rooftop"
+- Headlines should describe prospect's PAIN, not Jinki's technology
+- SOC 2 badge needs specific timeline, not vague "in progress"
+- "Systems Operational" was fake — changed to "Accepting New Clients"
+
+## Common Mistakes
+- Forgetting to check ALL instances of a string across ALL files
+- Applying M400 specs to M4TD context (different platforms)
+- Using transition: all instead of specific properties
+- Not checking mobile rendering after desktop changes
+- Duplicate code (counter animation was in Layout AND Hero)
