@@ -131,15 +131,55 @@ const capabilities = [
             <animate attributeName="r" values="10;20;10" dur="2s" repeatCount="indefinite"/>
             <animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"/>
           </circle>
-          <!-- Waypoints -->
-          <circle cx="235" cy="120" r="4" fill="rgba(0, 201, 167, 0.15)" stroke="rgba(0, 201, 167, 0.4)" stroke-width="1"/>
-          <circle cx="580" cy="120" r="4" fill="rgba(0, 201, 167, 0.15)" stroke="rgba(0, 201, 167, 0.4)" stroke-width="1"/>
-          <circle cx="580" cy="380" r="4" fill="rgba(0, 201, 167, 0.15)" stroke="rgba(0, 201, 167, 0.4)" stroke-width="1"/>
-          <circle cx="220" cy="380" r="4" fill="rgba(0, 201, 167, 0.15)" stroke="rgba(0, 201, 167, 0.4)" stroke-width="1"/>
+          <!-- Waypoints with pulse rings -->
+          <g>
+            <circle cx="235" cy="120" r="4" fill="rgba(0, 201, 167, 0.2)" stroke="rgba(0, 201, 167, 0.5)" stroke-width="1"/>
+            <circle cx="235" cy="120" r="4" fill="none" stroke="rgba(0, 201, 167, 0.3)" stroke-width="0.5">
+              <animate attributeName="r" values="4;12;4" dur="3s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          <g>
+            <circle cx="580" cy="120" r="4" fill="rgba(0, 201, 167, 0.2)" stroke="rgba(0, 201, 167, 0.5)" stroke-width="1"/>
+            <circle cx="580" cy="120" r="4" fill="none" stroke="rgba(0, 201, 167, 0.3)" stroke-width="0.5">
+              <animate attributeName="r" values="4;12;4" dur="3s" begin="0.75s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" begin="0.75s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          <g>
+            <circle cx="580" cy="380" r="4" fill="rgba(0, 201, 167, 0.2)" stroke="rgba(0, 201, 167, 0.5)" stroke-width="1"/>
+            <circle cx="580" cy="380" r="4" fill="none" stroke="rgba(0, 201, 167, 0.3)" stroke-width="0.5">
+              <animate attributeName="r" values="4;12;4" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          <g>
+            <circle cx="220" cy="380" r="4" fill="rgba(0, 201, 167, 0.2)" stroke="rgba(0, 201, 167, 0.5)" stroke-width="1"/>
+            <circle cx="220" cy="380" r="4" fill="none" stroke="rgba(0, 201, 167, 0.3)" stroke-width="0.5">
+              <animate attributeName="r" values="4;12;4" dur="3s" begin="2.25s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" begin="2.25s" repeatCount="indefinite"/>
+            </circle>
+          </g>
           <!-- Waypoint labels -->
           <text x="235" y="112" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.3)" text-anchor="middle">WP1</text>
           <text x="580" y="112" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.3)" text-anchor="middle">WP2</text>
           <text x="592" y="385" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.3)" text-anchor="middle">WP3</text>
+          <text x="208" y="375" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.3)" text-anchor="middle">WP4</text>
+          <!-- Telemetry data overlay -->
+          <text x="610" y="250" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.18)" text-anchor="start">ALT: 120m</text>
+          <text x="610" y="262" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.18)" text-anchor="start">SPD: 8.2m/s</text>
+          <text x="610" y="274" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.18)" text-anchor="start">BAT: 78%
+            <animate attributeName="fill" values="rgba(0,201,167,0.18);rgba(0,201,167,0.35);rgba(0,201,167,0.18)" dur="4s" repeatCount="indefinite"/>
+          </text>
+          <!-- Status HUD -->
+          <g opacity="0.6">
+            <rect x="15" y="15" width="90" height="22" rx="4" fill="rgba(0, 201, 167, 0.08)" stroke="rgba(0, 201, 167, 0.2)" stroke-width="0.5"/>
+            <circle cx="28" cy="26" r="3" fill="#00C9A7">
+              <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <text x="36" y="29" font-family="monospace" font-size="8" fill="rgba(0, 201, 167, 0.6)" font-weight="bold" letter-spacing="1">LIVE</text>
+            <text x="66" y="29" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.35)">M-147</text>
+          </g>
           <!-- Glow filter -->
           <defs>
             <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">

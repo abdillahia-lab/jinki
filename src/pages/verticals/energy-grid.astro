@@ -236,6 +236,13 @@ const techSections = [
 
               <!-- Scan path -->
               <path d="M 80 60 Q 180 40 300 80 T 430 100" class="eg-scan-path" fill="none"/>
+              <!-- Thermal scan sweep line -->
+              <line x1="0" y1="0" x2="0" y2="400" stroke="rgba(255,140,0,0.15)" stroke-width="2">
+                <animate attributeName="x1" values="0;500;0" dur="8s" repeatCount="indefinite"/>
+                <animate attributeName="x2" values="0;500;0" dur="8s" repeatCount="indefinite"/>
+              </line>
+              <!-- Node count -->
+              <text x="470" y="385" font-family="monospace" font-size="7" fill="rgba(255,140,0,0.25)" text-anchor="end">NODES: 8 | FAULTS: 1</text>
             </svg>
 
             <!-- HUD overlay -->
