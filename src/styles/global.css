@@ -510,7 +510,6 @@ html {
 }
 
 /* --- Rendering Performance --- */
-/* content-visibility removed — was causing layout jumps on scroll */
 
 /* --- Scroll Reveal --- */
 .reveal {
