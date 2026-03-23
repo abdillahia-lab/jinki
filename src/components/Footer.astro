@@ -248,6 +248,10 @@ const company = [
 
   @media (prefers-reduced-motion: reduce) { .footer-social-btn, .footer-submit-btn, .footer-links a { transition: none; } }
   @media print { .footer-main { background: #fff !important; } .footer-status-bar, .footer-social-btn { display: none !important; } }
+
+  :global([data-theme="light"]) .footer-email-link:hover { text-shadow: none; }
+  :global([data-theme="light"]) .footer-social-btn:hover { border-color: rgba(0, 131, 143, 0.25); }
+  :global([data-theme="light"]) .footer-copyright-bar { border-top-color: rgba(0, 0, 0, 0.06); }
 </style>
 
 <!-- Newsletter handled by Web3Forms script above -->
