@@ -314,15 +314,13 @@ const services = [
     border-left: 1px solid var(--glass-border);
     z-index: 1001;
     transform: translateX(100%);
-    visibility: hidden;
-    transition: transform 0.3s ease, visibility 0s 0.3s;
+    transition: transform 0.3s ease;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    contain: layout;
   }
   .mobile-panel.open {
     transform: translateX(0);
-    visibility: visible;
-    transition: transform 0.3s ease, visibility 0s 0s;
   }
 
   .mobile-backdrop {
