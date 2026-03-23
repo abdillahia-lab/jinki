@@ -108,4 +108,16 @@
     50% { box-shadow: 0 0 40px rgba(0, 229, 255, 0.3); }
   }
   @media (prefers-reduced-motion: reduce) { .bento-icon-ring { animation: none; } }
+
+  :global([data-theme="light"]) .bento-sidebar-cta {
+    border-color: rgba(0, 131, 143, 0.3);
+    color: #00838f;
+  }
+  :global([data-theme="light"]) .bento-sidebar-cta:hover {
+    background: linear-gradient(135deg, #00838f, #006064);
+    box-shadow: 0 4px 16px rgba(0, 131, 143, 0.25);
+  }
+  :global([data-theme="light"]) .bento-icon-ring {
+    box-shadow: 0 0 20px rgba(0, 131, 143, 0.1);
+  }
 </style>
