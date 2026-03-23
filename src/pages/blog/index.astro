@@ -778,6 +778,10 @@ function estimateReadTime(description: string): number {
       border: 1px solid #ccc !important;
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .omega-card, .omega-tag-btn { transition: none !important; }
+  }
 </style>
 
 <script>

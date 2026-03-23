@@ -837,6 +837,11 @@ const trustIndicators = [
     .sec-hero { min-height: auto; padding: 40px 20px; }
     .timeline-upcoming { opacity: 1; }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shield-ring, .shield-pulse { animation: none !important; }
+    .pillar-card, .timeline-item { transition: none !important; }
+  }
 </style>
 
 <script>

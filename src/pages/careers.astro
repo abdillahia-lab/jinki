@@ -1259,6 +1259,10 @@ const culturePoints = [
     .apply-panel { padding: 20px; border-radius: 12px; }
     .apply-modal { padding: 12px; }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .role-card, .dept-tab, .culture-card { transition: none !important; }
+  }
 </style>
 
 <script is:inline>
