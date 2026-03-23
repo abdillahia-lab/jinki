@@ -721,6 +721,20 @@ const pipelineSteps = [
     flex-direction: column;
     gap: 20px;
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  .hud-panel::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 10%, rgba(52, 211, 153, 0.4) 50%, transparent 90%);
+    animation: ag-scan-line 4s ease-in-out infinite;
+  }
+  @keyframes ag-scan-line {
+    0%, 100% { top: 0; opacity: 0.6; }
+    50% { top: calc(100% - 2px); opacity: 0.2; }
   }
 
   .hud-header {
