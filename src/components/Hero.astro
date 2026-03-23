@@ -98,13 +98,13 @@
     z-index: 0;
     pointer-events: none;
     background:
-      radial-gradient(ellipse 600px 400px at var(--mesh-x1) var(--mesh-y1),
-        rgba(0, 229, 255, 0.14) 0%, transparent 70%),
-      radial-gradient(ellipse 500px 500px at var(--mesh-x2) var(--mesh-y2),
-        rgba(123, 97, 255, 0.10) 0%, transparent 65%),
-      radial-gradient(ellipse 400px 300px at 55% 75%,
-        rgba(0, 180, 220, 0.08) 0%, transparent 60%);
-    filter: blur(60px) saturate(1.5);
+      radial-gradient(ellipse 700px 500px at var(--mesh-x1) var(--mesh-y1),
+        rgba(0, 229, 255, 0.18) 0%, transparent 65%),
+      radial-gradient(ellipse 600px 600px at var(--mesh-x2) var(--mesh-y2),
+        rgba(123, 97, 255, 0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 500px 400px at 55% 75%,
+        rgba(0, 180, 220, 0.10) 0%, transparent 55%);
+    filter: blur(50px) saturate(1.6);
     animation: meshDrift 25s ease-in-out infinite alternate;
     /* will-change on custom properties has no effect — removed */
   }

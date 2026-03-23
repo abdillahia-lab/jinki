@@ -29,9 +29,16 @@
 - SOC 2 badge needs specific timeline, not vague "in progress"
 - "Systems Operational" was fake — changed to "Accepting New Clients"
 
+## Performance
+- Material Symbols CANNOT be trivially self-hosted — ligature rendering breaks
+- Google CDN subset woff2 doesn't include all icon ligatures
+- Self-hosting requires full font (~2.5MB) or proper subsetting tool
+- Keep Google CDN with preconnect hints for Material Symbols
+
 ## Common Mistakes
 - Forgetting to check ALL instances of a string across ALL files
 - Applying M400 specs to M4TD context (different platforms)
 - Using transition: all instead of specific properties
 - Not checking mobile rendering after desktop changes
 - Duplicate code (counter animation was in Layout AND Hero)
+- ALWAYS verify visual rendering after font/icon changes
