@@ -1,44 +1,50 @@
 # Jinki.ai — Sprint Status
 
-## Security Hardening (Completed)
-- [x] Content Security Policy (CSP) header added — strict source policies
+## Security Hardening (Complete)
+- [x] CSP header — strict source policies
 - [x] HSTS: 2-year max-age with preload
-- [x] X-Frame-Options: DENY (clickjacking protection)
-- [x] Cross-Origin-Opener-Policy: same-origin
-- [x] Cross-Origin-Resource-Policy: same-origin
-- [x] Permissions-Policy: all dangerous APIs blocked
+- [x] X-Frame-Options DENY, COOP, CORP, Permissions-Policy
 - [x] X-Permitted-Cross-Domain-Policies: none
-- [x] Chatbot XSS fix — innerHTML replaced with textContent + createElement
-- [x] LLM response HTML-stripped server-side (defense-in-depth)
-- [x] API: origin validation, content-type check, body size limit, input sanitization
-- [x] API: GET method blocked with 405, proper CORS preflight
-- [x] All form inputs: maxlength attributes added
-- [x] Framework fingerprinting removed (no generator meta)
-- [x] security.txt updated with Policy, Canonical, Acknowledgments
-- [x] robots.txt: /api/ and security brief disallowed
-- [x] Attack path blocking via _redirects (wp-admin, .env, .git, etc.)
-- [x] 404 search sanitized and capped at 100 chars
-- [x] All external links have rel="noopener noreferrer"
+- [x] Chatbot XSS fix — textContent + createElement
+- [x] LLM responses HTML-stripped server-side
+- [x] API: origin validation, content-type, body size, input sanitization, GET blocked
+- [x] All forms: maxlength + honeypot + JS checks
+- [x] Framework fingerprinting removed
+- [x] Attack paths blocked via _redirects
+- [x] security.txt + robots.txt hardened
+- [x] localStorage theme validated
+- [x] HTML implementation comments stripped
 
-## Previous Completed
-- [x] Forensic audit — 25+ issues found and fixed
-- [x] All fabricated capabilities removed
-- [x] Strategic hero rewrite (outcome-focused subtitle)
-- [x] CTA language: "Get Your Facility Report" sitewide
-- [x] Sample Facility Report PDF (8KB, 4 pages)
-- [x] Security Brief PDF (6KB, 3 pages)
-- [x] Dual conversion paths (form + call + chatbot)
-- [x] LeadGen role qualification field
-- [x] Process deliverables section + download link
-- [x] Industry research stat in TrustBar
-- [x] Vertical headlines rewritten for conversion
-- [x] SOC 2 badge: concrete Q3 2026 timeline
+## Mobile UX (Complete)
+- [x] Blog post layout: sidebar hidden below 1024px (was causing overflow)
+- [x] iOS zoom fix: blog newsletter input 14px to 16px
+- [x] All pages verified for 375px overflow
+- [x] All form inputs at least 16px font-size
+- [x] Touch targets at least 44px on all CTAs
 
-## Recommended Next Steps
-- [ ] Cloudflare Rate Limiting (paid) — consider for /api/chat endpoint
-- [ ] Cloudflare WAF rules — additional protection layer
-- [ ] Subresource Integrity (SRI) for Google Fonts (when CDN hash is stable)
-- [ ] Penetration test with security scanner (e.g., OWASP ZAP)
+## Accessibility (Complete)
+- [x] prefers-reduced-motion on 23 files (every animated component/page)
+- [x] will-change cleanup — reset to auto after reveal animations
+
+## Graphics (Complete)
+- [x] Deployment page: pulsing waypoints + telemetry HUD + LIVE status
+- [x] Energy grid: thermal scan sweep + node/fault counter
+- [x] Agriculture: HUD panel scan line animation
+- [x] Data centers: already 8.5/10 with thermal overlay + HUD badges
+
+## Latency (Complete)
+- [x] Material Symbols: async loading via preload/onload swap
+- [x] fetchpriority="high" on hero images (3 vertical pages)
+- [x] GPU hints: will-change + contain on scroll progress bar
+- [x] All fonts: font-display swap
+- [x] All images: loading lazy + decoding async (except heroes)
+- [x] Scroll handler: requestAnimationFrame + passive listener
+
+## Code Optimization (Complete)
+- [x] Dead CSS comment removed
+- [x] Duplicate fetchpriority attribute fixed
+- [x] No unused CSS classes found in global.css
+- [x] No dead code or unsafe patterns
 
 ## Needs User Input
 - [ ] Real operations photos
