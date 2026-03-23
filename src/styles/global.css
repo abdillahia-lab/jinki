@@ -181,6 +181,10 @@ body {
 }
 
 /* Premium scrollbar */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--outline-variant) var(--bg-primary);
+}
 ::-webkit-scrollbar {
   width: 8px;
 }
