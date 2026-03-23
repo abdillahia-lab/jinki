@@ -449,14 +449,28 @@ const shareUrl = encodeURIComponent(currentUrl);
     margin-right: auto;
     padding-left: 24px;
     padding-right: 24px;
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  @media (min-width: 1024px) {
+    .omega-post-layout-inner {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 48px;
+    }
   }
 
   /* ===== Floating Sidebar ===== */
   .omega-sidebar {
     position: relative;
+  }
+
+  @media (max-width: 1023px) {
+    .omega-sidebar {
+      display: none;
+    }
   }
 
   .omega-sidebar-sticky {
@@ -947,6 +961,10 @@ const shareUrl = encodeURIComponent(currentUrl);
       max-width: 100% !important;
       page-break-inside: avoid;
     }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .omega-reaction-btn, .omega-share-btn, .omega-upnext { transition: none !important; }
   }
 </style>
 
