@@ -38,14 +38,14 @@ const shareTitle = encodeURIComponent(post.data.title);
 const shareUrl = encodeURIComponent(currentUrl);
 ---
 
-<Layout title={`${post.data.title} — Jinki Blog`} description={post.data.description} jsonLd={{
+<Layout title={`${post.data.title} — Jinki Blog`} description={post.data.description} ogImage={post.data.image ? post.data.image : "/images/og-blog.png"} jsonLd={{
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": post.data.title,
   "description": post.data.description,
   "author": { "@type": "Person", "name": post.data.author || "Adnan Abdillahi", "image": "https://jinki.ai/images/founder-adnan.jpg", "url": "https://jinki.ai/about" },
   "publisher": { "@type": "Organization", "name": "Jinki Aerial Intelligence", "url": "https://jinki.ai", "logo": { "@type": "ImageObject", "url": "https://jinki.ai/images/jinki-logo.png" } },
-  "image": "https://jinki.ai/images/og-default.png",
+  "image": post.data.image ? `https://jinki.ai${post.data.image}` : "https://jinki.ai/images/og-blog.png",
   "datePublished": post.data.date.toISOString(),
   "url": currentUrl,
   "mainEntityOfPage": currentUrl
