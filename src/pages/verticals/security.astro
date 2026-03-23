@@ -2249,6 +2249,12 @@ const integrations = [
     background: rgba(255, 255, 255, 0.95);
     border-color: rgba(255, 60, 60, 0.2);
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hud-scanlines, .radar-sweep-sec { animation: none !important; }
+    .crosshair-circle { animation: none !important; }
+    .log-entry { animation: none !important; opacity: 1 !important; }
+  }
 </style>
 
 <script>

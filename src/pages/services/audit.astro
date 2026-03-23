@@ -2039,6 +2039,11 @@ const reportTabs = [
   :global([data-theme="light"]) .comparison-vs {
     background: var(--surface-dim);
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .audit-hero svg animate, .audit-hero svg animateMotion { display: none; }
+    .step-card, .report-tab { transition: none !important; }
+  }
 </style>
 
 <script>

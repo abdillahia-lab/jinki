@@ -2154,6 +2154,11 @@ const pipelineSteps = [
   :global([data-theme="light"]) .dash-alert-item--info {
     background: rgba(96, 165, 250, 0.08);
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ag-scan-line, .ag-pulse-ring { animation: none !important; }
+    .timeline-card, .pipeline-step { transition: none !important; }
+  }
 </style>
 
 <script>

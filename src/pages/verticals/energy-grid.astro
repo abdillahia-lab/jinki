@@ -2251,4 +2251,9 @@ const techSections = [
   :global([data-theme="light"]) .eg-severity-medium {
     background: rgba(255, 200, 0, 0.06);
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .eg-flow-line, .eg-node-pulse, .eg-node-anomaly-pulse, .eg-node-anomaly-ring, .eg-scan-path { animation: none !important; }
+    .eg-grid-svg animate, .eg-grid-svg animateMotion { display: none; }
+  }
 </style>

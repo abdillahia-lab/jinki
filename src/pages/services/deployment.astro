@@ -2124,4 +2124,9 @@ const capabilities = [
   :global([data-theme="light"]) .eyebrow-text {
     color: #00897B;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-visual svg animate, .hero-visual svg animateMotion { display: none; }
+    .hero-stat, .process-step, .spec-card { transition: none !important; }
+  }
 </style>
