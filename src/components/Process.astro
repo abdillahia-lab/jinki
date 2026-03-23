@@ -77,7 +77,7 @@ const steps = [
         <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">summarize</span> Executive summary</span>
       </div>
       <div style="text-align: center; margin-top: 2rem;">
-        <a href="/docs/sample-facility-report.pdf" target="_blank" rel="noopener" class="sample-report-link" style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-label); font-size: 0.8125rem; font-weight: 600; color: var(--accent); text-decoration: none; padding: 10px 20px; border: 1px solid rgba(0,229,255,0.2); border-radius: 12px; transition: background 0.2s ease, border-color 0.2s ease;">
+        <a href="/docs/sample-facility-report.pdf" target="_blank" rel="noopener" aria-label="Download sample facility intelligence report PDF" class="sample-report-link" style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-label); font-size: 0.8125rem; font-weight: 600; color: var(--accent); text-decoration: none; padding: 10px 20px; border: 1px solid rgba(0,229,255,0.2); border-radius: 12px; transition: background 0.2s ease, border-color 0.2s ease;">
           <span class="material-symbols-outlined" style="font-size: 18px; font-variation-settings: 'FILL' 1;" aria-hidden="true">description</span>
           Download Sample Report (PDF)
         </a>
@@ -199,5 +199,10 @@ const steps = [
     letter-spacing: 0.03em;
     color: var(--accent);
     white-space: nowrap;
+  }
+
+  .sample-report-link:hover {
+    background: rgba(0, 229, 255, 0.08);
+    border-color: rgba(0, 229, 255, 0.3);
   }
 </style>
