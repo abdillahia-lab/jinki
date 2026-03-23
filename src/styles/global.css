@@ -31,15 +31,6 @@
   font-style: normal;
 }
 
-/* Material Symbols — self-hosted (eliminates Google CDN latency) */
-@font-face {
-  font-family: 'Material Symbols Outlined';
-  src: url('/fonts/MaterialSymbolsOutlined.woff2') format('woff2');
-  font-weight: 400;
-  font-display: swap;
-  font-style: normal;
-}
-
 /* --- Dark Theme (default) --- */
 :root {
   --surface: #121416;
