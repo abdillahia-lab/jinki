@@ -364,6 +364,8 @@ html {
   z-index: 1001;
   transition: width 0.1s linear;
   box-shadow: 0 0 8px var(--accent-glow-strong);
+  will-change: width;
+  contain: layout style;
 }
 
 /* --- Glass Panel --- */
@@ -523,6 +525,7 @@ html {
 .reveal.revealed {
   opacity: 1;
   transform: translateY(0);
+  will-change: auto;
 }
 
 .reveal-delay-1 { transition-delay: 0.15s; }
