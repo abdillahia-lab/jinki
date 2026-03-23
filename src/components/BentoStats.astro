@@ -2,8 +2,9 @@
 /* BentoStats — Bento grid stats section (counter animation handled by Layout.astro) */
 ---
 
-<section id="stats" class="bento-section" style="background: var(--surface-dim); padding: 7rem 0;" aria-label="Platform Statistics">
-  <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem;">
+<section id="stats" class="bento-section" style="background: var(--surface-dim); padding: 7rem 0; position: relative; overflow: hidden;" aria-label="Platform Statistics">
+  <div aria-hidden="true" style="position: absolute; top: 20%; left: 60%; width: 500px; height: 400px; background: radial-gradient(ellipse, rgba(0,229,255,0.04) 0%, transparent 60%); filter: blur(60px); pointer-events: none;"></div>
+  <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; position: relative; z-index: 1;">
     <div class="bento-grid">
       <!-- Main Panel -->
       <div class="bento-main reveal">
