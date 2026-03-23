@@ -166,6 +166,10 @@ function estimateReadTime(description: string): number {
               <p>Join industry leaders receiving our monthly briefing on autonomous operations, thermal analytics, and infrastructure monitoring.</p>
             </div>
             <form class="omega-newsletter-form" id="blog-newsletter">
+              <!-- Honeypot anti-spam -->
+              <div aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px;">
+                <input type="text" name="botcheck" tabindex="-1" autocomplete="off" />
+              </div>
               <div class="omega-input-group">
                 <input
                   type="email"
@@ -173,6 +177,8 @@ function estimateReadTime(description: string): number {
                   required
                   aria-label="Email address"
                   class="omega-email-input"
+                  maxlength="254"
+                  autocomplete="email"
                 />
                 <button type="submit" class="omega-subscribe-btn btn-premium">
                   Subscribe
@@ -850,6 +856,9 @@ function estimateReadTime(description: string): number {
   if (blogForm) {
     blogForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      // Honeypot check
+      const hp = blogForm.querySelector('input[name="botcheck"]') as HTMLInputElement;
+      if (hp && hp.value) return;
       const input = blogForm.querySelector('.omega-email-input') as HTMLInputElement;
       const btn = blogForm.querySelector('.omega-subscribe-btn') as HTMLButtonElement;
       const note = blogForm.querySelector('.omega-newsletter-note') as HTMLElement;
@@ -859,9 +868,9 @@ function estimateReadTime(description: string): number {
       btn.textContent = 'Sending...';
 
       try {
-        const formData = new FormData();
+        const formData = new FormData(blogForm);
         formData.append('access_key', 'b2bd961c-acf2-48a6-bf10-a5717c2dea95');
-        formData.append('email', input.value);
+        formData.set('email', input.value);
         formData.append('subject', 'Blog Newsletter Signup — jinki.ai');
         formData.append('from_name', 'Jinki Blog');
         const res = await fetch('https://api.web3forms.com/submit', {

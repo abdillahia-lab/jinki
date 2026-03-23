@@ -39,7 +39,7 @@
 
     <!-- Input -->
     <div class="jc-input-row">
-      <input id="jc-input" type="text" placeholder="Type a question..." autocomplete="off" aria-label="Chat message" />
+      <input id="jc-input" type="text" placeholder="Type a question..." autocomplete="off" aria-label="Chat message" maxlength="500" />
       <button id="jc-send" type="button" class="jc-send-btn" aria-label="Send message">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
@@ -223,10 +223,25 @@
     }
   };
 
-  function addBot(html) {
+  function addBot(text, linkHref, linkText) {
     var d = document.createElement('div');
     d.className = 'jc-msg jc-bot';
-    d.innerHTML = html;
+    // Use textContent for the message body (XSS-safe)
+    var span = document.createElement('span');
+    span.textContent = text;
+    d.appendChild(span);
+    // Append a safe link if provided (href must be relative or whitelisted)
+    if (linkHref && linkText) {
+      var a = document.createElement('a');
+      // Only allow relative URLs and # anchors — block javascript: and data: schemes
+      if (/^(\/|#|https:\/\/jinki\.ai)/.test(linkHref)) {
+        a.href = linkHref;
+      } else {
+        a.href = '#lead-gen';
+      }
+      a.textContent = ' ' + linkText + ' \u2192';
+      d.appendChild(a);
+    }
     msgs.appendChild(d);
     msgs.scrollTop = msgs.scrollHeight;
   }
@@ -266,7 +281,7 @@
     if (!a) return;
     removeQuickReplies();
     addUser(key);
-    addBot(a.text + ' <a href="' + a.link + '">' + a.cta + ' &rarr;</a>');
+    addBot(a.text, a.link, a.cta);
     addQuickReplies();
   }
 
@@ -313,7 +328,7 @@
     if (/thermal|heat|temperature|infrared|hotspot/.test(lc)) { showAnswer('Thermal'); return; }
     if (/process|how|work|step|engage|what happen/.test(lc)) { showAnswer('Process'); return; }
     if (/price|cost|pricing|quote|much/.test(lc)) {
-      addBot('We tailor each engagement to your facility\'s specific needs. <a href="#lead-gen">Request a demo</a> and our team will provide a custom scope and recommendation.');
+      addBot('We tailor each engagement to your facility\'s specific needs. Our team will provide a custom scope and recommendation.', '#lead-gen', 'Request a demo');
       addQuickReplies(); return;
     }
     if (/contact|touch|start|talk|demo|call|meet|schedule/.test(lc)) { showAnswer('Contact'); return; }
@@ -324,8 +339,6 @@
     // No keyword match — call LLM
     askLLM(v);
   }
-
-  function escText(s) { var d = document.createElement('div'); d.textContent = s; return d.textContent; }
 
   function askLLM(q) {
     var t = document.createElement('div');
@@ -350,8 +363,8 @@
       sendBtn.disabled = false;
       sendBtn.style.opacity = '1';
       input.focus();
-      var reply = escText(d.reply || d.error || 'Please email info@jinki.ai.');
-      addBot(reply + ' <a href="#lead-gen">Request a demo &rarr;</a>');
+      var reply = d.reply || d.error || 'Please email info@jinki.ai.';
+      addBot(reply, '#lead-gen', 'Get Your Facility Report');
       addQuickReplies();
     })
     .catch(function() {
@@ -360,7 +373,7 @@
       sendBtn.disabled = false;
       sendBtn.style.opacity = '1';
       input.focus();
-      addBot('I\'m temporarily unavailable. Please <a href="#lead-gen">request a demo</a> or email info@jinki.ai.');
+      addBot('I\'m temporarily unavailable. Please email info@jinki.ai.', '#lead-gen', 'Request a demo');
       addQuickReplies();
     });
   }

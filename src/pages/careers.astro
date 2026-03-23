@@ -370,21 +370,26 @@ const culturePoints = [
         <input type="hidden" name="subject" id="apply-subject" value="Job Application from jinki.ai" />
         <input type="hidden" name="from_name" value="Jinki Careers" />
         <input type="hidden" id="apply-role-input" name="role" value="" />
+        <!-- Honeypot anti-spam -->
+        <div aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px;">
+          <label for="apply-botcheck">Website</label>
+          <input type="text" id="apply-botcheck" name="botcheck" tabindex="-1" autocomplete="off" />
+        </div>
         <div class="apply-field">
           <label for="apply-name">Full Name</label>
-          <input type="text" id="apply-name" name="name" required placeholder="Jane Smith" autocomplete="name" />
+          <input type="text" id="apply-name" name="name" required placeholder="Jane Smith" autocomplete="name" maxlength="100" />
         </div>
         <div class="apply-field">
           <label for="apply-email">Email</label>
-          <input type="email" id="apply-email" name="email" required placeholder="jane@example.com" autocomplete="email" />
+          <input type="email" id="apply-email" name="email" required placeholder="jane@example.com" autocomplete="email" maxlength="254" />
         </div>
         <div class="apply-field">
           <label for="apply-linkedin">LinkedIn (optional)</label>
-          <input type="url" id="apply-linkedin" name="linkedin" placeholder="https://linkedin.com/in/..." autocomplete="url" />
+          <input type="url" id="apply-linkedin" name="linkedin" placeholder="https://linkedin.com/in/..." autocomplete="url" maxlength="200" />
         </div>
         <div class="apply-field">
           <label for="apply-message">Why Jinki?</label>
-          <textarea id="apply-message" name="message" rows="3" placeholder="Tell us what excites you about aerial intelligence..."></textarea>
+          <textarea id="apply-message" name="message" rows="3" placeholder="Tell us what excites you about aerial intelligence..." maxlength="2000"></textarea>
         </div>
         <button type="submit" class="apply-submit btn-premium">Submit Application</button>
       </form>
@@ -1281,6 +1286,9 @@ const culturePoints = [
     if (form) {
       form.addEventListener('submit', function(e) {
         e.preventDefault();
+        // Honeypot check
+        var hp = document.getElementById('apply-botcheck');
+        if (hp && hp.value) return;
         var btn = form.querySelector('.apply-submit');
         btn.disabled = true;
         btn.textContent = 'Sending...';

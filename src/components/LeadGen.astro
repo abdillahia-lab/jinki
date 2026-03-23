@@ -90,19 +90,19 @@
           <div style="display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1.5rem;">
             <div class="lg-field">
               <label for="lg-name">Full Name</label>
-              <input type="text" id="lg-name" name="name" required placeholder="Jane Smith" autocomplete="name" />
+              <input type="text" id="lg-name" name="name" required placeholder="Jane Smith" autocomplete="name" maxlength="100" />
             </div>
             <div class="lg-field">
               <label for="lg-company">Company</label>
-              <input type="text" id="lg-company" name="company" required placeholder="Acme Corp" autocomplete="organization" />
+              <input type="text" id="lg-company" name="company" required placeholder="Acme Corp" autocomplete="organization" maxlength="100" />
             </div>
             <div class="lg-field">
               <label for="lg-role">Your Role</label>
-              <input type="text" id="lg-role" name="role" placeholder="VP of Facilities" autocomplete="organization-title" />
+              <input type="text" id="lg-role" name="role" placeholder="VP of Facilities" autocomplete="organization-title" maxlength="100" />
             </div>
             <div class="lg-field">
               <label for="lg-email">Work Email</label>
-              <input type="email" id="lg-email" name="email" required placeholder="jane@acme.com" autocomplete="email" />
+              <input type="email" id="lg-email" name="email" required placeholder="jane@acme.com" autocomplete="email" maxlength="254" />
             </div>
           </div>
           <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
@@ -118,7 +118,7 @@
           <div style="margin-top: 1.5rem;">
             <div class="lg-field">
               <label for="lg-message">Message <span style="color: var(--text-tertiary); font-weight: 400;">(optional)</span></label>
-              <textarea id="lg-message" name="message" rows="4" placeholder="Tell us about your facility, fleet size, or specific challenges..."></textarea>
+              <textarea id="lg-message" name="message" rows="4" placeholder="Tell us about your facility, fleet size, or specific challenges..." maxlength="2000"></textarea>
             </div>
           </div>
           <div style="display: flex; justify-content: space-between; margin-top: 2rem;">

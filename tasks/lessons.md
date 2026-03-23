@@ -21,6 +21,16 @@
 - Honeypot field IDs must match between HTML and JS
 - Web3Forms key is public by design but noted
 - Footer heading tags must match (h3 open = h3 close)
+- NEVER use innerHTML with user/LLM content — use textContent + createElement for safe DOM insertion
+- All form inputs MUST have maxlength attributes (defense-in-depth)
+- API endpoints must validate Content-Type, sanitize input (strip control chars), and limit body size
+- CSP must be set: restrict script-src, style-src, font-src, connect-src, frame-ancestors
+- Remove meta generator tag to prevent framework fingerprinting
+- LLM responses must be HTML-stripped server-side (defense-in-depth against prompt injection)
+- Block common attack paths (/wp-admin, /.env, /.git) via _redirects
+- security.txt must include Contact, Expires, Policy, Canonical fields
+- API must block non-POST methods with 405 response
+- HSTS should use 2-year max-age with preload directive
 
 ## Conversion
 - "Request a Demo" → "Get Your Facility Report" (outcome, not process)
