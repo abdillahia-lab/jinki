@@ -23,7 +23,13 @@ function estimateReadTime(description: string): number {
 }
 ---
 
-<Layout ogImage="/images/og-blog.png" title="Blog — Jinki Aerial Intelligence" description="Insights on aerial intelligence, autonomous systems, and industry trends from the Jinki team.">
+<Layout ogImage="/images/og-blog.png" title="Blog — Jinki Aerial Intelligence" description="Insights on aerial intelligence, autonomous systems, and industry trends from the Jinki team." jsonLd={{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Jinki Intelligence Brief",
+  "description": "Insights on aerial intelligence, autonomous systems, thermal analytics, and infrastructure monitoring.",
+  "publisher": { "@type": "Organization", "name": "Jinki Aerial Intelligence", "url": "https://jinki.ai" }
+}}>
   <Nav />
   <main id="main-content" class="omega-blog-page">
     <!-- Hero Header -->

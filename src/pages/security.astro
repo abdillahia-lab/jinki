@@ -71,7 +71,13 @@ const trustIndicators = [
 ];
 ---
 
-<Layout ogImage="/images/og-security-page.png" title="Security Architecture — Jinki Aerial Intelligence" description="Security-first aerial intelligence. AES-256 encryption, SOC 2 preparation, NIST 800-53 alignment, and NDA-by-default engagements.">
+<Layout ogImage="/images/og-security-page.png" title="Security Architecture — Jinki Aerial Intelligence" description="Security-first aerial intelligence. AES-256 encryption, SOC 2 preparation, NIST 800-53 alignment, and NDA-by-default engagements." jsonLd={{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Security Architecture",
+  "description": "Jinki security architecture: AES-256 encryption, NIST 800-53 alignment, SOC 2 Type I preparation, and zero-trust data handling.",
+  "publisher": { "@type": "Organization", "name": "Jinki Aerial Intelligence" }
+}}>
   <Nav />
   <main id="main-content">
 

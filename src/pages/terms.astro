@@ -98,7 +98,13 @@ const sections = [
 ];
 ---
 
-<Layout title="Terms of Service — Jinki Aerial Intelligence" description="Terms of Service governing the use of Jinki Aerial Intelligence services and website.">
+<Layout title="Terms of Service — Jinki Aerial Intelligence" description="Terms of Service governing the use of Jinki Aerial Intelligence services and website." jsonLd={{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Terms of Service",
+  "description": "Terms of Service for Jinki Aerial Intelligence services and website.",
+  "publisher": { "@type": "Organization", "name": "Jinki Aerial Intelligence" }
+}}>
   <Nav />
   <main id="main-content">
 

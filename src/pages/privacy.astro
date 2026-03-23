@@ -109,7 +109,13 @@ const sections = [
 ];
 ---
 
-<Layout title="Privacy Policy — Jinki Aerial Intelligence" description="Privacy policy for Jinki Aerial Intelligence. How we collect, use, and protect your data.">
+<Layout title="Privacy Policy — Jinki Aerial Intelligence" description="Privacy policy for Jinki Aerial Intelligence. How we collect, use, and protect your data." jsonLd={{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Privacy Policy",
+  "description": "Jinki Aerial Intelligence privacy policy. Data collection, usage, protection, and your rights.",
+  "publisher": { "@type": "Organization", "name": "Jinki Aerial Intelligence" }
+}}>
   <Nav />
   <main id="main-content">
 
