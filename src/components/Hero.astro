@@ -4,7 +4,12 @@
 
 <section id="hero" class="hero" aria-label="Hero — Aerial Intelligence Platform" style="position: relative; min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; overflow: hidden; padding-top: 6rem; padding-bottom: 3rem; background: var(--bg-primary);">
 
-  <!-- Animated Mesh Gradient Background -->
+  <!-- Hero video (drop mp4 into public/videos/hero.mp4 to activate) -->
+  <video class="hero-video" autoplay muted loop playsinline preload="none" aria-hidden="true">
+    <source src="/videos/hero.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Animated Mesh Gradient Background (fallback when no video) -->
   <div class="hero-mesh" aria-hidden="true"></div>
 
   <!-- Noise texture overlay for physical depth -->
@@ -89,6 +94,20 @@
 </section>
 
 <style>
+  /* === Hero Video (hidden until /videos/hero.mp4 exists) === */
+  .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  .hero-video.loaded { opacity: 0.35; }
+  :global([data-theme="light"]) .hero-video.loaded { opacity: 0.2; }
+
   /* === Animated Mesh Gradient (Stripe-inspired) === */
   @property --mesh-x1 { syntax: '<percentage>'; initial-value: 25%; inherits: false; }
   @property --mesh-y1 { syntax: '<percentage>'; initial-value: 35%; inherits: false; }
@@ -404,5 +423,17 @@
     .dot, .scroll-indicator, .topo-map { display: none !important; }
   }
 </style>
+
+<script is:inline>
+  // Hero video: fade in only if the file loads successfully
+  (function() {
+    var v = document.querySelector('.hero-video');
+    if (!v) return;
+    v.addEventListener('canplaythrough', function() { v.classList.add('loaded'); });
+    v.addEventListener('error', function() { v.style.display = 'none'; });
+    // Kick off load (preload was "none" to avoid wasting bandwidth if file doesn't exist)
+    v.load();
+  })();
+</script>
 
 <!-- Counter animation handled by Layout.astro -->
