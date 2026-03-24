@@ -29,6 +29,9 @@
   Cache-Control: no-store, no-cache, must-revalidate
   Content-Security-Policy: default-src 'none'; frame-ancestors 'none'
 
+/videos/*
+  Cache-Control: public, max-age=2592000
+
 /docs/*
   Cache-Control: public, max-age=86400
 
