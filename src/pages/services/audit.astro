@@ -14,7 +14,7 @@ const process = [
   { step: '02', title: 'Flight Planning', desc: 'Airspace authorization, safety planning, and mission design tailored to your site geometry and inspection requirements.', icon: 'flight_takeoff' },
   { step: '03', title: 'Data Capture', desc: 'On-site aerial operations. Thermal and high-resolution visual data across every structure — typically completed in a single day.', icon: 'satellite_alt' },
   { step: '04', title: 'AI Analysis', desc: 'Our analytics pipeline processes thousands of data points: anomaly detection, severity classification, and automated damage assessment.', icon: 'model_training' },
-  { step: '05', title: 'Recommendations', desc: 'The Facility Intelligence Report: severity-ranked findings, remediation priorities, cost estimates, and suggested timelines.', icon: 'assignment' },
+  { step: '05', title: 'Report', desc: 'The Facility Intelligence Report: severity-ranked findings, remediation priorities, cost estimates, and suggested timelines.', icon: 'assignment' },
   { step: '06', title: 'Review & Handoff', desc: 'We walk your team through every finding. Questions answered, priorities confirmed, and a clear path forward.', icon: 'groups' },
 ];
 
@@ -70,50 +70,144 @@ const reportTabs = [
         </div>
         <div class="omega-hero-visual reveal reveal-delay-1" aria-hidden="true">
           <div class="mission-briefing-card">
-            <!-- Animated mesh background -->
             <div class="audit-mesh"></div>
-            <!-- Concentric ring process visualization -->
-            <svg class="audit-rings" viewBox="0 0 400 400" fill="none">
-              <!-- Outer ring — Step 6: Deliver -->
-              <circle cx="200" cy="200" r="180" stroke="rgba(0,229,255,0.06)" stroke-width="1"/>
-              <circle cx="200" cy="200" r="180" stroke="rgba(0,229,255,0.4)" stroke-width="2" stroke-dasharray="1131" stroke-dashoffset="200" stroke-linecap="round" class="ring-progress ring-6"/>
-              <!-- Ring 5: Analyze -->
-              <circle cx="200" cy="200" r="150" stroke="rgba(0,229,255,0.06)" stroke-width="1"/>
-              <circle cx="200" cy="200" r="150" stroke="rgba(0,229,255,0.35)" stroke-width="2" stroke-dasharray="942" stroke-dashoffset="180" stroke-linecap="round" class="ring-progress ring-5"/>
-              <!-- Ring 4: Capture -->
-              <circle cx="200" cy="200" r="120" stroke="rgba(0,229,255,0.06)" stroke-width="1"/>
-              <circle cx="200" cy="200" r="120" stroke="rgba(0,229,255,0.45)" stroke-width="2" stroke-dasharray="754" stroke-dashoffset="150" stroke-linecap="round" class="ring-progress ring-4"/>
-              <!-- Ring 3: Deploy -->
-              <circle cx="200" cy="200" r="90" stroke="rgba(0,229,255,0.06)" stroke-width="1"/>
-              <circle cx="200" cy="200" r="90" stroke="rgba(0,229,255,0.5)" stroke-width="2" stroke-dasharray="565" stroke-dashoffset="120" stroke-linecap="round" class="ring-progress ring-3"/>
-              <!-- Ring 2: Plan -->
-              <circle cx="200" cy="200" r="60" stroke="rgba(0,229,255,0.06)" stroke-width="1"/>
-              <circle cx="200" cy="200" r="60" stroke="rgba(0,229,255,0.6)" stroke-width="2" stroke-dasharray="377" stroke-dashoffset="80" stroke-linecap="round" class="ring-progress ring-2"/>
-              <!-- Ring 1: Scope (innermost) -->
-              <circle cx="200" cy="200" r="30" stroke="rgba(0,229,255,0.06)" stroke-width="1"/>
-              <circle cx="200" cy="200" r="30" stroke="rgba(0,229,255,0.8)" stroke-width="2.5" stroke-dasharray="188" stroke-dashoffset="30" stroke-linecap="round" class="ring-progress ring-1"/>
-              <!-- Center hub -->
-              <circle cx="200" cy="200" r="8" fill="rgba(0,229,255,0.9)" class="center-hub"/>
-              <circle cx="200" cy="200" r="14" fill="none" stroke="rgba(0,229,255,0.3)" stroke-width="1"/>
-              <!-- Sweep line -->
-              <line x1="200" y1="200" x2="200" y2="16" stroke="rgba(0,229,255,0.25)" stroke-width="1" stroke-linecap="round" class="audit-sweep"/>
-              <!-- Step labels -->
-              <text x="200" y="167" text-anchor="middle" fill="rgba(0,229,255,0.7)" font-size="7" font-family="var(--font-mono)" letter-spacing="0.1em">SCOPE</text>
-              <text x="200" y="137" text-anchor="middle" fill="rgba(0,229,255,0.6)" font-size="7" font-family="var(--font-mono)" letter-spacing="0.1em">PLAN</text>
-              <text x="200" y="107" text-anchor="middle" fill="rgba(0,229,255,0.5)" font-size="7" font-family="var(--font-mono)" letter-spacing="0.1em">DEPLOY</text>
-              <text x="200" y="77" text-anchor="middle" fill="rgba(0,229,255,0.4)" font-size="7" font-family="var(--font-mono)" letter-spacing="0.1em">CAPTURE</text>
-              <text x="200" y="47" text-anchor="middle" fill="rgba(0,229,255,0.35)" font-size="7" font-family="var(--font-mono)" letter-spacing="0.1em">ANALYZE</text>
-              <text x="348" y="203" text-anchor="middle" fill="rgba(0,229,255,0.3)" font-size="7" font-family="var(--font-mono)" letter-spacing="0.1em">DELIVER</text>
-              <!-- Node dots at ring positions -->
-              <circle cx="200" cy="170" r="3" fill="#00E5FF" opacity="0.8"><animate attributeName="r" values="3;4;3" dur="2s" repeatCount="indefinite"/></circle>
-              <circle cx="260" cy="200" r="3" fill="#00E5FF" opacity="0.6"><animate attributeName="r" values="3;4;3" dur="2s" begin="0.3s" repeatCount="indefinite"/></circle>
-              <circle cx="200" cy="290" r="3" fill="#00E5FF" opacity="0.5"><animate attributeName="r" values="3;4;3" dur="2s" begin="0.6s" repeatCount="indefinite"/></circle>
-              <circle cx="320" cy="200" r="3" fill="#00E5FF" opacity="0.4"><animate attributeName="r" values="3;4;3" dur="2s" begin="0.9s" repeatCount="indefinite"/></circle>
+            <svg class="audit-scan-viz" viewBox="0 0 440 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <filter id="a-glow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+                  <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+                <filter id="a-hot" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+                  <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+                <linearGradient id="scan-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.15"/>
+                  <stop offset="100%" stop-color="#00E5FF" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <!-- Inspection grid -->
+              <line x1="40" y1="40" x2="400" y2="40" stroke="rgba(0,229,255,0.06)" stroke-width="0.5"/>
+              <line x1="40" y1="120" x2="400" y2="120" stroke="rgba(0,229,255,0.06)" stroke-width="0.5"/>
+              <line x1="40" y1="200" x2="400" y2="200" stroke="rgba(0,229,255,0.06)" stroke-width="0.5"/>
+              <line x1="40" y1="280" x2="400" y2="280" stroke="rgba(0,229,255,0.06)" stroke-width="0.5"/>
+              <line x1="40" y1="360" x2="400" y2="360" stroke="rgba(0,229,255,0.06)" stroke-width="0.5"/>
+              <line x1="40" y1="40" x2="40" y2="400" stroke="rgba(0,229,255,0.06)" stroke-width="0.5"/>
+              <line x1="140" y1="40" x2="140" y2="400" stroke="rgba(0,229,255,0.06)" stroke-width="0.5"/>
+              <line x1="240" y1="40" x2="240" y2="400" stroke="rgba(0,229,255,0.06)" stroke-width="0.5"/>
+              <line x1="340" y1="40" x2="340" y2="400" stroke="rgba(0,229,255,0.06)" stroke-width="0.5"/>
+              <!-- Building footprint — main structure -->
+              <rect x="60" y="80" width="320" height="250" rx="4" fill="rgba(0,229,255,0.03)" stroke="rgba(0,229,255,0.2)" stroke-width="1.5"/>
+              <!-- Roof sections -->
+              <rect x="75" y="95" width="130" height="90" rx="2" fill="rgba(0,229,255,0.05)" stroke="rgba(0,229,255,0.12)" stroke-width="1"/>
+              <rect x="235" y="95" width="130" height="90" rx="2" fill="rgba(0,229,255,0.05)" stroke="rgba(0,229,255,0.12)" stroke-width="1"/>
+              <rect x="75" y="210" width="130" height="100" rx="2" fill="rgba(0,229,255,0.05)" stroke="rgba(0,229,255,0.12)" stroke-width="1"/>
+              <rect x="235" y="210" width="130" height="100" rx="2" fill="rgba(0,229,255,0.05)" stroke="rgba(0,229,255,0.12)" stroke-width="1"/>
+              <!-- Section labels -->
+              <text x="140" y="145" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(0,229,255,0.2)" letter-spacing="1">ROOF A</text>
+              <text x="300" y="145" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(0,229,255,0.2)" letter-spacing="1">ROOF B</text>
+              <text x="140" y="265" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(0,229,255,0.2)" letter-spacing="1">MECH YARD</text>
+              <text x="300" y="265" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(0,229,255,0.2)" letter-spacing="1">COOLING</text>
+              <!-- HVAC units (small rectangles) -->
+              <rect x="100" y="110" width="16" height="10" rx="1" fill="rgba(0,229,255,0.08)" stroke="rgba(0,229,255,0.15)" stroke-width="0.5"/>
+              <rect x="130" y="110" width="16" height="10" rx="1" fill="rgba(0,229,255,0.08)" stroke="rgba(0,229,255,0.15)" stroke-width="0.5"/>
+              <rect x="160" y="110" width="16" height="10" rx="1" fill="rgba(0,229,255,0.08)" stroke="rgba(0,229,255,0.15)" stroke-width="0.5"/>
+              <rect x="260" y="110" width="16" height="10" rx="1" fill="rgba(0,229,255,0.08)" stroke="rgba(0,229,255,0.15)" stroke-width="0.5"/>
+              <rect x="290" y="110" width="16" height="10" rx="1" fill="rgba(0,229,255,0.08)" stroke="rgba(0,229,255,0.15)" stroke-width="0.5"/>
+              <rect x="320" y="110" width="16" height="10" rx="1" fill="rgba(0,229,255,0.08)" stroke="rgba(0,229,255,0.15)" stroke-width="0.5"/>
+              <!-- Thermal hotspot 1 — CRITICAL (HVAC failure) -->
+              <circle cx="168" cy="115" r="12" fill="rgba(255,60,60,0.25)" filter="url(#a-hot)">
+                <animate attributeName="r" values="10;16;10" dur="2.5s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.8;0.4;0.8" dur="2.5s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="168" cy="115" r="5" fill="rgba(255,60,60,0.6)"/>
+              <!-- Finding tag 1 -->
+              <g class="finding-tag finding-tag-1">
+                <line x1="180" y1="108" x2="220" y2="75" stroke="rgba(255,60,60,0.4)" stroke-width="0.8" stroke-dasharray="3 2"/>
+                <rect x="220" y="62" width="100" height="26" rx="4" fill="rgba(255,60,60,0.12)" stroke="rgba(255,60,60,0.35)" stroke-width="0.8"/>
+                <circle cx="232" cy="75" r="3" fill="#FF3C3C">
+                  <animate attributeName="opacity" values="1;0.4;1" dur="1.5s" repeatCount="indefinite"/>
+                </circle>
+                <text x="240" y="72" font-family="monospace" font-size="6" fill="rgba(255,60,60,0.8)" letter-spacing="0.5">CRITICAL</text>
+                <text x="240" y="82" font-family="monospace" font-size="6.5" fill="rgba(255,255,255,0.5)">HVAC-03 47.3°C</text>
+              </g>
+              <!-- Thermal hotspot 2 — WARNING (roof seam) -->
+              <circle cx="110" cy="240" r="10" fill="rgba(255,180,0,0.2)" filter="url(#a-hot)">
+                <animate attributeName="r" values="8;14;8" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.7;0.3;0.7" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="110" cy="240" r="4" fill="rgba(255,180,0,0.5)"/>
+              <!-- Finding tag 2 -->
+              <g class="finding-tag finding-tag-2">
+                <line x1="98" y1="248" x2="68" y2="345" stroke="rgba(255,180,0,0.3)" stroke-width="0.8" stroke-dasharray="3 2"/>
+                <rect x="30" y="345" width="106" height="26" rx="4" fill="rgba(255,180,0,0.1)" stroke="rgba(255,180,0,0.3)" stroke-width="0.8"/>
+                <circle cx="42" cy="358" r="3" fill="#FFB400">
+                  <animate attributeName="opacity" values="1;0.4;1" dur="1.5s" begin="0.3s" repeatCount="indefinite"/>
+                </circle>
+                <text x="50" y="355" font-family="monospace" font-size="6" fill="rgba(255,180,0,0.8)" letter-spacing="0.5">WARNING</text>
+                <text x="50" y="365" font-family="monospace" font-size="6.5" fill="rgba(255,255,255,0.5)">Membrane split</text>
+              </g>
+              <!-- Thermal hotspot 3 — MODERATE (cooling inefficiency) -->
+              <circle cx="300" cy="250" r="18" fill="rgba(255,140,0,0.12)" filter="url(#a-hot)">
+                <animate attributeName="r" values="14;22;14" dur="3.5s" begin="1s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3.5s" begin="1s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="300" cy="250" r="5" fill="rgba(255,140,0,0.45)"/>
+              <!-- Finding tag 3 -->
+              <g class="finding-tag finding-tag-3">
+                <line x1="312" y1="240" x2="358" y2="200" stroke="rgba(255,140,0,0.3)" stroke-width="0.8" stroke-dasharray="3 2"/>
+                <rect x="340" y="188" width="90" height="26" rx="4" fill="rgba(255,140,0,0.08)" stroke="rgba(255,140,0,0.25)" stroke-width="0.8"/>
+                <circle cx="352" cy="201" r="3" fill="#FF8C00">
+                  <animate attributeName="opacity" values="1;0.4;1" dur="1.5s" begin="0.6s" repeatCount="indefinite"/>
+                </circle>
+                <text x="360" y="198" font-family="monospace" font-size="6" fill="rgba(255,140,0,0.7)" letter-spacing="0.5">MODERATE</text>
+                <text x="360" y="208" font-family="monospace" font-size="6.5" fill="rgba(255,255,255,0.5)">Cooling delta</text>
+              </g>
+              <!-- Scan sweep line -->
+              <rect x="0" y="0" width="440" height="440" fill="url(#scan-grad)" class="scan-sweep-overlay">
+                <animate attributeName="y" values="-440;440" dur="6s" repeatCount="indefinite"/>
+              </rect>
+              <!-- Drone position indicator -->
+              <circle r="5" fill="#00E5FF" filter="url(#a-glow)" class="scan-drone">
+                <animateMotion dur="10s" repeatCount="indefinite" path="M60,80 L380,80 L380,330 L60,330 Z"/>
+              </circle>
+              <circle r="14" fill="none" stroke="#00E5FF" opacity="0.25" class="scan-drone-ring">
+                <animateMotion dur="10s" repeatCount="indefinite" path="M60,80 L380,80 L380,330 L60,330 Z"/>
+                <animate attributeName="r" values="10;20;10" dur="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.3;0.08;0.3" dur="2s" repeatCount="indefinite"/>
+              </circle>
+              <!-- Top HUD bar -->
+              <g opacity="0.6">
+                <rect x="15" y="10" width="110" height="22" rx="4" fill="rgba(0,229,255,0.06)" stroke="rgba(0,229,255,0.15)" stroke-width="0.5"/>
+                <circle cx="28" cy="21" r="3" fill="#00E5FF">
+                  <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+                </circle>
+                <text x="36" y="24" font-family="monospace" font-size="7.5" fill="rgba(0,229,255,0.6)" font-weight="bold" letter-spacing="1">SCANNING</text>
+              </g>
+              <!-- Findings counter HUD -->
+              <g opacity="0.5">
+                <rect x="300" y="380" width="130" height="46" rx="4" fill="rgba(0,229,255,0.04)" stroke="rgba(0,229,255,0.12)" stroke-width="0.5"/>
+                <text x="315" y="396" font-family="monospace" font-size="6" fill="rgba(0,229,255,0.4)" letter-spacing="1">FINDINGS</text>
+                <text x="315" y="415" font-family="monospace" font-size="16" fill="rgba(0,229,255,0.7)" font-weight="bold">14</text>
+                <text x="340" y="415" font-family="monospace" font-size="8" fill="rgba(0,229,255,0.35)">identified</text>
+                <circle cx="410" cy="400" r="4" fill="rgba(255,60,60,0.6)"/>
+                <text x="400" y="415" font-family="monospace" font-size="7" fill="rgba(255,60,60,0.5)">3</text>
+                <circle cx="410" cy="416" r="4" fill="rgba(255,180,0,0.5)"/>
+                <text x="400" y="415" font-family="monospace" font-size="7" fill="rgba(255,180,0,0.5)"> </text>
+              </g>
+              <!-- Compass -->
+              <g opacity="0.35" transform="translate(400,30)">
+                <circle r="12" fill="none" stroke="rgba(0,229,255,0.3)" stroke-width="0.5"/>
+                <text x="0" y="-15" text-anchor="middle" font-family="monospace" font-size="6" fill="rgba(0,229,255,0.5)">N</text>
+                <line x1="0" y1="-10" x2="0" y2="-6" stroke="#00E5FF" stroke-width="1"/>
+                <line x1="0" y1="6" x2="0" y2="10" stroke="rgba(0,229,255,0.3)" stroke-width="0.5"/>
+                <line x1="-10" y1="0" x2="-6" y2="0" stroke="rgba(0,229,255,0.3)" stroke-width="0.5"/>
+                <line x1="6" y1="0" x2="10" y2="0" stroke="rgba(0,229,255,0.3)" stroke-width="0.5"/>
+              </g>
             </svg>
-            <!-- Status overlay -->
             <div class="audit-status-badge">
               <span class="audit-status-dot"></span>
-              <span class="audit-status-text">SCAN READY</span>
+              <span class="audit-status-text">SCAN IN PROGRESS</span>
             </div>
           </div>
         </div>
@@ -733,50 +827,29 @@ const reportTabs = [
     100% { opacity: 1; }
   }
 
-  /* Ring visualization */
-  .audit-rings {
+  /* Facility scan visualization */
+  .audit-scan-viz {
     position: relative;
-    width: 90%;
-    height: 90%;
+    width: 95%;
+    height: 95%;
     z-index: 2;
   }
 
-  .ring-progress {
-    transform-origin: center;
-    transform: rotate(-90deg);
-    animation: ringDraw 3s ease-out forwards;
+  /* Finding tags fade in sequentially */
+  .finding-tag {
+    opacity: 0;
+    animation: findingAppear 0.6s ease-out forwards;
   }
-  .ring-1 { animation-delay: 0s; }
-  .ring-2 { animation-delay: 0.3s; stroke-dashoffset: 377; }
-  .ring-3 { animation-delay: 0.6s; stroke-dashoffset: 565; }
-  .ring-4 { animation-delay: 0.9s; stroke-dashoffset: 754; }
-  .ring-5 { animation-delay: 1.2s; stroke-dashoffset: 942; }
-  .ring-6 { animation-delay: 1.5s; stroke-dashoffset: 1131; }
-
-  @keyframes ringDraw {
-    from { stroke-dashoffset: inherit; opacity: 0; }
-    to { stroke-dashoffset: 0; opacity: 1; }
+  .finding-tag-1 { animation-delay: 1.5s; }
+  .finding-tag-2 { animation-delay: 3s; }
+  .finding-tag-3 { animation-delay: 4.5s; }
+  @keyframes findingAppear {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Center hub glow */
-  .center-hub {
-    filter: drop-shadow(0 0 8px rgba(0,229,255,0.6));
-    animation: hubPulse 2s ease-in-out infinite;
-  }
-  @keyframes hubPulse {
-    0%, 100% { filter: drop-shadow(0 0 6px rgba(0,229,255,0.5)); }
-    50% { filter: drop-shadow(0 0 12px rgba(0,229,255,0.8)); }
-  }
-
-  /* Sweep line rotation */
-  .audit-sweep {
-    transform-origin: 200px 200px;
-    animation: auditSweep 4s linear infinite;
-  }
-  @keyframes auditSweep {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
+  /* Scan sweep overlay */
+  .scan-sweep-overlay { opacity: 0.5; }
 
   /* Status badge */
   .audit-status-badge {
