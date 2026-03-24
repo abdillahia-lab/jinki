@@ -120,8 +120,18 @@ const capabilities = [
           <!-- Scan zones -->
           <circle cx="350" cy="220" r="8" fill="none" stroke="rgba(0, 201, 167, 0.15)" stroke-width="0.5"><animate attributeName="r" values="8;16;8" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.5;0;0.5" dur="3s" repeatCount="indefinite"/></circle>
           <circle cx="450" cy="280" r="8" fill="none" stroke="rgba(0, 201, 167, 0.15)" stroke-width="0.5"><animate attributeName="r" values="8;16;8" dur="3s" begin="1s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.5;0;0.5" dur="3s" begin="1s" repeatCount="indefinite"/></circle>
-          <!-- Flight path -->
-          <path d="M235,360 L235,120 L580,120 L580,380 L220,380 L220,200 L400,200" stroke="rgba(0, 201, 167, 0.35)" stroke-width="1.5" stroke-dasharray="6 3" fill="none"/>
+          <circle cx="350" cy="280" r="6" fill="none" stroke="rgba(0, 201, 167, 0.12)" stroke-width="0.5"><animate attributeName="r" values="6;14;6" dur="3s" begin="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.4;0;0.4" dur="3s" begin="2s" repeatCount="indefinite"/></circle>
+          <circle cx="450" cy="220" r="6" fill="none" stroke="rgba(0, 201, 167, 0.12)" stroke-width="0.5"><animate attributeName="r" values="6;14;6" dur="3s" begin="0.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.4;0;0.4" dur="3s" begin="0.5s" repeatCount="indefinite"/></circle>
+          <!-- Flight path with animated stroke -->
+          <path d="M235,360 L235,120 L580,120 L580,380 L220,380 L220,200 L400,200" stroke="rgba(0, 201, 167, 0.15)" stroke-width="1.5" stroke-dasharray="6 3" fill="none"/>
+          <path d="M235,360 L235,120 L580,120 L580,380 L220,380 L220,200 L400,200" stroke="rgba(0, 201, 167, 0.4)" stroke-width="1.5" stroke-dasharray="12 1800" fill="none">
+            <animate attributeName="stroke-dashoffset" values="0;-1800" dur="12s" repeatCount="indefinite"/>
+          </path>
+          <!-- Data uplink beam from dock -->
+          <line x1="235" y1="355" x2="235" y2="330" stroke="rgba(0, 201, 167, 0.15)" stroke-width="1">
+            <animate attributeName="y2" values="355;320;355" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0.4;0" dur="2s" repeatCount="indefinite"/>
+          </line>
           <!-- Animated platform dot -->
           <circle r="6" fill="#00C9A7" opacity="1" filter="url(#glow)">
             <animateMotion dur="12s" repeatCount="indefinite" path="M235,360 L235,120 L580,120 L580,380 L220,380 L220,200 L400,200 L235,360"/>
@@ -179,6 +189,14 @@ const capabilities = [
             </circle>
             <text x="36" y="29" font-family="monospace" font-size="8" fill="rgba(0, 201, 167, 0.6)" font-weight="bold" letter-spacing="1">LIVE</text>
             <text x="66" y="29" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.35)">M-147</text>
+          </g>
+          <!-- Mission counter HUD -->
+          <g opacity="0.5">
+            <rect x="645" y="440" width="140" height="42" rx="4" fill="rgba(0, 201, 167, 0.05)" stroke="rgba(0, 201, 167, 0.15)" stroke-width="0.5"/>
+            <text x="660" y="455" font-family="monospace" font-size="6" fill="rgba(0, 201, 167, 0.4)" letter-spacing="1">MISSIONS TODAY</text>
+            <text x="660" y="473" font-family="monospace" font-size="14" fill="rgba(0, 201, 167, 0.7)" font-weight="bold">12 / 12</text>
+            <rect x="730" y="462" width="40" height="4" rx="2" fill="rgba(0, 201, 167, 0.1)"/>
+            <rect x="730" y="462" width="40" height="4" rx="2" fill="rgba(0, 201, 167, 0.4)"/>
           </g>
           <!-- Glow filter -->
           <defs>
