@@ -241,6 +241,23 @@ const techSections = [
                 <animate attributeName="x1" values="0;500;0" dur="8s" repeatCount="indefinite"/>
                 <animate attributeName="x2" values="0;500;0" dur="8s" repeatCount="indefinite"/>
               </line>
+              <!-- Drone inspection dot following scan path -->
+              <circle r="4" fill="#FF8C00" filter="url(#glow-orange)">
+                <animateMotion dur="8s" repeatCount="indefinite" path="M 80 60 Q 180 40 300 80 T 430 100"/>
+              </circle>
+              <circle r="10" fill="none" stroke="#FF8C00" opacity="0.3">
+                <animateMotion dur="8s" repeatCount="indefinite" path="M 80 60 Q 180 40 300 80 T 430 100"/>
+                <animate attributeName="r" values="8;16;8" dur="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.3;0.08;0.3" dur="2s" repeatCount="indefinite"/>
+              </circle>
+              <!-- Voltage readout HUD -->
+              <g opacity="0.5">
+                <rect x="15" y="360" width="120" height="30" rx="4" fill="rgba(255,140,0,0.06)" stroke="rgba(255,140,0,0.2)" stroke-width="0.5"/>
+                <text x="25" y="373" font-family="monospace" font-size="6" fill="rgba(255,140,0,0.4)" letter-spacing="1">LINE VOLTAGE</text>
+                <text x="25" y="384" font-family="monospace" font-size="10" fill="rgba(255,140,0,0.6)" font-weight="bold">138kV
+                  <animate attributeName="fill" values="rgba(255,140,0,0.6);rgba(255,140,0,0.8);rgba(255,140,0,0.6)" dur="3s" repeatCount="indefinite"/>
+                </text>
+              </g>
               <!-- Node count -->
               <text x="470" y="385" font-family="monospace" font-size="7" fill="rgba(255,140,0,0.25)" text-anchor="end">NODES: 8 | FAULTS: 1</text>
             </svg>
