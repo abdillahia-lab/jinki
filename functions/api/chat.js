@@ -50,23 +50,32 @@ function sanitizeInput(str) {
     .trim();
 }
 
-function isValidOrigin(request) {
+function isValidOrigin(request, env) {
   const origin = request.headers.get('Origin') || '';
   const referer = request.headers.get('Referer') || '';
 
-  // Allow localhost for development
-  if (origin.includes('localhost') || referer.includes('localhost')) return true;
+  // Allow localhost only in preview/dev deployments (not production)
+  if (env && env.CF_PAGES_BRANCH && env.CF_PAGES_BRANCH !== 'main') {
+    if (/^https?:\/\/localhost(:\d+)?$/.test(origin)) return true;
+  }
 
-  // Check against allowed origins
-  if (origin && ALLOWED_ORIGINS.some(ao => origin.startsWith(ao))) return true;
-  if (referer && ALLOWED_ORIGINS.some(ao => referer.startsWith(ao))) return true;
+  // Check against allowed origins — exact match for Origin
+  if (origin && ALLOWED_ORIGINS.includes(origin)) return true;
+
+  // Referer includes path, so extract origin portion
+  if (referer) {
+    try {
+      const refOrigin = new URL(referer).origin;
+      if (ALLOWED_ORIGINS.includes(refOrigin)) return true;
+    } catch (e) { /* invalid referer URL */ }
+  }
 
   return false;
 }
 
 export async function onRequestOptions(context) {
   const origin = context.request.headers.get('Origin') || '';
-  const allowedOrigin = ALLOWED_ORIGINS.find(ao => origin.startsWith(ao)) || ALLOWED_ORIGINS[0];
+  const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
 
   return new Response(null, {
     headers: {
@@ -82,7 +91,7 @@ export async function onRequestPost(context) {
   const { request, env } = context;
 
   const origin = request.headers.get('Origin') || '';
-  const allowedOrigin = ALLOWED_ORIGINS.find(ao => origin.startsWith(ao)) || ALLOWED_ORIGINS[0];
+  const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
 
   const corsHeaders = {
     'Access-Control-Allow-Origin': allowedOrigin,
@@ -92,7 +101,7 @@ export async function onRequestPost(context) {
   };
 
   // Origin validation
-  if (!isValidOrigin(request)) {
+  if (!isValidOrigin(request, env)) {
     return new Response(
       JSON.stringify({ error: 'Unauthorized origin.' }),
       { status: 403, headers: corsHeaders }
@@ -172,7 +181,7 @@ export async function onRequestPost(context) {
 
     if (!groqResponse.ok) {
       const errText = await groqResponse.text();
-      console.error('Groq API error:', groqResponse.status, errText);
+      console.error('Groq API error:', groqResponse.status, errText.slice(0, 200));
       return new Response(
         JSON.stringify({ reply: "I'm temporarily unavailable. Please use our contact form or email info@jinki.ai directly." }),
         { status: 200, headers: corsHeaders }
