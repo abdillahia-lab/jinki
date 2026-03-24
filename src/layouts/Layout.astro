@@ -188,6 +188,15 @@ const orgSchema = {
             });
           }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
           reveals.forEach(function(el) { observer.observe(el); });
+          // Safety: force-reveal above-fold elements after 1.5s if observer didn't fire
+          setTimeout(function() {
+            reveals.forEach(function(el) {
+              var rect = el.getBoundingClientRect();
+              if (rect.top < window.innerHeight && !el.classList.contains('revealed')) {
+                el.classList.add('revealed');
+              }
+            });
+          }, 1500);
         }
 
         // Counter animation
