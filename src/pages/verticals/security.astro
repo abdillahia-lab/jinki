@@ -356,6 +356,38 @@ const integrations = [
               <rect x="134" y="200" width="24" height="120" rx="4" class="zone-hit" />
               <text class="zone-label" x="120" y="265">WEST FENCE</text>
             </g>
+            <!-- Thermal sensor nodes -->
+            <g opacity="0.5">
+              <circle cx="170" cy="100" r="3" fill="#00E5FF"/>
+              <circle cx="170" cy="100" r="8" fill="none" stroke="#00E5FF" stroke-width="0.5" opacity="0.4">
+                <animate attributeName="r" values="6;12;6" dur="3s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.4;0.1;0.4" dur="3s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="630" cy="100" r="3" fill="#00E5FF"/>
+              <circle cx="630" cy="100" r="8" fill="none" stroke="#00E5FF" stroke-width="0.5" opacity="0.4">
+                <animate attributeName="r" values="6;12;6" dur="3s" begin="1s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.4;0.1;0.4" dur="3s" begin="1s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="170" cy="410" r="3" fill="#00E5FF"/>
+              <circle cx="170" cy="410" r="8" fill="none" stroke="#00E5FF" stroke-width="0.5" opacity="0.4">
+                <animate attributeName="r" values="6;12;6" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.4;0.1;0.4" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="630" cy="410" r="3" fill="#00E5FF"/>
+              <circle cx="630" cy="410" r="8" fill="none" stroke="#00E5FF" stroke-width="0.5" opacity="0.4">
+                <animate attributeName="r" values="6;12;6" dur="3s" begin="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.4;0.1;0.4" dur="3s" begin="2s" repeatCount="indefinite"/>
+              </circle>
+            </g>
+            <!-- Status HUD -->
+            <g opacity="0.45">
+              <rect x="600" y="440" width="180" height="42" rx="4" fill="rgba(0,229,255,0.05)" stroke="rgba(0,229,255,0.15)" stroke-width="0.5"/>
+              <text x="615" y="455" font-family="monospace" font-size="7" fill="rgba(0,229,255,0.5)" letter-spacing="1">PERIMETER STATUS</text>
+              <circle cx="615" cy="469" r="3" fill="#00C9A7">
+                <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+              </circle>
+              <text x="625" y="473" font-family="monospace" font-size="10" fill="rgba(0,229,255,0.6)" font-weight="bold">ALL CLEAR</text>
+            </g>
             <!-- Breach flash (hidden by default) -->
             <circle class="breach-flash" cx="400" cy="84" r="0" />
           </svg>
