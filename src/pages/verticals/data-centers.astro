@@ -193,6 +193,10 @@ const faqs = [
               <span class="hud-value">LIVE</span>
             </div>
             <div class="scan-line"></div>
+            <!-- Thermal hotspot glows -->
+            <div class="dc-hotspot dc-hotspot-1" aria-hidden="true"></div>
+            <div class="dc-hotspot dc-hotspot-2" aria-hidden="true"></div>
+            <div class="dc-hotspot dc-hotspot-3" aria-hidden="true"></div>
           </div>
         </div>
       </div>
@@ -940,6 +944,36 @@ document.addEventListener('DOMContentLoaded', function() {
     45% { top: 95%; opacity: 1; }
     55% { top: 95%; opacity: 1; }
     95% { top: 0; opacity: 0.3; }
+  }
+
+  /* Thermal hotspot glows on the photo */
+  .dc-hotspot {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 3;
+  }
+  .dc-hotspot-1 {
+    width: 60px; height: 60px;
+    top: 25%; left: 35%;
+    background: radial-gradient(circle, rgba(255,60,60,0.35) 0%, rgba(255,60,60,0.1) 40%, transparent 70%);
+    animation: hotPulse 2.5s ease-in-out infinite;
+  }
+  .dc-hotspot-2 {
+    width: 45px; height: 45px;
+    top: 40%; right: 25%;
+    background: radial-gradient(circle, rgba(255,180,0,0.3) 0%, rgba(255,180,0,0.08) 40%, transparent 70%);
+    animation: hotPulse 3s ease-in-out 0.8s infinite;
+  }
+  .dc-hotspot-3 {
+    width: 35px; height: 35px;
+    bottom: 30%; left: 55%;
+    background: radial-gradient(circle, rgba(255,140,0,0.25) 0%, rgba(255,140,0,0.06) 40%, transparent 70%);
+    animation: hotPulse 3.5s ease-in-out 1.5s infinite;
+  }
+  @keyframes hotPulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.4); opacity: 0.3; }
   }
 
   /* Legacy alert-badge fallback (unused but referenced in light mode) */
