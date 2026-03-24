@@ -130,12 +130,25 @@ const verticals = [
   .vertical-card {
     cursor: pointer;
     border: 1px solid transparent;
-    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
+  .vertical-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    z-index: 20;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .vertical-card:hover::before { opacity: 1; }
   .vertical-card:hover {
-    transform: scale(1.02) translateY(-4px);
-    border-color: rgba(0, 229, 255, 0.25);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 229, 255, 0.08);
+    transform: scale(1.02) translateY(-6px);
+    border-color: rgba(0, 229, 255, 0.2);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35), 0 0 40px rgba(0, 229, 255, 0.06);
   }
 
   .verticals-cta {
