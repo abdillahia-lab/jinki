@@ -1,0 +1,227 @@
+---
+/*
+  SocialProof — Anonymized result cards demonstrating real-world capability
+  Placed between TrustBar and Verticals on homepage
+  Uses glass-panel styling with vertical-colored accent borders
+*/
+const results = [
+  {
+    industry: 'Data Center',
+    color: '#00E5FF',
+    metric: '23',
+    metricLabel: 'anomalies found',
+    summary: 'Mid-Atlantic hyperscale campus — 23 thermal anomalies identified across 4 buildings, including 4 critical HVAC failures addressed before summer peak load.',
+    icon: 'thermostat'
+  },
+  {
+    industry: 'Energy & Utilities',
+    color: '#FF8C00',
+    metric: '340',
+    metricLabel: 'pole-miles inspected',
+    summary: 'Regional transmission provider — 340 pole-miles inspected in 48 hours. 12 priority repairs identified across 3 voltage classes, zero service interruption.',
+    icon: 'electric_bolt'
+  },
+  {
+    industry: 'Commercial Campus',
+    color: '#34D399',
+    metric: '$180K',
+    metricLabel: 'damage prevented',
+    summary: 'Logistics campus — 3 roof membrane failures identified via thermal imaging. Targeted repairs prevented estimated $180K in water intrusion damage.',
+    icon: 'roofing'
+  }
+];
+---
+
+<section class="social-proof" aria-label="Client results">
+  <div class="sp-container">
+    <div class="sp-header reveal">
+      <span class="sp-eyebrow">
+        <span class="sp-dot"></span>
+        <span class="sp-line"></span>
+        PROVEN RESULTS
+      </span>
+      <h2 class="sp-title">What We Find Changes Everything</h2>
+      <p class="sp-subtitle">Real outcomes from recent engagements. Names withheld under NDA — results speak for themselves.</p>
+    </div>
+
+    <div class="sp-grid">
+      {results.map((r, i) => (
+        <div class={`sp-card reveal reveal-delay-${i + 1}`}>
+          <div class="sp-accent" style={`background: ${r.color};`}></div>
+          <div class="sp-card-inner">
+            <div class="sp-card-header">
+              <span class="sp-industry" style={`color: ${r.color};`}>
+                <span class="material-symbols-outlined" aria-hidden="true" style={`font-size: 18px; margin-right: 6px; color: ${r.color};`}>{r.icon}</span>
+                {r.industry}
+              </span>
+            </div>
+            <div class="sp-metric-row">
+              <span class="sp-metric" style={`color: ${r.color};`}>{r.metric}</span>
+              <span class="sp-metric-label">{r.metricLabel}</span>
+            </div>
+            <p class="sp-summary">{r.summary}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .social-proof {
+    position: relative;
+    padding: 80px 0 60px;
+  }
+  .sp-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .sp-header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 48px;
+  }
+  .sp-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent, #00E5FF);
+    margin-bottom: 16px;
+  }
+  .sp-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent, #00E5FF);
+    animation: sp-pulse 2s ease-in-out infinite;
+  }
+  @keyframes sp-pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+  .sp-line {
+    width: 32px;
+    height: 1px;
+    background: var(--accent, #00E5FF);
+    opacity: 0.4;
+  }
+  .sp-title {
+    font-family: var(--font-headline, 'Space Grotesk', sans-serif);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    color: var(--text-primary, #e3e5e8);
+    margin: 0 0 12px;
+    line-height: 1.2;
+  }
+  .sp-subtitle {
+    font-family: var(--font-body, Inter, sans-serif);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-tertiary, #6b7681);
+    margin: 0;
+  }
+
+  .sp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .sp-card {
+    position: relative;
+    background: var(--glass-bg, rgba(28,32,36,0.5));
+    border: 1px solid var(--glass-border, rgba(255,255,255,0.06));
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+  }
+  .sp-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--glass-shadow, 0 8px 32px rgba(0,0,0,0.2));
+    border-color: var(--glass-border, rgba(255,255,255,0.1));
+  }
+  .sp-accent {
+    height: 3px;
+    width: 100%;
+  }
+  .sp-card-inner {
+    padding: 24px;
+  }
+  .sp-card-header {
+    margin-bottom: 16px;
+  }
+  .sp-industry {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+  }
+  .sp-metric-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .sp-metric {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .sp-metric-label {
+    font-family: var(--font-body, Inter, sans-serif);
+    font-size: 0.85rem;
+    color: var(--text-tertiary, #6b7681);
+  }
+  .sp-summary {
+    font-family: var(--font-body, Inter, sans-serif);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--text-secondary, #a0aab0);
+    margin: 0;
+  }
+
+  /* Light mode */
+  :global([data-theme="light"]) .sp-card {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  :global([data-theme="light"]) .sp-card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+  :global([data-theme="light"]) .sp-summary {
+    color: var(--text-secondary, #3b494c);
+  }
+
+  /* Mobile */
+  @media (max-width: 767px) {
+    .social-proof { padding: 48px 0 40px; }
+    .sp-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .sp-header { margin-bottom: 32px; }
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .sp-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .sp-dot { animation: none; opacity: 1; }
+    .sp-card { transition: none; }
+  }
+</style>
