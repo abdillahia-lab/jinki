@@ -36,6 +36,20 @@ const dateFormatted = post.data.date.toLocaleDateString('en-US', {
 const currentUrl = `https://jinki.ai/blog/${post.id}`;
 const shareTitle = encodeURIComponent(post.data.title);
 const shareUrl = encodeURIComponent(currentUrl);
+
+// Map tags to related verticals/services
+const tagMap: Record<string, { label: string; href: string }> = {
+  'data centers': { label: 'Data Centers', href: '/verticals/data-centers' },
+  'energy': { label: 'Energy & Grid', href: '/verticals/energy-grid' },
+  'security': { label: 'Perimeter Security', href: '/verticals/security' },
+  'agriculture': { label: 'Agriculture', href: '/verticals/agriculture' },
+  'thermal': { label: 'Intelligence Scan', href: '/services/audit' },
+  'monitoring': { label: 'Autonomous Deployment', href: '/services/deployment' },
+};
+const relatedLinks = (post.data.tags || [])
+  .filter((t: string) => tagMap[t])
+  .map((t: string) => tagMap[t])
+  .filter((v: {label:string;href:string}, i: number, arr: {label:string;href:string}[]) => arr.findIndex(x => x.href === v.href) === i);
 ---
 
 <Layout title={`${post.data.title} — Jinki Blog`} description={post.data.description} ogImage={post.data.image ? post.data.image : "/images/og-blog.png"} jsonLd={{
@@ -222,6 +236,18 @@ const shareUrl = encodeURIComponent(currentUrl);
         </article>
       </div>
     </div>
+
+    <!-- Related verticals/services -->
+    {relatedLinks.length > 0 && (
+      <div style="max-width: 720px; margin: 0 auto 2rem; padding: 0 1.5rem;">
+        <p style="font-family: var(--font-label); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 0.75rem;">Explore Related</p>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          {relatedLinks.map((link: {label:string;href:string}) => (
+            <a href={link.href} style="display: inline-flex; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--glass-bg); color: var(--text-secondary); font-family: var(--font-label); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-decoration: none; transition: all 0.2s ease;">{link.label}</a>
+          ))}
+        </div>
+      </div>
+    )}
 
     <!-- Up Next Bar -->
     {nextPost && nextPost.id !== post.id && (
