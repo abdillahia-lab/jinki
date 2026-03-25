@@ -6,6 +6,7 @@
 */
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import Footer from '../components/Footer.astro';
 
 const pillars = [
@@ -79,6 +80,7 @@ const trustIndicators = [
   "publisher": { "@type": "Organization", "name": "Jinki Aerial Intelligence" }
 }}>
   <Nav />
+  <Breadcrumb items={[{ label: "Data Security" }]} />
   <main id="main-content">
 
     <!-- Shield Hero -->

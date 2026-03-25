@@ -6,6 +6,7 @@
 */
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
 import Footer from '../components/Footer.astro';
 
 const lastUpdated = 'March 15, 2026';
@@ -106,6 +107,7 @@ const sections = [
   "publisher": { "@type": "Organization", "name": "Jinki Aerial Intelligence" }
 }}>
   <Nav />
+  <Breadcrumb items={[{ label: "Terms of Service" }]} />
   <main id="main-content">
 
     <!-- Hero -->
