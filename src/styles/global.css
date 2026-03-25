@@ -504,6 +504,12 @@ html {
 @keyframes fadeOut { to { opacity: 0; } }
 @keyframes fadeIn { from { opacity: 0; } }
 
+/* Named view transitions — persistent elements don't flash */
+::view-transition-old(site-nav),
+::view-transition-new(site-nav) {
+  animation: none;
+}
+
 /* --- Scrollbar --- */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
@@ -536,6 +542,24 @@ html {
 .reveal-delay-2 { transition-delay: 0.3s; }
 .reveal-delay-3 { transition-delay: 0.45s; }
 .reveal-delay-4 { transition-delay: 0.6s; }
+
+/* --- Scroll-driven animations (progressive enhancement) --- */
+@supports (animation-timeline: view()) {
+  .reveal:not(.revealed) {
+    animation: scrollReveal ease-out both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+    transition: none;
+  }
+  .reveal-delay-1:not(.revealed) { animation-range: entry 5% entry 40%; }
+  .reveal-delay-2:not(.revealed) { animation-range: entry 10% entry 45%; }
+  .reveal-delay-3:not(.revealed) { animation-range: entry 15% entry 50%; }
+  .reveal-delay-4:not(.revealed) { animation-range: entry 20% entry 55%; }
+}
+@keyframes scrollReveal {
+  from { opacity: 0; transform: translateY(28px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
 
 /* --- Micro-interactions --- */
 /* Dropdown item stagger entry */
