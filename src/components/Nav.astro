@@ -172,12 +172,29 @@ const services = [
                 transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  /* Dropdown item stagger */
+  .dropdown-item {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, background 0.15s ease;
+  }
+  .dropdown-item:nth-child(1) { transition-delay: 0s; }
+  .dropdown-item:nth-child(2) { transition-delay: 0.03s; }
+  .dropdown-item:nth-child(3) { transition-delay: 0.06s; }
+  .dropdown-item:nth-child(4) { transition-delay: 0.09s; }
+  .dropdown-item:nth-child(5) { transition-delay: 0.12s; }
+
   /* Dropdown open state */
   .dropdown:hover .dropdown-panel,
   .dropdown.open .dropdown-panel {
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(0) scale(1);
+  }
+  .dropdown:hover .dropdown-item,
+  .dropdown.open .dropdown-item {
+    opacity: 1;
+    transform: translateY(0);
   }
   .dropdown:hover .dropdown-trigger span.material-symbols-outlined,
   .dropdown.open .dropdown-trigger span.material-symbols-outlined {
