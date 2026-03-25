@@ -12,6 +12,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import LeadGen from '../../components/LeadGen.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 import Footer from '../../components/Footer.astro';
 
 const dockSpecs = [
@@ -83,6 +84,7 @@ const capabilities = [
   "serviceType": "Autonomous Aerial Monitoring",
 }}>
   <Nav />
+  <Breadcrumb items={[{ label: "Services" }, { label: "Autonomous Deployment" }]} />
   <main id="main-content">
 
     <!-- ============ HERO — FLIGHT PATH ============ -->

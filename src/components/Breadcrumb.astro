@@ -1,0 +1,81 @@
+---
+/*
+  Breadcrumb — Schema.org BreadcrumbList + visual breadcrumbs
+  Usage: <Breadcrumb items={[{ label: "Verticals", href: "#" }, { label: "Data Centers" }]} />
+  Last item has no href (current page).
+*/
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+interface Props {
+  items: BreadcrumbItem[];
+}
+const { items } = Astro.props;
+const fullItems = [{ label: "Home", href: "/" }, ...items];
+---
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+    {fullItems.map((item, i) => (
+      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        {item.href ? (
+          <a href={item.href} itemprop="item">
+            <span itemprop="name">{item.label}</span>
+          </a>
+        ) : (
+          <span itemprop="name" aria-current="page">{item.label}</span>
+        )}
+        <meta itemprop="position" content={String(i + 1)} />
+        {i < fullItems.length - 1 && <span class="breadcrumb-sep" aria-hidden="true">/</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumb {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem 0;
+  }
+  .breadcrumb-list {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .breadcrumb-item a {
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .breadcrumb-item a:hover {
+    color: var(--accent);
+  }
+  .breadcrumb-item span[aria-current] {
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary);
+  }
+  .breadcrumb-sep {
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    opacity: 0.5;
+    margin: 0 0.5rem;
+  }
+</style>

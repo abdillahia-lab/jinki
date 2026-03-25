@@ -10,6 +10,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import LeadGen from '../../components/LeadGen.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 import Footer from '../../components/Footer.astro';
 
 const stats = [
@@ -110,6 +111,7 @@ const pipelineSteps = [
   "serviceType": "Precision Agriculture Intelligence"
 }}>
   <Nav />
+  <Breadcrumb items={[{ label: "Verticals", href: "/#verticals" }, { label: "Agriculture" }]} />
   <main id="main-content">
 
     <!-- ============ NDVI HEATMAP HERO ============ -->
