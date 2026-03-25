@@ -36,8 +36,6 @@
         <div class="lg-step-dot active" data-step="1">1</div>
         <div class="lg-step-line"><div class="lg-step-fill" id="lg-fill-1"></div></div>
         <div class="lg-step-dot" data-step="2">2</div>
-        <div class="lg-step-line"><div class="lg-step-fill" id="lg-fill-2"></div></div>
-        <div class="lg-step-dot" data-step="3">3</div>
       </div>
 
       <form id="lg-form" action="https://api.web3forms.com/submit" method="POST" novalidate>
@@ -109,24 +107,12 @@
               <input type="email" id="lg-email" name="email" required placeholder="jane@acme.com" autocomplete="email" maxlength="254" />
             </div>
           </div>
+          <div class="lg-field" style="margin-top: 0.25rem;">
+            <label for="lg-message">Message <span style="color: var(--text-tertiary); font-weight: 400;">(optional)</span></label>
+            <textarea id="lg-message" name="message" rows="3" placeholder="Tell us about your facility or specific challenges..." maxlength="2000"></textarea>
+          </div>
           <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
             <button type="button" class="lg-btn lg-btn-back" data-prev="1">Back</button>
-            <button type="button" class="lg-btn lg-btn-next" data-next="3">Continue</button>
-          </div>
-        </fieldset>
-
-        <!-- Step 3: Message + Submit -->
-        <fieldset class="lg-step" id="lg-step-3" style="border: none; padding: 0; margin: 0; display: none;">
-          <legend class="lg-step-title">Additional Details</legend>
-          <p class="lg-step-desc">Anything else we should know about your facility or requirements?</p>
-          <div style="margin-top: 1.5rem;">
-            <div class="lg-field">
-              <label for="lg-message">Message <span style="color: var(--text-tertiary); font-weight: 400;">(optional)</span></label>
-              <textarea id="lg-message" name="message" rows="4" placeholder="Tell us about your facility, fleet size, or specific challenges..." maxlength="2000"></textarea>
-            </div>
-          </div>
-          <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
-            <button type="button" class="lg-btn lg-btn-back" data-prev="2">Back</button>
             <button type="submit" class="lg-btn lg-btn-submit">Submit Request</button>
           </div>
           <p style="font-family: var(--font-body); font-size: 0.75rem; color: var(--text-tertiary); margin-top: 12px; display: flex; align-items: center; gap: 5px;">
