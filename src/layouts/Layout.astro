@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Chatbot from '../components/Chatbot.astro';
+import CookieConsent from '../components/CookieConsent.astro';
 
 interface Props {
   title?: string;
@@ -158,6 +159,7 @@ const orgSchema = {
     <slot />
 
     <Chatbot />
+    <CookieConsent />
 
     <!-- Mobile sticky CTA -->
     <div class="mobile-sticky-cta">
