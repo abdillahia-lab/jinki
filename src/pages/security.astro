@@ -1,166 +1,213 @@
 ---
 /*
-  Security Architecture — Jinki Aerial Intelligence
-  Security architecture page with animated shield hero, expandable pillar cards,
-  compliance roadmap timeline, responsible disclosure, and trust indicators.
+  Security Services — Jinki Aerial Intelligence
+  Physical security services overview: event security, resort/hospitality,
+  private estates, critical facilities, construction sites.
+  Violet/blue accent (#7B61FF / #4F46E5).
 */
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import LeadGen from '../components/LeadGen.astro';
 import Footer from '../components/Footer.astro';
 
-const pillars = [
+const stats = [
+  { value: '<90s', label: 'dock-to-airborne response time', icon: 'speed' },
+  { value: '500+', label: 'acres covered per patrol', icon: 'map' },
+  { value: '24/7', label: 'autonomous thermal surveillance', icon: 'schedule' },
+  { value: '0', label: 'blind spots with aerial vantage', icon: 'visibility' },
+];
+
+const useCases = [
   {
-    icon: 'encrypted',
-    title: 'Encryption',
-    summary: 'AES-256 at rest, TLS 1.3 in transit. Zero-trust architecture.',
-    details: 'All data is encrypted using AES-256 at rest and TLS 1.3 for data in transit. Encryption keys are managed through cloud-provider KMS with automated rotation policies. Our architecture follows zero-trust principles — client data is logically isolated and access requires explicit authorization at every layer.',
-    color: '#00E5FF',
+    icon: 'stadium',
+    title: 'Event Security',
+    desc: 'Concerts, sports events, festivals, and large public gatherings. Real-time crowd monitoring, perimeter surveillance, and rapid incident response from above — providing situational awareness that ground teams cannot achieve alone.',
+    highlights: ['Crowd density monitoring', 'Perimeter breach detection', 'Incident response coordination', 'Post-event sweep'],
   },
   {
-    icon: 'admin_panel_settings',
-    title: 'Access Control',
-    summary: 'RBAC with least privilege. MFA mandatory, no exceptions.',
-    details: 'Role-based access control with the principle of least privilege enforced at every layer. Multi-factor authentication is mandatory across all systems. Every action is logged, timestamped, and available for client audit review. Session management includes automatic timeouts and device trust verification.',
-    color: '#7B61FF',
+    icon: 'villa',
+    title: 'Resort & Hospitality',
+    desc: 'Luxury resorts, golf courses, and hotel campuses. Discreet aerial patrols protect guests and property across expansive grounds without visible security infrastructure that disrupts the guest experience.',
+    highlights: ['Guest safety across large grounds', 'Beach and waterfront monitoring', 'Parking and perimeter coverage', 'Night operations with thermal'],
   },
   {
-    icon: 'cloud_done',
-    title: 'Infrastructure',
-    summary: 'Hardened cloud architecture with network segmentation.',
-    details: 'Our infrastructure runs on hardened cloud architecture with strict network segmentation. Automated vulnerability scanning runs continuously, and all systems are patched against emerging threats promptly upon disclosure. Our architecture is designed for resilience and disaster recovery.',
-    color: '#34D399',
+    icon: 'home',
+    title: 'Private Estates',
+    desc: 'High-net-worth residential compounds and multi-acre properties. Persistent perimeter monitoring with thermal detection identifies unauthorized access across terrain that cameras and guards cannot fully cover.',
+    highlights: ['Multi-acre perimeter patrol', 'Tree-line and fence-line monitoring', 'Visitor verification support', 'Integration with estate security'],
   },
   {
-    icon: 'monitoring',
-    title: 'Monitoring',
-    summary: 'Centralized logging with anomaly detection and alerting.',
-    details: 'Security monitoring through centralized logging with anomaly detection. Automated alerting triggers on detection of suspicious activity. Security events are triaged by severity with defined escalation paths. Regular security reviews ensure our detection capabilities evolve with the threat landscape.',
-    color: '#FF8C00',
+    icon: 'domain',
+    title: 'Critical Facilities',
+    desc: 'Data centers, power plants, water treatment facilities, and warehouses. Autonomous aerial surveillance augments existing security systems with persistent coverage, thermal anomaly detection, and rapid alert verification.',
+    highlights: ['Infrastructure perimeter patrol', 'Thermal anomaly detection', 'Alarm verification from the air', 'SOC integration'],
   },
   {
-    icon: 'verified_user',
-    title: 'Compliance',
-    summary: 'SOC 2 Type I targeted Q3 2026. NIST 800-53 aligned.',
-    details: 'Controls mapped to NIST 800-53 framework with SOC 2 Type I preparation underway. All engagements operate under NDA by default. We align with the frameworks your compliance team already trusts — and we publish our roadmap so you can track our progress.',
-    color: '#00D4FF',
-  },
-  {
-    icon: 'emergency',
-    title: 'Incident Response',
-    summary: 'Documented IR plan with defined SLAs and client notification.',
-    details: 'Documented incident response plan with defined notification procedures. Clients are notified promptly upon confirmation of any security incident. Post-incident reviews produce actionable improvements. Our founder brings an enterprise security background with hands-on incident response experience.',
-    color: '#FF6B9D',
+    icon: 'construction',
+    title: 'Construction Sites',
+    desc: 'After-hours theft prevention, equipment monitoring, and progress documentation. Autonomous patrol routes deter theft and vandalism while capturing time-stamped evidence across active job sites.',
+    highlights: ['After-hours theft deterrence', 'Equipment monitoring', 'Progress documentation', 'Evidence capture for incidents'],
   },
 ];
 
-const milestones = [
-  { date: 'Q1 2026', title: 'Security Foundation', desc: 'NIST 800-53 control mapping and gap analysis completed.', status: 'complete' },
-  { date: 'Q2 2026', title: 'SOC 2 Type I', desc: 'Assessor selection and formal audit engagement.', status: 'active' },
-  { date: 'Q3 2026', title: 'Penetration Testing', desc: 'Annual third-party penetration test and remediation cycle.', status: 'upcoming' },
-  { date: 'Q4 2026', title: 'SOC 2 Type II', desc: 'Observation period begins for Type II certification.', status: 'upcoming' },
-  { date: 'Q1 2027', title: 'Type II Certification', desc: 'Targeted SOC 2 Type II report issuance.', status: 'upcoming' },
+const steps = [
+  {
+    number: '01',
+    title: 'Intelligence Scan',
+    desc: 'We assess your site — footprint, terrain, existing security infrastructure, threat profile, and coverage gaps. This becomes the foundation for your custom aerial security plan.',
+    icon: 'search',
+  },
+  {
+    number: '02',
+    title: 'Deploy & Integrate',
+    desc: 'An autonomous dock station is positioned on-site and integrated with your existing alarm systems, VMS, and security operations center. Patrol routes are programmed to your specifications.',
+    icon: 'rocket_launch',
+  },
+  {
+    number: '03',
+    title: 'Persistent Protection',
+    desc: 'Autonomous thermal patrols run continuously — day and night. Real-time alerts stream directly to your SOC with classified threat data, GPS coordinates, and HD evidence.',
+    icon: 'shield',
+  },
 ];
 
-const trustIndicators = [
-  { label: 'Encryption Standard', value: 'AES-256 / TLS 1.3', icon: 'lock' },
-  { label: 'Availability', value: 'High-availability design', icon: 'speed' },
-  { label: 'Data Retention', value: 'Client-defined', icon: 'delete_sweep' },
-  { label: 'Incident Response', value: '< 24h notification', icon: 'notification_important' },
-  { label: 'Access Logging', value: 'Comprehensive', icon: 'history' },
-  { label: 'Key Rotation', value: 'Quarterly', icon: 'autorenew' },
+const differentiators = [
+  {
+    icon: 'dark_mode',
+    title: 'Night Operations Advantage',
+    desc: 'Thermal imaging detects human presence through complete darkness, fog, and vegetation. No lighting infrastructure required — the aerial platform sees what cameras cannot.',
+  },
+  {
+    icon: 'trending_down',
+    title: 'Reduce Headcount, Increase Coverage',
+    desc: 'One autonomous aerial system covers ground that would require multiple guard posts and camera installations. Scale coverage without scaling payroll or overtime.',
+  },
+  {
+    icon: 'timer',
+    title: 'Response in Seconds, Not Minutes',
+    desc: 'Under 90 seconds from alert to airborne verification. Traditional guard response averages 15-20 minutes. Aerial verification classifies threats before ground teams are dispatched.',
+  },
+  {
+    icon: 'hub',
+    title: 'Integrates With What You Have',
+    desc: 'Connects with your existing VMS, alarm panels, access control, and SIEM platforms. Aerial intelligence becomes another input to your security operations center — not a replacement.',
+  },
+  {
+    icon: 'visibility_off',
+    title: 'Eliminate Blind Spots',
+    desc: 'Fixed cameras are limited by mounting position, field of view, and obstructions. Aerial vantage provides coverage across terrain, rooftops, and perimeter zones that ground-level systems miss.',
+  },
+  {
+    icon: 'savings',
+    title: '24/7 Without Overtime',
+    desc: 'Autonomous operations run continuously without shift changes, fatigue, or overtime costs. Persistent coverage at a fraction of the cost of round-the-clock manned patrols.',
+  },
 ];
 ---
 
-<Layout ogImage="/images/og-security-page.png" title="Security Architecture — Jinki Aerial Intelligence" description="Security-first aerial intelligence. AES-256 encryption, SOC 2 preparation, NIST 800-53 alignment, and NDA-by-default engagements." jsonLd={{
+<Layout ogImage="/images/og-security-services.png" title="Security Services — Jinki Aerial Intelligence" description="Aerial security services for events, resorts, private estates, critical facilities, and construction sites. Thermal surveillance, autonomous patrol, and real-time SOC integration." jsonLd={{
   "@context": "https://schema.org",
-  "@type": "WebPage",
-  "name": "Security Architecture",
-  "description": "Jinki security architecture: AES-256 encryption, NIST 800-53 alignment, SOC 2 Type I preparation, and zero-trust data handling.",
-  "publisher": { "@type": "Organization", "name": "Jinki Aerial Intelligence" }
+  "@type": "Service",
+  "name": "Aerial Security Services",
+  "provider": { "@type": "Organization", "name": "Jinki Aerial Intelligence" },
+  "description": "Physical security services powered by autonomous aerial thermal surveillance. Event security, estate protection, critical facility monitoring, and construction site coverage.",
+  "areaServed": "Mid-Atlantic United States",
+  "serviceType": "Aerial Physical Security"
 }}>
   <Nav />
+  <Breadcrumb items={[{ label: "Services" }, { label: "Security Services" }]} />
   <main id="main-content">
 
-    <!-- Shield Hero -->
-    <section class="sec-hero" aria-label="Security Architecture">
-      <div aria-hidden="true" style="position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 30%,rgba(0,229,255,0.06) 0%,transparent 55%),radial-gradient(ellipse at 30% 70%,rgba(123,97,255,0.04) 0%,transparent 50%);filter:blur(60px);"></div>
+    <!-- ==================== 1. HERO ==================== -->
+    <section class="sec-hero" aria-label="Security Services">
+      <div aria-hidden="true" class="sec-hero-glow"></div>
       <div class="sec-hero-inner">
-        <!-- Animated Shield -->
-        <div class="shield-container reveal" aria-hidden="true">
-          <div class="shield-ring shield-ring-1"></div>
-          <div class="shield-ring shield-ring-2"></div>
-          <div class="shield-ring shield-ring-3"></div>
-          <div class="shield-core">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <polyline points="9 12 11 14 15 10"/>
-            </svg>
+        <div class="sec-hero-content reveal">
+          <div class="sec-eyebrow">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">Security Services</span>
+          </div>
+          <h1 class="sec-hero-title">
+            Your Property Never Sleeps.<br/>
+            <span class="gradient-text-violet">Neither Do We.</span>
+          </h1>
+          <p class="sec-hero-subtitle">
+            Autonomous aerial thermal surveillance that covers hundreds of acres,
+            detects threats through total darkness, and alerts your security team
+            in seconds. Not a replacement for your team — a force multiplier.
+          </p>
+          <div class="sec-hero-actions">
+            <a href="#lead-gen" class="btn-premium sec-cta">Get a Security Assessment</a>
+            <a href="#use-cases" class="sec-cta-secondary">View Use Cases</a>
           </div>
         </div>
 
-        <div class="sec-hero-copy">
-          <div class="vert-eyebrow reveal reveal-delay-1">
-            <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">Security</span>
+        <!-- Animated Radar Visual -->
+        <div class="sec-hero-visual reveal reveal-delay-1" aria-hidden="true">
+          <div class="radar-container">
+            <div class="radar-ring radar-ring-1"></div>
+            <div class="radar-ring radar-ring-2"></div>
+            <div class="radar-ring radar-ring-3"></div>
+            <div class="radar-sweep"></div>
+            <div class="radar-center">
+              <span class="material-symbols-outlined" style="font-size:32px;color:#7B61FF;font-variation-settings:'FILL' 1;">security</span>
+            </div>
+            <!-- Blips -->
+            <div class="radar-blip" style="top:22%;left:68%;animation-delay:0.3s;"></div>
+            <div class="radar-blip" style="top:58%;left:25%;animation-delay:1.1s;"></div>
+            <div class="radar-blip" style="top:75%;left:72%;animation-delay:2.0s;"></div>
           </div>
-          <h1 class="reveal reveal-delay-2">Security Is Not a Feature.<br/><span class="gradient-text-cyan">It's the Foundation.</span></h1>
-          <p class="sec-hero-sub reveal reveal-delay-3">
-            Founded by a security professional with deep enterprise experience. Data
-            protection, access control, and operational security are embedded
-            in every layer of how we operate.
-          </p>
         </div>
       </div>
     </section>
 
-    <!-- Trust Indicators Strip -->
-    <section class="trust-strip" aria-label="Trust Indicators">
-      <div class="trust-strip-inner">
-        {trustIndicators.map((item, i) => (
-          <div class={`trust-item reveal reveal-delay-${(i % 4) + 1}`}>
-            <span class="material-symbols-outlined trust-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{item.icon}</span>
-            <div class="trust-text">
-              <span class="trust-value">{item.value}</span>
-              <span class="trust-label">{item.label}</span>
+    <!-- ==================== 2. STATS BAR ==================== -->
+    <section class="stats-strip" aria-label="Key Metrics">
+      <div class="stats-strip-inner">
+        {stats.map((stat, i) => (
+          <div class={`stat-item reveal reveal-delay-${(i % 4) + 1}`}>
+            <span class="material-symbols-outlined stat-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{stat.icon}</span>
+            <div class="stat-text">
+              <span class="stat-value">{stat.value}</span>
+              <span class="stat-label">{stat.label}</span>
             </div>
           </div>
         ))}
       </div>
     </section>
 
-    <!-- Security Pillars -->
-    <section class="section" style="background: var(--surface-dim);" aria-label="Security Pillars">
+    <!-- ==================== 3. USE CASES ==================== -->
+    <section id="use-cases" class="section" style="background: var(--surface-dim);" aria-label="Use Cases">
       <div class="section-inner">
         <div class="section-header reveal">
           <div class="vert-eyebrow">
             <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">Architecture</span>
+            <span class="vert-eyebrow-text">Use Cases</span>
           </div>
-          <h2>Six Pillars of Protection</h2>
+          <h2>Aerial Security for Every Environment</h2>
           <p class="section-subtitle">
-            Every engagement is governed by a security architecture designed for
-            enterprise-grade requirements.
+            From single-night events to persistent facility protection,
+            aerial intelligence adapts to your security requirements.
           </p>
         </div>
-        <div class="pillars-grid">
-          {pillars.map((pillar, i) => (
-            <div class={`pillar-card reveal reveal-delay-${(i % 3) + 1}`} data-pillar-index={i}>
-              <div class="pillar-header">
-                <div class="pillar-icon-wrap" style={`background: ${pillar.color}15; border-color: ${pillar.color}30;`}>
-                  <span class="material-symbols-outlined pillar-icon" style={`color: ${pillar.color}; font-variation-settings: 'FILL' 1;`} aria-hidden="true">{pillar.icon}</span>
+        <div class="use-cases-grid">
+          {useCases.map((uc, i) => (
+            <div class={`uc-card reveal reveal-delay-${(i % 3) + 1}`}>
+              <div class="uc-card-inner">
+                <div class="uc-icon-wrap">
+                  <span class="material-symbols-outlined uc-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{uc.icon}</span>
                 </div>
-                <div class="pillar-title-area">
-                  <h3>{pillar.title}</h3>
-                  <p class="pillar-summary">{pillar.summary}</p>
-                </div>
-                <button class="pillar-toggle" aria-expanded="false" aria-label={`Expand ${pillar.title} details`}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
-                </button>
-              </div>
-              <div class="pillar-details" aria-hidden="true">
-                <p>{pillar.details}</p>
+                <h3>{uc.title}</h3>
+                <p class="uc-desc">{uc.desc}</p>
+                <ul class="uc-highlights">
+                  {uc.highlights.map(h => (
+                    <li>
+                      <span class="material-symbols-outlined" style="font-size:14px;color:#7B61FF;font-variation-settings:'FILL' 1;" aria-hidden="true">check_circle</span>
+                      {h}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           ))}
@@ -168,189 +215,187 @@ const trustIndicators = [
       </div>
     </section>
 
-    <!-- Compliance Roadmap -->
-    <section class="section" aria-label="Compliance Roadmap">
+    <!-- ==================== 4. HOW IT WORKS ==================== -->
+    <section class="section" aria-label="How It Works">
       <div class="section-inner">
         <div class="section-header reveal">
           <div class="vert-eyebrow">
             <span class="vert-eyebrow-line"></span>
-            <span class="vert-eyebrow-text">Compliance</span>
+            <span class="vert-eyebrow-text">Process</span>
           </div>
-          <h2>SOC 2 Compliance Roadmap</h2>
+          <h2>How It Works</h2>
           <p class="section-subtitle">
-            Our path to SOC 2 Type II certification with transparent milestones.
+            From initial assessment to persistent protection in three steps.
           </p>
         </div>
-        <div class="timeline">
-          {milestones.map((ms, i) => (
-            <div class={`timeline-item timeline-${ms.status} reveal reveal-delay-${(i % 4) + 1}`}>
-              <div class="timeline-marker">
-                {ms.status === 'complete' && (
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                )}
-                {ms.status === 'active' && (
-                  <span class="timeline-active-dot"></span>
-                )}
+        <div class="steps-grid">
+          {steps.map((step, i) => (
+            <div class={`step-card reveal reveal-delay-${i + 1}`}>
+              <div class="step-number">{step.number}</div>
+              <div class="step-icon-wrap">
+                <span class="material-symbols-outlined" style="font-size:28px;color:#7B61FF;font-variation-settings:'FILL' 1;" aria-hidden="true">{step.icon}</span>
               </div>
-              <div class="timeline-content">
-                <span class="timeline-date">{ms.date}</span>
-                <h3>{ms.title}</h3>
-                <p>{ms.desc}</p>
-              </div>
+              <h3>{step.title}</h3>
+              <p>{step.desc}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
 
-    <!-- Responsible Disclosure -->
-    <section class="section" style="background: var(--surface-dim);" aria-label="Responsible Disclosure">
+    <!-- ==================== 5. WHY AERIAL SECURITY ==================== -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Why Aerial Security">
       <div class="section-inner">
-        <div class="disclosure-card reveal">
-          <div class="disclosure-icon-area" aria-hidden="true">
-            <span class="material-symbols-outlined" style="font-size: 48px; color: var(--accent); font-variation-settings: 'FILL' 1;">bug_report</span>
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Advantages</span>
           </div>
-          <div class="disclosure-content">
-            <h2>Responsible Disclosure</h2>
-            <p>
-              We value the security research community. If you discover a vulnerability
-              in our systems, we encourage responsible disclosure. We commit to:
-            </p>
-            <ul class="disclosure-list">
-              <li>Acknowledging your report within 48 hours</li>
-              <li>Providing a timeline for remediation</li>
-              <li>Recognizing your contribution (with your permission)</li>
-              <li>No legal action against good-faith researchers</li>
-            </ul>
-            <div class="disclosure-cta">
-              <a href="mailto:security@jinki.ai" class="btn-disclosure">
-                <span class="material-symbols-outlined" style="font-size: 18px; font-variation-settings: 'FILL' 1;" aria-hidden="true">mail</span>
-                security@jinki.ai
-              </a>
-              <p class="disclosure-note">Please include detailed steps to reproduce the issue and allow reasonable time for remediation before public disclosure.</p>
-            </div>
-          </div>
+          <h2>Why Aerial Security</h2>
+          <p class="section-subtitle">
+            Traditional physical security was designed for a world of fences and fixed cameras.
+            The threat landscape has evolved. Your coverage should too.
+          </p>
         </div>
+        <div class="diff-grid">
+          {differentiators.map((d, i) => (
+            <div class={`diff-card reveal reveal-delay-${(i % 3) + 1}`}>
+              <div class="diff-icon-wrap">
+                <span class="material-symbols-outlined diff-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{d.icon}</span>
+              </div>
+              <h3>{d.title}</h3>
+              <p>{d.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
 
-        <!-- Security Brief Download -->
-        <div class="reveal" style="text-align: center; margin-top: 48px;">
-          <a href="/docs/jinki-security-brief.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download Jinki security architecture brief PDF" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 12px; background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.2); color: var(--accent); text-decoration: none; font-family: var(--font-label); font-size: 0.875rem; font-weight: 600; transition: background 0.2s ease, border-color 0.2s ease;">
-            <span class="material-symbols-outlined" style="font-size: 20px; font-variation-settings: 'FILL' 1;" aria-hidden="true">shield</span>
-            Download Security Brief (PDF)
+    <!-- ==================== 6. CROSS-LINKS ==================== -->
+    <section class="section" aria-label="Related Services">
+      <div class="section-inner">
+        <div class="section-header reveal" style="text-align:center;">
+          <h2>Explore Our Services</h2>
+          <p class="section-subtitle" style="margin-left:auto;margin-right:auto;">
+            Security is one dimension of aerial intelligence. See how we deploy.
+          </p>
+        </div>
+        <div class="xlinks-grid">
+          <a href="/services/audit" class="xlink-card reveal reveal-delay-1">
+            <div class="xlink-icon-wrap">
+              <span class="material-symbols-outlined" style="font-size:28px;color:var(--accent);font-variation-settings:'FILL' 1;" aria-hidden="true">search_insights</span>
+            </div>
+            <h3>Intelligence Scan</h3>
+            <p>One-time aerial AI assessment of your facility. Thermal, visual, and analytical deliverables.</p>
+            <span class="xlink-arrow">
+              <span class="material-symbols-outlined" style="font-size:18px;" aria-hidden="true">arrow_forward</span>
+            </span>
+          </a>
+          <a href="/services/deployment" class="xlink-card reveal reveal-delay-2">
+            <div class="xlink-icon-wrap">
+              <span class="material-symbols-outlined" style="font-size:28px;color:var(--accent);font-variation-settings:'FILL' 1;" aria-hidden="true">rocket_launch</span>
+            </div>
+            <h3>Autonomous Deployment</h3>
+            <p>Persistent on-site aerial operations. Autonomous dock station, scheduled patrols, real-time alerts.</p>
+            <span class="xlink-arrow">
+              <span class="material-symbols-outlined" style="font-size:18px;" aria-hidden="true">arrow_forward</span>
+            </span>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="section" aria-label="Request Security Review">
-      <div class="section-inner" style="text-align: center; max-width: 640px;">
-        <div class="reveal">
-          <h2>Need Our Security Documentation?</h2>
-          <p class="section-subtitle" style="margin: 16px auto 32px;">
-            We provide detailed security architecture documentation, compliance
-            attestations, and data handling procedures under NDA.
-          </p>
-          <a href="/#lead-gen" class="btn-premium security-cta">Request Security Review</a>
+    <!-- Data Security Trust Callout -->
+    <section class="reveal" style="max-width: 800px; margin: 0 auto; padding: 0 1.5rem 3rem;">
+      <div style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem 2.5rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; backdrop-filter: blur(12px);">
+        <span class="material-symbols-outlined" style="font-size: 2.5rem; color: #34D399; font-variation-settings: 'FILL' 1;" aria-hidden="true">verified_user</span>
+        <div style="flex: 1; min-width: 200px;">
+          <h3 style="font-family: var(--font-headline); font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 0 0 0.25rem;">Your Data Is Protected</h3>
+          <p style="font-family: var(--font-body); font-size: 0.9rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">AES-256 encryption, SOC 2 Type I preparation, NIST 800-53 alignment, and NDA-by-default on every engagement.</p>
         </div>
+        <a href="/data-security" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 10px; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2); color: #34D399; font-family: var(--font-label); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: all 0.25s ease; white-space: nowrap;">
+          View Data Security
+          <span class="material-symbols-outlined" style="font-size: 16px;" aria-hidden="true">arrow_forward</span>
+        </a>
       </div>
     </section>
+
+    <!-- ==================== 7. LEADGEN ==================== -->
+    <LeadGen />
 
   </main>
   <Footer />
 </Layout>
 
 <style>
-  /* === SHIELD HERO === */
+  /* === HERO === */
   .sec-hero {
-    min-height: 70vh;
+    min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 140px clamp(20px, 5vw, 80px) 80px;
-    text-align: center;
     background: var(--surface-container-lowest);
     position: relative;
     overflow: hidden;
   }
 
-  .sec-hero::before {
-    content: '';
+  .sec-hero-glow {
     position: absolute;
-    top: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 800px;
-    height: 600px;
-    background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
-    opacity: 0.4;
+    inset: 0;
+    z-index: 0;
     pointer-events: none;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(123,97,255,0.07) 0%, transparent 55%),
+      radial-gradient(ellipse at 70% 60%, rgba(79,70,229,0.05) 0%, transparent 50%);
+    filter: blur(60px);
   }
 
   .sec-hero-inner {
-    max-width: 800px;
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
     position: relative;
     z-index: 1;
+    width: 100%;
   }
 
-  .shield-container {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 40px;
+  @media (max-width: 960px) {
+    .sec-hero { min-height: auto; }
+    .sec-hero-inner { grid-template-columns: 1fr; gap: 48px; text-align: center; }
   }
 
-  .shield-ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .shield-ring-1 {
-    width: 120px;
-    height: 120px;
-    border-color: rgba(0, 229, 255, 0.15);
-    animation: shield-pulse 3s ease-in-out infinite;
-  }
-
-  .shield-ring-2 {
-    width: 96px;
-    height: 96px;
-    border-color: rgba(0, 229, 255, 0.2);
-    animation: shield-pulse 3s ease-in-out infinite 0.5s;
-  }
-
-  .shield-ring-3 {
-    width: 72px;
-    height: 72px;
-    border-color: rgba(0, 229, 255, 0.3);
-    animation: shield-pulse 3s ease-in-out infinite 1s;
-  }
-
-  @keyframes shield-pulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-    50% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
-  }
-
-  .shield-core {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 64px;
-    height: 64px;
-    background: var(--accent-glow);
-    border-radius: 50%;
+  .sec-eyebrow {
     display: flex;
     align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 40px rgba(0, 229, 255, 0.15);
+    gap: 12px;
+    margin-bottom: 16px;
   }
 
-  .sec-hero h1 {
+  @media (max-width: 960px) {
+    .sec-eyebrow { justify-content: center; }
+  }
+
+  .sec-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: #7B61FF;
+  }
+
+  .sec-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #7B61FF;
+  }
+
+  .sec-hero-title {
     font-family: var(--font-headline);
     font-size: clamp(2rem, 4vw + 0.5rem, 3.25rem);
     font-weight: 700;
@@ -359,48 +404,197 @@ const trustIndicators = [
     margin-bottom: 24px;
   }
 
-  .gradient-text-cyan {
-    background: linear-gradient(135deg, #00E5FF, #00a8b5);
+  .gradient-text-violet {
+    background: linear-gradient(135deg, #7B61FF, #4F46E5);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .sec-hero-sub {
+  .sec-hero-subtitle {
     font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
-    max-width: 620px;
-    margin: 0 auto;
     line-height: 1.75;
     color: var(--text-secondary);
+    max-width: 560px;
+    margin-bottom: 32px;
   }
 
-  /* === EYEBROW === */
-  .vert-eyebrow {
+  @media (max-width: 960px) {
+    .sec-hero-subtitle { margin-left: auto; margin-right: auto; }
+  }
+
+  .sec-hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 960px) {
+    .sec-hero-actions { justify-content: center; }
+  }
+
+  .sec-cta {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.75rem 2rem;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .sec-cta-secondary {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: #7B61FF;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(123,97,255,0.3);
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .sec-cta-secondary:hover {
+    background: rgba(123,97,255,0.08);
+    border-color: rgba(123,97,255,0.5);
+  }
+
+  /* Radar Visual */
+  .sec-hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .radar-container {
+    position: relative;
+    width: 320px;
+    height: 320px;
+  }
+
+  @media (max-width: 640px) {
+    .radar-container { width: 240px; height: 240px; }
+  }
+
+  .radar-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .radar-ring-1 {
+    width: 100%; height: 100%;
+    border-color: rgba(123,97,255,0.12);
+  }
+  .radar-ring-2 {
+    width: 66%; height: 66%;
+    border-color: rgba(123,97,255,0.18);
+  }
+  .radar-ring-3 {
+    width: 33%; height: 33%;
+    border-color: rgba(123,97,255,0.25);
+  }
+
+  .radar-sweep {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 50%; height: 2px;
+    transform-origin: left center;
+    background: linear-gradient(90deg, rgba(123,97,255,0.6), transparent);
+    animation: radar-spin 3s linear infinite;
+  }
+
+  @keyframes radar-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .radar-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px; height: 56px;
+    background: rgba(123,97,255,0.08);
+    border: 1px solid rgba(123,97,255,0.3);
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
     justify-content: center;
   }
 
-  .section-header .vert-eyebrow {
-    justify-content: flex-start;
+  .radar-blip {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #7B61FF;
+    animation: blip-pulse 2.5s ease-in-out infinite;
   }
 
-  .vert-eyebrow-line {
-    display: block;
-    width: 32px;
-    height: 1px;
-    background: var(--accent);
+  @keyframes blip-pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.4); box-shadow: 0 0 12px rgba(123,97,255,0.5); }
   }
 
-  .vert-eyebrow-text {
-    font-family: var(--font-label);
-    font-size: 0.6875rem;
+  /* === STATS BAR === */
+  .stats-strip {
+    background: var(--surface-container-low);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 32px clamp(20px, 5vw, 80px);
+  }
+
+  .stats-strip-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .stats-strip-inner { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .stat-icon {
+    color: #7B61FF;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+
+  .stat-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-value {
+    font-family: var(--font-headline);
+    font-size: 1.25rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.3em;
-    color: var(--accent);
+    color: var(--text-primary);
+  }
+
+  .stat-label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    line-height: 1.4;
   }
 
   /* === SECTIONS === */
@@ -438,88 +632,57 @@ const trustIndicators = [
     margin-top: 16px;
   }
 
-  .section h2 { margin-bottom: 0; }
-
-  /* === TRUST INDICATORS === */
-  .trust-strip {
-    background: var(--surface-container-low);
-    border-top: 1px solid var(--glass-border);
-    border-bottom: 1px solid var(--glass-border);
-    padding: 32px clamp(20px, 5vw, 80px);
-    overflow-x: auto;
+  /* === EYEBROW (reused) === */
+  .vert-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
   }
 
-  .trust-strip-inner {
-    max-width: 1280px;
-    margin: 0 auto;
+  .vert-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: #7B61FF;
+  }
+
+  .vert-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #7B61FF;
+  }
+
+  /* === USE CASE CARDS === */
+  .use-cases-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
   }
 
   @media (max-width: 1024px) {
-    .trust-strip-inner { grid-template-columns: repeat(3, 1fr); }
+    .use-cases-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 640px) {
-    .trust-strip-inner { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .use-cases-grid { grid-template-columns: 1fr; }
   }
 
-  .trust-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .trust-icon {
-    color: var(--accent);
-    font-size: 22px;
-    flex-shrink: 0;
-  }
-
-  .trust-text {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .trust-value {
-    font-family: var(--font-headline);
-    font-size: 0.8125rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    white-space: nowrap;
-  }
-
-  .trust-label {
-    font-family: var(--font-body);
-    font-size: 0.6875rem;
-    color: var(--text-tertiary);
-    white-space: nowrap;
-  }
-
-  /* === PILLAR CARDS === */
-  .pillars-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-
-  @media (max-width: 768px) {
-    .pillars-grid { grid-template-columns: 1fr; }
-  }
-
-  .pillar-card {
+  .uc-card {
     background: var(--surface-container-low);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     overflow: hidden;
-    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
-                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
+                box-shadow 0.4s cubic-bezier(0.16,1,0.3,1),
                 border-color 0.4s ease;
     position: relative;
   }
 
-  .pillar-card::before {
+  .uc-card::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -528,342 +691,294 @@ const trustIndicators = [
     border-radius: inherit;
   }
 
-  .pillar-card:hover {
-    border-color: rgba(0, 229, 255, 0.15);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 0 20px var(--accent-glow);
+  .uc-card:hover {
+    border-color: rgba(123,97,255,0.25);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15), 0 0 20px rgba(123,97,255,0.08);
+    transform: translateY(-2px);
   }
 
-  .pillar-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 28px;
-    cursor: pointer;
+  .uc-card-inner {
+    padding: 32px 28px;
   }
 
-  .pillar-icon-wrap {
-    width: 44px;
-    height: 44px;
+  .uc-icon-wrap {
+    width: 48px;
+    height: 48px;
     border-radius: 12px;
-    border: 1px solid;
+    background: rgba(123,97,255,0.08);
+    border: 1px solid rgba(123,97,255,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .pillar-icon {
-    font-size: 22px;
-  }
-
-  .pillar-title-area {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .pillar-title-area h3 {
-    font-family: var(--font-headline);
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-  }
-
-  .pillar-summary {
-    font-family: var(--font-body);
-    font-size: 0.8125rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-  }
-
-  .pillar-toggle {
-    background: none;
-    border: none;
-    color: var(--text-tertiary);
-    cursor: pointer;
-    padding: 4px;
-    border-radius: 8px;
-    transition: color 0.2s ease, background 0.2s ease;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .pillar-toggle:hover {
-    color: var(--accent);
-    background: var(--accent-glow);
-  }
-
-  .pillar-toggle svg {
-    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
-  }
-
-  .pillar-card.expanded .pillar-toggle svg {
-    transform: rotate(180deg);
-  }
-
-  .pillar-details {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
-    padding: 0 28px;
-  }
-
-  .pillar-card.expanded .pillar-details {
-    max-height: 300px;
-    padding: 0 28px 28px;
-  }
-
-  .pillar-details p {
-    font-family: var(--font-body);
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    line-height: 1.75;
-    border-top: 1px solid var(--glass-border);
-    padding-top: 20px;
-  }
-
-  /* === TIMELINE === */
-  .timeline {
-    position: relative;
-    padding-left: 40px;
-    max-width: 700px;
-  }
-
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 11px;
-    top: 8px;
-    bottom: 8px;
-    width: 2px;
-    background: var(--glass-border);
-  }
-
-  .timeline-item {
-    position: relative;
-    margin-bottom: 40px;
-  }
-
-  .timeline-item:last-child { margin-bottom: 0; }
-
-  .timeline-marker {
-    position: absolute;
-    left: -40px;
-    top: 4px;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: var(--surface-container-low);
-    border: 2px solid var(--glass-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
-  }
-
-  .timeline-complete .timeline-marker {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #050508;
-  }
-
-  .timeline-active .timeline-marker {
-    border-color: var(--accent);
-    box-shadow: 0 0 12px rgba(0, 229, 255, 0.15);
-  }
-
-  .timeline-active-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: timeline-blink 1.5s ease-in-out infinite;
-  }
-
-  @keyframes timeline-blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  .timeline-date {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  .timeline-content h3 {
-    font-family: var(--font-headline);
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-  }
-
-  .timeline-content p {
-    font-family: var(--font-body);
-    font-size: 0.8125rem;
-    color: var(--text-secondary);
-    line-height: 1.65;
-  }
-
-  .timeline-upcoming { opacity: 0.55; }
-
-  /* === DISCLOSURE === */
-  .disclosure-card {
-    display: flex;
-    gap: 40px;
-    background: var(--surface-container-low);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    padding: 48px;
-    position: relative;
-    overflow: hidden;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .disclosure-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--glossy-shine);
-    pointer-events: none;
-    border-radius: inherit;
-  }
-
-  @media (max-width: 768px) {
-    .sec-hero { min-height: auto !important; }
-    .disclosure-card { flex-direction: column; gap: 24px; padding: 32px 24px; }
-  }
-
-  .disclosure-icon-area {
-    flex-shrink: 0;
-    width: 80px;
-    height: 80px;
-    border-radius: 16px;
-    background: var(--accent-glow);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .disclosure-content h2 {
-    font-family: var(--font-headline);
-    font-size: clamp(1.25rem, 2vw, 1.75rem);
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 16px;
-  }
-
-  .disclosure-content > p {
-    font-family: var(--font-body);
-    font-size: 0.9375rem;
-    color: var(--text-secondary);
-    line-height: 1.75;
     margin-bottom: 20px;
   }
 
-  .disclosure-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 28px;
+  .uc-icon {
+    font-size: 24px;
+    color: #7B61FF;
   }
 
-  .disclosure-list li {
+  .uc-card h3 {
+    font-family: var(--font-headline);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .uc-desc {
     font-family: var(--font-body);
     font-size: 0.875rem;
     color: var(--text-secondary);
-    line-height: 1.6;
-    padding-left: 24px;
-    position: relative;
+    line-height: 1.7;
+    margin-bottom: 20px;
   }
 
-  .disclosure-list li::before {
+  .uc-highlights {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .uc-highlights li {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* === STEPS === */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  @media (max-width: 768px) {
+    .steps-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  .step-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 36px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .step-card::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 8px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--accent);
-    opacity: 0.6;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
   }
 
-  .btn-disclosure {
+  .step-number {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #7B61FF;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+
+  .step-icon-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(123,97,255,0.08);
+    border: 1px solid rgba(123,97,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .step-card h3 {
+    font-family: var(--font-headline);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .step-card p {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* === DIFFERENTIATORS === */
+  .diff-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 1024px) {
+    .diff-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .diff-grid { grid-template-columns: 1fr; }
+  }
+
+  .diff-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
+                box-shadow 0.4s cubic-bezier(0.16,1,0.3,1),
+                border-color 0.4s ease;
+  }
+
+  .diff-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .diff-card:hover {
+    border-color: rgba(123,97,255,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 0 16px rgba(123,97,255,0.06);
+    transform: translateY(-2px);
+  }
+
+  .diff-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(123,97,255,0.08);
+    border: 1px solid rgba(123,97,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+
+  .diff-icon {
+    font-size: 22px;
+    color: #7B61FF;
+  }
+
+  .diff-card h3 {
+    font-family: var(--font-headline);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+  }
+
+  .diff-card p {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* === CROSS-LINKS === */
+  .xlinks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 640px) {
+    .xlinks-grid { grid-template-columns: 1fr; }
+  }
+
+  .xlink-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 36px 32px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
+                box-shadow 0.4s cubic-bezier(0.16,1,0.3,1),
+                border-color 0.4s ease;
+  }
+
+  .xlink-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .xlink-card:hover {
+    border-color: rgba(0,229,255,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    transform: translateY(-2px);
+  }
+
+  .xlink-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--accent-glow);
+    border: 1px solid rgba(0,229,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .xlink-card h3 {
+    font-family: var(--font-headline);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .xlink-card p {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+
+  .xlink-arrow {
+    color: var(--accent);
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    font-family: var(--font-mono);
-    font-size: 0.9375rem;
-    color: var(--accent);
-    text-decoration: none;
-    padding: 12px 24px;
-    border: 1px solid var(--accent);
-    border-radius: 12px;
-    transition: background 0.3s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: transform 0.2s ease;
   }
 
-  .btn-disclosure:hover {
-    background: var(--accent-glow);
-    box-shadow: 0 0 24px var(--accent-glow);
+  .xlink-card:hover .xlink-arrow {
+    transform: translateX(4px);
   }
 
-  .disclosure-note {
-    font-family: var(--font-body);
-    font-size: 0.75rem;
-    color: var(--text-tertiary);
-    margin-top: 12px;
-    line-height: 1.6;
-  }
-
-  /* === CTA === */
-  .security-cta {
-    font-family: var(--font-headline);
-    font-size: 0.8125rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    padding: 0.75rem 2rem;
-    border-radius: 12px;
-    color: #fff;
-    text-decoration: none;
-    display: inline-block;
-  }
-
-  /* === PRINT === */
+  /* === PRINT / MOTION === */
   @media print {
-    .shield-container, .trust-strip { display: none !important; }
-    .pillar-details { max-height: none !important; padding: 0 28px 28px !important; }
+    .sec-hero-visual, .stats-strip { display: none !important; }
     .sec-hero { min-height: auto; padding: 40px 20px; }
-    .timeline-upcoming { opacity: 1; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .shield-ring, .shield-pulse { animation: none !important; }
-    .pillar-card, .timeline-item { transition: none !important; }
+    .radar-sweep { animation: none !important; }
+    .radar-blip { animation: none !important; opacity: 0.6; }
+    .uc-card, .diff-card, .step-card, .xlink-card { transition: none !important; }
   }
 </style>
-
-<script>
-  // Expandable pillar cards
-  document.querySelectorAll('.pillar-card').forEach(card => {
-    const header = card.querySelector('.pillar-header');
-    const toggle = card.querySelector('.pillar-toggle');
-    const details = card.querySelector('.pillar-details');
-
-    if (header && toggle && details) {
-      header.addEventListener('click', () => {
-        const isExpanded = card.classList.contains('expanded');
-        card.classList.toggle('expanded');
-        toggle.setAttribute('aria-expanded', String(!isExpanded));
-        details.setAttribute('aria-hidden', String(isExpanded));
-      });
-    }
-  });
-</script>

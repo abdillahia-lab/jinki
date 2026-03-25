@@ -1,0 +1,869 @@
+---
+/*
+  Security Architecture — Jinki Aerial Intelligence
+  Security architecture page with animated shield hero, expandable pillar cards,
+  compliance roadmap timeline, responsible disclosure, and trust indicators.
+*/
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const pillars = [
+  {
+    icon: 'encrypted',
+    title: 'Encryption',
+    summary: 'AES-256 at rest, TLS 1.3 in transit. Zero-trust architecture.',
+    details: 'All data is encrypted using AES-256 at rest and TLS 1.3 for data in transit. Encryption keys are managed through cloud-provider KMS with automated rotation policies. Our architecture follows zero-trust principles — client data is logically isolated and access requires explicit authorization at every layer.',
+    color: '#00E5FF',
+  },
+  {
+    icon: 'admin_panel_settings',
+    title: 'Access Control',
+    summary: 'RBAC with least privilege. MFA mandatory, no exceptions.',
+    details: 'Role-based access control with the principle of least privilege enforced at every layer. Multi-factor authentication is mandatory across all systems. Every action is logged, timestamped, and available for client audit review. Session management includes automatic timeouts and device trust verification.',
+    color: '#7B61FF',
+  },
+  {
+    icon: 'cloud_done',
+    title: 'Infrastructure',
+    summary: 'Hardened cloud architecture with network segmentation.',
+    details: 'Our infrastructure runs on hardened cloud architecture with strict network segmentation. Automated vulnerability scanning runs continuously, and all systems are patched against emerging threats promptly upon disclosure. Our architecture is designed for resilience and disaster recovery.',
+    color: '#34D399',
+  },
+  {
+    icon: 'monitoring',
+    title: 'Monitoring',
+    summary: 'Centralized logging with anomaly detection and alerting.',
+    details: 'Security monitoring through centralized logging with anomaly detection. Automated alerting triggers on detection of suspicious activity. Security events are triaged by severity with defined escalation paths. Regular security reviews ensure our detection capabilities evolve with the threat landscape.',
+    color: '#FF8C00',
+  },
+  {
+    icon: 'verified_user',
+    title: 'Compliance',
+    summary: 'SOC 2 Type I targeted Q3 2026. NIST 800-53 aligned.',
+    details: 'Controls mapped to NIST 800-53 framework with SOC 2 Type I preparation underway. All engagements operate under NDA by default. We align with the frameworks your compliance team already trusts — and we publish our roadmap so you can track our progress.',
+    color: '#00D4FF',
+  },
+  {
+    icon: 'emergency',
+    title: 'Incident Response',
+    summary: 'Documented IR plan with defined SLAs and client notification.',
+    details: 'Documented incident response plan with defined notification procedures. Clients are notified promptly upon confirmation of any security incident. Post-incident reviews produce actionable improvements. Our founder brings an enterprise security background with hands-on incident response experience.',
+    color: '#FF6B9D',
+  },
+];
+
+const milestones = [
+  { date: 'Q1 2026', title: 'Security Foundation', desc: 'NIST 800-53 control mapping and gap analysis completed.', status: 'complete' },
+  { date: 'Q2 2026', title: 'SOC 2 Type I', desc: 'Assessor selection and formal audit engagement.', status: 'active' },
+  { date: 'Q3 2026', title: 'Penetration Testing', desc: 'Annual third-party penetration test and remediation cycle.', status: 'upcoming' },
+  { date: 'Q4 2026', title: 'SOC 2 Type II', desc: 'Observation period begins for Type II certification.', status: 'upcoming' },
+  { date: 'Q1 2027', title: 'Type II Certification', desc: 'Targeted SOC 2 Type II report issuance.', status: 'upcoming' },
+];
+
+const trustIndicators = [
+  { label: 'Encryption Standard', value: 'AES-256 / TLS 1.3', icon: 'lock' },
+  { label: 'Availability', value: 'High-availability design', icon: 'speed' },
+  { label: 'Data Retention', value: 'Client-defined', icon: 'delete_sweep' },
+  { label: 'Incident Response', value: '< 24h notification', icon: 'notification_important' },
+  { label: 'Access Logging', value: 'Comprehensive', icon: 'history' },
+  { label: 'Key Rotation', value: 'Quarterly', icon: 'autorenew' },
+];
+---
+
+<Layout ogImage="/images/og-security-page.png" title="Data Security — Jinki Aerial Intelligence" description="How Jinki protects your data. AES-256 encryption, SOC 2 preparation, NIST 800-53 alignment, zero-trust architecture, and NDA-by-default engagements." jsonLd={{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Data Security",
+  "description": "Jinki security architecture: AES-256 encryption, NIST 800-53 alignment, SOC 2 Type I preparation, and zero-trust data handling.",
+  "publisher": { "@type": "Organization", "name": "Jinki Aerial Intelligence" }
+}}>
+  <Nav />
+  <main id="main-content">
+
+    <!-- Shield Hero -->
+    <section class="sec-hero" aria-label="Security Architecture">
+      <div aria-hidden="true" style="position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 30%,rgba(0,229,255,0.06) 0%,transparent 55%),radial-gradient(ellipse at 30% 70%,rgba(123,97,255,0.04) 0%,transparent 50%);filter:blur(60px);"></div>
+      <div class="sec-hero-inner">
+        <!-- Animated Shield -->
+        <div class="shield-container reveal" aria-hidden="true">
+          <div class="shield-ring shield-ring-1"></div>
+          <div class="shield-ring shield-ring-2"></div>
+          <div class="shield-ring shield-ring-3"></div>
+          <div class="shield-core">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="sec-hero-copy">
+          <div class="vert-eyebrow reveal reveal-delay-1">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Security</span>
+          </div>
+          <h1 class="reveal reveal-delay-2">Security Is Not a Feature.<br/><span class="gradient-text-cyan">It's the Foundation.</span></h1>
+          <p class="sec-hero-sub reveal reveal-delay-3">
+            Founded by a security professional with deep enterprise experience. Data
+            protection, access control, and operational security are embedded
+            in every layer of how we operate.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust Indicators Strip -->
+    <section class="trust-strip" aria-label="Trust Indicators">
+      <div class="trust-strip-inner">
+        {trustIndicators.map((item, i) => (
+          <div class={`trust-item reveal reveal-delay-${(i % 4) + 1}`}>
+            <span class="material-symbols-outlined trust-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{item.icon}</span>
+            <div class="trust-text">
+              <span class="trust-value">{item.value}</span>
+              <span class="trust-label">{item.label}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Security Pillars -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Security Pillars">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Architecture</span>
+          </div>
+          <h2>Six Pillars of Protection</h2>
+          <p class="section-subtitle">
+            Every engagement is governed by a security architecture designed for
+            enterprise-grade requirements.
+          </p>
+        </div>
+        <div class="pillars-grid">
+          {pillars.map((pillar, i) => (
+            <div class={`pillar-card reveal reveal-delay-${(i % 3) + 1}`} data-pillar-index={i}>
+              <div class="pillar-header">
+                <div class="pillar-icon-wrap" style={`background: ${pillar.color}15; border-color: ${pillar.color}30;`}>
+                  <span class="material-symbols-outlined pillar-icon" style={`color: ${pillar.color}; font-variation-settings: 'FILL' 1;`} aria-hidden="true">{pillar.icon}</span>
+                </div>
+                <div class="pillar-title-area">
+                  <h3>{pillar.title}</h3>
+                  <p class="pillar-summary">{pillar.summary}</p>
+                </div>
+                <button class="pillar-toggle" aria-expanded="false" aria-label={`Expand ${pillar.title} details`}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+              </div>
+              <div class="pillar-details" aria-hidden="true">
+                <p>{pillar.details}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Compliance Roadmap -->
+    <section class="section" aria-label="Compliance Roadmap">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="vert-eyebrow">
+            <span class="vert-eyebrow-line"></span>
+            <span class="vert-eyebrow-text">Compliance</span>
+          </div>
+          <h2>SOC 2 Compliance Roadmap</h2>
+          <p class="section-subtitle">
+            Our path to SOC 2 Type II certification with transparent milestones.
+          </p>
+        </div>
+        <div class="timeline">
+          {milestones.map((ms, i) => (
+            <div class={`timeline-item timeline-${ms.status} reveal reveal-delay-${(i % 4) + 1}`}>
+              <div class="timeline-marker">
+                {ms.status === 'complete' && (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                )}
+                {ms.status === 'active' && (
+                  <span class="timeline-active-dot"></span>
+                )}
+              </div>
+              <div class="timeline-content">
+                <span class="timeline-date">{ms.date}</span>
+                <h3>{ms.title}</h3>
+                <p>{ms.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Responsible Disclosure -->
+    <section class="section" style="background: var(--surface-dim);" aria-label="Responsible Disclosure">
+      <div class="section-inner">
+        <div class="disclosure-card reveal">
+          <div class="disclosure-icon-area" aria-hidden="true">
+            <span class="material-symbols-outlined" style="font-size: 48px; color: var(--accent); font-variation-settings: 'FILL' 1;">bug_report</span>
+          </div>
+          <div class="disclosure-content">
+            <h2>Responsible Disclosure</h2>
+            <p>
+              We value the security research community. If you discover a vulnerability
+              in our systems, we encourage responsible disclosure. We commit to:
+            </p>
+            <ul class="disclosure-list">
+              <li>Acknowledging your report within 48 hours</li>
+              <li>Providing a timeline for remediation</li>
+              <li>Recognizing your contribution (with your permission)</li>
+              <li>No legal action against good-faith researchers</li>
+            </ul>
+            <div class="disclosure-cta">
+              <a href="mailto:security@jinki.ai" class="btn-disclosure">
+                <span class="material-symbols-outlined" style="font-size: 18px; font-variation-settings: 'FILL' 1;" aria-hidden="true">mail</span>
+                security@jinki.ai
+              </a>
+              <p class="disclosure-note">Please include detailed steps to reproduce the issue and allow reasonable time for remediation before public disclosure.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security Brief Download -->
+        <div class="reveal" style="text-align: center; margin-top: 48px;">
+          <a href="/docs/jinki-security-brief.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download Jinki security architecture brief PDF" style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 12px; background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.2); color: var(--accent); text-decoration: none; font-family: var(--font-label); font-size: 0.875rem; font-weight: 600; transition: background 0.2s ease, border-color 0.2s ease;">
+            <span class="material-symbols-outlined" style="font-size: 20px; font-variation-settings: 'FILL' 1;" aria-hidden="true">shield</span>
+            Download Security Brief (PDF)
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section" aria-label="Request Security Review">
+      <div class="section-inner" style="text-align: center; max-width: 640px;">
+        <div class="reveal">
+          <h2>Need Our Security Documentation?</h2>
+          <p class="section-subtitle" style="margin: 16px auto 32px;">
+            We provide detailed security architecture documentation, compliance
+            attestations, and data handling procedures under NDA.
+          </p>
+          <a href="/#lead-gen" class="btn-premium security-cta">Request Security Review</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* === SHIELD HERO === */
+  .sec-hero {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 140px clamp(20px, 5vw, 80px) 80px;
+    text-align: center;
+    background: var(--surface-container-lowest);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sec-hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 600px;
+    background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .sec-hero-inner {
+    max-width: 800px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .shield-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 40px;
+  }
+
+  .shield-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .shield-ring-1 {
+    width: 120px;
+    height: 120px;
+    border-color: rgba(0, 229, 255, 0.15);
+    animation: shield-pulse 3s ease-in-out infinite;
+  }
+
+  .shield-ring-2 {
+    width: 96px;
+    height: 96px;
+    border-color: rgba(0, 229, 255, 0.2);
+    animation: shield-pulse 3s ease-in-out infinite 0.5s;
+  }
+
+  .shield-ring-3 {
+    width: 72px;
+    height: 72px;
+    border-color: rgba(0, 229, 255, 0.3);
+    animation: shield-pulse 3s ease-in-out infinite 1s;
+  }
+
+  @keyframes shield-pulse {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+  }
+
+  .shield-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    background: var(--accent-glow);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 40px rgba(0, 229, 255, 0.15);
+  }
+
+  .sec-hero h1 {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4vw + 0.5rem, 3.25rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+  }
+
+  .gradient-text-cyan {
+    background: linear-gradient(135deg, #00E5FF, #00a8b5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .sec-hero-sub {
+    font-size: clamp(1rem, 1.2vw + 0.5rem, 1.125rem);
+    max-width: 620px;
+    margin: 0 auto;
+    line-height: 1.75;
+    color: var(--text-secondary);
+  }
+
+  /* === EYEBROW === */
+  .vert-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    justify-content: center;
+  }
+
+  .section-header .vert-eyebrow {
+    justify-content: flex-start;
+  }
+
+  .vert-eyebrow-line {
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .vert-eyebrow-text {
+    font-family: var(--font-label);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--accent);
+  }
+
+  /* === SECTIONS === */
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+
+  @media (min-width: 768px) {
+    .section { padding: 6rem clamp(20px, 5vw, 80px); }
+  }
+
+  .section-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    margin-bottom: 56px;
+  }
+
+  .section-header h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.15;
+    margin-top: 8px;
+  }
+
+  .section-subtitle {
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 640px;
+    margin-top: 16px;
+  }
+
+  .section h2 { margin-bottom: 0; }
+
+  /* === TRUST INDICATORS === */
+  .trust-strip {
+    background: var(--surface-container-low);
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 32px clamp(20px, 5vw, 80px);
+    overflow-x: auto;
+  }
+
+  .trust-strip-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 1024px) {
+    .trust-strip-inner { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 640px) {
+    .trust-strip-inner { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .trust-icon {
+    color: var(--accent);
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .trust-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .trust-value {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+
+  .trust-label {
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+  }
+
+  /* === PILLAR CARDS === */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .pillars-grid { grid-template-columns: 1fr; }
+  }
+
+  .pillar-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                border-color 0.4s ease;
+    position: relative;
+  }
+
+  .pillar-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  .pillar-card:hover {
+    border-color: rgba(0, 229, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 0 20px var(--accent-glow);
+  }
+
+  .pillar-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 28px;
+    cursor: pointer;
+  }
+
+  .pillar-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .pillar-icon {
+    font-size: 22px;
+  }
+
+  .pillar-title-area {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .pillar-title-area h3 {
+    font-family: var(--font-headline);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .pillar-summary {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .pillar-toggle {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 8px;
+    transition: color 0.2s ease, background 0.2s ease;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .pillar-toggle:hover {
+    color: var(--accent);
+    background: var(--accent-glow);
+  }
+
+  .pillar-toggle svg {
+    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+
+  .pillar-card.expanded .pillar-toggle svg {
+    transform: rotate(180deg);
+  }
+
+  .pillar-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+    padding: 0 28px;
+  }
+
+  .pillar-card.expanded .pillar-details {
+    max-height: 300px;
+    padding: 0 28px 28px;
+  }
+
+  .pillar-details p {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    border-top: 1px solid var(--glass-border);
+    padding-top: 20px;
+  }
+
+  /* === TIMELINE === */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+    max-width: 700px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--glass-border);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+  }
+
+  .timeline-item:last-child { margin-bottom: 0; }
+
+  .timeline-marker {
+    position: absolute;
+    left: -40px;
+    top: 4px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--surface-container-low);
+    border: 2px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .timeline-complete .timeline-marker {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #050508;
+  }
+
+  .timeline-active .timeline-marker {
+    border-color: var(--accent);
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.15);
+  }
+
+  .timeline-active-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: timeline-blink 1.5s ease-in-out infinite;
+  }
+
+  @keyframes timeline-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .timeline-date {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .timeline-content h3 {
+    font-family: var(--font-headline);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .timeline-content p {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
+  .timeline-upcoming { opacity: 0.55; }
+
+  /* === DISCLOSURE === */
+  .disclosure-card {
+    display: flex;
+    gap: 40px;
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .disclosure-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glossy-shine);
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  @media (max-width: 768px) {
+    .sec-hero { min-height: auto !important; }
+    .disclosure-card { flex-direction: column; gap: 24px; padding: 32px 24px; }
+  }
+
+  .disclosure-icon-area {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 16px;
+    background: var(--accent-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .disclosure-content h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+
+  .disclosure-content > p {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 20px;
+  }
+
+  .disclosure-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .disclosure-list li {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding-left: 24px;
+    position: relative;
+  }
+
+  .disclosure-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+  .btn-disclosure {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    color: var(--accent);
+    text-decoration: none;
+    padding: 12px 24px;
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    transition: background 0.3s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+
+  .btn-disclosure:hover {
+    background: var(--accent-glow);
+    box-shadow: 0 0 24px var(--accent-glow);
+  }
+
+  .disclosure-note {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+
+  /* === CTA === */
+  .security-cta {
+    font-family: var(--font-headline);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.75rem 2rem;
+    border-radius: 12px;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  /* === PRINT === */
+  @media print {
+    .shield-container, .trust-strip { display: none !important; }
+    .pillar-details { max-height: none !important; padding: 0 28px 28px !important; }
+    .sec-hero { min-height: auto; padding: 40px 20px; }
+    .timeline-upcoming { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .shield-ring, .shield-pulse { animation: none !important; }
+    .pillar-card, .timeline-item { transition: none !important; }
+  }
+</style>
+
+<script>
+  // Expandable pillar cards
+  document.querySelectorAll('.pillar-card').forEach(card => {
+    const header = card.querySelector('.pillar-header');
+    const toggle = card.querySelector('.pillar-toggle');
+    const details = card.querySelector('.pillar-details');
+
+    if (header && toggle && details) {
+      header.addEventListener('click', () => {
+        const isExpanded = card.classList.contains('expanded');
+        card.classList.toggle('expanded');
+        toggle.setAttribute('aria-expanded', String(!isExpanded));
+        details.setAttribute('aria-hidden', String(isExpanded));
+      });
+    }
+  });
+</script>
