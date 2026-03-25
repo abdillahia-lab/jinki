@@ -720,7 +720,7 @@ const storyBlocks = [
     border-radius: 16px;
   }
 
-  .team-card:hover,
+  .team-card-wrapper:hover .team-card,
   .team-card:focus,
   .team-card:focus-visible {
     transform: rotateY(180deg);
@@ -1183,7 +1183,7 @@ const storyBlocks = [
 
   @media (prefers-reduced-motion: reduce) {
     .team-card { transition: none !important; }
-    .team-card:hover, .team-card:focus { transform: none !important; }
+    .team-card-wrapper:hover .team-card, .team-card:focus { transform: none !important; }
     .pillar-card, .value-card { transition: none !important; }
   }
 </style>
