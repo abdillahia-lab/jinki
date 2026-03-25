@@ -9,6 +9,7 @@ const verticals = [
     title: "Data Centers",
     icon: "dns",
     img: "/images/dc-rooftop-aerial.jpg",
+    webp: "/images/dc-rooftop-aerial.webp",
     imgAlt: "Aerial view of a commercial building rooftop with HVAC equipment",
     gradient: "",
     desc: "Thermal scans that detect hotspots within 0.5\u00B0C accuracy, pinpointing cooling failures and roof damage before they cause unplanned downtime.",
@@ -27,6 +28,7 @@ const verticals = [
     title: "Perimeter Security",
     icon: "security",
     img: "/images/facility-night-aerial.jpg",
+    webp: "/images/facility-night-aerial.webp",
     imgAlt: "Industrial facility complex illuminated at night with perimeter lighting",
     gradient: "",
     desc: "Persistent aerial monitoring covering 500+ acre perimeters with thermal intrusion detection and autonomous response capability.",
@@ -71,13 +73,16 @@ const verticals = [
       {verticals.map((v) => (
         <a href={v.link} class="group relative rounded-xl overflow-hidden vertical-card reveal" data-tilt style={`aspect-ratio: 3 / 4.2; display: block; text-decoration: none;${v.gradient ? ` background: ${v.gradient};` : ''}`}>
           {v.img ? (
-            <img
-              src={v.img}
-              alt={v.imgAlt || v.title}
-              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              loading="lazy"
-              decoding="async"
-            />
+            <picture>
+              {v.webp && <source srcset={v.webp} type="image/webp" />}
+              <img
+                src={v.img}
+                alt={v.imgAlt || v.title}
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
           ) : (
             <div class="absolute inset-0 vertical-card-pattern" aria-hidden="true"></div>
           )}

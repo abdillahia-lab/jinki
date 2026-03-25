@@ -192,16 +192,14 @@ const orgSchema = {
               }
             });
           }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-          reveals.forEach(function(el) { observer.observe(el); });
-          // Immediate reveal for above-fold elements (prevents blank hero in light mode)
-          requestAnimationFrame(function() {
-            reveals.forEach(function(el) {
-              var rect = el.getBoundingClientRect();
-              if (rect.top < window.innerHeight + 100) {
-                el.classList.add('revealed');
-                observer.unobserve(el);
-              }
-            });
+          // Immediate reveal for above-fold — runs synchronously before first paint
+          reveals.forEach(function(el) {
+            var rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight + 100) {
+              el.classList.add('revealed');
+            } else {
+              observer.observe(el);
+            }
           });
         }
 
