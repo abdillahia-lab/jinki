@@ -1310,6 +1310,7 @@ const culturePoints = [
           if (d.success) {
             form.style.display = 'none';
             document.getElementById('apply-success').style.display = 'block';
+            setTimeout(function() { closeApplyModal(); }, 3000);
           } else {
             btn.disabled = false;
             btn.textContent = 'Submit Application';
