@@ -12,6 +12,7 @@ const verticals = [
     webp: "/images/dc-rooftop-aerial.webp",
     imgAlt: "Aerial view of a commercial building rooftop with HVAC equipment",
     gradient: "",
+    accent: "#00E5FF",
     desc: "Thermal scans that detect hotspots within 0.5\u00B0C accuracy, pinpointing cooling failures and roof damage before they cause unplanned downtime.",
     link: "/verticals/data-centers",
   },
@@ -21,6 +22,7 @@ const verticals = [
     img: "/images/energy-powerlines.jpg",
     imgAlt: "Power transmission lines and towers against a blue sky",
     gradient: "",
+    accent: "#FF8C00",
     desc: "Condition assessments for power lines, substations, and solar arrays \u2014 inspecting 50+ miles of corridor per day without service interruption.",
     link: "/verticals/energy-grid",
   },
@@ -31,6 +33,7 @@ const verticals = [
     webp: "/images/facility-night-aerial.webp",
     imgAlt: "Industrial facility complex illuminated at night with perimeter lighting",
     gradient: "",
+    accent: "#7B61FF",
     desc: "Persistent aerial monitoring covering 500+ acre perimeters with thermal intrusion detection and autonomous response capability.",
     link: "/verticals/security",
   },
@@ -40,6 +43,7 @@ const verticals = [
     img: "/images/agriculture-fields.jpg",
     imgAlt: "Aerial view of agricultural fields showing crop patterns",
     gradient: "",
+    accent: "#34D399",
     desc: "Thermal crop stress detection, irrigation analysis, and yield intelligence across thousands of acres \u2014 identifying water stress and field issues before they impact harvest.",
     link: "/verticals/agriculture",
   },
@@ -71,7 +75,7 @@ const verticals = [
     <!-- 4-column grid -->
     <div class="verticals-grid">
       {verticals.map((v) => (
-        <a href={v.link} class="group relative rounded-xl overflow-hidden vertical-card reveal" data-tilt style={`aspect-ratio: 3 / 4.2; display: block; text-decoration: none;${v.gradient ? ` background: ${v.gradient};` : ''}`}>
+        <a href={v.link} class="group relative rounded-xl overflow-hidden vertical-card reveal" data-tilt style={`--card-accent: ${v.accent}; aspect-ratio: 3 / 4.2; display: block; text-decoration: none;${v.gradient ? ` background: ${v.gradient};` : ''}`}>
           {v.img ? (
             <picture>
               {v.webp && <source srcset={v.webp} type="image/webp" />}
@@ -139,17 +143,32 @@ const verticals = [
                 border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
+  /* Top accent line */
   .vertical-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    background: linear-gradient(90deg, transparent, var(--card-accent, var(--accent)), transparent);
     opacity: 0;
     z-index: 20;
     transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
+  /* Bottom accent border on hover */
+  .vertical-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--accent));
+    opacity: 0;
+    z-index: 20;
+    transform: scaleX(0);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
   .vertical-card:hover::before { opacity: 1; }
+  .vertical-card:hover::after { opacity: 1; transform: scaleX(1); }
   .vertical-card:hover {
     transform: scale(1.02) translateY(-6px);
     border-color: rgba(0, 229, 255, 0.2);
@@ -164,7 +183,7 @@ const verticals = [
   .arrow-icon { transition: transform 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)); }
 
   .card-overlay {
-    background: linear-gradient(to top, rgba(5,5,8,0.97) 0%, rgba(5,5,8,0.85) 30%, rgba(5,5,8,0.4) 60%, rgba(5,5,8,0.1) 85%, rgba(5,5,8,0.05) 100%);
+    background: linear-gradient(to top, rgba(5,5,8,0.98) 0%, rgba(5,5,8,0.92) 25%, rgba(5,5,8,0.65) 50%, rgba(5,5,8,0.25) 70%, rgba(5,5,8,0.08) 85%, rgba(5,5,8,0.02) 100%);
   }
 
   .card-desc {
@@ -180,10 +199,16 @@ const verticals = [
     transition: opacity 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
                 transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
   }
+  .card-cta .material-symbols-outlined {
+    transition: transform 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+  }
   .vertical-card:hover .card-cta,
   .vertical-card:focus-within .card-cta {
     opacity: 1;
     transform: translateY(0);
+  }
+  .vertical-card:hover .card-cta .material-symbols-outlined {
+    transform: translateX(4px);
   }
 
   @media (max-width: 767px) {
@@ -210,11 +235,11 @@ const verticals = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .vertical-card, .card-cta, .arrow-icon { transition: none; }
+    .vertical-card, .vertical-card::before, .vertical-card::after, .card-cta, .card-cta .material-symbols-outlined, .arrow-icon { transition: none; }
     .vertical-card img { transition: none; }
   }
 
   :global([data-theme="light"]) .card-overlay {
-    background: linear-gradient(to top, rgba(10,12,14,0.95) 0%, rgba(10,12,14,0.75) 35%, rgba(10,12,14,0.15) 65%, transparent 100%);
+    background: linear-gradient(to top, rgba(10,12,14,0.97) 0%, rgba(10,12,14,0.88) 25%, rgba(10,12,14,0.5) 50%, rgba(10,12,14,0.12) 70%, transparent 100%);
   }
 </style>

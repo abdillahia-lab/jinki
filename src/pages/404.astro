@@ -30,7 +30,13 @@ import Footer from '../components/Footer.astro';
       <div class="radar-blip"></div>
       <div class="radar-blip"></div>
       <div class="radar-blip"></div>
+      <div class="radar-blip"></div>
+      <div class="radar-blip"></div>
+      <div class="radar-blip"></div>
     </div>
+
+    <!-- Grid line pulse -->
+    <div class="grid-pulse" aria-hidden="true"></div>
 
     <!-- Glitch 404 -->
     <div class="glitch-wrap">
@@ -247,6 +253,9 @@ import Footer from '../components/Footer.astro';
   .radar-blip:nth-child(8) { top: 25%; left: 60%; animation-delay: 0.5s; }
   .radar-blip:nth-child(9) { top: 70%; left: 35%; animation-delay: 1.2s; }
   .radar-blip:nth-child(10) { top: 40%; left: 75%; animation-delay: 2.1s; }
+  .radar-blip:nth-child(11) { top: 15%; left: 30%; animation-delay: 0.8s; }
+  .radar-blip:nth-child(12) { top: 60%; left: 70%; animation-delay: 1.7s; }
+  .radar-blip:nth-child(13) { top: 80%; left: 55%; animation-delay: 2.5s; }
   @keyframes blipFade {
     0% { opacity: 0; transform: scale(0); }
     20% { opacity: 0.7; transform: scale(1); }
@@ -519,6 +528,48 @@ import Footer from '../components/Footer.astro';
     );
   }
 
+  /* Suggestion card stagger entrance */
+  .suggestion-card {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: cardEnter 0.4s ease forwards;
+  }
+  .suggestion-card:nth-child(1) { animation-delay: 0ms; }
+  .suggestion-card:nth-child(2) { animation-delay: 30ms; }
+  .suggestion-card:nth-child(3) { animation-delay: 60ms; }
+  .suggestion-card:nth-child(4) { animation-delay: 90ms; }
+  .suggestion-card:nth-child(5) { animation-delay: 120ms; }
+  .suggestion-card:nth-child(6) { animation-delay: 150ms; }
+  @keyframes cardEnter {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Grid line pulse — horizontal line sweeps down */
+  .grid-pulse {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .grid-pulse::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 10%, var(--accent) 50%, transparent 90%);
+    opacity: 0;
+    animation: gridPulseSweep 6s ease-in-out infinite;
+  }
+  @keyframes gridPulseSweep {
+    0% { top: -1px; opacity: 0; }
+    5% { opacity: 0.4; }
+    50% { opacity: 0.15; }
+    95% { opacity: 0; }
+    100% { top: 100%; opacity: 0; }
+  }
+
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -526,6 +577,8 @@ import Footer from '../components/Footer.astro';
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+    .suggestion-card { opacity: 1; transform: none; }
+    .grid-pulse::before { animation: none; opacity: 0; }
   }
 
   /* Focus */

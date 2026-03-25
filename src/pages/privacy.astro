@@ -127,8 +127,12 @@ const sections = [
           <span class="vert-eyebrow-text">Legal</span>
         </div>
         <h1 class="reveal reveal-delay-1">Privacy Policy</h1>
+        <div class="last-updated-badge reveal reveal-delay-2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Last updated {lastUpdated}
+        </div>
         <p class="legal-hero-sub reveal reveal-delay-2">
-          Effective {lastUpdated}. This policy describes how Jinki Aerial Intelligence
+          This policy describes how Jinki Aerial Intelligence
           collects, uses, and protects your information.
         </p>
         <div class="legal-meta reveal reveal-delay-3">
@@ -450,11 +454,20 @@ const sections = [
 
   .legal-section {
     padding: 40px 0;
-    border-bottom: 1px solid var(--glass-border);
+    border-bottom: none;
   }
 
   .legal-section:first-child { padding-top: 0; }
-  .legal-section:last-of-type { border-bottom: none; }
+
+  /* Gradient section divider */
+  .legal-section + .legal-section::before {
+    content: '';
+    display: block;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--glass-border) 20%, var(--accent) 50%, var(--glass-border) 80%, transparent);
+    opacity: 0.5;
+    margin-bottom: 40px;
+  }
 
   .legal-section h2 {
     font-family: var(--font-headline);
@@ -463,6 +476,8 @@ const sections = [
     color: var(--text-primary);
     line-height: 1.2;
     margin-bottom: 20px;
+    padding-left: 16px;
+    border-left: 3px solid var(--accent);
   }
 
   /* === KEY POINTS BOX === */
@@ -576,6 +591,27 @@ const sections = [
     font-size: 0.8125rem;
     color: var(--text-tertiary);
     line-height: 1.8;
+  }
+
+  /* === LAST UPDATED BADGE === */
+  .last-updated-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .last-updated-badge svg {
+    color: var(--accent);
+    flex-shrink: 0;
   }
 
   /* === PRINT === */

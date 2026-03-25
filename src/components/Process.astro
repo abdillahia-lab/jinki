@@ -52,14 +52,16 @@ const steps = [
       {steps.map((step, i) => (
         <div class={`process-step reveal ${i > 0 ? `reveal-delay-${i}` : ''}`}>
           <div class="process-step-header">
-            <span class="process-num">{step.num}</span>
+            <span class="process-num-circle" aria-hidden="true">{step.num}</span>
             <span class="material-symbols-outlined process-icon" aria-hidden="true">{step.icon}</span>
           </div>
           <h3 class="process-title">{step.title}</h3>
           <p class="process-desc">{step.desc}</p>
           {i < steps.length - 1 && (
             <div class="process-connector" aria-hidden="true">
-              <span class="material-symbols-outlined" style="font-size: 16px; color: var(--accent); opacity: 0.4;">arrow_forward</span>
+              <svg width="48" height="2" viewBox="0 0 48 2" class="process-connector-line">
+                <line x1="0" y1="1" x2="48" y2="1" stroke="var(--accent)" stroke-width="2" stroke-dasharray="48" stroke-dashoffset="48" stroke-linecap="round"/>
+              </svg>
             </div>
           )}
         </div>
@@ -126,13 +128,13 @@ const steps = [
     margin-bottom: 1.25rem;
   }
 
-  .process-num {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--accent);
-    opacity: 0.6;
-    letter-spacing: 0.05em;
+  .process-num-circle {
+    width: 2.5rem; height: 2.5rem; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700;
+    color: #050508; letter-spacing: 0.05em;
+    background: conic-gradient(from 135deg, var(--accent), #7B61FF, #34d399, var(--accent));
+    flex-shrink: 0;
   }
 
   .process-icon {
@@ -169,16 +171,19 @@ const steps = [
       top: 50%;
       transform: translateY(-50%);
       z-index: 2;
-      animation: connectorPulse 2s ease-in-out infinite;
     }
   }
-  @keyframes connectorPulse {
-    0%, 100% { opacity: 0.4; transform: translateY(-50%) translateX(0); }
-    50% { opacity: 0.8; transform: translateY(-50%) translateX(3px); }
+  .process-connector-line line {
+    transition: stroke-dashoffset 0.8s ease;
+  }
+  .process-step.revealed .process-connector-line line {
+    stroke-dashoffset: 0;
   }
 
   @media (prefers-reduced-motion: reduce) {
     .process-step { transition: none; }
+    .process-connector-line line { transition: none; stroke-dashoffset: 0; }
+    .deliverable-tag { transition: none; }
   }
 
   .deliverable-tag {
@@ -195,6 +200,15 @@ const steps = [
     letter-spacing: 0.03em;
     color: var(--accent);
     white-space: nowrap;
+    transition: transform 0.25s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                box-shadow 0.25s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                border-color 0.25s ease;
+    cursor: default;
+  }
+  .deliverable-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.15);
+    border-color: rgba(0, 229, 255, 0.3);
   }
 
   .sample-report-link:hover {
@@ -202,10 +216,17 @@ const steps = [
     border-color: rgba(0, 229, 255, 0.3);
   }
 
+  :global([data-theme="light"]) .process-num-circle {
+    color: #fff;
+  }
   :global([data-theme="light"]) .deliverable-tag {
     background: rgba(0, 131, 143, 0.06);
     border-color: rgba(0, 131, 143, 0.15);
     color: #00838f;
+  }
+  :global([data-theme="light"]) .deliverable-tag:hover {
+    box-shadow: 0 4px 12px rgba(0, 131, 143, 0.12);
+    border-color: rgba(0, 131, 143, 0.3);
   }
 
   :global([data-theme="light"]) .sample-report-link {

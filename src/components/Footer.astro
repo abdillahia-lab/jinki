@@ -102,7 +102,7 @@ const company = [
   <div class="footer-status-bar">
     <div class="footer-status-inner">
       <div class="footer-status-left">
-        <span class="status-dot"></span>
+        <span class="status-dot status-dot--blink"></span>
         <span class="status-label">Jinki Platform</span>
       </div>
       <span class="status-uptime">Ready to Deploy</span>
@@ -173,7 +173,27 @@ const company = [
 </script>
 
 <style>
-  .footer-divider { height: 1px; background: linear-gradient(to right, transparent, var(--border), transparent); }
+  .footer-divider {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 5%,
+      #00E5FF 25%,
+      #7B61FF 50%,
+      transparent 85%
+    );
+    opacity: 0.5;
+  }
+  :global([data-theme="light"]) .footer-divider {
+    background: linear-gradient(
+      to right,
+      transparent 5%,
+      #0891b2 25%,
+      #6d28d9 50%,
+      transparent 85%
+    );
+    opacity: 0.35;
+  }
   .footer-main { position: relative; background: var(--surface-container-lowest); }
   .footer-main::before {
     content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
@@ -192,21 +212,46 @@ const company = [
     background: rgba(52, 211, 153, 0.06);
     border: 1px solid rgba(52, 211, 153, 0.15);
   }
-  .status-dot {
+  /* "Accepting New Clients" badge dot — expanding ring pulse */
+  .footer-status .status-dot {
     width: 6px; height: 6px; border-radius: 50%;
     background: #34D399;
     box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
-    animation: statusPulse 2.5s ease-in-out infinite;
+    position: relative;
+    animation: none;
+    flex-shrink: 0;
   }
-  @keyframes statusPulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 6px rgba(52, 211, 153, 0.4); }
-    50% { opacity: 0.6; box-shadow: 0 0 3px rgba(52, 211, 153, 0.2); }
+  .footer-status .status-dot::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1.5px solid #34D399;
+    animation: dotRingPulse 2.5s ease-out infinite;
+  }
+  @keyframes dotRingPulse {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    60% { transform: scale(2.2); opacity: 0; }
+    100% { transform: scale(2.2); opacity: 0; }
   }
   .status-text {
     font-family: var(--font-mono); font-size: 0.625rem; font-weight: 500;
     letter-spacing: 0.06em; color: #34D399;
   }
-  @media (prefers-reduced-motion: reduce) { .status-dot { animation: none; } }
+
+  /* Status bar dot — blinking */
+  .status-dot--blink {
+    animation: statusBlink 2s steps(1) infinite !important;
+  }
+  @keyframes statusBlink {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(52, 211, 153, 0.6); }
+    50% { opacity: 0.3; box-shadow: 0 0 3px rgba(52, 211, 153, 0.2); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-status .status-dot::after { animation: none; display: none; }
+    .status-dot--blink { animation: none !important; }
+  }
 
   .footer-email-link:hover { color: var(--accent); text-shadow: 0 0 12px rgba(0, 229, 255, 0.3); }
 
@@ -219,7 +264,7 @@ const company = [
     border-radius: 12px; color: var(--text-secondary); background: var(--surface-container-low);
     border: 1px solid var(--glass-border); transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease, transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)); text-decoration: none;
   }
-  .footer-social-btn:hover { color: var(--accent); background: var(--accent-glow); border-color: rgba(0,229,255,0.2); transform: translateY(-3px); }
+  .footer-social-btn:hover { color: var(--accent); background: var(--accent-glow); border-color: rgba(0,229,255,0.2); transform: translateY(-3px) scale(1.08); }
 
   .footer-col-title {
     font-family: var(--font-headline); font-weight: 700; font-size: 0.6875rem;
@@ -234,7 +279,8 @@ const company = [
 
   .footer-newsletter-desc { font-family: var(--font-body); font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px; }
   .footer-input-row { display: flex; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); background: var(--surface-container-low); transition: border-color 0.3s ease; }
-  .footer-input-row:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+  .footer-input-row:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow), inset 0 1px 12px rgba(0, 229, 255, 0.08); }
+  :global([data-theme="light"]) .footer-input-row:focus-within { box-shadow: 0 0 0 3px var(--accent-glow), inset 0 1px 12px rgba(8, 145, 178, 0.06); }
   .footer-email-input { flex: 1; background: transparent; border: none; outline: none; padding: 14px 16px; font-family: var(--font-body); font-size: 1rem; color: var(--text-primary); min-width: 0; min-height: 44px; }
   .footer-email-input::placeholder { color: var(--text-tertiary); }
   .footer-submit-btn { display: flex; align-items: center; justify-content: center; width: 46px; background: var(--accent); color: #050508; border: none; cursor: pointer; transition: background 0.2s ease; flex-shrink: 0; }

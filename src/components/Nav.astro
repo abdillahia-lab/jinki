@@ -135,6 +135,7 @@ const services = [
     border: none;
     cursor: pointer;
     white-space: nowrap;
+    letter-spacing: 0.02em;
   }
   .nav-link:hover {
     color: var(--text-primary);
@@ -332,11 +333,54 @@ const services = [
     backdrop-filter: blur(28px) saturate(1.9);
     -webkit-backdrop-filter: blur(28px) saturate(1.9);
     background: rgba(18, 20, 22, 0.92);
+    border-image: linear-gradient(
+      to right,
+      transparent,
+      rgba(0, 229, 255, 0.25) 30%,
+      rgba(0, 229, 255, 0.4) 50%,
+      rgba(0, 229, 255, 0.25) 70%,
+      transparent
+    ) 1 / 0 0 1px 0;
   }
   :global([data-theme="light"]) .nav-inner.scrolled {
     background: rgba(250, 251, 252, 0.95);
     border-color: rgba(0,0,0,0.08);
     box-shadow: 0 4px 24px rgba(0,0,0,0.06), 0 1px 0 rgba(0,0,0,0.04);
+    border-image: linear-gradient(
+      to right,
+      transparent,
+      rgba(8, 145, 178, 0.2) 30%,
+      rgba(8, 145, 178, 0.35) 50%,
+      rgba(8, 145, 178, 0.2) 70%,
+      transparent
+    ) 1 / 0 0 1px 0;
+  }
+
+  /* CTA shimmer sweep */
+  .nav-cta {
+    position: relative;
+    overflow: hidden;
+  }
+  .nav-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      105deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.4) 50%,
+      transparent 80%
+    );
+    animation: ctaShimmer 4s ease-in-out infinite;
+  }
+  @keyframes ctaShimmer {
+    0%, 85%, 100% { left: -100%; opacity: 0; }
+    88% { opacity: 1; }
+    95% { left: 150%; opacity: 1; }
+    96% { opacity: 0; }
   }
 
   /* ---- Mobile ---- */
@@ -421,6 +465,10 @@ const services = [
     .nav-cta,
     .nav-logo .material-symbols-outlined {
       transition: none !important;
+    }
+    .nav-cta::before {
+      animation: none;
+      display: none;
     }
   }
 </style>

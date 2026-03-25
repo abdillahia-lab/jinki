@@ -235,6 +235,7 @@ h1 {
   letter-spacing: -0.03em;
   color: var(--text-primary);
   text-wrap: balance;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 h2 {
   font-family: var(--font-headline);
@@ -243,6 +244,7 @@ h2 {
   line-height: 1.12;
   letter-spacing: -0.02em;
   color: var(--text-primary);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 h3, h4, h5, h6 {
   font-family: var(--font-headline);
@@ -250,6 +252,12 @@ h3, h4, h5, h6 {
   line-height: 1.2;
   letter-spacing: -0.015em;
   color: var(--text-primary);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Light mode: no heading text-shadow (light backgrounds don't need depth) */
+[data-theme="light"] :is(h1, h2, h3, h4, h5, h6) {
+  text-shadow: none;
 }
 
 p {
@@ -302,7 +310,12 @@ a:visited {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
-  transition: outline-offset 0.15s ease;
+  transition: outline-offset 0.2s var(--ease-out-premium);
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+[data-theme="light"] :focus-visible {
+  box-shadow: 0 0 0 4px var(--accent-glow);
 }
 
 /* Image defaults — prevent layout shift */
@@ -315,16 +328,6 @@ img {
 /* Smooth scroll for anchor links */
 html {
   scroll-padding-top: 5rem;
-}
-
-/* Selection styling */
-::selection {
-  background: rgba(0, 229, 255, 0.2);
-  color: var(--text-primary);
-}
-
-[data-theme="light"] ::selection {
-  background: rgba(0, 131, 143, 0.15);
 }
 
 /* --- List Markers --- */
@@ -528,6 +531,14 @@ html {
 ::-webkit-scrollbar-thumb { background: var(--text-tertiary); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
 
+/* Light mode scrollbar — softer than dark defaults */
+[data-theme="light"] {
+  scrollbar-color: #c4ccce #fafbfc;
+}
+[data-theme="light"] ::-webkit-scrollbar-track { background: #fafbfc; }
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: #c4ccce; }
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #a0acaf; }
+
 /* --- Tabular Numbers (for counters and stats) --- */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
@@ -631,6 +642,52 @@ html {
   }
 }
 
+/* --- Glass Card Utility --- */
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 12px;
+  position: relative;
+  backdrop-filter: blur(20px) saturate(1.6);
+  -webkit-backdrop-filter: blur(20px) saturate(1.6);
+  transition: box-shadow 0.35s var(--ease-out-premium),
+              border-color 0.35s var(--ease-out-premium),
+              transform 0.35s var(--ease-out-premium);
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--glossy-shine);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glass-card:hover {
+  box-shadow: var(--shadow-elevated), 0 0 24px var(--accent-glow);
+  border-color: var(--glass-highlight);
+}
+
+/* --- Gradient Text Utility --- */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent) 0%, #7B61FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent; /* fallback */
+}
+
+[data-theme="light"] .gradient-text {
+  background: linear-gradient(135deg, #006875 0%, #4F46E5 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 /* --- Reduced Motion --- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -644,10 +701,12 @@ html {
 /* --- Selection --- */
 ::selection {
   background: rgba(0, 229, 255, 0.3);
+  color: #050508;
 }
 
 [data-theme="light"] ::selection {
-  background: rgba(0, 131, 143, 0.2);
+  background: rgba(0, 131, 143, 0.25);
+  color: #ffffff;
 }
 
 /* --- Print --- */
