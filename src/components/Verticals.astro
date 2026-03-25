@@ -69,7 +69,7 @@ const verticals = [
     <!-- 4-column grid -->
     <div class="verticals-grid">
       {verticals.map((v) => (
-        <a href={v.link} class="group relative rounded-xl overflow-hidden vertical-card reveal" style={`aspect-ratio: 3 / 4.2; display: block; text-decoration: none;${v.gradient ? ` background: ${v.gradient};` : ''}`}>
+        <a href={v.link} class="group relative rounded-xl overflow-hidden vertical-card reveal" data-tilt style={`aspect-ratio: 3 / 4.2; display: block; text-decoration: none;${v.gradient ? ` background: ${v.gradient};` : ''}`}>
           {v.img ? (
             <img
               src={v.img}
