@@ -321,15 +321,15 @@
     removeQuickReplies();
     addUser(v);
     var lc = v.toLowerCase();
-    if (/scan|assess|evaluation|inspect|one.?time|report/.test(lc)) { showAnswer('Assessment'); return; }
-    if (/deploy|autonom|persistent|dock|continuous|monitor/.test(lc)) { showAnswer('Deployment'); return; }
-    if (/data.?center|hvac|cooling|rooftop|server/.test(lc)) { showAnswer('Data Centers'); return; }
-    if (/energy|power|grid|solar|substation|transmission|utilit/.test(lc)) { showAnswer('Energy'); return; }
-    if (/secur|perime|surveillance|intru|patrol|fence/.test(lc)) { showAnswer('Security'); return; }
-    if (/agri|farm|crop|ndvi|irrigat|field|harvest/.test(lc)) { showAnswer('Agriculture'); return; }
-    if (/thermal|heat|temperature|infrared|hotspot/.test(lc)) { showAnswer('Thermal'); return; }
-    if (/process|how|work|step|engage|what happen/.test(lc)) { showAnswer('Process'); return; }
-    if (/price|cost|pricing|quote|much/.test(lc)) {
+    if (/\b(scan|assess|evaluation|inspect|one.?time|report)\b/.test(lc)) { showAnswer('Assessment'); return; }
+    if (/\b(deploy|autonom|persistent|dock|continuous|monitor)\b/.test(lc)) { showAnswer('Deployment'); return; }
+    if (/data.?center|\b(hvac|cooling|rooftop|server)\b/.test(lc)) { showAnswer('Data Centers'); return; }
+    if (/\b(energy|power|grid|solar|substation|transmission|utilit)/.test(lc)) { showAnswer('Energy'); return; }
+    if (/\b(secur|perime|surveillance|intru|patrol|fence)/.test(lc)) { showAnswer('Security'); return; }
+    if (/\b(agri|farm|crop|ndvi|irrigat|field|harvest)\b/.test(lc)) { showAnswer('Agriculture'); return; }
+    if (/\b(thermal|heat|temperature|infrared|hotspot)\b/.test(lc)) { showAnswer('Thermal'); return; }
+    if (/\b(process|how|work|step|engage)\b|what happen/.test(lc)) { showAnswer('Process'); return; }
+    if (/\b(price|cost|pricing|quote|much)\b/.test(lc)) {
       addBot('We tailor each engagement to your facility\'s specific needs. Our team will provide a custom scope and recommendation.', '#lead-gen', 'Request a demo');
       addQuickReplies(); return;
     }
@@ -349,16 +349,18 @@
     t.style.opacity = '0.5';
     msgs.appendChild(t);
     msgs.scrollTop = msgs.scrollHeight;
-    // Disable input while waiting
     input.disabled = true;
     sendBtn.disabled = true;
     sendBtn.style.opacity = '0.5';
+    var controller = new AbortController();
+    var timeoutId = setTimeout(function() { controller.abort(); }, 15000);
     fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: q })
+      body: JSON.stringify({ message: q }),
+      signal: controller.signal
     })
-    .then(function(r) { return r.json(); })
+    .then(function(r) { clearTimeout(timeoutId); return r.json(); })
     .then(function(d) {
       t.remove();
       input.disabled = false;
@@ -369,13 +371,17 @@
       addBot(reply, '#lead-gen', 'Get Your Facility Report');
       addQuickReplies();
     })
-    .catch(function() {
+    .catch(function(err) {
+      clearTimeout(timeoutId);
       t.remove();
       input.disabled = false;
       sendBtn.disabled = false;
       sendBtn.style.opacity = '1';
       input.focus();
-      addBot('I\'m temporarily unavailable. Please email info@jinki.ai.', '#lead-gen', 'Request a demo');
+      var msg = err && err.name === 'AbortError'
+        ? 'Response took too long. Please try again or email info@jinki.ai.'
+        : 'I\'m temporarily unavailable. Please email info@jinki.ai.';
+      addBot(msg, '#lead-gen', 'Request a demo');
       addQuickReplies();
     });
   }

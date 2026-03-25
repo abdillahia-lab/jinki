@@ -96,7 +96,8 @@ const orgSchema = {
 
     <script is:inline>
       (function() {
-        var stored = localStorage.getItem('jinki-theme');
+        var stored;
+        try { stored = localStorage.getItem('jinki-theme'); } catch(e) {}
         var theme = (stored === 'light' || stored === 'dark') ? stored : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
         document.documentElement.setAttribute('data-theme', theme);
       })();
@@ -222,6 +223,7 @@ const orgSchema = {
           var target = el.getAttribute('data-count');
           var suffix = el.getAttribute('data-suffix') || '';
           var num = parseFloat(target);
+          if (isNaN(num)) return;
           var isDecimal = target.indexOf('.') !== -1;
           var duration = 1500;
           var start = performance.now();

@@ -392,13 +392,16 @@
     }
   });
 
-  // Submit — Formspree integration with loading/error states
+  // Submit — Web3Forms integration with loading/error states
+  let submitting = false;
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (submitting) return;
+    submitting = true;
     // Honeypot check
     const hp = (document.getElementById('lg-botcheck') as HTMLInputElement);
-    if (hp && hp.value) return;
-    if (!validateStep(current)) return;
+    if (hp && hp.value) { submitting = false; return; }
+    if (!validateStep(current)) { submitting = false; return; }
 
     // Show loading state
     const submitBtn = form.querySelector('.lg-btn-submit') as HTMLButtonElement;
@@ -423,7 +426,7 @@
         throw new Error('Submission failed');
       }
     } catch (err) {
-      // Show error state
+      submitting = false;
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
       submitBtn.style.opacity = '1';

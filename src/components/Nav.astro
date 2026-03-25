@@ -445,7 +445,7 @@ const services = [
       var current = html.getAttribute('data-theme') || 'dark';
       var next = current === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', next);
-      localStorage.setItem('jinki-theme', next);
+      try { localStorage.setItem('jinki-theme', next); } catch(e) {}
       syncIcon();
     });
 
@@ -487,10 +487,20 @@ const services = [
       link.addEventListener('click', closeMobile);
     });
 
-    /* Close mobile menu on Escape */
+    /* Close mobile menu on Escape + focus trap */
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && mobilePanel?.classList.contains('open')) {
-        closeMobile();
+      if (!mobilePanel?.classList.contains('open')) return;
+      if (e.key === 'Escape') { closeMobile(); return; }
+      if (e.key === 'Tab') {
+        var focusable = mobilePanel.querySelectorAll('a, button');
+        if (!focusable.length) return;
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault(); last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault(); first.focus();
+        }
       }
     });
 
