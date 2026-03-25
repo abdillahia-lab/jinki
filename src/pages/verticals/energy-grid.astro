@@ -15,14 +15,14 @@ const stats = [
   { value: '50+ mi', label: 'corridor coverage per mission', source: 'Platform Capability' },
   { value: '0.5°C', label: 'thermal detection sensitivity', source: 'Radiometric Thermal Sensor' },
   { value: '48hr', label: 'findings report turnaround', source: 'Service Commitment' },
-  { value: 'LiDAR', label: 'sub-meter clearance mapping', source: '3D Mapping Sensor' },
+  { value: '3D', label: 'sub-meter clearance mapping', source: '3D Spatial Intelligence' },
 ];
 
 const detections = [
   {
     id: 'vegetation',
     title: 'Vegetation Encroachment',
-    desc: 'LiDAR-measured clearance violations along rights-of-way. Sub-meter accuracy identifies encroachment before contact events.',
+    desc: 'Precision-measured clearance violations along rights-of-way. Sub-meter accuracy identifies encroachment before contact events.',
     severity: 'high',
     icon: 'forest',
   },
@@ -43,7 +43,7 @@ const detections = [
   {
     id: 'sag',
     title: 'Conductor Sag',
-    desc: 'LiDAR-derived sag measurements compared against design clearances. Identifies overloaded spans and thermal elongation.',
+    desc: 'Precision-derived sag measurements compared against design clearances. Identifies overloaded spans and thermal elongation.',
     severity: 'medium',
     icon: 'trending_down',
   },
@@ -65,11 +65,11 @@ const detections = [
 
 const techSections = [
   {
-    id: 'lidar',
-    title: 'LiDAR Intelligence',
-    subtitle: 'LiDAR Sensor',
+    id: 'spatial',
+    title: '3D Spatial Intelligence',
+    subtitle: 'Sub-Meter Precision Mapping',
     icon: 'radar',
-    specs: ['5-point-return scanning', '250m effective range', '200,000 points/sec', 'Sub-centimeter accuracy'],
+    specs: ['Multi-return point cloud', 'Sub-meter precision', 'High-density capture', 'Centimeter-level accuracy'],
     capabilities: [
       'Vegetation clearance measurement with sub-meter precision',
       'Conductor sag analysis against design tolerances',
@@ -82,7 +82,7 @@ const techSections = [
     title: 'Thermal Intelligence',
     subtitle: 'Radiometric Thermal Imaging',
     icon: 'thermostat',
-    specs: ['640x512 resolution', 'Radiometric accuracy', '-20 to 150 degrees C range', 'NETD < 30mK'],
+    specs: ['High-resolution radiometric', '0.5°C sensitivity', '-20°C to 150°C range', 'NETD < 30mK'],
     capabilities: [
       'Hot joint and connection fault identification',
       'Transformer thermal profiling under load',
@@ -302,7 +302,7 @@ const techSections = [
           </div>
           <h2>Six Failure Modes.<br/>One Aerial Platform.</h2>
           <p class="eg-section-subtitle">
-            Every flight captures thermal, visual, and LiDAR data simultaneously.
+            Every flight captures thermal, visual, and 3D spatial data simultaneously.
             AI-assisted analysis identifies and severity-ranks these critical failure modes
             before they cause outages.
           </p>
@@ -579,7 +579,7 @@ const techSections = [
                 <span class="eg-tl-icon eg-tl-icon-after material-symbols-outlined" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">verified</span>
                 <div>
                   <h3>Predictive Detection</h3>
-                  <p>Thermal and LiDAR intelligence identifies failing components months before outage events.</p>
+                  <p>Thermal and 3D spatial intelligence identifies failing components months before outage events.</p>
                 </div>
               </div>
               <div class="eg-tl-item">
@@ -606,7 +606,7 @@ const techSections = [
           <h2>Three Sensor Modalities.<br/>One Integrated Platform.</h2>
           <p class="eg-section-subtitle">
             Our piloted aerial platform carries all three sensor payloads simultaneously. Every flight captures
-            thermal, visual, and LiDAR data — no second passes, no data gaps.
+            thermal, visual, and 3D spatial data — no second passes, no data gaps.
           </p>
         </div>
 
@@ -680,7 +680,7 @@ const techSections = [
             <span class="eg-diff-num">02</span>
             <h3>Multi-Sensor Fusion</h3>
             <p>
-              Thermal, LiDAR, and visual data captured simultaneously and
+              Thermal, 3D spatial, and visual data captured simultaneously and
               cross-referenced. Findings include temperature data, clearance
               measurements, and high-resolution imagery in a single report.
             </p>
