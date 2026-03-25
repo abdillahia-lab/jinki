@@ -33,7 +33,7 @@ const problems = [
     title: 'HVAC Failure',
     summary: 'Cooling system degradation detected before cascade failure.',
     description: 'Aerial thermal imaging identifies failing compressors, blocked condensers, and refrigerant leaks across rooftop HVAC arrays. Pattern recognition flags units operating outside thermal envelopes weeks before total failure.',
-    detection: 'Radiometric thermal mapping with 0.5°C sensitivity (H30T sensor) across full rooftop arrays in a single pass.',
+    detection: 'Radiometric thermal mapping with 0.5°C sensitivity across full rooftop arrays in a single pass.',
     cost: 'Early detection enables scheduled repair vs. emergency replacement.',
   },
   {
@@ -85,8 +85,8 @@ const problems = [
 
 
 const pipelineSteps = [
-  { icon: 'rocket_launch', label: 'Aerial Platform', sub: 'M400 RTK (piloted) or M4TD (autonomous)' },
-  { icon: 'thermostat', label: 'Thermal Sensor', sub: 'H30T (piloted) / Integrated IR (autonomous)' },
+  { icon: 'rocket_launch', label: 'Aerial Platform', sub: 'Piloted or autonomous configuration' },
+  { icon: 'thermostat', label: 'Thermal Sensor', sub: 'Radiometric thermal imaging with 0.5°C sensitivity' },
   { icon: 'psychology', label: 'AI Analysis', sub: 'Edge + cloud processing pipeline' },
   { icon: 'hub', label: 'Cloud Intelligence', sub: 'Pattern recognition + ML classification' },
   { icon: 'verified_user', label: 'Actionable Report', sub: 'Prioritized findings within 48hr' },
@@ -107,7 +107,7 @@ const faqs = [
   },
   {
     q: 'How does autonomous monitoring differ from one-time assessment?',
-    a: 'Autonomous monitoring uses a permanently stationed aerial platform (DJI M4TD + Dock 3) that conducts 150-200 scheduled missions per month. This enables thermal trend analysis over time — detecting degradation velocity, not just current state.',
+    a: 'Autonomous monitoring uses a permanently stationed aerial platform with an on-site autonomous dock station that conducts 150-200 scheduled missions per month. This enables thermal trend analysis over time — detecting degradation velocity, not just current state.',
   },
   {
     q: 'What is included in the findings report?',

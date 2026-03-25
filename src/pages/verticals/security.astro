@@ -19,9 +19,9 @@ import Footer from '../../components/Footer.astro';
 
 const stats = [
   { value: '500+', label: 'acre perimeter coverage per mission', source: 'Platform Capability' },
-  { value: '<90s', label: 'dock-to-airborne response', source: 'DJI Dock 3 Spec' },
+  { value: '<90s', label: 'dock-to-airborne response', source: 'Autonomous Dock Station' },
   { value: 'Thermal', label: 'day and night detection capability', source: 'Integrated IR Camera' },
-  { value: '24/7', label: 'persistent autonomous patrol', source: 'Dock 3 Automation' },
+  { value: '24/7', label: 'persistent autonomous patrol', source: 'Autonomous Platform' },
 ];
 
 const services = [
@@ -33,7 +33,7 @@ const services = [
   {
     icon: 'speed',
     title: 'Event-Triggered Response',
-    desc: 'Automated aerial response to perimeter alerts. When sensors detect activity, the DJI Dock 3 launches aerial assets to verify, classify, and stream live thermal video to your SOC.',
+    desc: 'Automated aerial response to perimeter alerts. When sensors detect activity, the autonomous dock station launches aerial assets to verify, classify, and stream live thermal video to your SOC.',
   },
   {
     icon: 'shield',
@@ -78,7 +78,7 @@ const painPoints = [
 
 const alertEvents = [
   { time: '22:41:07', severity: 'red', type: 'PERIMETER BREACH', location: 'Sector 7 — East Fence', detail: 'Thermal signature detected, 2 individuals' },
-  { time: '22:41:12', severity: 'yellow', type: 'AERIAL UNIT DISPATCHED', location: 'Dock 3 — Auto-launch', detail: 'ETA to target: 28 seconds' },
+  { time: '22:41:12', severity: 'yellow', type: 'AERIAL UNIT DISPATCHED', location: 'Dock Station — Auto-launch', detail: 'ETA to target: 28 seconds' },
   { time: '22:41:38', severity: 'green', type: 'VISUAL CONFIRMED', location: 'Sector 7 — East Fence', detail: 'HD + thermal lock acquired' },
   { time: '22:41:44', severity: 'red', type: 'THREAT CLASSIFIED', location: 'Sector 7 — East Fence', detail: 'Unauthorized personnel — SOC notified' },
   { time: '22:42:01', severity: 'yellow', type: 'GROUND TEAM DISPATCHED', location: 'Patrol Unit 3', detail: 'ETA 4 min — aerial overwatch active' },

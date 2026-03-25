@@ -4,7 +4,7 @@
 
   Redesigned service page with:
   1. Animated flight path SVG hero circling a facility
-  2. DJI Dock 3 showcase with animated deployment sequence
+  2. Autonomous dock station showcase with animated deployment sequence
   3. Interactive coverage calculator
   4. 24/7 day/night cycle visualization
   5. Integration architecture diagram
@@ -33,8 +33,8 @@ const deploySequence = [
 ];
 
 const integrationNodes = [
-  { id: 'dock', label: 'Dock 3', icon: 'home', desc: 'On-site autonomous station' },
-  { id: 'platform', label: 'M4TD', icon: 'flight', desc: 'Aerial capture platform' },
+  { id: 'dock', label: 'Dock Station', icon: 'home', desc: 'On-site autonomous station' },
+  { id: 'platform', label: 'Aerial Platform', icon: 'flight', desc: 'Autonomous capture platform' },
   { id: 'cloud', label: 'Cloud AI', icon: 'cloud', desc: 'Processing & analytics' },
   { id: 'dashboard', label: 'Dashboard', icon: 'dashboard', desc: 'Operations visibility' },
   { id: 'alerts', label: 'Alerts', icon: 'notification_important', desc: 'Real-time notifications' },
@@ -74,12 +74,12 @@ const capabilities = [
 ];
 ---
 
-<Layout ogImage="/images/og-deployment.png" title="Autonomous Deployment — Jinki Aerial Intelligence" description="Persistent autonomous aerial intelligence for facilities that need continuous visibility. DJI Dock 3 platform capable of 150-200 missions per month with 24/7 autonomous operation." jsonLd={{
+<Layout ogImage="/images/og-deployment.png" title="Autonomous Deployment — Jinki Aerial Intelligence" description="Persistent autonomous aerial intelligence for facilities that need continuous visibility. On-site autonomous dock station capable of 150-200 missions per month with 24/7 autonomous operation." jsonLd={{
   "@context": "https://schema.org",
   "@type": "Service",
   "name": "Autonomous Deployment",
   "provider": { "@type": "Organization", "name": "Jinki Aerial Intelligence" },
-  "description": "Persistent autonomous aerial monitoring with on-site DJI Dock 3 platform capable of 150-200 missions per month with 24/7 operation.",
+  "description": "Persistent autonomous aerial monitoring with on-site autonomous dock station capable of 150-200 missions per month with 24/7 operation.",
   "areaServed": "Mid-Atlantic United States",
   "serviceType": "Autonomous Aerial Monitoring",
 }}>
@@ -259,14 +259,14 @@ const capabilities = [
     </section>
 
     <!-- ============ DOCK 3 SHOWCASE ============ -->
-    <section id="dock" class="section" style="background: var(--surface-dim);" aria-label="DJI Dock 3 Platform">
+    <section id="dock" class="section" style="background: var(--surface-dim);" aria-label="Autonomous Dock Station">
       <div class="section-inner">
         <div class="section-header reveal">
           <div class="eyebrow">
             <span class="eyebrow-line"></span>
             <span class="eyebrow-text">The Platform</span>
           </div>
-          <h2>Dock 3 + M4TD<br/>Autonomous Station</h2>
+          <h2>Autonomous Dock +<br/>Aerial Platform</h2>
           <p class="section-subtitle">
             A permanent on-site installation that launches, operates, and recovers
             aerial systems without human intervention. All-weather. All-hours.
@@ -320,7 +320,7 @@ const capabilities = [
             <p class="calc-lead">
               Enter your facility perimeter to estimate missions per month,
               coverage percentage, and typical response time. Results are based
-              on standard Dock 3 operating parameters.
+              on standard autonomous dock operating parameters.
             </p>
           </div>
           <div class="calc-card reveal reveal-delay-2">
@@ -381,7 +381,7 @@ const capabilities = [
               </div>
               <div class="calc-note">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: var(--text-tertiary); font-size: 16px;" aria-hidden="true">info</span>
-                <span>Estimates based on single Dock 3 with standard flight parameters. Multi-dock deployments scale linearly.</span>
+                <span>Estimates based on single autonomous dock station with standard flight parameters. Multi-dock deployments scale linearly.</span>
               </div>
             </div>
           </div>

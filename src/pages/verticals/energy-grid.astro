@@ -13,9 +13,9 @@ import Footer from '../../components/Footer.astro';
 
 const stats = [
   { value: '50+ mi', label: 'corridor coverage per mission', source: 'Platform Capability' },
-  { value: '0.5°C', label: 'thermal detection sensitivity', source: 'H30T Sensor Spec' },
+  { value: '0.5°C', label: 'thermal detection sensitivity', source: 'Radiometric Thermal Sensor' },
   { value: '48hr', label: 'findings report turnaround', source: 'Service Commitment' },
-  { value: 'LiDAR', label: 'sub-meter clearance mapping', source: 'L3 LiDAR Sensor' },
+  { value: 'LiDAR', label: 'sub-meter clearance mapping', source: '3D Mapping Sensor' },
 ];
 
 const detections = [
@@ -67,7 +67,7 @@ const techSections = [
   {
     id: 'lidar',
     title: 'LiDAR Intelligence',
-    subtitle: 'L3 LiDAR Sensor',
+    subtitle: 'LiDAR Sensor',
     icon: 'radar',
     specs: ['5-point-return scanning', '250m effective range', '200,000 points/sec', 'Sub-centimeter accuracy'],
     capabilities: [
@@ -80,7 +80,7 @@ const techSections = [
   {
     id: 'thermal',
     title: 'Thermal Intelligence',
-    subtitle: 'H30T Thermal Payload',
+    subtitle: 'Radiometric Thermal Imaging',
     icon: 'thermostat',
     specs: ['640x512 resolution', 'Radiometric accuracy', '-20 to 150 degrees C range', 'NETD < 30mK'],
     capabilities: [
@@ -605,7 +605,7 @@ const techSections = [
           </div>
           <h2>Three Sensor Modalities.<br/>One Integrated Platform.</h2>
           <p class="eg-section-subtitle">
-            The DJI M400 RTK carries all three payloads simultaneously. Every flight captures
+            Our piloted aerial platform carries all three sensor payloads simultaneously. Every flight captures
             thermal, visual, and LiDAR data — no second passes, no data gaps.
           </p>
         </div>
