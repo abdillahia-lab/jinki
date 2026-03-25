@@ -58,27 +58,27 @@
           <p class="lg-step-desc">What type of intelligence engagement are you looking for?</p>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
             <label class="lg-radio-card">
-              <input type="radio" name="service" value="scan" required />
+              <input type="radio" name="service" value="scan" required aria-describedby="desc-scan" />
               <span class="lg-card-inner">
                 <span class="material-symbols-outlined" style="font-size: 1.75rem; color: var(--accent);" aria-hidden="true">assignment</span>
                 <span class="lg-card-title">Intelligence Scan</span>
-                <span class="lg-card-desc">One-time aerial assessment with actionable report</span>
+                <span class="lg-card-desc" id="desc-scan">One-time aerial assessment with actionable report</span>
               </span>
             </label>
             <label class="lg-radio-card">
-              <input type="radio" name="service" value="deployment" />
+              <input type="radio" name="service" value="deployment" aria-describedby="desc-deploy" />
               <span class="lg-card-inner">
                 <span class="material-symbols-outlined" style="font-size: 1.75rem; color: var(--accent);" aria-hidden="true">precision_manufacturing</span>
                 <span class="lg-card-title">Autonomous Deployment</span>
-                <span class="lg-card-desc">Persistent monitoring with recurring missions</span>
+                <span class="lg-card-desc" id="desc-deploy">Persistent monitoring with recurring missions</span>
               </span>
             </label>
             <label class="lg-radio-card">
-              <input type="radio" name="service" value="consultation" />
+              <input type="radio" name="service" value="consultation" aria-describedby="desc-consult" />
               <span class="lg-card-inner">
                 <span class="material-symbols-outlined" style="font-size: 1.75rem; color: var(--accent);" aria-hidden="true">forum</span>
                 <span class="lg-card-title">Consultation</span>
-                <span class="lg-card-desc">Explore how aerial intelligence fits your needs</span>
+                <span class="lg-card-desc" id="desc-consult">Explore how aerial intelligence fits your needs</span>
               </span>
             </label>
           </div>

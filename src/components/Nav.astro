@@ -39,14 +39,14 @@ const services = [
     <ul class="nav-links" style="display:flex;align-items:center;gap:4px;list-style:none;margin:0;padding:0;">
       <!-- Verticals dropdown -->
       <li class="dropdown" style="position:relative;">
-        <button class="nav-link dropdown-trigger" aria-expanded="false" aria-haspopup="true" style="display:flex;align-items:center;gap:4px;">
+        <button class="nav-link dropdown-trigger" aria-expanded="false" aria-haspopup="menu" style="display:flex;align-items:center;gap:4px;">
           Verticals
           <span class="material-symbols-outlined" aria-hidden="true" style="font-size:16px;transition:transform .25s;">expand_more</span>
         </button>
-        <div class="dropdown-panel" style="position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:200px;background:var(--surface-container);border:1px solid var(--glass-border);border-radius:12px;padding:6px;transition:opacity .2s,visibility .2s;box-shadow:0 8px 32px rgba(0,0,0,.3);">
+        <div class="dropdown-panel" role="menu" aria-label="Industry verticals" style="position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:200px;background:var(--surface-container);border:1px solid var(--glass-border);border-radius:12px;padding:6px;transition:opacity .2s,visibility .2s;box-shadow:0 8px 32px rgba(0,0,0,.3);">
           {verticals.map(v => (
-            <a href={v.href} class="dropdown-item" style={`display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--text-primary);font-family:var(--font-label);font-size:14px;transition:background .15s;`}>
-              <span class="dot" style={`width:8px;height:8px;border-radius:50%;background:${v.color};flex-shrink:0;`}></span>
+            <a href={v.href} class="dropdown-item" role="menuitem" style={`display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--text-primary);font-family:var(--font-label);font-size:14px;transition:background .15s;`}>
+              <span class="dot" style={`width:8px;height:8px;border-radius:50%;background:${v.color};flex-shrink:0;`} aria-hidden="true"></span>
               {v.label}
             </a>
           ))}
@@ -55,13 +55,13 @@ const services = [
 
       <!-- Services dropdown -->
       <li class="dropdown" style="position:relative;">
-        <button class="nav-link dropdown-trigger" aria-expanded="false" aria-haspopup="true" style="display:flex;align-items:center;gap:4px;">
+        <button class="nav-link dropdown-trigger" aria-expanded="false" aria-haspopup="menu" style="display:flex;align-items:center;gap:4px;">
           Services
           <span class="material-symbols-outlined" aria-hidden="true" style="font-size:16px;transition:transform .25s;">expand_more</span>
         </button>
-        <div class="dropdown-panel" style="position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:200px;background:var(--surface-container);border:1px solid var(--glass-border);border-radius:12px;padding:6px;transition:opacity .2s,visibility .2s;box-shadow:0 8px 32px rgba(0,0,0,.3);">
+        <div class="dropdown-panel" role="menu" aria-label="Services" style="position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:200px;background:var(--surface-container);border:1px solid var(--glass-border);border-radius:12px;padding:6px;transition:opacity .2s,visibility .2s;box-shadow:0 8px 32px rgba(0,0,0,.3);">
           {services.map(s => (
-            <a href={s.href} class="dropdown-item" style={`display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--text-primary);font-family:var(--font-label);font-size:14px;transition:background .15s;`}>
+            <a href={s.href} class="dropdown-item" role="menuitem" style={`display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--text-primary);font-family:var(--font-label);font-size:14px;transition:background .15s;`}>
               {s.label}
             </a>
           ))}
@@ -437,6 +437,7 @@ const services = [
       if (!themeIcon) return;
       var theme = html.getAttribute('data-theme') || 'dark';
       themeIcon.textContent = theme === 'dark' ? 'dark_mode' : 'light_mode';
+      themeToggle?.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
     }
     syncIcon();
 
