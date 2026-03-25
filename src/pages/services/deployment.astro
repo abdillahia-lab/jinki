@@ -143,33 +143,57 @@ const capabilities = [
             <animate attributeName="r" values="10;20;10" dur="2s" repeatCount="indefinite"/>
             <animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite"/>
           </circle>
-          <!-- Waypoints with pulse rings -->
-          <g>
-            <circle cx="235" cy="120" r="4" fill="rgba(0, 201, 167, 0.2)" stroke="rgba(0, 201, 167, 0.5)" stroke-width="1"/>
+          <!-- Waypoints with pulse rings + scale pulse -->
+          <g class="waypoint-group">
+            <circle cx="235" cy="120" r="4" fill="rgba(0, 201, 167, 0.35)" stroke="rgba(0, 201, 167, 0.6)" stroke-width="1">
+              <animate attributeName="r" values="4;5.5;4" dur="2s" repeatCount="indefinite"/>
+            </circle>
             <circle cx="235" cy="120" r="4" fill="none" stroke="rgba(0, 201, 167, 0.3)" stroke-width="0.5">
-              <animate attributeName="r" values="4;12;4" dur="3s" repeatCount="indefinite"/>
+              <animate attributeName="r" values="4;14;4" dur="3s" repeatCount="indefinite"/>
               <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" repeatCount="indefinite"/>
             </circle>
+            <circle cx="235" cy="120" r="7" fill="none" stroke="rgba(0, 201, 167, 0.15)" stroke-width="0.5">
+              <animate attributeName="r" values="7;18;7" dur="3s" begin="0.3s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.3;0;0.3" dur="3s" begin="0.3s" repeatCount="indefinite"/>
+            </circle>
           </g>
-          <g>
-            <circle cx="580" cy="120" r="4" fill="rgba(0, 201, 167, 0.2)" stroke="rgba(0, 201, 167, 0.5)" stroke-width="1"/>
+          <g class="waypoint-group">
+            <circle cx="580" cy="120" r="4" fill="rgba(0, 201, 167, 0.35)" stroke="rgba(0, 201, 167, 0.6)" stroke-width="1">
+              <animate attributeName="r" values="4;5.5;4" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+            </circle>
             <circle cx="580" cy="120" r="4" fill="none" stroke="rgba(0, 201, 167, 0.3)" stroke-width="0.5">
-              <animate attributeName="r" values="4;12;4" dur="3s" begin="0.75s" repeatCount="indefinite"/>
+              <animate attributeName="r" values="4;14;4" dur="3s" begin="0.75s" repeatCount="indefinite"/>
               <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" begin="0.75s" repeatCount="indefinite"/>
             </circle>
-          </g>
-          <g>
-            <circle cx="580" cy="380" r="4" fill="rgba(0, 201, 167, 0.2)" stroke="rgba(0, 201, 167, 0.5)" stroke-width="1"/>
-            <circle cx="580" cy="380" r="4" fill="none" stroke="rgba(0, 201, 167, 0.3)" stroke-width="0.5">
-              <animate attributeName="r" values="4;12;4" dur="3s" begin="1.5s" repeatCount="indefinite"/>
-              <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+            <circle cx="580" cy="120" r="7" fill="none" stroke="rgba(0, 201, 167, 0.15)" stroke-width="0.5">
+              <animate attributeName="r" values="7;18;7" dur="3s" begin="1.05s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.3;0;0.3" dur="3s" begin="1.05s" repeatCount="indefinite"/>
             </circle>
           </g>
-          <g>
-            <circle cx="220" cy="380" r="4" fill="rgba(0, 201, 167, 0.2)" stroke="rgba(0, 201, 167, 0.5)" stroke-width="1"/>
+          <g class="waypoint-group">
+            <circle cx="580" cy="380" r="4" fill="rgba(0, 201, 167, 0.35)" stroke="rgba(0, 201, 167, 0.6)" stroke-width="1">
+              <animate attributeName="r" values="4;5.5;4" dur="2s" begin="1s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="580" cy="380" r="4" fill="none" stroke="rgba(0, 201, 167, 0.3)" stroke-width="0.5">
+              <animate attributeName="r" values="4;14;4" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="580" cy="380" r="7" fill="none" stroke="rgba(0, 201, 167, 0.15)" stroke-width="0.5">
+              <animate attributeName="r" values="7;18;7" dur="3s" begin="1.8s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.3;0;0.3" dur="3s" begin="1.8s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          <g class="waypoint-group">
+            <circle cx="220" cy="380" r="4" fill="rgba(0, 201, 167, 0.35)" stroke="rgba(0, 201, 167, 0.6)" stroke-width="1">
+              <animate attributeName="r" values="4;5.5;4" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+            </circle>
             <circle cx="220" cy="380" r="4" fill="none" stroke="rgba(0, 201, 167, 0.3)" stroke-width="0.5">
-              <animate attributeName="r" values="4;12;4" dur="3s" begin="2.25s" repeatCount="indefinite"/>
+              <animate attributeName="r" values="4;14;4" dur="3s" begin="2.25s" repeatCount="indefinite"/>
               <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" begin="2.25s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="220" cy="380" r="7" fill="none" stroke="rgba(0, 201, 167, 0.15)" stroke-width="0.5">
+              <animate attributeName="r" values="7;18;7" dur="3s" begin="2.55s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.3;0;0.3" dur="3s" begin="2.55s" repeatCount="indefinite"/>
             </circle>
           </g>
           <!-- Waypoint labels -->
@@ -186,8 +210,13 @@ const capabilities = [
           <!-- Status HUD -->
           <g opacity="0.6">
             <rect x="15" y="15" width="90" height="22" rx="4" fill="rgba(0, 201, 167, 0.08)" stroke="rgba(0, 201, 167, 0.2)" stroke-width="0.5"/>
+            <circle cx="28" cy="26" r="6" fill="none" stroke="#00C9A7" opacity="0.15">
+              <animate attributeName="r" values="5;9;5" dur="2.5s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.2;0;0.2" dur="2.5s" repeatCount="indefinite"/>
+            </circle>
             <circle cx="28" cy="26" r="3" fill="#00C9A7">
               <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="r" values="3;3.8;3" dur="2s" repeatCount="indefinite"/>
             </circle>
             <text x="36" y="29" font-family="monospace" font-size="8" fill="rgba(0, 201, 167, 0.6)" font-weight="bold" letter-spacing="1">LIVE</text>
             <text x="66" y="29" font-family="monospace" font-size="7" fill="rgba(0, 201, 167, 0.35)">M-147</text>
@@ -1325,8 +1354,8 @@ const capabilities = [
   }
 
   .calc-result.value-changed {
-    border-color: rgba(0, 201, 167, 0.35);
-    box-shadow: 0 0 16px rgba(0, 201, 167, 0.12);
+    border-color: rgba(0, 201, 167, 0.45);
+    box-shadow: 0 0 20px rgba(0, 201, 167, 0.18), 0 0 40px rgba(0, 201, 167, 0.06);
   }
 
   .calc-result-value {
@@ -1335,12 +1364,15 @@ const capabilities = [
     font-weight: 700;
     color: var(--text-primary);
     display: block;
-    transition: transform 0.15s ease, color 0.15s ease;
+    transition: transform 0.2s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                color 0.15s ease,
+                text-shadow 0.3s ease;
   }
 
   .calc-result-value.animating {
     transform: scale(1.15);
     color: #00C9A7;
+    text-shadow: 0 0 12px rgba(0, 201, 167, 0.5), 0 0 24px rgba(0, 201, 167, 0.2);
   }
 
   .calc-result-label {
@@ -2158,6 +2190,8 @@ const capabilities = [
 
   @media (prefers-reduced-motion: reduce) {
     .hero-visual svg animate, .hero-visual svg animateMotion { display: none; }
+    .facility-svg animate, .facility-svg animateMotion { display: none; }
     .hero-stat, .process-step, .spec-card { transition: none !important; }
+    .calc-result-value { transition: none !important; }
   }
 </style>

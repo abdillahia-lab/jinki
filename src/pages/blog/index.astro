@@ -327,12 +327,24 @@ function estimateReadTime(description: string): number {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px 16px;
+    padding: 8px 16px 12px;
     border-radius: 8px;
     white-space: nowrap;
     transition: color 0.3s ease, background 0.3s ease;
     position: relative;
     z-index: 1;
+  }
+
+  .omega-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .omega-tab:hover {
@@ -341,6 +353,11 @@ function estimateReadTime(description: string): number {
 
   .omega-tab.active {
     color: var(--accent);
+  }
+
+  .omega-tab.active::after {
+    width: 60%;
+    left: 20%;
   }
 
   .omega-tab-indicator {
@@ -459,7 +476,7 @@ function estimateReadTime(description: string): number {
   }
 
   .omega-card:hover .omega-card-image {
-    transform: scale(1.04);
+    transform: scale(1.03);
   }
 
   .omega-card-image-placeholder {
@@ -481,8 +498,18 @@ function estimateReadTime(description: string): number {
     pointer-events: none;
   }
 
+  /* Stronger gradient on featured card bottom for text readability */
+  .omega-card-featured .omega-card-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 40%, transparent 70%);
+    opacity: 0.6;
+  }
+
   .omega-card:hover .omega-card-overlay {
     opacity: 0.7;
+  }
+
+  .omega-card-featured:hover .omega-card-overlay {
+    opacity: 0.85;
   }
 
   :global([data-theme="light"]) .omega-card-overlay {
@@ -490,8 +517,17 @@ function estimateReadTime(description: string): number {
     opacity: 0.2;
   }
 
+  :global([data-theme="light"]) .omega-card-featured .omega-card-overlay {
+    background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 40%, transparent 70%);
+    opacity: 0.35;
+  }
+
   :global([data-theme="light"]) .omega-card:hover .omega-card-overlay {
     opacity: 0.4;
+  }
+
+  :global([data-theme="light"]) .omega-card-featured:hover .omega-card-overlay {
+    opacity: 0.55;
   }
 
   /* ===== Card Body ===== */
@@ -786,7 +822,7 @@ function estimateReadTime(description: string): number {
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .omega-card, .omega-tag-btn { transition: none !important; }
+    .omega-card, .omega-tag-btn, .omega-tab::after { transition: none !important; }
   }
 </style>
 

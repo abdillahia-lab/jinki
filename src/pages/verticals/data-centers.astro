@@ -195,10 +195,13 @@ const faqs = [
               <span class="hud-value">LIVE</span>
             </div>
             <div class="scan-line"></div>
+            <div class="scan-line-h"></div>
             <!-- Thermal hotspot glows -->
-            <div class="dc-hotspot dc-hotspot-1" aria-hidden="true"></div>
-            <div class="dc-hotspot dc-hotspot-2" aria-hidden="true"></div>
-            <div class="dc-hotspot dc-hotspot-3" aria-hidden="true"></div>
+            <div class="dc-hotspot dc-hotspot-1" aria-hidden="true"><div class="dc-hotspot-ring"></div></div>
+            <div class="dc-hotspot dc-hotspot-2" aria-hidden="true"><div class="dc-hotspot-ring"></div></div>
+            <div class="dc-hotspot dc-hotspot-3" aria-hidden="true"><div class="dc-hotspot-ring"></div></div>
+            <div class="dc-hotspot dc-hotspot-4" aria-hidden="true"><div class="dc-hotspot-ring"></div></div>
+            <div class="dc-hotspot dc-hotspot-5" aria-hidden="true"><div class="dc-hotspot-ring"></div></div>
           </div>
         </div>
       </div>
@@ -962,6 +965,26 @@ document.addEventListener('DOMContentLoaded', function() {
     95% { top: 0; opacity: 0.3; }
   }
 
+  /* Horizontal scan line (cross-sweep) */
+  .scan-line-h {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent 5%, rgba(0,229,255,0.35) 30%, rgba(0,229,255,0.6) 50%, rgba(0,229,255,0.35) 70%, transparent 95%);
+    animation: scan-sweep-h 7s ease-in-out 2.5s infinite;
+    box-shadow: 0 0 12px rgba(0,229,255,0.15), 0 0 30px rgba(0,229,255,0.06);
+    z-index: 4;
+    opacity: 0.6;
+  }
+  @keyframes scan-sweep-h {
+    0%, 100% { left: 0; opacity: 0.2; }
+    45% { left: 95%; opacity: 0.6; }
+    55% { left: 95%; opacity: 0.6; }
+    95% { left: 0; opacity: 0.2; }
+  }
+
   /* Thermal hotspot glows on the photo */
   .dc-hotspot {
     position: absolute;
@@ -969,27 +992,56 @@ document.addEventListener('DOMContentLoaded', function() {
     pointer-events: none;
     z-index: 3;
   }
+  .dc-hotspot-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,60,60,0.3);
+    animation: hotRingExpand 3s ease-out infinite;
+  }
   .dc-hotspot-1 {
     width: 60px; height: 60px;
     top: 25%; left: 35%;
-    background: radial-gradient(circle, rgba(255,60,60,0.35) 0%, rgba(255,60,60,0.1) 40%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,60,60,0.4) 0%, rgba(255,60,60,0.12) 40%, transparent 70%);
     animation: hotPulse 2.5s ease-in-out infinite;
   }
+  .dc-hotspot-1 .dc-hotspot-ring { border-color: rgba(255,60,60,0.35); }
   .dc-hotspot-2 {
     width: 45px; height: 45px;
     top: 40%; right: 25%;
-    background: radial-gradient(circle, rgba(255,180,0,0.3) 0%, rgba(255,180,0,0.08) 40%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,180,0,0.35) 0%, rgba(255,180,0,0.1) 40%, transparent 70%);
     animation: hotPulse 3s ease-in-out 0.8s infinite;
   }
+  .dc-hotspot-2 .dc-hotspot-ring { border-color: rgba(255,180,0,0.3); animation-delay: 0.8s; }
   .dc-hotspot-3 {
     width: 35px; height: 35px;
     bottom: 30%; left: 55%;
-    background: radial-gradient(circle, rgba(255,140,0,0.25) 0%, rgba(255,140,0,0.06) 40%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,140,0,0.3) 0%, rgba(255,140,0,0.08) 40%, transparent 70%);
     animation: hotPulse 3.5s ease-in-out 1.5s infinite;
   }
+  .dc-hotspot-3 .dc-hotspot-ring { border-color: rgba(255,140,0,0.25); animation-delay: 1.5s; }
+  .dc-hotspot-4 {
+    width: 50px; height: 50px;
+    top: 55%; left: 20%;
+    background: radial-gradient(circle, rgba(255,80,40,0.3) 0%, rgba(255,80,40,0.08) 40%, transparent 70%);
+    animation: hotPulse 2.8s ease-in-out 0.4s infinite;
+  }
+  .dc-hotspot-4 .dc-hotspot-ring { border-color: rgba(255,80,40,0.25); animation-delay: 0.4s; }
+  .dc-hotspot-5 {
+    width: 28px; height: 28px;
+    top: 18%; right: 30%;
+    background: radial-gradient(circle, rgba(255,200,0,0.25) 0%, rgba(255,200,0,0.06) 40%, transparent 70%);
+    animation: hotPulse 4s ease-in-out 2s infinite;
+  }
+  .dc-hotspot-5 .dc-hotspot-ring { border-color: rgba(255,200,0,0.2); animation-delay: 2s; }
   @keyframes hotPulse {
-    0%, 100% { transform: scale(1); opacity: 0.7; }
-    50% { transform: scale(1.4); opacity: 0.3; }
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.5); opacity: 0.3; }
+  }
+  @keyframes hotRingExpand {
+    0% { transform: scale(1); opacity: 0.6; }
+    70% { transform: scale(2.2); opacity: 0; }
+    100% { transform: scale(2.2); opacity: 0; }
   }
 
   /* Legacy alert-badge fallback (unused but referenced in light mode) */
@@ -2290,6 +2342,13 @@ document.addEventListener('DOMContentLoaded', function() {
     background: linear-gradient(90deg, transparent, rgba(0,131,143,0.5), transparent);
     box-shadow: 0 0 20px rgba(0,131,143,0.2);
   }
+  :global([data-theme="light"]) .scan-line-h {
+    background: linear-gradient(180deg, transparent, rgba(0,131,143,0.35), transparent);
+    box-shadow: 0 0 15px rgba(0,131,143,0.12);
+  }
+  :global([data-theme="light"]) .dc-hotspot-ring {
+    border-color: rgba(200,60,20,0.2);
+  }
   :global([data-theme="light"]) .dashboard-mockup {
     background: var(--glass-bg);
   }
@@ -2331,6 +2390,8 @@ document.addEventListener('DOMContentLoaded', function() {
     .facility-building,
     .thermal-overlay,
     .scan-line,
+    .scan-line-h,
+    .dc-hotspot-ring,
     .alert-badge,
     .alert-dot,
     .dash-live-dot,

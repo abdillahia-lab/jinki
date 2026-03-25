@@ -321,9 +321,17 @@ const reportTabs = [
                 </button>
               );
             })}
-            <!-- SVG connector ring -->
+            <!-- SVG connector ring with animated dash -->
             <svg class="wheel-ring-svg" viewBox="0 0 100 100" aria-hidden="true">
-              <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="0.3" stroke-dasharray="2,2" />
+              <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(0,229,255,0.06)" stroke-width="0.3" />
+              <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(0,229,255,0.25)" stroke-width="0.5" stroke-dasharray="4,8" class="wheel-ring-animated" />
+              <circle cx="50" cy="50" r="42" fill="none" stroke="url(#wheelRingGrad)" stroke-width="1" stroke-dasharray="22,242" stroke-linecap="round" class="wheel-ring-progress" />
+              <defs>
+                <linearGradient id="wheelRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.8"/>
+                  <stop offset="100%" stop-color="#00E5FF" stop-opacity="0.1"/>
+                </linearGradient>
+              </defs>
             </svg>
           </div>
 
@@ -2181,9 +2189,88 @@ const reportTabs = [
     background: var(--surface-dim);
   }
 
+  /* ================ ANIMATED WHEEL RING ================ */
+  .wheel-ring-animated {
+    animation: wheel-dash-spin 20s linear infinite;
+  }
+
+  .wheel-ring-progress {
+    animation: wheel-progress-spin 8s linear infinite;
+    transform-origin: 50% 50%;
+  }
+
+  @keyframes wheel-dash-spin {
+    to { stroke-dashoffset: -264; }
+  }
+
+  @keyframes wheel-progress-spin {
+    to { stroke-dashoffset: -264; }
+  }
+
+  /* ================ REPORT MOCKUP PAGE-TURN SHADOW ================ */
+  .report-panel-mockup {
+    position: relative;
+  }
+
+  .report-panel-mockup::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    right: -4px;
+    bottom: 20px;
+    width: 12px;
+    background: linear-gradient(90deg,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.06) 40%,
+      transparent 100%
+    );
+    border-radius: 0 4px 4px 0;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+
+  .report-panel-mockup::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    right: -2px;
+    bottom: 6px;
+    width: 8px;
+    background: linear-gradient(135deg, #0a0c10, #141820);
+    border: 1px solid var(--glass-border);
+    border-left: none;
+    border-radius: 0 6px 6px 0;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.6;
+  }
+
+  :global([data-theme="light"]) .report-panel-mockup::before {
+    background: linear-gradient(135deg, #e8eaed, #f0f0f0);
+  }
+
+  :global([data-theme="light"]) .report-panel-mockup::after {
+    background: linear-gradient(90deg,
+      rgba(0, 0, 0, 0.06),
+      rgba(0, 0, 0, 0.02) 40%,
+      transparent 100%
+    );
+  }
+
+  /* ================ REPORT TAB GRADIENT BORDER ================ */
+  .report-tab.active {
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(90deg, #00E5FF, #7B61FF) 1;
+  }
+
+  :global([data-theme="light"]) .report-tab.active {
+    border-image: linear-gradient(90deg, #0097A7, #5E35B1) 1;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .audit-hero svg animate, .audit-hero svg animateMotion { display: none; }
     .step-card, .report-tab { transition: none !important; }
+    .wheel-ring-animated, .wheel-ring-progress { animation: none !important; }
   }
 </style>
 

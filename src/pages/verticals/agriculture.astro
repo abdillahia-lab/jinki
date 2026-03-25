@@ -128,7 +128,14 @@ const pipelineSteps = [
           <div class="ndvi-row" style="--row: 7"></div>
         </div>
         <div class="scan-sweep"></div>
+        <div class="scan-sweep-diag"></div>
         <div class="field-grid-overlay"></div>
+        <!-- Growth indicator lines rising from crop rows -->
+        <div class="growth-line growth-line-1" aria-hidden="true"></div>
+        <div class="growth-line growth-line-2" aria-hidden="true"></div>
+        <div class="growth-line growth-line-3" aria-hidden="true"></div>
+        <div class="growth-line growth-line-4" aria-hidden="true"></div>
+        <div class="growth-line growth-line-5" aria-hidden="true"></div>
       </div>
 
       <div class="ag-hero-inner">
@@ -610,6 +617,56 @@ const pipelineSteps = [
       linear-gradient(rgba(52, 211, 153, 0.03) 1px, transparent 1px),
       linear-gradient(90deg, rgba(52, 211, 153, 0.03) 1px, transparent 1px);
     background-size: 48px 48px;
+  }
+
+  /* Diagonal scan sweep (secondary) */
+  .scan-sweep-diag {
+    position: absolute;
+    top: -100%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent 47%,
+      rgba(52, 211, 153, 0.06) 49%,
+      rgba(52, 211, 153, 0.1) 50%,
+      rgba(52, 211, 153, 0.06) 51%,
+      transparent 53%,
+      transparent 100%
+    );
+    animation: scan-diag 8s ease-in-out 3s infinite;
+    pointer-events: none;
+  }
+  @keyframes scan-diag {
+    0% { transform: translateY(-30%) translateX(-30%); opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { transform: translateY(30%) translateX(30%); opacity: 0; }
+  }
+
+  /* Growth indicator lines — vertical pulses rising from field rows */
+  .growth-line {
+    position: absolute;
+    width: 2px;
+    bottom: 20%;
+    height: 0;
+    background: linear-gradient(to top, rgba(52, 211, 153, 0.5), rgba(52, 211, 153, 0));
+    border-radius: 1px;
+    pointer-events: none;
+    animation: growth-rise 4s ease-out infinite;
+  }
+  .growth-line-1 { left: 18%; animation-delay: 0s; }
+  .growth-line-2 { left: 35%; animation-delay: 0.8s; }
+  .growth-line-3 { left: 52%; animation-delay: 1.6s; }
+  .growth-line-4 { left: 68%; animation-delay: 2.4s; }
+  .growth-line-5 { left: 82%; animation-delay: 3.2s; }
+  @keyframes growth-rise {
+    0% { height: 0; opacity: 0; bottom: 20%; }
+    20% { height: 30px; opacity: 0.7; }
+    60% { height: 50px; opacity: 0.4; }
+    100% { height: 60px; opacity: 0; bottom: 50%; }
   }
 
   .ag-hero-inner {
@@ -2159,6 +2216,12 @@ const pipelineSteps = [
       linear-gradient(rgba(16, 185, 129, 0.04) 1px, transparent 1px),
       linear-gradient(90deg, rgba(16, 185, 129, 0.04) 1px, transparent 1px);
   }
+  :global([data-theme="light"]) .scan-sweep-diag {
+    background: linear-gradient(135deg, transparent 0%, transparent 47%, rgba(16, 185, 129, 0.04) 49%, rgba(16, 185, 129, 0.07) 50%, rgba(16, 185, 129, 0.04) 51%, transparent 53%, transparent 100%);
+  }
+  :global([data-theme="light"]) .growth-line {
+    background: linear-gradient(to top, rgba(16, 185, 129, 0.35), rgba(16, 185, 129, 0));
+  }
 
   :global([data-theme="light"]) .roi-input {
     background: var(--surface-container-lowest);
@@ -2186,7 +2249,7 @@ const pipelineSteps = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ag-scan-line, .ag-pulse-ring { animation: none !important; }
+    .ag-scan-line, .ag-pulse-ring, .growth-line, .scan-sweep-diag { animation: none !important; }
     .timeline-card, .pipeline-step { transition: none !important; }
   }
 </style>

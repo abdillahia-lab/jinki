@@ -626,10 +626,30 @@ const culturePoints = [
     border-radius: inherit;
   }
 
+  /* Accent left border that grows on hover */
+  .role-card::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 3px;
+    height: 0%;
+    background: linear-gradient(180deg, var(--accent), #0091a1);
+    border-radius: 0 3px 3px 0;
+    transition: height 0.4s cubic-bezier(0.16,1,0.3,1), top 0.4s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .role-card:hover::after {
+    height: 60%;
+    top: 20%;
+  }
+
   .role-card:hover {
     border-color: var(--border-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
   }
 
   .role-info {
@@ -877,9 +897,18 @@ const culturePoints = [
   }
 
   .bento-icon {
-    font-size: 28px;
+    font-size: 24px;
     color: var(--accent);
     margin-bottom: 14px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--accent-glow);
+    border: 1px solid rgba(0, 229, 255, 0.12);
+    flex-shrink: 0;
   }
 
   .bento-title {
@@ -1267,7 +1296,7 @@ const culturePoints = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .role-card, .dept-tab, .culture-card { transition: none !important; }
+    .role-card, .role-card::after, .dept-tab, .culture-card, .bento-card, .dil-chevron { transition: none !important; }
   }
 </style>
 

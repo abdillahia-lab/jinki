@@ -147,9 +147,12 @@ const differentiators = [
         <div class="sec-hero-visual reveal reveal-delay-1" aria-hidden="true">
           <div class="radar-container">
             <div class="radar-ring radar-ring-1"></div>
+            <div class="radar-ring radar-ring-1b"></div>
             <div class="radar-ring radar-ring-2"></div>
+            <div class="radar-ring radar-ring-2b"></div>
             <div class="radar-ring radar-ring-3"></div>
             <div class="radar-sweep"></div>
+            <div class="radar-sweep radar-sweep-secondary"></div>
             <div class="radar-center">
               <span class="material-symbols-outlined" style="font-size:32px;color:#7B61FF;font-variation-settings:'FILL' 1;">security</span>
             </div>
@@ -497,9 +500,19 @@ const differentiators = [
     width: 100%; height: 100%;
     border-color: rgba(123,97,255,0.12);
   }
+  .radar-ring-1b {
+    width: 83%; height: 83%;
+    border-color: rgba(123,97,255,0.08);
+    border-style: dashed;
+  }
   .radar-ring-2 {
     width: 66%; height: 66%;
     border-color: rgba(123,97,255,0.18);
+  }
+  .radar-ring-2b {
+    width: 50%; height: 50%;
+    border-color: rgba(123,97,255,0.1);
+    border-style: dashed;
   }
   .radar-ring-3 {
     width: 33%; height: 33%;
@@ -513,6 +526,11 @@ const differentiators = [
     transform-origin: left center;
     background: linear-gradient(90deg, rgba(123,97,255,0.6), transparent);
     animation: radar-spin 3s linear infinite;
+  }
+
+  .radar-sweep-secondary {
+    opacity: 0.35;
+    animation-delay: -1.5s;
   }
 
   @keyframes radar-spin {
@@ -691,6 +709,26 @@ const differentiators = [
     border-radius: inherit;
   }
 
+  /* Left border accent that grows from 0 to full height on hover */
+  .uc-card::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 3px;
+    height: 0%;
+    background: linear-gradient(180deg, #7B61FF, #4F46E5);
+    border-radius: 0 3px 3px 0;
+    transition: height 0.4s cubic-bezier(0.16,1,0.3,1), top 0.4s cubic-bezier(0.16,1,0.3,1);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .uc-card:hover::after {
+    height: 100%;
+    top: 0%;
+  }
+
   .uc-card:hover {
     border-color: rgba(123,97,255,0.25);
     box-shadow: 0 8px 32px rgba(0,0,0,0.15), 0 0 20px rgba(123,97,255,0.08);
@@ -781,12 +819,19 @@ const differentiators = [
 
   .step-number {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
     font-weight: 700;
-    color: #7B61FF;
-    letter-spacing: 0.1em;
+    color: #fff;
+    letter-spacing: 0.05em;
     margin-bottom: 16px;
-    opacity: 0.7;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7B61FF, #4F46E5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(123,97,255,0.3);
   }
 
   .step-icon-wrap {
@@ -979,6 +1024,6 @@ const differentiators = [
   @media (prefers-reduced-motion: reduce) {
     .radar-sweep { animation: none !important; }
     .radar-blip { animation: none !important; opacity: 0.6; }
-    .uc-card, .diff-card, .step-card, .xlink-card { transition: none !important; }
+    .uc-card, .uc-card::after, .diff-card, .step-card, .xlink-card { transition: none !important; }
   }
 </style>

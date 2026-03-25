@@ -224,6 +224,14 @@ const techSections = [
               <text x="200" y="150" text-anchor="middle" class="eg-node-label">HUB-01</text>
               <text x="250" y="260" text-anchor="middle" class="eg-node-label eg-label-red">FAULT</text>
 
+              <!-- Electricity arcs between nodes -->
+              <path d="M 65 80 Q 90 60 120 75 Q 150 90 170 78 Q 185 70 200 120" class="eg-arc" style="--arc-dur: 1.8s; --arc-delay: 0s;" fill="none"/>
+              <path d="M 205 120 Q 240 90 270 100 Q 300 110 320 80 Q 330 72 340 70" class="eg-arc" style="--arc-dur: 2s; --arc-delay: 0.6s;" fill="none"/>
+              <path d="M 345 70 Q 370 50 390 75 Q 410 100 430 95 Q 435 110 440 130" class="eg-arc" style="--arc-dur: 1.6s; --arc-delay: 1.2s;" fill="none"/>
+              <path d="M 200 125 Q 210 160 225 180 Q 235 200 250 230" class="eg-arc eg-arc-fault" style="--arc-dur: 1.2s; --arc-delay: 0.3s;" fill="none"/>
+              <path d="M 255 230 Q 310 240 350 245 Q 380 250 400 260" class="eg-arc" style="--arc-dur: 2.2s; --arc-delay: 0.9s;" fill="none"/>
+              <path d="M 250 235 Q 200 260 170 275 Q 150 285 130 300" class="eg-arc" style="--arc-dur: 1.9s; --arc-delay: 1.5s;" fill="none"/>
+
               <!-- Tower icons (simplified) -->
               <g class="eg-tower-icon" transform="translate(55, 40)">
                 <line x1="5" y1="0" x2="5" y2="30" stroke="#FF8C00" stroke-width="1.5" opacity="0.5"/>
@@ -960,6 +968,44 @@ const techSections = [
     fill: #FF4444;
     letter-spacing: 0.15em;
     font-weight: 700;
+  }
+
+  /* Electricity arcs between nodes */
+  .eg-arc {
+    stroke: #FF8C00;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-dasharray: 6 10 2 10;
+    filter: url(#glow-orange);
+    opacity: 0;
+    animation: eg-arc-flash var(--arc-dur, 2s) ease-in-out var(--arc-delay, 0s) infinite;
+  }
+  .eg-arc-fault {
+    stroke: #FF4444;
+    stroke-width: 2;
+    stroke-dasharray: 4 8 2 8;
+    filter: url(#glow-red);
+    animation-name: eg-arc-flash-fault;
+  }
+  @keyframes eg-arc-flash {
+    0%, 100% { opacity: 0; stroke-dashoffset: 0; }
+    15% { opacity: 0.7; }
+    30% { opacity: 0.2; }
+    45% { opacity: 0.9; stroke-dashoffset: 28; }
+    60% { opacity: 0.15; }
+    75% { opacity: 0.6; stroke-dashoffset: 56; }
+    90% { opacity: 0; }
+  }
+  @keyframes eg-arc-flash-fault {
+    0%, 100% { opacity: 0; stroke-dashoffset: 0; }
+    10% { opacity: 0.9; }
+    20% { opacity: 0.1; }
+    30% { opacity: 1; stroke-dashoffset: 22; }
+    40% { opacity: 0.05; }
+    50% { opacity: 0.8; stroke-dashoffset: 44; }
+    60% { opacity: 0.1; }
+    70% { opacity: 0.6; }
+    80% { opacity: 0; }
   }
 
   .eg-node-label {
@@ -2286,7 +2332,7 @@ const techSections = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .eg-flow-line, .eg-node-pulse, .eg-node-anomaly-pulse, .eg-node-anomaly-ring, .eg-scan-path { animation: none !important; }
+    .eg-flow-line, .eg-node-pulse, .eg-node-anomaly-pulse, .eg-node-anomaly-ring, .eg-scan-path, .eg-arc { animation: none !important; opacity: 0 !important; }
     .eg-grid-svg animate, .eg-grid-svg animateMotion { display: none; }
   }
 </style>

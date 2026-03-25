@@ -175,6 +175,17 @@ const integrations = [
             <div class="hud-target hud-target-2">
               <span class="hud-target-label">SUBJ-02</span>
             </div>
+            <!-- Radar sweep overlay -->
+            <div class="radar-sweep-sec"></div>
+            <!-- Faint grid overlay -->
+            <div class="hud-grid-overlay"></div>
+            <!-- Radar blips (varied sizes and positions) -->
+            <div class="hud-blip hud-blip-1"></div>
+            <div class="hud-blip hud-blip-2"></div>
+            <div class="hud-blip hud-blip-3"></div>
+            <div class="hud-blip hud-blip-4"></div>
+            <div class="hud-blip hud-blip-5"></div>
+            <div class="hud-blip hud-blip-6"></div>
             <!-- Telemetry readout bottom-right -->
             <div class="hud-telemetry">
               <span>ALT 120m</span>
@@ -997,6 +1008,65 @@ const integrations = [
     font-size: 9px;
     letter-spacing: 0.1em;
     color: rgba(0, 255, 65, 0.5);
+  }
+
+  /* Radar sweep rotating overlay */
+  .radar-sweep-sec {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    transform-origin: 0 0;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      rgba(0, 255, 65, 0.06) 20deg,
+      rgba(0, 255, 65, 0.02) 40deg,
+      transparent 60deg
+    );
+    animation: hud-radar-sweep 6s linear infinite;
+    pointer-events: none;
+    z-index: 2;
+  }
+  @keyframes hud-radar-sweep {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* Grid overlay for tactical aesthetic */
+  .hud-grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 255, 65, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 65, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Radar blips — scattered motion-detected targets */
+  .hud-blip {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(0, 255, 65, 0.8);
+    box-shadow: 0 0 6px rgba(0, 255, 65, 0.5), 0 0 12px rgba(0, 255, 65, 0.2);
+    pointer-events: none;
+    z-index: 5;
+    animation: blip-pulse 3s ease-in-out infinite;
+  }
+  .hud-blip-1 { width: 5px; height: 5px; top: 32%; left: 25%; animation-delay: 0s; animation-duration: 2.8s; }
+  .hud-blip-2 { width: 7px; height: 7px; top: 58%; left: 42%; animation-delay: 0.5s; animation-duration: 3.2s; }
+  .hud-blip-3 { width: 4px; height: 4px; top: 45%; right: 28%; animation-delay: 1.2s; animation-duration: 2.5s; }
+  .hud-blip-4 { width: 6px; height: 6px; top: 65%; right: 35%; animation-delay: 1.8s; animation-duration: 3.5s; }
+  .hud-blip-5 { width: 3px; height: 3px; top: 28%; left: 60%; animation-delay: 0.7s; animation-duration: 4s; }
+  .hud-blip-6 { width: 5px; height: 5px; top: 72%; left: 55%; animation-delay: 2.2s; animation-duration: 2.6s; }
+  @keyframes blip-pulse {
+    0%, 100% { opacity: 0.9; transform: scale(1); }
+    30% { opacity: 0.3; transform: scale(0.6); }
+    60% { opacity: 0.8; transform: scale(1.2); }
+    80% { opacity: 0.4; transform: scale(0.8); }
   }
 
   /* ---- Stats Bar ---- */
@@ -2274,6 +2344,18 @@ const integrations = [
   :global([data-theme="light"]) .hud-status-dot { background: #00a030; box-shadow: 0 0 8px rgba(0, 160, 48, 0.4); }
   :global([data-theme="light"]) .hud-status-text { color: rgba(0, 100, 30, 0.6); }
   :global([data-theme="light"]) .hud-telemetry span { color: rgba(0, 100, 30, 0.3); }
+  :global([data-theme="light"]) .hud-grid-overlay {
+    background-image:
+      linear-gradient(rgba(0, 120, 40, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 120, 40, 0.03) 1px, transparent 1px);
+  }
+  :global([data-theme="light"]) .radar-sweep-sec {
+    background: conic-gradient(from 0deg, transparent 0deg, rgba(0, 120, 40, 0.04) 20deg, rgba(0, 120, 40, 0.015) 40deg, transparent 60deg);
+  }
+  :global([data-theme="light"]) .hud-blip {
+    background: rgba(0, 120, 40, 0.6);
+    box-shadow: 0 0 6px rgba(0, 120, 40, 0.3);
+  }
 
   :global([data-theme="light"]) .alert-cascade {
     background: #f8f9fa;
@@ -2301,6 +2383,7 @@ const integrations = [
   @media (prefers-reduced-motion: reduce) {
     .hud-scanlines, .radar-sweep-sec { animation: none !important; }
     .crosshair-circle { animation: none !important; }
+    .hud-blip { animation: none !important; opacity: 0.6 !important; }
     .log-entry { animation: none !important; opacity: 1 !important; }
   }
 </style>

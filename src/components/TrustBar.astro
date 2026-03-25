@@ -129,11 +129,13 @@ const trustBadges = [
     border: 1px solid rgba(255,255,255,0.1);
     background: rgba(255,255,255,0.04);
     backdrop-filter: blur(8px);
-    transition: border-color 0.2s ease, background 0.2s ease;
+    transition: border-color 0.25s ease, background 0.25s ease, transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), box-shadow 0.3s ease;
   }
   .badge-chip:hover {
-    border-color: rgba(0, 229, 255, 0.2);
+    border-color: rgba(0, 229, 255, 0.25);
     background: rgba(0, 229, 255, 0.05);
+    transform: scale(1.02);
+    box-shadow: 0 2px 12px rgba(0,229,255,0.1), 0 0 20px rgba(0,229,255,0.05);
   }
 
   .outcomes-grid {
@@ -156,8 +158,14 @@ const trustBadges = [
   .outcome-card::before {
     content: '';
     position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent 10%, var(--accent) 50%, transparent 90%);
-    opacity: 0.4;
+    background: linear-gradient(90deg, transparent 5%, var(--accent) 50%, transparent 95%);
+    opacity: 0;
+    transform: scaleX(0.3);
+    transition: opacity 0.4s ease, transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+  .outcome-card:hover::before {
+    opacity: 0.8;
+    transform: scaleX(1);
   }
   .outcome-card:hover {
     border-color: rgba(0, 229, 255, 0.2);
@@ -240,9 +248,18 @@ const trustBadges = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .outcome-card { transition: none; }
+    .outcome-card, .badge-chip { transition: none; }
+    .outcome-card::before { transition: none; }
   }
 
+  :global([data-theme="light"]) .badge-chip {
+    border-color: rgba(0,131,143,0.12);
+    background: rgba(255,255,255,0.7);
+  }
+  :global([data-theme="light"]) .badge-chip:hover {
+    border-color: rgba(0,131,143,0.25);
+    box-shadow: 0 2px 12px rgba(0,131,143,0.08), 0 0 16px rgba(0,131,143,0.04);
+  }
   :global([data-theme="light"]) .outcome-card {
     background: rgba(255, 255, 255, 0.9);
     border-color: rgba(0, 131, 143, 0.12);
