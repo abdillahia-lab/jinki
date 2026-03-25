@@ -114,7 +114,8 @@
       "Bash(sips --getProperty pixelWidth --getProperty pixelHeight /Users/aa/JInki.ai/public/images/jinki-logo.png)",
       "Bash(sips --getProperty pixelWidth /Users/aa/JInki.ai/public/images/jinki-logo-192.png)",
       "Bash(grep -c aria-label /Users/aa/JInki.ai/src/pages/index.astro /Users/aa/JInki.ai/src/components/*.astro /Users/aa/JInki.ai/src/pages/services/*.astro /Users/aa/JInki.ai/src/pages/verticals/*.astro)",
-      "Bash(sort -t: -k2 -n)"
+      "Bash(sort -t: -k2 -n)",
+      "mcp__4897e4eb-dc1b-467a-b3b2-76aa7961bb5a__move-item-to-folder"
     ]
   }
 }
