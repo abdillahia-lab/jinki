@@ -176,8 +176,8 @@ const orgSchema = {
         function updateProgress() {
           if (progressBar) {
             var docH = document.documentElement.scrollHeight - window.innerHeight;
-            var pct = docH > 0 ? (window.scrollY / docH) * 100 : 0;
-            progressBar.style.width = pct + '%';
+            var pct = docH > 0 ? window.scrollY / docH : 0;
+            progressBar.style.transform = 'scaleX(' + pct + ')';
           }
         }
 

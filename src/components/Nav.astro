@@ -455,6 +455,7 @@ const services = [
       var theme = html.getAttribute('data-theme') || 'dark';
       themeIcon.textContent = theme === 'dark' ? 'dark_mode' : 'light_mode';
       themeToggle?.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+      themeToggle?.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
     }
     syncIcon();
 

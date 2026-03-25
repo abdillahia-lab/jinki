@@ -79,13 +79,24 @@ const relatedLinks = (post.data.tags || [])
       </div>
       <div class="omega-post-hero-content">
         <div class="omega-post-hero-inner">
-          <!-- Breadcrumb -->
+          <!-- Breadcrumb with Schema.org -->
           <nav class="omega-breadcrumb reveal" aria-label="Breadcrumb">
-            <a href="/">Home</a>
-            <span aria-hidden="true">/</span>
-            <a href="/blog">Blog</a>
-            <span aria-hidden="true">/</span>
-            <span aria-current="page">{post.data.title}</span>
+            <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display:contents;">
+              <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" style="display:contents;">
+                <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
+                <meta itemprop="position" content="1" />
+              </li>
+              <span aria-hidden="true">/</span>
+              <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" style="display:contents;">
+                <a href="/blog" itemprop="item"><span itemprop="name">Blog</span></a>
+                <meta itemprop="position" content="2" />
+              </li>
+              <span aria-hidden="true">/</span>
+              <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem" style="display:contents;">
+                <span itemprop="name" aria-current="page">{post.data.title}</span>
+                <meta itemprop="position" content="3" />
+              </li>
+            </ol>
           </nav>
 
           <div class="omega-post-hero-meta reveal reveal-delay-1" style="margin-bottom: 16px;">

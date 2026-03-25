@@ -373,10 +373,12 @@ html {
   top: 0;
   left: 0;
   height: 2px;
-  width: 0%;
+  width: 100%;
   background: linear-gradient(90deg, var(--accent), #7B61FF);
   z-index: 1001;
-  transition: width 0.1s linear;
+  transform: scaleX(0);
+  transform-origin: left;
+  will-change: transform;
   box-shadow: 0 0 8px var(--accent-glow-strong);
   will-change: width;
   contain: layout style;
