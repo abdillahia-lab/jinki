@@ -190,7 +190,6 @@ body {
   background: linear-gradient(180deg, #fafbfc 0%, #f4f6f8 30%, #fafbfc 60%, #f2f4f6 100%);
 }
 
-/* Scrollbar — see consolidated rules below */
 
 /* --- Topographic Background --- */
 body::before {
@@ -504,6 +503,7 @@ html {
 }
 
 /* --- Scrollbar --- */
+html { scrollbar-width: thin; scrollbar-color: var(--text-tertiary) var(--bg-primary); }
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb { background: var(--text-tertiary); border-radius: 3px; }
