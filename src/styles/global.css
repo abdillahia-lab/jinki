@@ -190,24 +190,7 @@ body {
   background: linear-gradient(180deg, #fafbfc 0%, #f4f6f8 30%, #fafbfc 60%, #f2f4f6 100%);
 }
 
-/* Premium scrollbar */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: var(--outline-variant) var(--bg-primary);
-}
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--outline-variant);
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--outline);
-}
+/* Scrollbar — see consolidated rules below */
 
 /* --- Topographic Background --- */
 body::before {
@@ -346,7 +329,7 @@ html {
   font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   color: var(--accent);
   line-height: 1;
 }
@@ -503,9 +486,6 @@ html {
   pointer-events: none;
 }
 
-/* --- Animations --- */
-
-/* --- Scrollbar --- */
 /* --- View Transitions (Chrome native) --- */
 @view-transition { navigation: auto; }
 ::view-transition-old(root) {
@@ -538,7 +518,12 @@ html {
 [data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #a0acaf; }
 
 /* --- Tabular Numbers (for counters and stats) --- */
-.tabular-nums {
+.tabular-nums,
+.stat-value,
+.metric-value,
+.trust-counter-val,
+.outcome-stat-val,
+[data-count] {
   font-variant-numeric: tabular-nums;
 }
 
