@@ -620,7 +620,7 @@ const differentiators = [
     .sec-bg-svg circle, .sec-bg-svg animate { animation: none !important; }
   }
 
-  /* === STATS BAR === */
+  /* === STATS BAR — HUD readout === */
   .stats-strip {
     background: var(--surface-container-low);
     border-top: 1px solid var(--glass-border);
@@ -633,7 +633,7 @@ const differentiators = [
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    gap: 0;
   }
 
   @media (max-width: 768px) {
@@ -644,12 +644,31 @@ const differentiators = [
     display: flex;
     align-items: center;
     gap: 16px;
+    border-left: 2px solid rgba(123,97,255,0.35);
+    padding-left: 20px;
+    position: relative;
+  }
+
+  /* Violet divider line between stats */
+  .stat-item + .stat-item {
+    border-left: 2px solid rgba(123,97,255,0.35);
+  }
+
+  .stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background: rgba(123,97,255,0.10);
   }
 
   .stat-icon {
     color: #7B61FF;
-    font-size: 24px;
+    font-size: 20px;
     flex-shrink: 0;
+    opacity: 0.5;
   }
 
   .stat-text {
@@ -658,17 +677,21 @@ const differentiators = [
   }
 
   .stat-value {
-    font-family: var(--font-headline);
-    font-size: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
     font-weight: 700;
-    color: var(--text-primary);
+    color: #e0e0ff;
+    letter-spacing: 0.02em;
   }
 
   .stat-label {
-    font-family: var(--font-body);
-    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
     color: var(--text-tertiary);
     line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    opacity: 0.7;
   }
 
   /* === SECTIONS === */
@@ -735,6 +758,7 @@ const differentiators = [
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
+    counter-reset: uc-counter;
   }
 
   @media (max-width: 1024px) {
@@ -793,6 +817,25 @@ const differentiators = [
 
   .uc-card-inner {
     padding: 32px 28px;
+    position: relative;
+  }
+
+  /* Monospace numbered label in top-right */
+  .uc-card {
+    counter-increment: uc-counter;
+  }
+
+  .uc-card-inner::before {
+    content: counter(uc-counter, decimal-leading-zero);
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: rgba(123,97,255,0.08);
+    line-height: 1;
+    pointer-events: none;
   }
 
   .uc-icon-wrap {
@@ -822,7 +865,7 @@ const differentiators = [
 
   .uc-desc {
     font-family: var(--font-body);
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     color: var(--text-secondary);
     line-height: 1.7;
     margin-bottom: 20px;
@@ -836,30 +879,64 @@ const differentiators = [
   }
 
   .uc-highlights li {
-    font-family: var(--font-body);
-    font-size: 0.8125rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
     color: var(--text-secondary);
     display: flex;
     align-items: center;
     gap: 8px;
+    letter-spacing: 0.01em;
   }
 
-  /* === STEPS === */
+  /* Hide Material Symbols checkmarks, use monospace bracket style */
+  .uc-highlights li .material-symbols-outlined {
+    font-size: 0 !important;
+    width: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  .uc-highlights li::before {
+    content: '[+]';
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: rgba(123,97,255,0.5);
+    flex-shrink: 0;
+    letter-spacing: 0;
+  }
+
+  /* === STEPS — boot sequence === */
   .steps-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 32px;
+    position: relative;
+  }
+
+  /* Horizontal connecting dotted line between steps */
+  .steps-grid::before {
+    content: '';
+    position: absolute;
+    top: 54px; /* aligned with step number center */
+    left: calc(16.66% + 18px);
+    right: calc(16.66% + 18px);
+    height: 1px;
+    border-top: 2px dotted rgba(123,97,255,0.2);
+    z-index: 1;
+    pointer-events: none;
   }
 
   @media (max-width: 768px) {
     .steps-grid { grid-template-columns: 1fr; gap: 24px; }
+    .steps-grid::before { display: none; }
   }
 
   .step-card {
     background: var(--surface-container-low);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
-    padding: 36px 28px;
+    padding: 36px 28px 48px;
     position: relative;
     overflow: hidden;
   }
@@ -873,11 +950,29 @@ const differentiators = [
     border-radius: inherit;
   }
 
+  /* STATUS label at bottom of each step card */
+  .step-card::after {
+    content: 'STATUS: ACTIVE';
+    position: absolute;
+    bottom: 16px;
+    right: 20px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: rgba(123,97,255,0.12);
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  .step-card:first-child::after { content: 'STATUS: READY'; }
+  .step-card:nth-child(2)::after { content: 'STATUS: ACTIVE'; }
+  .step-card:last-child::after { content: 'STATUS: ACTIVE'; }
+
   .step-number {
     font-family: var(--font-mono);
     font-size: 0.8125rem;
     font-weight: 700;
-    color: #fff;
+    color: #c4b5ff;
     letter-spacing: 0.05em;
     margin-bottom: 16px;
     width: 36px;
@@ -888,6 +983,8 @@ const differentiators = [
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 12px rgba(123,97,255,0.3);
+    position: relative;
+    z-index: 2;
   }
 
   .step-icon-wrap {
@@ -953,6 +1050,25 @@ const differentiators = [
     border-radius: inherit;
   }
 
+  /* Gradient top border — appears on hover */
+  .diff-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #7B61FF, #4F46E5, transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .diff-card:hover::after {
+    opacity: 1;
+  }
+
   .diff-card:hover {
     border-color: rgba(123,97,255,0.2);
     box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 0 16px rgba(123,97,255,0.06);
@@ -960,25 +1076,25 @@ const differentiators = [
   }
 
   .diff-icon-wrap {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: rgba(123,97,255,0.08);
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(123,97,255,0.1);
     border: 1px solid rgba(123,97,255,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
   }
 
   .diff-icon {
-    font-size: 22px;
+    font-size: 24px;
     color: #7B61FF;
   }
 
   .diff-card h3 {
     font-family: var(--font-headline);
-    font-size: 1rem;
+    font-size: 1.0625rem;
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 12px;
@@ -1026,9 +1142,22 @@ const differentiators = [
     border-radius: inherit;
   }
 
+  /* Violet gradient top border */
+  .xlink-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #7B61FF, #4F46E5, transparent);
+    pointer-events: none;
+    z-index: 2;
+  }
+
   .xlink-card:hover {
-    border-color: color-mix(in srgb, var(--accent) 20%, transparent);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    border-color: rgba(123,97,255,0.25);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15), 0 0 24px rgba(123,97,255,0.1);
     transform: translateY(-2px);
   }
 
@@ -1067,8 +1196,39 @@ const differentiators = [
     transition: transform 0.2s ease;
   }
 
+  .xlink-arrow .material-symbols-outlined {
+    font-size: 22px !important;
+  }
+
   .xlink-card:hover .xlink-arrow {
-    transform: translateX(4px);
+    transform: translateX(6px);
+  }
+
+  /* === FAQ REFINEMENT === */
+  .sec-faq-item {
+    border-left: 2px solid rgba(123,97,255,0.2) !important;
+    transition: border-color 0.3s ease;
+  }
+
+  .sec-faq-item[open] {
+    border-left-color: #7B61FF !important;
+  }
+
+  /* === GLOBAL PAGE REFINEMENTS === */
+
+  /* Section heading depth */
+  .section-header h2 {
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+
+  /* All eyebrow labels → monospace */
+  .vert-eyebrow-text {
+    font-family: var(--font-mono);
+  }
+
+  /* Subtle section dividers between major sections */
+  .section + .section {
+    border-top: 1px solid rgba(123,97,255,0.08);
   }
 
   /* === PRINT / MOTION === */
