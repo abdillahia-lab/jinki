@@ -542,13 +542,6 @@ html { scrollbar-width: thin; scrollbar-color: var(--text-tertiary) var(--bg-pri
 
 /* --- Rendering Performance --- */
 
-/* Below-fold sections: skip rendering until near viewport */
-.verticals-section,
-#lead-gen {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
-}
-
 /* --- Scroll Reveal --- */
 .reveal {
   opacity: 0;
