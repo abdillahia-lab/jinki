@@ -1300,6 +1300,24 @@ const capabilities = [
     box-shadow: 0 0 20px rgba(0, 201, 167, 0.7), 0 0 50px rgba(0, 201, 167, 0.25);
   }
 
+  .calc-slider:focus {
+    outline: none;
+  }
+
+  .calc-slider:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 201, 167, 0.2), 0 0 16px rgba(0, 201, 167, 0.15);
+    border-radius: 4px;
+  }
+
+  .calc-slider:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 20px rgba(0, 201, 167, 0.8), 0 0 40px rgba(0, 201, 167, 0.3), 0 0 0 4px rgba(0, 201, 167, 0.15);
+  }
+
+  .calc-slider:focus-visible::-moz-range-thumb {
+    box-shadow: 0 0 20px rgba(0, 201, 167, 0.8), 0 0 40px rgba(0, 201, 167, 0.3), 0 0 0 4px rgba(0, 201, 167, 0.15);
+  }
+
   .calc-slider::-moz-range-thumb {
     width: 28px;
     height: 28px;
@@ -1823,15 +1841,15 @@ const capabilities = [
     z-index: 1;
   }
 
-  /* Data flow particle animation on connectors */
+  /* Dotted connecting line between nodes */
   .arch-arrow::before {
     content: '';
     position: absolute;
     top: 50%;
     left: -18px;
     width: 36px;
-    height: 2px;
-    background: rgba(0, 201, 167, 0.08);
+    height: 0;
+    border-top: 2px dotted rgba(0, 201, 167, 0.25);
     transform: translateY(-50%);
     overflow: hidden;
   }
@@ -2193,5 +2211,8 @@ const capabilities = [
     .facility-svg animate, .facility-svg animateMotion { display: none; }
     .hero-stat, .process-step, .spec-card { transition: none !important; }
     .calc-result-value { transition: none !important; }
+    .arch-node-icon { animation: none !important; }
+    .arch-arrow::after { animation: none !important; }
+    #calc-perimeter-ring, #calc-perimeter-glow { animation: none !important; }
   }
 </style>
