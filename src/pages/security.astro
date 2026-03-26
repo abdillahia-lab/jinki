@@ -21,33 +21,33 @@ const stats = [
 const useCases = [
   {
     icon: 'stadium',
-    title: 'Event Security',
-    desc: 'Concerts, sports events, festivals, and large public gatherings. Real-time crowd monitoring, perimeter surveillance, and rapid incident response from above — providing situational awareness that ground teams cannot achieve alone.',
-    highlights: ['Crowd density monitoring', 'Perimeter breach detection', 'Incident response coordination', 'Post-event sweep'],
+    title: 'Events',
+    tagline: 'Concerts. Festivals. Gatherings.',
+    specs: ['Crowd density analysis', 'Perimeter breach detection', 'Incident response from above', 'Post-event thermal sweep'],
   },
   {
     icon: 'villa',
-    title: 'Resort & Hospitality',
-    desc: 'Luxury resorts, golf courses, and hotel campuses. Discreet aerial patrols protect guests and property across expansive grounds without visible security infrastructure that disrupts the guest experience.',
-    highlights: ['Guest safety across large grounds', 'Beach and waterfront monitoring', 'Parking and perimeter coverage', 'Night operations with thermal'],
+    title: 'Hospitality',
+    tagline: 'Resorts. Golf courses. Campuses.',
+    specs: ['Guest safety at scale', 'Waterfront monitoring', 'Perimeter coverage', 'Thermal night ops'],
   },
   {
     icon: 'home',
     title: 'Private Estates',
-    desc: 'High-net-worth residential compounds and multi-acre properties. Persistent perimeter monitoring with thermal detection identifies unauthorized access across terrain that cameras and guards cannot fully cover.',
-    highlights: ['Multi-acre perimeter patrol', 'Tree-line and fence-line monitoring', 'Visitor verification support', 'Integration with estate security'],
+    tagline: 'Compounds. Multi-acre properties.',
+    specs: ['Perimeter patrol', 'Fence-line monitoring', 'Visitor verification', 'Estate security integration'],
   },
   {
     icon: 'domain',
     title: 'Critical Facilities',
-    desc: 'Data centers, power plants, water treatment facilities, and warehouses. Autonomous aerial surveillance augments existing security systems with persistent coverage, thermal anomaly detection, and rapid alert verification.',
-    highlights: ['Infrastructure perimeter patrol', 'Thermal anomaly detection', 'Alarm verification from the air', 'SOC integration'],
+    tagline: 'Data centers. Power plants. Warehouses.',
+    specs: ['Infrastructure patrol', 'Thermal anomaly detection', 'Alarm verification', 'SOC integration'],
   },
   {
     icon: 'construction',
-    title: 'Construction Sites',
-    desc: 'After-hours theft prevention, equipment monitoring, and progress documentation. Autonomous patrol routes deter theft and vandalism while capturing time-stamped evidence across active job sites.',
-    highlights: ['After-hours theft deterrence', 'Equipment monitoring', 'Progress documentation', 'Evidence capture for incidents'],
+    title: 'Construction',
+    tagline: 'Job sites. Equipment yards.',
+    specs: ['After-hours deterrence', 'Equipment monitoring', 'Progress documentation', 'Evidence capture'],
   },
 ];
 
@@ -232,24 +232,21 @@ const differentiators = [
             aerial intelligence adapts to your security requirements.
           </p>
         </div>
-        <div class="use-cases-grid">
+        <div class="uc-grid-v2">
           {useCases.map((uc, i) => (
-            <div class={`uc-card reveal reveal-delay-${(i % 3) + 1}`}>
-              <div class="uc-card-inner">
-                <div class="uc-icon-wrap">
-                  <span class="material-symbols-outlined uc-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{uc.icon}</span>
+            <div class={`uc-tile reveal reveal-delay-${(i % 3) + 1}`}>
+              <div class="uc-tile-header">
+                <span class="material-symbols-outlined uc-tile-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{uc.icon}</span>
+                <div>
+                  <h3 class="uc-tile-title">{uc.title}</h3>
+                  <p class="uc-tile-tagline">{uc.tagline}</p>
                 </div>
-                <h3>{uc.title}</h3>
-                <p class="uc-desc">{uc.desc}</p>
-                <ul class="uc-highlights">
-                  {uc.highlights.map(h => (
-                    <li>
-                      <span class="material-symbols-outlined" style="font-size:14px;color:#7B61FF;font-variation-settings:'FILL' 1;" aria-hidden="true">check_circle</span>
-                      {h}
-                    </li>
-                  ))}
-                </ul>
               </div>
+              <ul class="uc-tile-specs">
+                {uc.specs.map(s => (
+                  <li>{s}</li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
@@ -754,156 +751,92 @@ const differentiators = [
   }
 
   /* === USE CASE CARDS === */
-  .use-cases-grid {
+  /* === USE CASE TILES — mission brief style === */
+  .uc-grid-v2 {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    counter-reset: uc-counter;
-  }
-
-  @media (max-width: 1024px) {
-    .use-cases-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  @media (max-width: 640px) {
-    .use-cases-grid { grid-template-columns: 1fr; }
-  }
-
-  .uc-card {
-    background: var(--surface-container-low);
-    border: 1px solid var(--glass-border);
-    border-radius: 16px;
-    overflow: hidden;
-    transition: transform 0.4s var(--ease-out-premium),
-                box-shadow 0.4s var(--ease-out-premium),
-                border-color 0.4s ease;
-    position: relative;
-  }
-
-  .uc-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--glossy-shine);
-    pointer-events: none;
-    border-radius: inherit;
-  }
-
-  /* Left border accent that grows from 0 to full height on hover */
-  .uc-card::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 3px;
-    height: 0%;
-    background: linear-gradient(180deg, #7B61FF, #4F46E5);
-    border-radius: 0 3px 3px 0;
-    transition: height 0.4s var(--ease-out-premium), top 0.4s var(--ease-out-premium);
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  .uc-card:hover::after {
-    height: 100%;
-    top: 0%;
-  }
-
-  .uc-card:hover {
-    border-color: rgba(123,97,255,0.25);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.15), 0 0 20px rgba(123,97,255,0.08);
-    transform: translateY(-2px);
-  }
-
-  .uc-card-inner {
-    padding: 32px 28px;
-    position: relative;
-  }
-
-  /* Monospace numbered label in top-right */
-  .uc-card {
-    counter-increment: uc-counter;
-  }
-
-  .uc-card-inner::before {
-    content: counter(uc-counter, decimal-leading-zero);
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    font-family: var(--font-mono);
-    font-size: 2rem;
-    font-weight: 700;
-    color: rgba(123,97,255,0.08);
-    line-height: 1;
-    pointer-events: none;
-  }
-
-  .uc-icon-wrap {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
     background: rgba(123,97,255,0.08);
-    border: 1px solid rgba(123,97,255,0.2);
+    border: 1px solid rgba(123,97,255,0.08);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  @media (max-width: 1100px) {
+    .uc-grid-v2 { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .uc-grid-v2 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .uc-grid-v2 { grid-template-columns: 1fr; }
+  }
+
+  .uc-tile {
+    background: var(--surface-container-low);
+    padding: 24px 20px;
+    transition: background 0.3s ease;
+    position: relative;
+  }
+
+  .uc-tile:hover {
+    background: rgba(123,97,255,0.06);
+  }
+
+  .uc-tile-header {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
   }
 
-  .uc-icon {
-    font-size: 24px;
+  .uc-tile-icon {
+    font-size: 20px;
     color: #7B61FF;
+    flex-shrink: 0;
+    margin-top: 2px;
   }
 
-  .uc-card h3 {
+  .uc-tile-title {
     font-family: var(--font-headline);
-    font-size: 1.125rem;
+    font-size: 0.9375rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 12px;
+    line-height: 1.2;
+    margin: 0;
   }
 
-  .uc-desc {
-    font-family: var(--font-body);
-    font-size: 0.8125rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: 20px;
+  .uc-tile-tagline {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: rgba(123,97,255,0.5);
+    letter-spacing: 0.05em;
+    margin-top: 4px;
   }
 
-  .uc-highlights {
+  .uc-tile-specs {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
+    border-top: 1px solid rgba(123,97,255,0.08);
+    padding-top: 12px;
   }
 
-  .uc-highlights li {
+  .uc-tile-specs li {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    letter-spacing: 0.01em;
+    font-size: 0.6875rem;
+    color: var(--text-tertiary);
+    letter-spacing: 0.02em;
+    padding-left: 12px;
+    position: relative;
   }
 
-  /* Hide Material Symbols checkmarks, use monospace bracket style */
-  .uc-highlights li .material-symbols-outlined {
-    font-size: 0 !important;
-    width: 0;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-  }
-
-  .uc-highlights li::before {
-    content: '[+]';
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: rgba(123,97,255,0.5);
-    flex-shrink: 0;
-    letter-spacing: 0;
+  .uc-tile-specs li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: rgba(123,97,255,0.3);
   }
 
   /* === STEPS — boot sequence === */
@@ -1240,6 +1173,6 @@ const differentiators = [
   @media (prefers-reduced-motion: reduce) {
     .radar-sweep { animation: none !important; }
     .radar-blip { animation: none !important; opacity: 0.6; }
-    .uc-card, .uc-card::after, .diff-card, .step-card, .xlink-card { transition: none !important; }
+    .uc-tile, .diff-card, .step-card, .xlink-card { transition: none !important; }
   }
 </style>
