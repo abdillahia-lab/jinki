@@ -89,7 +89,7 @@ function estimateReadTime(description: string): number {
           <div class="omega-magazine-layout reveal">
             <!-- Featured (large) card -->
             <a href={`/blog/${posts[0].id}`}
-               class="omega-card omega-card-featured"
+               class="omega-card omega-card-featured reveal"
                data-tags={JSON.stringify(posts[0].data.tags)}>
               <div class="omega-card-image-wrap">
                 {posts[0].data.image ? (
@@ -437,6 +437,27 @@ function estimateReadTime(description: string): number {
     transition: transform 0.4s var(--ease-out-premium),
                 border-color 0.3s ease,
                 box-shadow 0.4s ease;
+    position: relative;
+  }
+
+  /* Top-border glow: 2px gradient line that scaleX from 0 → 1 on hover */
+  .omega-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), #7B61FF, var(--accent), transparent);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.45s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    z-index: 2;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .omega-card:hover::before {
+    transform: scaleX(1);
   }
 
   .omega-card:hover {
@@ -477,11 +498,12 @@ function estimateReadTime(description: string): number {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s var(--ease-out-premium);
+    transition: transform 0.6s var(--ease-out-premium), filter 0.4s ease;
   }
 
   .omega-card:hover .omega-card-image {
     transform: scale(1.03);
+    filter: brightness(0.95);
   }
 
   .omega-card-image-placeholder {
@@ -628,6 +650,40 @@ function estimateReadTime(description: string): number {
   /* ===== Featured card fills height ===== */
   .omega-card-featured {
     height: 100%;
+  }
+
+  /* Shimmer: diagonal light sweep that runs once on scroll reveal */
+  .omega-card-featured::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      105deg,
+      transparent 0%,
+      transparent 40%,
+      rgba(255, 255, 255, 0.10) 50%,
+      transparent 60%,
+      transparent 100%
+    );
+    transform: translateX(-150%);
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .omega-card-featured.revealed::after {
+    animation: featuredShimmer 1.5s ease-out 0.3s 1 forwards;
+  }
+
+  @keyframes featuredShimmer {
+    0%   { transform: translateX(-150%); }
+    100% { transform: translateX(250%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .omega-card-featured::after { display: none; }
   }
 
   .omega-card-sidebar {
@@ -827,7 +883,11 @@ function estimateReadTime(description: string): number {
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .omega-card, .omega-tag-btn, .omega-tab::after { transition: none !important; }
+    .omega-card,
+    .omega-tag-btn,
+    .omega-tab::after,
+    .omega-card::before { transition: none !important; }
+    .omega-card-image { transition: none !important; }
   }
 </style>
 

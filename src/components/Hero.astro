@@ -136,7 +136,9 @@
       radial-gradient(ellipse 600px 600px at var(--mesh-x2) var(--mesh-y2),
         rgba(123, 97, 255, 0.14) 0%, transparent 60%),
       radial-gradient(ellipse 500px 400px at 55% 75%,
-        rgba(0, 180, 220, 0.10) 0%, transparent 55%);
+        rgba(0, 180, 220, 0.10) 0%, transparent 55%),
+      radial-gradient(ellipse 550px 450px at 88% 85%,
+        rgba(139, 92, 246, 0.09) 0%, transparent 60%);
     filter: blur(50px) saturate(1.6);
     animation: meshDrift 25s ease-in-out infinite alternate;
   }
@@ -172,7 +174,7 @@
     background-size: 200px 200px;
   }
 
-  /* Intelligence grid — ultra subtle */
+  /* Intelligence grid — topographic/tech grid, 60px spacing */
   .hero-grid {
     position: absolute;
     inset: 0;
@@ -182,7 +184,7 @@
     background-image:
       linear-gradient(rgba(0, 229, 255, 1) 1px, transparent 1px),
       linear-gradient(90deg, rgba(0, 229, 255, 1) 1px, transparent 1px);
-    background-size: 80px 80px;
+    background-size: 60px 60px;
     mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,0,0,0.6) 0%, transparent 70%);
     -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,0,0,0.6) 0%, transparent 70%);
   }

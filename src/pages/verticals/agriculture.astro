@@ -130,6 +130,14 @@ const pipelineSteps = [
         <div class="scan-sweep"></div>
         <div class="scan-sweep-diag"></div>
         <div class="field-grid-overlay"></div>
+        <!-- Field section dividers -->
+        <div class="field-dividers" aria-hidden="true">
+          <div class="field-divider-v" style="left: 25%;"></div>
+          <div class="field-divider-v" style="left: 50%;"></div>
+          <div class="field-divider-v" style="left: 75%;"></div>
+          <div class="field-divider-h" style="top: 33.3%;"></div>
+          <div class="field-divider-h" style="top: 66.6%;"></div>
+        </div>
         <!-- Growth indicator lines rising from crop rows -->
         <div class="growth-line growth-line-1" aria-hidden="true"></div>
         <div class="growth-line growth-line-2" aria-hidden="true"></div>
@@ -193,6 +201,17 @@ const pipelineSteps = [
             <div class="hud-alert">
               <span class="material-symbols-outlined" style="font-size: 16px; color: #F59E0B; font-variation-settings: 'FILL' 1;">warning</span>
               <span>Zone B4: Moisture stress detected — irrigation recommended</span>
+            </div>
+            <!-- Moisture indicator bar -->
+            <div class="hud-moisture">
+              <div class="moisture-bar-wrap">
+                <div class="moisture-bar"></div>
+                <div class="moisture-needle"></div>
+              </div>
+              <div class="moisture-labels">
+                <span>DRY</span>
+                <span>MOIST</span>
+              </div>
             </div>
           </div>
         </div>
@@ -2248,12 +2267,83 @@ const pipelineSteps = [
     background: rgba(96, 165, 250, 0.08);
   }
 
+  /* Moisture indicator bar in HUD panel */
+  .hud-moisture {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(52, 211, 153, 0.1);
+  }
+  .moisture-bar-wrap {
+    position: relative;
+    height: 8px;
+    border-radius: 4px;
+    overflow: visible;
+  }
+  .moisture-bar {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(to right, #78350F, #92400E, #B45309, #34D399, #60A5FA);
+    opacity: 0.7;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .moisture-needle {
+    position: absolute;
+    top: -3px;
+    left: 28%;
+    width: 2px;
+    height: 14px;
+    background: #F9FAFB;
+    border-radius: 1px;
+    box-shadow: 0 0 4px rgba(255,255,255,0.4);
+    animation: moisture-flicker 4s ease-in-out infinite;
+  }
+  @keyframes moisture-flicker {
+    0%, 100% { left: 28%; }
+    40%       { left: 31%; }
+    70%       { left: 25%; }
+  }
+  .moisture-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+  }
+  .moisture-labels span {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    color: rgba(52, 211, 153, 0.5);
+  }
+
+  /* Field section dividers */
+  .field-dividers {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .field-divider-v {
+    position: absolute;
+    top: 6%;
+    bottom: 6%;
+    width: 1px;
+    background: rgba(52, 211, 153, 0.12);
+  }
+  .field-divider-h {
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: rgba(52, 211, 153, 0.12);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .ag-scan-line, .ag-pulse-ring, .growth-line, .scan-sweep-diag { animation: none !important; }
     .timeline-card, .pipeline-step { transition: none !important; }
     .ag-stat-value { text-shadow: none !important; }
     .ag-stat-icon { animation: none !important; filter: none !important; }
     .ag-stat::before { animation: none !important; }
+    .moisture-needle { animation: none !important; }
   }
 </style>
 

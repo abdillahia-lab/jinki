@@ -196,6 +196,13 @@ const faqs = [
             </div>
             <div class="scan-line"></div>
             <div class="scan-line-h"></div>
+            <div class="scan-line-diag"></div>
+            <!-- Temperature scale legend -->
+            <div class="temp-scale-legend">
+              <span class="temp-scale-label">HOT</span>
+              <div class="temp-scale-bar"></div>
+              <span class="temp-scale-label">COOL</span>
+            </div>
             <!-- Thermal hotspot glows -->
             <div class="dc-hotspot dc-hotspot-1" aria-hidden="true"><div class="dc-hotspot-ring"></div></div>
             <div class="dc-hotspot dc-hotspot-2" aria-hidden="true"><div class="dc-hotspot-ring"></div></div>
@@ -983,6 +990,57 @@ document.addEventListener('DOMContentLoaded', function() {
     45% { left: 95%; opacity: 0.6; }
     55% { left: 95%; opacity: 0.6; }
     95% { left: 0; opacity: 0.2; }
+  }
+
+  /* Diagonal scan line (45°, slower 10s cycle) */
+  .scan-line-diag {
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(0,229,255,0.25) 30%, rgba(0,229,255,0.55) 50%, rgba(0,229,255,0.25) 70%, transparent 100%);
+    transform-origin: left center;
+    transform: rotate(45deg);
+    animation: scan-diag-sweep 10s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(0,229,255,0.15);
+    z-index: 4;
+    pointer-events: none;
+  }
+  @keyframes scan-diag-sweep {
+    0%, 100% { top: -100%; opacity: 0.2; }
+    45% { top: 120%; opacity: 0.7; }
+    55% { top: 120%; opacity: 0.7; }
+    95% { top: -100%; opacity: 0.2; }
+  }
+
+  /* Temperature scale legend */
+  .temp-scale-legend {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .temp-scale-bar {
+    width: 4px;
+    height: 80px;
+    border-radius: 2px;
+    background: linear-gradient(to bottom, #FF3B30, #FFBD2E, #34D399, #00D4FF);
+    box-shadow: 0 0 8px rgba(255,60,48,0.3);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .temp-scale-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: rgba(0,229,255,0.7);
+    text-transform: uppercase;
   }
 
   /* Thermal hotspot glows on the photo */
@@ -2392,6 +2450,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .thermal-overlay,
     .scan-line,
     .scan-line-h,
+    .scan-line-diag,
     .dc-hotspot-ring,
     .alert-badge,
     .alert-dot,

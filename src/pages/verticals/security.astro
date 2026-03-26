@@ -193,6 +193,13 @@ const integrations = [
               <span>HDG 047&deg;</span>
               <span>THERM ON</span>
             </div>
+            <!-- Coordinates readout -->
+            <div class="hud-coords">
+              <span>LAT 38.8977</span>
+              <span>LON -77.0365</span>
+            </div>
+            <!-- Perimeter dashed outline overlay -->
+            <div class="hud-perimeter"></div>
           </div>
         </div>
       </div>
@@ -2380,6 +2387,67 @@ const integrations = [
     border-color: rgba(255, 60, 60, 0.2);
   }
 
+  /* Coordinates readout — top-left corner */
+  .hud-coords {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .hud-coords span {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: rgba(0, 255, 65, 0.4);
+    line-height: 1.4;
+  }
+
+  /* Perimeter dashed outline — slowly animating dash-offset */
+  .hud-perimeter {
+    position: absolute;
+    inset: 12px;
+    border: 1.5px dashed rgba(0, 255, 65, 0.25);
+    border-radius: 4px;
+    z-index: 4;
+    pointer-events: none;
+    animation: perimeter-dash 6s linear infinite;
+  }
+  @keyframes perimeter-dash {
+    0%   { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 100; }
+  }
+  /* CSS outline doesn't support dashoffset — use outline-offset trick via clip-path shimmer */
+  /* Implement with SVG-like border via background approach */
+  .hud-perimeter {
+    background: repeating-linear-gradient(
+      90deg,
+      rgba(0, 255, 65, 0.25) 0px,
+      rgba(0, 255, 65, 0.25) 8px,
+      transparent 8px,
+      transparent 14px
+    ),
+    repeating-linear-gradient(
+      180deg,
+      rgba(0, 255, 65, 0.25) 0px,
+      rgba(0, 255, 65, 0.25) 8px,
+      transparent 8px,
+      transparent 14px
+    );
+    background-size: 14px 1px, 1px 14px;
+    background-position: 0 0, 0 0, 100% 0, 0 100%;
+    background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
+    border: none;
+    animation: perimeter-march 4s linear infinite;
+  }
+  @keyframes perimeter-march {
+    0%   { background-position: 0 0, 0 0; }
+    100% { background-position: 56px 0, 0 56px; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .hud-scanlines, .radar-sweep-sec { animation: none !important; }
     .crosshair-circle { animation: none !important; }
@@ -2388,6 +2456,7 @@ const integrations = [
     .stat-value { text-shadow: none !important; }
     .stats-bar::after { animation: none !important; }
     .diff-card::before { animation: none !important; }
+    .hud-perimeter { animation: none !important; }
   }
 </style>
 

@@ -272,6 +272,22 @@ const techSections = [
               <text x="470" y="385" font-family="monospace" font-size="7" fill="rgba(255,140,0,0.25)" text-anchor="end">NODES: 8 | FAULTS: 1</text>
             </svg>
 
+            <!-- Voltage meter arc gauge -->
+            <div class="eg-voltage-meter" aria-hidden="true">
+              <svg viewBox="0 0 40 26" width="40" height="26" xmlns="http://www.w3.org/2000/svg">
+                <!-- Arc track -->
+                <path d="M 4 22 A 16 16 0 0 1 36 22" fill="none" stroke="rgba(255,140,0,0.2)" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Arc fill -->
+                <path d="M 4 22 A 16 16 0 0 1 36 22" fill="none" stroke="#FF8C00" stroke-width="2.5" stroke-linecap="round"
+                  stroke-dasharray="50.3" stroke-dashoffset="12" opacity="0.7"/>
+                <!-- Needle -->
+                <line x1="20" y1="22" x2="20" y2="8" stroke="#FF8C00" stroke-width="1.5" stroke-linecap="round" class="eg-volt-needle"/>
+                <!-- Center dot -->
+                <circle cx="20" cy="22" r="2" fill="#FF8C00" opacity="0.8"/>
+              </svg>
+              <span class="eg-volt-label">kV</span>
+            </div>
+
             <!-- HUD overlay -->
             <div class="eg-hud-readout">
               <span class="eg-hud-label">GRID STATUS</span>
@@ -998,14 +1014,20 @@ const techSections = [
   }
   @keyframes eg-arc-flash-fault {
     0%, 100% { opacity: 0; stroke-dashoffset: 0; }
-    10% { opacity: 0.9; }
-    20% { opacity: 0.1; }
-    30% { opacity: 1; stroke-dashoffset: 22; }
-    40% { opacity: 0.05; }
-    50% { opacity: 0.8; stroke-dashoffset: 44; }
-    60% { opacity: 0.1; }
-    70% { opacity: 0.6; }
-    80% { opacity: 0; }
+    8%  { opacity: 1; }
+    12% { opacity: 0; }
+    18% { opacity: 1; stroke-dashoffset: 22; }
+    22% { opacity: 0; }
+    30% { opacity: 1; stroke-dashoffset: 44; }
+    36% { opacity: 0.05; }
+    44% { opacity: 1; stroke-dashoffset: 66; }
+    48% { opacity: 0; }
+    55% { opacity: 0.9; }
+    60% { opacity: 0.05; }
+    68% { opacity: 1; stroke-dashoffset: 88; }
+    74% { opacity: 0; }
+    82% { opacity: 0.8; }
+    88% { opacity: 0; }
   }
 
   .eg-node-label {
@@ -2331,9 +2353,42 @@ const techSections = [
     background: rgba(255, 200, 0, 0.06);
   }
 
+  /* Voltage meter arc gauge */
+  .eg-voltage-meter {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    z-index: 5;
+    pointer-events: none;
+    background: rgba(255, 140, 0, 0.06);
+    border: 1px solid rgba(255, 140, 0, 0.2);
+    border-radius: 6px;
+    padding: 6px 8px 4px;
+  }
+  .eg-volt-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    color: rgba(255, 140, 0, 0.6);
+    text-transform: uppercase;
+  }
+  .eg-volt-needle {
+    transform-origin: 20px 22px;
+    animation: eg-needle-oscillate 3s ease-in-out infinite;
+  }
+  @keyframes eg-needle-oscillate {
+    0%, 100% { transform: rotate(-8deg); }
+    50% { transform: rotate(8deg); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .eg-flow-line, .eg-node-pulse, .eg-node-anomaly-pulse, .eg-node-anomaly-ring, .eg-scan-path, .eg-arc { animation: none !important; opacity: 0 !important; }
     .eg-grid-svg animate, .eg-grid-svg animateMotion { display: none; }
     .eg-stat-value { animation: none !important; text-shadow: none !important; }
+    .eg-volt-needle { animation: none !important; }
   }
 </style>

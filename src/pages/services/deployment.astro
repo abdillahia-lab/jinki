@@ -229,11 +229,26 @@ const capabilities = [
             <rect x="730" y="462" width="40" height="4" rx="2" fill="rgba(0, 201, 167, 0.1)"/>
             <rect x="730" y="462" width="40" height="4" rx="2" fill="rgba(0, 201, 167, 0.4)"/>
           </g>
-          <!-- Glow filter -->
+          <!-- Signal pulse rings at dock/base station (cx=235, cy=370 = center of dock rect) -->
+          <circle cx="235" cy="370" r="12" fill="none" stroke="#00C9A7" stroke-width="1.2" opacity="0">
+            <animate attributeName="r" values="12;28;12" dur="2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0.45;0" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="235" cy="370" r="10" fill="none" stroke="#00C9A7" stroke-width="0.6" opacity="0">
+            <animate attributeName="r" values="10;22;10" dur="2s" begin="0.4s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0.25;0" dur="2s" begin="0.4s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Glow filter with accent color tint -->
           <defs>
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            <filter id="glow" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+              <feFlood flood-color="#00C9A7" flood-opacity="0.6" result="color"/>
+              <feComposite in="color" in2="blur" operator="in" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
             </filter>
           </defs>
         </svg>

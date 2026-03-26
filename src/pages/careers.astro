@@ -231,7 +231,10 @@ const culturePoints = [
                     </div>
                     <p class="role-desc">{role.desc}</p>
                   </div>
-                  <button type="button" class="role-apply-btn btn-premium" aria-label={`Apply for ${role.title}`} data-role={role.title} onclick={`openApplyModal('${role.title}')`}>Apply</button>
+                  <button type="button" class="role-apply-btn btn-premium" aria-label={`Apply for ${role.title}`} data-role={role.title} onclick={`openApplyModal('${role.title}')`}>
+                    <span class="role-apply-label">Apply</span>
+                    <svg class="role-apply-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </button>
                 </div>
               ))}
             </div>
@@ -642,8 +645,8 @@ const culturePoints = [
   }
 
   .role-card:hover::after {
-    height: 60%;
-    top: 20%;
+    height: 80%;
+    top: 10%;
   }
 
   .role-card:hover {
@@ -712,8 +715,39 @@ const culturePoints = [
     letter-spacing: 0.1em;
     border-radius: 12px;
     text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    overflow: hidden;
     transition: transform 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
-                box-shadow 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+                box-shadow 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                gap 0.3s ease;
+  }
+
+  .role-apply-arrow {
+    display: inline-block;
+    transform: translateX(-4px);
+    opacity: 0;
+    transition: transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                opacity 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .role-card:hover .role-apply-arrow,
+  .role-apply-btn:hover .role-apply-arrow,
+  .role-apply-btn:focus-visible .role-apply-arrow {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .role-card:hover .role-apply-btn,
+  .role-apply-btn:hover {
+    gap: 8px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .role-apply-arrow { transition: none !important; }
+    .role-apply-btn { transition: none !important; }
   }
 
   :global([data-theme="light"]) .role-apply-btn {

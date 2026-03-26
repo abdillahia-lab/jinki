@@ -312,10 +312,37 @@ const trustBadges = [
     .badge-chip::after { display: none; }
   }
 
+  /* === Stat value animated underline (expands from center on reveal) === */
+  .trust-counter-val {
+    position: relative;
+  }
+  .trust-counter-val::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    width: 60%;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--accent);
+    opacity: 0.4;
+    transition: transform 0.7s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)) 0.2s;
+  }
+  .trust-counters.revealed .trust-counter-val::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+  :global([data-theme="light"]) .trust-counter-val::after {
+    background: #00838f;
+    opacity: 0.4;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .outcome-card, .badge-chip { transition: none; }
     .outcome-card::before { transition: none; }
     .badge-chip::after { transition: none; }
+    .trust-counter-val::after { transition: none; }
   }
 
   :global([data-theme="light"]) .badge-chip {

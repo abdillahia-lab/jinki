@@ -82,7 +82,7 @@ const verticals = [
               <img
                 src={v.img}
                 alt={v.imgAlt || v.title}
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                class="absolute inset-0 w-full h-full object-cover vertical-card-img"
                 loading="lazy"
                 decoding="async"
               />
@@ -173,8 +173,22 @@ const verticals = [
   .verticals-cta:hover .arrow-icon { transform: translateX(4px); }
   .arrow-icon { transition: transform 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)); }
 
+  /* Parallax-lite: scale + vertical lift on hover */
+  .vertical-card-img {
+    transition: transform 0.6s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transform: scale(1) translateY(0);
+    will-change: transform;
+  }
+  .vertical-card:hover .vertical-card-img {
+    transform: scale(1.08) translateY(-8px);
+  }
+
   .card-overlay {
     background: linear-gradient(to top, rgba(5,5,8,0.98) 0%, rgba(5,5,8,0.92) 25%, rgba(5,5,8,0.65) 50%, rgba(5,5,8,0.25) 70%, rgba(5,5,8,0.08) 85%, rgba(5,5,8,0.02) 100%);
+    transition: background 0.6s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+  .vertical-card:hover .card-overlay {
+    background: linear-gradient(to top, rgba(5,5,8,1) 0%, rgba(5,5,8,0.97) 25%, rgba(5,5,8,0.78) 50%, rgba(5,5,8,0.38) 70%, rgba(5,5,8,0.14) 85%, rgba(5,5,8,0.04) 100%);
   }
 
   .card-desc {
@@ -227,7 +241,8 @@ const verticals = [
 
   @media (prefers-reduced-motion: reduce) {
     .vertical-card, .vertical-card::before, .vertical-card::after, .card-cta, .card-cta .material-symbols-outlined, .arrow-icon { transition: none; }
-    .vertical-card img { transition: none; }
+    .vertical-card img, .vertical-card-img, .card-overlay { transition: none; }
+    .vertical-card:hover .vertical-card-img { transform: scale(1.04) translateY(0); }
   }
 
   :global([data-theme="light"]) .card-overlay {
