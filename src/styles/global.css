@@ -381,9 +381,7 @@ html {
   z-index: 1001;
   transform: scaleX(0);
   transform-origin: left;
-  will-change: transform;
   box-shadow: 0 0 8px var(--accent-glow-strong);
-  will-change: width;
   contain: layout style;
 }
 
@@ -545,6 +543,13 @@ html {
 }
 
 /* --- Rendering Performance --- */
+
+/* Below-fold sections: skip rendering until near viewport */
+.verticals-section,
+#lead-gen {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
 
 /* --- Scroll Reveal --- */
 .reveal {
