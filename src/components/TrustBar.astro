@@ -24,12 +24,12 @@ const outcomes = [
 ];
 
 const trustBadges = [
-  { icon: 'flight_takeoff', label: 'FAA Part 107' },
-  { icon: 'radar', label: 'DC SFRA Trained' },
-  { icon: 'verified_user', label: 'SOC 2 Type I — Q3 2026' },
-  { icon: 'lock', label: 'End-to-End Encrypted' },
-  { icon: 'health_and_safety', label: 'OSHA Compliant' },
-  { icon: 'shield', label: 'NDA by Default' },
+  { icon: 'flight_takeoff', label: 'FAA Part 107', full: 'FAA Remote Pilot Certificate — Part 107' },
+  { icon: 'radar', label: 'DC SFRA Trained', full: 'Washington DC Special Flight Rules Area Certified' },
+  { icon: 'verified_user', label: 'SOC 2 Type I — Q3 2026', full: 'SOC 2 Type I Compliance — Target Q3 2026' },
+  { icon: 'lock', label: 'End-to-End Encrypted', full: 'AES-256 End-to-End Data Encryption' },
+  { icon: 'health_and_safety', label: 'OSHA Compliant', full: 'OSHA Workplace Safety Standards Compliant' },
+  { icon: 'shield', label: 'NDA by Default', full: 'Non-Disclosure Agreement Included With Every Engagement' },
 ];
 ---
 
@@ -59,8 +59,10 @@ const trustBadges = [
 
   <!-- Industry insight — domain expertise proof -->
   <div class="reveal" style="text-align: center; padding: 24px 24px 0; max-width: 700px; margin: 0 auto;">
-    <p style="font-family: var(--font-body); font-size: 0.9375rem; font-style: italic; color: var(--text-tertiary); line-height: 1.6;">
-      "73% of cooling system failures show detectable thermal signatures weeks before catastrophic failure."
+    <p class="trust-quote" style="font-family: var(--font-body); font-size: 0.9375rem; font-style: italic; color: var(--text-tertiary); line-height: 1.6; position: relative;">
+      <span class="quote-mark quote-open" aria-hidden="true">&ldquo;</span>
+      73% of cooling system failures show detectable thermal signatures weeks before catastrophic failure.
+      <span class="quote-mark quote-close" aria-hidden="true">&rdquo;</span>
       <span style="font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-tertiary); display: block; margin-top: 6px; font-style: normal;">— ASHRAE / Uptime Institute Research</span>
     </p>
   </div>
@@ -75,7 +77,7 @@ const trustBadges = [
       <div class="cert-divider" aria-hidden="true" style="width: 1px; height: 24px; background: rgba(0,229,255,0.15);"></div>
       <div class="badges-row">
         {trustBadges.map((b) => (
-          <div class="badge-chip">
+          <div class="badge-chip" data-tooltip={b.full}>
             <span class="material-symbols-outlined" style="font-size: 1rem; color: var(--accent); font-variation-settings: 'FILL' 1;" aria-hidden="true">{b.icon}</span>
             <span style="font-family: var(--font-label); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-primary);">{b.label}</span>
           </div>
@@ -247,9 +249,73 @@ const trustBadges = [
     }
   }
 
+  /* === Decorative gradient quotation marks === */
+  .quote-mark {
+    font-family: var(--font-headline);
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-style: normal;
+    line-height: 0;
+    vertical-align: -0.25em;
+    background: linear-gradient(135deg, var(--accent), #7B61FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .quote-open { margin-right: 2px; }
+  .quote-close { margin-left: 2px; }
+  :global([data-theme="light"]) .quote-mark {
+    background: linear-gradient(135deg, #00838f, #5B4BC9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* === CSS-only tooltips on badge chips === */
+  .badge-chip {
+    position: relative;
+  }
+  .badge-chip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.95);
+    white-space: nowrap;
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--text-primary);
+    background: var(--surface-container, rgba(30,32,36,0.95));
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 50;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  }
+  .badge-chip:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+  :global([data-theme="light"]) .badge-chip::after {
+    background: rgba(255,255,255,0.97);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    color: var(--text-primary);
+  }
+
+  @media (max-width: 767px) {
+    .badge-chip::after { display: none; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .outcome-card, .badge-chip { transition: none; }
     .outcome-card::before { transition: none; }
+    .badge-chip::after { transition: none; }
   }
 
   :global([data-theme="light"]) .badge-chip {

@@ -48,6 +48,12 @@
             loading="lazy"
             decoding="async"
           />
+          <!-- Scan line sweep -->
+          <div class="thermal-scanline" aria-hidden="true"></div>
+          <!-- Corner HUD readouts -->
+          <span class="hud-readout hud-top-left" aria-hidden="true">38.897&deg;N 77.036&deg;W</span>
+          <span class="hud-readout hud-top-right" aria-hidden="true">ALT 120m AGL</span>
+          <span class="hud-readout hud-bottom-right" aria-hidden="true">UTC 14:32:07.4</span>
           <!-- Status badge -->
           <div class="thermal-badge absolute z-10 flex items-center rounded-sm" style="bottom: 1rem; left: 1rem; padding: 0.375rem 0.75rem; gap: 0.5rem;">
             <span style="display: block; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: #4ade80;"></span>
@@ -113,7 +119,53 @@
     background: rgba(255, 255, 255, 0.85);
   }
 
+  /* === HUD corner readouts === */
+  .hud-readout {
+    position: absolute;
+    z-index: 10;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.04em;
+    color: rgba(255, 140, 0, 0.7);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    pointer-events: none;
+  }
+  .hud-top-left    { top: 0.75rem; left: 0.75rem; }
+  .hud-top-right   { top: 0.75rem; right: 0.75rem; }
+  .hud-bottom-right { bottom: 0.75rem; right: 0.75rem; }
+  :global([data-theme="light"]) .hud-readout {
+    color: rgba(180, 80, 0, 0.6);
+    text-shadow: 0 1px 3px rgba(255,255,255,0.5);
+  }
+
+  /* === Scan line sweep === */
+  .thermal-scanline {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .thermal-scanline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 5%, rgba(255,140,0,0.35) 30%, rgba(255,140,0,0.6) 50%, rgba(255,140,0,0.35) 70%, transparent 95%);
+    box-shadow: 0 0 12px rgba(255,140,0,0.2), 0 2px 8px rgba(255,140,0,0.1);
+    animation: scanSweep 4s ease-in-out infinite;
+  }
+
+  @keyframes scanSweep {
+    0%   { top: -2px; opacity: 0; }
+    5%   { opacity: 1; }
+    95%  { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .thermal-img { transition: none; }
+    .thermal-scanline::after { animation: none; display: none; }
   }
 </style>

@@ -94,6 +94,9 @@
       <div class="scroll-thumb" style="width: 2px; height: 10px; background: var(--accent); border-radius: 1px; box-shadow: 0 0 6px var(--accent);"></div>
     </div>
     <span style="font-family: var(--font-mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .2em; color: var(--text-tertiary); opacity: .5; margin-top: .5rem;">Scroll</span>
+    <svg class="scroll-chevron" width="14" height="8" viewBox="0 0 14 8" fill="none" style="margin-top: .35rem; opacity: .4;">
+      <path d="M1 1l6 5.5L13 1" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
   </div>
 </section>
 
@@ -132,7 +135,17 @@
         rgba(0, 180, 220, 0.10) 0%, transparent 55%);
     filter: blur(50px) saturate(1.6);
     animation: meshDrift 25s ease-in-out infinite alternate;
-    /* will-change on custom properties has no effect — removed */
+  }
+  /* Noise grain composited on mesh for physical texture */
+  .hero-mesh::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size: 128px 128px;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    pointer-events: none;
   }
 
   @keyframes meshDrift {
@@ -238,6 +251,13 @@
     0%   { transform: translateY(0); opacity: 1; }
     70%  { transform: translateY(22px); opacity: .3; }
     100% { transform: translateY(0); opacity: 1; }
+  }
+
+  /* === Bouncing chevron === */
+  .scroll-chevron { animation: chevronBounce 2s ease-in-out infinite; }
+  @keyframes chevronBounce {
+    0%, 100% { transform: translateY(0); opacity: .4; }
+    50%      { transform: translateY(5px); opacity: .7; }
   }
 
   /* === Headline accent === */
@@ -452,7 +472,7 @@
   /* === Reduced motion === */
   @media (prefers-reduced-motion: reduce) {
     .contour { stroke-dashoffset: 0 !important; animation: none !important; }
-    .dot, .eyebrow-pip, .scroll-thumb, .eyebrow-text::after { animation: none !important; }
+    .dot, .eyebrow-pip, .scroll-thumb, .scroll-chevron, .eyebrow-text::after { animation: none !important; }
     .dot { display: none; }
   }
 

@@ -321,11 +321,30 @@ const reportTabs = [
                 </button>
               );
             })}
-            <!-- SVG connector ring with animated dash -->
+            <!-- SVG connector ring with animated dash + outer step labels -->
             <svg class="wheel-ring-svg" viewBox="0 0 100 100" aria-hidden="true">
               <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(0,229,255,0.06)" stroke-width="0.3" />
               <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(0,229,255,0.25)" stroke-width="0.5" stroke-dasharray="4,8" class="wheel-ring-animated" />
               <circle cx="50" cy="50" r="42" fill="none" stroke="url(#wheelRingGrad)" stroke-width="1" stroke-dasharray="22,242" stroke-linecap="round" class="wheel-ring-progress" />
+              <!-- Outer step labels positioned beyond the ring -->
+              {(() => {
+                const labels = ['Scope', 'Plan', 'Fly', 'Analyze', 'Report', 'Handoff'];
+                const outerR = 48.5;
+                return labels.map((label, i) => {
+                  const angle = (i * 60 - 90) * Math.PI / 180;
+                  const lx = 50 + outerR * Math.cos(angle);
+                  const ly = 50 + outerR * Math.sin(angle);
+                  return (
+                    <text
+                      x={lx}
+                      y={ly}
+                      text-anchor="middle"
+                      dominant-baseline="central"
+                      class="wheel-outer-label"
+                    >{label}</text>
+                  );
+                });
+              })()}
               <defs>
                 <linearGradient id="wheelRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stop-color="#00E5FF" stop-opacity="0.8"/>
@@ -635,6 +654,11 @@ const reportTabs = [
           <p class="omega-section-subtitle">
             Your team gets an action plan, not a file dump. Every finding is ranked by severity with clear next steps.
           </p>
+          <a href="#lead-gen" class="sample-report-cta">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 20px;" aria-hidden="true">description</span>
+            <span>Request Sample Report</span>
+            <span class="sample-report-meta">(4 pages, PDF)</span>
+          </a>
         </div>
 
         <div class="report-tabs-container reveal">
@@ -1193,6 +1217,22 @@ const reportTabs = [
     max-width: 60px;
   }
 
+  .wheel-outer-label {
+    font-family: var(--font-label);
+    font-size: 2.6px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    fill: var(--text-tertiary);
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+
+  :global([data-theme="light"]) .wheel-outer-label {
+    fill: var(--text-tertiary);
+    opacity: 0.6;
+  }
+
   .wheel-detail-panel {
     display: none;
     text-align: center;
@@ -1726,6 +1766,52 @@ const reportTabs = [
   }
 
   /* ================ REPORT TABS ================ */
+  .sample-report-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    background: rgba(0, 229, 255, 0.04);
+    color: var(--accent);
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .sample-report-cta:hover {
+    background: rgba(0, 229, 255, 0.1);
+    border-color: rgba(0, 229, 255, 0.35);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+    transform: translateY(-1px);
+  }
+
+  .sample-report-meta {
+    color: var(--text-tertiary);
+    font-weight: 500;
+    font-size: 0.6875rem;
+    letter-spacing: 0.03em;
+    text-transform: none;
+  }
+
+  :global([data-theme="light"]) .sample-report-cta {
+    border-color: rgba(0, 151, 167, 0.2);
+    background: rgba(0, 151, 167, 0.04);
+    color: #0097A7;
+  }
+
+  :global([data-theme="light"]) .sample-report-cta:hover {
+    background: rgba(0, 151, 167, 0.1);
+    border-color: rgba(0, 151, 167, 0.35);
+    box-shadow: 0 0 20px rgba(0, 151, 167, 0.08);
+  }
+
   .report-tabs-container {
     background: var(--surface-container-low);
     border: 1px solid var(--glass-border);

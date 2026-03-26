@@ -8,6 +8,11 @@
     <div class="bento-grid">
       <!-- Main Panel -->
       <div class="bento-main reveal">
+        <!-- LIVE badge -->
+        <div class="live-badge" aria-hidden="true">
+          <span class="live-dot"></span>
+          <span class="live-text">LIVE</span>
+        </div>
         <div>
           <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
             <span style="display: block; height: 1px; width: 2rem; background: var(--accent);"></span>
@@ -128,8 +133,74 @@
     0%, 100% { box-shadow: 0 0 20px rgba(0, 229, 255, 0.15); }
     50% { box-shadow: 0 0 40px rgba(0, 229, 255, 0.3); }
   }
+  /* === Animated rotating gradient border on main card === */
+  @property --bento-border-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+  .bento-main {
+    background-clip: padding-box;
+    border-color: transparent;
+  }
+  .bento-main::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(from var(--bento-border-angle), transparent 40%, var(--accent) 50%, #7B61FF 55%, transparent 60%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    animation: rotateBentoBorder 6s linear infinite;
+    z-index: 1;
+  }
+
+  @keyframes rotateBentoBorder {
+    to { --bento-border-angle: 360deg; }
+  }
+
+  /* === LIVE badge === */
+  .live-badge {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+  }
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ef4444;
+    box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
+    animation: liveBlink 1.5s ease-in-out infinite;
+  }
+  .live-text {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #ef4444;
+  }
+
+  @keyframes liveBlink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .bento-icon-ring { animation: none; }
+    .bento-main::after { animation: none; opacity: 0.5; }
+    .live-dot { animation: none; }
     .bento-main, .bento-sidebar { transition: none; }
   }
 
