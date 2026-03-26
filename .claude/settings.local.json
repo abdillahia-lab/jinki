@@ -118,7 +118,10 @@
       "mcp__4897e4eb-dc1b-467a-b3b2-76aa7961bb5a__move-item-to-folder",
       "Bash(find /Users/aa/JInki.ai/public/images -type f -size +200k -exec ls -lh {})",
       "Bash(sort -k5 -h -r)",
-      "Bash(PATH=\"$HOME/.nvm/versions/node/v24.12.0/bin:$PATH\" which cwebp)"
+      "Bash(PATH=\"$HOME/.nvm/versions/node/v24.12.0/bin:$PATH\" which cwebp)",
+      "Bash(python3:*)",
+      "Bash(git stash:*)",
+      "Bash(git restore:*)"
     ]
   }
 }

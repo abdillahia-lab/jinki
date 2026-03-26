@@ -393,7 +393,7 @@ const differentiators = [
   }
 
   .sec-hero-inner {
-    max-width: 1280px;
+    max-width: var(--container-max);
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -497,7 +497,7 @@ const differentiators = [
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     padding: 0.75rem 1rem;
     border-radius: 12px;
     border: 1px solid rgba(123,97,255,0.3);
@@ -611,7 +611,7 @@ const differentiators = [
   }
 
   .stats-strip-inner {
-    max-width: 1280px;
+    max-width: var(--container-max);
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -625,7 +625,7 @@ const differentiators = [
   .stat-item {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 16px;
   }
 
   .stat-icon {
@@ -663,7 +663,7 @@ const differentiators = [
   }
 
   .section-inner {
-    max-width: 1280px;
+    max-width: var(--container-max);
     margin: 0 auto;
   }
 
@@ -732,8 +732,8 @@ const differentiators = [
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     overflow: hidden;
-    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
-                box-shadow 0.4s cubic-bezier(0.16,1,0.3,1),
+    transition: transform 0.4s var(--ease-out-premium),
+                box-shadow 0.4s var(--ease-out-premium),
                 border-color 0.4s ease;
     position: relative;
   }
@@ -757,7 +757,7 @@ const differentiators = [
     height: 0%;
     background: linear-gradient(180deg, #7B61FF, #4F46E5);
     border-radius: 0 3px 3px 0;
-    transition: height 0.4s cubic-bezier(0.16,1,0.3,1), top 0.4s cubic-bezier(0.16,1,0.3,1);
+    transition: height 0.4s var(--ease-out-premium), top 0.4s var(--ease-out-premium);
     pointer-events: none;
     z-index: 2;
   }
@@ -921,8 +921,8 @@ const differentiators = [
     padding: 32px 28px;
     position: relative;
     overflow: hidden;
-    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
-                box-shadow 0.4s cubic-bezier(0.16,1,0.3,1),
+    transition: transform 0.4s var(--ease-out-premium),
+                box-shadow 0.4s var(--ease-out-premium),
                 border-color 0.4s ease;
   }
 
@@ -963,7 +963,7 @@ const differentiators = [
     font-size: 1rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .diff-card p {
@@ -994,8 +994,8 @@ const differentiators = [
     position: relative;
     overflow: hidden;
     display: block;
-    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1),
-                box-shadow 0.4s cubic-bezier(0.16,1,0.3,1),
+    transition: transform 0.4s var(--ease-out-premium),
+                box-shadow 0.4s var(--ease-out-premium),
                 border-color 0.4s ease;
   }
 

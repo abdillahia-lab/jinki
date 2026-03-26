@@ -18,7 +18,7 @@ const services = [
 ---
 
 <header id="site-nav" class="site-nav" style="position:fixed;top:0;left:0;right:0;z-index:1000;padding:12px 24px;view-transition-name:site-nav;">
-  <nav class="nav-inner" style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:10px 20px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:box-shadow .3s,background .3s;" aria-label="Main navigation">
+  <nav class="nav-inner" style="max-width: var(--container-max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:12px 20px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:box-shadow .3s,background .3s;" aria-label="Main navigation">
 
     <!-- Logo -->
     <a href="/" class="nav-logo" aria-label="Jinki — Home" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text-primary);flex-shrink:0;">
@@ -43,9 +43,9 @@ const services = [
           Verticals
           <span class="material-symbols-outlined" aria-hidden="true" style="font-size:16px;transition:transform .25s;">expand_more</span>
         </button>
-        <div class="dropdown-panel" role="menu" aria-label="Industry verticals" style="position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:200px;background:var(--surface-container);border:1px solid var(--glass-border);border-radius:12px;padding:6px;transition:opacity .2s,visibility .2s;box-shadow:0 8px 32px rgba(0,0,0,.3);">
+        <div class="dropdown-panel" role="menu" aria-label="Industry verticals" style="position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:200px;background:var(--surface-container);border:1px solid var(--glass-border);border-radius:12px;padding:8px;transition:opacity .2s,visibility .2s;box-shadow:0 8px 32px rgba(0,0,0,.3);">
           {verticals.map(v => (
-            <a href={v.href} class="dropdown-item" role="menuitem" style={`display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--text-primary);font-family:var(--font-label);font-size:14px;transition:background .15s;`}>
+            <a href={v.href} class="dropdown-item" role="menuitem" style={`display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;text-decoration:none;color:var(--text-primary);font-family:var(--font-label);font-size:14px;transition:background .15s;`}>
               <span class="dot" style={`width:8px;height:8px;border-radius:50%;background:${v.color};flex-shrink:0;`} aria-hidden="true"></span>
               {v.label}
             </a>
@@ -59,9 +59,9 @@ const services = [
           Services
           <span class="material-symbols-outlined" aria-hidden="true" style="font-size:16px;transition:transform .25s;">expand_more</span>
         </button>
-        <div class="dropdown-panel" role="menu" aria-label="Services" style="position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:200px;background:var(--surface-container);border:1px solid var(--glass-border);border-radius:12px;padding:6px;transition:opacity .2s,visibility .2s;box-shadow:0 8px 32px rgba(0,0,0,.3);">
+        <div class="dropdown-panel" role="menu" aria-label="Services" style="position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:200px;background:var(--surface-container);border:1px solid var(--glass-border);border-radius:12px;padding:8px;transition:opacity .2s,visibility .2s;box-shadow:0 8px 32px rgba(0,0,0,.3);">
           {services.map(s => (
-            <a href={s.href} class="dropdown-item" role="menuitem" style={`display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--text-primary);font-family:var(--font-label);font-size:14px;transition:background .15s;`}>
+            <a href={s.href} class="dropdown-item" role="menuitem" style={`display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;text-decoration:none;color:var(--text-primary);font-family:var(--font-label);font-size:14px;transition:background .15s;`}>
               {s.label}
             </a>
           ))}
@@ -90,15 +90,15 @@ const services = [
   <!-- Mobile slide-out panel -->
   <div id="mobile-panel" class="mobile-panel" aria-hidden="true">
     <div class="mobile-panel-inner" style="display:flex;flex-direction:column;gap:4px;padding:20px;">
-      <div class="mobile-section-label" style="font-family:var(--font-label);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);padding:16px 14px 6px;">Verticals</div>
+      <div class="mobile-section-label" style="font-family:var(--font-label);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);padding:16px 16px 8px;">Verticals</div>
       {verticals.map(v => (
-        <a href={v.href} class="mobile-link" style="display:flex;align-items:center;gap:10px;">
+        <a href={v.href} class="mobile-link" style="display:flex;align-items:center;gap:12px;">
           <span style={`width:8px;height:8px;border-radius:50%;background:${v.color};flex-shrink:0;`}></span>
           {v.label}
         </a>
       ))}
 
-      <div class="mobile-section-label" style="font-family:var(--font-label);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);padding:16px 14px 6px;">Services</div>
+      <div class="mobile-section-label" style="font-family:var(--font-label);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);padding:16px 16px 8px;">Services</div>
       {services.map(s => (
         <a href={s.href} class="mobile-link">{s.label}</a>
       ))}
@@ -109,7 +109,7 @@ const services = [
       <a href="/security" class="mobile-link">Security</a>
       <a href="/blog" class="mobile-link">Blog</a>
 
-      <a href="#lead-gen" class="mobile-cta" style="display:block;text-align:center;margin-top:16px;font-family:var(--font-label);font-size:15px;font-weight:600;padding:14px;border-radius:12px;background:var(--accent);color:#050508;text-decoration:none;">Request Assessment</a>
+      <a href="#lead-gen" class="mobile-cta" style="display:block;text-align:center;margin-top:16px;font-family:var(--font-label);font-size:15px;font-weight:600;padding:16px;border-radius:12px;background:var(--accent);color:#050508;text-decoration:none;">Request Assessment</a>
     </div>
   </div>
 
@@ -128,7 +128,7 @@ const services = [
     font-weight: 500;
     color: var(--text-secondary);
     text-decoration: none;
-    padding: 8px 14px;
+    padding: 8px 16px;
     border-radius: 8px;
     transition: color 0.2s, background 0.2s;
     background: none;
@@ -168,9 +168,9 @@ const services = [
     opacity: 0;
     visibility: hidden;
     transform: translateX(-50%) translateY(8px) scale(0.97);
-    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.3s var(--ease-out-premium),
+                visibility 0.3s var(--ease-out-premium),
+                transform 0.3s var(--ease-out-premium);
   }
 
   /* Dropdown item stagger */
@@ -424,7 +424,7 @@ const services = [
     font-weight: 500;
     color: var(--text-primary);
     text-decoration: none;
-    padding: 14px 16px;
+    padding: 16px 16px;
     border-radius: 12px;
     transition: background 0.15s;
     min-height: 44px;

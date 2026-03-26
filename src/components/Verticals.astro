@@ -130,9 +130,9 @@ const verticals = [
   .vertical-card {
     cursor: pointer;
     border: 1px solid transparent;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.5s var(--ease-out-premium),
+                border-color 0.5s var(--ease-out-premium),
+                box-shadow 0.5s var(--ease-out-premium);
   }
   /* Top accent line */
   .vertical-card::before {
@@ -143,7 +143,7 @@ const verticals = [
     background: linear-gradient(90deg, transparent, var(--card-accent, var(--accent)), transparent);
     opacity: 0;
     z-index: 20;
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.5s var(--ease-out-premium);
   }
   /* Bottom accent border on hover */
   .vertical-card::after {
@@ -155,8 +155,8 @@ const verticals = [
     opacity: 0;
     z-index: 20;
     transform: scaleX(0);
-    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.5s var(--ease-out-premium),
+                transform 0.5s var(--ease-out-premium);
   }
   .vertical-card:hover::before { opacity: 1; }
   .vertical-card:hover::after { opacity: 1; transform: scaleX(1); }

@@ -66,8 +66,8 @@
     border-radius: 1rem; border: 1px solid var(--glass-border);
     display: flex; flex-direction: column; justify-content: space-between;
     position: relative; overflow: hidden;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.4s var(--ease-out-premium),
+                box-shadow 0.4s var(--ease-out-premium);
   }
   .bento-main:hover {
     transform: translateY(-4px);
@@ -104,8 +104,8 @@
   .bento-sidebar {
     background: var(--surface-container); padding: 2rem; border-radius: 1rem; border: 1px solid var(--glass-border);
     position: relative; overflow: hidden;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.4s var(--ease-out-premium),
+                box-shadow 0.4s var(--ease-out-premium);
   }
   .bento-sidebar::before {
     content: '';
@@ -170,8 +170,8 @@
     z-index: 5;
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 4px 10px;
+    gap: 8px;
+    padding: 4px 12px;
     border-radius: 9999px;
     background: rgba(239, 68, 68, 0.12);
     border: 1px solid rgba(239, 68, 68, 0.25);

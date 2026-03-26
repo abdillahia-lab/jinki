@@ -747,7 +747,7 @@ const integrations = [
     grid-template-columns: 1.1fr 0.9fr;
     gap: 60px;
     align-items: center;
-    max-width: 1280px;
+    max-width: var(--container-max);
     margin: 0 auto;
     width: 100%;
   }
@@ -1109,7 +1109,7 @@ const integrations = [
   .stats-bar-inner {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    max-width: 1280px;
+    max-width: var(--container-max);
     margin: 0 auto;
     padding: 48px clamp(20px, 5vw, 80px);
     gap: 32px;
@@ -1119,7 +1119,7 @@ const integrations = [
   .stat-item {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
     text-align: center;
     padding: 20px 16px;
     border: 1px solid rgba(123, 97, 255, 0.12);
@@ -1173,7 +1173,7 @@ const integrations = [
     .section { padding: 8rem clamp(20px, 5vw, 80px); }
   }
   .section-inner {
-    max-width: 1280px;
+    max-width: var(--container-max);
     margin: 0 auto;
   }
   .section-header {
@@ -1636,8 +1636,8 @@ const integrations = [
   .alert-header-bar {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 14px 24px;
+    gap: 12px;
+    padding: 16px 24px;
     background: rgba(123, 97, 255, 0.06);
     border-bottom: 1px solid rgba(123, 97, 255, 0.1);
   }
@@ -1744,7 +1744,7 @@ const integrations = [
     font-size: 0.9375rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
   .chart-bar-wrap {
     background: rgba(123, 97, 255, 0.06);
@@ -2287,7 +2287,7 @@ const integrations = [
     letter-spacing: 0.15em;
     margin-bottom: 12px;
     display: inline-block;
-    padding: 3px 10px;
+    padding: 3px 12px;
     background: rgba(123, 97, 255, 0.08);
     border-radius: 4px;
     border: 1px solid rgba(123, 97, 255, 0.12);

@@ -676,7 +676,7 @@ const pipelineSteps = [
     grid-template-columns: 1.1fr 0.9fr;
     gap: 60px;
     align-items: center;
-    max-width: 1280px;
+    max-width: var(--container-max);
     margin: 0 auto;
     width: 100%;
   }
@@ -908,7 +908,7 @@ const pipelineSteps = [
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 14px;
+    padding: 12px 16px;
     background: rgba(245, 158, 11, 0.06);
     border: 1px solid rgba(245, 158, 11, 0.15);
     border-radius: 8px;
@@ -944,7 +944,7 @@ const pipelineSteps = [
   .ag-stats-inner {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    max-width: 1280px;
+    max-width: var(--container-max);
     margin: 0 auto;
     padding: 48px clamp(20px, 5vw, 80px);
     gap: 32px;
@@ -955,7 +955,7 @@ const pipelineSteps = [
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     text-align: center;
     position: relative;
     padding: 20px 12px;
@@ -1053,7 +1053,7 @@ const pipelineSteps = [
   }
 
   .ag-section-inner {
-    max-width: 1280px;
+    max-width: var(--container-max);
     margin: 0 auto;
   }
 
@@ -1119,7 +1119,7 @@ const pipelineSteps = [
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 14px 20px;
+    padding: 16px 20px;
     background: var(--surface-container-low);
     border-bottom: 1px solid var(--glass-border);
   }
@@ -1127,7 +1127,7 @@ const pipelineSteps = [
   .dash-topbar-left {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
   }
 
   .dash-title {
@@ -1152,7 +1152,7 @@ const pipelineSteps = [
   .dash-badge {
     font-family: var(--font-mono);
     font-size: 0.625rem;
-    padding: 4px 10px;
+    padding: 4px 12px;
     border-radius: 16px;
     letter-spacing: 0.05em;
   }
@@ -1187,7 +1187,7 @@ const pipelineSteps = [
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 12px;
+    padding: 12px 12px;
     border-radius: 8px;
     cursor: default;
     transition: background 0.2s ease;
@@ -1234,7 +1234,7 @@ const pipelineSteps = [
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 10px;
+    padding: 8px 12px;
     border-radius: 8px;
     font-family: var(--font-mono);
     font-size: 0.6875rem;
@@ -1498,7 +1498,7 @@ const pipelineSteps = [
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 16px;
   }
 
@@ -1520,8 +1520,8 @@ const pipelineSteps = [
   .timeline-metric {
     display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 10px 12px;
+    gap: 8px;
+    padding: 12px 12px;
     background: rgba(52, 211, 153, 0.04);
     border-radius: 8px;
     border: 1px solid rgba(52, 211, 153, 0.08);
@@ -1776,7 +1776,7 @@ const pipelineSteps = [
   .comp-field-rows {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
     padding: 5%;
     height: 100%;
   }
@@ -1812,7 +1812,7 @@ const pipelineSteps = [
     text-transform: uppercase;
     color: #fff;
     background: rgba(0, 0, 0, 0.6);
-    padding: 6px 14px;
+    padding: 8px 16px;
     border-radius: 16px;
     backdrop-filter: blur(8px);
   }
@@ -1904,7 +1904,7 @@ const pipelineSteps = [
   .roi-input-group {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
     flex: 1;
     min-width: 180px;
   }

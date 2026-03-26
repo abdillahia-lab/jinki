@@ -520,7 +520,7 @@ const culturePoints = [
   .hero-cta {
     display: inline-block;
     margin-top: 32px;
-    padding: 14px 36px;
+    padding: 16px 36px;
     background: linear-gradient(135deg, var(--accent), #0091a1);
     color: #000;
     font-family: var(--font-headline);
@@ -560,7 +560,7 @@ const culturePoints = [
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 20px;
+    padding: 12px 20px;
     background: var(--bg-card);
     border: 1px solid var(--glass-border);
     border-radius: 12px;
@@ -636,7 +636,7 @@ const culturePoints = [
     height: 0%;
     background: linear-gradient(180deg, var(--accent), #0091a1);
     border-radius: 0 3px 3px 0;
-    transition: height 0.4s cubic-bezier(0.16,1,0.3,1), top 0.4s cubic-bezier(0.16,1,0.3,1);
+    transition: height 0.4s var(--ease-out-premium), top 0.4s var(--ease-out-premium);
     pointer-events: none;
     z-index: 2;
   }
@@ -669,7 +669,7 @@ const culturePoints = [
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     flex-wrap: wrap;
   }
 
@@ -702,7 +702,7 @@ const culturePoints = [
 
   .role-apply-btn {
     flex-shrink: 0;
-    padding: 10px 24px;
+    padding: 12px 24px;
     background: linear-gradient(135deg, var(--accent), #0091a1);
     color: #000;
     font-family: var(--font-headline);
@@ -817,7 +817,7 @@ const culturePoints = [
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 10px 0;
+    padding: 12px 0;
     border-bottom: 1px solid var(--border);
   }
 
@@ -899,7 +899,7 @@ const culturePoints = [
   .bento-icon {
     font-size: 24px;
     color: var(--accent);
-    margin-bottom: 14px;
+    margin-bottom: 16px;
     width: 48px;
     height: 48px;
     display: flex;
@@ -916,7 +916,7 @@ const culturePoints = [
     font-size: 1rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
 
   .bento-desc {
@@ -1138,7 +1138,7 @@ const culturePoints = [
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    padding: 3px 10px;
+    padding: 3px 12px;
     border-radius: 8px;
   }
 
@@ -1151,7 +1151,7 @@ const culturePoints = [
   /* ==================== BOTTOM CTA ==================== */
   .cta-btn {
     display: inline-block;
-    padding: 14px 36px;
+    padding: 16px 36px;
     background: linear-gradient(135deg, var(--accent), #0091a1);
     color: #000;
     font-family: var(--font-mono);
@@ -1181,7 +1181,7 @@ const culturePoints = [
   }
 
   .section-inner {
-    max-width: 1280px;
+    max-width: var(--container-max);
     margin: 0 auto;
   }
 
@@ -1264,14 +1264,14 @@ const culturePoints = [
     display: block; font-family: var(--font-label);
     font-size: 0.75rem; font-weight: 600;
     text-transform: uppercase; letter-spacing: 0.06em;
-    color: var(--text-secondary); margin-bottom: 6px;
+    color: var(--text-secondary); margin-bottom: 8px;
   }
   .apply-field input, .apply-field textarea {
     width: 100%; font-family: var(--font-body);
     font-size: 1rem; color: var(--text-primary);
     background: var(--surface-container-low);
     border: 1px solid var(--glass-border);
-    border-radius: 12px; padding: 12px 14px;
+    border-radius: 12px; padding: 12px 16px;
     outline: none; min-height: 44px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
@@ -1281,7 +1281,7 @@ const culturePoints = [
   }
   .apply-field textarea { resize: vertical; min-height: 80px; }
   .apply-submit {
-    width: 100%; padding: 14px; margin-top: 8px;
+    width: 100%; padding: 16px; margin-top: 8px;
     background: linear-gradient(135deg, var(--accent), #00a8b5);
     color: #050508; border: none; border-radius: 12px;
     font-family: var(--font-headline); font-size: 0.875rem;
