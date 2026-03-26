@@ -143,7 +143,7 @@ const culturePoints = [
 
     <!-- ============ JOIN THE MISSION HERO ============ -->
     <section class="careers-hero" aria-label="Join Jinki">
-      <div class="careers-mesh" aria-hidden="true" style="position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 30% 35%,rgba(0,229,255,0.07) 0%,transparent 60%),radial-gradient(ellipse at 70% 65%,rgba(123,97,255,0.05) 0%,transparent 50%);filter:blur(60px);"></div>
+      <div class="careers-mesh" aria-hidden="true" style="position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 30% 35%,color-mix(in srgb, var(--accent) 7%, transparent) 0%,transparent 60%),radial-gradient(ellipse at 70% 65%,rgba(123,97,255,0.05) 0%,transparent 50%);filter:blur(60px);"></div>
       <div class="flight-path-bg" aria-hidden="true">
         <svg class="flight-svg" viewBox="0 0 1200 600" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
           <!-- Flight path curve -->
@@ -490,7 +490,7 @@ const culturePoints = [
   }
 
   .hero-gradient {
-    background: linear-gradient(135deg, #00E5FF 0%, #7B61FF 50%, #00E5FF 100%);
+    background: linear-gradient(135deg, var(--accent) 0%, #7B61FF 50%, var(--accent) 100%);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -533,8 +533,8 @@ const culturePoints = [
     letter-spacing: 0.1em;
     border-radius: 12px;
     text-decoration: none;
-    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
-                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+    transition: transform 0.4s var(--ease-out-premium),
+                box-shadow 0.4s var(--ease-out-premium),
                 background 0.3s ease;
   }
   .hero-cta:hover {
@@ -615,7 +615,7 @@ const culturePoints = [
     background: var(--bg-card);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
-    transition: border-color 0.3s ease, transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: border-color 0.3s ease, transform 0.3s var(--ease-out-premium), box-shadow 0.3s var(--ease-out-premium);
     position: relative;
     overflow: hidden;
   }
@@ -652,7 +652,7 @@ const culturePoints = [
   .role-card:hover {
     border-color: var(--border-hover);
     transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-elevated);
   }
 
   .role-info {
@@ -717,10 +717,10 @@ const culturePoints = [
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     overflow: hidden;
-    transition: transform 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
-                box-shadow 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+    transition: transform 0.35s var(--ease-out-premium),
+                box-shadow 0.35s var(--ease-out-premium),
                 gap 0.3s ease;
   }
 
@@ -728,7 +728,7 @@ const culturePoints = [
     display: inline-block;
     transform: translateX(-4px);
     opacity: 0;
-    transition: transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+    transition: transform 0.3s var(--ease-out-premium),
                 opacity 0.3s ease;
     flex-shrink: 0;
   }
@@ -823,7 +823,7 @@ const culturePoints = [
   .dil-chevron {
     font-size: 22px;
     color: var(--text-tertiary);
-    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: transform 0.4s var(--ease-out-premium);
   }
 
   .dil-toggle[aria-expanded="true"] .dil-chevron {
@@ -898,7 +898,7 @@ const culturePoints = [
     padding: 28px 24px;
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), border-color 0.3s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: transform 0.3s var(--ease-out-premium), border-color 0.3s ease, box-shadow 0.3s var(--ease-out-premium);
     display: flex;
     flex-direction: column;
   }
@@ -915,7 +915,7 @@ const culturePoints = [
   .bento-card:hover {
     transform: translateY(-3px);
     border-color: var(--border-hover);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-elevated);
   }
 
   .bento-card--large {
@@ -941,7 +941,7 @@ const culturePoints = [
     justify-content: center;
     border-radius: 50%;
     background: var(--accent-glow);
-    border: 1px solid rgba(0, 229, 255, 0.12);
+    border: 1px solid color-mix(in srgb, var(--accent) 12%, transparent);
     flex-shrink: 0;
   }
 
@@ -1014,7 +1014,7 @@ const culturePoints = [
     color: var(--accent);
     position: relative;
     z-index: 2;
-    transition: transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: transform 0.3s var(--ease-out-premium), box-shadow 0.3s var(--ease-out-premium);
     box-shadow: 0 0 20px var(--accent-glow);
   }
 
@@ -1112,7 +1112,7 @@ const culturePoints = [
     padding: 32px 28px;
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), border-color 0.3s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: transform 0.3s var(--ease-out-premium), border-color 0.3s ease, box-shadow 0.3s var(--ease-out-premium);
     display: flex;
     flex-direction: column;
   }
@@ -1129,7 +1129,7 @@ const culturePoints = [
   .testimonial-card:hover {
     transform: translateY(-3px);
     border-color: var(--border-hover);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-elevated);
   }
 
   .testimonial-quote-mark {
@@ -1193,7 +1193,7 @@ const culturePoints = [
     font-weight: 600;
     border-radius: 12px;
     text-decoration: none;
-    transition: transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: transform 0.3s var(--ease-out-premium), box-shadow 0.3s var(--ease-out-premium);
   }
 
   :global([data-theme="light"]) .cta-btn {
@@ -1243,7 +1243,7 @@ const culturePoints = [
   }
   .apply-modal[aria-hidden="false"] {
     display: flex;
-    animation: modalIn 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    animation: modalIn 0.3s var(--ease-out-premium);
   }
   @keyframes modalIn {
     from { opacity: 0; }
@@ -1261,10 +1261,10 @@ const culturePoints = [
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     padding: 28px;
-    box-shadow: 0 24px 64px rgba(0,0,0,0.4);
+    box-shadow: var(--shadow-floating);
     max-height: 90vh;
     overflow-y: auto;
-    animation: panelSlideUp 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    animation: panelSlideUp 0.35s var(--ease-out-premium);
   }
   @keyframes panelSlideUp {
     from { opacity: 0; transform: translateY(20px) scale(0.97); }
@@ -1311,7 +1311,7 @@ const culturePoints = [
   }
   .apply-field input:focus, .apply-field textarea:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(0,229,255,0.1);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 10%, transparent);
   }
   .apply-field textarea { resize: vertical; min-height: 80px; }
   .apply-submit {

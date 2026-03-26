@@ -281,7 +281,7 @@
     border-radius: 16px;
     width: 90%;
     max-width: 480px;
-    box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+    box-shadow: var(--shadow-floating);
     overflow: hidden;
   }
   .cookie-prefs-header {
@@ -339,7 +339,7 @@
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--accent, #00E5FF);
-    background: rgba(0,229,255,0.08);
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
     padding: 3px 8px;
     border-radius: 4px;
   }
@@ -434,7 +434,7 @@
   }
   :global([data-theme="light"]) .cookie-toggle-track::after {
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-rest);
   }
   :global([data-theme="light"]) .cookie-prefs-footer {
     border-top-color: rgba(0,0,0,0.06);

@@ -349,8 +349,8 @@ const storyBlocks = [
 
   .parallax-layer--grid {
     background-image:
-      linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+      linear-gradient(color-mix(in srgb, var(--accent) 3%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--accent) 3%, transparent) 1px, transparent 1px);
     background-size: 60px 60px;
   }
 
@@ -389,7 +389,7 @@ const storyBlocks = [
     background: linear-gradient(
       180deg,
       transparent 0%,
-      rgba(0, 229, 255, 0.02) 50%,
+      color-mix(in srgb, var(--accent) 2%, transparent) 50%,
       transparent 100%
     );
     animation: scan-sweep 8s ease-in-out infinite;
@@ -423,7 +423,7 @@ const storyBlocks = [
   }
 
   .hero-gradient {
-    background: linear-gradient(135deg, #00E5FF 0%, #7B61FF 50%, #00E5FF 100%);
+    background: linear-gradient(135deg, var(--accent) 0%, #7B61FF 50%, var(--accent) 100%);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -511,7 +511,7 @@ const storyBlocks = [
     margin-left: -3px;
     border-radius: 50%;
     background: var(--accent, #00E5FF);
-    box-shadow: 0 0 10px rgba(0, 229, 255, 0.5), 0 0 20px rgba(0, 229, 255, 0.2);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 50%, transparent), 0 0 20px color-mix(in srgb, var(--accent) 20%, transparent);
     animation: timeline-dot-travel 6s ease-in-out infinite;
     z-index: 3;
   }
@@ -609,7 +609,7 @@ const storyBlocks = [
   .about-mesh {
     position: absolute; inset: 0; z-index: 0;
     background:
-      radial-gradient(ellipse at 25% 40%, rgba(0,229,255,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 25% 40%, color-mix(in srgb, var(--accent) 8%, transparent) 0%, transparent 60%),
       radial-gradient(ellipse at 75% 60%, rgba(123,97,255,0.06) 0%, transparent 50%);
     filter: blur(60px);
     pointer-events: none;
@@ -681,15 +681,15 @@ const storyBlocks = [
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     backdrop-filter: blur(12px);
-    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
-                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+    transition: transform 0.4s var(--ease-out-premium),
+                box-shadow 0.4s var(--ease-out-premium),
                 border-color 0.4s ease;
   }
 
   .stat-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 229, 255, 0.05);
-    border-color: rgba(0, 229, 255, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 20px color-mix(in srgb, var(--accent) 5%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 12%, transparent);
   }
 
   .stat-value {
@@ -820,9 +820,9 @@ const storyBlocks = [
     letter-spacing: 0.04em;
     padding: 3px 8px;
     border-radius: 4px;
-    border: 1px solid rgba(0, 229, 255, 0.2);
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
     color: var(--accent);
-    background: rgba(0, 229, 255, 0.06);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
     line-height: 1;
     white-space: nowrap;
   }
@@ -908,8 +908,8 @@ const storyBlocks = [
     overflow: hidden;
     position: relative;
     transition: border-color 0.4s ease,
-                transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
-                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+                transform 0.4s var(--ease-out-premium),
+                box-shadow 0.4s var(--ease-out-premium);
   }
 
   /* Gradient left accent border per pillar */
@@ -926,7 +926,7 @@ const storyBlocks = [
   }
 
   .pillar-card:nth-child(1)::before {
-    background: linear-gradient(180deg, #00E5FF, #0097A7);
+    background: linear-gradient(180deg, var(--accent), #0097A7);
   }
 
   .pillar-card:nth-child(2)::before {
@@ -950,7 +950,7 @@ const storyBlocks = [
     right: 0;
     height: 2px;
     border-radius: 16px 16px 0 0;
-    background: linear-gradient(90deg, #00E5FF, #7B61FF);
+    background: linear-gradient(90deg, var(--accent), #7B61FF);
     opacity: 0;
     transition: opacity 0.4s ease;
     pointer-events: none;
@@ -964,7 +964,7 @@ const storyBlocks = [
   .pillar-card:hover {
     border-color: var(--border-hover);
     transform: translateY(-6px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18), 0 0 24px rgba(0, 229, 255, 0.06);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18), 0 0 24px color-mix(in srgb, var(--accent) 6%, transparent);
   }
 
   .pillar-header-btn {
@@ -1003,7 +1003,7 @@ const storyBlocks = [
     position: absolute;
     inset: -4px;
     border-radius: 16px;
-    background: radial-gradient(circle, rgba(0, 229, 255, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent) 8%, transparent) 0%, transparent 70%);
     z-index: -1;
     opacity: 1;
     transition: opacity 0.4s ease;
@@ -1015,11 +1015,11 @@ const storyBlocks = [
   }
 
   .pillar-card:nth-child(1) .pillar-icon-wrap::after {
-    background: radial-gradient(circle, rgba(0, 229, 255, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent) 8%, transparent) 0%, transparent 70%);
   }
 
   .pillar-card:nth-child(1):hover .pillar-icon-wrap::after {
-    background: radial-gradient(circle, rgba(0, 229, 255, 0.22) 0%, transparent 70%);
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 70%);
   }
 
   .pillar-card:nth-child(2) .pillar-icon-wrap::after {
@@ -1058,7 +1058,7 @@ const storyBlocks = [
     flex-shrink: 0;
     font-size: 24px;
     color: var(--text-tertiary);
-    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: transform 0.4s var(--ease-out-premium);
   }
 
   .pillar-header-btn[aria-expanded="true"] .pillar-chevron {
@@ -1116,7 +1116,7 @@ const storyBlocks = [
     border-radius: 16px;
     position: relative;
     overflow: hidden;
-    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: transform 0.4s var(--ease-out-premium), box-shadow 0.4s var(--ease-out-premium);
   }
 
   .split-panel::before {
@@ -1130,7 +1130,7 @@ const storyBlocks = [
 
   .split-panel:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-floating);
   }
 
   .split-panel-inner {
@@ -1255,7 +1255,7 @@ const storyBlocks = [
     letter-spacing: 0.1em;
     border-radius: 12px;
     text-decoration: none;
-    transition: transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: transform 0.3s var(--ease-out-premium), box-shadow 0.3s var(--ease-out-premium);
   }
 
   :global([data-theme="light"]) .cta-btn {

@@ -178,7 +178,7 @@ const company = [
     background: linear-gradient(
       to right,
       transparent 5%,
-      #00E5FF 25%,
+      var(--accent) 25%,
       #7B61FF 50%,
       transparent 85%
     );
@@ -253,7 +253,7 @@ const company = [
     .status-dot--blink { animation: none !important; }
   }
 
-  .footer-email-link:hover { color: var(--accent); text-shadow: 0 0 12px rgba(0, 229, 255, 0.3); }
+  .footer-email-link:hover { color: var(--accent); text-shadow: 0 0 12px color-mix(in srgb, var(--accent) 30%, transparent); }
 
   .footer-logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
   .footer-logo-text { font-family: var(--font-headline); font-weight: 700; font-size: 1.25rem; letter-spacing: 0.02em; color: var(--text-primary); }
@@ -262,30 +262,30 @@ const company = [
   .footer-social-btn {
     display: flex; align-items: center; justify-content: center; width: 42px; height: 42px;
     border-radius: 12px; color: var(--text-secondary); background: var(--surface-container-low);
-    border: 1px solid var(--glass-border); transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease, transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)); text-decoration: none;
+    border: 1px solid var(--glass-border); transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease, transform 0.3s var(--ease-out-premium); text-decoration: none;
   }
-  .footer-social-btn:hover { color: var(--accent); background: var(--accent-glow); border-color: rgba(0,229,255,0.2); transform: translateY(-3px) scale(1.08); }
+  .footer-social-btn:hover { color: var(--accent); background: var(--accent-glow); border-color: color-mix(in srgb, var(--accent) 20%, transparent); transform: translateY(-3px) scale(1.08); }
 
   .footer-col-title {
     font-family: var(--font-headline); font-weight: 700; font-size: 0.6875rem;
     text-transform: uppercase; letter-spacing: 0.15em; color: var(--text-primary);
     margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--glass-border); position: relative;
   }
-  .footer-col-title::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 28px; height: 1px; background: var(--accent); transition: width 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)); }
+  .footer-col-title::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 28px; height: 1px; background: var(--accent); transition: width 0.4s var(--ease-out-premium); }
   .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
   .footer-links a { font-family: var(--font-body); font-size: 0.875rem; color: var(--text-secondary); text-decoration: none; transition: color 0.2s ease; display: inline-block; }
   .footer-links a:hover { color: var(--accent); transform: translateX(4px); }
-  .footer-links a { transition: color 0.25s ease, transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)); }
+  .footer-links a { transition: color 0.25s ease, transform 0.3s var(--ease-out-premium); }
 
   .footer-newsletter-desc { font-family: var(--font-body); font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px; }
   .footer-input-row { display: flex; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); background: var(--surface-container-low); transition: border-color 0.3s ease; }
-  .footer-input-row:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow), inset 0 1px 12px rgba(0, 229, 255, 0.08); }
+  .footer-input-row:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow), inset 0 1px 12px color-mix(in srgb, var(--accent) 8%, transparent); }
   :global([data-theme="light"]) .footer-input-row:focus-within { box-shadow: 0 0 0 3px var(--accent-glow), inset 0 1px 12px rgba(8, 145, 178, 0.06); }
   .footer-email-input { flex: 1; background: transparent; border: none; outline: none; padding: 16px 16px; font-family: var(--font-body); font-size: 1rem; color: var(--text-primary); min-width: 0; min-height: 44px; }
   .footer-email-input::placeholder { color: var(--text-tertiary); }
   .footer-submit-btn { display: flex; align-items: center; justify-content: center; width: 46px; background: var(--accent); color: #050508; border: none; cursor: pointer; transition: background 0.2s ease; flex-shrink: 0; }
   .footer-submit-btn:hover { background: #00c8e0; transform: scale(1.05); }
-  .footer-submit-btn { transition: background 0.2s ease, transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)); }
+  .footer-submit-btn { transition: background 0.2s ease, transform 0.3s var(--ease-out-premium); }
   .footer-newsletter-note { font-family: var(--font-body); font-size: 0.6875rem; color: var(--text-tertiary); margin-top: 8px; }
 
   .footer-status-bar { border-top: 1px solid var(--glass-border); background: var(--surface-container-low); position: relative; z-index: 1; }
@@ -296,7 +296,7 @@ const company = [
   .status-uptime { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--text-tertiary); }
   @media (max-width: 640px) { .footer-status-inner { padding: 12px 20px; flex-direction: column; gap: 8px; } }
 
-  .footer-copyright-bar { border-top: 1px solid rgba(0,229,255,0.06); background: var(--surface-container-lowest); position: relative; z-index: 1; }
+  .footer-copyright-bar { border-top: 1px solid color-mix(in srgb, var(--accent) 6%, transparent); background: var(--surface-container-lowest); position: relative; z-index: 1; }
   .footer-copyright-inner { max-width: var(--container-max); margin: 0 auto; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
   .footer-copyright-text { font-family: var(--font-body); font-size: 0.75rem; color: var(--text-tertiary); }
   .footer-legal-links { display: flex; align-items: center; gap: 8px; }

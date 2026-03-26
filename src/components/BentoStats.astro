@@ -3,7 +3,7 @@
 ---
 
 <section id="stats" class="bento-section" style="background: var(--surface-dim); padding: 7rem 0; position: relative; overflow: hidden;" aria-label="Platform Statistics">
-  <div aria-hidden="true" style="position: absolute; top: 20%; left: 60%; width: 500px; height: 400px; background: radial-gradient(ellipse, rgba(0,229,255,0.04) 0%, transparent 60%); filter: blur(60px); pointer-events: none;"></div>
+  <div aria-hidden="true" style="position: absolute; top: 20%; left: 60%; width: 500px; height: 400px; background: radial-gradient(ellipse, color-mix(in srgb, var(--accent) 4%, transparent) 0%, transparent 60%); filter: blur(60px); pointer-events: none;"></div>
   <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; position: relative; z-index: 1;">
     <div class="bento-grid">
       <!-- Main Panel -->
@@ -71,7 +71,7 @@
   }
   .bento-main:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25), 0 0 30px rgba(0, 229, 255, 0.05);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25), 0 0 30px color-mix(in srgb, var(--accent) 5%, transparent);
   }
   .bento-main::before {
     content: '';
@@ -84,7 +84,7 @@
   .bento-headline { font-family: var(--font-headline); font-weight: 700; font-size: 2rem; letter-spacing: -0.02em; }
   @media (min-width: 768px) { .bento-headline { font-size: 3rem; } }
   .bento-headline-accent {
-    background: linear-gradient(135deg, #00E5FF, #7B61FF);
+    background: linear-gradient(135deg, var(--accent), #7B61FF);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text; font-style: italic;
   }
@@ -115,23 +115,23 @@
   }
   .bento-sidebar:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25), 0 0 30px rgba(0, 229, 255, 0.05);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25), 0 0 30px color-mix(in srgb, var(--accent) 5%, transparent);
   }
   @media (min-width: 768px) { .bento-sidebar { padding: 4rem; } }
   .bento-sidebar-cta {
-    border: 1.5px solid rgba(0, 229, 255, 0.25); color: var(--accent);
-    background: transparent; transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    border: 1.5px solid color-mix(in srgb, var(--accent) 25%, transparent); color: var(--accent);
+    background: transparent; transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s var(--ease-out-premium), transform 0.3s var(--ease-out-premium);
   }
   .bento-sidebar-cta:hover {
-    background: linear-gradient(135deg, #00E5FF 0%, #00a8b5 50%, #00626e 100%);
+    background: linear-gradient(135deg, var(--accent) 0%, #00a8b5 50%, #00626e 100%);
     color: #fff; border-color: transparent;
-    box-shadow: 0 4px 16px rgba(0, 229, 255, 0.3); transform: translateY(-1px);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 30%, transparent); transform: translateY(-1px);
   }
   .bento-sidebar-cta:active { transform: translateY(0); }
   .bento-icon-ring { animation: glow-pulse 4s ease-in-out infinite; }
   @keyframes glow-pulse {
-    0%, 100% { box-shadow: 0 0 20px rgba(0, 229, 255, 0.15); }
-    50% { box-shadow: 0 0 40px rgba(0, 229, 255, 0.3); }
+    0%, 100% { box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 15%, transparent); }
+    50% { box-shadow: 0 0 40px color-mix(in srgb, var(--accent) 30%, transparent); }
   }
   /* === Animated rotating gradient border on main card === */
   @property --bento-border-angle {

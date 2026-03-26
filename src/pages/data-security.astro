@@ -85,7 +85,7 @@ const trustIndicators = [
 
     <!-- Shield Hero -->
     <section class="sec-hero" aria-label="Security Architecture">
-      <div aria-hidden="true" style="position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 30%,rgba(0,229,255,0.06) 0%,transparent 55%),radial-gradient(ellipse at 30% 70%,rgba(123,97,255,0.04) 0%,transparent 50%);filter:blur(60px);"></div>
+      <div aria-hidden="true" style="position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 30%,color-mix(in srgb, var(--accent) 6%, transparent) 0%,transparent 55%),radial-gradient(ellipse at 30% 70%,rgba(123,97,255,0.04) 0%,transparent 50%);filter:blur(60px);"></div>
       <div class="sec-hero-inner">
         <!-- Animated Shield -->
         <div class="shield-container reveal" aria-hidden="true">
@@ -236,7 +236,7 @@ const trustIndicators = [
 
         <!-- Security Brief Download -->
         <div class="reveal" style="text-align: center; margin-top: 48px;">
-          <a href="/docs/jinki-security-brief.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download Jinki security architecture brief PDF" style="display: inline-flex; align-items: center; gap: 12px; padding: 16px 28px; border-radius: 12px; background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.2); color: var(--accent); text-decoration: none; font-family: var(--font-label); font-size: 0.875rem; font-weight: 600; transition: background 0.2s ease, border-color 0.2s ease;">
+          <a href="/docs/jinki-security-brief.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download Jinki security architecture brief PDF" style="display: inline-flex; align-items: center; gap: 12px; padding: 16px 28px; border-radius: 12px; background: color-mix(in srgb, var(--accent) 6%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent); color: var(--accent); text-decoration: none; font-family: var(--font-label); font-size: 0.875rem; font-weight: 600; transition: background 0.2s ease, border-color 0.2s ease;">
             <span class="material-symbols-outlined" style="font-size: 20px; font-variation-settings: 'FILL' 1;" aria-hidden="true">shield</span>
             Download Security Brief (PDF)
           </a>
@@ -314,21 +314,21 @@ const trustIndicators = [
   .shield-ring-1 {
     width: 120px;
     height: 120px;
-    border-color: rgba(0, 229, 255, 0.15);
+    border-color: color-mix(in srgb, var(--accent) 15%, transparent);
     animation: shield-pulse 3s ease-in-out infinite;
   }
 
   .shield-ring-2 {
     width: 96px;
     height: 96px;
-    border-color: rgba(0, 229, 255, 0.2);
+    border-color: color-mix(in srgb, var(--accent) 20%, transparent);
     animation: shield-pulse 3s ease-in-out infinite 0.5s;
   }
 
   .shield-ring-3 {
     width: 72px;
     height: 72px;
-    border-color: rgba(0, 229, 255, 0.3);
+    border-color: color-mix(in srgb, var(--accent) 30%, transparent);
     animation: shield-pulse 3s ease-in-out infinite 1s;
   }
 
@@ -349,7 +349,7 @@ const trustIndicators = [
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 40px rgba(0, 229, 255, 0.15);
+    box-shadow: 0 0 40px color-mix(in srgb, var(--accent) 15%, transparent);
   }
 
   .sec-hero h1 {
@@ -362,7 +362,7 @@ const trustIndicators = [
   }
 
   .gradient-text-cyan {
-    background: linear-gradient(135deg, #00E5FF, #00a8b5);
+    background: linear-gradient(135deg, var(--accent), #00a8b5);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -515,8 +515,8 @@ const trustIndicators = [
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     overflow: hidden;
-    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
-                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+    transition: transform 0.4s var(--ease-out-premium),
+                box-shadow 0.4s var(--ease-out-premium),
                 border-color 0.4s ease;
     position: relative;
   }
@@ -531,7 +531,7 @@ const trustIndicators = [
   }
 
   .pillar-card:hover {
-    border-color: rgba(0, 229, 255, 0.15);
+    border-color: color-mix(in srgb, var(--accent) 15%, transparent);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), 0 0 20px var(--accent-glow);
   }
 
@@ -596,7 +596,7 @@ const trustIndicators = [
   }
 
   .pillar-toggle svg {
-    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: transform 0.4s var(--ease-out-premium);
   }
 
   .pillar-card.expanded .pillar-toggle svg {
@@ -671,7 +671,7 @@ const trustIndicators = [
 
   .timeline-active .timeline-marker {
     border-color: var(--accent);
-    box-shadow: 0 0 12px rgba(0, 229, 255, 0.15);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 15%, transparent);
   }
 
   .timeline-active-dot {
@@ -808,7 +808,7 @@ const trustIndicators = [
     padding: 12px 24px;
     border: 1px solid var(--accent);
     border-radius: 12px;
-    transition: background 0.3s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: background 0.3s ease, box-shadow 0.3s var(--ease-out-premium);
   }
 
   .btn-disclosure:hover {

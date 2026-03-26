@@ -879,7 +879,7 @@ const reportTabs = [
   }
 
   .gradient-text-cyan {
-    background: linear-gradient(135deg, #00E5FF, #00a8b5);
+    background: linear-gradient(135deg, var(--accent), #00a8b5);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -932,26 +932,26 @@ const reportTabs = [
     margin: 0 auto;
     background: #060a10;
     border-radius: 12px;
-    border: 1px solid rgba(0,229,255,0.12);
+    border: 1px solid color-mix(in srgb, var(--accent) 12%, transparent);
     overflow: hidden;
-    box-shadow: 0 4px 40px rgba(0,0,0,0.5), 0 0 80px rgba(0,229,255,0.03);
+    box-shadow: 0 4px 40px rgba(0,0,0,0.5), 0 0 80px color-mix(in srgb, var(--accent) 3%, transparent);
   }
   .si-toolbar {
     display: flex; justify-content: space-between; align-items: center;
     padding: 8px 16px;
-    background: rgba(0,229,255,0.03);
-    border-bottom: 1px solid rgba(0,229,255,0.08);
+    background: color-mix(in srgb, var(--accent) 3%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 8%, transparent);
     font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.08em;
-    color: rgba(0,229,255,0.5);
+    color: color-mix(in srgb, var(--accent) 50%, transparent);
   }
   .si-toolbar-left, .si-toolbar-right { display: flex; align-items: center; gap: 8px; }
   .si-rec-dot { width: 6px; height: 6px; border-radius: 50%; background: #FF3C3C; animation: siRecBlink 1s steps(2) infinite; }
   @keyframes siRecBlink { 0% { opacity: 1; } 50% { opacity: 0; } }
   .si-rec-label { color: #FF6B6B; font-weight: 700; font-size: 0.6rem; }
-  .si-divider { width: 1px; height: 10px; background: rgba(0,229,255,0.12); }
-  .si-mode { color: rgba(0,229,255,0.4); }
-  .si-coord { color: rgba(0,229,255,0.35); }
-  .si-alt { color: rgba(0,229,255,0.45); font-weight: 600; }
+  .si-divider { width: 1px; height: 10px; background: color-mix(in srgb, var(--accent) 12%, transparent); }
+  .si-mode { color: color-mix(in srgb, var(--accent) 40%, transparent); }
+  .si-coord { color: color-mix(in srgb, var(--accent) 35%, transparent); }
+  .si-alt { color: color-mix(in srgb, var(--accent) 45%, transparent); font-weight: 600; }
 
   .si-viewport { position: relative; background: #04080e; }
   .si-svg { width: 100%; display: block; }
@@ -971,7 +971,7 @@ const reportTabs = [
   }
   .si-scale-gradient {
     width: 8px; height: 120px; border-radius: 4px;
-    background: linear-gradient(to bottom, #FF3C3C, #FF8C00, #FFB400, #34D399, #00E5FF, #1a3040);
+    background: linear-gradient(to bottom, #FF3C3C, #FF8C00, #FFB400, #34D399, var(--accent), #1a3040);
     opacity: 0.7;
   }
   .si-scale-labels {
@@ -984,8 +984,8 @@ const reportTabs = [
   .si-bottom-panel {
     display: flex; justify-content: space-between; align-items: center;
     padding: 12px 16px;
-    background: rgba(0,229,255,0.02);
-    border-top: 1px solid rgba(0,229,255,0.08);
+    background: color-mix(in srgb, var(--accent) 2%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--accent) 8%, transparent);
   }
   .si-finding-pills { display: flex; gap: 8px; flex-wrap: wrap; }
   .si-pill {
@@ -1000,11 +1000,11 @@ const reportTabs = [
   .si-pill-warn .si-pill-dot { background: #FFB400; }
   .si-pill-mod { color: rgba(255,176,96,0.7); background: rgba(255,140,0,0.06); }
   .si-pill-mod .si-pill-dot { background: #FF8C00; }
-  .si-pill-info { color: rgba(0,229,255,0.5); background: rgba(0,229,255,0.04); }
-  .si-pill-info .si-pill-dot { background: #00E5FF; }
+  .si-pill-info { color: color-mix(in srgb, var(--accent) 50%, transparent); background: color-mix(in srgb, var(--accent) 4%, transparent); }
+  .si-pill-info .si-pill-dot { background: var(--accent); }
   .si-summary { display: flex; flex-direction: column; align-items: flex-end; }
   .si-total { font-family: var(--font-mono); font-size: 0.7rem; color: rgba(255,255,255,0.6); font-weight: 700; }
-  .si-est { font-family: var(--font-mono); font-size: 0.6rem; color: rgba(0,229,255,0.4); }
+  .si-est { font-family: var(--font-mono); font-size: 0.6rem; color: color-mix(in srgb, var(--accent) 40%, transparent); }
 
   @media (max-width: 640px) {
     .scan-interface { max-width: 100%; }
@@ -1022,8 +1022,8 @@ const reportTabs = [
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: rgba(0, 229, 255, 0.08);
-    border: 1px solid rgba(0, 229, 255, 0.2);
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1039,7 +1039,7 @@ const reportTabs = [
     backdrop-filter: blur(8px);
     padding: 8px 12px;
     border-radius: 8px;
-    border: 1px solid rgba(0, 229, 255, 0.12);
+    border: 1px solid color-mix(in srgb, var(--accent) 12%, transparent);
     z-index: 2;
   }
 
@@ -1154,12 +1154,12 @@ const reportTabs = [
     height: 140px;
     border-radius: 50%;
     background: var(--surface-container-low);
-    border: 2px solid rgba(0, 229, 255, 0.15);
+    border: 2px solid color-mix(in srgb, var(--accent) 15%, transparent);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 2;
-    box-shadow: 0 0 40px rgba(0, 229, 255, 0.1);
+    box-shadow: 0 0 40px color-mix(in srgb, var(--accent) 10%, transparent);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
@@ -1207,15 +1207,15 @@ const reportTabs = [
     justify-content: center;
     gap: 2px;
     cursor: pointer;
-    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s var(--ease-out-premium), transform 0.3s var(--ease-out-premium);
     z-index: 3;
   }
 
   .wheel-node:hover,
   .wheel-node.active {
     border-color: var(--accent);
-    background: rgba(0, 229, 255, 0.08);
-    box-shadow: 0 0 24px rgba(0, 229, 255, 0.2);
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 20%, transparent);
     transform: scale(1.1);
   }
 
@@ -1373,15 +1373,15 @@ const reportTabs = [
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     overflow: hidden;
-    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
-                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+    transition: transform 0.4s var(--ease-out-premium),
+                box-shadow 0.4s var(--ease-out-premium),
                 border-color 0.4s ease;
   }
 
   .finding-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 229, 255, 0.05);
-    border-color: rgba(0, 229, 255, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2), 0 0 20px color-mix(in srgb, var(--accent) 5%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 15%, transparent);
   }
 
   .finding-image-area {
@@ -1553,13 +1553,13 @@ const reportTabs = [
     font-family: var(--font-mono);
     font-size: 13px;
     font-weight: 700;
-    color: #00E5FF;
+    color: var(--accent);
   }
   .efficiency-label {
     font-family: var(--font-mono);
     font-size: 8px;
     letter-spacing: 0.12em;
-    color: rgba(0, 229, 255, 0.5);
+    color: color-mix(in srgb, var(--accent) 50%, transparent);
   }
 
   .finding-severity-badge {
@@ -1662,7 +1662,7 @@ const reportTabs = [
     background: var(--glass-border);
     border: none;
     cursor: pointer;
-    transition: background 0.2s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: background 0.2s ease, box-shadow 0.3s var(--ease-out-premium), transform 0.3s var(--ease-out-premium);
   }
 
   .findings-dot.active {
@@ -1689,13 +1689,13 @@ const reportTabs = [
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     overflow: hidden;
-    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
-                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: transform 0.4s var(--ease-out-premium),
+                box-shadow 0.4s var(--ease-out-premium);
   }
 
   .comparison-side:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-elevated);
   }
 
   .comparison-header-bar {
@@ -1720,8 +1720,8 @@ const reportTabs = [
   .traditional-bar h3 { color: #FF6B6B; }
 
   .jinki-bar {
-    background: rgba(0, 229, 255, 0.06);
-    border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 15%, transparent);
     color: var(--accent);
   }
 
@@ -1799,8 +1799,8 @@ const reportTabs = [
     margin-top: 20px;
     padding: 12px 20px;
     border-radius: 10px;
-    border: 1px solid rgba(0, 229, 255, 0.2);
-    background: rgba(0, 229, 255, 0.04);
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+    background: color-mix(in srgb, var(--accent) 4%, transparent);
     color: var(--accent);
     font-family: var(--font-label);
     font-size: 0.75rem;
@@ -1812,9 +1812,9 @@ const reportTabs = [
   }
 
   .sample-report-cta:hover {
-    background: rgba(0, 229, 255, 0.1);
-    border-color: rgba(0, 229, 255, 0.35);
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 10%, transparent);
     transform: translateY(-1px);
   }
 
@@ -1876,13 +1876,13 @@ const reportTabs = [
 
   .report-tab:hover {
     color: var(--text-secondary);
-    background: rgba(0, 229, 255, 0.03);
+    background: color-mix(in srgb, var(--accent) 3%, transparent);
   }
 
   .report-tab.active {
     color: var(--accent);
     border-bottom-color: var(--accent);
-    background: rgba(0, 229, 255, 0.05);
+    background: color-mix(in srgb, var(--accent) 5%, transparent);
   }
 
   .report-tab-label {
@@ -2236,7 +2236,7 @@ const reportTabs = [
   :global([data-theme="light"]) .scan-interface {
     background: #f0f2f5;
     border-color: rgba(0, 131, 143, 0.15);
-    box-shadow: 0 4px 40px rgba(0,0,0,0.08);
+    box-shadow: var(--shadow-elevated);
   }
   :global([data-theme="light"]) .si-toolbar {
     background: rgba(0, 131, 143, 0.04);
@@ -2372,7 +2372,7 @@ const reportTabs = [
   /* ================ REPORT TAB GRADIENT BORDER ================ */
   .report-tab.active {
     border-bottom: 2px solid transparent;
-    border-image: linear-gradient(90deg, #00E5FF, #7B61FF) 1;
+    border-image: linear-gradient(90deg, var(--accent), #7B61FF) 1;
   }
 
   :global([data-theme="light"]) .report-tab.active {

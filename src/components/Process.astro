@@ -79,7 +79,7 @@ const steps = [
         <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">calendar_month</span> Maintenance timeline</span>
         <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">summarize</span> Executive summary</span>
       </div>
-      <a href="/docs/sample-facility-report.pdf" class="sample-report-link" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; padding: 12px 20px; border-radius: 8px; border: 1px solid rgba(0, 229, 255, 0.15); font-family: var(--font-label); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); text-decoration: none; transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));">
+      <a href="/docs/sample-facility-report.pdf" class="sample-report-link" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; padding: 12px 20px; border-radius: 8px; border: 1px solid color-mix(in srgb, var(--accent) 15%, transparent); font-family: var(--font-label); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); text-decoration: none; transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s var(--ease-out-premium);">
         <span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">download</span>
         Download Sample Report
       </a>
@@ -108,8 +108,8 @@ const steps = [
     padding: 2rem;
     overflow: hidden;
     transition: border-color 0.4s ease,
-                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
-                transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+                box-shadow 0.4s var(--ease-out-premium),
+                transform 0.4s var(--ease-out-premium);
   }
   .process-step::after {
     content: '';
@@ -119,8 +119,8 @@ const steps = [
   }
 
   .process-step:hover {
-    border-color: rgba(0, 229, 255, 0.15);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 0 20px rgba(0, 229, 255, 0.04);
+    border-color: color-mix(in srgb, var(--accent) 15%, transparent);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 0 20px color-mix(in srgb, var(--accent) 4%, transparent);
     transform: translateY(-3px);
   }
 
@@ -195,28 +195,28 @@ const steps = [
     gap: 8px;
     padding: 8px 16px;
     border-radius: 8px;
-    background: rgba(0, 229, 255, 0.06);
-    border: 1px solid rgba(0, 229, 255, 0.12);
+    background: color-mix(in srgb, var(--accent) 6%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 12%, transparent);
     font-family: var(--font-label);
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.03em;
     color: var(--accent);
     white-space: nowrap;
-    transition: transform 0.25s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
-                box-shadow 0.25s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+    transition: transform 0.25s var(--ease-out-premium),
+                box-shadow 0.25s var(--ease-out-premium),
                 border-color 0.25s ease;
     cursor: default;
   }
   .deliverable-tag:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 229, 255, 0.15);
-    border-color: rgba(0, 229, 255, 0.3);
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--accent) 15%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 30%, transparent);
   }
 
   .sample-report-link:hover {
-    background: rgba(0, 229, 255, 0.08);
-    border-color: rgba(0, 229, 255, 0.3);
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 30%, transparent);
   }
 
   :global([data-theme="light"]) .process-num-circle {

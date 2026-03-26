@@ -303,7 +303,7 @@ const sections = [
     background: var(--accent-glow);
     padding: 4px 12px;
     border-radius: 8px;
-    border: 1px solid rgba(0, 229, 255, 0.2);
+    border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
   }
 
   .version-history-btn {
@@ -322,7 +322,7 @@ const sections = [
   .version-history-btn:hover { color: var(--accent); }
 
   .version-history-btn svg {
-    transition: transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: transform 0.4s var(--ease-out-premium);
   }
 
   .version-history-btn.open svg {
@@ -565,7 +565,7 @@ const sections = [
     border: 1px solid var(--accent);
     border-radius: 12px;
     display: inline-block;
-    transition: background 0.3s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: background 0.3s ease, box-shadow 0.3s var(--ease-out-premium);
   }
 
   .legal-email-btn:hover {

@@ -238,12 +238,12 @@ const services = [
   }
   .nav-cta:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 16px rgba(0, 229, 255, 0.3);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 30%, transparent);
     opacity: 0.95;
   }
   .nav-cta:active {
     transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(0, 229, 255, 0.2);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 20%, transparent);
   }
 
   /* === Active scanning logo === */
@@ -336,9 +336,9 @@ const services = [
     border-image: linear-gradient(
       to right,
       transparent,
-      rgba(0, 229, 255, 0.25) 30%,
-      rgba(0, 229, 255, 0.4) 50%,
-      rgba(0, 229, 255, 0.25) 70%,
+      color-mix(in srgb, var(--accent) 25%, transparent) 30%,
+      color-mix(in srgb, var(--accent) 40%, transparent) 50%,
+      color-mix(in srgb, var(--accent) 25%, transparent) 70%,
       transparent
     ) 1 / 0 0 1px 0;
   }

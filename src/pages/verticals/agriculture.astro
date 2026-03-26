@@ -812,7 +812,7 @@ const pipelineSteps = [
     display: flex;
     flex-direction: column;
     gap: 20px;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-floating);
     position: relative;
     overflow: hidden;
   }
@@ -1410,7 +1410,7 @@ const pipelineSteps = [
 
   .timeline-card:hover {
     border-color: var(--card-color);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-elevated);
   }
 
   /* Animated background visual per season card */
@@ -2007,7 +2007,7 @@ const pipelineSteps = [
     border: 1px solid var(--glass-border);
     border-radius: 12px;
     gap: 8px;
-    transition: border-color 0.4s ease, box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: border-color 0.4s ease, box-shadow 0.4s var(--ease-out-premium), transform 0.4s var(--ease-out-premium);
     position: relative;
     overflow: hidden;
   }
@@ -2207,7 +2207,7 @@ const pipelineSteps = [
   :global([data-theme="light"]) .hud-panel {
     background: rgba(255, 255, 255, 0.9);
     border-color: rgba(16, 185, 129, 0.15);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-elevated);
   }
 
   :global([data-theme="light"]) .hud-alert {
@@ -2269,8 +2269,8 @@ const pipelineSteps = [
 
   /* Moisture indicator bar in HUD panel */
   .hud-moisture {
-    margin-top: 10px;
-    padding-top: 10px;
+    margin-top: 8px;
+    padding-top: 8px;
     border-top: 1px solid rgba(52, 211, 153, 0.1);
   }
   .moisture-bar-wrap {

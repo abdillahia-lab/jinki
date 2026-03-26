@@ -791,8 +791,8 @@ const integrations = [
     background: linear-gradient(135deg, #7B61FF, #4F46E5);
     text-decoration: none;
     box-shadow: 0 4px 20px rgba(123, 97, 255, 0.3);
-    transition: box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
-                transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: box-shadow 0.4s var(--ease-out-premium),
+                transform 0.4s var(--ease-out-premium);
   }
   .sec-cta:hover {
     box-shadow: 0 8px 32px rgba(123, 97, 255, 0.45), 0 2px 8px rgba(123, 97, 255, 0.2);
@@ -1133,7 +1133,7 @@ const integrations = [
     border-radius: 12px;
     background: rgba(123, 97, 255, 0.03);
     position: relative;
-    transition: border-color 0.4s ease, box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: border-color 0.4s ease, box-shadow 0.4s var(--ease-out-premium), transform 0.4s var(--ease-out-premium);
   }
   .stat-item:hover {
     border-color: rgba(123, 97, 255, 0.3);
@@ -1219,7 +1219,7 @@ const integrations = [
   }
   .pain-card:hover {
     border-color: var(--border-hover);
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-elevated);
   }
   .pain-problem {
     display: flex;
@@ -1638,7 +1638,7 @@ const integrations = [
     border: 1px solid rgba(123, 97, 255, 0.12);
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--shadow-floating);
   }
   .alert-header-bar {
     display: flex;
@@ -2003,7 +2003,7 @@ const integrations = [
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     padding: 32px;
-    transition: transform 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)), border-color 0.3s ease, box-shadow 0.3s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: transform 0.3s var(--ease-out-premium), border-color 0.3s ease, box-shadow 0.3s var(--ease-out-premium);
     position: relative;
     overflow: hidden;
     z-index: 1;
@@ -2248,9 +2248,9 @@ const integrations = [
     position: relative;
     overflow: hidden;
     transition: border-color 0.4s ease,
-                box-shadow 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
+                box-shadow 0.4s var(--ease-out-premium),
                 background 0.4s ease,
-                transform 0.4s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+                transform 0.4s var(--ease-out-premium);
   }
   .diff-card::before {
     content: '';
@@ -2334,7 +2334,7 @@ const integrations = [
   :global([data-theme="light"]) .hud-container {
     background: #e8eee8;
     border-color: rgba(79, 70, 229, 0.15);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-elevated);
   }
   :global([data-theme="light"]) .hud-nightvision {
     background: radial-gradient(ellipse at center, rgba(0, 180, 50, 0.04) 0%, rgba(200, 220, 200, 0.3) 100%);
@@ -2367,7 +2367,7 @@ const integrations = [
   :global([data-theme="light"]) .alert-cascade {
     background: #f8f9fa;
     border-color: rgba(79, 70, 229, 0.1);
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-elevated);
   }
   :global([data-theme="light"]) .alert-header-bar {
     background: rgba(79, 70, 229, 0.04);

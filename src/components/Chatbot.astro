@@ -57,8 +57,8 @@
     background: var(--accent); color: #050508; border: none; cursor: pointer;
     font-family: var(--font-label); font-size: 0.8125rem; font-weight: 700;
     letter-spacing: 0.03em; box-shadow: 0 4px 24px rgba(0,212,255,0.3);
-    transition: transform 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
-                box-shadow 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1));
+    transition: transform 0.35s var(--ease-out-premium),
+                box-shadow 0.35s var(--ease-out-premium);
   }
   .jc-launcher { animation: jcBreathePulse 3s ease-in-out infinite; }
   .jc-launcher:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 32px rgba(0,212,255,0.4); animation: none; }
@@ -95,7 +95,7 @@
     border-radius: 16px; overflow: hidden;
     box-shadow: 0 16px 48px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.05) inset;
   }
-  .jc-panel[aria-hidden="false"] { display: flex; animation: chatPanelIn 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)); }
+  .jc-panel[aria-hidden="false"] { display: flex; animation: chatPanelIn 0.35s var(--ease-out-premium); }
   @keyframes chatPanelIn {
     from { opacity: 0; transform: translateY(16px) scale(0.96); }
     to { opacity: 1; transform: translateY(0) scale(1); }
