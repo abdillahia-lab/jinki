@@ -394,17 +394,38 @@ const trustBadges = [
   }
 
   @media (max-width: 767px) {
-    .trust-counters,
+    .trust-counters {
+      padding: 2.5rem 16px;
+    }
     .trust-outcomes {
-      padding: 56px 16px;
+      padding: 2.5rem 16px;
     }
     .trust-counters-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
+      gap: 12px;
+    }
+    .trust-outcomes-title {
+      font-size: clamp(1.5rem, 6vw, 2rem) !important;
+    }
+    .trust-outcomes-subtitle {
+      margin-bottom: 2rem !important;
+      font-size: 0.875rem !important;
+    }
+    .outcome-card {
+      padding: 1.25rem 1rem !important;
+    }
+    .trust-insight {
+      padding: 16px 16px 0 !important;
+    }
+    .trust-quote {
+      font-size: 0.85rem !important;
     }
     .badges-row {
-      gap: 8px 8px;
+      gap: 6px 6px;
       justify-content: center;
+    }
+    .badge-chip {
+      padding: 6px 10px !important;
     }
     .trust-certs-inner {
       flex-direction: column;
@@ -412,6 +433,9 @@ const trustBadges = [
     }
     .trust-counter-val {
       font-size: 1.5rem;
+    }
+    .trust-certs {
+      padding: 20px 16px !important;
     }
   }
 

@@ -183,6 +183,15 @@ const steps = [
     stroke-dashoffset: 0;
   }
 
+  @media (max-width: 767px) {
+    .process-grid { gap: 1rem; }
+    .process-step { padding: 1.25rem; border-radius: 12px; }
+    .process-num-circle { width: 2rem; height: 2rem; font-size: 0.7rem; }
+    .process-title { font-size: 1.1rem; }
+    .process-desc { font-size: 0.875rem; }
+    .deliverable-tag { padding: 6px 12px; font-size: 0.7rem; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .process-step { transition: none; }
     .process-connector-line line { transition: none; stroke-dashoffset: 0; }

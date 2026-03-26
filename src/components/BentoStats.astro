@@ -204,6 +204,12 @@
     .bento-main, .bento-sidebar { transition: none; }
   }
 
+  @media (max-width: 767px) {
+    .bento-main::after { animation: none; }
+    .bento-icon-ring { animation: none; }
+    .live-dot { animation: none; }
+  }
+
   :global([data-theme="light"]) .bento-sidebar-cta {
     border-color: rgba(0, 131, 143, 0.3);
     color: #00838f;

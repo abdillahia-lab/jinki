@@ -68,14 +68,15 @@
     50% { transform: scale(1.03); }
   }
 
-  /* Mobile: smaller launcher */
+  /* Mobile: smaller launcher — sits above sticky CTA bar */
   @media (max-width: 767px) {
-    .jc-root { bottom: 72px; right: 16px; }
+    .jc-root { bottom: 80px; right: 16px; }
     .jc-launcher {
       padding: 8px 16px 8px 12px;
       font-size: 0.6875rem;
       gap: 8px;
       box-shadow: 0 2px 16px rgba(0,212,255,0.25);
+      animation: none;
     }
     .jc-launcher svg { width: 14px; height: 14px; }
     .jc-panel {

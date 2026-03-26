@@ -399,9 +399,13 @@ const services = [
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     contain: layout;
+    visibility: hidden;
+    pointer-events: none;
   }
   .mobile-panel.open {
     transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .mobile-backdrop {

@@ -424,9 +424,16 @@
 
   /* === Responsive === */
   @media (max-width: 767px) {
-    .hero { min-height: auto !important; padding-top: 5rem !important; padding-bottom: 2rem !important; }
+    .hero { min-height: auto !important; padding-top: 4rem !important; padding-bottom: 1.5rem !important; }
+    .hero .headline { font-size: clamp(1.75rem, 8vw, 2.25rem) !important; margin-bottom: 1.25rem !important; }
+    .hero .hero-text p { font-size: 0.95rem !important; line-height: 1.6 !important; margin-bottom: 1.75rem !important; }
+    .hero-mesh { animation: none; opacity: 0.3; }
+    .eyebrow-text::after { animation: none; display: none; }
+    .dot { animation: none; display: none; }
+    .eyebrow-pip { animation: none; }
+    .scroll-thumb, .scroll-chevron { animation: none; }
     .hero-actions { flex-direction: column; }
-    .cta-primary, .cta-secondary { width: 100%; max-width: 320px; }
+    .cta-primary, .cta-secondary { width: 100%; max-width: none; padding: 14px 24px !important; }
 
     /* Metric cards → compact horizontal strip on mobile */
     .hero-metrics {

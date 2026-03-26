@@ -253,6 +253,11 @@ const company = [
     .status-dot--blink { animation: none !important; }
   }
 
+  @media (max-width: 767px) {
+    .footer-status .status-dot::after { animation: none; display: none; }
+    .status-dot--blink { animation: none !important; }
+  }
+
   .footer-email-link:hover { color: var(--accent); text-shadow: 0 0 12px color-mix(in srgb, var(--accent) 30%, transparent); }
 
   .footer-logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
