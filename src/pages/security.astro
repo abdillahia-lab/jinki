@@ -11,53 +11,54 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import LeadGen from '../components/LeadGen.astro';
 import Footer from '../components/Footer.astro';
 
-const stats = [
-  { value: '<90s', label: 'dock-to-airborne response time', icon: 'speed' },
-  { value: '500+', label: 'acres covered per patrol', icon: 'map' },
-  { value: '24/7', label: 'autonomous thermal surveillance', icon: 'schedule' },
-  { value: '0', label: 'blind spots with aerial vantage', icon: 'visibility' },
-];
-
 const useCases = [
   {
-    icon: 'stadium',
-    title: 'Event Security',
-    metric: '500+',
-    metricLabel: 'acres covered per event',
-    desc: 'Real-time crowd monitoring and perimeter surveillance for concerts, festivals, and large gatherings.',
-    capabilities: ['Crowd density analysis', 'Perimeter breach detection', 'Rapid incident response', 'Post-event sweep'],
+    icon: 'downhill_skiing',
+    title: 'Ski Resorts & Recreation',
+    metric: '1,000+',
+    metricLabel: 'acres per patrol',
+    desc: 'Terrain-aware aerial patrols across slopes, lodges, and backcountry. Thermal detection in whiteout conditions when traditional cameras fail.',
+    capabilities: ['Slope monitoring', 'Lodge perimeter', 'Night thermal', 'Search support'],
   },
   {
-    icon: 'villa',
-    title: 'Resort & Hospitality',
-    metric: '0',
-    metricLabel: 'visible security infrastructure',
-    desc: 'Discreet aerial patrols across expansive grounds — protecting guests without disrupting the experience.',
-    capabilities: ['Guest safety at scale', 'Waterfront monitoring', 'Night operations', 'Perimeter coverage'],
-  },
-  {
-    icon: 'home',
-    title: 'Private Estates',
+    icon: 'school',
+    title: 'Private Schools & Campuses',
     metric: '24/7',
-    metricLabel: 'perimeter monitoring',
-    desc: 'Persistent thermal detection across multi-acre compounds and terrain that cameras cannot fully cover.',
-    capabilities: ['Fence-line patrol', 'Thermal intrusion detection', 'Visitor verification', 'Estate integration'],
-  },
-  {
-    icon: 'domain',
-    title: 'Critical Facilities',
-    metric: '<90s',
-    metricLabel: 'alert to verification',
-    desc: 'Autonomous surveillance augmenting existing systems at data centers, power plants, and warehouses.',
-    capabilities: ['Infrastructure patrol', 'Thermal anomaly detection', 'Alarm verification', 'SOC integration'],
+    metricLabel: 'campus coverage',
+    desc: 'Discreet autonomous surveillance protecting students and staff across sprawling campus grounds, athletic fields, and parking areas.',
+    capabilities: ['Campus perimeter', 'Event security', 'After-hours patrol', 'Parent pickup monitoring'],
   },
   {
     icon: 'construction',
     title: 'Construction Sites',
     metric: '200+',
     metricLabel: 'missions per month',
-    desc: 'After-hours theft prevention and equipment monitoring with time-stamped evidence capture.',
-    capabilities: ['Theft deterrence', 'Equipment monitoring', 'Progress documentation', 'Evidence capture'],
+    desc: 'After-hours theft prevention and equipment monitoring with autonomous patrol routes and time-stamped evidence capture.',
+    capabilities: ['Theft deterrence', 'Equipment monitoring', 'Progress docs', 'Evidence capture'],
+  },
+  {
+    icon: 'dns',
+    title: 'Data Centers',
+    metric: '<90s',
+    metricLabel: 'alert to verification',
+    desc: 'Multi-layered perimeter protection for facilities housing critical digital infrastructure. Thermal anomaly detection at the fence line.',
+    capabilities: ['Perimeter patrol', 'Thermal fence-line', 'Alarm verification', 'SOC integration'],
+  },
+  {
+    icon: 'stadium',
+    title: 'Events & Gatherings',
+    metric: '500+',
+    metricLabel: 'acres per event',
+    desc: 'Real-time crowd monitoring and perimeter surveillance from above — providing situational awareness ground teams cannot achieve alone.',
+    capabilities: ['Crowd analysis', 'Perimeter breach', 'Incident response', 'Post-event sweep'],
+  },
+  {
+    icon: 'villa',
+    title: 'Resorts & Hospitality',
+    metric: '0',
+    metricLabel: 'visible infrastructure',
+    desc: 'Protecting guests across expansive luxury grounds without the visible security presence that disrupts the experience.',
+    capabilities: ['Guest safety', 'Waterfront', 'Night thermal', 'Perimeter coverage'],
   },
 ];
 
@@ -213,22 +214,7 @@ const differentiators = [
       </div>
     </section>
 
-    <!-- ==================== 2. STATS BAR ==================== -->
-    <section class="stats-strip" aria-label="Key Metrics">
-      <div class="stats-strip-inner">
-        {stats.map((stat, i) => (
-          <div class={`stat-item reveal reveal-delay-${(i % 4) + 1}`}>
-            <span class="material-symbols-outlined stat-icon" style="font-variation-settings: 'FILL' 1;" aria-hidden="true">{stat.icon}</span>
-            <div class="stat-text">
-              <span class="stat-value">{stat.value}</span>
-              <span class="stat-label">{stat.label}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <!-- ==================== 3. USE CASES ==================== -->
+    <!-- ==================== 2. USE CASES ==================== -->
     <section id="use-cases" class="section" style="background: var(--surface-dim);" aria-label="Use Cases">
       <div class="section-inner">
         <div class="section-header reveal">
@@ -354,44 +340,6 @@ const differentiators = [
             </span>
           </a>
         </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="reveal" style="max-width: 800px; margin: 0 auto; padding: 0 1.5rem 4rem;" aria-label="Frequently Asked Questions">
-      <div style="text-align: center; margin-bottom: 2.5rem;">
-        <span class="section-eyebrow" style="color: #7B61FF;">FAQ</span>
-        <h2 style="font-family: var(--font-headline); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--text-primary); margin-top: 0.5rem;">Common Questions</h2>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 1rem;">
-        <details class="sec-faq-item" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.25rem 1.5rem; cursor: pointer;">
-          <summary style="font-family: var(--font-headline); font-size: 0.95rem; font-weight: 600; color: var(--text-primary); list-style: none; display: flex; justify-content: space-between; align-items: center;">
-            How quickly can aerial security respond to an alert?
-            <span class="material-symbols-outlined" style="font-size: 20px; color: var(--text-tertiary); transition: transform 0.3s ease;" aria-hidden="true">expand_more</span>
-          </summary>
-          <p style="font-family: var(--font-body); font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-top: 1rem;">Our autonomous dock stations achieve under 90 seconds from alert to airborne. Once deployed, the aerial platform reaches most points within a 500-acre perimeter in under 3 minutes, streaming live thermal video to your security operations center.</p>
-        </details>
-        <details class="sec-faq-item" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.25rem 1.5rem; cursor: pointer;">
-          <summary style="font-family: var(--font-headline); font-size: 0.95rem; font-weight: 600; color: var(--text-primary); list-style: none; display: flex; justify-content: space-between; align-items: center;">
-            Does aerial surveillance work at night?
-            <span class="material-symbols-outlined" style="font-size: 20px; color: var(--text-tertiary); transition: transform 0.3s ease;" aria-hidden="true">expand_more</span>
-          </summary>
-          <p style="font-family: var(--font-body); font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-top: 1rem;">Yes — thermal imaging is actually more effective at night. Without solar heating interference, human thermal signatures are clearly distinguishable from the environment. Our systems operate 24/7 regardless of lighting conditions.</p>
-        </details>
-        <details class="sec-faq-item" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.25rem 1.5rem; cursor: pointer;">
-          <summary style="font-family: var(--font-headline); font-size: 0.95rem; font-weight: 600; color: var(--text-primary); list-style: none; display: flex; justify-content: space-between; align-items: center;">
-            Can this integrate with our existing security systems?
-            <span class="material-symbols-outlined" style="font-size: 20px; color: var(--text-tertiary); transition: transform 0.3s ease;" aria-hidden="true">expand_more</span>
-          </summary>
-          <p style="font-family: var(--font-body); font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-top: 1rem;">Aerial intelligence is designed to augment, not replace, your existing security infrastructure. We integrate with alarm systems, access control, and security operations centers to provide automated aerial verification when alerts trigger.</p>
-        </details>
-        <details class="sec-faq-item" style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.25rem 1.5rem; cursor: pointer;">
-          <summary style="font-family: var(--font-headline); font-size: 0.95rem; font-weight: 600; color: var(--text-primary); list-style: none; display: flex; justify-content: space-between; align-items: center;">
-            Is aerial security discreet enough for hospitality environments?
-            <span class="material-symbols-outlined" style="font-size: 20px; color: var(--text-tertiary); transition: transform 0.3s ease;" aria-hidden="true">expand_more</span>
-          </summary>
-          <p style="font-family: var(--font-body); font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-top: 1rem;">Autonomous aerial platforms operate at altitude and follow pre-programmed routes that minimize guest awareness. Scheduled patrols run during low-activity hours, and the dock station can be positioned away from guest areas.</p>
-        </details>
       </div>
     </section>
 
@@ -631,80 +579,6 @@ const differentiators = [
     .sec-bg-svg circle, .sec-bg-svg animate { animation: none !important; }
   }
 
-  /* === STATS BAR — HUD readout === */
-  .stats-strip {
-    background: var(--surface-container-low);
-    border-top: 1px solid var(--glass-border);
-    border-bottom: 1px solid var(--glass-border);
-    padding: 32px clamp(20px, 5vw, 80px);
-  }
-
-  .stats-strip-inner {
-    max-width: var(--container-max);
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-  }
-
-  @media (max-width: 768px) {
-    .stats-strip-inner { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  .stat-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    border-left: 2px solid rgba(123,97,255,0.35);
-    padding-left: 20px;
-    position: relative;
-  }
-
-  /* Violet divider line between stats */
-  .stat-item + .stat-item {
-    border-left: 2px solid rgba(123,97,255,0.35);
-  }
-
-  .stat-item:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 10%;
-    height: 80%;
-    width: 1px;
-    background: rgba(123,97,255,0.10);
-  }
-
-  .stat-icon {
-    color: #7B61FF;
-    font-size: 20px;
-    flex-shrink: 0;
-    opacity: 0.5;
-  }
-
-  .stat-text {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .stat-value {
-    font-family: var(--font-mono);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #e0e0ff;
-    letter-spacing: 0.02em;
-  }
-
-  .stat-label {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    color: var(--text-tertiary);
-    line-height: 1.4;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    opacity: 0.7;
-  }
-
   /* === SECTIONS === */
   .section {
     padding: 5rem clamp(20px, 5vw, 80px);
@@ -723,11 +597,15 @@ const differentiators = [
     margin-bottom: 56px;
   }
 
+  .section-header h2, .section h2 {
+    color: #ffffff !important;
+  }
+
   .section-header h2 {
     font-family: var(--font-headline);
     font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
     font-weight: 700;
-    color: var(--text-primary);
+    color: #ffffff;
     line-height: 1.15;
     margin-top: 8px;
   }
@@ -787,6 +665,7 @@ const differentiators = [
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
+    backdrop-filter: blur(8px);
   }
 
   .uc-card-v3:hover {
@@ -805,7 +684,7 @@ const differentiators = [
     width: 44px;
     height: 44px;
     border-radius: 12px;
-    background: rgba(123,97,255,0.1);
+    background: rgba(123,97,255,0.15);
     border: 1px solid rgba(123,97,255,0.2);
     display: flex;
     align-items: center;
@@ -840,14 +719,14 @@ const differentiators = [
     font-family: var(--font-headline);
     font-size: 1.0625rem;
     font-weight: 700;
-    color: #e8e8f0;
+    color: #ffffff;
     margin: 0 0 8px;
   }
 
   .uc-card-desc {
     font-family: var(--font-body);
     font-size: 0.85rem;
-    color: #a0a0b8;
+    color: #b0b0c8;
     line-height: 1.6;
     margin-bottom: 20px;
     flex: 1;
@@ -864,8 +743,8 @@ const differentiators = [
   .uc-cap-tag {
     font-family: var(--font-mono);
     font-size: 0.625rem;
-    color: rgba(196,181,255,0.7);
-    background: rgba(123,97,255,0.06);
+    color: rgba(196,181,255,0.9);
+    background: rgba(123,97,255,0.1);
     border: 1px solid rgba(123,97,255,0.12);
     border-radius: 6px;
     padding: 4px 8px;
@@ -969,14 +848,14 @@ const differentiators = [
     font-family: var(--font-headline);
     font-size: 1.125rem;
     font-weight: 700;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 12px;
   }
 
   .step-card p {
     font-family: var(--font-body);
     font-size: 0.875rem;
-    color: var(--text-secondary);
+    color: #b0b0c8;
     line-height: 1.7;
   }
 
@@ -1045,7 +924,7 @@ const differentiators = [
     width: 52px;
     height: 52px;
     border-radius: 14px;
-    background: rgba(123,97,255,0.1);
+    background: rgba(123,97,255,0.15);
     border: 1px solid rgba(123,97,255,0.2);
     display: flex;
     align-items: center;
@@ -1062,14 +941,14 @@ const differentiators = [
     font-family: var(--font-headline);
     font-size: 1.0625rem;
     font-weight: 700;
-    color: var(--text-primary);
+    color: #ffffff;
     margin-bottom: 12px;
   }
 
   .diff-card p {
     font-family: var(--font-body);
     font-size: 0.8125rem;
-    color: var(--text-secondary);
+    color: #b0b0c8;
     line-height: 1.7;
   }
 
@@ -1170,16 +1049,6 @@ const differentiators = [
     transform: translateX(6px);
   }
 
-  /* === FAQ REFINEMENT === */
-  .sec-faq-item {
-    border-left: 2px solid rgba(123,97,255,0.2) !important;
-    transition: border-color 0.3s ease;
-  }
-
-  .sec-faq-item[open] {
-    border-left-color: #7B61FF !important;
-  }
-
   /* === GLOBAL PAGE REFINEMENTS === */
 
   /* Section heading depth */
@@ -1199,7 +1068,7 @@ const differentiators = [
 
   /* === PRINT / MOTION === */
   @media print {
-    .sec-hero-visual, .stats-strip { display: none !important; }
+    .sec-hero-visual { display: none !important; }
     .sec-hero { min-height: auto; padding: 40px 20px; }
   }
 
