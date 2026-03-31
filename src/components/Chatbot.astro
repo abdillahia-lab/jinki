@@ -232,6 +232,7 @@
   var msgs = document.getElementById('jc-messages');
   var input = document.getElementById('jc-input');
   var sendBtn = document.getElementById('jc-send');
+  if (!launcher || !panel || !msgs || !input || !sendBtn) return;
   var initialized = false;
 
   var answers = {
@@ -284,7 +285,7 @@
     if (linkHref && linkText) {
       var a = document.createElement('a');
       // Only allow relative URLs and # anchors — block javascript: and data: schemes
-      if (/^(\/|#|https:\/\/jinki\.ai)/.test(linkHref)) {
+      if (/^(\/|#|https:\/\/jinki\.ai(\/|$))/.test(linkHref)) {
         a.href = linkHref;
       } else {
         a.href = '#lead-gen';
