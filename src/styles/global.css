@@ -332,7 +332,7 @@ img {
 
 /* Smooth scroll for anchor links */
 html {
-  scroll-padding-top: 5rem;
+  scroll-padding-top: calc(72px + 1rem);
 }
 
 /* --- List Markers --- */
@@ -342,7 +342,7 @@ html {
 
 /* --- Anchor Offset (account for fixed nav on scroll-to) --- */
 [id] {
-  scroll-margin-top: 5.5rem;
+  scroll-margin-top: calc(72px + 1rem);
 }
 
 /* --- Section Eyebrow (design system component) --- */

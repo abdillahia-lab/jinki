@@ -44,12 +44,12 @@ const footerLinks = {
             <div class="form-group">
               <label for="name">Full Name</label>
               <input type="text" id="name" name="name" required placeholder="Jane Smith" autocomplete="name" />
-              <span class="form-error" aria-live="polite"></span>
+              <span class="form-error" aria-live="assertive"></span>
             </div>
             <div class="form-group">
               <label for="email">Work Email</label>
               <input type="email" id="email" name="email" required placeholder="jane@company.com" autocomplete="email" />
-              <span class="form-error" aria-live="polite"></span>
+              <span class="form-error" aria-live="assertive"></span>
             </div>
           </div>
 
@@ -438,14 +438,22 @@ const footerLinks = {
         clearError(email);
       }
 
-      if (valid) {
-        // SWAP: Replace this with actual form submission
-        // For now, show success message
-        var success = document.getElementById('form-success');
-        success.hidden = false;
-        form.reset();
-        setTimeout(function() { success.hidden = true; }, 5000);
+      if (!valid) {
+        // Focus first invalid field and scroll into view
+        var firstInvalid = form.querySelector('input[style*="border-color: rgb(255, 107, 107)"]');
+        if (firstInvalid) {
+          firstInvalid.focus();
+          firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return;
       }
+
+      // SWAP: Replace this with actual form submission
+      // For now, show success message
+      var success = document.getElementById('form-success');
+      success.hidden = false;
+      form.reset();
+      setTimeout(function() { success.hidden = true; }, 5000);
     });
 
     function showError(input, message) {

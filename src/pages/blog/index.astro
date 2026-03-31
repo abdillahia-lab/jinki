@@ -934,27 +934,30 @@ function estimateReadTime(description: string): number {
       });
     });
 
-    // --- View toggle ---
+    // --- View toggle (persists to localStorage) ---
     const viewBtns = document.querySelectorAll<HTMLButtonElement>('.omega-view-btn');
     const postsContainer = document.getElementById('omega-posts-container');
 
-    viewBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        viewBtns.forEach(b => {
-          b.classList.remove('active');
-          b.setAttribute('aria-pressed', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-pressed', 'true');
-
-        if (postsContainer) {
-          if (btn.dataset.view === 'list') {
-            postsContainer.classList.add('omega-list-view');
-          } else {
-            postsContainer.classList.remove('omega-list-view');
-          }
-        }
+    function setView(view: string) {
+      viewBtns.forEach(b => {
+        const isActive = b.dataset.view === view;
+        b.classList.toggle('active', isActive);
+        b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
       });
+      if (postsContainer) {
+        postsContainer.classList.toggle('omega-list-view', view === 'list');
+      }
+      try { localStorage.setItem('blog-view', view); } catch {}
+    }
+
+    // Restore saved preference
+    try {
+      const saved = localStorage.getItem('blog-view');
+      if (saved === 'list' || saved === 'grid') setView(saved);
+    } catch {}
+
+    viewBtns.forEach(btn => {
+      btn.addEventListener('click', () => setView(btn.dataset.view || 'grid'));
     });
 
     // Recalculate indicator on resize

@@ -213,6 +213,11 @@
     height: 100%; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease;
   }
 
+  /* Step transitions */
+  .lg-step {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
   /* Step content */
   .lg-step-title {
     font-family: var(--font-headline); font-size: 1.25rem; font-weight: 700;
@@ -396,14 +401,32 @@
     opacity: 0.6; z-index: 3;
   }
 
+  /* Submit spinner */
+  .lg-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: lgSpin 0.6s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  @keyframes lgSpin {
+    to { transform: rotate(360deg); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .lg-step-fill { transition: none; }
+    .lg-step { transition: none; }
     .lg-btn { transition: none; }
     .lg-card-inner { transition: none; }
     .lg-field label { transition: none; }
     .lg-radio-card input:checked + .lg-card-inner::before { animation: none; background: var(--accent); }
     .lg-check-circle, .lg-check-mark { animation: none; stroke-dashoffset: 0; }
     .lg-step-dot.done { animation: none; }
+    .lg-spinner { animation-duration: 1.5s; }
   }
 
   @media (max-width: 767px) {
@@ -427,9 +450,22 @@
   let current = 1;
 
   function showStep(n: number) {
-    document.querySelectorAll<HTMLElement>('.lg-step').forEach(s => s.style.display = 'none');
+    const allSteps = document.querySelectorAll<HTMLElement>('.lg-step');
     const step = document.getElementById(`lg-step-${n}`);
-    if (step) step.style.display = 'block';
+    // Fade out current, fade in next
+    allSteps.forEach(s => {
+      if (s.id === `lg-step-${n}`) {
+        s.style.display = 'block';
+        requestAnimationFrame(() => {
+          s.style.opacity = '1';
+          s.style.transform = 'translateX(0)';
+        });
+      } else {
+        s.style.opacity = '0';
+        s.style.transform = n > current ? 'translateX(-20px)' : 'translateX(20px)';
+        setTimeout(() => { s.style.display = 'none'; }, 200);
+      }
+    });
     dots.forEach((d, i) => {
       const sn = i + 1;
       d.classList.toggle('active', sn === n);
@@ -442,7 +478,7 @@
     // Autofocus first input in new step
     if (step) {
       const firstInput = step.querySelector<HTMLInputElement | HTMLTextAreaElement>('input:not([type=hidden]):not([type=radio]), textarea');
-      if (firstInput) setTimeout(() => firstInput.focus(), 100);
+      if (firstInput) setTimeout(() => firstInput.focus(), 200);
     }
   }
 
@@ -451,21 +487,28 @@
     if (!step) return false;
     const fields = step.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]');
     let valid = true;
+    let firstInvalid: HTMLElement | null = null;
     fields.forEach(f => {
       if (f.type === 'radio') {
         const radios = step.querySelectorAll<HTMLInputElement>(`input[name="${f.name}"]`);
         const checked = Array.from(radios).some(r => r.checked);
-        if (!checked) valid = false;
+        if (!checked) { valid = false; if (!firstInvalid) firstInvalid = radios[0]?.closest('.lg-radio-card') as HTMLElement || f; }
       } else if (!f.value.trim()) {
         f.classList.add('invalid');
         valid = false;
+        if (!firstInvalid) firstInvalid = f;
       } else if (f.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value)) {
         f.classList.add('invalid');
         valid = false;
+        if (!firstInvalid) firstInvalid = f;
       } else {
         f.classList.remove('invalid');
       }
     });
+    if (!valid && firstInvalid) {
+      firstInvalid.focus();
+      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
     return valid;
   }
 
@@ -499,11 +542,14 @@
     if (hp && hp.value) { submitting = false; return; }
     if (!validateStep(current)) { submitting = false; return; }
 
-    // Show loading state
+    // Show loading state with spinner
     const submitBtn = form.querySelector('.lg-btn-submit') as HTMLButtonElement;
-    const originalText = submitBtn.textContent;
+    const originalHTML = submitBtn.innerHTML;
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Sending...';
+    const spinner = document.createElement('span');
+    spinner.className = 'lg-spinner';
+    submitBtn.textContent = ' Sending...';
+    submitBtn.prepend(spinner);
     submitBtn.style.opacity = '0.7';
 
     try {
@@ -527,7 +573,8 @@
     } catch (err) {
       submitting = false;
       submitBtn.disabled = false;
-      submitBtn.textContent = originalText;
+      submitBtn.querySelector('.lg-spinner')?.remove();
+      submitBtn.textContent = 'Submit Request';
       submitBtn.style.opacity = '1';
       // Create inline error message
       let errMsg = form.querySelector('.lg-error') as HTMLElement;

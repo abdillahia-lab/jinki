@@ -15,6 +15,15 @@ const services = [
   { href: '/services/audit', label: 'Facility Intelligence Scan' },
   { href: '/services/deployment', label: 'Autonomous Deployment' },
 ];
+
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+function isActive(href: string) {
+  const clean = href.replace(/\/$/, '') || '/';
+  return currentPath === clean || currentPath.startsWith(clean + '/');
+}
+function isDropdownActive(items: { href: string }[]) {
+  return items.some(item => isActive(item.href));
+}
 ---
 
 <header id="site-nav" class="site-nav" style="position:fixed;top:0;left:0;right:0;z-index:1000;padding:12px 24px;view-transition-name:site-nav;">
@@ -39,13 +48,13 @@ const services = [
     <ul class="nav-links" style="display:flex;align-items:center;gap:4px;list-style:none;margin:0;padding:0;">
       <!-- Verticals dropdown -->
       <li class="dropdown" style="position:relative;">
-        <button class="nav-link dropdown-trigger" aria-expanded="false" aria-haspopup="menu" style="display:flex;align-items:center;gap:4px;">
+        <button class={`nav-link dropdown-trigger${isDropdownActive(verticals) ? ' nav-link-active' : ''}`} aria-expanded="false" aria-haspopup="menu" style="display:flex;align-items:center;gap:4px;">
           Verticals
           <span class="material-symbols-outlined" aria-hidden="true" style="font-size:16px;transition:transform .25s;">expand_more</span>
         </button>
         <div class="dropdown-panel" role="menu" aria-label="Industry verticals" style="position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:200px;background:var(--surface-container);border:1px solid var(--glass-border);border-radius:12px;padding:8px;transition:opacity .2s,visibility .2s;box-shadow:0 8px 32px rgba(0,0,0,.3);">
           {verticals.map(v => (
-            <a href={v.href} class="dropdown-item" role="menuitem" style={`display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;text-decoration:none;color:var(--text-primary);font-family:var(--font-label);font-size:14px;transition:background .15s;`}>
+            <a href={v.href} class={`dropdown-item${isActive(v.href) ? ' dropdown-item-active' : ''}`} role="menuitem" aria-current={isActive(v.href) ? 'page' : undefined} style={`display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;text-decoration:none;color:var(--text-primary);font-family:var(--font-label);font-size:14px;transition:background .15s;`}>
               <span class="dot" style={`width:8px;height:8px;border-radius:50%;background:${v.color};flex-shrink:0;`} aria-hidden="true"></span>
               {v.label}
             </a>
@@ -55,22 +64,22 @@ const services = [
 
       <!-- Services dropdown -->
       <li class="dropdown" style="position:relative;">
-        <button class="nav-link dropdown-trigger" aria-expanded="false" aria-haspopup="menu" style="display:flex;align-items:center;gap:4px;">
+        <button class={`nav-link dropdown-trigger${isDropdownActive(services) ? ' nav-link-active' : ''}`} aria-expanded="false" aria-haspopup="menu" style="display:flex;align-items:center;gap:4px;">
           Services
           <span class="material-symbols-outlined" aria-hidden="true" style="font-size:16px;transition:transform .25s;">expand_more</span>
         </button>
         <div class="dropdown-panel" role="menu" aria-label="Services" style="position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:200px;background:var(--surface-container);border:1px solid var(--glass-border);border-radius:12px;padding:8px;transition:opacity .2s,visibility .2s;box-shadow:0 8px 32px rgba(0,0,0,.3);">
           {services.map(s => (
-            <a href={s.href} class="dropdown-item" role="menuitem" style={`display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;text-decoration:none;color:var(--text-primary);font-family:var(--font-label);font-size:14px;transition:background .15s;`}>
+            <a href={s.href} class={`dropdown-item${isActive(s.href) ? ' dropdown-item-active' : ''}`} role="menuitem" aria-current={isActive(s.href) ? 'page' : undefined} style={`display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;text-decoration:none;color:var(--text-primary);font-family:var(--font-label);font-size:14px;transition:background .15s;`}>
               {s.label}
             </a>
           ))}
         </div>
       </li>
 
-      <li><a href="/about" class="nav-link">About</a></li>
-      <li><a href="/security" class="nav-link">Security</a></li>
-      <li><a href="/blog" class="nav-link">Blog</a></li>
+      <li><a href="/about" class={`nav-link${isActive('/about') ? ' nav-link-active' : ''}`} aria-current={isActive('/about') ? 'page' : undefined}>About</a></li>
+      <li><a href="/security" class={`nav-link${isActive('/security') ? ' nav-link-active' : ''}`} aria-current={isActive('/security') ? 'page' : undefined}>Security</a></li>
+      <li><a href="/blog" class={`nav-link${isActive('/blog') ? ' nav-link-active' : ''}`} aria-current={isActive('/blog') ? 'page' : undefined}>Blog</a></li>
     </ul>
 
     <!-- Right side: theme toggle + CTA -->
@@ -92,7 +101,7 @@ const services = [
     <div class="mobile-panel-inner" style="display:flex;flex-direction:column;gap:4px;padding:20px;">
       <div class="mobile-section-label" style="font-family:var(--font-label);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);padding:16px 16px 8px;">Verticals</div>
       {verticals.map(v => (
-        <a href={v.href} class="mobile-link" style="display:flex;align-items:center;gap:12px;">
+        <a href={v.href} class={`mobile-link${isActive(v.href) ? ' mobile-link-active' : ''}`} aria-current={isActive(v.href) ? 'page' : undefined} style="display:flex;align-items:center;gap:12px;">
           <span style={`width:8px;height:8px;border-radius:50%;background:${v.color};flex-shrink:0;`}></span>
           {v.label}
         </a>
@@ -100,14 +109,14 @@ const services = [
 
       <div class="mobile-section-label" style="font-family:var(--font-label);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);padding:16px 16px 8px;">Services</div>
       {services.map(s => (
-        <a href={s.href} class="mobile-link">{s.label}</a>
+        <a href={s.href} class={`mobile-link${isActive(s.href) ? ' mobile-link-active' : ''}`} aria-current={isActive(s.href) ? 'page' : undefined}>{s.label}</a>
       ))}
 
       <div style="border-top:1px solid var(--glass-border);margin:12px 0;"></div>
-      <a href="/about" class="mobile-link">About</a>
-      <a href="/careers" class="mobile-link">Careers</a>
-      <a href="/security" class="mobile-link">Security</a>
-      <a href="/blog" class="mobile-link">Blog</a>
+      <a href="/about" class={`mobile-link${isActive('/about') ? ' mobile-link-active' : ''}`} aria-current={isActive('/about') ? 'page' : undefined}>About</a>
+      <a href="/careers" class={`mobile-link${isActive('/careers') ? ' mobile-link-active' : ''}`} aria-current={isActive('/careers') ? 'page' : undefined}>Careers</a>
+      <a href="/security" class={`mobile-link${isActive('/security') ? ' mobile-link-active' : ''}`} aria-current={isActive('/security') ? 'page' : undefined}>Security</a>
+      <a href="/blog" class={`mobile-link${isActive('/blog') ? ' mobile-link-active' : ''}`} aria-current={isActive('/blog') ? 'page' : undefined}>Blog</a>
 
       <a href="#lead-gen" class="mobile-cta" style="display:block;text-align:center;margin-top:16px;font-family:var(--font-label);font-size:15px;font-weight:600;padding:16px;border-radius:12px;background:var(--accent);color:var(--text-on-accent);text-decoration:none;">Request Assessment</a>
 
@@ -159,14 +168,29 @@ const services = [
     transition: transform 0.3s ease;
     border-radius: 1px;
   }
-  .nav-link:hover::after {
+  .nav-link:hover::after,
+  .nav-link-active::after {
     transform: scaleX(1);
+  }
+  .nav-link-active {
+    color: var(--text-primary);
   }
   .nav-link {
     position: relative;
   }
   :global([data-theme="light"]) .nav-link:hover {
     background: rgba(0,0,0,0.05);
+  }
+
+  /* Active dropdown item */
+  .dropdown-item-active {
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+
+  /* Active mobile link */
+  .mobile-link-active {
+    color: var(--accent) !important;
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
   }
 
   /* Dropdown default hidden */

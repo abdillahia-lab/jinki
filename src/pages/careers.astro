@@ -362,7 +362,7 @@ const culturePoints = [
   </main>
 
   <!-- Application Modal -->
-  <div id="apply-modal" class="apply-modal" aria-hidden="true" role="dialog" aria-label="Job Application">
+  <div id="apply-modal" class="apply-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Job Application">
     <div class="apply-backdrop" onclick="closeApplyModal()"></div>
     <div class="apply-panel">
       <div class="apply-header">
@@ -1336,7 +1336,9 @@ const culturePoints = [
 
 <script is:inline>
   // Application modal
+  var _applyTrigger = null;
   function openApplyModal(roleTitle) {
+    _applyTrigger = document.activeElement;
     var modal = document.getElementById('apply-modal');
     document.getElementById('apply-role-name').textContent = roleTitle;
     document.getElementById('apply-role-input').value = roleTitle;
@@ -1352,6 +1354,7 @@ const culturePoints = [
     var modal = document.getElementById('apply-modal');
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    if (_applyTrigger && _applyTrigger.focus) _applyTrigger.focus();
   }
   // Handle form submission via fetch
   document.addEventListener('DOMContentLoaded', function() {
@@ -1384,9 +1387,19 @@ const culturePoints = [
         });
       });
     }
-    // Close modal on Escape
+    // Close modal on Escape + focus trap
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeApplyModal();
+      var modal = document.getElementById('apply-modal');
+      if (modal.getAttribute('aria-hidden') !== 'false') return;
+      if (e.key === 'Escape') { closeApplyModal(); return; }
+      if (e.key === 'Tab') {
+        var focusable = modal.querySelectorAll('input:not([type=hidden]):not([style*="display: none"]), textarea, button:not([disabled]), select, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     });
   });
 </script>
