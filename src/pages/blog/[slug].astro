@@ -137,6 +137,10 @@ const relatedLinks = (post.data.tags || [])
                 </svg>
                 ~{wordCount.toLocaleString()} words
               </span>
+              <button class="share-btn omega-stat" aria-label="Share this article" style="display:none;cursor:pointer;background:none;border:none;color:inherit;padding:0;">
+                <span class="material-symbols-outlined" style="font-size:16px;" aria-hidden="true">share</span>
+                Share
+              </button>
             </div>
           </div>
         </div>
@@ -958,7 +962,7 @@ const relatedLinks = (post.data.tags || [])
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .omega-post-hero {
       min-height: 400px;
     }

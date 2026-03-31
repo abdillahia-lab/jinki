@@ -5,6 +5,8 @@
   Redesigned with animated power grid hero, risk detection showcase,
   interactive grid map, comparison timeline, and technology deep-dive.
 */
+import { Image } from 'astro:assets';
+import heroImg from '../../assets/images/powerline-aerial.jpg';
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import LeadGen from '../../components/LeadGen.astro';
@@ -142,17 +144,26 @@ const techSections = [
               <span class="material-symbols-outlined" style="font-size: 18px; font-variation-settings: 'FILL' 1;" aria-hidden="true">arrow_downward</span>
               See Detection Types
             </a>
+            <button class="share-btn" aria-label="Share this page" style="display:none;cursor:pointer;background:none;border:none;color:var(--text-secondary);font-family:var(--font-label);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;align-items:center;gap:6px;">
+              <span class="material-symbols-outlined" style="font-size:18px;" aria-hidden="true">share</span>
+              Share
+            </button>
           </div>
         </div>
         <div class="eg-hero-visual reveal reveal-delay-1" aria-hidden="true">
           <div class="eg-grid-container">
             <!-- Real aerial photo as base layer -->
-            <img
-              src="/images/powerline-aerial.jpg"
+            <Image
+              src={heroImg}
               alt=""
               class="eg-hero-photo"
-              loading="eager" fetchpriority="high"
+              loading="eager"
+              fetchpriority="high"
               decoding="async"
+              widths={[640, 960, 1280]}
+              sizes="(max-width: 767px) 100vw, (max-width: 1024px) 50vw, 640px"
+              format="webp"
+              quality={80}
             />
             <svg viewBox="0 0 500 400" class="eg-grid-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animated power grid network visualization">
               <!-- Grid lines with flowing electricity -->
@@ -620,7 +631,7 @@ const techSections = [
     </section>
 
     <!-- ============ TECHNOLOGY DEEP-DIVE ============ -->
-    <section class="eg-section eg-section-dim" aria-label="Technology Capabilities">
+    <section class="eg-section eg-section-dim cv-auto" aria-label="Technology Capabilities">
       <div class="eg-section-inner">
         <div class="eg-section-header reveal">
           <div class="eg-eyebrow">
@@ -680,7 +691,7 @@ const techSections = [
     </section>
 
     <!-- ============ WHY JINKI ============ -->
-    <section class="eg-section" aria-label="Why Jinki">
+    <section class="eg-section cv-auto" aria-label="Why Jinki">
       <div class="eg-section-inner">
         <div class="eg-section-header reveal">
           <div class="eg-eyebrow">
@@ -2170,7 +2181,7 @@ const techSections = [
     height: 0;
     background: linear-gradient(to bottom, #FF8C00, #FF6B35);
     border-radius: 2px;
-    transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+    transition: height 0.6s var(--ease-material) 0.2s;
   }
 
   .eg-diff-card:global(.revealed)::after {
@@ -2212,7 +2223,7 @@ const techSections = [
   }
 
   /* ---- Responsive ---- */
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .eg-hero-inner {
       grid-template-columns: 1fr;
       gap: 40px;

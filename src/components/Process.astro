@@ -30,7 +30,7 @@ const steps = [
 
 <section id="process" style="padding-top: 7rem; padding-bottom: 7rem; position: relative; overflow: hidden;" aria-label="How It Works">
   <div aria-hidden="true" style="position: absolute; bottom: 10%; left: 30%; width: 400px; height: 350px; background: radial-gradient(ellipse, rgba(123,97,255,0.04) 0%, transparent 60%); filter: blur(60px); pointer-events: none;"></div>
-  <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; position: relative; z-index: 1;">
+  <div style="max-width: var(--container-max); margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; position: relative; z-index: 1;">
 
     <!-- Header -->
     <div class="reveal" style="text-align: center; max-width: 40rem; margin-left: auto; margin-right: auto; margin-bottom: 4rem;">
@@ -135,8 +135,8 @@ const steps = [
     width: 2.5rem; height: 2.5rem; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700;
-    color: #050508; letter-spacing: 0.05em;
-    background: conic-gradient(from 135deg, var(--accent), #7B61FF, #34d399, var(--accent));
+    color: var(--text-on-accent); letter-spacing: 0.05em;
+    background: conic-gradient(from 135deg, var(--accent), var(--accent-secondary), var(--accent-tertiary), var(--accent));
     flex-shrink: 0;
   }
 

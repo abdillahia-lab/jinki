@@ -13,6 +13,8 @@
   7. FAQ Accordion
   8. LeadGen + Footer
 */
+import { Image } from 'astro:assets';
+import heroImg from '../../assets/images/dc-rooftop-aerial.jpg';
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
@@ -156,18 +158,26 @@ const faqs = [
           <div class="omega-hero-actions">
             <a href="#lead-gen" class="btn-premium omega-cta">Get Your Facility Report</a>
             <a href="#problem-explorer" class="omega-cta-secondary">Explore Issues We Find</a>
+            <button class="share-btn" aria-label="Share this page" style="display:none;cursor:pointer;background:none;border:none;color:var(--text-secondary);font-family:var(--font-label);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;align-items:center;gap:6px;">
+              <span class="material-symbols-outlined" style="font-size:18px;" aria-hidden="true">share</span>
+              Share
+            </button>
           </div>
         </div>
         <div class="omega-hero-visual reveal reveal-delay-1" aria-hidden="true">
           <div class="facility-scene">
             <!-- Real data center photo with thermal overlay -->
-            <img
-              src="/images/dc-rooftop-aerial.jpg"
+            <Image
+              src={heroImg}
               alt=""
               class="facility-photo"
               loading="eager"
               decoding="async"
               fetchpriority="high"
+              widths={[640, 960, 1280]}
+              sizes="(max-width: 767px) 100vw, (max-width: 1024px) 50vw, 640px"
+              format="webp"
+              quality={80}
             />
             <!-- Thermal color overlay -->
             <div class="thermal-color-overlay"></div>
@@ -430,7 +440,7 @@ const faqs = [
     <!-- ============================================================
          SECTION 4: CTA — GET YOUR FACILITY REPORT
          ============================================================ -->
-    <section class="omega-section" aria-label="Get Your Facility Report">
+    <section class="omega-section cv-auto" aria-label="Get Your Facility Report">
       <div class="omega-section-inner" style="text-align: center;">
         <div class="omega-section-header reveal">
           <div class="omega-eyebrow">
@@ -451,7 +461,7 @@ const faqs = [
     <!-- ============================================================
          SECTION 5: TECHNOLOGY STACK SHOWCASE
          ============================================================ -->
-    <section class="omega-section omega-section-alt" aria-label="Technology Pipeline">
+    <section class="omega-section omega-section-alt cv-auto" aria-label="Technology Pipeline">
       <div class="omega-section-inner">
         <div class="omega-section-header reveal">
           <div class="omega-eyebrow">
@@ -492,7 +502,7 @@ const faqs = [
     <!-- ============================================================
          SECTION 7: FAQ ACCORDION
          ============================================================ -->
-    <section class="omega-section omega-section-alt" aria-label="Frequently Asked Questions">
+    <section class="omega-section omega-section-alt cv-auto" aria-label="Frequently Asked Questions">
       <div class="omega-section-inner omega-section-narrow">
         <div class="omega-section-header reveal">
           <div class="omega-eyebrow">
@@ -946,7 +956,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   .hud-critical { background: #FF3B30; box-shadow: 0 0 8px rgba(255,59,48,0.6); animation: hud-blink 1.5s ease-in-out infinite; }
   .hud-warning { background: #FFBD2E; box-shadow: 0 0 6px rgba(255,189,46,0.4); }
-  .hud-normal { background: #34D399; }
+  .hud-normal { background: var(--accent-tertiary); }
   .hud-live { background: var(--accent); box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 50%, transparent); animation: hud-blink 2s ease-in-out infinite; }
   @keyframes hud-blink {
     0%, 100% { opacity: 1; }
@@ -1031,7 +1041,7 @@ document.addEventListener('DOMContentLoaded', function() {
     width: 4px;
     height: 80px;
     border-radius: 2px;
-    background: linear-gradient(to bottom, #FF3B30, #FFBD2E, #34D399, var(--accent));
+    background: linear-gradient(to bottom, #FF3B30, #FFBD2E, var(--accent-tertiary), var(--accent));
     box-shadow: 0 0 8px rgba(255,60,48,0.3);
     border: 1px solid rgba(255,255,255,0.12);
   }
@@ -1575,7 +1585,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   .testimonial-track {
     display: flex;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.5s var(--ease-material);
   }
   .testimonial-slide {
     min-width: 100%;
@@ -2335,7 +2345,7 @@ document.addEventListener('DOMContentLoaded', function() {
     .dash-sidebar { display: none; }
     .dash-cards-row { grid-template-columns: repeat(2, 1fr); }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .omega-hero-inner {
       grid-template-columns: 1fr;
       gap: 40px;

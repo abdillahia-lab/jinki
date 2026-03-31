@@ -190,6 +190,8 @@ function estimateReadTime(description: string): number {
                   class="omega-email-input"
                   maxlength="254"
                   autocomplete="email"
+                  inputmode="email"
+                  enterkeyhint="send"
                 />
                 <button type="submit" class="omega-subscribe-btn btn-premium">
                   Subscribe
@@ -292,7 +294,7 @@ function estimateReadTime(description: string): number {
   }
 
   .omega-gradient-text {
-    background: linear-gradient(90deg, var(--accent), #7B61FF, var(--accent));
+    background: linear-gradient(90deg, var(--accent), var(--accent-secondary), var(--accent));
     background-size: 200% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -349,7 +351,7 @@ function estimateReadTime(description: string): number {
     height: 2px;
     background: var(--accent);
     border-radius: 2px;
-    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 0.35s var(--ease-material), left 0.35s var(--ease-material);
   }
 
   .omega-tab:hover {
@@ -371,8 +373,8 @@ function estimateReadTime(description: string): number {
     height: 2px;
     background: var(--accent);
     border-radius: 2px;
-    transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-                width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: left 0.35s var(--ease-material),
+                width 0.35s var(--ease-material);
     pointer-events: none;
   }
 
@@ -448,7 +450,7 @@ function estimateReadTime(description: string): number {
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent), #7B61FF, var(--accent), transparent);
+    background: linear-gradient(90deg, transparent, var(--accent), var(--accent-secondary), var(--accent), transparent);
     transform: scaleX(0);
     transform-origin: left center;
     transition: transform 0.45s var(--ease-out-premium);
@@ -834,7 +836,7 @@ function estimateReadTime(description: string): number {
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .omega-newsletter-content {
       flex-direction: column;
       gap: 24px;

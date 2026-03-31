@@ -971,7 +971,7 @@ const reportTabs = [
   }
   .si-scale-gradient {
     width: 8px; height: 120px; border-radius: 4px;
-    background: linear-gradient(to bottom, #FF3C3C, #FF8C00, #FFB400, #34D399, var(--accent), #1a3040);
+    background: linear-gradient(to bottom, #FF3C3C, #FF8C00, #FFB400, var(--accent-tertiary), var(--accent), #1a3040);
     opacity: 0.7;
   }
   .si-scale-labels {
@@ -2198,7 +2198,7 @@ const reportTabs = [
   }
 
   /* ================ RESPONSIVE ================ */
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .omega-hero-inner {
       grid-template-columns: 1fr;
       gap: 40px;
@@ -2229,6 +2229,15 @@ const reportTabs = [
 
     .report-panel-right {
       min-height: 160px;
+    }
+
+    .si-svg text {
+      display: none;
+    }
+
+    .si-viewport {
+      max-height: 240px;
+      overflow: hidden;
     }
   }
 
@@ -2372,7 +2381,7 @@ const reportTabs = [
   /* ================ REPORT TAB GRADIENT BORDER ================ */
   .report-tab.active {
     border-bottom: 2px solid transparent;
-    border-image: linear-gradient(90deg, var(--accent), #7B61FF) 1;
+    border-image: linear-gradient(90deg, var(--accent), var(--accent-secondary)) 1;
   }
 
   :global([data-theme="light"]) .report-tab.active {

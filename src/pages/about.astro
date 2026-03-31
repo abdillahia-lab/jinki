@@ -286,7 +286,7 @@ const storyBlocks = [
           <div class="split-panel split-panel--field reveal reveal-delay-1">
             <div class="split-panel-inner">
               <div class="split-icon-row" aria-hidden="true">
-                <span class="material-symbols-outlined" style="font-size: 40px; color: #34D399; font-variation-settings: 'FILL' 1;">flight_takeoff</span>
+                <span class="material-symbols-outlined" style="font-size: 40px; color: var(--accent-tertiary); font-variation-settings: 'FILL' 1;">flight_takeoff</span>
               </div>
               <h3 style="margin-bottom: 16px;">The Field</h3>
               <ul class="split-list">
@@ -423,7 +423,7 @@ const storyBlocks = [
   }
 
   .hero-gradient {
-    background: linear-gradient(135deg, var(--accent) 0%, #7B61FF 50%, var(--accent) 100%);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 50%, var(--accent) 100%);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -615,7 +615,7 @@ const storyBlocks = [
     pointer-events: none;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .about-hero { min-height: auto !important; padding-top: 120px !important; }
     .about-mesh { filter: blur(40px); }
     .story-timeline::before {
@@ -710,7 +710,7 @@ const storyBlocks = [
     color: var(--text-tertiary);
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .stats-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 16px;
@@ -743,7 +743,7 @@ const storyBlocks = [
     height: 340px;
     position: relative;
     transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.6s var(--ease-material);
     cursor: pointer;
     border-radius: 16px;
   }
@@ -930,7 +930,7 @@ const storyBlocks = [
   }
 
   .pillar-card:nth-child(2)::before {
-    background: linear-gradient(180deg, #7B61FF, #4F46E5);
+    background: linear-gradient(180deg, var(--accent-secondary), #4F46E5);
   }
 
   .pillar-card:nth-child(3)::before {
@@ -950,7 +950,7 @@ const storyBlocks = [
     right: 0;
     height: 2px;
     border-radius: 16px 16px 0 0;
-    background: linear-gradient(90deg, var(--accent), #7B61FF);
+    background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
     opacity: 0;
     transition: opacity 0.4s ease;
     pointer-events: none;
@@ -1068,7 +1068,7 @@ const storyBlocks = [
   .pillar-detail {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), padding 0.4s ease;
+    transition: max-height 0.4s var(--ease-material), padding 0.4s ease;
     padding: 0 32px;
   }
 
@@ -1083,7 +1083,7 @@ const storyBlocks = [
     padding-left: 72px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .pillar-header-btn {
       padding: 20px 20px;
       gap: 16px;
@@ -1174,7 +1174,7 @@ const storyBlocks = [
   }
 
   .split-panel--field .split-list li::before {
-    background: #34D399;
+    background: var(--accent-tertiary);
   }
 
   .split-tag {
@@ -1193,7 +1193,7 @@ const storyBlocks = [
   }
 
   .split-tag--field {
-    color: #34D399;
+    color: var(--accent-tertiary);
     background: rgba(52, 211, 153, 0.15);
   }
 
@@ -1220,7 +1220,7 @@ const storyBlocks = [
     flex-shrink: 0;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .split-grid {
       grid-template-columns: 1fr;
       gap: 24px;

@@ -4,10 +4,12 @@
   Split layout: text + stats left, thermal image right.
   Zero JavaScript. All spacing inline.
 */
+import { Image } from 'astro:assets';
+import thermalImg from '../assets/images/thermal-infrastructure.jpg';
 ---
 
 <section id="thermal-hud" style="background: color-mix(in srgb, var(--surface-container-low) 30%, transparent); padding-top: 7rem; padding-bottom: 7rem;" aria-label="Precision Structural Analysis">
-  <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem;">
+  <div style="max-width: var(--container-max); margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem;">
     <div class="thermal-grid">
 
       <!-- Left: Text -->
@@ -41,12 +43,16 @@
       <!-- Right: Image -->
       <div class="reveal">
         <div class="thermal-panel relative overflow-hidden" style="border: 1px solid rgba(255,140,0,0.15); border-radius: 0.75rem; box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 0 40px rgba(255,100,0,0.04);">
-          <img
-            src="/images/thermal-infrastructure.jpg"
+          <Image
+            src={thermalImg}
             alt="Thermal infrared scan of industrial infrastructure showing heat distribution analysis"
             class="thermal-img aspect-video w-full object-cover"
             loading="lazy"
             decoding="async"
+            widths={[640, 960, 1280]}
+            sizes="(max-width: 767px) 100vw, (max-width: 1024px) 50vw, 640px"
+            format="webp"
+            quality={80}
           />
           <!-- Scan line sweep -->
           <div class="thermal-scanline" aria-hidden="true"></div>

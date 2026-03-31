@@ -233,7 +233,7 @@ const differentiators = [
             <div class={`uc-card-v3 reveal reveal-delay-${(i % 3) + 1}`}>
               <div class="uc-card-top">
                 <div class="uc-card-icon-wrap">
-                  <span class="material-symbols-outlined" style="font-size:22px;color:#7B61FF;font-variation-settings:'FILL' 1;" aria-hidden="true">{uc.icon}</span>
+                  <span class="material-symbols-outlined" style="font-size:22px;color:var(--accent-secondary);font-variation-settings:'FILL' 1;" aria-hidden="true">{uc.icon}</span>
                 </div>
                 <div class="uc-card-metric">
                   <span class="uc-metric-val">{uc.metric}</span>
@@ -271,7 +271,7 @@ const differentiators = [
             <div class={`step-card reveal reveal-delay-${i + 1}`}>
               <div class="step-number">{step.number}</div>
               <div class="step-icon-wrap">
-                <span class="material-symbols-outlined" style="font-size:28px;color:#7B61FF;font-variation-settings:'FILL' 1;" aria-hidden="true">{step.icon}</span>
+                <span class="material-symbols-outlined" style="font-size:28px;color:var(--accent-secondary);font-variation-settings:'FILL' 1;" aria-hidden="true">{step.icon}</span>
               </div>
               <h3>{step.title}</h3>
               <p>{step.desc}</p>
@@ -346,12 +346,12 @@ const differentiators = [
     <!-- Data Security Trust Callout -->
     <section class="reveal" style="max-width: 800px; margin: 0 auto; padding: 0 1.5rem 3rem;">
       <div style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem 2.5rem; display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; backdrop-filter: blur(12px);">
-        <span class="material-symbols-outlined" style="font-size: 2.5rem; color: #34D399; font-variation-settings: 'FILL' 1;" aria-hidden="true">verified_user</span>
+        <span class="material-symbols-outlined" style="font-size: 2.5rem; color: var(--accent-tertiary); font-variation-settings: 'FILL' 1;" aria-hidden="true">verified_user</span>
         <div style="flex: 1; min-width: 200px;">
           <h3 style="font-family: var(--font-headline); font-size: 1.1rem; font-weight: 700; color: var(--text-primary); margin: 0 0 0.25rem;">Your Data Is Protected</h3>
           <p style="font-family: var(--font-body); font-size: 0.9rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">AES-256 encryption, SOC 2 Type I preparation, NIST 800-53 alignment, and NDA-by-default on every engagement.</p>
         </div>
-        <a href="/data-security" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 10px; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2); color: #34D399; font-family: var(--font-label); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: all 0.25s ease; white-space: nowrap;">
+        <a href="/data-security" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; border-radius: 10px; background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2); color: var(--accent-tertiary); font-family: var(--font-label); font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; transition: all 0.25s ease; white-space: nowrap;">
           View Data Security
           <span class="material-symbols-outlined" style="font-size: 16px;" aria-hidden="true">arrow_forward</span>
         </a>
@@ -496,7 +496,7 @@ const differentiators = [
     display: block;
     width: 32px;
     height: 1px;
-    background: #7B61FF;
+    background: var(--accent-secondary);
   }
 
   .sec-eyebrow-text {
@@ -518,7 +518,7 @@ const differentiators = [
   }
 
   .gradient-text-violet {
-    background: linear-gradient(135deg, #7B61FF, #4F46E5);
+    background: linear-gradient(135deg, var(--accent-secondary), #4F46E5);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -558,7 +558,7 @@ const differentiators = [
     font-size: 0.8125rem;
     font-weight: 600;
     letter-spacing: 0.06em;
-    color: #7B61FF;
+    color: var(--accent-secondary);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
@@ -630,7 +630,7 @@ const differentiators = [
     display: block;
     width: 32px;
     height: 1px;
-    background: #7B61FF;
+    background: var(--accent-secondary);
   }
 
   .vert-eyebrow-text {
@@ -639,7 +639,7 @@ const differentiators = [
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.3em;
-    color: #7B61FF;
+    color: var(--accent-secondary);
   }
 
   /* === USE CASE CARDS === */
@@ -772,7 +772,7 @@ const differentiators = [
     pointer-events: none;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .steps-grid { grid-template-columns: 1fr; gap: 24px; }
     .steps-grid::before { display: none; }
   }
@@ -823,7 +823,7 @@ const differentiators = [
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #7B61FF, #4F46E5);
+    background: linear-gradient(135deg, var(--accent-secondary), #4F46E5);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -903,7 +903,7 @@ const differentiators = [
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, #7B61FF, #4F46E5, transparent);
+    background: linear-gradient(90deg, var(--accent-secondary), #4F46E5, transparent);
     opacity: 0;
     transition: opacity 0.4s ease;
     pointer-events: none;
@@ -934,7 +934,7 @@ const differentiators = [
 
   .diff-icon {
     font-size: 24px;
-    color: #7B61FF;
+    color: var(--accent-secondary);
   }
 
   .diff-card h3 {
@@ -995,7 +995,7 @@ const differentiators = [
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, #7B61FF, #4F46E5, transparent);
+    background: linear-gradient(90deg, var(--accent-secondary), #4F46E5, transparent);
     pointer-events: none;
     z-index: 2;
   }

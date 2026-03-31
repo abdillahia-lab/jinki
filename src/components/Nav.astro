@@ -78,7 +78,7 @@ const services = [
       <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme" style="background:none;border:1px solid var(--glass-border);border-radius:12px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);transition:color .2s,border-color .2s;">
         <span class="material-symbols-outlined" aria-hidden="true" style="font-size:20px;">dark_mode</span>
       </button>
-      <a href="#lead-gen" class="nav-cta" style="display:inline-flex;align-items:center;font-family:var(--font-label);font-size:14px;font-weight:600;padding:8px 18px;border-radius:12px;background:var(--accent);color:#050508;text-decoration:none;white-space:nowrap;transition:opacity .2s;">Request Assessment</a>
+      <a href="#lead-gen" class="nav-cta" style="display:inline-flex;align-items:center;font-family:var(--font-label);font-size:14px;font-weight:600;padding:8px 18px;border-radius:12px;background:var(--accent);color:var(--text-on-accent);text-decoration:none;white-space:nowrap;transition:opacity .2s;">Request Assessment</a>
 
       <!-- Mobile hamburger -->
       <button id="mobile-toggle" class="mobile-toggle" aria-label="Open menu" aria-expanded="false" style="display:none;background:none;border:none;cursor:pointer;color:var(--text-primary);padding:8px;min-width:44px;min-height:44px;">
@@ -109,7 +109,13 @@ const services = [
       <a href="/security" class="mobile-link">Security</a>
       <a href="/blog" class="mobile-link">Blog</a>
 
-      <a href="#lead-gen" class="mobile-cta" style="display:block;text-align:center;margin-top:16px;font-family:var(--font-label);font-size:15px;font-weight:600;padding:16px;border-radius:12px;background:var(--accent);color:#050508;text-decoration:none;">Request Assessment</a>
+      <a href="#lead-gen" class="mobile-cta" style="display:block;text-align:center;margin-top:16px;font-family:var(--font-label);font-size:15px;font-weight:600;padding:16px;border-radius:12px;background:var(--accent);color:var(--text-on-accent);text-decoration:none;">Request Assessment</a>
+
+      <div style="border-top:1px solid var(--glass-border);margin:16px 0 8px;"></div>
+      <button id="mobile-theme-toggle" class="mobile-link" style="display:flex;align-items:center;gap:12px;width:100%;background:none;border:none;cursor:pointer;color:var(--text-primary);font-family:var(--font-body);font-size:15px;" aria-label="Toggle theme">
+        <span class="material-symbols-outlined" aria-hidden="true" style="font-size:20px;">dark_mode</span>
+        <span class="mobile-theme-label">Dark mode</span>
+      </button>
     </div>
   </div>
 
@@ -445,7 +451,7 @@ const services = [
   }
 
   /* ---- Responsive ---- */
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .nav-links {
       display: none !important;
     }
@@ -483,6 +489,9 @@ const services = [
     var nav = document.querySelector('.nav-inner');
     var themeToggle = document.getElementById('theme-toggle');
     var themeIcon = themeToggle?.querySelector('.material-symbols-outlined');
+    var mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    var mobileThemeIcon = mobileThemeToggle?.querySelector('.material-symbols-outlined');
+    var mobileThemeLabel = mobileThemeToggle?.querySelector('.mobile-theme-label');
     var mobileToggle = document.getElementById('mobile-toggle');
     var mobilePanel = document.getElementById('mobile-panel');
     var backdrop = document.getElementById('mobile-backdrop');
@@ -503,21 +512,25 @@ const services = [
 
     /* ---- Theme toggle ---- */
     function syncIcon() {
-      if (!themeIcon) return;
       var theme = html.getAttribute('data-theme') || 'dark';
-      themeIcon.textContent = theme === 'dark' ? 'dark_mode' : 'light_mode';
+      if (themeIcon) themeIcon.textContent = theme === 'dark' ? 'dark_mode' : 'light_mode';
       themeToggle?.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
       themeToggle?.setAttribute('aria-pressed', theme === 'light' ? 'true' : 'false');
+      if (mobileThemeIcon) mobileThemeIcon.textContent = theme === 'dark' ? 'dark_mode' : 'light_mode';
+      if (mobileThemeLabel) mobileThemeLabel.textContent = theme === 'dark' ? 'Dark mode' : 'Light mode';
     }
     syncIcon();
 
-    themeToggle?.addEventListener('click', function () {
+    function toggleTheme() {
       var current = html.getAttribute('data-theme') || 'dark';
       var next = current === 'dark' ? 'light' : 'dark';
       html.setAttribute('data-theme', next);
       try { localStorage.setItem('jinki-theme', next); } catch(e) {}
       syncIcon();
-    });
+    }
+
+    themeToggle?.addEventListener('click', toggleTheme);
+    mobileThemeToggle?.addEventListener('click', toggleTheme);
 
     /* ---- Mobile menu ---- */
     function openMobile() {

@@ -135,7 +135,7 @@ const orgSchema = {
           padding: 14px;
           border-radius: 12px;
           background: linear-gradient(135deg, var(--accent), #00a8b5);
-          color: #050508;
+          color: var(--text-on-accent);
           font-family: var(--font-headline);
           font-weight: 600;
           font-size: 0.875rem;
@@ -153,6 +153,26 @@ const orgSchema = {
         .mobile-sticky-cta.visible { transform: translateY(0); }
       }
     </style>
+
+    <!-- Speculative prerendering for instant navigation (Chrome 122+) -->
+    <script type="speculationrules">
+    {
+      "prerender": [
+        {
+          "where": { "href_matches": [
+            "/services/audit",
+            "/verticals/data-centers",
+            "/verticals/energy-grid",
+            "/verticals/security",
+            "/verticals/agriculture",
+            "/about",
+            "/security"
+          ]},
+          "eagerness": "moderate"
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div class="scroll-progress" aria-hidden="true"></div>
@@ -173,7 +193,31 @@ const orgSchema = {
 
     <!-- Scroll progress + reveal animations -->
     <script is:inline>
+      // Prefetch fallback for browsers without Speculation Rules (Safari, Firefox)
+      if (!HTMLScriptElement.supports || !HTMLScriptElement.supports('speculationrules')) {
+        document.querySelectorAll('a[href^="/"]').forEach(function(a) {
+          a.addEventListener('pointerenter', function() {
+            if (!document.querySelector('link[href="' + a.pathname + '"]')) {
+              var link = document.createElement('link');
+              link.rel = 'prefetch';
+              link.href = a.pathname;
+              document.head.appendChild(link);
+            }
+          }, { once: true });
+        });
+      }
+
       document.addEventListener('DOMContentLoaded', function() {
+        // Web Share API — progressive enhancement
+        if (navigator.share) {
+          document.querySelectorAll('.share-btn').forEach(function(btn) {
+            btn.style.display = 'inline-flex';
+            btn.addEventListener('click', function() {
+              navigator.share({ title: document.title, url: window.location.href });
+            });
+          });
+        }
+
         // Scroll progress bar
         var progressBar = document.querySelector('.scroll-progress');
         function updateProgress() {
@@ -196,11 +240,13 @@ const orgSchema = {
             });
           }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
           // Immediate reveal for above-fold — runs synchronously before first paint
+          // Below-fold: skip JS observer when CSS scroll-driven animations handle it
+          var hasScrollTimeline = CSS.supports('animation-timeline', 'view()');
           reveals.forEach(function(el) {
             var rect = el.getBoundingClientRect();
             if (rect.top < window.innerHeight + 100) {
               el.classList.add('revealed');
-            } else {
+            } else if (!hasScrollTimeline) {
               observer.observe(el);
             }
           });

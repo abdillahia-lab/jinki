@@ -4,7 +4,7 @@
 
 <section id="stats" class="bento-section" style="background: var(--surface-dim); padding: 7rem 0; position: relative; overflow: hidden;" aria-label="Platform Statistics">
   <div aria-hidden="true" style="position: absolute; top: 20%; left: 60%; width: 500px; height: 400px; background: radial-gradient(ellipse, color-mix(in srgb, var(--accent) 4%, transparent) 0%, transparent 60%); filter: blur(60px); pointer-events: none;"></div>
-  <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; position: relative; z-index: 1;">
+  <div class="bento-container" style="max-width: var(--container-max); margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; position: relative; z-index: 1; container-type: inline-size;">
     <div class="bento-grid">
       <!-- Main Panel -->
       <div class="bento-main reveal">
@@ -60,7 +60,7 @@
 <style>
   @media (min-width: 768px) { .bento-section { padding: 8rem 0 !important; } }
   .bento-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-  @media (min-width: 1024px) { .bento-grid { grid-template-columns: 2fr 1fr; } }
+  @container (min-width: 1024px) { .bento-grid { grid-template-columns: 2fr 1fr; } }
   .bento-main {
     background: var(--surface-container); padding: 2rem; min-height: 400px;
     border-radius: 1rem; border: 1px solid var(--glass-border);
@@ -79,12 +79,12 @@
     background: linear-gradient(90deg, transparent 10%, var(--accent) 50%, transparent 90%);
     opacity: 0.6;
   }
-  @media (min-width: 768px) { .bento-main { padding: 4rem; min-height: 550px; } }
+  @container (min-width: 768px) { .bento-main { padding: 4rem; min-height: 550px; } }
   .bento-eyebrow { font-family: var(--font-label); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); }
   .bento-headline { font-family: var(--font-headline); font-weight: 700; font-size: 2rem; letter-spacing: -0.02em; }
-  @media (min-width: 768px) { .bento-headline { font-size: 3rem; } }
+  @container (min-width: 768px) { .bento-headline { font-size: 3rem; } }
   .bento-headline-accent {
-    background: linear-gradient(135deg, var(--accent), #7B61FF);
+    background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     background-clip: text; font-style: italic;
   }
@@ -93,14 +93,14 @@
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
   .bento-body { font-family: var(--font-body); font-size: 1.125rem; line-height: 1.65; font-weight: 300; }
-  @media (min-width: 768px) { .bento-body { font-size: 1.5rem; } }
+  @container (min-width: 768px) { .bento-body { font-size: 1.5rem; } }
   .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  @media (min-width: 768px) { .stats-row { gap: 3rem; } }
+  @container (min-width: 768px) { .stats-row { gap: 3rem; } }
   .stat-value { display: block; font-family: var(--font-headline); font-weight: 700; font-size: 1.5rem; color: var(--accent); font-variant-numeric: tabular-nums; }
-  @media (min-width: 768px) { .stat-value { font-size: 2.25rem; } }
+  @container (min-width: 768px) { .stat-value { font-size: 2.25rem; } }
   .stat-label { display: block; font-family: var(--font-label); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-tertiary); margin-top: 0.5rem; }
   .stat-item + .stat-item { border-left: 1px solid var(--glass-border); padding-left: 1.5rem; }
-  @media (min-width: 768px) { .stat-item + .stat-item { padding-left: 3rem; } }
+  @container (min-width: 768px) { .stat-item + .stat-item { padding-left: 3rem; } }
   .bento-sidebar {
     background: var(--surface-container); padding: 2rem; border-radius: 1rem; border: 1px solid var(--glass-border);
     position: relative; overflow: hidden;
@@ -117,7 +117,7 @@
     transform: translateY(-4px);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25), 0 0 30px color-mix(in srgb, var(--accent) 5%, transparent);
   }
-  @media (min-width: 768px) { .bento-sidebar { padding: 4rem; } }
+  @container (min-width: 768px) { .bento-sidebar { padding: 4rem; } }
   .bento-sidebar-cta {
     border: 1.5px solid color-mix(in srgb, var(--accent) 25%, transparent); color: var(--accent);
     background: transparent; transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s var(--ease-out-premium), transform 0.3s var(--ease-out-premium);
@@ -149,7 +149,7 @@
     inset: -1px;
     border-radius: inherit;
     padding: 1px;
-    background: conic-gradient(from var(--bento-border-angle), transparent 40%, var(--accent) 50%, #7B61FF 55%, transparent 60%);
+    background: conic-gradient(from var(--bento-border-angle), transparent 40%, var(--accent) 50%, var(--accent-secondary) 55%, transparent 60%);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;

@@ -7,7 +7,7 @@
 ---
 
 <section id="lead-gen" class="relative" style="padding-top: 7rem; padding-bottom: 7rem;" aria-label="Request Intelligence Scan">
-  <div style="max-width: 80rem; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem;">
+  <div style="max-width: var(--container-max); margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem;">
 
     <!-- Header -->
     <div class="text-center" style="margin-bottom: 3rem;">
@@ -17,7 +17,7 @@
         <span class="block" style="height: 1px; width: 2rem; background: var(--accent);"></span>
       </div>
       <h2 class="font-headline text-4xl md:text-5xl font-bold" style="color: var(--text-primary);">
-        See What's Hiding on <span style="background: linear-gradient(135deg, var(--accent), #7B61FF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Your Rooftop</span>
+        See What's Hiding on <span style="background: linear-gradient(135deg, var(--accent), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Your Rooftop</span>
       </h2>
       <p class="text-xl font-light" style="color: var(--text-secondary); margin-top: 1rem; max-width: 36rem; margin-left: auto; margin-right: auto;">
         Three quick steps to unlock aerial intelligence for your facility.
@@ -92,27 +92,27 @@
           <div style="display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1.5rem;">
             <div class="lg-field">
               <label for="lg-name">Full Name</label>
-              <input type="text" id="lg-name" name="name" required placeholder="Jane Smith" autocomplete="name" maxlength="100" aria-describedby="lg-name-err" />
+              <input type="text" id="lg-name" name="name" required placeholder="Jane Smith" autocomplete="name" maxlength="100" aria-describedby="lg-name-err" enterkeyhint="next" />
               <span class="lg-field-error" id="lg-name-err" role="alert">Please enter your name.</span>
             </div>
             <div class="lg-field">
               <label for="lg-company">Company</label>
-              <input type="text" id="lg-company" name="company" required placeholder="Acme Corp" autocomplete="organization" maxlength="100" aria-describedby="lg-company-err" />
+              <input type="text" id="lg-company" name="company" required placeholder="Acme Corp" autocomplete="organization" maxlength="100" aria-describedby="lg-company-err" enterkeyhint="next" />
               <span class="lg-field-error" id="lg-company-err" role="alert">Please enter your company name.</span>
             </div>
             <div class="lg-field">
               <label for="lg-role">Your Role</label>
-              <input type="text" id="lg-role" name="role" placeholder="VP of Facilities" autocomplete="organization-title" maxlength="100" />
+              <input type="text" id="lg-role" name="role" placeholder="VP of Facilities" autocomplete="organization-title" maxlength="100" enterkeyhint="next" />
             </div>
             <div class="lg-field">
               <label for="lg-email">Work Email</label>
-              <input type="email" id="lg-email" name="email" required placeholder="jane@acme.com" autocomplete="email" maxlength="254" aria-describedby="lg-email-err" />
+              <input type="email" id="lg-email" name="email" required placeholder="jane@acme.com" autocomplete="email" inputmode="email" maxlength="254" aria-describedby="lg-email-err" enterkeyhint="next" />
               <span class="lg-field-error" id="lg-email-err" role="alert">Please enter a valid email address.</span>
             </div>
           </div>
           <div class="lg-field" style="margin-top: 0.25rem;">
             <label for="lg-message">Message <span style="color: var(--text-tertiary); font-weight: 400;">(optional)</span></label>
-            <textarea id="lg-message" name="message" rows="3" placeholder="Tell us about your facility or specific challenges..." maxlength="2000"></textarea>
+            <textarea id="lg-message" name="message" rows="3" placeholder="Tell us about your facility or specific challenges..." maxlength="2000" enterkeyhint="send"></textarea>
           </div>
           <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
             <button type="button" class="lg-btn lg-btn-back" data-prev="1">Back</button>
@@ -120,15 +120,15 @@
           </div>
           <div class="lg-trust-badges" style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; justify-content: center;">
             <span style="display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-label); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-tertiary); padding: 8px 12px; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-container);">
-              <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 14px; color: #34d399;">lock</span>
+              <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 14px; color: var(--accent-tertiary);">lock</span>
               AES-256 Encrypted
             </span>
             <span style="display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-label); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-tertiary); padding: 8px 12px; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-container);">
-              <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 14px; color: #34d399;">handshake</span>
+              <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 14px; color: var(--accent-tertiary);">handshake</span>
               NDA by Default
             </span>
             <span style="display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-label); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-tertiary); padding: 8px 12px; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-container);">
-              <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 14px; color: #34d399;">block</span>
+              <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 14px; color: var(--accent-tertiary);">block</span>
               No Spam
             </span>
           </div>
@@ -204,7 +204,7 @@
     transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease; flex-shrink: 0;
   }
   .lg-step-dot.active, .lg-step-dot.done {
-    background: var(--accent); color: #050508; border-color: var(--accent);
+    background: var(--accent); color: var(--text-on-accent); border-color: var(--accent);
   }
   .lg-step-line {
     flex: 1; height: 2px; background: var(--glass-border); border-radius: 1px; overflow: hidden;
@@ -270,7 +270,7 @@
     content: '';
     position: absolute; inset: -1px;
     border-radius: 13px;
-    background: conic-gradient(from var(--shimmer-angle), var(--accent), #7B61FF, #34d399, var(--accent));
+    background: conic-gradient(from var(--shimmer-angle), var(--accent), var(--accent-secondary), var(--accent-tertiary), var(--accent));
     z-index: -1;
     animation: shimmerRotate 3s linear infinite;
   }
@@ -326,7 +326,7 @@
     transition: filter 0.2s ease, transform 0.2s var(--ease-out-premium), box-shadow 0.2s var(--ease-out-premium), opacity 0.2s ease, border-color 0.2s ease;
   }
   .lg-btn-next, .lg-btn-submit {
-    background: var(--accent); color: #050508;
+    background: var(--accent); color: var(--text-on-accent);
   }
   .lg-btn-next:hover, .lg-btn-submit:hover {
     filter: brightness(1.1); transform: translateY(-2px);

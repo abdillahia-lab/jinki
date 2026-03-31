@@ -11,6 +11,8 @@
   5. Night operations showcase — day/night toggle
   6. Integration ecosystem — animated connection diagram
 */
+import { Image } from 'astro:assets';
+import heroImg from '../../assets/images/facility-night-aerial.jpg';
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import LeadGen from '../../components/LeadGen.astro';
@@ -128,6 +130,10 @@ const integrations = [
           <div class="sec-hero-actions">
             <a href="#lead-gen" class="btn-premium sec-cta">Get Your Facility Report</a>
             <a href="#services" class="sec-cta-secondary">View Capabilities</a>
+            <button class="share-btn" aria-label="Share this page" style="display:none;cursor:pointer;background:none;border:none;color:var(--text-secondary);font-family:var(--font-label);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;align-items:center;gap:6px;">
+              <span class="material-symbols-outlined" style="font-size:18px;" aria-hidden="true">share</span>
+              Share
+            </button>
           </div>
         </div>
 
@@ -135,12 +141,17 @@ const integrations = [
         <div class="sec-hero-visual reveal reveal-delay-1" aria-hidden="true">
           <div class="hud-container">
             <!-- Real facility photo as base layer -->
-            <img
-              src="/images/facility-night-aerial.jpg"
+            <Image
+              src={heroImg}
               alt=""
               class="hud-photo"
-              loading="eager" fetchpriority="high"
+              loading="eager"
+              fetchpriority="high"
               decoding="async"
+              widths={[640, 960, 1280]}
+              sizes="(max-width: 767px) 100vw, (max-width: 1024px) 50vw, 640px"
+              format="webp"
+              quality={80}
             />
             <!-- Night vision green overlay -->
             <div class="hud-nightvision"></div>
@@ -598,7 +609,7 @@ const integrations = [
     </section>
 
     <!-- ==================== 6. INTEGRATION ECOSYSTEM ==================== -->
-    <section class="section" aria-label="Integration Ecosystem">
+    <section class="section cv-auto" aria-label="Integration Ecosystem">
       <div class="section-inner">
         <div class="section-header reveal">
           <div class="sec-eyebrow">
@@ -614,7 +625,7 @@ const integrations = [
         <div class="integration-diagram reveal" role="img" aria-label="Diagram showing Jinki connecting to CCTV, Access Control, Alarm Systems, and SIEM/SOC">
           <div class="integ-ring">
             <div class="integ-center">
-              <span class="material-symbols-outlined" style="font-size: 40px; font-variation-settings: 'FILL' 1; color: #7B61FF;" aria-hidden="true">flight</span>
+              <span class="material-symbols-outlined" style="font-size: 40px; font-variation-settings: 'FILL' 1; color: var(--accent-secondary);" aria-hidden="true">flight</span>
               <span class="integ-center-label">JINKI</span>
             </div>
             <!-- Connection lines animated via CSS -->
@@ -643,7 +654,7 @@ const integrations = [
     </section>
 
     <!-- ==================== DIFFERENTIATORS ==================== -->
-    <section class="section" style="background: var(--surface-dim);" aria-label="Why Jinki">
+    <section class="section cv-auto" style="background: var(--surface-dim);" aria-label="Why Jinki">
       <div class="section-inner">
         <div class="section-header reveal">
           <div class="sec-eyebrow">
@@ -713,7 +724,7 @@ const integrations = [
     display: block;
     width: 32px;
     height: 1px;
-    background: #7B61FF;
+    background: var(--accent-secondary);
   }
   .sec-eyebrow-text {
     font-family: var(--font-label);
@@ -721,12 +732,12 @@ const integrations = [
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.3em;
-    color: #7B61FF;
+    color: var(--accent-secondary);
   }
 
   /* ---- Gradient Text ---- */
   .gradient-text-violet {
-    background: linear-gradient(90deg, #7B61FF, #4F46E5, #7B61FF);
+    background: linear-gradient(90deg, var(--accent-secondary), #4F46E5, var(--accent-secondary));
     background-size: 200% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -788,7 +799,7 @@ const integrations = [
     padding: 0.875rem 2rem;
     border-radius: 12px;
     color: #fff;
-    background: linear-gradient(135deg, #7B61FF, #4F46E5);
+    background: linear-gradient(135deg, var(--accent-secondary), #4F46E5);
     text-decoration: none;
     box-shadow: 0 4px 20px rgba(123, 97, 255, 0.3);
     transition: box-shadow 0.4s var(--ease-out-premium),
@@ -812,7 +823,7 @@ const integrations = [
     text-decoration: none;
     transition: color 0.2s ease;
   }
-  .sec-cta-secondary:hover { color: #7B61FF; }
+  .sec-cta-secondary:hover { color: var(--accent-secondary); }
 
   /* HUD Container */
   .hud-container {
@@ -1104,7 +1115,7 @@ const integrations = [
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, transparent 0%, #7B61FF 50%, transparent 100%);
+    background: linear-gradient(90deg, transparent 0%, var(--accent-secondary) 50%, transparent 100%);
     opacity: 0.5;
     animation: stats-scanline 4s linear infinite;
   }
@@ -1153,7 +1164,7 @@ const integrations = [
     font-family: var(--font-mono);
     font-size: 2.5rem;
     font-weight: 700;
-    color: #7B61FF;
+    color: var(--accent-secondary);
     line-height: 1;
     text-shadow: 0 0 20px rgba(123, 97, 255, 0.3);
     letter-spacing: -0.02em;
@@ -1240,7 +1251,7 @@ const integrations = [
     gap: 12px;
     padding-left: 32px;
   }
-  .pain-arrow { color: #7B61FF; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+  .pain-arrow { color: var(--accent-secondary); font-weight: 700; flex-shrink: 0; margin-top: 2px; }
   .pain-solution p { font-size: 0.9375rem; color: var(--text-secondary); line-height: 1.7; }
 
   /* ---- Pain Card Animated Visuals ---- */
@@ -1316,7 +1327,7 @@ const integrations = [
     height: 4px;
     margin: -2px 0 0 -2px;
     border-radius: 50%;
-    background: #7B61FF;
+    background: var(--accent-secondary);
     box-shadow: 0 0 6px rgba(123, 97, 255, 0.8);
   }
 
@@ -1551,7 +1562,7 @@ const integrations = [
     stroke-dasharray: 6 3;
   }
   .patrol-dot {
-    fill: #7B61FF;
+    fill: var(--accent-secondary);
     filter: drop-shadow(0 0 6px rgba(123, 97, 255, 0.8));
   }
   .patrol-trail {
@@ -1570,7 +1581,7 @@ const integrations = [
     stroke: rgba(123, 97, 255, 0.4);
   }
   .zone:focus { outline: none; }
-  .zone:focus-visible .zone-hit { stroke: #7B61FF; stroke-width: 2; }
+  .zone:focus-visible .zone-hit { stroke: var(--accent-secondary); stroke-width: 2; }
   .zone-label {
     font-family: var(--font-mono);
     font-size: 9px;
@@ -1626,7 +1637,7 @@ const integrations = [
   .breach-response {
     font-family: var(--font-mono);
     font-size: 10px;
-    color: #7B61FF;
+    color: var(--accent-secondary);
     letter-spacing: 0.05em;
   }
 
@@ -1768,11 +1779,11 @@ const integrations = [
     justify-content: flex-end;
     padding: 0 16px;
     width: 0%;
-    transition: width 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: width 1.8s var(--ease-out-premium);
   }
   .chart-bar.animate { width: var(--bar-pct); }
   .chart-bar-jinki {
-    background: linear-gradient(90deg, #7B61FF, #4F46E5);
+    background: linear-gradient(90deg, var(--accent-secondary), #4F46E5);
     box-shadow: 0 0 20px rgba(123, 97, 255, 0.3);
     min-width: 80px;
   }
@@ -1838,12 +1849,12 @@ const integrations = [
   }
   .night-toggle-day { color: #ffb400; }
   .night-toggle[aria-pressed="true"] .night-toggle-day { color: var(--text-tertiary); }
-  .night-toggle[aria-pressed="true"] .night-toggle-night { color: #7B61FF; }
+  .night-toggle[aria-pressed="true"] .night-toggle-night { color: var(--accent-secondary); }
   .night-toggle-thumb {
     width: 28px;
     height: 16px;
     border-radius: 8px;
-    background: #7B61FF;
+    background: var(--accent-secondary);
     position: relative;
     transition: background 0.3s ease;
   }
@@ -1960,7 +1971,7 @@ const integrations = [
     padding: 16px 20px;
     border-top: 1px solid var(--glass-border);
   }
-  .night-caption-icon { font-size: 20px; color: #7B61FF; flex-shrink: 0; margin-top: 2px; }
+  .night-caption-icon { font-size: 20px; color: var(--accent-secondary); flex-shrink: 0; margin-top: 2px; }
   .night-caption-title {
     display: block;
     font-family: var(--font-headline);
@@ -2068,7 +2079,7 @@ const integrations = [
     0% { transform: scale(1); opacity: 1; }
     100% { transform: scale(1.4); opacity: 0; }
   }
-  .service-icon { color: #7B61FF; font-size: 24px; }
+  .service-icon { color: var(--accent-secondary); font-size: 24px; }
   .service-title {
     font-family: var(--font-headline);
     font-size: 1.0625rem;
@@ -2124,7 +2135,7 @@ const integrations = [
     font-size: 9px;
     font-weight: 700;
     letter-spacing: 0.2em;
-    color: #7B61FF;
+    color: var(--accent-secondary);
   }
   .integ-lines {
     position: absolute;
@@ -2195,7 +2206,7 @@ const integrations = [
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #7B61FF;
+    background: var(--accent-secondary);
     box-shadow: 0 0 8px rgba(123, 97, 255, 0.6);
     opacity: 0;
   }
@@ -2259,7 +2270,7 @@ const integrations = [
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(90deg, #7B61FF, #4F46E5, #7B61FF);
+    background: linear-gradient(90deg, var(--accent-secondary), #4F46E5, var(--accent-secondary));
     background-size: 200% 100%;
     animation: diff-accent-shift 4s ease infinite;
   }
@@ -2290,7 +2301,7 @@ const integrations = [
   .diff-number {
     font-family: var(--font-mono);
     font-size: 0.6875rem;
-    color: #7B61FF;
+    color: var(--accent-secondary);
     letter-spacing: 0.15em;
     margin-bottom: 12px;
     display: inline-block;
@@ -2315,7 +2326,7 @@ const integrations = [
   /* ================================================================
      RESPONSIVE
      ================================================================ */
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .sec-hero-inner { grid-template-columns: 1fr; gap: 40px; }
     .sec-hero { min-height: auto; padding-top: 120px; }
     .stats-bar-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
@@ -2326,6 +2337,12 @@ const integrations = [
     .integ-node-icon { width: 44px; height: 44px; font-size: 22px; }
     .integ-center { width: 72px; height: 72px; }
     .integ-center .material-symbols-outlined { font-size: 28px !important; }
+    .hud-telemetry,
+    .hud-coords,
+    .hud-target-label,
+    .hud-ts-label,
+    .hud-ts-time { display: none; }
+    .hud-container { max-height: 280px; overflow: hidden; }
   }
 
   /* ================================================================

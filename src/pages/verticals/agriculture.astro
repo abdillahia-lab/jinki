@@ -37,7 +37,7 @@ const seasons = [
     season: 'Summer',
     months: 'Jun — Aug',
     icon: 'wb_sunny',
-    color: '#34D399',
+    color: 'var(--accent-tertiary)',
     tasks: [
       'Weekly thermal crop health scans',
       'Irrigation efficiency analysis',
@@ -82,7 +82,7 @@ const pipelineSteps = [
     icon: 'image',
     title: 'Thermal Crop Analysis',
     desc: 'Thermal imaging identifies irrigation irregularities, crop stress patterns, and drainage issues through temperature differential analysis across fields.',
-    color: '#34D399',
+    color: 'var(--accent-tertiary)',
   },
   {
     icon: 'thermostat',
@@ -164,6 +164,10 @@ const pipelineSteps = [
           <div class="ag-hero-actions" style="display: flex; align-items: center; gap: 24px; margin-top: 32px;">
             <a href="#lead-gen" class="btn-premium ag-cta">Get Your Facility Report</a>
             <a href="#roi-calculator" class="ag-cta-secondary">See Capabilities</a>
+            <button class="share-btn" aria-label="Share this page" style="display:none;cursor:pointer;background:none;border:none;color:var(--text-secondary);font-family:var(--font-label);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;align-items:center;gap:6px;">
+              <span class="material-symbols-outlined" style="font-size:18px;" aria-hidden="true">share</span>
+              Share
+            </button>
           </div>
         </div>
 
@@ -181,7 +185,7 @@ const pipelineSteps = [
               <div class="ndvi-labels">
                 <span style="color: #EF4444;">Bare</span>
                 <span style="color: #F59E0B;">Stress</span>
-                <span style="color: #34D399;">Healthy</span>
+                <span style="color: var(--accent-tertiary);">Healthy</span>
               </div>
             </div>
             <div class="hud-metrics">
@@ -250,7 +254,7 @@ const pipelineSteps = [
         <div class="dashboard-mockup reveal reveal-delay-1" aria-label="Interactive crop health dashboard mockup" role="img">
           <div class="dash-topbar">
             <div class="dash-topbar-left">
-              <span class="material-symbols-outlined" style="font-size: 18px; color: #34D399; font-variation-settings: 'FILL' 1;">agriculture</span>
+              <span class="material-symbols-outlined" style="font-size: 18px; color: var(--accent-tertiary); font-variation-settings: 'FILL' 1;">agriculture</span>
               <span class="dash-title">Jinki Field Intelligence</span>
             </div>
             <div class="dash-topbar-right">
@@ -264,11 +268,11 @@ const pipelineSteps = [
               <div class="dash-field-list">
                 <div class="dash-field-item dash-field-item--active">
                   <span class="dash-field-name">North Field</span>
-                  <span class="dash-field-score" style="color: #34D399;">0.84</span>
+                  <span class="dash-field-score" style="color: var(--accent-tertiary);">0.84</span>
                 </div>
                 <div class="dash-field-item">
                   <span class="dash-field-name">East Pivot</span>
-                  <span class="dash-field-score" style="color: #34D399;">0.79</span>
+                  <span class="dash-field-score" style="color: var(--accent-tertiary);">0.79</span>
                 </div>
                 <div class="dash-field-item">
                   <span class="dash-field-name">South Bottoms</span>
@@ -276,7 +280,7 @@ const pipelineSteps = [
                 </div>
                 <div class="dash-field-item">
                   <span class="dash-field-name">West Ridge</span>
-                  <span class="dash-field-score" style="color: #34D399;">0.77</span>
+                  <span class="dash-field-score" style="color: var(--accent-tertiary);">0.77</span>
                 </div>
               </div>
               <div class="dash-alerts-panel">
@@ -309,11 +313,11 @@ const pipelineSteps = [
                   <svg viewBox="0 0 300 80" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Upward trending chart line">
                     <defs>
                       <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#34D399" stop-opacity="0.3"/>
-                        <stop offset="100%" stop-color="#34D399" stop-opacity="0"/>
+                        <stop offset="0%" stop-color="var(--accent-tertiary)" stop-opacity="0.3"/>
+                        <stop offset="100%" stop-color="var(--accent-tertiary)" stop-opacity="0"/>
                       </linearGradient>
                     </defs>
-                    <path d="M0,60 Q30,55 60,50 T120,42 T180,35 T240,25 T300,18" stroke="#34D399" stroke-width="2" fill="none"/>
+                    <path d="M0,60 Q30,55 60,50 T120,42 T180,35 T240,25 T300,18" stroke="var(--accent-tertiary)" stroke-width="2" fill="none"/>
                     <path d="M0,60 Q30,55 60,50 T120,42 T180,35 T240,25 T300,18 L300,80 L0,80 Z" fill="url(#trendFill)"/>
                   </svg>
                 </div>
@@ -368,7 +372,7 @@ const pipelineSteps = [
     </section>
 
     <!-- ============ TECHNOLOGY PIPELINE ============ -->
-    <section class="ag-section" aria-label="Technology Pipeline">
+    <section class="ag-section cv-auto" aria-label="Technology Pipeline">
       <div class="ag-section-inner">
         <div class="ag-section-header reveal">
           <div class="ag-eyebrow">
@@ -441,20 +445,20 @@ const pipelineSteps = [
             <div class="comparison-side comparison-after">
               <div class="comp-field comp-field--analyzed">
                 <div class="comp-field-rows">
-                  <div class="comp-row" style="background: linear-gradient(90deg, #34D399 0%, #34D399 60%, #F59E0B 80%, #34D399 100%);"></div>
-                  <div class="comp-row" style="background: linear-gradient(90deg, #34D399 0%, #10B981 40%, #34D399 100%);"></div>
-                  <div class="comp-row" style="background: linear-gradient(90deg, #10B981 0%, #F59E0B 30%, #EF4444 50%, #F59E0B 70%, #34D399 100%);"></div>
-                  <div class="comp-row" style="background: linear-gradient(90deg, #34D399 0%, #34D399 100%);"></div>
-                  <div class="comp-row" style="background: linear-gradient(90deg, #34D399 0%, #F59E0B 40%, #F59E0B 60%, #34D399 100%);"></div>
-                  <div class="comp-row" style="background: linear-gradient(90deg, #10B981 0%, #34D399 30%, #34D399 100%);"></div>
-                  <div class="comp-row" style="background: linear-gradient(90deg, #34D399 0%, #34D399 50%, #EF4444 60%, #F59E0B 80%, #34D399 100%);"></div>
-                  <div class="comp-row" style="background: linear-gradient(90deg, #34D399 0%, #10B981 100%);"></div>
+                  <div class="comp-row" style="background: linear-gradient(90deg, var(--accent-tertiary) 0%, var(--accent-tertiary) 60%, #F59E0B 80%, var(--accent-tertiary) 100%);"></div>
+                  <div class="comp-row" style="background: linear-gradient(90deg, var(--accent-tertiary) 0%, #10B981 40%, var(--accent-tertiary) 100%);"></div>
+                  <div class="comp-row" style="background: linear-gradient(90deg, #10B981 0%, #F59E0B 30%, #EF4444 50%, #F59E0B 70%, var(--accent-tertiary) 100%);"></div>
+                  <div class="comp-row" style="background: linear-gradient(90deg, var(--accent-tertiary) 0%, var(--accent-tertiary) 100%);"></div>
+                  <div class="comp-row" style="background: linear-gradient(90deg, var(--accent-tertiary) 0%, #F59E0B 40%, #F59E0B 60%, var(--accent-tertiary) 100%);"></div>
+                  <div class="comp-row" style="background: linear-gradient(90deg, #10B981 0%, var(--accent-tertiary) 30%, var(--accent-tertiary) 100%);"></div>
+                  <div class="comp-row" style="background: linear-gradient(90deg, var(--accent-tertiary) 0%, var(--accent-tertiary) 50%, #EF4444 60%, #F59E0B 80%, var(--accent-tertiary) 100%);"></div>
+                  <div class="comp-row" style="background: linear-gradient(90deg, var(--accent-tertiary) 0%, #10B981 100%);"></div>
                 </div>
                 <div class="comp-zone-labels">
-                  <span class="comp-zone-tag" style="top: 15%; left: 25%; color: #34D399;">0.88</span>
+                  <span class="comp-zone-tag" style="top: 15%; left: 25%; color: var(--accent-tertiary);">0.88</span>
                   <span class="comp-zone-tag" style="top: 40%; left: 45%; color: #EF4444;">0.31</span>
                   <span class="comp-zone-tag" style="top: 60%; left: 55%; color: #F59E0B;">0.62</span>
-                  <span class="comp-zone-tag" style="top: 80%; left: 20%; color: #34D399;">0.85</span>
+                  <span class="comp-zone-tag" style="top: 80%; left: 20%; color: var(--accent-tertiary);">0.85</span>
                 </div>
               </div>
               <span class="comparison-label">Thermal Analysis</span>
@@ -473,7 +477,7 @@ const pipelineSteps = [
     </section>
 
     <!-- ============ CUSTOM ANALYSIS CTA ============ -->
-    <section id="roi-calculator" class="ag-section" aria-label="Request Custom Analysis">
+    <section id="roi-calculator" class="ag-section cv-auto" aria-label="Request Custom Analysis">
       <div class="ag-section-inner">
         <div class="ag-section-header reveal">
           <div class="ag-eyebrow">
@@ -490,7 +494,7 @@ const pipelineSteps = [
           <div style="display: flex; flex-direction: column; align-items: center; gap: 2rem; padding: 2rem 0;">
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; width: 100%; max-width: 600px;">
               <div class="roi-result-card">
-                <span class="material-symbols-outlined roi-result-icon" style="color: #34D399; font-variation-settings: 'FILL' 1;" aria-hidden="true">satellite_alt</span>
+                <span class="material-symbols-outlined roi-result-icon" style="color: var(--accent-tertiary); font-variation-settings: 'FILL' 1;" aria-hidden="true">satellite_alt</span>
                 <span class="roi-result-label" style="font-size: 0.8125rem;">Thermal Crop Health</span>
                 <span class="roi-result-detail">Field-level stress mapping</span>
               </div>
@@ -725,7 +729,7 @@ const pipelineSteps = [
     display: block;
     width: 32px;
     height: 1px;
-    background: #34D399;
+    background: var(--accent-tertiary);
   }
 
   .ag-eyebrow-text {
@@ -734,7 +738,7 @@ const pipelineSteps = [
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.3em;
-    color: #34D399;
+    color: var(--accent-tertiary);
   }
 
   .ag-hero-title {
@@ -747,7 +751,7 @@ const pipelineSteps = [
   }
 
   .gradient-text-green {
-    background: linear-gradient(90deg, #34D399, #10B981, #34D399);
+    background: linear-gradient(90deg, var(--accent-tertiary), #10B981, var(--accent-tertiary));
     background-size: 200% 100%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -798,7 +802,7 @@ const pipelineSteps = [
     transition: color 0.3s ease;
   }
 
-  .ag-cta-secondary:hover { color: #34D399; transform: translateX(2px); }
+  .ag-cta-secondary:hover { color: var(--accent-tertiary); transform: translateX(2px); }
   .ag-cta-secondary { transition: color 0.3s ease, transform 0.3s ease; }
 
   /* Hero HUD */
@@ -839,7 +843,7 @@ const pipelineSteps = [
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #34D399;
+    background: var(--accent-tertiary);
   }
 
   .hud-dot--live {
@@ -856,13 +860,13 @@ const pipelineSteps = [
     font-size: 0.6875rem;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: #34D399;
+    color: var(--accent-tertiary);
   }
 
   .ndvi-gradient-bar {
     height: 12px;
     border-radius: 8px;
-    background: linear-gradient(90deg, #8B4513, #EF4444, #F59E0B, #FDE68A, #6EE7B7, #34D399, #059669);
+    background: linear-gradient(90deg, #8B4513, #EF4444, #F59E0B, #FDE68A, #6EE7B7, var(--accent-tertiary), #059669);
   }
 
   .ndvi-scale {
@@ -909,7 +913,7 @@ const pipelineSteps = [
     font-family: var(--font-mono);
     font-size: 1.375rem;
     font-weight: 700;
-    color: #34D399;
+    color: var(--accent-tertiary);
     line-height: 1;
   }
 
@@ -999,7 +1003,7 @@ const pipelineSteps = [
     width: 40px;
     height: 3px;
     border-radius: 0 0 4px 4px;
-    background: linear-gradient(90deg, transparent, #34D399, transparent);
+    background: linear-gradient(90deg, transparent, var(--accent-tertiary), transparent);
     opacity: 0.5;
     animation: stat-leaf-pulse 3s ease-in-out infinite;
     animation-delay: calc(var(--stat-i, 0) * 0.4s);
@@ -1031,7 +1035,7 @@ const pipelineSteps = [
 
   .ag-stat-icon {
     font-size: 24px;
-    color: #34D399;
+    color: var(--accent-tertiary);
     margin-bottom: 4px;
     filter: drop-shadow(0 0 6px rgba(52, 211, 153, 0.3));
     animation: icon-float 4s ease-in-out infinite;
@@ -1047,7 +1051,7 @@ const pipelineSteps = [
     font-family: var(--font-mono);
     font-size: 2.25rem;
     font-weight: 700;
-    color: #34D399;
+    color: var(--accent-tertiary);
     line-height: 1;
     text-shadow: 0 0 20px rgba(52, 211, 153, 0.4), 0 0 40px rgba(52, 211, 153, 0.15);
     letter-spacing: -0.02em;
@@ -1178,7 +1182,7 @@ const pipelineSteps = [
 
   .dash-badge--good {
     background: rgba(52, 211, 153, 0.1);
-    color: #34D399;
+    color: var(--accent-tertiary);
     border: 1px solid rgba(52, 211, 153, 0.2);
   }
 
@@ -1376,7 +1380,7 @@ const pipelineSteps = [
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
-    scrollbar-color: #34D399 var(--surface-container);
+    scrollbar-color: var(--accent-tertiary) var(--surface-container);
     padding-bottom: 16px;
   }
 
@@ -1446,7 +1450,7 @@ const pipelineSteps = [
 
   /* Summer — pulsing sun / heat shimmer */
   .timeline-card:nth-child(2)::after {
-    background: radial-gradient(circle, #34D399 0%, transparent 70%);
+    background: radial-gradient(circle, var(--accent-tertiary) 0%, transparent 70%);
     animation: summer-pulse 3s ease-in-out infinite;
     width: 60px;
     height: 60px;
@@ -1718,7 +1722,7 @@ const pipelineSteps = [
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #34D399;
+    background: var(--accent-tertiary);
     animation: pulse-dot 2s ease-in-out infinite;
   }
 
@@ -1868,7 +1872,7 @@ const pipelineSteps = [
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #34D399, #10B981);
+    background: linear-gradient(135deg, var(--accent-tertiary), #10B981);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1957,7 +1961,7 @@ const pipelineSteps = [
   }
 
   .roi-input:focus {
-    border-color: #34D399;
+    border-color: var(--accent-tertiary);
   }
 
   .roi-select {
@@ -2029,12 +2033,12 @@ const pipelineSteps = [
     pointer-events: none;
     opacity: 0.04;
     background:
-      linear-gradient(to top, #34D399 0%, transparent 100%) 0% 100% / 12% 60% no-repeat,
-      linear-gradient(to top, #34D399 0%, transparent 100%) 16% 100% / 12% 45% no-repeat,
-      linear-gradient(to top, #34D399 0%, transparent 100%) 32% 100% / 12% 75% no-repeat,
-      linear-gradient(to top, #34D399 0%, transparent 100%) 48% 100% / 12% 55% no-repeat,
-      linear-gradient(to top, #34D399 0%, transparent 100%) 64% 100% / 12% 85% no-repeat,
-      linear-gradient(to top, #34D399 0%, transparent 100%) 80% 100% / 12% 65% no-repeat;
+      linear-gradient(to top, var(--accent-tertiary) 0%, transparent 100%) 0% 100% / 12% 60% no-repeat,
+      linear-gradient(to top, var(--accent-tertiary) 0%, transparent 100%) 16% 100% / 12% 45% no-repeat,
+      linear-gradient(to top, var(--accent-tertiary) 0%, transparent 100%) 32% 100% / 12% 75% no-repeat,
+      linear-gradient(to top, var(--accent-tertiary) 0%, transparent 100%) 48% 100% / 12% 55% no-repeat,
+      linear-gradient(to top, var(--accent-tertiary) 0%, transparent 100%) 64% 100% / 12% 85% no-repeat,
+      linear-gradient(to top, var(--accent-tertiary) 0%, transparent 100%) 80% 100% / 12% 65% no-repeat;
     animation: roi-bars-grow 3s ease-out forwards;
   }
 
@@ -2056,7 +2060,7 @@ const pipelineSteps = [
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #34D399;
+    background: var(--accent-tertiary);
     box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
     animation: data-point-blink 2.5s ease-in-out infinite;
   }
@@ -2092,7 +2096,7 @@ const pipelineSteps = [
     font-family: var(--font-mono);
     font-size: 2.25rem;
     font-weight: 700;
-    color: #34D399;
+    color: var(--accent-tertiary);
     line-height: 1;
     text-shadow: 0 0 24px rgba(52, 211, 153, 0.35), 0 0 48px rgba(52, 211, 153, 0.1);
     transition: text-shadow 0.3s ease;
@@ -2151,7 +2155,7 @@ const pipelineSteps = [
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .ag-hero {
       min-height: auto;
       padding-top: 120px;
@@ -2283,7 +2287,7 @@ const pipelineSteps = [
     width: 100%;
     height: 100%;
     border-radius: 4px;
-    background: linear-gradient(to right, #78350F, #92400E, #B45309, #34D399, #60A5FA);
+    background: linear-gradient(to right, #78350F, #92400E, #B45309, var(--accent-tertiary), #60A5FA);
     opacity: 0.7;
     border: 1px solid rgba(255,255,255,0.1);
   }
