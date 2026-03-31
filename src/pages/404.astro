@@ -153,7 +153,7 @@ import Footer from '../components/Footer.astro';
   /* Animated grid background */
   .grid-bg {
     position: absolute;
-    inset: 0;
+    inset: -60px;
     z-index: 0;
     background-image:
       linear-gradient(var(--glass-border) 1px, transparent 1px),
@@ -162,7 +162,7 @@ import Footer from '../components/Footer.astro';
     opacity: 0.4;
     animation: gridScroll 20s linear infinite;
   }
-  @keyframes gridScroll { to { background-position: 60px 60px; } }
+  @keyframes gridScroll { to { transform: translate(60px, 60px); } }
 
   /* Radar container */
   .radar-wrap {

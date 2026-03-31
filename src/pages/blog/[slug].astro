@@ -258,7 +258,7 @@ const relatedLinks = (post.data.tags || [])
         <p style="font-family: var(--font-label); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 0.75rem;">Explore Related</p>
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
           {relatedLinks.map((link: {label:string;href:string}) => (
-            <a href={link.href} style="display: inline-flex; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--glass-bg); color: var(--text-secondary); font-family: var(--font-label); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-decoration: none; transition: all 0.2s ease;">{link.label}</a>
+            <a href={link.href} style="display: inline-flex; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid var(--glass-border); background: var(--glass-bg); color: var(--text-secondary); font-family: var(--font-label); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; text-decoration: none; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;">{link.label}</a>
           ))}
         </div>
       </div>
