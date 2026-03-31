@@ -577,6 +577,12 @@ html { scrollbar-width: thin; scrollbar-color: var(--text-tertiary) var(--bg-pri
 }
 .reveal-delay-4 { transition-delay: 0.6s; }
 
+/* --- Content Visibility (skip rendering for off-screen sections) --- */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}
+
 /* --- Scroll-driven animations (progressive enhancement) --- */
 @supports (animation-timeline: view()) {
   .reveal:not(.revealed) {
