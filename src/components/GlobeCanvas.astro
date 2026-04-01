@@ -255,8 +255,8 @@
         vec3 camDir = vec3(0.0, 0.0, 1.0);
         float facing = dot(posNorm, camDir);
         float rimFade = smoothstep(-0.05, 0.25, facing);
-        // Darken center-facing dots, keep edges bright
-        float faceDim = 0.15 + 0.85 * pow(1.0 - facing, 0.55);
+        // Darken center-facing dots aggressively, keep edges bright (premium globe)
+        float faceDim = 0.08 + 0.92 * pow(1.0 - facing, 0.75);
         // Fresnel — edge dots tint toward accent (atmospheric scattering)
         vFresnel = pow(1.0 - max(facing, 0.0), 2.2);
         // Depth fog — far dots fade for spatial depth cue
