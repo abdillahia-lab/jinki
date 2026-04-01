@@ -348,22 +348,58 @@
       }
     `;
 
-    // ── Dark Core Sphere — solid body behind dots ──
+    // ── Dark Core Sphere — solid body with subtle surface noise ──
     const coreGeo = new THREE.IcosahedronGeometry(0.99, 32);
     const coreMat = new THREE.ShaderMaterial({
       uniforms: {
         uColor: { value: new THREE.Color(themeColors.isLight ? '#e8eaed' : '#020208') },
+        uAccent: { value: new THREE.Color(themeColors.accent) },
+        uTime: { value: 0 },
       },
-      vertexShader: atmosVert,
-      fragmentShader: `
-        uniform vec3 uColor;
+      vertexShader: `
         varying vec3 vNormal;
         varying vec3 vPos;
+        varying vec3 vWorldPos;
+        void main() {
+          vNormal = normalize(normalMatrix * normal);
+          vWorldPos = position;
+          vPos = (modelViewMatrix * vec4(position, 1.0)).xyz;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColor;
+        uniform vec3 uAccent;
+        uniform float uTime;
+        varying vec3 vNormal;
+        varying vec3 vPos;
+        varying vec3 vWorldPos;
+        // Cheap hash noise — no texture lookups
+        float hash(vec3 p) {
+          p = fract(p * vec3(443.897, 441.423, 437.195));
+          p += dot(p, p.yzx + 19.19);
+          return fract((p.x + p.y) * p.z);
+        }
+        float noise3D(vec3 p) {
+          vec3 i = floor(p);
+          vec3 f = fract(p);
+          f = f * f * (3.0 - 2.0 * f);
+          return mix(
+            mix(mix(hash(i), hash(i + vec3(1,0,0)), f.x),
+                mix(hash(i + vec3(0,1,0)), hash(i + vec3(1,1,0)), f.x), f.y),
+            mix(mix(hash(i + vec3(0,0,1)), hash(i + vec3(1,0,1)), f.x),
+                mix(hash(i + vec3(0,1,1)), hash(i + vec3(1,1,1)), f.x), f.y), f.z);
+        }
         void main() {
           vec3 viewDir = normalize(-vPos);
           float facing = max(dot(viewDir, vNormal), 0.0);
           float edgeLift = pow(1.0 - facing, 3.0) * 0.04;
-          gl_FragColor = vec4(uColor + edgeLift, 1.0);
+          // Subtle surface noise — slow-drifting continental texture
+          float n = noise3D(vWorldPos * 4.0 + uTime * 0.02) * 0.5
+                  + noise3D(vWorldPos * 8.0 - uTime * 0.01) * 0.25;
+          // Very subtle accent tint at edges through the noise
+          vec3 noiseTint = mix(uColor, uAccent * 0.15, n * pow(1.0 - facing, 2.0) * 0.3);
+          gl_FragColor = vec4(noiseTint + edgeLift, 1.0);
         }
       `,
       transparent: false,
@@ -831,6 +867,7 @@
 
       // Update all time uniforms
       dotMat.uniforms.uTime.value = time;
+      coreMat.uniforms.uTime.value = time;
       markerMat.uniforms.uTime.value = time;
       starMat.uniforms.uTime.value = time;
       outerAtmosMat.uniforms.uTime.value = time;
