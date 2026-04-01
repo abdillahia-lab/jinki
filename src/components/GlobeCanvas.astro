@@ -9,7 +9,7 @@
   - Trailing-particle arc animations (comet effect)
   - Double Fresnel atmosphere layers
   - CSS custom property integration for theme-aware colors
-  - Zero post-processing imports (~30KB + GPU overhead saved)
+  - position: fixed — persists across full page scroll
   - Dynamic import('three') — zero initial bundle cost
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
@@ -22,17 +22,20 @@
 
 <style>
   .globe-wrap {
-    position: absolute;
-    inset: 0;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: 0;
     pointer-events: none;
     opacity: 0;
     transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-    mask-image: linear-gradient(to right, transparent 2%, rgba(0,0,0,0.15) 18%, rgba(0,0,0,0.7) 45%, black 65%);
-    -webkit-mask-image: linear-gradient(to right, transparent 2%, rgba(0,0,0,0.15) 18%, rgba(0,0,0,0.7) 45%, black 65%);
+    mask-image: linear-gradient(to right, transparent 2%, rgba(0,0,0,0.12) 18%, rgba(0,0,0,0.6) 45%, black 65%);
+    -webkit-mask-image: linear-gradient(to right, transparent 2%, rgba(0,0,0,0.12) 18%, rgba(0,0,0,0.6) 45%, black 65%);
   }
   .globe-wrap.ready { opacity: 1; }
-  :global([data-theme="light"]) .globe-wrap.ready { opacity: 0.45; }
+  :global([data-theme="light"]) .globe-wrap.ready { opacity: 0.55; }
   #globe-canvas {
     width: 100%;
     height: 100%;
@@ -43,8 +46,8 @@
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     .globe-wrap {
-      mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, rgba(0,0,0,0.2) 0%, transparent 65%);
-      -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, rgba(0,0,0,0.2) 0%, transparent 65%);
+      mask-image: radial-gradient(ellipse 90% 90% at 60% 50%, rgba(0,0,0,0.25) 0%, transparent 65%);
+      -webkit-mask-image: radial-gradient(ellipse 90% 90% at 60% 50%, rgba(0,0,0,0.25) 0%, transparent 65%);
     }
   }
 </style>
@@ -66,7 +69,6 @@
     const canvas = document.getElementById('globe-canvas') as HTMLCanvasElement;
     if (!wrap || !canvas) return;
 
-    // Single import — no post-processing needed
     const THREE = await import('three');
 
     // ── Read CSS custom properties for theme-aware colors ──
@@ -87,7 +89,7 @@
     const renderer = new THREE.WebGLRenderer({
       canvas,
       alpha: true,
-      antialias: false, // Disabled — GitHub/Stripe discovery: shader AA is better + huge perf gain
+      antialias: false,
       powerPreference: 'high-performance',
     });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -97,7 +99,6 @@
     scene.add(globeGroup);
 
     // ── Fibonacci Sphere Point Cloud ──
-    // Golden-ratio spiral produces perfectly uniform distribution (COBE/Stripe technique)
     const isTablet = wrap.clientWidth < 1024;
     const DOT_COUNT = isTablet ? 6000 : 15000;
     const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
@@ -125,13 +126,11 @@
       dotPositions[i * 3 + 1] = y;
       dotPositions[i * 3 + 2] = z;
 
-      // Noise-like variation using golden ratio phase
       const noise = Math.sin(i * 0.1) * Math.cos(i * 0.07) * 0.5 + 0.5;
       dotSizes[i] = 0.6 + noise * 0.8;
       dotOpacities[i] = 0.25 + noise * 0.75;
-      dotPhases[i] = i * 2.399; // Golden angle for phase variation
+      dotPhases[i] = i * 2.399;
 
-      // Color gradient: cyan at equator → purple at poles
       const latFactor = Math.abs(y);
       const c = new THREE.Color().lerpColors(cAccent, cSecondary, latFactor * 0.6 + noise * 0.2);
       dotColors[i * 3] = c.r;
@@ -146,7 +145,6 @@
     dotGeo.setAttribute('aPhase', new THREE.BufferAttribute(dotPhases, 1));
     dotGeo.setAttribute('aColor', new THREE.BufferAttribute(dotColors, 3));
 
-    // Vertex shader: depth-based sizing + subtle breathing
     const dotVertSrc = `
       attribute float aSize;
       attribute float aOpacity;
@@ -168,8 +166,6 @@
       }
     `;
 
-    // Fragment shader: inverse-distance glow (myctrl.tools technique)
-    // Creates soft, radiant dots without any post-processing bloom
     const dotFragSrc = `
       varying float vOpacity;
       varying vec3 vColor;
@@ -264,12 +260,12 @@
     }
 
     const arcDefs = [
-      { from: [39.0, -77.0], to: [51.5, -0.1],   alt: 0.4, speed: 0.25 },  // DC → London
-      { from: [39.0, -77.0], to: [1.35, 103.8],   alt: 0.55, speed: 0.18 }, // DC → Singapore
-      { from: [39.0, -77.0], to: [35.7, 139.7],   alt: 0.5, speed: 0.2 },   // DC → Tokyo
-      { from: [39.0, -77.0], to: [25.3, 55.3],    alt: 0.42, speed: 0.22 },  // DC → Dubai
-      { from: [39.0, -77.0], to: [-23.5, -46.6],  alt: 0.38, speed: 0.24 },  // DC → São Paulo
-      { from: [39.0, -77.0], to: [50.1, 8.7],     alt: 0.35, speed: 0.26 },  // DC → Frankfurt
+      { from: [39.0, -77.0], to: [51.5, -0.1],   alt: 0.4, speed: 0.25 },
+      { from: [39.0, -77.0], to: [1.35, 103.8],   alt: 0.55, speed: 0.18 },
+      { from: [39.0, -77.0], to: [35.7, 139.7],   alt: 0.5, speed: 0.2 },
+      { from: [39.0, -77.0], to: [25.3, 55.3],    alt: 0.42, speed: 0.22 },
+      { from: [39.0, -77.0], to: [-23.5, -46.6],  alt: 0.38, speed: 0.24 },
+      { from: [39.0, -77.0], to: [50.1, 8.7],     alt: 0.35, speed: 0.26 },
     ];
 
     const ARC_RESOLUTION = 80;
@@ -311,10 +307,8 @@
           void main() {
             vProgress = aProgress;
             float headDist = aProgress - uHead;
-            // Trail: visible behind head, fading over 35% of arc length
             vTrail = headDist > 0.02 ? 0.0 : smoothstep(-0.35, 0.0, headDist);
             vec4 mv = modelViewMatrix * vec4(position, 1.0);
-            // Head particles are larger
             float headProximity = 1.0 - smoothstep(0.0, 0.08, abs(headDist));
             gl_PointSize = max((2.5 + headProximity * 4.0) * (40.0 / -mv.z), 0.8);
             gl_Position = projectionMatrix * mv;
@@ -467,18 +461,11 @@
       });
     }
 
+    // Scroll: gentle fade as user scrolls, but never disappear
     let scrollFade = 1;
     window.addEventListener('scroll', () => {
-      // Fade from 1 → 0.25 over 100vh of scroll (never fully disappears)
-      scrollFade = Math.max(0.25, 1 - window.scrollY / (window.innerHeight * 1.0));
+      scrollFade = Math.max(0.35, 1 - window.scrollY / (window.innerHeight * 1.5));
     }, { passive: true });
-
-    let visible = true;
-    const io = new IntersectionObserver(
-      ([e]) => { visible = e.isIntersecting; },
-      { threshold: 0.05 }
-    );
-    io.observe(wrap);
 
     // ── Animation Loop ──
     let animId = 0;
@@ -487,12 +474,11 @@
 
     function animate() {
       animId = requestAnimationFrame(animate);
-      if (!visible) return;
 
       const dt = clock.getDelta();
       time += dt;
 
-      // Theme sync (check every ~60 frames to avoid perf hit)
+      // Theme sync (check periodically)
       if (Math.floor(time * 60) % 60 === 0) {
         const theme = readThemeColors();
         outerAtmosMat.uniforms.uColor.value.set(theme.accent);
@@ -500,19 +486,17 @@
       }
 
       const theme = readThemeColors();
-      const opacityMult = theme.isLight ? 0.45 : 1;
+      const opacityMult = theme.isLight ? 0.55 : 1;
 
       // Globe rotation
       if (!reducedMotion) {
         globeGroup.rotation.y += 0.0008;
       }
 
-      // Mouse parallax (desktop only, smooth lerp)
+      // Mouse parallax (desktop only)
       if (!reducedMotion && wrap.clientWidth >= 1024) {
         const tiltX = mouseY * 0.06;
-        const tiltY = mouseX * 0.06 + globeGroup.rotation.y;
         globeGroup.rotation.x += (tiltX - globeGroup.rotation.x) * 0.025;
-        // Only apply mouse influence on the base rotation offset
       }
 
       // Update uniforms
@@ -520,16 +504,15 @@
       markerMat.uniforms.uTime.value = time;
       starMat.uniforms.uTime.value = time;
 
-      // Arc comet animation — each arc has its own speed and phase
+      // Arc comet animation
       if (!reducedMotion) {
         arcSystems.forEach(({ mat, speed, phase }) => {
-          // Head travels 0→1, pauses, repeats
-          const cycle = (time * speed + phase) % 2.0; // 2s cycle: 1s travel + 1s pause
+          const cycle = (time * speed + phase) % 2.0;
           mat.uniforms.uHead.value = Math.min(cycle, 1.0);
         });
       }
 
-      // Apply scroll fade (only after initial CSS transition completes)
+      // Scroll-driven opacity (after initial transition)
       if (scrollControlsOpacity) {
         wrap.style.opacity = String(Math.max(0, scrollFade * opacityMult));
       }
@@ -549,19 +532,24 @@
     ro.observe(wrap);
 
     // ── Launch ──
-    // Let CSS transition handle the initial 0→1 fade. Only start scroll-driven
-    // opacity override AFTER the transition completes (1.5s).
     let scrollControlsOpacity = false;
     animate();
-    wrap.classList.add('ready');
-    wrap.dispatchEvent(new CustomEvent('globe-ready', { bubbles: true }));
-    setTimeout(() => { scrollControlsOpacity = true; }, 1600);
+    // Double-rAF ensures browser has painted opacity:0 before transitioning to 1
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        wrap.classList.add('ready');
+        wrap.dispatchEvent(new CustomEvent('globe-ready', { bubbles: true }));
+      });
+    });
+    setTimeout(() => {
+      scrollControlsOpacity = true;
+      wrap.style.transition = 'none'; // JS controls opacity now; CSS transition would fight rAF updates
+    }, 1600);
 
     // ── Cleanup ──
     document.addEventListener('astro:before-swap', () => {
       cancelAnimationFrame(animId);
       ro.disconnect();
-      io.disconnect();
       renderer.dispose();
       dotGeo.dispose();
       dotMat.dispose();
