@@ -448,7 +448,14 @@
           float innerRim = pow(rim, 4.0) * 0.28;
           float outerFalloff = pow(rim, 1.8) * 0.04;
           float glow = (innerRim + outerFalloff) * breathe;
-          gl_FragColor = vec4(atmosColor * 1.2, glow);
+          // Chromatic aberration — color channels separate at extreme edges
+          float caOffset = pow(rim, 6.0) * 0.12;
+          vec3 caColor = vec3(
+            atmosColor.r * (1.0 + caOffset * 1.5),
+            atmosColor.g,
+            atmosColor.b * (1.0 + caOffset * 0.8)
+          );
+          gl_FragColor = vec4(caColor * 1.2, glow);
         }
       `,
       transparent: true,
