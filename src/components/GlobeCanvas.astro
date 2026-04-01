@@ -739,21 +739,27 @@
     // ── Animation Loop ──
     let animId = 0;
     let time = 0;
-    const clock = new THREE.Clock();
+    let prevTimestamp = 0;
 
-    function animate() {
+    function animate(timestamp: number) {
       animId = requestAnimationFrame(animate);
-      const dt = clock.getDelta();
+      const dt = prevTimestamp ? Math.min((timestamp - prevTimestamp) / 1000, 0.1) : 0.016;
+      prevTimestamp = timestamp;
       time += dt;
 
       const opacityMult = themeColors.isLight ? 0.55 : 1;
 
-      if (!reducedMotion) globeGroup.rotation.y += 0.0008;
+      // Auto-rotation with mouse-modulated speed (horizontal parallax)
+      if (!reducedMotion) {
+        const baseSpeed = 0.0008;
+        const mouseSpeedMod = wrap.clientWidth >= 1024 ? mouseX * 0.0006 : 0;
+        globeGroup.rotation.y += baseSpeed + mouseSpeedMod;
+      }
 
-      // Mouse parallax (desktop)
+      // Mouse parallax — vertical tilt (desktop)
       if (!reducedMotion && wrap.clientWidth >= 1024) {
-        const tiltX = mouseY * 0.06;
-        globeGroup.rotation.x += (tiltX - globeGroup.rotation.x) * 0.025;
+        const targetTiltX = mouseY * 0.15;
+        globeGroup.rotation.x += (targetTiltX - globeGroup.rotation.x) * 0.04;
       }
 
       // Update all time uniforms
