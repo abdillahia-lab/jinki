@@ -254,13 +254,18 @@
         float faceDim = 0.15 + 0.85 * pow(1.0 - facing, 0.55);
         // Depth fog — far dots fade for spatial depth cue
         float depthFog = smoothstep(4.2, 2.0, depth);
-        // Scanning sweep — bright meridian band rotating around globe
+        // Scanning sweep — dramatic rotating light band with trailing afterglow
         float scanAngle = atan(posNorm.x, posNorm.z);
-        float sweepAngle = mod(uTime * 0.35, 6.28318);
-        float scanDist = abs(mod(scanAngle - sweepAngle + 3.14159, 6.28318) - 3.14159);
-        vScanBoost = smoothstep(0.3, 0.0, scanDist) * facing * 0.5;
-        vOpacity = aOpacity * backFade * rimFade * depthFog * faceDim;
-        gl_PointSize = max(aSize * uBaseSize * (20.0 / depth) * (1.0 + vScanBoost * 0.3), 0.5);
+        float sweepAngle = mod(uTime * 0.4, 6.28318);
+        float scanDist = mod(scanAngle - sweepAngle + 6.28318, 6.28318);
+        // Sharp leading edge + wider trailing afterglow
+        float leadEdge = smoothstep(0.45, 0.0, scanDist) * 0.9;
+        float trail = smoothstep(1.8, 0.3, scanDist) * 0.4;
+        float scanRaw = max(leadEdge, trail);
+        // Sweep overrides face-dimming — illuminates the dark center
+        vScanBoost = scanRaw * max(facing, 0.15);
+        vOpacity = aOpacity * backFade * rimFade * depthFog * max(faceDim, vScanBoost * 1.5);
+        gl_PointSize = max(aSize * uBaseSize * (20.0 / depth) * (1.0 + vScanBoost * 0.6), 0.5);
         gl_Position = projectionMatrix * mv;
       }
     `;
