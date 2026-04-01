@@ -245,11 +245,13 @@
         float depth = -mv.z;
         // Backface fade
         float backFade = smoothstep(3.8, 1.9, depth);
-        // Rim attenuation — reduce additive accumulation at silhouette
+        // Face-dimming — center dots dimmer, edge dots brighter (premium globe look)
         vec3 posNorm = normalize(pos);
         vec3 camDir = vec3(0.0, 0.0, 1.0);
         float facing = dot(posNorm, camDir);
-        float rimFade = smoothstep(-0.05, 0.35, facing);
+        float rimFade = smoothstep(-0.05, 0.25, facing);
+        // Darken center-facing dots, keep edges bright
+        float faceDim = 0.15 + 0.85 * pow(1.0 - facing, 0.55);
         // Depth fog — far dots fade for spatial depth cue
         float depthFog = smoothstep(4.2, 2.0, depth);
         // Scanning sweep — bright meridian band rotating around globe
@@ -257,7 +259,7 @@
         float sweepAngle = mod(uTime * 0.35, 6.28318);
         float scanDist = abs(mod(scanAngle - sweepAngle + 3.14159, 6.28318) - 3.14159);
         vScanBoost = smoothstep(0.3, 0.0, scanDist) * facing * 0.5;
-        vOpacity = aOpacity * backFade * rimFade * depthFog;
+        vOpacity = aOpacity * backFade * rimFade * depthFog * faceDim;
         gl_PointSize = max(aSize * uBaseSize * (20.0 / depth) * (1.0 + vScanBoost * 0.3), 0.5);
         gl_Position = projectionMatrix * mv;
       }
