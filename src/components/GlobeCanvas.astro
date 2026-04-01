@@ -652,47 +652,63 @@
 
     const markerCount = markerPositions.length;
     const mPos = new Float32Array(markerCount * 3);
+    const mPhase = new Float32Array(markerCount);
     markerPositions.forEach((p, i) => {
       mPos[i * 3] = p.x;
       mPos[i * 3 + 1] = p.y;
       mPos[i * 3 + 2] = p.z;
+      mPhase[i] = Math.random() * 6.28; // Per-marker random phase offset
     });
     const markerGeo = new THREE.BufferGeometry();
     markerGeo.setAttribute('position', new THREE.BufferAttribute(mPos, 3));
+    markerGeo.setAttribute('aPhase', new THREE.BufferAttribute(mPhase, 1));
     const markerMat = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
         uColor: { value: new THREE.Color(themeColors.accent) },
       },
       vertexShader: `
+        attribute float aPhase;
         uniform float uTime;
-        varying float vPulse;
-        varying float vRingRadius;
+        varying float vPulse1;
+        varying float vRingRadius1;
+        varying float vPulse2;
+        varying float vRingRadius2;
         void main() {
-          float cycle = fract(uTime * 0.4);
-          vPulse = 1.0 - cycle; // Fades as ring expands
-          vRingRadius = 0.08 + cycle * 0.38; // Ring expands outward
+          // Primary ring — staggered per marker
+          float cycle1 = fract(uTime * 0.35 + aPhase);
+          vPulse1 = 1.0 - cycle1;
+          vRingRadius1 = 0.06 + cycle1 * 0.40;
+          // Secondary ring — delayed echo
+          float cycle2 = fract(uTime * 0.35 + aPhase + 0.35);
+          vPulse2 = (1.0 - cycle2) * 0.5;
+          vRingRadius2 = 0.06 + cycle2 * 0.40;
           vec4 mv = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = max(18.0 * (50.0 / -mv.z), 4.0);
+          gl_PointSize = max(22.0 * (55.0 / -mv.z), 5.0);
           gl_Position = projectionMatrix * mv;
         }
       `,
       fragmentShader: `
         uniform vec3 uColor;
-        varying float vPulse;
-        varying float vRingRadius;
+        varying float vPulse1;
+        varying float vRingRadius1;
+        varying float vPulse2;
+        varying float vRingRadius2;
         void main() {
           float dist = length(gl_PointCoord - vec2(0.5));
-          // Bright center dot
-          float centerDot = exp(-dist * dist * 180.0) * 1.2;
-          // Expanding ring (radar ping)
-          float ringDist = abs(dist - vRingRadius);
-          float ring = exp(-ringDist * ringDist * 800.0) * vPulse * 0.8;
-          // Soft outer glow
-          float glow = 0.015 / (dist + 0.02);
-          float strength = centerDot + ring + glow;
+          // Bright center dot with sharper core
+          float centerDot = exp(-dist * dist * 220.0) * 1.4;
+          // Primary expanding ring
+          float ringDist1 = abs(dist - vRingRadius1);
+          float ring1 = exp(-ringDist1 * ringDist1 * 900.0) * vPulse1 * 0.9;
+          // Secondary echo ring
+          float ringDist2 = abs(dist - vRingRadius2);
+          float ring2 = exp(-ringDist2 * ringDist2 * 1200.0) * vPulse2 * 0.6;
+          // Soft ambient glow
+          float glow = 0.02 / (dist + 0.02);
+          float strength = centerDot + ring1 + ring2 + glow;
           if (strength < 0.02) discard;
-          vec3 col = mix(uColor, vec3(1.0), centerDot * 0.5);
+          vec3 col = mix(uColor, vec3(1.0), centerDot * 0.6);
           gl_FragColor = vec4(col, strength);
         }
       `,
