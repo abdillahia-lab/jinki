@@ -924,12 +924,23 @@
         });
       }
 
+      // Entrance animation — smooth scale-up over first 2 seconds
+      const entranceDur = 2.0;
+      const entranceT = Math.min(time / entranceDur, 1.0);
+      // Cubic ease-out: fast start, smooth deceleration
+      const entranceEase = 1.0 - Math.pow(1.0 - entranceT, 3);
+      const entranceScale = 0.85 + 0.15 * entranceEase;
+
       // Scroll-driven opacity + zoom parallax
       if (scrollControlsOpacity) {
         wrap.style.opacity = String(Math.max(0, scrollFade * opacityMult));
         const baseScale = wrap.clientWidth >= 1024 ? 1.15 : 0.85;
-        globeGroup.scale.setScalar(baseScale * scrollZoom);
+        globeGroup.scale.setScalar(baseScale * scrollZoom * entranceScale);
         globeGroup.position.y = (wrap.clientWidth >= 1024 ? 0.05 : 0) + (1 - scrollZoom) * 0.3;
+      } else {
+        // Pre-scroll-control: still apply entrance scale
+        const baseScale = wrap.clientWidth >= 1024 ? 1.15 : 0.85;
+        globeGroup.scale.setScalar(baseScale * entranceScale);
       }
 
       renderer.render(scene, camera);
