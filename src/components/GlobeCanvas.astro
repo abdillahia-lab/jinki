@@ -261,14 +261,20 @@
         vFresnel = pow(1.0 - max(facing, 0.0), 2.2);
         // Depth fog — far dots fade for spatial depth cue
         float depthFog = smoothstep(4.2, 2.0, depth);
-        // Scanning sweep — dramatic rotating light band with trailing afterglow
+        // Primary scanning sweep — dramatic rotating light band
         float scanAngle = atan(posNorm.x, posNorm.z);
-        float sweepAngle = mod(uTime * 0.4, 6.28318);
-        float scanDist = mod(scanAngle - sweepAngle + 6.28318, 6.28318);
-        // Sharp leading edge + wider trailing afterglow
-        float leadEdge = smoothstep(0.45, 0.0, scanDist) * 0.9;
-        float trail = smoothstep(1.8, 0.3, scanDist) * 0.4;
-        float scanRaw = max(leadEdge, trail);
+        float sweepAngle1 = mod(uTime * 0.4, 6.28318);
+        float scanDist1 = mod(scanAngle - sweepAngle1 + 6.28318, 6.28318);
+        float leadEdge1 = smoothstep(0.45, 0.0, scanDist1) * 0.9;
+        float trail1 = smoothstep(1.8, 0.3, scanDist1) * 0.4;
+        float scan1 = max(leadEdge1, trail1);
+        // Secondary sweep — opposite direction, subtler
+        float sweepAngle2 = mod(-uTime * 0.25, 6.28318);
+        float scanDist2 = mod(scanAngle - sweepAngle2 + 6.28318, 6.28318);
+        float leadEdge2 = smoothstep(0.35, 0.0, scanDist2) * 0.5;
+        float trail2 = smoothstep(1.2, 0.3, scanDist2) * 0.2;
+        float scan2 = max(leadEdge2, trail2);
+        float scanRaw = max(scan1, scan2 * 0.6);
         // Sweep overrides face-dimming — illuminates the dark center
         vScanBoost = scanRaw * max(facing, 0.15);
         vOpacity = aOpacity * backFade * rimFade * depthFog * max(faceDim, vScanBoost * 1.5);
