@@ -1,5 +1,6 @@
 ---
-/* Hero — Lightweight topographic intelligence map. ~280 lines. */
+/* Hero — Cinematic globe background + tactical intelligence layout. */
+import GlobeCanvas from './GlobeCanvas.astro';
 ---
 
 <section id="hero" class="hero" aria-label="Hero — Aerial Intelligence Platform" style="position: relative; min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; overflow: hidden; padding-top: 6rem; padding-bottom: 3rem; background: var(--bg-primary);">
@@ -9,8 +10,11 @@
     <source src="/videos/hero.mp4" type="video/mp4" />
   </video>
 
-  <!-- Animated Mesh Gradient Background (fallback when no video) -->
+  <!-- Animated Mesh Gradient Background (fallback until globe loads) -->
   <div class="hero-mesh" aria-hidden="true"></div>
+
+  <!-- 3D Globe (desktop/tablet only, dynamically loaded) -->
+  <GlobeCanvas />
 
   <!-- Noise texture overlay for physical depth -->
   <div class="hero-noise" aria-hidden="true"></div>
@@ -503,8 +507,20 @@
     if (!v) return;
     v.addEventListener('canplaythrough', function() { v.classList.add('loaded'); });
     v.addEventListener('error', function() { v.style.display = 'none'; });
-    // Kick off load (preload was "none" to avoid wasting bandwidth if file doesn't exist)
     v.load();
+  })();
+
+  // Fade out mesh gradient when 3D globe is ready
+  (function() {
+    var hero = document.getElementById('hero');
+    if (!hero) return;
+    hero.addEventListener('globe-ready', function() {
+      var mesh = hero.querySelector('.hero-mesh');
+      if (mesh) {
+        mesh.style.transition = 'opacity 1.5s ease';
+        mesh.style.opacity = '0';
+      }
+    });
   })();
 </script>
 
