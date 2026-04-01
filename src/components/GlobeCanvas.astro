@@ -843,8 +843,12 @@
     }
 
     let scrollFade = 1;
+    let scrollZoom = 1;
     window.addEventListener('scroll', () => {
-      scrollFade = Math.max(0.35, 1 - window.scrollY / (window.innerHeight * 1.5));
+      const scrollPct = window.scrollY / window.innerHeight;
+      scrollFade = Math.max(0.35, 1 - scrollPct / 1.5);
+      // Subtle zoom-out + upward shift on scroll — parallax depth
+      scrollZoom = Math.max(0.88, 1 - scrollPct * 0.08);
     }, { passive: true });
 
     // ── Animation Loop ──
@@ -897,9 +901,12 @@
         });
       }
 
-      // Scroll-driven opacity
+      // Scroll-driven opacity + zoom parallax
       if (scrollControlsOpacity) {
         wrap.style.opacity = String(Math.max(0, scrollFade * opacityMult));
+        const baseScale = wrap.clientWidth >= 1024 ? 1.15 : 0.85;
+        globeGroup.scale.setScalar(baseScale * scrollZoom);
+        globeGroup.position.y = (wrap.clientWidth >= 1024 ? 0.05 : 0) + (1 - scrollZoom) * 0.3;
       }
 
       renderer.render(scene, camera);
