@@ -544,14 +544,14 @@
           void main() {
             vProgress = aProgress;
             float headDist = aProgress - uHead;
-            // Wider trail (0.45 length) with smooth falloff
-            vTrail = headDist > 0.01 ? 0.0 : smoothstep(-0.45, -0.01, headDist);
-            // Bright head indicator
-            vHead = smoothstep(0.06, 0.0, abs(headDist));
+            // Longer trail (0.55 length) with smooth falloff
+            vTrail = headDist > 0.01 ? 0.0 : smoothstep(-0.55, -0.01, headDist);
+            // Bright head indicator — wider detection range
+            vHead = smoothstep(0.08, 0.0, abs(headDist));
             vec4 mv = modelViewMatrix * vec4(position, 1.0);
-            // Large head, tapered trail — arcs should be a key visual
-            float size = 3.0 + vHead * 14.0 + vTrail * 4.0;
-            gl_PointSize = max(size * (50.0 / -mv.z), 1.0);
+            // Larger head, more dramatic tapered trail
+            float size = 3.5 + vHead * 18.0 + vTrail * 5.0;
+            gl_PointSize = max(size * (55.0 / -mv.z), 1.0);
             gl_Position = projectionMatrix * mv;
           }
         `,
@@ -564,13 +564,15 @@
           void main() {
             if (vTrail <= 0.0) discard;
             float dist = length(gl_PointCoord - vec2(0.5));
-            // Soft glow falloff
-            float glow = exp(-dist * dist * 8.0);
+            // Tighter core + soft outer glow
+            float core = exp(-dist * dist * 12.0);
+            float outerGlow = exp(-dist * dist * 3.0) * 0.3;
+            float glow = core + outerGlow * vHead;
             if (glow < 0.01) discard;
             vec3 col = mix(uColorA, uColorB, vProgress);
-            // Head burns white-hot
-            col = mix(col, vec3(1.0), vHead * 0.7);
-            float alpha = glow * vTrail * (0.8 + vHead * 0.5);
+            // Head burns white-hot with brighter center
+            col = mix(col, vec3(1.0), vHead * 0.8);
+            float alpha = glow * vTrail * (0.9 + vHead * 0.6);
             gl_FragColor = vec4(col, alpha);
           }
         `,
