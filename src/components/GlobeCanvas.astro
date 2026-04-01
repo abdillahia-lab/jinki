@@ -527,7 +527,7 @@
         const key = c.join(',');
         if (!uniqueCoords.has(key)) {
           uniqueCoords.add(key);
-          markerPositions.push(latLngToVec3(c[0], c[1], 1.008));
+          markerPositions.push(latLngToVec3(c[0], c[1], 1.015));
         }
       });
     });
@@ -549,21 +549,33 @@
       vertexShader: `
         uniform float uTime;
         varying float vPulse;
+        varying float vRingRadius;
         void main() {
-          vPulse = 0.6 + sin(uTime * 1.2) * 0.4;
+          float cycle = fract(uTime * 0.4);
+          vPulse = 1.0 - cycle; // Fades as ring expands
+          vRingRadius = 0.08 + cycle * 0.38; // Ring expands outward
           vec4 mv = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = max((4.0 + sin(uTime * 1.2) * 2.0) * (50.0 / -mv.z), 2.0);
+          gl_PointSize = max(18.0 * (50.0 / -mv.z), 4.0);
           gl_Position = projectionMatrix * mv;
         }
       `,
       fragmentShader: `
         uniform vec3 uColor;
         varying float vPulse;
+        varying float vRingRadius;
         void main() {
           float dist = length(gl_PointCoord - vec2(0.5));
-          float strength = 0.06 / dist - 0.12;
-          if (strength <= 0.0) discard;
-          gl_FragColor = vec4(uColor, strength * vPulse);
+          // Bright center dot
+          float centerDot = exp(-dist * dist * 180.0) * 1.2;
+          // Expanding ring (radar ping)
+          float ringDist = abs(dist - vRingRadius);
+          float ring = exp(-ringDist * ringDist * 800.0) * vPulse * 0.8;
+          // Soft outer glow
+          float glow = 0.015 / (dist + 0.02);
+          float strength = centerDot + ring + glow;
+          if (strength < 0.02) discard;
+          vec3 col = mix(uColor, vec3(1.0), centerDot * 0.5);
+          gl_FragColor = vec4(col, strength);
         }
       `,
       transparent: true,
