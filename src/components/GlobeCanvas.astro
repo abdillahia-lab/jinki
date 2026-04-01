@@ -747,7 +747,7 @@
     });
 
     // ── Stardust Field — depth backdrop with varied brightness classes ──
-    const STAR_COUNT = 600;
+    const STAR_COUNT = 900;
     const starPos = new Float32Array(STAR_COUNT * 3);
     const starSizes = new Float32Array(STAR_COUNT);
     const starBrightness = new Float32Array(STAR_COUNT);
@@ -863,6 +863,12 @@
       if (!reducedMotion && wrap.clientWidth >= 1024) {
         const targetTiltX = mouseY * 0.15;
         globeGroup.rotation.x += (targetTiltX - globeGroup.rotation.x) * 0.04;
+      }
+
+      // Star field parallax — subtle counter-rotation for depth
+      if (!reducedMotion) {
+        stars.rotation.y -= 0.00004;
+        stars.rotation.x = globeGroup.rotation.x * 0.05;
       }
 
       // Update all time uniforms
