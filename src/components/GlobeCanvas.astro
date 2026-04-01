@@ -329,7 +329,7 @@
     const coreGeo = new THREE.IcosahedronGeometry(0.99, 32);
     const coreMat = new THREE.ShaderMaterial({
       uniforms: {
-        uColor: { value: new THREE.Color(themeColors.isLight ? '#e8eaed' : '#040410') },
+        uColor: { value: new THREE.Color(themeColors.isLight ? '#e8eaed' : '#020208') },
       },
       vertexShader: atmosVert,
       fragmentShader: `
@@ -339,7 +339,7 @@
         void main() {
           vec3 viewDir = normalize(-vPos);
           float facing = max(dot(viewDir, vNormal), 0.0);
-          float edgeLift = pow(1.0 - facing, 2.5) * 0.08;
+          float edgeLift = pow(1.0 - facing, 3.0) * 0.04;
           gl_FragColor = vec4(uColor + edgeLift, 1.0);
         }
       `,
