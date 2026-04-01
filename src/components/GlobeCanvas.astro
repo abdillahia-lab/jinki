@@ -100,7 +100,7 @@
 
     // ── Fibonacci Sphere Point Cloud ──
     const isTablet = wrap.clientWidth < 1024;
-    const DOT_COUNT = isTablet ? 6000 : 15000;
+    const DOT_COUNT = isTablet ? 8000 : 22000;
     const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
     const ANGLE_INC = Math.PI * 2 * GOLDEN_RATIO;
 
@@ -112,6 +112,33 @@
 
     const cAccent = new THREE.Color(readThemeColors().accent);
     const cSecondary = new THREE.Color(readThemeColors().accentSecondary);
+    const cTertiary = new THREE.Color('#34D399');
+
+    // Simplified land mass detection — returns 0 (ocean) to 1 (land)
+    // Uses bounding-box approximations of major continents
+    function isLand(lat: number, lng: number): number {
+      // North America
+      if (lat > 15 && lat < 72 && lng > -170 && lng < -50) return 1;
+      // South America
+      if (lat > -56 && lat < 13 && lng > -82 && lng < -34) return 1;
+      // Europe
+      if (lat > 35 && lat < 72 && lng > -12 && lng < 45) return 1;
+      // Africa
+      if (lat > -35 && lat < 37 && lng > -18 && lng < 52) return 1;
+      // Asia (broad)
+      if (lat > 0 && lat < 75 && lng > 25 && lng < 180) return 1;
+      // Russia/Siberia
+      if (lat > 50 && lat < 78 && lng > 25 && lng < 180) return 1;
+      // Australia
+      if (lat > -45 && lat < -10 && lng > 112 && lng < 155) return 1;
+      // Middle East
+      if (lat > 12 && lat < 42 && lng > 25 && lng < 63) return 1;
+      // Japan/Korea
+      if (lat > 30 && lat < 46 && lng > 124 && lng < 146) return 1;
+      // Indonesia/SE Asia
+      if (lat > -10 && lat < 20 && lng > 95 && lng < 141) return 0.7;
+      return 0;
+    }
 
     for (let i = 0; i < DOT_COUNT; i++) {
       const t = i / DOT_COUNT;
@@ -126,13 +153,34 @@
       dotPositions[i * 3 + 1] = y;
       dotPositions[i * 3 + 2] = z;
 
+      // Convert to lat/lng for land detection
+      const lat = 90 - (inclination * 180 / Math.PI);
+      const lng = (azimuth * 180 / Math.PI) % 360 - 180;
+      const landFactor = isLand(lat, lng);
+
       const noise = Math.sin(i * 0.1) * Math.cos(i * 0.07) * 0.5 + 0.5;
-      dotSizes[i] = 0.6 + noise * 0.8;
-      dotOpacities[i] = 0.25 + noise * 0.75;
+
+      // Land dots: larger, brighter, accent-colored
+      // Ocean dots: smaller, dimmer, blue-shifted
+      dotSizes[i] = landFactor > 0 ? (0.8 + noise * 1.0) : (0.3 + noise * 0.4);
+      dotOpacities[i] = landFactor > 0 ? (0.5 + noise * 0.5) * landFactor : (0.08 + noise * 0.18);
       dotPhases[i] = i * 2.399;
 
       const latFactor = Math.abs(y);
-      const c = new THREE.Color().lerpColors(cAccent, cSecondary, latFactor * 0.6 + noise * 0.2);
+      let c: THREE.Color;
+      if (landFactor > 0) {
+        // Land: accent → tertiary (green-cyan) gradient based on latitude
+        c = new THREE.Color().lerpColors(cAccent, cTertiary, latFactor * 0.4 + noise * 0.3);
+        // Add secondary (purple) near poles
+        if (latFactor > 0.6) c.lerp(cSecondary, (latFactor - 0.6) * 0.5);
+      } else {
+        // Ocean: very dim blue
+        c = new THREE.Color().lerpColors(
+          new THREE.Color('#0a1628'),
+          new THREE.Color('#0d2847'),
+          noise
+        );
+      }
       dotColors[i * 3] = c.r;
       dotColors[i * 3 + 1] = c.g;
       dotColors[i * 3 + 2] = c.b;
@@ -247,6 +295,29 @@
       depthWrite: false,
     });
     globeGroup.add(new THREE.Mesh(innerAtmosGeo, innerAtmosMat));
+
+    // ── Atmosphere — Wide cinematic halo (third layer) ──
+    const haloGeo = new THREE.IcosahedronGeometry(1.45, 32);
+    const haloMat = new THREE.ShaderMaterial({
+      uniforms: { uColor: { value: new THREE.Color(readThemeColors().accent) } },
+      vertexShader: atmosVert,
+      fragmentShader: `
+        uniform vec3 uColor;
+        varying vec3 vNormal;
+        varying vec3 vPos;
+        void main() {
+          vec3 viewDir = normalize(-vPos);
+          float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
+          float glow = pow(rim, 1.5) * 0.06;
+          gl_FragColor = vec4(uColor, glow);
+        }
+      `,
+      transparent: true,
+      side: THREE.BackSide,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    globeGroup.add(new THREE.Mesh(haloGeo, haloMat));
 
     // ── Data Arcs — Trailing particle comet effect ──
     function latLngToVec3(lat: number, lng: number, r: number) {
@@ -390,6 +461,63 @@
       depthWrite: false,
     });
     globeGroup.add(new THREE.Points(markerGeo, markerMat));
+
+    // ── Latitude Grid Rings — tactical intelligence aesthetic ──
+    const RING_LATS = [0, 23.5, -23.5, 39]; // equator, tropics, DC latitude
+    const RING_RES = 128;
+    RING_LATS.forEach((lat, ri) => {
+      const phi = (90 - lat) * (Math.PI / 180);
+      const rPos = new Float32Array(RING_RES * 3);
+      const rPhase = new Float32Array(RING_RES);
+      for (let j = 0; j < RING_RES; j++) {
+        const theta = (j / RING_RES) * Math.PI * 2;
+        const r = 1.003;
+        rPos[j * 3] = r * Math.sin(phi) * Math.cos(theta);
+        rPos[j * 3 + 1] = r * Math.cos(phi);
+        rPos[j * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
+        rPhase[j] = j / RING_RES;
+      }
+      const rGeo = new THREE.BufferGeometry();
+      rGeo.setAttribute('position', new THREE.BufferAttribute(rPos, 3));
+      rGeo.setAttribute('aPhase', new THREE.BufferAttribute(rPhase, 1));
+      const isEquator = lat === 0;
+      const isDC = lat === 39;
+      const rMat = new THREE.ShaderMaterial({
+        uniforms: {
+          uTime: { value: 0 },
+          uColor: { value: isDC
+            ? new THREE.Color(readThemeColors().accent)
+            : new THREE.Color(isEquator ? '#1a3a5c' : '#0f2840') },
+        },
+        vertexShader: `
+          attribute float aPhase;
+          uniform float uTime;
+          varying float vAlpha;
+          void main() {
+            float dash = sin(aPhase * 50.0 + uTime * 0.5) * 0.5 + 0.5;
+            vAlpha = dash * ${isDC ? '0.35' : isEquator ? '0.12' : '0.06'};
+            vec4 mv = modelViewMatrix * vec4(position, 1.0);
+            gl_PointSize = max(${isDC ? '1.8' : '1.2'} * (30.0 / -mv.z), 0.5);
+            gl_Position = projectionMatrix * mv;
+          }
+        `,
+        fragmentShader: `
+          uniform vec3 uColor;
+          varying float vAlpha;
+          void main() {
+            float dist = length(gl_PointCoord - vec2(0.5));
+            if (dist > 0.5) discard;
+            float strength = smoothstep(0.5, 0.1, dist);
+            gl_FragColor = vec4(uColor, strength * vAlpha);
+          }
+        `,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+      const ringPts = new THREE.Points(rGeo, rMat);
+      globeGroup.add(ringPts);
+    });
 
     // ── Stardust Field ──
     const STAR_COUNT = 300;
@@ -557,6 +685,8 @@
       outerAtmosMat.dispose();
       innerAtmosGeo.dispose();
       innerAtmosMat.dispose();
+      haloGeo.dispose();
+      haloMat.dispose();
       starGeo.dispose();
       starMat.dispose();
       markerGeo.dispose();
