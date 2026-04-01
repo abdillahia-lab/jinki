@@ -90,6 +90,7 @@
     const themeObserver = new MutationObserver(() => {
       themeColors = readThemeColors();
       outerAtmosMat.uniforms.uColor.value.set(themeColors.accent);
+      outerAtmosMat.uniforms.uColorSecondary.value.set(themeColors.accentSecondary);
       midAtmosMat.uniforms.uColor.value.set(themeColors.accent);
       markerMat.uniforms.uColor.value.set(themeColors.accent);
       dotMat.uniforms.uAccentColor.value.set(themeColors.accent);
@@ -365,28 +366,45 @@
 
     // ── 3-Shell Atmosphere System ──
 
-    // Shell 1: Outer halo (BackSide, 1.15r) — AdditiveBlending for dramatic rim glow
+    // Shell 1: Outer halo (BackSide, 1.15r) — two-tone gradient atmosphere
     const outerAtmosGeo = new THREE.IcosahedronGeometry(1.15, 48);
     const outerAtmosMat = new THREE.ShaderMaterial({
       uniforms: {
         uColor: { value: new THREE.Color(themeColors.accent) },
+        uColorSecondary: { value: new THREE.Color(themeColors.accentSecondary) },
         uTime: { value: 0 },
       },
-      vertexShader: atmosVertAnimated,
-      fragmentShader: `
-        uniform vec3 uColor;
+      vertexShader: `
         uniform float uTime;
         varying vec3 vNormal;
         varying vec3 vPos;
+        varying vec3 vWorldNormal;
+        void main() {
+          vNormal = normalize(normalMatrix * normal);
+          vWorldNormal = normalize(normal);
+          vPos = (modelViewMatrix * vec4(position, 1.0)).xyz;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColor;
+        uniform vec3 uColorSecondary;
+        uniform float uTime;
+        varying vec3 vNormal;
+        varying vec3 vPos;
+        varying vec3 vWorldNormal;
         void main() {
           vec3 viewDir = normalize(-vPos);
           float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
           float breathe = 1.0 + sin(uTime * 0.3) * 0.1;
+          // Two-tone gradient: primary accent at top, secondary at bottom
+          float gradient = smoothstep(-0.6, 0.6, vWorldNormal.y);
+          vec3 atmosColor = mix(uColorSecondary, uColor, gradient);
           // Concentrated bright inner rim + soft extended falloff
           float innerRim = pow(rim, 4.0) * 0.28;
           float outerFalloff = pow(rim, 1.8) * 0.04;
           float glow = (innerRim + outerFalloff) * breathe;
-          gl_FragColor = vec4(uColor * 1.2, glow);
+          gl_FragColor = vec4(atmosColor * 1.2, glow);
         }
       `,
       transparent: true,
