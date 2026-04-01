@@ -32,7 +32,7 @@
     -webkit-mask-image: linear-gradient(to right, transparent 2%, rgba(0,0,0,0.15) 18%, rgba(0,0,0,0.7) 45%, black 65%);
   }
   .globe-wrap.ready { opacity: 1; }
-  :global([data-theme="light"]) .globe-wrap.ready { opacity: 0.12; }
+  :global([data-theme="light"]) .globe-wrap.ready { opacity: 0.45; }
   #globe-canvas {
     width: 100%;
     height: 100%;
@@ -469,7 +469,8 @@
 
     let scrollFade = 1;
     window.addEventListener('scroll', () => {
-      scrollFade = Math.max(0, 1 - window.scrollY / (window.innerHeight * 0.5));
+      // Fade from 1 → 0.25 over 100vh of scroll (never fully disappears)
+      scrollFade = Math.max(0.25, 1 - window.scrollY / (window.innerHeight * 1.0));
     }, { passive: true });
 
     let visible = true;
@@ -499,7 +500,7 @@
       }
 
       const theme = readThemeColors();
-      const opacityMult = theme.isLight ? 0.18 : 1;
+      const opacityMult = theme.isLight ? 0.45 : 1;
 
       // Globe rotation
       if (!reducedMotion) {
