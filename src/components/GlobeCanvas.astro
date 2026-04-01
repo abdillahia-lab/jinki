@@ -156,7 +156,7 @@
 
     // ── Fibonacci Sphere Point Cloud ──
     const isTablet = wrap.clientWidth < 1024;
-    const DOT_COUNT = isTablet ? 10000 : 28000;
+    const DOT_COUNT = isTablet ? 14000 : 42000;
     const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
     const ANGLE_INC = Math.PI * 2 * GOLDEN_RATIO;
 
@@ -314,7 +314,7 @@
     const dotMat = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
-        uBaseSize: { value: isTablet ? 1.0 : 1.4 },
+        uBaseSize: { value: isTablet ? 0.9 : 1.2 },
         uAccentColor: { value: new THREE.Color(themeColors.accent) },
       },
       vertexShader: dotVertSrc,
