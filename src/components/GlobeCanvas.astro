@@ -348,8 +348,8 @@
 
     // ── 3-Shell Atmosphere System ──
 
-    // Shell 1: Outer halo (BackSide, 1.18r) — NormalBlending for solid shell feel
-    const outerAtmosGeo = new THREE.IcosahedronGeometry(1.18, 48);
+    // Shell 1: Outer halo (BackSide, 1.15r) — AdditiveBlending for dramatic rim glow
+    const outerAtmosGeo = new THREE.IcosahedronGeometry(1.15, 48);
     const outerAtmosMat = new THREE.ShaderMaterial({
       uniforms: {
         uColor: { value: new THREE.Color(themeColors.accent) },
@@ -364,20 +364,23 @@
         void main() {
           vec3 viewDir = normalize(-vPos);
           float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
-          float breathe = 0.15 + sin(uTime * 0.3) * 0.03;
-          float glow = pow(rim, 4.0) * breathe;
-          gl_FragColor = vec4(uColor, glow);
+          float breathe = 1.0 + sin(uTime * 0.3) * 0.1;
+          // Concentrated bright inner rim + soft extended falloff
+          float innerRim = pow(rim, 4.0) * 0.28;
+          float outerFalloff = pow(rim, 1.8) * 0.04;
+          float glow = (innerRim + outerFalloff) * breathe;
+          gl_FragColor = vec4(uColor * 1.2, glow);
         }
       `,
       transparent: true,
       side: THREE.BackSide,
-      blending: THREE.NormalBlending,
+      blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
     globeGroup.add(new THREE.Mesh(outerAtmosGeo, outerAtmosMat));
 
-    // Shell 2: Mid volume (FrontSide, 1.06r) — creates atmospheric depth
-    const midAtmosGeo = new THREE.IcosahedronGeometry(1.06, 32);
+    // Shell 2: Extended halo (BackSide, 1.25r) — wider, softer secondary glow
+    const midAtmosGeo = new THREE.IcosahedronGeometry(1.25, 32);
     const midAtmosMat = new THREE.ShaderMaterial({
       uniforms: {
         uColor: { value: new THREE.Color(themeColors.accent) },
@@ -392,19 +395,17 @@
         void main() {
           vec3 viewDir = normalize(-vPos);
           float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
-          float breathe = 0.04 + sin(uTime * 0.3 + 1.0) * 0.008;
-          float glow = pow(rim, 4.0) * breathe;
+          float breathe = 1.0 + sin(uTime * 0.3 + 1.0) * 0.1;
+          float glow = pow(rim, 5.0) * 0.12 * breathe;
           gl_FragColor = vec4(uColor, glow);
         }
       `,
       transparent: true,
-      side: THREE.FrontSide,
-      blending: THREE.NormalBlending,
+      side: THREE.BackSide,
+      blending: THREE.AdditiveBlending,
       depthWrite: false,
-    });
+    })
     globeGroup.add(new THREE.Mesh(midAtmosGeo, midAtmosMat));
-
-    // Inner subsurface removed — face wash looked amateur, dots provide all surface detail
 
     // ── Data Arcs — Trailing particle comet effect ──
     function latLngToVec3(lat: number, lng: number, r: number) {
