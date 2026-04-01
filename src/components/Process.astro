@@ -107,6 +107,7 @@ const steps = [
     border-radius: 16px;
     padding: 2rem;
     overflow: hidden;
+    box-shadow: var(--inset-highlight), var(--shadow-rest);
     transition: border-color 0.4s ease,
                 box-shadow 0.4s var(--ease-out-premium),
                 transform 0.4s var(--ease-out-premium);
@@ -119,8 +120,8 @@ const steps = [
   }
 
   .process-step:hover {
-    border-color: color-mix(in srgb, var(--accent) 15%, transparent);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 0 20px color-mix(in srgb, var(--accent) 4%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 20%, transparent);
+    box-shadow: var(--inset-highlight-strong), 0 8px 24px rgba(0, 0, 0, 0.15), 0 0 24px color-mix(in srgb, var(--accent) 6%, transparent);
     transform: translateY(-3px);
   }
 

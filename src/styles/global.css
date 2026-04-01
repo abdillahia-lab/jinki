@@ -112,6 +112,10 @@
   --shadow-elevated: 0 4px 8px rgba(0,0,0,0.12), 0 12px 28px rgba(0,0,0,0.16);
   --shadow-floating: 0 12px 28px rgba(0,0,0,0.15), 0 24px 56px rgba(0,0,0,0.2);
 
+  /* Inset highlight — pressed-metal feel (Apple/Linear standard) */
+  --inset-highlight: inset 0 1px 0 rgba(255,255,255,0.08);
+  --inset-highlight-strong: inset 0 1px 0 rgba(255,255,255,0.14);
+
   /* Transitions */
   --theme-transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
 
@@ -246,8 +250,8 @@ h2 {
   font-family: var(--font-headline);
   text-wrap: balance;
   font-weight: 700;
-  line-height: 1.12;
-  letter-spacing: -0.02em;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
   color: var(--text-primary);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
@@ -269,7 +273,8 @@ p {
   color: var(--text-secondary);
   font-family: var(--font-body);
   text-wrap: pretty;
-  line-height: 1.65;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
 }
 
 a {
@@ -351,9 +356,13 @@ html {
   font-size: 0.6875rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: var(--accent);
   line-height: 1;
+  text-shadow: 0 0 20px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+[data-theme="light"] .section-eyebrow {
+  text-shadow: none;
 }
 
 /* --- Skip to Content --- */
@@ -396,7 +405,7 @@ html {
   -webkit-backdrop-filter: blur(24px) saturate(1.8);
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  box-shadow: var(--inset-highlight), var(--glass-shadow);
   position: relative;
 }
 
@@ -425,7 +434,7 @@ html {
 [data-theme="light"] .glass-panel {
   background: var(--glass-bg);
   border-color: var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), var(--glass-shadow);
 }
 
 /* --- Metallic Gloss --- */
@@ -471,15 +480,21 @@ html {
 .btn-premium {
   position: relative;
   overflow: hidden;
+  box-shadow: var(--inset-highlight-strong), 0 4px 20px color-mix(in srgb, var(--accent) 15%, transparent);
   transition: transform 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
               box-shadow 0.35s var(--ease-out-premium, cubic-bezier(0.16, 1, 0.3, 1)),
               background 0.3s ease;
 }
 .btn-premium:hover {
   transform: translateY(-2px);
+  box-shadow: var(--inset-highlight-strong),
+    0 8px 32px color-mix(in srgb, var(--accent) 30%, transparent),
+    0 2px 8px color-mix(in srgb, var(--accent) 15%, transparent);
 }
 .btn-premium:active {
   transform: translateY(0);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2),
+    0 2px 12px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 .btn-premium::before {
@@ -555,9 +570,9 @@ html { scrollbar-width: thin; scrollbar-color: var(--text-tertiary) var(--bg-pri
 /* --- Scroll Reveal --- */
 .reveal {
   opacity: 0;
-  transform: translateY(28px) scale(0.98);
-  transition: opacity 0.9s var(--ease-out-premium),
-              transform 0.9s var(--ease-out-premium);
+  transform: translateY(24px);
+  transition: opacity 1s var(--ease-out-premium),
+              transform 1s var(--ease-out-premium);
   will-change: opacity, transform;
 }
 
