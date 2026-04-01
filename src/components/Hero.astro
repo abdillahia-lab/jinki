@@ -520,8 +520,8 @@ import GlobeCanvas from './GlobeCanvas.astro';
     hero.addEventListener('globe-ready', function() {
       var mesh = hero.querySelector('.hero-mesh');
       if (mesh) {
-        mesh.style.transition = 'opacity 1.5s ease';
-        mesh.style.opacity = '0';
+        mesh.style.setProperty('animation', 'none', 'important');
+        mesh.style.setProperty('opacity', '0', 'important');
       }
     });
   })();
