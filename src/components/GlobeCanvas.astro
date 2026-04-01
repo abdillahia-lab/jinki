@@ -843,6 +843,69 @@
     const stars = new THREE.Points(starGeo, starMat);
     scene.add(stars);
 
+    // ── Ambient Dust Particles — depth + scale cues near globe ──
+    const DUST_COUNT = 120;
+    const dustPos = new Float32Array(DUST_COUNT * 3);
+    const dustSizes = new Float32Array(DUST_COUNT);
+    const dustDrift = new Float32Array(DUST_COUNT * 3); // velocity vectors
+    for (let i = 0; i < DUST_COUNT; i++) {
+      // Distribute in a shell around the globe (1.2r to 2.2r)
+      const r = 1.2 + Math.random() * 1.0;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+      dustPos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      dustPos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      dustPos[i * 3 + 2] = r * Math.cos(phi);
+      dustSizes[i] = 0.5 + Math.random() * 1.5;
+      // Slow random drift direction
+      dustDrift[i * 3] = (Math.random() - 0.5) * 0.003;
+      dustDrift[i * 3 + 1] = (Math.random() - 0.5) * 0.002;
+      dustDrift[i * 3 + 2] = (Math.random() - 0.5) * 0.003;
+    }
+    const dustGeo = new THREE.BufferGeometry();
+    dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
+    dustGeo.setAttribute('aSize', new THREE.BufferAttribute(dustSizes, 1));
+    dustGeo.setAttribute('aDrift', new THREE.BufferAttribute(dustDrift, 3));
+    const dustMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uColor: { value: new THREE.Color(themeColors.accent) },
+      },
+      vertexShader: `
+        attribute float aSize;
+        attribute vec3 aDrift;
+        uniform float uTime;
+        varying float vAlpha;
+        void main() {
+          // Slow orbital drift
+          vec3 pos = position + aDrift * uTime;
+          // Gentle bobbing
+          pos.y += sin(uTime * 0.5 + position.x * 10.0) * 0.01;
+          vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+          float depth = -mv.z;
+          // Fade by distance from camera
+          vAlpha = smoothstep(3.5, 1.5, depth) * 0.25;
+          gl_PointSize = max(aSize * (15.0 / depth), 0.5);
+          gl_Position = projectionMatrix * mv;
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColor;
+        varying float vAlpha;
+        void main() {
+          float dist = length(gl_PointCoord - vec2(0.5));
+          float glow = exp(-dist * dist * 18.0);
+          if (glow < 0.02) discard;
+          gl_FragColor = vec4(uColor * 0.6 + vec3(0.4), glow * vAlpha);
+        }
+      `,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const dustParticles = new THREE.Points(dustGeo, dustMat);
+    globeGroup.add(dustParticles);
+
     // ── Positioning ──
     function positionGlobe() {
       if (wrap.clientWidth >= 1024) {
@@ -915,6 +978,7 @@
       midAtmosMat.uniforms.uTime.value = time;
       innerRimMat.uniforms.uTime.value = time;
       ringRefs.forEach(r => { r.mat.uniforms.uTime.value = time; });
+      dustMat.uniforms.uTime.value = time;
 
       // Arc comet animation
       if (!reducedMotion) {
@@ -990,6 +1054,8 @@
       starMat.dispose();
       markerGeo.dispose();
       markerMat.dispose();
+      dustGeo.dispose();
+      dustMat.dispose();
       ringRefs.forEach(r => { r.geo.dispose(); r.mat.dispose(); });
       arcSystems.forEach(({ points }) => {
         points.geometry.dispose();
