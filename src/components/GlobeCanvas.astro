@@ -92,6 +92,7 @@
       outerAtmosMat.uniforms.uColor.value.set(themeColors.accent);
       outerAtmosMat.uniforms.uColorSecondary.value.set(themeColors.accentSecondary);
       midAtmosMat.uniforms.uColor.value.set(themeColors.accent);
+      innerRimMat.uniforms.uColor.value.set(themeColors.accent);
       markerMat.uniforms.uColor.value.set(themeColors.accent);
       dotMat.uniforms.uAccentColor.value.set(themeColors.accent);
     });
@@ -441,6 +442,36 @@
       depthWrite: false,
     })
     globeGroup.add(new THREE.Mesh(midAtmosGeo, midAtmosMat));
+
+    // Shell 3: Inner rim boundary (FrontSide, 1.002r) — crisp atmosphere edge
+    const innerRimGeo = new THREE.IcosahedronGeometry(1.002, 48);
+    const innerRimMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uColor: { value: new THREE.Color(themeColors.accent) },
+        uTime: { value: 0 },
+      },
+      vertexShader: atmosVertAnimated,
+      fragmentShader: `
+        uniform vec3 uColor;
+        uniform float uTime;
+        varying vec3 vNormal;
+        varying vec3 vPos;
+        void main() {
+          vec3 viewDir = normalize(-vPos);
+          float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
+          float breathe = 1.0 + sin(uTime * 0.3 + 0.5) * 0.08;
+          // Very concentrated at edge only — no face contribution
+          float glow = pow(rim, 8.0) * 0.55 * breathe;
+          gl_FragColor = vec4(uColor * 1.4, glow);
+        }
+      `,
+      transparent: true,
+      side: THREE.FrontSide,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const innerRimMesh = new THREE.Mesh(innerRimGeo, innerRimMat);
+    globeGroup.add(innerRimMesh);
 
     // ── Data Arcs — Trailing particle comet effect ──
     function latLngToVec3(lat: number, lng: number, r: number) {
@@ -796,6 +827,7 @@
       starMat.uniforms.uTime.value = time;
       outerAtmosMat.uniforms.uTime.value = time;
       midAtmosMat.uniforms.uTime.value = time;
+      innerRimMat.uniforms.uTime.value = time;
       ringRefs.forEach(r => { r.mat.uniforms.uTime.value = time; });
 
       // Arc comet animation
@@ -852,6 +884,8 @@
       outerAtmosMat.dispose();
       midAtmosGeo.dispose();
       midAtmosMat.dispose();
+      innerRimGeo.dispose();
+      innerRimMat.dispose();
       starGeo.dispose();
       starMat.dispose();
       markerGeo.dispose();
