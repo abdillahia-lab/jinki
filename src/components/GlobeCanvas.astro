@@ -92,6 +92,7 @@
       outerAtmosMat.uniforms.uColor.value.set(themeColors.accent);
       midAtmosMat.uniforms.uColor.value.set(themeColors.accent);
       markerMat.uniforms.uColor.value.set(themeColors.accent);
+      dotMat.uniforms.uAccentColor.value.set(themeColors.accent);
     });
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
@@ -234,9 +235,11 @@
       attribute vec3 aColor;
       uniform float uTime;
       uniform float uBaseSize;
+      uniform vec3 uAccentColor;
       varying float vOpacity;
       varying vec3 vColor;
       varying float vScanBoost;
+      varying float vFresnel;
       void main() {
         vColor = aColor;
         float breath = sin(uTime * 0.3 + aPhase) * 0.025;
@@ -252,6 +255,8 @@
         float rimFade = smoothstep(-0.05, 0.25, facing);
         // Darken center-facing dots, keep edges bright
         float faceDim = 0.15 + 0.85 * pow(1.0 - facing, 0.55);
+        // Fresnel — edge dots tint toward accent (atmospheric scattering)
+        vFresnel = pow(1.0 - max(facing, 0.0), 2.2);
         // Depth fog — far dots fade for spatial depth cue
         float depthFog = smoothstep(4.2, 2.0, depth);
         // Scanning sweep — dramatic rotating light band with trailing afterglow
@@ -272,9 +277,11 @@
 
     // ── Dot Fragment Shader — anti-aliased bokeh (adaptive Gaussian + inverse-square halo) ──
     const dotFragSrc = `
+      uniform vec3 uAccentColor;
       varying float vOpacity;
       varying vec3 vColor;
       varying float vScanBoost;
+      varying float vFresnel;
       void main() {
         float dist = length(gl_PointCoord - vec2(0.5));
         if (dist > 0.55) discard;
@@ -287,8 +294,10 @@
         halo *= smoothstep(0.0, 0.18, dist);
         float strength = core * 0.8 + max(halo, 0.0) * 0.3 * aaRim;
         if (strength < 0.005) discard;
+        // Fresnel atmospheric scattering — edge dots tint toward accent
+        vec3 baseCol = mix(vColor, uAccentColor, vFresnel * 0.45);
         // Scan sweep adds brightness + white shift
-        vec3 col = mix(vColor, vec3(1.0), vScanBoost * 0.4);
+        vec3 col = mix(baseCol, vec3(1.0), vScanBoost * 0.4);
         float alpha = strength * (vOpacity + vScanBoost);
         gl_FragColor = vec4(col, alpha);
       }
@@ -298,6 +307,7 @@
       uniforms: {
         uTime: { value: 0 },
         uBaseSize: { value: isTablet ? 1.0 : 1.4 },
+        uAccentColor: { value: new THREE.Color(themeColors.accent) },
       },
       vertexShader: dotVertSrc,
       fragmentShader: dotFragSrc,
