@@ -190,24 +190,34 @@
       const y = Math.cos(inclination);
       const z = Math.sin(inclination) * Math.sin(azimuth);
 
-      // Micro-jitter — organic radial displacement for natural terrain feel
-      const jitterSeed = Math.sin(i * 127.1) * Math.cos(i * 311.7);
-      const jitter = 1.0 + jitterSeed * 0.008; // ±0.8% radial variation
-      dotPositions[i * 3] = x * jitter;
-      dotPositions[i * 3 + 1] = y * jitter;
-      dotPositions[i * 3 + 2] = z * jitter;
-
       const lat = 90 - (inclination * 180 / Math.PI);
       const lng = (azimuth * 180 / Math.PI) % 360 - 180;
       const landFactor = isLand(lat, lng);
 
+      // Topographic elevation — land sits above ocean for 3D terrain relief
+      const jitterSeed = Math.sin(i * 127.1) * Math.cos(i * 311.7);
+      const jitterNoise = jitterSeed * 0.004; // ±0.4% micro-variation
+      let elevation: number;
+      const isCoast = landFactor > 0.5 && isCoastal(lat, lng);
+      if (isCoast) {
+        elevation = 1.012 + jitterNoise; // Coastal shelf — highest points
+      } else if (landFactor > 0.5) {
+        // Land — slight variation for mountain/valley feel
+        const terrainHeight = (Math.sin(i * 0.23) * Math.cos(i * 0.41) * 0.5 + 0.5);
+        elevation = 1.005 + terrainHeight * 0.006 + jitterNoise;
+      } else {
+        elevation = 1.0 + jitterNoise * 0.5; // Ocean — at base radius
+      }
+      dotPositions[i * 3] = x * elevation;
+      dotPositions[i * 3 + 1] = y * elevation;
+      dotPositions[i * 3 + 2] = z * elevation;
+
       const noise = Math.sin(i * 0.1) * Math.cos(i * 0.07) * 0.5 + 0.5;
-      const coastal = landFactor > 0.5 && isCoastal(lat, lng);
       // Equatorial brightness boost — data activity peaks near equator
       const latBrightness = 1.0 - Math.abs(lat) / 90 * 0.2; // 1.0 at equator, 0.8 at poles
 
       // Dot hierarchy: coastal (bright edges) > land (medium) > ocean (dim)
-      if (coastal) {
+      if (isCoast) {
         dotSizes[i] = 1.4 + noise * 0.5;
         dotOpacities[i] = 1.0 * latBrightness;
       } else if (landFactor > 0.5) {
@@ -223,7 +233,7 @@
 
       const latFactor = Math.abs(y);
       let c: THREE.Color;
-      if (coastal) {
+      if (isCoast) {
         c = new THREE.Color().lerpColors(cAccent, new THREE.Color('#ffffff'), 0.35);
       } else if (landFactor > 0.5) {
         // Terrain variation: noise-driven blend between accent, green, and warm gold
