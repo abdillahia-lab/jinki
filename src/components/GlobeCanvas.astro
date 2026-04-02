@@ -95,6 +95,10 @@
       innerRimMat.uniforms.uColor.value.set(themeColors.accent);
       markerMat.uniforms.uColor.value.set(themeColors.accent);
       dotMat.uniforms.uAccentColor.value.set(themeColors.accent);
+      beamMat.uniforms.uColor.value.set(themeColors.accent);
+      coreMat.uniforms.uAccent.value.set(themeColors.accent);
+      coreMat.uniforms.uColor.value.set(themeColors.isLight ? '#e8eaed' : '#020208');
+      dustMat.uniforms.uColor.value.set(themeColors.accent);
     });
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
