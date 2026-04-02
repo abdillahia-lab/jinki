@@ -1161,11 +1161,14 @@
 
     let scrollFade = 1;
     let scrollZoom = 1;
+    let scrollRotMult = 1;
     window.addEventListener('scroll', () => {
       const scrollPct = window.scrollY / window.innerHeight;
       scrollFade = Math.max(0.35, 1 - scrollPct / 1.5);
       // Subtle zoom-out + upward shift on scroll — parallax depth
       scrollZoom = Math.max(0.88, 1 - scrollPct * 0.08);
+      // Rotation deceleration on scroll — globe "pauses" as user reads content
+      scrollRotMult = Math.max(0.1, 1 - scrollPct * 0.7);
     }, { passive: true });
 
     // ── Animation Loop ──
@@ -1186,8 +1189,8 @@
         // Wind-up: rotation starts slow, reaches full speed over 3 seconds
         const windUp = Math.min(time / 3.0, 1.0);
         const windUpEase = windUp * windUp * (3 - 2 * windUp); // smoothstep
-        const baseSpeed = 0.0008 * windUpEase;
-        const mouseSpeedMod = wrap.clientWidth >= 1024 ? mouseX * 0.0006 * windUpEase : 0;
+        const baseSpeed = 0.0008 * windUpEase * scrollRotMult;
+        const mouseSpeedMod = wrap.clientWidth >= 1024 ? mouseX * 0.0006 * windUpEase * scrollRotMult : 0;
         globeGroup.rotation.y += baseSpeed + mouseSpeedMod;
       }
 
