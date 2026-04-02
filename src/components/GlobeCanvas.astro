@@ -304,6 +304,7 @@
       varying float vFresnel;
       varying float vSunLight;
       varying float vCityGlow;
+      varying float vTerminator;
       void main() {
         vColor = aColor;
         float breath = sin(uTime * 0.3 + aPhase) * 0.025;
@@ -326,6 +327,9 @@
         float sunDot = dot(posNorm, sunDir);
         // Sharper terminator transition — tighter smoothstep for visible day/night line
         vSunLight = smoothstep(-0.15, 0.5, sunDot);
+        // Terminator glow — atmospheric scattering at the day/night boundary
+        // Peak brightness where sunDot ≈ 0.1 (just past the terminator edge)
+        vTerminator = exp(-(sunDot - 0.1) * (sunDot - 0.1) / 0.025) * 0.8;
         // Depth fog — far dots fade for spatial depth cue
         float depthFog = smoothstep(4.2, 2.0, depth);
         // Primary scanning sweep — dramatic rotating light band
@@ -346,6 +350,8 @@
         vScanBoost = scanRaw * max(facing, 0.15);
         // Dramatic hemisphere split — 50% brightness differential for cinematic day/night
         float sunBoost = 0.5 + vSunLight * 0.5;
+        // Terminator line boost — dots at the boundary glow brighter
+        sunBoost += vTerminator;
         // City glow — warm light pools visible especially on shadow side (night lights)
         vCityGlow = aCityGlow * (1.0 - vSunLight * 0.6); // Stronger on night side
         float cityBoost = 1.0 + vCityGlow * 2.5; // Cities glow 2.5x brighter
@@ -365,6 +371,7 @@
       varying float vFresnel;
       varying float vSunLight;
       varying float vCityGlow;
+      varying float vTerminator;
       void main() {
         float dist = length(gl_PointCoord - vec2(0.5));
         if (dist > 0.55) discard;
@@ -387,6 +394,9 @@
         float desat = 1.0 - (1.0 - vSunLight) * 0.25;
         float lum = dot(baseCol, vec3(0.299, 0.587, 0.114));
         baseCol = mix(vec3(lum), baseCol, desat);
+        // Terminator glow — warm amber tint at the day/night boundary
+        vec3 terminatorColor = vec3(1.0, 0.7, 0.3); // Sunrise/sunset amber
+        baseCol = mix(baseCol, terminatorColor, vTerminator * 0.5);
         // City glow — warm golden-white tint for night-side city lights
         vec3 cityWarm = vec3(1.0, 0.92, 0.75); // Warm incandescent
         baseCol = mix(baseCol, cityWarm, vCityGlow * 0.6);
