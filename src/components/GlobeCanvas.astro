@@ -648,6 +648,10 @@
           vec3 finalColor = caColor * 1.2 + vec3(1.0) * specRim * 0.5;
           finalColor = mix(finalColor, terminatorWarm, terminatorGlow * 0.4);
           glow += terminatorGlow * 0.3;
+          // Shadow-side atmosphere dimming — less light scattering on night hemisphere
+          float atmosSunFade = smoothstep(-0.4, 0.3, sunDot);
+          float shadowDim = 0.4 + atmosSunFade * 0.6; // Night side at 40%, day side at 100%
+          glow *= shadowDim;
           gl_FragColor = vec4(finalColor, glow);
         }
       `,
@@ -694,6 +698,10 @@
           float scanDist = mod(scanAngle - sweepAngle + 6.28318, 6.28318);
           float sweepBoost = smoothstep(0.7, 0.0, scanDist) * 0.3;
           float glow = pow(rim, 4.0) * (0.16 + sweepBoost * rim) * breathe;
+          // Shadow-side dimming on extended halo
+          vec3 sunDir = normalize(vec3(0.6, 0.4, 0.8));
+          float sunDot = dot(normalize(vWorldPos), sunDir);
+          glow *= 0.35 + smoothstep(-0.4, 0.3, sunDot) * 0.65;
           gl_FragColor = vec4(uColor, glow);
         }
       `,
@@ -750,6 +758,9 @@
           vec3 sunDir = normalize(vec3(0.6, 0.4, 0.8));
           float sunHorizon = max(dot(normalize(vWorldPos), sunDir), 0.0);
           float sunBright = 1.0 + sunHorizon * 0.4;
+          // Shadow-side dimming on inner rim
+          float sunDot = dot(normalize(vWorldPos), sunDir);
+          glow *= 0.45 + smoothstep(-0.3, 0.3, sunDot) * 0.55;
           gl_FragColor = vec4(razorColor * (1.0 + sweepFlash * 0.6) * sunBright, glow);
         }
       `,
