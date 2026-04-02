@@ -357,7 +357,9 @@
         float cityBoost = 1.0 + vCityGlow * 2.5; // Cities glow 2.5x brighter
         vOpacity = aOpacity * backFade * rimFade * depthFog * max(faceDim, vScanBoost * 1.5) * sunBoost * cityBoost;
         float citySize = 1.0 + vCityGlow * 0.8; // Cities slightly larger
-        gl_PointSize = max(aSize * uBaseSize * (20.0 / depth) * (1.0 + vScanBoost * 0.6) * citySize, 0.5);
+        // Enhanced depth-based size attenuation — stronger perspective foreshortening
+        float depthSize = 22.0 / (depth * depth * 0.35 + depth * 0.65);
+        gl_PointSize = max(aSize * uBaseSize * depthSize * (1.0 + vScanBoost * 0.6) * citySize, 0.5);
         gl_Position = projectionMatrix * mv;
       }
     `;
