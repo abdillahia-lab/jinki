@@ -187,9 +187,12 @@
       const y = Math.cos(inclination);
       const z = Math.sin(inclination) * Math.sin(azimuth);
 
-      dotPositions[i * 3] = x;
-      dotPositions[i * 3 + 1] = y;
-      dotPositions[i * 3 + 2] = z;
+      // Micro-jitter — organic radial displacement for natural terrain feel
+      const jitterSeed = Math.sin(i * 127.1) * Math.cos(i * 311.7);
+      const jitter = 1.0 + jitterSeed * 0.008; // ±0.8% radial variation
+      dotPositions[i * 3] = x * jitter;
+      dotPositions[i * 3 + 1] = y * jitter;
+      dotPositions[i * 3 + 2] = z * jitter;
 
       const lat = 90 - (inclination * 180 / Math.PI);
       const lng = (azimuth * 180 / Math.PI) % 360 - 180;
