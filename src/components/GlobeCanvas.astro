@@ -197,14 +197,16 @@
 
       const noise = Math.sin(i * 0.1) * Math.cos(i * 0.07) * 0.5 + 0.5;
       const coastal = landFactor > 0.5 && isCoastal(lat, lng);
+      // Equatorial brightness boost — data activity peaks near equator
+      const latBrightness = 1.0 - Math.abs(lat) / 90 * 0.2; // 1.0 at equator, 0.8 at poles
 
       // Dot hierarchy: coastal (bright edges) > land (medium) > ocean (dim)
       if (coastal) {
         dotSizes[i] = 1.4 + noise * 0.5;
-        dotOpacities[i] = 1.0;
+        dotOpacities[i] = 1.0 * latBrightness;
       } else if (landFactor > 0.5) {
         dotSizes[i] = 0.85 + noise * 0.6;
-        dotOpacities[i] = 0.50 + noise * 0.2;
+        dotOpacities[i] = (0.50 + noise * 0.2) * latBrightness;
       } else {
         dotSizes[i] = 0.08 + noise * 0.08;
         dotOpacities[i] = 0.008 + noise * 0.012;
