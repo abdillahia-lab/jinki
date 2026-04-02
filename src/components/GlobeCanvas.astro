@@ -990,10 +990,19 @@
         uniform float uTime;
         varying float vAlpha;
         void main() {
-          // Slow orbital drift
-          vec3 pos = position + aDrift * uTime;
-          // Gentle bobbing
-          pos.y += sin(uTime * 0.5 + position.x * 10.0) * 0.01;
+          // True orbital motion — rotate around Y axis at unique speed + wobble
+          float orbitSpeed = aDrift.x * 80.0; // use drift.x as orbit speed seed
+          float wobbleSpeed = aDrift.z * 60.0;
+          float angle = uTime * orbitSpeed;
+          float wobble = sin(uTime * wobbleSpeed + position.y * 5.0) * 0.03;
+          // Rotate position around Y axis
+          float cosA = cos(angle);
+          float sinA = sin(angle);
+          vec3 pos = vec3(
+            position.x * cosA - position.z * sinA,
+            position.y + wobble,
+            position.x * sinA + position.z * cosA
+          );
           vec4 mv = modelViewMatrix * vec4(pos, 1.0);
           float depth = -mv.z;
           // Fade by distance from camera
