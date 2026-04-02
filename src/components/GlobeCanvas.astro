@@ -221,9 +221,14 @@
       const latFactor = Math.abs(y);
       let c: THREE.Color;
       if (coastal) {
-        c = new THREE.Color().lerpColors(cAccent, new THREE.Color('#ffffff'), 0.3);
+        c = new THREE.Color().lerpColors(cAccent, new THREE.Color('#ffffff'), 0.35);
       } else if (landFactor > 0.5) {
+        // Terrain variation: noise-driven blend between accent, green, and warm gold
+        const terrainNoise = Math.sin(i * 0.37) * Math.cos(i * 0.19) * 0.5 + 0.5;
+        const warmGold = new THREE.Color('#D4A843');
         c = new THREE.Color().lerpColors(cAccent, cTertiary, latFactor * 0.35 + noise * 0.25);
+        // Desert/arid regions get warm gold tint at lower latitudes
+        if (latFactor < 0.4 && terrainNoise > 0.6) c.lerp(warmGold, (terrainNoise - 0.6) * 0.3);
         if (latFactor > 0.55) c.lerp(cSecondary, (latFactor - 0.55) * 0.6);
       } else {
         c = new THREE.Color().lerpColors(
