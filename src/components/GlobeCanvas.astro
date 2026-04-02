@@ -885,8 +885,11 @@
             float headDist = aProgress - uHead;
             // Longer trail (0.55 length) with smooth falloff
             float activeTrail = headDist > 0.01 ? 0.0 : smoothstep(-0.55, -0.01, headDist);
-            // Faint ghost trail behind the comet — persistent route visibility
-            float ghostTrail = headDist < -0.01 ? 0.06 : 0.0;
+            // Ghost trail — persistent route path showing network topology
+            // Parabolic falloff: brighter near endpoints, dimmer at arc apex
+            float ghostBase = 0.16;
+            float endpointBoost = (1.0 - 4.0 * (aProgress - 0.5) * (aProgress - 0.5)) * 0.06;
+            float ghostTrail = headDist < -0.01 ? ghostBase - endpointBoost : 0.0;
             vTrail = max(activeTrail, ghostTrail);
             // Bright head indicator — wider detection range
             vHead = smoothstep(0.08, 0.0, abs(headDist));
@@ -898,7 +901,7 @@
             vec4 mv = modelViewMatrix * vec4(position, 1.0);
             // Dramatic tapered trail: huge blazing head → thin tail
             float trailTaper = pow(activeTrail, 0.6); // wider near head, thin at tail
-            float size = 2.5 + vHead * 24.0 + trailTaper * 7.0 + ghostTrail * 1.5 + vArrival * 18.0;
+            float size = 2.5 + vHead * 24.0 + trailTaper * 7.0 + ghostTrail * 3.0 + vArrival * 18.0;
             gl_PointSize = max(size * (55.0 / -mv.z), 1.0);
             gl_Position = projectionMatrix * mv;
           }
