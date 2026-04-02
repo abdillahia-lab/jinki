@@ -412,11 +412,20 @@
                   + noise3D(vWorldPos * 8.0 - uTime * 0.01) * 0.25;
           // Very subtle accent tint at edges through the noise
           vec3 noiseTint = mix(uColor, uAccent * 0.15, n * pow(1.0 - facing, 2.0) * 0.3);
+          // Scanning sweep illumination on core surface
+          float scanAngle = atan(vWorldPos.x, vWorldPos.z);
+          float sweepAngle = mod(uTime * 0.4, 6.28318);
+          float scanDist = mod(scanAngle - sweepAngle + 6.28318, 6.28318);
+          float sweepGlow = smoothstep(0.5, 0.0, scanDist) * 0.06
+                          + smoothstep(1.6, 0.2, scanDist) * 0.02;
+          // Sweep only visible on face-facing parts (not backside)
+          sweepGlow *= facing;
+          vec3 sweepColor = uAccent * sweepGlow;
           // Specular highlight — glossy sphere reflection from upper-right light
           vec3 lightDir = normalize(vec3(0.5, 0.8, 0.6));
           vec3 halfVec = normalize(lightDir + viewDir);
           float spec = pow(max(dot(vNormal, halfVec), 0.0), 64.0) * 0.08;
-          gl_FragColor = vec4(noiseTint + edgeLift + spec, 1.0);
+          gl_FragColor = vec4(noiseTint + edgeLift + spec + sweepColor, 1.0);
         }
       `,
       transparent: false,
