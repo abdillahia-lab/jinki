@@ -181,6 +181,9 @@
     const cSecondary = new THREE.Color(themeColors.accentSecondary);
     const cTertiary = new THREE.Color('#34D399');
 
+    // Utility: clamp 0-1 with smooth edges
+    function smoothClamp(t: number) { return Math.max(0, Math.min(1, t)); }
+
     // Major city coordinates for night-side city glow hotspots
     const cityCoords = [
       [40.7, -74.0], [51.5, -0.1], [35.7, 139.7], [22.3, 114.2],   // NYC, London, Tokyo, HK
@@ -261,6 +264,17 @@
           noise
         );
       }
+      // Polar ice caps — white bright dots at high latitudes (>65°)
+      const absLat = Math.abs(lat);
+      if (absLat > 65) {
+        const polarFactor = smoothClamp((absLat - 65) / 20); // 0 at 65°, 1 at 85°
+        const iceWhite = new THREE.Color('#d8e8f8'); // Cold blue-white
+        c.lerp(iceWhite, polarFactor * 0.7);
+        // Ice caps glow brighter — high reflectivity
+        dotOpacities[i] = Math.max(dotOpacities[i], (0.4 + polarFactor * 0.5) * (landFactor > 0.3 ? 1.0 : 0.6));
+        dotSizes[i] = Math.max(dotSizes[i], 0.6 + polarFactor * 0.5);
+      }
+
       dotColors[i * 3] = c.r;
       dotColors[i * 3 + 1] = c.g;
       dotColors[i * 3 + 2] = c.b;
