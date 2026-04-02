@@ -821,6 +821,7 @@
           varying float vProgress;
           varying float vTrail;
           varying float vHead;
+          varying float vArrival;
           void main() {
             vProgress = aProgress;
             float headDist = aProgress - uHead;
@@ -831,10 +832,15 @@
             vTrail = max(activeTrail, ghostTrail);
             // Bright head indicator — wider detection range
             vHead = smoothstep(0.08, 0.0, abs(headDist));
+            // Arrival flash — endpoint dots bloom when comet arrives
+            float arrivalProximity = smoothstep(0.15, 0.0, 1.0 - aProgress); // last 15% of arc
+            float arrivalMoment = smoothstep(0.82, 0.95, uHead) * smoothstep(1.0, 0.97, uHead); // brief peak near arrival
+            vArrival = arrivalProximity * arrivalMoment;
+            vTrail = max(vTrail, vArrival * 0.8);
             vec4 mv = modelViewMatrix * vec4(position, 1.0);
             // Dramatic tapered trail: huge blazing head → thin tail
             float trailTaper = pow(activeTrail, 0.6); // wider near head, thin at tail
-            float size = 2.5 + vHead * 24.0 + trailTaper * 7.0 + ghostTrail * 1.5;
+            float size = 2.5 + vHead * 24.0 + trailTaper * 7.0 + ghostTrail * 1.5 + vArrival * 18.0;
             gl_PointSize = max(size * (55.0 / -mv.z), 1.0);
             gl_Position = projectionMatrix * mv;
           }
@@ -845,18 +851,23 @@
           varying float vProgress;
           varying float vTrail;
           varying float vHead;
+          varying float vArrival;
           void main() {
             if (vTrail <= 0.0) discard;
             float dist = length(gl_PointCoord - vec2(0.5));
             // Tighter core + soft outer glow
             float core = exp(-dist * dist * 12.0);
             float outerGlow = exp(-dist * dist * 3.0) * 0.3;
-            float glow = core + outerGlow * vHead;
+            // Arrival flash has wider, softer bloom
+            float arrivalBloom = exp(-dist * dist * 4.0) * vArrival;
+            float glow = core + outerGlow * vHead + arrivalBloom;
             if (glow < 0.01) discard;
             vec3 col = mix(uColorA, uColorB, vProgress);
             // Head burns white-hot with intense center
             col = mix(col, vec3(1.0), vHead * 0.9);
-            float alpha = glow * vTrail * (0.85 + vHead * 0.8);
+            // Arrival flash burns bright white
+            col = mix(col, vec3(1.0, 0.95, 0.85), vArrival * 0.7);
+            float alpha = glow * vTrail * (0.85 + vHead * 0.8 + vArrival * 0.6);
             gl_FragColor = vec4(col, alpha);
           }
         `,
