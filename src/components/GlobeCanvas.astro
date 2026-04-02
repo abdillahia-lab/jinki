@@ -96,6 +96,7 @@
       markerMat.uniforms.uColor.value.set(themeColors.accent);
       dotMat.uniforms.uAccentColor.value.set(themeColors.accent);
       beamMat.uniforms.uColor.value.set(themeColors.accent);
+      beam2Mat.uniforms.uColor.value.set(themeColors.accentSecondary);
       coreMat.uniforms.uAccent.value.set(themeColors.accent);
       coreMat.uniforms.uColor.value.set(themeColors.isLight ? '#e8eaed' : '#020208');
       dustMat.uniforms.uColor.value.set(themeColors.accent);
@@ -1009,6 +1010,55 @@
     const beamPts = new THREE.Points(beamGeo, beamMat);
     globeGroup.add(beamPts);
 
+    // ── Secondary Radar Beam — counter-rotating, dimmer ──
+    const beam2Geo = new THREE.BufferGeometry();
+    beam2Geo.setAttribute('position', new THREE.BufferAttribute(beamPos.slice(), 3));
+    beam2Geo.setAttribute('aPhase', new THREE.BufferAttribute(beamPhase.slice(), 1));
+    const beam2Mat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uColor: { value: new THREE.Color(themeColors.accentSecondary) },
+      },
+      vertexShader: `
+        attribute float aPhase;
+        uniform float uTime;
+        varying float vAlpha;
+        void main() {
+          float angle = mod(-uTime * 0.25, 6.28318);
+          float cosA = cos(angle);
+          float sinA = sin(angle);
+          vec3 pos = vec3(
+            position.z * sinA,
+            position.y,
+            position.z * cosA
+          );
+          vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+          vec3 viewDir = vec3(0.0, 0.0, 1.0);
+          float facing = dot(normalize(pos), viewDir);
+          vAlpha = smoothstep(-0.1, 0.3, facing) * 0.25;
+          float poleFade = smoothstep(0.0, 0.15, aPhase) * smoothstep(1.0, 0.85, aPhase);
+          vAlpha *= poleFade;
+          gl_PointSize = max(1.5 * (30.0 / -mv.z), 0.5);
+          gl_Position = projectionMatrix * mv;
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColor;
+        varying float vAlpha;
+        void main() {
+          float dist = length(gl_PointCoord - vec2(0.5));
+          if (dist > 0.5) discard;
+          float core = exp(-dist * dist * 25.0);
+          gl_FragColor = vec4(uColor * 1.2, core * vAlpha);
+        }
+      `,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const beam2Pts = new THREE.Points(beam2Geo, beam2Mat);
+    globeGroup.add(beam2Pts);
+
     // ── Stardust Field — depth backdrop with varied brightness classes ──
     const STAR_COUNT = 2000;
     const starPos = new Float32Array(STAR_COUNT * 3);
@@ -1233,6 +1283,7 @@
       ringRefs.forEach(r => { r.mat.uniforms.uTime.value = time; });
       dustMat.uniforms.uTime.value = time;
       beamMat.uniforms.uTime.value = time;
+      beam2Mat.uniforms.uTime.value = time;
 
       // Arc comet animation — ease-in-out for organic motion
       if (!reducedMotion) {
@@ -1317,6 +1368,8 @@
       dustMat.dispose();
       beamGeo.dispose();
       beamMat.dispose();
+      beam2Geo.dispose();
+      beam2Mat.dispose();
       ringRefs.forEach(r => { r.geo.dispose(); r.mat.dispose(); });
       arcSystems.forEach(({ points }) => {
         points.geometry.dispose();
