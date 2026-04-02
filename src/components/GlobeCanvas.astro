@@ -629,8 +629,14 @@
             atmosColor.g,
             atmosColor.b * (1.0 + caOffset * 0.8)
           );
+          // Terminator glow — atmosphere brightens and warms at day/night boundary
+          float sunDot = dot(normalize(vWorldPos), sunDir);
+          float terminatorGlow = exp(-(sunDot - 0.1) * (sunDot - 0.1) / 0.03) * rim;
+          vec3 terminatorWarm = vec3(1.0, 0.7, 0.3); // Amber sunrise/sunset
           // Hot spot adds white to the specular area
           vec3 finalColor = caColor * 1.2 + vec3(1.0) * specRim * 0.5;
+          finalColor = mix(finalColor, terminatorWarm, terminatorGlow * 0.4);
+          glow += terminatorGlow * 0.3;
           gl_FragColor = vec4(finalColor, glow);
         }
       `,
