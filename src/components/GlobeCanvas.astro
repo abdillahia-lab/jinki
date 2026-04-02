@@ -1066,7 +1066,7 @@
     scene.add(stars);
 
     // ── Ambient Dust Particles — depth + scale cues near globe ──
-    const DUST_COUNT = 120;
+    const DUST_COUNT = 200;
     const dustPos = new Float32Array(DUST_COUNT * 3);
     const dustSizes = new Float32Array(DUST_COUNT);
     const dustDrift = new Float32Array(DUST_COUNT * 3); // velocity vectors
@@ -1127,7 +1127,7 @@
           float dist = length(gl_PointCoord - vec2(0.5));
           float glow = exp(-dist * dist * 18.0);
           if (glow < 0.02) discard;
-          gl_FragColor = vec4(uColor * 0.6 + vec3(0.4), glow * vAlpha);
+          gl_FragColor = vec4(uColor * 0.75 + vec3(0.25), glow * vAlpha);
         }
       `,
       transparent: true,
