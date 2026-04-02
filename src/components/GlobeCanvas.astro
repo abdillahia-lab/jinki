@@ -448,9 +448,11 @@
         varying vec3 vNormal;
         varying vec3 vPos;
         varying vec3 vWorldNormal;
+        varying vec3 vWorldPos;
         void main() {
           vNormal = normalize(normalMatrix * normal);
           vWorldNormal = normalize(normal);
+          vWorldPos = normal;
           vPos = (modelViewMatrix * vec4(position, 1.0)).xyz;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
@@ -462,6 +464,7 @@
         varying vec3 vNormal;
         varying vec3 vPos;
         varying vec3 vWorldNormal;
+        varying vec3 vWorldPos;
         void main() {
           vec3 viewDir = normalize(-vPos);
           float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
@@ -474,6 +477,13 @@
           float midBloom = pow(rim, 2.5) * 0.08;
           float outerFalloff = pow(rim, 1.8) * 0.05;
           float glow = (innerRim + midBloom + outerFalloff) * breathe;
+          // Volumetric scan sweep — atmosphere brightens where radar passes
+          float scanAngle = atan(vWorldPos.x, vWorldPos.z);
+          float sweepAngle = mod(uTime * 0.4, 6.28318);
+          float scanDist = mod(scanAngle - sweepAngle + 6.28318, 6.28318);
+          float sweepBoost = smoothstep(0.6, 0.0, scanDist) * 0.4
+                           + smoothstep(1.8, 0.3, scanDist) * 0.15;
+          glow *= (1.0 + sweepBoost * rim);
           // Chromatic aberration — color channels separate at extreme edges
           float caOffset = pow(rim, 6.0) * 0.12;
           vec3 caColor = vec3(
