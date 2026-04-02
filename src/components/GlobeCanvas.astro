@@ -325,6 +325,7 @@
       varying float vSunLight;
       varying float vCityGlow;
       varying float vTerminator;
+      varying float vDepthHaze;
       // Hash for per-dot shimmer — cheap deterministic randomness
       float dotHash(float seed, float t) {
         return fract(sin(seed * 127.1 + t * 311.7) * 43758.5453);
@@ -341,6 +342,8 @@
         float shimmerLand = step(0.4, aOpacity) * shimmer; // Only visible on land dots
         // Backface fade
         float backFade = smoothstep(3.8, 1.9, depth);
+        // Atmospheric perspective — far dots lose saturation and shift blue-grey
+        vDepthHaze = smoothstep(1.8, 3.6, depth); // 0 near, 1 far
         // Face-dimming — center dots dimmer, edge dots brighter (premium globe look)
         vec3 posNorm = normalize(pos);
         vec3 camDir = vec3(0.0, 0.0, 1.0);
@@ -403,6 +406,7 @@
       varying float vSunLight;
       varying float vCityGlow;
       varying float vTerminator;
+      varying float vDepthHaze;
       void main() {
         float dist = length(gl_PointCoord - vec2(0.5));
         if (dist > 0.55) discard;
@@ -434,6 +438,9 @@
         // Scan sweep adds brightness + accent tint (branded sweep)
         vec3 sweepColor = mix(vec3(1.0), uAccentColor * 1.5, 0.35);
         vec3 col = mix(baseCol, sweepColor, vScanBoost * 0.5);
+        // Atmospheric perspective — far dots desaturate and shift toward muted blue-grey
+        vec3 hazeColor = vec3(0.08, 0.12, 0.18); // Deep atmospheric blue-grey
+        col = mix(col, hazeColor, vDepthHaze * 0.45);
         float alpha = strength * (vOpacity + vScanBoost);
         gl_FragColor = vec4(col, alpha);
       }
