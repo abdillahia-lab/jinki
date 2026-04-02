@@ -890,6 +890,74 @@
       ringRefs.push({ geo: mGeo, mat: mMat, pts: meridPts });
     });
 
+    // ── Radar Beam Line — visible scan sweep meridian ──
+    const BEAM_RES = 96;
+    const beamPos = new Float32Array(BEAM_RES * 3);
+    const beamPhase = new Float32Array(BEAM_RES);
+    for (let j = 0; j < BEAM_RES; j++) {
+      const phi = (j / (BEAM_RES - 1)) * Math.PI;
+      const r = 1.006;
+      beamPos[j * 3] = 0; // will be rotated in shader
+      beamPos[j * 3 + 1] = r * Math.cos(phi);
+      beamPos[j * 3 + 2] = r * Math.sin(phi);
+      beamPhase[j] = j / BEAM_RES;
+    }
+    const beamGeo = new THREE.BufferGeometry();
+    beamGeo.setAttribute('position', new THREE.BufferAttribute(beamPos, 3));
+    beamGeo.setAttribute('aPhase', new THREE.BufferAttribute(beamPhase, 1));
+    const beamMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uColor: { value: new THREE.Color(themeColors.accent) },
+      },
+      vertexShader: `
+        attribute float aPhase;
+        uniform float uTime;
+        varying float vAlpha;
+        varying float vPhase;
+        void main() {
+          vPhase = aPhase;
+          // Rotate beam position to match primary sweep angle
+          float angle = mod(uTime * 0.4, 6.28318);
+          float cosA = cos(angle);
+          float sinA = sin(angle);
+          vec3 pos = vec3(
+            position.z * sinA,
+            position.y,
+            position.z * cosA
+          );
+          vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+          // Backface fade — hide beam on far side of globe
+          vec3 viewDir = vec3(0.0, 0.0, 1.0);
+          float facing = dot(normalize(pos), viewDir);
+          vAlpha = smoothstep(-0.1, 0.3, facing) * 0.45;
+          // Fade near poles for elegance
+          float poleFade = smoothstep(0.0, 0.12, aPhase) * smoothstep(1.0, 0.88, aPhase);
+          vAlpha *= poleFade;
+          gl_PointSize = max(2.0 * (30.0 / -mv.z), 0.8);
+          gl_Position = projectionMatrix * mv;
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColor;
+        varying float vAlpha;
+        varying float vPhase;
+        void main() {
+          float dist = length(gl_PointCoord - vec2(0.5));
+          if (dist > 0.5) discard;
+          float core = exp(-dist * dist * 20.0);
+          float glow = exp(-dist * dist * 6.0) * 0.3;
+          float strength = core + glow;
+          gl_FragColor = vec4(uColor * 1.3, strength * vAlpha);
+        }
+      `,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const beamPts = new THREE.Points(beamGeo, beamMat);
+    globeGroup.add(beamPts);
+
     // ── Stardust Field — depth backdrop with varied brightness classes ──
     const STAR_COUNT = 900;
     const starPos = new Float32Array(STAR_COUNT * 3);
@@ -1101,6 +1169,7 @@
       innerRimMat.uniforms.uTime.value = time;
       ringRefs.forEach(r => { r.mat.uniforms.uTime.value = time; });
       dustMat.uniforms.uTime.value = time;
+      beamMat.uniforms.uTime.value = time;
 
       // Arc comet animation — ease-in-out for organic motion
       if (!reducedMotion) {
@@ -1183,6 +1252,8 @@
       markerMat.dispose();
       dustGeo.dispose();
       dustMat.dispose();
+      beamGeo.dispose();
+      beamMat.dispose();
       ringRefs.forEach(r => { r.geo.dispose(); r.mat.dispose(); });
       arcSystems.forEach(({ points }) => {
         points.geometry.dispose();
