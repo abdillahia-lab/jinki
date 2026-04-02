@@ -818,6 +818,61 @@
       ringRefs.push({ geo: rGeo, mat: rMat, pts: ringPts });
     });
 
+    // ── Meridian Grid Lines — vertical structure lines for geographic legibility ──
+    const MERIDIAN_LNGS = [0, 90, -90]; // Prime, 90E, 90W
+    const MERID_RES = 128;
+    MERIDIAN_LNGS.forEach((lng) => {
+      const theta = (lng + 180) * (Math.PI / 180);
+      const mPos = new Float32Array(MERID_RES * 3);
+      const mPhase = new Float32Array(MERID_RES);
+      for (let j = 0; j < MERID_RES; j++) {
+        const phi = (j / (MERID_RES - 1)) * Math.PI; // pole to pole
+        const r = 1.003;
+        mPos[j * 3] = -r * Math.sin(phi) * Math.cos(theta);
+        mPos[j * 3 + 1] = r * Math.cos(phi);
+        mPos[j * 3 + 2] = r * Math.sin(phi) * Math.sin(theta);
+        mPhase[j] = j / MERID_RES;
+      }
+      const mGeo = new THREE.BufferGeometry();
+      mGeo.setAttribute('position', new THREE.BufferAttribute(mPos, 3));
+      mGeo.setAttribute('aPhase', new THREE.BufferAttribute(mPhase, 1));
+      const isPrime = lng === 0;
+      const mMat = new THREE.ShaderMaterial({
+        uniforms: {
+          uTime: { value: 0 },
+          uColor: { value: new THREE.Color(isPrime ? '#1a3a5c' : '#0f2840') },
+        },
+        vertexShader: `
+          attribute float aPhase;
+          uniform float uTime;
+          varying float vAlpha;
+          void main() {
+            float dash = sin(aPhase * 50.0 + uTime * 0.5) * 0.5 + 0.5;
+            vAlpha = dash * ${isPrime ? '0.10' : '0.05'};
+            vec4 mv = modelViewMatrix * vec4(position, 1.0);
+            gl_PointSize = max(1.0 * (30.0 / -mv.z), 0.5);
+            gl_Position = projectionMatrix * mv;
+          }
+        `,
+        fragmentShader: `
+          uniform vec3 uColor;
+          varying float vAlpha;
+          void main() {
+            float dist = length(gl_PointCoord - vec2(0.5));
+            if (dist > 0.5) discard;
+            float strength = smoothstep(0.5, 0.1, dist);
+            gl_FragColor = vec4(uColor, strength * vAlpha);
+          }
+        `,
+        transparent: true,
+        blending: THREE.NormalBlending,
+        depthWrite: false,
+      });
+      const meridPts = new THREE.Points(mGeo, mMat);
+      globeGroup.add(meridPts);
+      ringRefs.push({ geo: mGeo, mat: mMat, pts: meridPts });
+    });
+
     // ── Stardust Field — depth backdrop with varied brightness classes ──
     const STAR_COUNT = 900;
     const starPos = new Float32Array(STAR_COUNT * 3);
