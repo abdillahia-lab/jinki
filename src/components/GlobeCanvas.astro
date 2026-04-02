@@ -634,12 +634,15 @@
             vProgress = aProgress;
             float headDist = aProgress - uHead;
             // Longer trail (0.55 length) with smooth falloff
-            vTrail = headDist > 0.01 ? 0.0 : smoothstep(-0.55, -0.01, headDist);
+            float activeTrail = headDist > 0.01 ? 0.0 : smoothstep(-0.55, -0.01, headDist);
+            // Faint ghost trail behind the comet — persistent route visibility
+            float ghostTrail = headDist < -0.01 ? 0.06 : 0.0;
+            vTrail = max(activeTrail, ghostTrail);
             // Bright head indicator — wider detection range
             vHead = smoothstep(0.08, 0.0, abs(headDist));
             vec4 mv = modelViewMatrix * vec4(position, 1.0);
             // Larger head, more dramatic tapered trail
-            float size = 3.5 + vHead * 18.0 + vTrail * 5.0;
+            float size = 3.5 + vHead * 18.0 + activeTrail * 5.0 + ghostTrail * 2.0;
             gl_PointSize = max(size * (55.0 / -mv.z), 1.0);
             gl_Position = projectionMatrix * mv;
           }
