@@ -181,6 +181,17 @@
     const cSecondary = new THREE.Color(themeColors.accentSecondary);
     const cTertiary = new THREE.Color('#34D399');
 
+    // Major city coordinates for night-side city glow hotspots
+    const cityCoords = [
+      [40.7, -74.0], [51.5, -0.1], [35.7, 139.7], [22.3, 114.2],   // NYC, London, Tokyo, HK
+      [48.9, 2.35], [55.8, 37.6], [1.35, 103.8], [-33.9, 151.2],   // Paris, Moscow, Singapore, Sydney
+      [25.3, 55.3], [28.6, 77.2], [37.8, -122.4], [34.1, -118.2],  // Dubai, Delhi, SF, LA
+      [19.4, -99.1], [-23.5, -46.6], [6.5, 3.4], [37.6, 127.0],   // Mexico City, São Paulo, Lagos, Seoul
+      [39.9, 116.4], [31.2, 121.5], [13.8, 100.5], [-33.9, 18.4],  // Beijing, Shanghai, Bangkok, Cape Town
+      [41.0, 29.0], [30.0, 31.2], [52.5, 13.4], [59.3, 18.1],      // Istanbul, Cairo, Berlin, Stockholm
+    ];
+    const dotCityGlow = new Float32Array(DOT_COUNT);
+
     for (let i = 0; i < DOT_COUNT; i++) {
       const t = i / DOT_COUNT;
       const inclination = Math.acos(1 - 2 * t);
@@ -253,6 +264,20 @@
       dotColors[i * 3] = c.r;
       dotColors[i * 3 + 1] = c.g;
       dotColors[i * 3 + 2] = c.b;
+
+      // City glow — proximity to major cities creates warm light pools
+      let maxCityGlow = 0;
+      if (landFactor > 0.3) { // Only compute for land/near-land dots
+        for (const [cLat, cLng] of cityCoords) {
+          const dLat = lat - cLat;
+          const dLng = lng - cLng;
+          const dist2 = dLat * dLat + dLng * dLng;
+          // Gaussian falloff — ~5° radius of influence
+          const glow = Math.exp(-dist2 / 50);
+          if (glow > maxCityGlow) maxCityGlow = glow;
+        }
+      }
+      dotCityGlow[i] = maxCityGlow;
     }
 
     const dotGeo = new THREE.BufferGeometry();
@@ -261,6 +286,7 @@
     dotGeo.setAttribute('aOpacity', new THREE.BufferAttribute(dotOpacities, 1));
     dotGeo.setAttribute('aPhase', new THREE.BufferAttribute(dotPhases, 1));
     dotGeo.setAttribute('aColor', new THREE.BufferAttribute(dotColors, 3));
+    dotGeo.setAttribute('aCityGlow', new THREE.BufferAttribute(dotCityGlow, 1));
 
     // ── Dot Vertex Shader — breathing, depth fog, rim fade, scanning sweep ──
     const dotVertSrc = `
@@ -268,6 +294,7 @@
       attribute float aOpacity;
       attribute float aPhase;
       attribute vec3 aColor;
+      attribute float aCityGlow;
       uniform float uTime;
       uniform float uBaseSize;
       uniform vec3 uAccentColor;
@@ -276,6 +303,7 @@
       varying float vScanBoost;
       varying float vFresnel;
       varying float vSunLight;
+      varying float vCityGlow;
       void main() {
         vColor = aColor;
         float breath = sin(uTime * 0.3 + aPhase) * 0.025;
@@ -318,8 +346,12 @@
         vScanBoost = scanRaw * max(facing, 0.15);
         // Dramatic hemisphere split — 50% brightness differential for cinematic day/night
         float sunBoost = 0.5 + vSunLight * 0.5;
-        vOpacity = aOpacity * backFade * rimFade * depthFog * max(faceDim, vScanBoost * 1.5) * sunBoost;
-        gl_PointSize = max(aSize * uBaseSize * (20.0 / depth) * (1.0 + vScanBoost * 0.6), 0.5);
+        // City glow — warm light pools visible especially on shadow side (night lights)
+        vCityGlow = aCityGlow * (1.0 - vSunLight * 0.6); // Stronger on night side
+        float cityBoost = 1.0 + vCityGlow * 2.5; // Cities glow 2.5x brighter
+        vOpacity = aOpacity * backFade * rimFade * depthFog * max(faceDim, vScanBoost * 1.5) * sunBoost * cityBoost;
+        float citySize = 1.0 + vCityGlow * 0.8; // Cities slightly larger
+        gl_PointSize = max(aSize * uBaseSize * (20.0 / depth) * (1.0 + vScanBoost * 0.6) * citySize, 0.5);
         gl_Position = projectionMatrix * mv;
       }
     `;
@@ -332,6 +364,7 @@
       varying float vScanBoost;
       varying float vFresnel;
       varying float vSunLight;
+      varying float vCityGlow;
       void main() {
         float dist = length(gl_PointCoord - vec2(0.5));
         if (dist > 0.55) discard;
@@ -354,6 +387,9 @@
         float desat = 1.0 - (1.0 - vSunLight) * 0.25;
         float lum = dot(baseCol, vec3(0.299, 0.587, 0.114));
         baseCol = mix(vec3(lum), baseCol, desat);
+        // City glow — warm golden-white tint for night-side city lights
+        vec3 cityWarm = vec3(1.0, 0.92, 0.75); // Warm incandescent
+        baseCol = mix(baseCol, cityWarm, vCityGlow * 0.6);
         // Scan sweep adds brightness + accent tint (branded sweep)
         vec3 sweepColor = mix(vec3(1.0), uAccentColor * 1.5, 0.35);
         vec3 col = mix(baseCol, sweepColor, vScanBoost * 0.5);
