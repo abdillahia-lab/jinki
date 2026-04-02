@@ -192,11 +192,11 @@
 
       // Dot hierarchy: coastal (bright edges) > land (medium) > ocean (dim)
       if (coastal) {
-        dotSizes[i] = 1.1 + noise * 0.5;
-        dotOpacities[i] = 0.85;
+        dotSizes[i] = 1.2 + noise * 0.5;
+        dotOpacities[i] = 0.95;
       } else if (landFactor > 0.5) {
-        dotSizes[i] = 0.7 + noise * 0.6;
-        dotOpacities[i] = 0.35 + noise * 0.15;
+        dotSizes[i] = 0.8 + noise * 0.6;
+        dotOpacities[i] = 0.45 + noise * 0.2;
       } else {
         dotSizes[i] = 0.08 + noise * 0.08;
         dotOpacities[i] = 0.008 + noise * 0.012;
