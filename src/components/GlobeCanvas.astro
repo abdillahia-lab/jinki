@@ -985,11 +985,16 @@
       ringRefs.forEach(r => { r.mat.uniforms.uTime.value = time; });
       dustMat.uniforms.uTime.value = time;
 
-      // Arc comet animation
+      // Arc comet animation — ease-in-out for organic motion
       if (!reducedMotion) {
         arcSystems.forEach(({ mat, speed, phase }) => {
           const cycle = (time * speed + phase) % 2.0;
-          mat.uniforms.uHead.value = Math.min(cycle, 1.0);
+          const linear = Math.min(cycle, 1.0);
+          // Smooth ease-in-out: slow start, fast middle, slow end
+          const eased = linear < 0.5
+            ? 2 * linear * linear
+            : 1 - Math.pow(-2 * linear + 2, 2) / 2;
+          mat.uniforms.uHead.value = eased;
         });
       }
 
