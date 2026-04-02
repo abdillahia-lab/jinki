@@ -622,9 +622,18 @@
           float sweepAngle = mod(uTime * 0.4, 6.28318);
           float scanDist = mod(scanAngle - sweepAngle + 6.28318, 6.28318);
           float sweepFlash = smoothstep(0.4, 0.0, scanDist) * 0.6;
-          // Very concentrated at edge only — no face contribution
-          float glow = pow(rim, 8.0) * (0.55 + sweepFlash) * breathe;
-          gl_FragColor = vec4(uColor * (1.4 + sweepFlash * 0.6), glow);
+          // Razor-sharp horizon line — ultra-concentrated at the silhouette edge
+          float razorEdge = pow(rim, 16.0) * 1.2;
+          // Softer secondary bloom behind the razor edge
+          float bloomEdge = pow(rim, 8.0) * (0.55 + sweepFlash);
+          float glow = (razorEdge + bloomEdge) * breathe;
+          // Color-shifted corona — white-hot at the razor edge, accent in the bloom
+          vec3 razorColor = mix(uColor * 1.6, vec3(1.0), razorEdge / max(glow, 0.01) * 0.5);
+          // Sun-side horizon is brighter — directional atmospheric scattering
+          vec3 sunDir = normalize(vec3(0.6, 0.4, 0.8));
+          float sunHorizon = max(dot(normalize(vWorldPos), sunDir), 0.0);
+          float sunBright = 1.0 + sunHorizon * 0.4;
+          gl_FragColor = vec4(razorColor * (1.0 + sweepFlash * 0.6) * sunBright, glow);
         }
       `,
       transparent: true,
