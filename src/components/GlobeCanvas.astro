@@ -242,6 +242,7 @@
       varying vec3 vColor;
       varying float vScanBoost;
       varying float vFresnel;
+      varying float vSunLight;
       void main() {
         vColor = aColor;
         float breath = sin(uTime * 0.3 + aPhase) * 0.025;
@@ -259,6 +260,10 @@
         float faceDim = 0.08 + 0.92 * pow(1.0 - facing, 0.75);
         // Fresnel — edge dots tint toward accent (atmospheric scattering)
         vFresnel = pow(1.0 - max(facing, 0.0), 2.2);
+        // Hemisphere sun illumination — upper-right light creates warm/cool split
+        vec3 sunDir = normalize(vec3(0.6, 0.4, 0.8));
+        float sunDot = dot(posNorm, sunDir);
+        vSunLight = smoothstep(-0.3, 0.8, sunDot);
         // Depth fog — far dots fade for spatial depth cue
         float depthFog = smoothstep(4.2, 2.0, depth);
         // Primary scanning sweep — dramatic rotating light band
@@ -277,7 +282,9 @@
         float scanRaw = max(scan1, scan2 * 0.6);
         // Sweep overrides face-dimming — illuminates the dark center
         vScanBoost = scanRaw * max(facing, 0.15);
-        vOpacity = aOpacity * backFade * rimFade * depthFog * max(faceDim, vScanBoost * 1.5);
+        // Sun hemisphere adds 30% brightness to lit side, shadow side stays dim
+        float sunBoost = 0.7 + vSunLight * 0.3;
+        vOpacity = aOpacity * backFade * rimFade * depthFog * max(faceDim, vScanBoost * 1.5) * sunBoost;
         gl_PointSize = max(aSize * uBaseSize * (20.0 / depth) * (1.0 + vScanBoost * 0.6), 0.5);
         gl_Position = projectionMatrix * mv;
       }
@@ -290,6 +297,7 @@
       varying vec3 vColor;
       varying float vScanBoost;
       varying float vFresnel;
+      varying float vSunLight;
       void main() {
         float dist = length(gl_PointCoord - vec2(0.5));
         if (dist > 0.55) discard;
@@ -304,6 +312,10 @@
         if (strength < 0.005) discard;
         // Fresnel atmospheric scattering — edge dots tint toward accent
         vec3 baseCol = mix(vColor, uAccentColor, vFresnel * 0.45);
+        // Sun hemisphere warm/cool shift — lit side warms toward accent, shadow cools
+        vec3 warmTint = uAccentColor * 0.15;
+        vec3 coolTint = vec3(0.02, 0.04, 0.08);
+        baseCol += mix(coolTint, warmTint, vSunLight);
         // Scan sweep adds brightness + accent tint (branded sweep)
         vec3 sweepColor = mix(vec3(1.0), uAccentColor * 1.5, 0.35);
         vec3 col = mix(baseCol, sweepColor, vScanBoost * 0.5);
