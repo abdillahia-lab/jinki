@@ -156,7 +156,7 @@
 
     // ── Fibonacci Sphere Point Cloud ──
     const isTablet = wrap.clientWidth < 1024;
-    const DOT_COUNT = isTablet ? 14000 : 42000;
+    const DOT_COUNT = isTablet ? 18000 : 55000;
     const GOLDEN_RATIO = (1 + Math.sqrt(5)) / 2;
     const ANGLE_INC = Math.PI * 2 * GOLDEN_RATIO;
 
@@ -192,11 +192,11 @@
 
       // Dot hierarchy: coastal (bright edges) > land (medium) > ocean (dim)
       if (coastal) {
-        dotSizes[i] = 1.2 + noise * 0.5;
-        dotOpacities[i] = 0.95;
+        dotSizes[i] = 1.4 + noise * 0.5;
+        dotOpacities[i] = 1.0;
       } else if (landFactor > 0.5) {
-        dotSizes[i] = 0.8 + noise * 0.6;
-        dotOpacities[i] = 0.45 + noise * 0.2;
+        dotSizes[i] = 0.85 + noise * 0.6;
+        dotOpacities[i] = 0.50 + noise * 0.2;
       } else {
         dotSizes[i] = 0.08 + noise * 0.08;
         dotOpacities[i] = 0.008 + noise * 0.012;
