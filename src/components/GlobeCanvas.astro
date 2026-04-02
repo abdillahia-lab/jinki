@@ -100,6 +100,8 @@
       coreMat.uniforms.uAccent.value.set(themeColors.accent);
       coreMat.uniforms.uColor.value.set(themeColors.isLight ? '#e8eaed' : '#020208');
       dustMat.uniforms.uColor.value.set(themeColors.accent);
+      nebulaMat.uniforms.uColor.value.set(themeColors.accent);
+      nebulaMat.uniforms.uColorSecondary.value.set(themeColors.accentSecondary);
       arcSystems.forEach(({ mat }) => {
         mat.uniforms.uColorA.value.set(themeColors.accent);
         mat.uniforms.uColorB.value.set(themeColors.accentSecondary);
@@ -1131,6 +1133,58 @@
     const stars = new THREE.Points(starGeo, starMat);
     scene.add(stars);
 
+    // ── Ambient Nebula Backdrop — radial glow behind globe for depth separation ──
+    const nebulaGeo = new THREE.PlaneGeometry(6, 6);
+    const nebulaMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uColor: { value: new THREE.Color(themeColors.accent) },
+        uColorSecondary: { value: new THREE.Color(themeColors.accentSecondary) },
+        uTime: { value: 0 },
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColor;
+        uniform vec3 uColorSecondary;
+        uniform float uTime;
+        varying vec2 vUv;
+        void main() {
+          vec2 center = vUv - vec2(0.5);
+          float dist = length(center);
+          // Primary soft radial glow — tight core
+          float glow1 = exp(-dist * dist * 8.0) * 0.06;
+          // Extended haze — wider, dimmer
+          float glow2 = exp(-dist * dist * 2.5) * 0.025;
+          // Asymmetric warm spot — offset for sun-side bias
+          vec2 warmCenter = center - vec2(0.12, 0.08);
+          float warmDist = length(warmCenter);
+          float warmGlow = exp(-warmDist * warmDist * 6.0) * 0.03;
+          // Breathing — subtle pulse synced with atmosphere
+          float breathe = 1.0 + sin(uTime * 0.3 + 2.5) * 0.15;
+          float totalGlow = (glow1 + glow2 + warmGlow) * breathe;
+          // Two-tone color: primary accent core, secondary at edges
+          float colorMix = smoothstep(0.0, 0.4, dist);
+          vec3 col = mix(uColor, uColorSecondary, colorMix * 0.4);
+          // Very subtle — this is a background element, not a feature
+          gl_FragColor = vec4(col, totalGlow);
+        }
+      `,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    });
+    const nebulaMesh = new THREE.Mesh(nebulaGeo, nebulaMat);
+    nebulaMesh.position.z = -0.5; // Behind the globe
+    globeGroup.add(nebulaMesh);
+    // Nebula always faces camera (billboard)
+    nebulaMesh.lookAt(camera.position);
+
     // ── Ambient Dust Particles — depth + scale cues near globe ──
     const DUST_COUNT = 200;
     const dustPos = new Float32Array(DUST_COUNT * 3);
@@ -1267,6 +1321,9 @@
         globeGroup.rotation.x += (targetTiltX - globeGroup.rotation.x) * 0.04;
       }
 
+      // Nebula billboard — always faces camera regardless of globe rotation
+      nebulaMesh.quaternion.copy(camera.quaternion);
+
       // Star field parallax — subtle counter-rotation for depth
       if (!reducedMotion) {
         stars.rotation.y -= 0.00004;
@@ -1285,6 +1342,7 @@
       dustMat.uniforms.uTime.value = time;
       beamMat.uniforms.uTime.value = time;
       beam2Mat.uniforms.uTime.value = time;
+      nebulaMat.uniforms.uTime.value = time;
 
       // Arc comet animation — ease-in-out for organic motion
       if (!reducedMotion) {
@@ -1371,6 +1429,8 @@
       beamMat.dispose();
       beam2Geo.dispose();
       beam2Mat.dispose();
+      nebulaGeo.dispose();
+      nebulaMat.dispose();
       ringRefs.forEach(r => { r.geo.dispose(); r.mat.dispose(); });
       arcSystems.forEach(({ points }) => {
         points.geometry.dispose();
