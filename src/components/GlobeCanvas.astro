@@ -448,10 +448,11 @@
           // Two-tone gradient: primary accent at top, secondary at bottom
           float gradient = smoothstep(-0.6, 0.6, vWorldNormal.y);
           vec3 atmosColor = mix(uColorSecondary, uColor, gradient);
-          // Concentrated bright inner rim + soft extended falloff
-          float innerRim = pow(rim, 4.0) * 0.28;
-          float outerFalloff = pow(rim, 1.8) * 0.04;
-          float glow = (innerRim + outerFalloff) * breathe;
+          // Concentrated bright inner rim + soft extended falloff + mid bloom
+          float innerRim = pow(rim, 4.0) * 0.35;
+          float midBloom = pow(rim, 2.5) * 0.08;
+          float outerFalloff = pow(rim, 1.8) * 0.05;
+          float glow = (innerRim + midBloom + outerFalloff) * breathe;
           // Chromatic aberration — color channels separate at extreme edges
           float caOffset = pow(rim, 6.0) * 0.12;
           vec3 caColor = vec3(
@@ -486,7 +487,7 @@
           vec3 viewDir = normalize(-vPos);
           float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
           float breathe = 1.0 + sin(uTime * 0.3 + 1.0) * 0.1;
-          float glow = pow(rim, 5.0) * 0.12 * breathe;
+          float glow = pow(rim, 4.0) * 0.16 * breathe;
           gl_FragColor = vec4(uColor, glow);
         }
       `,
