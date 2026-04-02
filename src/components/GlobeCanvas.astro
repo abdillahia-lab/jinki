@@ -483,7 +483,8 @@
         void main() {
           vec3 viewDir = normalize(-vPos);
           float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
-          float breathe = 1.0 + sin(uTime * 0.3) * 0.1;
+          // Shell 1 breathe: primary freq + slower harmonic for organic motion
+          float breathe = 1.0 + sin(uTime * 0.3) * 0.12 + sin(uTime * 0.17) * 0.04;
           // Two-tone gradient: primary accent at top, secondary at bottom
           float gradient = smoothstep(-0.6, 0.6, vWorldNormal.y);
           vec3 atmosColor = mix(uColorSecondary, uColor, gradient);
@@ -552,7 +553,8 @@
         void main() {
           vec3 viewDir = normalize(-vPos);
           float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
-          float breathe = 1.0 + sin(uTime * 0.3 + 1.0) * 0.1;
+          // Shell 2 breathe: offset phase + different harmonic
+          float breathe = 1.0 + sin(uTime * 0.3 + 1.0) * 0.08 + sin(uTime * 0.22 + 2.0) * 0.05;
           // Scan sweep sync on extended halo
           float scanAngle = atan(vWorldPos.x, vWorldPos.z);
           float sweepAngle = mod(uTime * 0.4, 6.28318);
@@ -597,7 +599,8 @@
         void main() {
           vec3 viewDir = normalize(-vPos);
           float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
-          float breathe = 1.0 + sin(uTime * 0.3 + 0.5) * 0.08;
+          // Shell 3 breathe: tighter, faster variation for crisp rim
+          float breathe = 1.0 + sin(uTime * 0.35 + 0.5) * 0.1 + sin(uTime * 0.13) * 0.03;
           // Scan sweep flash on inner rim — beam hits atmospheric boundary
           float scanAngle = atan(vWorldPos.x, vWorldPos.z);
           float sweepAngle = mod(uTime * 0.4, 6.28318);
