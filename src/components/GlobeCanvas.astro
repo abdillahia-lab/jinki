@@ -785,7 +785,7 @@
           vPulse2 = (1.0 - cycle2) * 0.5;
           vRingRadius2 = 0.06 + cycle2 * 0.40;
           vec4 mv = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = max(22.0 * (55.0 / -mv.z), 5.0);
+          gl_PointSize = max(26.0 * (55.0 / -mv.z), 6.0);
           gl_Position = projectionMatrix * mv;
         }
       `,
@@ -797,16 +797,16 @@
         varying float vRingRadius2;
         void main() {
           float dist = length(gl_PointCoord - vec2(0.5));
-          // Bright center dot with sharper core
-          float centerDot = exp(-dist * dist * 220.0) * 1.4;
-          // Primary expanding ring
+          // Bright center dot — strong focal point
+          float centerDot = exp(-dist * dist * 180.0) * 1.8;
+          // Primary expanding ring — more visible
           float ringDist1 = abs(dist - vRingRadius1);
-          float ring1 = exp(-ringDist1 * ringDist1 * 900.0) * vPulse1 * 0.9;
+          float ring1 = exp(-ringDist1 * ringDist1 * 700.0) * vPulse1 * 1.1;
           // Secondary echo ring
           float ringDist2 = abs(dist - vRingRadius2);
-          float ring2 = exp(-ringDist2 * ringDist2 * 1200.0) * vPulse2 * 0.6;
-          // Soft ambient glow
-          float glow = 0.02 / (dist + 0.02);
+          float ring2 = exp(-ringDist2 * ringDist2 * 1000.0) * vPulse2 * 0.7;
+          // Wider ambient glow
+          float glow = 0.03 / (dist + 0.02);
           float strength = centerDot + ring1 + ring2 + glow;
           if (strength < 0.02) discard;
           vec3 col = mix(uColor, vec3(1.0), centerDot * 0.6);
