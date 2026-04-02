@@ -696,8 +696,9 @@
             // Bright head indicator — wider detection range
             vHead = smoothstep(0.08, 0.0, abs(headDist));
             vec4 mv = modelViewMatrix * vec4(position, 1.0);
-            // Larger head, more dramatic tapered trail
-            float size = 3.5 + vHead * 18.0 + activeTrail * 5.0 + ghostTrail * 2.0;
+            // Dramatic tapered trail: huge blazing head → thin tail
+            float trailTaper = pow(activeTrail, 0.6); // wider near head, thin at tail
+            float size = 2.5 + vHead * 24.0 + trailTaper * 7.0 + ghostTrail * 1.5;
             gl_PointSize = max(size * (55.0 / -mv.z), 1.0);
             gl_Position = projectionMatrix * mv;
           }
@@ -717,9 +718,9 @@
             float glow = core + outerGlow * vHead;
             if (glow < 0.01) discard;
             vec3 col = mix(uColorA, uColorB, vProgress);
-            // Head burns white-hot with brighter center
-            col = mix(col, vec3(1.0), vHead * 0.8);
-            float alpha = glow * vTrail * (0.9 + vHead * 0.6);
+            // Head burns white-hot with intense center
+            col = mix(col, vec3(1.0), vHead * 0.9);
+            float alpha = glow * vTrail * (0.85 + vHead * 0.8);
             gl_FragColor = vec4(col, alpha);
           }
         `,
