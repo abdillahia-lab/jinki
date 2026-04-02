@@ -278,7 +278,7 @@
         float facing = dot(posNorm, camDir);
         float rimFade = smoothstep(-0.05, 0.25, facing);
         // Darken center-facing dots aggressively, keep edges bright (premium globe)
-        float faceDim = 0.08 + 0.92 * pow(1.0 - facing, 0.75);
+        float faceDim = 0.04 + 0.96 * pow(1.0 - facing, 0.65);
         // Fresnel — edge dots tint toward accent (atmospheric scattering)
         vFresnel = pow(1.0 - max(facing, 0.0), 2.2);
         // Hemisphere sun illumination — upper-right light creates warm/cool split
