@@ -977,7 +977,7 @@
     globeGroup.add(beamPts);
 
     // ── Stardust Field — depth backdrop with varied brightness classes ──
-    const STAR_COUNT = 900;
+    const STAR_COUNT = 2000;
     const starPos = new Float32Array(STAR_COUNT * 3);
     const starSizes = new Float32Array(STAR_COUNT);
     const starBrightness = new Float32Array(STAR_COUNT);
@@ -1030,8 +1030,14 @@
           float glow = 0.02 / (dist + 0.04);
           float strength = core * 0.7 + glow * vBright;
           if (strength < 0.02) discard;
-          // Slight warm/cool tint variation
-          vec3 col = vec3(0.95 + vBright * 0.05, 0.95 + vBright * 0.02, 1.0);
+          // Spectral class color variation — warm (orange/red) to cool (blue/white)
+          float colorSeed = fract(vBright * 7.31 + 0.5);
+          vec3 warmStar = vec3(1.0, 0.85, 0.7);   // K-type orange
+          vec3 coolStar = vec3(0.8, 0.9, 1.0);     // A-type blue-white
+          vec3 whiteStar = vec3(0.98, 0.97, 1.0);   // F-type white
+          vec3 col = colorSeed < 0.15 ? warmStar
+                   : colorSeed < 0.35 ? coolStar
+                   : whiteStar;
           gl_FragColor = vec4(col, strength * vTwinkle * vBright);
         }
       `,
