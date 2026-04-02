@@ -1140,10 +1140,13 @@
 
       const opacityMult = themeColors.isLight ? 0.55 : 1;
 
-      // Auto-rotation with mouse-modulated speed (horizontal parallax)
+      // Auto-rotation with entrance wind-up + mouse parallax
       if (!reducedMotion) {
-        const baseSpeed = 0.0008;
-        const mouseSpeedMod = wrap.clientWidth >= 1024 ? mouseX * 0.0006 : 0;
+        // Wind-up: rotation starts slow, reaches full speed over 3 seconds
+        const windUp = Math.min(time / 3.0, 1.0);
+        const windUpEase = windUp * windUp * (3 - 2 * windUp); // smoothstep
+        const baseSpeed = 0.0008 * windUpEase;
+        const mouseSpeedMod = wrap.clientWidth >= 1024 ? mouseX * 0.0006 * windUpEase : 0;
         globeGroup.rotation.y += baseSpeed + mouseSpeedMod;
       }
 
@@ -1184,12 +1187,12 @@
         });
       }
 
-      // Entrance animation — smooth scale-up over first 2 seconds
-      const entranceDur = 2.0;
+      // Entrance animation — smooth scale-up over first 3 seconds with wind-up
+      const entranceDur = 3.0;
       const entranceT = Math.min(time / entranceDur, 1.0);
-      // Cubic ease-out: fast start, smooth deceleration
-      const entranceEase = 1.0 - Math.pow(1.0 - entranceT, 3);
-      const entranceScale = 0.85 + 0.15 * entranceEase;
+      // Quartic ease-out: dramatic deceleration
+      const entranceEase = 1.0 - Math.pow(1.0 - entranceT, 4);
+      const entranceScale = 0.82 + 0.18 * entranceEase;
 
       // Scroll-driven opacity + zoom parallax
       if (scrollControlsOpacity) {
