@@ -524,17 +524,34 @@
         uColor: { value: new THREE.Color(themeColors.accent) },
         uTime: { value: 0 },
       },
-      vertexShader: atmosVertAnimated,
+      vertexShader: `
+        uniform float uTime;
+        varying vec3 vNormal;
+        varying vec3 vPos;
+        varying vec3 vWorldPos;
+        void main() {
+          vNormal = normalize(normalMatrix * normal);
+          vWorldPos = normal;
+          vPos = (modelViewMatrix * vec4(position, 1.0)).xyz;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
       fragmentShader: `
         uniform vec3 uColor;
         uniform float uTime;
         varying vec3 vNormal;
         varying vec3 vPos;
+        varying vec3 vWorldPos;
         void main() {
           vec3 viewDir = normalize(-vPos);
           float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
           float breathe = 1.0 + sin(uTime * 0.3 + 1.0) * 0.1;
-          float glow = pow(rim, 4.0) * 0.16 * breathe;
+          // Scan sweep sync on extended halo
+          float scanAngle = atan(vWorldPos.x, vWorldPos.z);
+          float sweepAngle = mod(uTime * 0.4, 6.28318);
+          float scanDist = mod(scanAngle - sweepAngle + 6.28318, 6.28318);
+          float sweepBoost = smoothstep(0.7, 0.0, scanDist) * 0.3;
+          float glow = pow(rim, 4.0) * (0.16 + sweepBoost * rim) * breathe;
           gl_FragColor = vec4(uColor, glow);
         }
       `,
