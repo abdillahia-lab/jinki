@@ -555,12 +555,12 @@
       { from: [35.7, 139.7], to: [37.8, -122.4],  alt: 0.55, speed: 0.14 }, // Tokyo → San Francisco
     ];
 
-    const ARC_RESOLUTION = 120;
+    const ARC_RESOLUTION = 160;
     const arcSystems: { mat: THREE.ShaderMaterial; points: THREE.Points; speed: number; phase: number }[] = [];
 
     arcDefs.forEach((def, idx) => {
-      const start = latLngToVec3(def.from[0], def.from[1], 1.02);
-      const end = latLngToVec3(def.to[0], def.to[1], 1.02);
+      const start = latLngToVec3(def.from[0], def.from[1], 1.03);
+      const end = latLngToVec3(def.to[0], def.to[1], 1.03);
       const mid = start.clone().add(end).multiplyScalar(0.5);
       mid.normalize().multiplyScalar(1.0 + def.alt);
 
