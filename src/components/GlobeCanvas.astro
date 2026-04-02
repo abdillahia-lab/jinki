@@ -211,8 +211,10 @@
         dotSizes[i] = 0.85 + noise * 0.6;
         dotOpacities[i] = (0.50 + noise * 0.2) * latBrightness;
       } else {
-        dotSizes[i] = 0.08 + noise * 0.08;
-        dotOpacities[i] = 0.008 + noise * 0.012;
+        // Deep ocean dots — barely visible, coastal proximity adds subtle brightness
+        const coastProximity = isCoastal(lat, lng) ? 0.015 : 0;
+        dotSizes[i] = 0.06 + noise * 0.06;
+        dotOpacities[i] = 0.004 + noise * 0.008 + coastProximity;
       }
       dotPhases[i] = i * 2.399;
 
