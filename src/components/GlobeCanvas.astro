@@ -305,12 +305,20 @@
       varying float vSunLight;
       varying float vCityGlow;
       varying float vTerminator;
+      // Hash for per-dot shimmer — cheap deterministic randomness
+      float dotHash(float seed, float t) {
+        return fract(sin(seed * 127.1 + t * 311.7) * 43758.5453);
+      }
       void main() {
         vColor = aColor;
         float breath = sin(uTime * 0.3 + aPhase) * 0.025;
         vec3 pos = position * (1.0 + breath);
         vec4 mv = modelViewMatrix * vec4(pos, 1.0);
         float depth = -mv.z;
+        // Per-dot data shimmer — stochastic brightness flicker like live telemetry
+        float shimmerSpeed = 2.0 + dotHash(aPhase, 0.0) * 6.0; // 2-8 Hz per dot
+        float shimmer = dotHash(aPhase, floor(uTime * shimmerSpeed)) * 0.3; // 0-30% flicker
+        float shimmerLand = step(0.4, aOpacity) * shimmer; // Only visible on land dots
         // Backface fade
         float backFade = smoothstep(3.8, 1.9, depth);
         // Face-dimming — center dots dimmer, edge dots brighter (premium globe look)
@@ -355,11 +363,12 @@
         // City glow — warm light pools visible especially on shadow side (night lights)
         vCityGlow = aCityGlow * (1.0 - vSunLight * 0.6); // Stronger on night side
         float cityBoost = 1.0 + vCityGlow * 2.5; // Cities glow 2.5x brighter
-        vOpacity = aOpacity * backFade * rimFade * depthFog * max(faceDim, vScanBoost * 1.5) * sunBoost * cityBoost;
+        float shimmerBoost = 1.0 + shimmerLand;
+        vOpacity = aOpacity * backFade * rimFade * depthFog * max(faceDim, vScanBoost * 1.5) * sunBoost * cityBoost * shimmerBoost;
         float citySize = 1.0 + vCityGlow * 0.8; // Cities slightly larger
         // Enhanced depth-based size attenuation — stronger perspective foreshortening
         float depthSize = 22.0 / (depth * depth * 0.35 + depth * 0.65);
-        gl_PointSize = max(aSize * uBaseSize * depthSize * (1.0 + vScanBoost * 0.6) * citySize, 0.5);
+        gl_PointSize = max(aSize * uBaseSize * depthSize * (1.0 + vScanBoost * 0.6) * citySize * (1.0 + shimmerLand * 0.3), 0.5);
         gl_Position = projectionMatrix * mv;
       }
     `;
