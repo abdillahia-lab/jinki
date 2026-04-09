@@ -1,6 +1,6 @@
 ---
 /*
-  GlobeCanvas v4.87 — Performance: visibility skip + DOM cache + uniform batching.
+  GlobeCanvas v4.88 — Performance: half-res bloom + visibility skip + DOM cache.
 
   Architecture:
   - Fibonacci sphere sampling (100k desktop, 38k tablet)
@@ -305,10 +305,10 @@
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
 
-    const bloomPass = new UnrealBloomPass(
-      new THREE.Vector2(wrap.clientWidth, wrap.clientHeight),
-      0.15, 0.65, 0.72
-    );
+    // v4.88: Half-resolution bloom — bloom is inherently soft, full-res wastes GPU
+    // Internally UnrealBloomPass downsamples further for blur MIPs, so half-res input is visually identical
+    const bloomRes = new THREE.Vector2(Math.floor(wrap.clientWidth / 2), Math.floor(wrap.clientHeight / 2));
+    const bloomPass = new UnrealBloomPass(bloomRes, 0.15, 0.65, 0.72);
     composer.addPass(bloomPass);
 
     const fxaaPass = new FXAAPass();
@@ -1794,12 +1794,24 @@
 
     // ── Arc Routes — great-circle data flows between cities ──
     const arcPairs: [number, number, number, number][] = [
+      // Tier 1: Major intercontinental corridors
       [40.7, -74.0, 51.5, -0.1],    // NYC → London
       [51.5, -0.1, 25.3, 55.3],     // London → Dubai
       [25.3, 55.3, 1.35, 103.8],    // Dubai → Singapore
       [1.35, 103.8, 35.7, 139.7],   // Singapore → Tokyo
       [35.7, 139.7, 22.3, 114.2],   // Tokyo → Hong Kong
       [48.9, 2.35, 40.7, -74.0],    // Paris → NYC
+      // Tier 2: Global mesh — dense network topology
+      [37.8, -122.4, 35.7, 139.7],  // San Francisco → Tokyo
+      [40.7, -74.0, -23.5, -46.6],  // NYC → São Paulo
+      [51.5, -0.1, 19.1, 72.9],     // London → Mumbai
+      [22.3, 114.2, -33.9, 151.2],  // Hong Kong → Sydney
+      [-33.9, 151.2, 1.35, 103.8],  // Sydney → Singapore
+      [25.3, 55.3, 6.5, 3.4],       // Dubai → Lagos
+      [48.9, 2.35, 35.7, 139.7],    // Paris → Tokyo
+      [37.8, -122.4, 51.5, -0.1],   // San Francisco → London
+      [19.1, 72.9, 35.7, 139.7],    // Mumbai → Tokyo
+      [-23.5, -46.6, 6.5, 3.4],     // São Paulo → Lagos
     ];
 
     function latLngToVec3(lat: number, lng: number, r: number): THREE.Vector3 {
@@ -2958,6 +2970,8 @@
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
       composer.setSize(w, h);
+      // v4.88: Bloom at half resolution on resize
+      bloomPass.resolution.set(Math.floor(w / 2), Math.floor(h / 2));
       const pr = renderer.getPixelRatio();
       fxaaPass.uniforms['resolution'].value.set(1 / (w * pr), 1 / (h * pr));
       positionGlobe();
