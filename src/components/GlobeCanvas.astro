@@ -50,6 +50,7 @@
   - v5.18: Star field smooth fade-in — uFade uniform, 1.5s entrance before globe coalesces
   - v5.19: Sun disk entrance fade — appears 0.5s after stars over 2s ramp
   - v5.20: HUD connector beam — thin glowing line linking data readout to globe surface
+  - v5.21: Composite viewport mask — radial vignette intersected with left fade for cinematic framing
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -94,8 +95,15 @@
     opacity: 0;
     will-change: opacity;
     transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-    mask-image: linear-gradient(to right, transparent 2%, rgba(0,0,0,0.12) 18%, rgba(0,0,0,0.6) 45%, black 65%);
-    -webkit-mask-image: linear-gradient(to right, transparent 2%, rgba(0,0,0,0.12) 18%, rgba(0,0,0,0.6) 45%, black 65%);
+    /* v5.21: Composite mask — left fade + radial vignette for cinematic viewport */
+    mask-image:
+      linear-gradient(to right, transparent 2%, rgba(0,0,0,0.12) 18%, rgba(0,0,0,0.6) 45%, black 65%),
+      radial-gradient(ellipse 85% 80% at 62% 48%, black 30%, rgba(0,0,0,0.7) 60%, transparent 85%);
+    mask-composite: intersect;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 2%, rgba(0,0,0,0.12) 18%, rgba(0,0,0,0.6) 45%, black 65%),
+      radial-gradient(ellipse 85% 80% at 62% 48%, black 30%, rgba(0,0,0,0.7) 60%, transparent 85%);
+    -webkit-mask-composite: source-in;
   }
   .globe-wrap.ready { opacity: 1; }
   :global([data-theme="light"]) .globe-wrap.ready { opacity: 0.55; }
