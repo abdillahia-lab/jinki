@@ -1,6 +1,6 @@
 ---
 /*
-  GlobeCanvas v4.99 — Concentrated sun specular hotspot for photorealistic lighting.
+  GlobeCanvas v5.00 — Prismatic sun specular dispersion on dot surface.
 
   Architecture:
   - Fibonacci sphere sampling (100k desktop, 38k tablet)
@@ -28,6 +28,7 @@
   - v4.97: Tighter backface culling (3.2/2.1) + atmospheric rim luminance for cleaner silhouette
   - v4.98: Cinematic DOF — deeper bokeh sigma range + DOF size swell at silhouette
   - v4.99: Concentrated sun specular hotspot — tight bright catch at sun-facing apex
+  - v5.00: Prismatic specular dispersion — rainbow fringing on sun specular like light through a lens
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -1586,8 +1587,8 @@
           atmosColor = mix(atmosColor, auroraColor, auroraGlow);
           glow += auroraGlow * 0.3;
           // v12.57: Latitude-banded heat shimmer — tropics shimmer more, poles calmer
-          float equatorialBand = 1.0 - abs(n.y); // 1.0 at equator, 0.0 at poles
-          float shimmerStrength = 0.06 + equatorialBand * equatorialBand * 0.12; // 0.06 polar → 0.18 equator
+          // v4.96 opt: reuse equatorBand from line ~1564 (same value)
+          float shimmerStrength = 0.06 + equatorBand * equatorBand * 0.12; // 0.06 polar → 0.18 equator
           float heatFreq = fnoise(n * 12.0 + vec3(uTime * 0.2, uTime * 0.15, uTime * -0.1));
           float heatShimmer = (heatFreq - 0.5) * rim * shimmerStrength;
           glow *= (1.0 + heatShimmer);
@@ -3012,8 +3013,9 @@
       const entranceT = Math.min(time / entranceDur, 1.0);
       const entranceEase = 1.0 - Math.pow(1.0 - entranceT, 4);
       const entranceScale = 0.78 + 0.22 * entranceEase; // Deeper scale ramp (was 0.82→1.0)
-      const dollyStart = 4.5; // Further start for more dramatic approach
-      const dollyEnd = 2.8;
+      // v4.90: Wider dolly range — more dramatic approach, closer final position
+      const dollyStart = 4.8;
+      const dollyEnd = 2.65;
       const dollyZ = dollyEnd + (dollyStart - dollyEnd) * (1.0 - entranceEase);
       // Camera starts offset, straightens during entrance — parallax reveal
       const entranceDriftDecay = 1.0 - entranceEase;
