@@ -1,6 +1,6 @@
 ---
 /*
-  GlobeCanvas v4.90 — Volumetric god rays from sun position.
+  GlobeCanvas v4.91 — Milky Way galactic band in star field.
 
   Architecture:
   - Fibonacci sphere sampling (100k desktop, 38k tablet)
@@ -1123,8 +1123,8 @@
     const dotMat = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
-        // v4.78: Tuned for 200k/75k dot density — tighter surface, more premium fill
-        uBaseSize: { value: isTablet ? 0.72 : 0.88 },
+        // v4.81: Denser surface fill — premium solid feel with richer bloom
+        uBaseSize: { value: isTablet ? 0.78 : 0.95 },
         uAccentColor: { value: new THREE.Color(themeColors.accent) },
         uScroll: { value: 0 },
         uSunDir: { value: new THREE.Vector3(0.6, 0.4, 0.8).normalize() },
@@ -1882,7 +1882,8 @@
       );
     }
 
-    const ARC_SEGMENTS = 64;
+    // v4.82: Higher arc resolution — smoother curves for long trans-oceanic routes
+    const ARC_SEGMENTS = 128;
     const arcGeometries: THREE.BufferGeometry[] = [];
     const arcMeshes: THREE.Mesh[] = [];
 
