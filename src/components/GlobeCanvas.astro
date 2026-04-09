@@ -1144,7 +1144,9 @@
         float depthBloomMod = 1.0 + (1.0 - vDepthHaze) * 0.15; // +15% bloom on near dots
         // v12.64: Sun-hemisphere bloom bias — sunlit dots glow brighter into bloom
         float sunBloomBias = 1.0 + vSunLight * vSunLight * 0.25; // +25% bloom on fully sunlit dots
-        float dotBloomPush = (1.0 + vCityGlow * 1.5 + vScanBoost * 0.3 + vScanTrail * 0.4 + vCoastalHalo * 0.5 + vOceanGlint * 1.0 + vDataPulse * 0.6 + vBacklit * 1.2) * depthBloomMod * sunBloomBias;
+        float dotBloomPush = (1.0 + vCityGlow * 1.5 + vScanBoost * 0.3 + vScanTrail * 0.4 + vCoastalHalo * 0.5 + vOceanGlint * 1.0 + vDataPulse * 0.6 + vBacklit * 1.2 + vMouseGlow * 1.0) * depthBloomMod * sunBloomBias;
+        // v4.84: Cursor proximity accent tint — dots under cursor shift toward accent
+        col = mix(col, uAccentColor * 1.6, vMouseGlow * 0.4);
         gl_FragColor = vec4(col * dotBloomPush, alpha);
       }
     `;
@@ -1664,6 +1666,14 @@
           vec3 backlitGoldIR = vec3(1.0, 0.78, 0.35);
           rimColor = mix(rimColor, backlitGoldIR, backlitRimIR);
           glow += backlitRimIR * 0.4;
+          // v4.92: Enhanced eclipse rim — tighter hot edge + atmospheric scattering fringe
+          float eclipseEdge = pow(rim, 6.0) * pow(backlitIR, 1.5) * 0.55;
+          vec3 eclipseWhite = vec3(1.0, 0.95, 0.82);
+          rimColor = mix(rimColor, eclipseWhite, eclipseEdge);
+          glow += eclipseEdge * 0.6;
+          float scatterFringe = pow(rim, 2.0) * (1.0 - pow(rim, 4.0)) * backlitIR * 0.18;
+          vec3 scatterBlue = vec3(0.45, 0.55, 1.0);
+          rimColor = mix(rimColor, scatterBlue, scatterFringe);
           // v11.42: Enhanced polar dimming — stronger equatorial concentration
           // v12.29: Reuse rimLat from latitude thickness (same as polarFade)
           float equatorBoost = 1.0 - rimLat * 0.35 - rimLat * rimLat * 0.15;
