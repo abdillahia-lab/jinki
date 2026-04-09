@@ -1,6 +1,6 @@
 ---
 /*
-  GlobeCanvas v4.91 — Milky Way galactic band in star field.
+  GlobeCanvas v4.92 — Optimization pass: restored dynamic grading after LUT.
 
   Architecture:
   - Fibonacci sphere sampling (100k desktop, 38k tablet)
@@ -23,6 +23,7 @@
   - v4.89: Anamorphic lens streak — horizontal light smear from bright highlights
   - v4.90: Volumetric god rays — radial light shafts from sun screen position
   - v4.91: Milky Way galactic band — 1200 stars with concentrated galactic plane + nebula glow
+  - v4.92: Optimization pass — restored dynamic contrast/saturation/tint after LUT (was silently dead)
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -517,6 +518,13 @@
           vec3 lutGraded = sampleLUT(uColorLUT, col);
           // Blend 70% LUT (static grading) + 30% original (preserve headroom for dynamic effects)
           col = mix(col, lutGraded, 0.7);
+          // v4.92: Restore dynamic grading on top of LUT — contrast, saturation, shadow/highlight tints
+          // These animate during entrance, interaction, sweep, and backlit conditions
+          float postLum = dot(col, vec3(0.2126, 0.7152, 0.0722));
+          col = mix(vec3(postLum), col, uSaturation / 1.18); // Dynamic saturation (1.18 = neutral)
+          col = mix(vec3(0.5), col, uContrast / 1.12); // Dynamic contrast (1.12 = neutral)
+          col += uShadowTint * max(1.0 - postLum * 2.0, 0.0) * 0.3; // Shadow tint on darks
+          col += uHighlightTint * max(postLum * 2.0 - 1.0, 0.0) * 0.5; // Highlight tint on brights
           // Dynamic warmth — subtle temperature shift that breathes (TIME-DEPENDENT, kept in shader)
           float warmBreathe = sin(uTime * 0.08) * 0.004;
           col.r += warmBreathe;
@@ -1143,6 +1151,7 @@
         uNightLights: { value: nightLightsTex },
         uTerrainNormals: { value: terrainNormalsTex },
         uNoiseAtlas: { value: noiseAtlasTex },
+        uMouseWorld: { value: new THREE.Vector3(0, 0, -10) }, // v4.84: Cursor proximity glow
       },
       vertexShader: dotVertSrc,
       fragmentShader: dotFragSrc,
