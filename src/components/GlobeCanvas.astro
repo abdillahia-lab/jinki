@@ -45,6 +45,7 @@
   - v5.13: Precessing sun orbit — orbital plane tilts over ~35min cycle for non-repeating lighting
   - v5.14: Bloom accent tint — neutral bright pixels shift toward brand accent for cohesive glow
   - v5.15: Radial DOF — globe-centered oval focus replaces vertical tilt-shift for cinematic depth
+  - v5.16: Premium scroll fade — smoothstep ease-out curve, lower ambient floor at 15%
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -3050,7 +3051,10 @@
     window.addEventListener('scroll', () => {
       cachedScrollY = window.scrollY;
       const scrollPct = cachedScrollY / cachedInnerHeight;
-      scrollFade = Math.max(0.35, 1 - scrollPct / 1.5);
+      // v5.16: Ease-out scroll fade — holds longer at top, accelerates mid-scroll, settles at ambient glow
+      const rawFade = Math.max(0, 1 - scrollPct / 1.2);
+      scrollFade = rawFade * rawFade * (3 - 2 * rawFade); // Smoothstep for premium ease
+      scrollFade = Math.max(0.15, scrollFade); // Lower floor — globe becomes subtle ambient glow
       // Dispersal: dead zone 0-100px, map 100-700px to 0-1
       scrollDispersalTarget = Math.max(0, Math.min((cachedScrollY - 100) / 600, 1.0));
     }, { passive: true });
