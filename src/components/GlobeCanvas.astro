@@ -26,6 +26,7 @@
   - v4.92: Optimization pass — restored dynamic contrast/saturation/tint after LUT (was silently dead)
   - v4.86: Optimization pass — zero-alloc raycast, unified bloom pipeline, eliminated all hash noise
   - v4.97: Tighter backface culling (3.2/2.1) + atmospheric rim luminance for cleaner silhouette
+  - v4.98: Cinematic DOF — deeper bokeh sigma range + DOF size swell at silhouette
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -890,7 +891,8 @@
         float citySize = 1.0 + vCityGlow * 1.8;
         // v4.80: Refined depth perspective for 200k density — steeper falloff, tighter near
         float depthSize = 18.0 / (depth * depth * 0.42 + depth * 0.58);
-        float dofSoften = smoothstep(2.2, 3.4, depth) * 0.18;
+        // v4.98: Stronger DOF size swell — edge dots grow for cinematic bokeh circles
+        float dofSoften = smoothstep(2.0, 3.2, depth) * 0.35;
         depthSize *= (1.0 + dofSoften);
         float shimmerSize = 1.0 + (shimmer - 0.88) * 0.3; // Subtle size variation with shimmer
         // v10.90: Scan wave surface ripple — dots swell as sweep passes, creating pressure wave
@@ -977,14 +979,16 @@
       void main() {
         float dist = length(gl_PointCoord - vec2(0.5));
         if (dist > 0.55) discard;
-        // v4.93: Depth-of-field Gaussian — edge dots blur wider for photographic bokeh
-        float sigma = 0.14 + vDepthHaze * 0.06; // 0.14 sharp center → 0.20 soft edges
+        // v4.98: Cinematic DOF — deeper bokeh with dramatic silhouette softness
+        float sigma = 0.13 + vDepthHaze * 0.12; // 0.13 razor center → 0.25 dreamy edges
         float core = exp(-(dist * dist) / (2.0 * sigma * sigma));
         float aaRim = smoothstep(0.52, 0.44, dist);
         float halo = 0.04 / (dist * dist + 0.003) - 0.05;
         halo *= smoothstep(0.0, 0.18, dist);
         // Bokeh ring — subtle bright edge characteristic of photographic bokeh
-        float bokehRing = smoothstep(0.3, 0.42, dist) * smoothstep(0.5, 0.44, dist) * 0.15;
+        // v4.98: Depth-responsive bokeh ring — more visible on edge dots (DOF circles)
+        float bokehRingBase = smoothstep(0.3, 0.42, dist) * smoothstep(0.5, 0.44, dist);
+        float bokehRing = bokehRingBase * (0.15 + vDepthHaze * 0.20);
         float strength = core * 0.8 + max(halo, 0.0) * 0.3 * aaRim + bokehRing;
         if (strength < 0.005) discard;
         // Fresnel atmospheric scattering — sun-responsive rim color
