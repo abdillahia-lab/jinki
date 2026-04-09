@@ -47,6 +47,7 @@
   - v5.15: Radial DOF — globe-centered oval focus replaces vertical tilt-shift for cinematic depth
   - v5.16: Premium scroll fade — smoothstep ease-out curve, lower ambient floor at 15%
   - v5.17: Wire up HUD Active Routes counter — was showing static 0 since v5.02 cleanup
+  - v5.18: Star field smooth fade-in — uFade uniform, 1.5s entrance before globe coalesces
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -2591,6 +2592,7 @@
       uniforms: {
         uTime: { value: 0 },
         uCameraDrift: { value: new THREE.Vector2(0, 0) },
+        uFade: { value: 0 },
       },
       vertexShader: `
         attribute float aSize;
@@ -2632,6 +2634,7 @@
         }
       `,
       fragmentShader: `
+        uniform float uFade;
         varying float vTwinkle;
         varying float vTemp;
         varying float vBright;
@@ -2680,7 +2683,7 @@
           float alphaScale = mix(0.05, 0.1, smoothstep(0.5, 1.5, vBright));
           alphaScale += vGalactic * 0.04; // Galactic stars slightly more visible
           // v12.95: Apply globe occlusion — fade stars behind globe silhouette
-          gl_FragColor = vec4(col * strength, strength * alphaScale * vOcclusion);
+          gl_FragColor = vec4(col * strength, strength * alphaScale * vOcclusion * uFade);
         }
       `,
       transparent: true,
@@ -3285,6 +3288,8 @@
       outerAtmosMat.uniforms.uTime.value = time;
       innerRimMat.uniforms.uTime.value = time;
       starMat.uniforms.uTime.value = time;
+      // v5.14: Stars fade in early — "arriving in space" before globe coalesces
+      starMat.uniforms.uFade.value = Math.min(time / 1.5, 1.0); // 0→1 over 1.5s
       // v5.08: Enhanced star parallax — camera drift + direct mouse response for 3D space feel
       const mouseParallaxX = cachedWrapWidth >= 1024 ? mouseX * 0.08 : 0;
       const mouseParallaxY = cachedWrapWidth >= 1024 ? mouseY * 0.06 : 0;
