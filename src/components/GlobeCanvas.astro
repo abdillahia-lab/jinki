@@ -1182,6 +1182,10 @@
         float dotBloomPush = (1.0 + vCityGlow * 1.5 + vScanBoost * 0.3 + vScanTrail * 0.4 + vCoastalHalo * 0.5 + vOceanGlint * 1.0 + vDataPulse * 0.6 + vBacklit * 1.2 + vMouseGlow * 1.0) * depthBloomMod * sunBloomBias;
         // v4.84: Cursor proximity accent tint — dots under cursor shift toward accent
         col = mix(col, uAccentColor * 1.6, vMouseGlow * 0.4);
+        // v4.97: Atmospheric rim luminance — silhouette edge dots glow with scattered light
+        float rimGlow = vFresnel * vFresnel * 0.30;
+        vec3 rimAtmo = mix(uAccentColor * 0.5, vec3(0.7, 0.85, 1.0), vSunLight);
+        col += rimAtmo * rimGlow * (1.0 - vDepthHaze);
         gl_FragColor = vec4(col * dotBloomPush, alpha);
       }
     `;
@@ -1448,8 +1452,8 @@
           float sunZenith = max(dot(normalize(vWorldNormal), sunDir), 0.0); // 0 to 1
           vec2 lutUV = vec2(viewZenith * 0.5 + 0.5, sunZenith);
           vec3 lutScatter = texture2D(uAtmosphereLUT, lutUV).rgb;
-          // v4.77: Stronger physically-based scattering blend (50% LUT, 50% original)
-          atmosColor = mix(atmosColor, lutScatter * uColor * 3.0, 0.5 * rim);
+          // v4.97: Dominant physically-based scattering (65% LUT) — realistic Rayleigh/Mie color
+          atmosColor = mix(atmosColor, lutScatter * uColor * 3.0, 0.65 * rim);
           // v11.17: 4-octave plasma noise — non-uniform turbulent speeds per octave
           vec3 n = normalize(vWorldNormal);
           // v12.16: Latitude-dependent plasma speed — equatorial flows faster (Coriolis-like)
