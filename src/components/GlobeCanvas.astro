@@ -53,6 +53,7 @@
   - v5.21: Composite viewport mask — radial vignette intersected with left fade for cinematic framing
   - v5.22: Deep core heartbeat — ~42s cubic pulse visible at rim, rewards prolonged observation
   - v5.23: Enhanced scroll dispersal — bloom threshold drop, wider radius, desaturation, chroma spike
+  - v5.24: Optimization pass — gate star/sun uFade writes after entrance, document HUD connector
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -160,7 +161,7 @@
   /* v5.20: Connection beam — links HUD to globe surface */
   .hud-connector {
     position: absolute;
-    bottom: calc(12% + 98px); /* Aligns to top of HUD */
+    bottom: calc(12% + 98px); /* Coupled to HUD height (~98px with 5 children) */
     right: calc(8% + 10px);
     width: 1px;
     height: 50px;
@@ -3341,7 +3342,7 @@
       innerRimMat.uniforms.uTime.value = time;
       starMat.uniforms.uTime.value = time;
       // v5.14: Stars fade in early — "arriving in space" before globe coalesces
-      starMat.uniforms.uFade.value = Math.min(time / 1.5, 1.0); // 0→1 over 1.5s
+      if (time < 2) starMat.uniforms.uFade.value = Math.min(time / 1.5, 1.0);
       // v5.08: Enhanced star parallax — camera drift + direct mouse response for 3D space feel
       const mouseParallaxX = cachedWrapWidth >= 1024 ? mouseX * 0.08 : 0;
       const mouseParallaxY = cachedWrapWidth >= 1024 ? mouseY * 0.06 : 0;
