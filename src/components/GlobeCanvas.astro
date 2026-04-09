@@ -29,6 +29,7 @@
   - v4.98: Cinematic DOF — deeper bokeh sigma range + DOF size swell at silhouette
   - v4.99: Concentrated sun specular hotspot — tight bright catch at sun-facing apex
   - v5.00: Prismatic specular dispersion — rainbow fringing on sun specular like light through a lens
+  - v5.01: Camera FOV breathing — slow focal length oscillation for organic cinematic depth
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -2694,7 +2695,9 @@
           // v12.13: Sweep white-hot flash — motes flash bright white when sweep passes
           baseCol = mix(baseCol, vec3(1.0, 0.97, 0.92), vMoteSweep * 0.6);
           vec3 col = mix(baseCol, hotCore, core * 0.5);
-          gl_FragColor = vec4(col, strength * 0.15);
+          // v5.06: Mote bloom push — visible atmospheric particles with sweep-reactive energy
+          float moteBloom = 1.3 + vMoteSweep * 1.5 + vSunGlow * 0.4;
+          gl_FragColor = vec4(col * moteBloom, strength * 0.18);
         }
       `,
       transparent: true,
@@ -3107,7 +3110,8 @@
       }
 
       // Dynamic exposure + bloom (sweepAngleRad & sweepFacing computed above)
-      const baseExposure = themeColors.isLight ? 1.1 : 1.4;
+      // v4.92: Hotter exposure — ACES filmic compresses highlights, more luminous globe
+      const baseExposure = themeColors.isLight ? 1.15 : 1.5;
       // Auto-exposure: compensate for bright/dark hemisphere facing camera
       const sunCamDot = sunZ / sunLen; // How much sun faces camera (z-axis)
       // v11.53: Enhanced backlit compensation — stronger exposure boost when sun behind globe
@@ -3189,11 +3193,14 @@
       const interactionFov = peakEnergy * 1.5; // Subtle FOV widen during fast interaction
       // v11.27: Sweep-responsive FOV breathing — deeper breath when sweep faces camera
       // v11.85: Amplitude-modulated breathing — depth of breath varies over long cycle
+      // v5.01: Deeper cinematic FOV breathing — 3 harmonics with amplitude modulation
       const breathDepth = 0.7 + 0.3 * Math.sin(time * 0.037); // Slow 27s cycle modulates amplitude
-      const fovBreathe = breathDepth * ((0.2 + sweepFacing * 0.15) * Math.sin(time * 0.2) + 0.1 * Math.sin(time * 0.13));
+      const fovBreathe = breathDepth * ((0.35 + sweepFacing * 0.2) * Math.sin(time * 0.18) + 0.15 * Math.sin(time * 0.11) + 0.08 * Math.sin(time * 0.29));
       // v11.72: Grab FOV punch — brief narrowing on drag start, then widens
       const grabFov = dragAge < 0.4 ? Math.exp(-dragAge * 10) * -1.5 : 0; // Brief -1.5° punch
-      camera.fov = 45 + fovBreathe + dispersalFov + interactionFov + grabFov;
+      // v5.01: Entrance telephoto zoom — camera starts wider, tightens during coalesce
+      const entranceFovPull = Math.max(0, 1.0 - time / ENTRANCE_COALESCE_DUR) * -3.0; // Tighter during entrance
+      camera.fov = 45 + fovBreathe + dispersalFov + interactionFov + grabFov + entranceFovPull;
       camera.updateProjectionMatrix();
 
       // Scroll-driven opacity + mouse parallax position
