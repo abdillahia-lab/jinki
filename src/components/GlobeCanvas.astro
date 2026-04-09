@@ -1,6 +1,6 @@
 ---
 /*
-  GlobeCanvas v4.92 — Optimization pass: restored dynamic grading after LUT.
+  GlobeCanvas v4.97 — Tighter backface culling + atmospheric rim luminance.
 
   Architecture:
   - Fibonacci sphere sampling (100k desktop, 38k tablet)
@@ -24,6 +24,7 @@
   - v4.90: Volumetric god rays — radial light shafts from sun screen position
   - v4.91: Milky Way galactic band — 1200 stars with concentrated galactic plane + nebula glow
   - v4.92: Optimization pass — restored dynamic contrast/saturation/tint after LUT (was silently dead)
+  - v4.97: Tighter backface culling (3.2/2.1) + atmospheric rim luminance for cleaner silhouette
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -2718,6 +2719,11 @@
     let cachedWrapHeight = wrap.clientHeight;
     let cachedScrollY = window.scrollY;
     let cachedInnerHeight = window.innerHeight;
+    // v4.86: Reusable vectors for cursor raycast — zero GC pressure per frame
+    const _rayVec = new THREE.Vector3();
+    const _ocVec = new THREE.Vector3();
+    const _hitVec = new THREE.Vector3();
+    const _invQuat = new THREE.Quaternion();
     const updateCachedSize = () => {
       cachedWrapWidth = wrap.clientWidth;
       cachedWrapHeight = wrap.clientHeight;
