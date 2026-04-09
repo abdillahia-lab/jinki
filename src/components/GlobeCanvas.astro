@@ -43,6 +43,7 @@
   - v5.11: Golden hour lens effects — god rays, lens flare, anamorphic streak all warm with sun elevation
   - v5.12: Film gate weave + lamp flicker — 35mm projector micro-drift and brightness variation
   - v5.13: Precessing sun orbit — orbital plane tilts over ~35min cycle for non-repeating lighting
+  - v5.14: Bloom accent tint — neutral bright pixels shift toward brand accent for cohesive glow
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -311,6 +312,9 @@
       nodeMat.uniforms.uColor.value.set(themeColors.accent);
       coronaMat.uniforms.uColor.value.set(themeColors.accent);
       ringMat.uniforms.uColor.value.set(themeColors.accent);
+      // v5.14: Sync accent to color grade pass for bloom tinting
+      const accentCol = new THREE.Color(themeColors.accent);
+      colorGradePass.uniforms.uAccentColor.value.set(accentCol.r, accentCol.g, accentCol.b);
     });
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
@@ -537,6 +541,7 @@
         uSweepPulse: { value: 0 },
         uEntranceTemp: { value: 0 },
         uSunWarmth: { value: 0 },
+        uAccentColor: { value: (() => { const c = new THREE.Color(themeColors.accent); return new THREE.Vector3(c.r, c.g, c.b); })() },
         uNoiseAtlas: { value: null },
         uColorLUT: { value: null },
       },
@@ -557,6 +562,7 @@
         uniform float uSweepPulse;
         uniform float uEntranceTemp;
         uniform float uSunWarmth;
+        uniform vec3 uAccentColor;
         uniform sampler2D uNoiseAtlas;
         uniform sampler2D uColorLUT;
         varying vec2 vUv;
@@ -630,6 +636,11 @@
           float chromaAmount = length(col - vec3(lum));
           float glowBoost = smoothstep(0.04, 0.12, chromaAmount) * smoothstep(0.15, 0.45, lum);
           col *= 1.0 + glowBoost * 0.10;
+          // v5.14: Bloom accent tint — neutral bright pixels shift toward brand accent
+          float bloomZone = smoothstep(0.35, 0.7, postLum); // Only affect bright areas
+          float isNeutral = 1.0 - smoothstep(0.02, 0.08, chromaAmount); // Target achromatic bloom
+          vec3 accentNudge = normalize(uAccentColor + 0.001) * postLum; // Accent-tinted luminance
+          col = mix(col, mix(col, accentNudge, 0.08), bloomZone * isNeutral);
           // v12.43: Film halation
           float halationLum = max(col.r, max(col.g, col.b));
           float halationMask = smoothstep(0.5, 0.9, halationLum);
