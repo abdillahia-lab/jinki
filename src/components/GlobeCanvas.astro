@@ -51,6 +51,7 @@
   - v5.19: Sun disk entrance fade — appears 0.5s after stars over 2s ramp
   - v5.20: HUD connector beam — thin glowing line linking data readout to globe surface
   - v5.21: Composite viewport mask — radial vignette intersected with left fade for cinematic framing
+  - v5.22: Deep core heartbeat — ~42s cubic pulse visible at rim, rewards prolonged observation
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -1529,6 +1530,12 @@
           float pulse2 = sin(uTime * 1.3 + 2.0) * 0.5 + 0.5;
           float pulse3 = sin(uTime * 0.4 + 1.0) * 0.5 + 0.5;
           float subsurface = (pulse1 * 0.4 + pulse2 * 0.35 + pulse3 * 0.25) * pow(1.0 - facing, 1.5) * 0.045;
+          // v5.22: Deep core heartbeat — very slow throbbing that's visible over 10s observation
+          float heartPhase = uTime * 0.15; // ~42s full cycle
+          float heartRaw = sin(heartPhase) * 0.5 + 0.5;
+          float heartbeat = heartRaw * heartRaw * heartRaw; // Cubic for sharp peaks, long valleys
+          float deepPulse = heartbeat * pow(1.0 - facing, 2.0) * 0.035;
+          subsurface += deepPulse;
           // v12.93: Sweep-synchronized subsurface flare — core lights up from within as scan passes
           float ssFlare = smoothstep(0.8, 0.0, hexScanDist) * pow(1.0 - facing, 1.0) * 0.06;
           subsurface += ssFlare;
