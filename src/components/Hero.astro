@@ -390,8 +390,9 @@ import GlobeCanvas from './GlobeCanvas.astro';
     display: flex; align-items: center;
     position: relative; overflow: hidden;
     transition: box-shadow 0.4s var(--ease-out-premium),
-                transform 0.4s var(--ease-out-premium),
+                transform 0.15s ease-out,
                 border-color 0.4s ease;
+    will-change: transform;
   }
   /* Gradient left accent border */
   .metric-card::after {
@@ -523,6 +524,39 @@ import GlobeCanvas from './GlobeCanvas.astro';
         mesh.style.setProperty('animation', 'none', 'important');
         mesh.style.setProperty('opacity', '0', 'important');
       }
+    });
+  })();
+</script>
+
+<script is:inline>
+  // Premium 3D tilt on metric cards (desktop only)
+  (function() {
+    if (window.innerWidth < 1024 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var cards = document.querySelectorAll('.metric-card');
+    cards.forEach(function(card) {
+      card.addEventListener('mousemove', function(e) {
+        var rect = card.getBoundingClientRect();
+        var x = (e.clientX - rect.left) / rect.width;
+        var y = (e.clientY - rect.top) / rect.height;
+        var rotateX = (0.5 - y) * 8; // ±4 degrees
+        var rotateY = (x - 0.5) * 8;
+        card.style.transform = 'perspective(600px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-2px)';
+        // Shine follows cursor
+        var shine = card.querySelector('.tilt-shine');
+        if (shine) {
+          shine.style.background = 'radial-gradient(circle at ' + (x * 100) + '% ' + (y * 100) + '%, rgba(255,255,255,0.12) 0%, transparent 60%)';
+        }
+      });
+      card.addEventListener('mouseleave', function() {
+        card.style.transform = '';
+        var shine = card.querySelector('.tilt-shine');
+        if (shine) shine.style.background = 'none';
+      });
+      // Add shine overlay element
+      var shine = document.createElement('div');
+      shine.className = 'tilt-shine';
+      shine.style.cssText = 'position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:3;transition:background 0.15s ease;';
+      card.appendChild(shine);
     });
   })();
 </script>

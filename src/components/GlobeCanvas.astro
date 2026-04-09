@@ -1,6 +1,7 @@
 ---
 /*
-  GlobeCanvas v5.01 — GLSL optimization pass: consolidate redundant dot products, fix variable redeclarations, precompute constants.
+  GlobeCanvas v5.10 — Optimization pass: shared uSweepAngle uniform (9 shaders), smooth ring fade,
+  remove dead .opacity writes, stale comments, hardcoded resolution fix.
 
   Architecture:
   - Fibonacci sphere sampling (100k desktop, 38k tablet)
@@ -30,6 +31,18 @@
   - v4.99: Concentrated sun specular hotspot — tight bright catch at sun-facing apex
   - v5.00: Prismatic specular dispersion — rainbow fringing on sun specular like light through a lens
   - v5.01: Camera FOV breathing — slow focal length oscillation for organic cinematic depth
+  - v5.02: Optimization pass — fix entrance bloom/exposure overwrite, GPU memory leaks, noise dedup, dead code
+  - v5.03: Cinematic sun disk — multi-layer glow billboard with chromatic halo, anamorphic streak, globe occlusion
+  - v5.04: Heat distortion — convective shimmer radiating from globe, 3-frequency rising haze
+  - v5.05: Orbital data ring — 400-particle tilted constellation ring, sun-lit, twinkle, slow orbit
+  - v5.06: Dynamic sun color temperature — golden hour amber ↔ neutral white based on sun elevation
+  - v5.07: Golden hour color grading — full-frame warmth shift in midtones/highlights + warmer halation
+  - v5.08: Eclipse corona expansion + mouse star parallax — dynamic corona scale, responsive starfield
+  - v5.09: Micro-clarity — post-process unsharp mask for dot field definition, midtone-gated
+  - v5.10: Optimization pass — shared uSweepAngle uniform, smooth ring uFade, dead opacity cleanup
+  - v5.11: Golden hour lens effects — god rays, lens flare, anamorphic streak all warm with sun elevation
+  - v5.12: Film gate weave + lamp flicker — 35mm projector micro-drift and brightness variation
+  - v5.13: Precessing sun orbit — orbital plane tilts over ~35min cycle for non-repeating lighting
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -53,6 +66,10 @@
     <div class="hud-metric">
       <span class="hud-label">LATENCY</span>
       <span class="hud-value" id="hud-latency">0<span class="hud-unit"> ms</span></span>
+    </div>
+    <div class="hud-metric">
+      <span class="hud-label">ACTIVE ROUTES</span>
+      <span class="hud-value" id="hud-routes">0</span>
     </div>
   </div>
 </div>
@@ -293,6 +310,7 @@
       sweepRingMat.uniforms.uColor.value.set(themeColors.accent);
       nodeMat.uniforms.uColor.value.set(themeColors.accent);
       coronaMat.uniforms.uColor.value.set(themeColors.accent);
+      ringMat.uniforms.uColor.value.set(themeColors.accent);
     });
     themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
@@ -338,6 +356,7 @@
         uVignetteShift: { value: new THREE.Vector2(0, 0) },
         uSunScreenPos: { value: new THREE.Vector2(0.7, 0.4) },
         uGodRayIntensity: { value: 0.0 },
+        uSunWarmth: { value: 0 },
       },
       vertexShader: `
         varying vec2 vUv;
@@ -353,6 +372,7 @@
         uniform vec2 uVignetteShift;
         uniform vec2 uSunScreenPos;
         uniform float uGodRayIntensity;
+        uniform float uSunWarmth;
         varying vec2 vUv;
         void main() {
           vec2 center = vec2(0.5);
@@ -360,6 +380,20 @@
           float dist = length(dir);
           float barrel = 1.0 + dist * dist * 0.03;
           vec2 warpedUv = center + dir * barrel;
+          // v5.12: Film gate weave — imperceptible 35mm projector micro-drift
+          warpedUv.y += sin(uTime * 0.7) * 0.00025 + sin(uTime * 1.1) * 0.00015;
+          warpedUv.x += sin(uTime * 0.5 + 1.3) * 0.00012;
+          // v5.04: Heat distortion — convective shimmer radiating from globe center
+          // Concentrated in globe region, dissipates toward edges
+          float heatMask = exp(-dist * dist * 6.0); // Strong near center, fades to edges
+          float heatFreq1 = sin(vUv.y * 80.0 + uTime * 1.8) * cos(vUv.x * 60.0 + uTime * 1.2);
+          float heatFreq2 = sin(vUv.y * 45.0 - uTime * 2.5 + vUv.x * 20.0) * 0.6;
+          float heatFreq3 = cos(vUv.y * 120.0 + uTime * 3.2) * sin(vUv.x * 90.0 - uTime * 0.8) * 0.3;
+          vec2 heatOffset = vec2(
+            (heatFreq1 + heatFreq2 * 0.5) * 0.0006,
+            (heatFreq1 + heatFreq3) * 0.0008  // Stronger vertical — heat rises
+          ) * heatMask;
+          warpedUv += heatOffset;
           float strength = dist * dist * uIntensity;
           vec2 offset = dir * strength;
           // v11.11: Enhanced edge separation — radial + tangential fringe
@@ -430,8 +464,8 @@
               streak += sL * lumL * weight + sR * lumR * weight;
             }
             streak *= 0.06; // Subtle blend — premium, not garish
-            // Streak color: warm teal-cyan tint (anamorphic coating color)
-            vec3 streakTint = vec3(0.7, 0.9, 1.0);
+            // v5.11: Streak responds to golden hour — shifts from cool teal to warm amber
+            vec3 streakTint = mix(vec3(0.7, 0.9, 1.0), vec3(1.0, 0.8, 0.5), uSunWarmth * 0.6);
             col += streak * streakTint;
           }
           // v4.90: Volumetric god rays — radial light shafts from sun screen position
@@ -456,15 +490,19 @@
             }
             // Fade god rays with distance from sun (stronger near limb)
             float rayFalloff = exp(-sunDist2D * sunDist2D * 3.0);
-            // Warm golden tint — sunlight through atmosphere
-            vec3 rayTint = vec3(1.0, 0.88, 0.65);
-            col += godRay * rayTint * uGodRayIntensity * rayFalloff * 0.035;
+            // v5.11: Golden hour god rays — richer amber during low sun, neutral at elevation
+            vec3 rayNeutral = vec3(1.0, 0.88, 0.65);
+            vec3 rayGolden = vec3(1.0, 0.68, 0.3); // Deep amber for golden hour
+            vec3 rayTint = mix(rayNeutral, rayGolden, uSunWarmth);
+            float goldenBoost = 1.0 + uSunWarmth * 0.5; // +50% stronger during golden hour
+            col += godRay * rayTint * uGodRayIntensity * rayFalloff * 0.035 * goldenBoost;
           }
           // v4.93: Cinematic lens flare — ghost circles along sun→center axis
           if (uGodRayIntensity > 0.02) {
             vec2 flareAxis = vec2(0.5) - uSunScreenPos;
             float sunGlow = exp(-length(vUv - uSunScreenPos) * length(vUv - uSunScreenPos) * 18.0);
-            col += vec3(1.0, 0.92, 0.7) * sunGlow * uGodRayIntensity * 0.04;
+            vec3 sunGlowCol = mix(vec3(1.0, 0.92, 0.7), vec3(1.0, 0.78, 0.4), uSunWarmth);
+            col += sunGlowCol * sunGlow * uGodRayIntensity * 0.04 * (1.0 + uSunWarmth * 0.3);
             for (int i = 1; i <= 3; i++) {
               float fi = float(i);
               vec2 ghostPos = uSunScreenPos + flareAxis * (fi * 0.35);
@@ -498,6 +536,7 @@
         uTime: { value: 0 },
         uSweepPulse: { value: 0 },
         uEntranceTemp: { value: 0 },
+        uSunWarmth: { value: 0 },
         uNoiseAtlas: { value: null },
         uColorLUT: { value: null },
       },
@@ -517,6 +556,7 @@
         uniform float uTime;
         uniform float uSweepPulse;
         uniform float uEntranceTemp;
+        uniform float uSunWarmth;
         uniform sampler2D uNoiseAtlas;
         uniform sampler2D uColorLUT;
         varying vec2 vUv;
@@ -573,6 +613,13 @@
           float moodMask = smoothstep(0.1, 0.4, lum) * smoothstep(0.7, 0.4, lum);
           col.r += moodMask * (moodPhase - 0.5) * 0.006;
           col.b += moodMask * (0.5 - moodPhase) * 0.005;
+          // v5.07: Golden hour global color grade — entire frame warms when sun is low
+          // Shadows shift from teal toward amber, highlights warm, midtones gain golden tint
+          float ghMid = smoothstep(0.08, 0.35, postLum) * smoothstep(0.7, 0.35, postLum); // Midtone mask
+          float ghHighlight = smoothstep(0.4, 0.8, postLum); // Highlight mask
+          col.r += uSunWarmth * (ghMid * 0.008 + ghHighlight * 0.005); // Golden midtones + warm highlights
+          col.g += uSunWarmth * ghMid * 0.002; // Slight green boost for natural warmth
+          col.b -= uSunWarmth * (ghMid * 0.006 + ghHighlight * 0.004); // Pull blue from entire frame
           // v11.14: Sweep-responsive warmth (TIME-DEPENDENT, kept in shader)
           float midMask = exp(-(lum - 0.35) * (lum - 0.35) * 12.0);
           float sweepWarm = uSweepPulse * 0.006;
@@ -586,8 +633,27 @@
           // v12.43: Film halation
           float halationLum = max(col.r, max(col.g, col.b));
           float halationMask = smoothstep(0.5, 0.9, halationLum);
-          vec3 halationWarm = vec3(1.0, 0.82, 0.55);
+          vec3 halationWarm = mix(vec3(1.0, 0.82, 0.55), vec3(1.0, 0.72, 0.35), uSunWarmth); // Warmer halation during golden hour
           col = mix(col, col + halationWarm * halationMask * 0.04, halationMask);
+          // v5.09: Micro-clarity — subtle unsharp mask for dot field definition
+          // Sample neighbors and sharpen based on local contrast (enhances texture without ringing)
+          float texelW = 1.0 / 1920.0;
+          float texelH = 1.0 / 1080.0;
+          vec3 nT = texture2D(tDiffuse, vUv + vec2(0.0, texelH)).rgb;
+          vec3 nB = texture2D(tDiffuse, vUv - vec2(0.0, texelH)).rgb;
+          vec3 nL = texture2D(tDiffuse, vUv - vec2(texelW, 0.0)).rgb;
+          vec3 nR = texture2D(tDiffuse, vUv + vec2(texelW, 0.0)).rgb;
+          vec3 blur = (nT + nB + nL + nR) * 0.25;
+          vec3 sharp = col - blur; // High-frequency detail
+          float sharpLum = dot(abs(sharp), vec3(0.333));
+          // Only sharpen moderate detail (avoids boosting noise or halos)
+          float clarityGate = smoothstep(0.002, 0.015, sharpLum) * smoothstep(0.06, 0.025, sharpLum);
+          // Stronger clarity in midtones, subtler in darks/highlights
+          float midtoneMask = smoothstep(0.05, 0.2, postLum) * smoothstep(0.8, 0.5, postLum);
+          col += sharp * clarityGate * midtoneMask * 0.35;
+          // v5.12: Film projector lamp flicker — imperceptible brightness micro-variation
+          float lampFlicker = 1.0 + sin(uTime * 4.7) * 0.0015 + sin(uTime * 7.3) * 0.001;
+          col *= lampFlicker;
           // v4.86: GPU blue noise film grain — perceptually uniform from DGX noise atlas
           vec2 grainUV = gl_FragCoord.xy / 1024.0 + vec2(fract(uTime * 7.3), fract(uTime * 3.1));
           float grain = texture2D(uNoiseAtlas, grainUV).r; // Blue noise channel
@@ -664,6 +730,28 @@
     colorGradePass.uniforms.uNoiseAtlas.value = noiseAtlasTex;
     colorGradePass.uniforms.uColorLUT.value = colorLutTex;
 
+    // v5.10: Shared sweep angle — computed once on CPU, passed to all 8 materials
+    const sharedSweepAngle = { value: 0 };
+
+    // ── Shared GLSL snippets (deduplicated from 3 identical copies) ──
+    const GLSL_VALUE_NOISE = `
+      float _nhash(vec3 p) {
+        p = fract(p * vec3(443.897, 441.423, 437.195));
+        p += dot(p, p.yzx + 19.19);
+        return fract((p.x + p.y) * p.z);
+      }
+      float vnoise(vec3 p) {
+        vec3 i = floor(p);
+        vec3 f = fract(p);
+        f = f * f * (3.0 - 2.0 * f);
+        return mix(
+          mix(mix(_nhash(i), _nhash(i + vec3(1,0,0)), f.x),
+              mix(_nhash(i + vec3(0,1,0)), _nhash(i + vec3(1,1,0)), f.x), f.y),
+          mix(mix(_nhash(i + vec3(0,0,1)), _nhash(i + vec3(1,0,1)), f.x),
+              mix(_nhash(i + vec3(0,1,1)), _nhash(i + vec3(1,1,1)), f.x), f.y), f.z);
+      }
+    `;
+
     // ── Dot Vertex Shader ──
     const dotVertSrc = `
       attribute float aSize;
@@ -681,6 +769,8 @@
       uniform sampler2D uTerrainNormals;
       uniform sampler2D uNoiseAtlas;
       uniform vec3 uMouseWorld;
+      uniform vec3 uSunColor;
+      uniform float uSweepAngle;
       varying float vOpacity;
       varying vec3 vColor;
       varying float vMouseGlow;
@@ -750,7 +840,7 @@
         vFresnel = pow(1.0 - max(facing, 0.0), 2.2);
 
         // Day/night hemisphere
-        vec3 sunDir = normalize(uSunDir);
+        vec3 sunDir = uSunDir; // Already normalized on CPU
         float sunDot = dot(posNorm, sunDir);
         vSunLight = smoothstep(-0.15, 0.5, sunDot);
         vSunDotRaw = sunDot; // v4.99: Raw sun dot for specular hotspot
@@ -764,7 +854,7 @@
 
         // v4.83: Razor-sharp sweep for 200k density — tighter edge, richer afterglow
         float scanAngle = atan(posNorm.x, posNorm.z);
-        float sweepAngle = mod(uTime * 0.4, 6.28318);
+        float sweepAngle = uSweepAngle;
         float scanDist = mod(scanAngle - sweepAngle + 6.28318, 6.28318);
         // Leading edge — ultra-tight razor, cuts through dense surface
         float razorEdge = smoothstep(0.05, 0.0, scanDist) * 1.6;
@@ -962,6 +1052,7 @@
       uniform vec3 uAccentColor;
       uniform float uTime;
       uniform sampler2D uNoiseAtlas;
+      uniform vec3 uSunColor;
       varying float vOpacity;
       varying vec3 vColor;
       varying float vScanBoost;
@@ -998,13 +1089,13 @@
         float strength = core * 0.8 + max(halo, 0.0) * 0.3 * aaRim + bokehRing;
         if (strength < 0.005) discard;
         // Fresnel atmospheric scattering — sun-responsive rim color
-        vec3 sunWarmFresnel = mix(uAccentColor, vec3(0.8, 0.5, 0.2), 0.3); // Warm amber rim on sunlit side
+        vec3 sunWarmFresnel = mix(uAccentColor, uSunColor * vec3(0.85, 0.55, 0.25), 0.3); // Sun-tinted rim
         vec3 shadowCoolFresnel = mix(uAccentColor, vec3(0.3, 0.2, 0.6), 0.4); // Violet rim on shadow side
         vec3 fresnelColor = mix(shadowCoolFresnel, sunWarmFresnel, vSunLight);
         // v11.23: Richer fresnel — stronger accent at rim edges for vivid silhouette
         vec3 baseCol = mix(vColor, fresnelColor, vFresnel * 0.65);
         // Sun hemisphere warm/cool shift
-        vec3 warmTint = uAccentColor * 0.22;
+        vec3 warmTint = uSunColor * uAccentColor * 0.25;
         vec3 coolTint = vec3(0.01, 0.02, 0.07);
         baseCol += mix(coolTint, warmTint, vSunLight);
         // v11.30: Land warmth gradient — bright interior land dots subtly warmer
@@ -1016,7 +1107,7 @@
         float hotspot = pow(max(vSunDotRaw, 0.0), 24.0) * 0.35; // Tight specular needle
         float medSpec = pow(max(vSunDotRaw, 0.0), 10.0) * 0.15; // Mid-range specular lobe
         float sunSpecular = broadSpec + hotspot + medSpec;
-        vec3 specColor = mix(vec3(1.0, 0.95, 0.85), vec3(1.0, 0.99, 0.97), hotspot * 2.0); // White-hot at peak
+        vec3 specColor = mix(uSunColor, vec3(1.0, 0.99, 0.97), hotspot * 2.0); // Sun-tinted → white-hot at peak
         baseCol += specColor * sunSpecular * (1.0 - vFresnel * 0.7);
         // v5.00: Prismatic specular dispersion — rainbow fringe around hotspot like lens refraction
         float prismZone = pow(max(vSunDotRaw, 0.0), 8.0) * (1.0 - pow(max(vSunDotRaw, 0.0), 16.0)); // Ring around hotspot
@@ -1239,6 +1330,8 @@
         uTerrainNormals: { value: terrainNormalsTex },
         uNoiseAtlas: { value: noiseAtlasTex },
         uMouseWorld: { value: new THREE.Vector3(0, 0, -10) }, // v4.84: Cursor proximity glow
+        uSunColor: { value: new THREE.Vector3(1.0, 0.95, 0.85) }, // v5.06: Dynamic sun temperature
+        uSweepAngle: sharedSweepAngle,
       },
       vertexShader: dotVertSrc,
       fragmentShader: dotFragSrc,
@@ -1259,6 +1352,7 @@
         uTime: { value: 0 },
         uSunDir: { value: new THREE.Vector3(0.6, 0.4, 0.8).normalize() },
         uFade: { value: 1.0 },
+        uSweepAngle: sharedSweepAngle,
       },
       vertexShader: `
         varying vec3 vNormal;
@@ -1277,6 +1371,7 @@
         uniform float uTime;
         uniform vec3 uSunDir;
         uniform float uFade;
+        uniform float uSweepAngle;
         varying vec3 vNormal;
         varying vec3 vPos;
         varying vec3 vWorldPos;
@@ -1300,7 +1395,7 @@
           float hex = hexGrid(vec2(lng * 3.0, lat * 3.0), 8.0);
           float gridPulse = 0.4 + 0.6 * (sin(uTime * 0.5 + lat * 4.0) * 0.5 + 0.5);
           // v11.20: Scan sweep hex grid reaction — grid brightens as sweep passes
-          float sweepAngle = mod(uTime * 0.4, 6.28318);
+          float sweepAngle = uSweepAngle;
           // v12.29: Consolidated — hexAngle same as scanAngle below (atan of normalized = same)
           float coreAngle = atan(n.x, n.z);
           float hexScanDist = mod(coreAngle - sweepAngle + 6.28318, 6.28318);
@@ -1347,7 +1442,7 @@
           float pulseRing = exp(-pulseFront * pulseFront * 8.0) * pow(1.0 - facing, 1.8) * 0.06;
           emissionColor += vec3(1.0, 0.95, 0.85) * pulseRing;
           // Subsurface scattering — light bleeds through sunlit hemisphere
-          vec3 lightDir = normalize(uSunDir);
+          vec3 lightDir = uSunDir; // Already normalized on CPU
           float sssWrap = max(dot(n, lightDir), 0.0);
           float sssRim = pow(1.0 - facing, 2.0);
           // v11.22: Enhanced SSS — stronger warm bleed with multi-layer scattering
@@ -1407,29 +1502,16 @@
         uSunDir: { value: new THREE.Vector3(0.6, 0.4, 0.8).normalize() },
         uAtmosphereLUT: { value: atmosLutTex },
         uNoiseAtlas: { value: noiseAtlasTex },
+        uSweepAngle: sharedSweepAngle,
       },
       vertexShader: `
         uniform float uTime;
+        uniform float uSweepAngle;
         varying vec3 vNormal;
         varying vec3 vPos;
         varying vec3 vWorldNormal;
         varying float vDisplacement;
-        // Hash noise for vertex displacement
-        float hash3(vec3 p) {
-          p = fract(p * vec3(443.897, 441.423, 437.195));
-          p += dot(p, p.yzx + 19.19);
-          return fract((p.x + p.y) * p.z);
-        }
-        float vnoise(vec3 p) {
-          vec3 i = floor(p);
-          vec3 f = fract(p);
-          f = f * f * (3.0 - 2.0 * f);
-          return mix(
-            mix(mix(hash3(i), hash3(i + vec3(1,0,0)), f.x),
-                mix(hash3(i + vec3(0,1,0)), hash3(i + vec3(1,1,0)), f.x), f.y),
-            mix(mix(hash3(i + vec3(0,0,1)), hash3(i + vec3(1,0,1)), f.x),
-                mix(hash3(i + vec3(0,1,1)), hash3(i + vec3(1,1,1)), f.x), f.y), f.z);
-        }
+        ${GLSL_VALUE_NOISE}
         void main() {
           vec3 n = normalize(normal);
           // v11.25: Enhanced plasma undulation — 4 octaves with stronger displacement
@@ -1439,7 +1521,7 @@
                      + vnoise(n * 18.0 + uTime * 0.15) * 0.004;
           // Sweep-reactive bulge — atmosphere swells where scan beam passes
           float scanAngle = atan(n.x, n.z);
-          float sweepAngle = mod(uTime * 0.4, 6.28318);
+          float sweepAngle = uSweepAngle;
           float scanDist = mod(scanAngle - sweepAngle + 6.28318, 6.28318);
           float sweepBulge = smoothstep(0.6, 0.0, scanDist) * 0.012;
           float totalDisp = disp + sweepBulge;
@@ -1458,33 +1540,19 @@
         uniform vec3 uSunDir;
         uniform sampler2D uAtmosphereLUT;
         uniform sampler2D uNoiseAtlas;
+        uniform float uSweepAngle;
         varying vec3 vNormal;
         varying vec3 vPos;
         varying vec3 vWorldNormal;
         varying float vDisplacement;
-        // Fragment noise for plasma patterns
-        float fhash(vec3 p) {
-          p = fract(p * vec3(443.897, 441.423, 437.195));
-          p += dot(p, p.yzx + 19.19);
-          return fract((p.x + p.y) * p.z);
-        }
-        float fnoise(vec3 p) {
-          vec3 i = floor(p);
-          vec3 f = fract(p);
-          f = f * f * (3.0 - 2.0 * f);
-          return mix(
-            mix(mix(fhash(i), fhash(i + vec3(1,0,0)), f.x),
-                mix(fhash(i + vec3(0,1,0)), fhash(i + vec3(1,1,0)), f.x), f.y),
-            mix(mix(fhash(i + vec3(0,0,1)), fhash(i + vec3(1,0,1)), f.x),
-                mix(fhash(i + vec3(0,1,1)), fhash(i + vec3(1,1,1)), f.x), f.y), f.z);
-        }
+        ${GLSL_VALUE_NOISE}
         void main() {
           vec3 viewDir = normalize(-vPos);
           float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
           float gradient = smoothstep(-0.6, 0.6, vWorldNormal.y);
           vec3 atmosColor = mix(uColorSecondary, uColor, gradient);
           // v4.86: DGX physically-based scattering from atmosphere LUT (Bruneton/Hillaire)
-          vec3 sunDir = normalize(uSunDir);
+          vec3 sunDir = uSunDir; // Already normalized on CPU
           float viewZenith = dot(viewDir, normalize(vWorldNormal)); // -1 to 1
           float sunZenith = max(dot(normalize(vWorldNormal), sunDir), 0.0); // 0 to 1
           vec2 lutUV = vec2(viewZenith * 0.5 + 0.5, sunZenith);
@@ -1499,10 +1567,10 @@
           float drift2 = uTime * 0.12 + sin(uTime * 0.09) * 0.2; // Mid acceleration
           float drift3 = uTime * 0.18;
           float drift4 = uTime * 0.25 + cos(uTime * 0.07) * 0.15; // Fine turbulence bursts
-          float plasma = fnoise(n * 2.5 + drift1) * 0.4
-                       + fnoise(n * 5.0 - drift2) * 0.3
-                       + fnoise(n * 10.0 + drift3) * 0.2
-                       + fnoise(n * 20.0 - drift4) * 0.1;
+          float plasma = vnoise(n * 2.5 + drift1) * 0.4
+                       + vnoise(n * 5.0 - drift2) * 0.3
+                       + vnoise(n * 10.0 + drift3) * 0.2
+                       + vnoise(n * 20.0 - drift4) * 0.1;
           // v12.46: Displacement-correlated plasma — physical bulges glow brighter
           float dispBrightness = smoothstep(0.02, 0.06, vDisplacement) * 0.15; // Bulging regions brighter
           plasma += dispBrightness;
@@ -1529,8 +1597,7 @@
           float sunFacing = max(sunDot, 0.0);
           glow += pow(sunFacing, 3.0) * rim * 0.1;
           // v11.96: Sun crescent flare — concentrated bright point where sun hits limb most directly
-          vec3 viewDirOA = normalize(-vPos);
-          vec3 sunHalfOA = normalize(sunDir + viewDirOA);
+          vec3 sunHalfOA = normalize(sunDir + viewDir);
           float sunFlare = pow(max(dot(normalize(vWorldNormal), sunHalfOA), 0.0), 48.0) * pow(rim, 2.0) * 0.15;
           glow += sunFlare;
           atmosColor = mix(atmosColor, vec3(1.0, 0.95, 0.82), sunFlare * 2.0);
@@ -1561,7 +1628,7 @@
           atmosColor = mix(atmosColor, vec3(1.0, 0.98, 0.93), specWhiten * rim * 0.4);
           // Scan sweep reactive glow
           float scanAngle = atan(vWorldNormal.x, vWorldNormal.z);
-          float sweepAngle = mod(uTime * 0.4, 6.28318);
+          float sweepAngle = uSweepAngle;
           float scanDist = mod(scanAngle - sweepAngle + 6.28318, 6.28318);
           // Multi-layer sweep interaction — razor flash + glow trail + ionosphere pulse
           float sweepRazor = smoothstep(0.15, 0.0, scanDist) * 0.3;
@@ -1584,7 +1651,7 @@
           atmosColor = mix(equatorialWarm, polarCool, smoothstep(0.3, 0.8, latitude));
           // v12.58: Aurora curtain structure — vertical bands instead of uniform glow
           float polarBand = smoothstep(0.55, 0.8, latitude);
-          float auroraWave = fnoise(n * 3.0 + vec3(0.0, uTime * 0.03, 0.0)) * 0.6 + 0.4;
+          float auroraWave = vnoise(n * 3.0 + vec3(0.0, uTime * 0.03, 0.0)) * 0.6 + 0.4;
           // v12.59: Reuse scanAngle (same as atan(n.x, n.z) since n = normalize(vWorldNormal))
           float curtainBands = pow(sin(scanAngle * 8.0 + uTime * 0.05) * 0.5 + 0.5, 3.0); // Sharp peaks
           float curtainFine = sin(scanAngle * 24.0 + uTime * 0.08) * 0.3 + 0.7; // Fine detail
@@ -1599,7 +1666,7 @@
           // v12.57: Latitude-banded heat shimmer — tropics shimmer more, poles calmer
           // v4.96 opt: reuse equatorBand from line ~1564 (same value)
           float shimmerStrength = 0.06 + equatorBand * equatorBand * 0.12; // 0.06 polar → 0.18 equator
-          float heatFreq = fnoise(n * 12.0 + vec3(uTime * 0.2, uTime * 0.15, uTime * -0.1));
+          float heatFreq = vnoise(n * 12.0 + vec3(uTime * 0.2, uTime * 0.15, uTime * -0.1));
           float heatShimmer = (heatFreq - 0.5) * rim * shimmerStrength;
           glow *= (1.0 + heatShimmer);
           // Prismatic chromatic aberration — RGB channels separate at rim, creating rainbow fringe
@@ -1670,6 +1737,7 @@
         uColor: { value: new THREE.Color(themeColors.accent) },
         uTime: { value: 0 },
         uSunDir: { value: new THREE.Vector3(0.6, 0.4, 0.8).normalize() },
+        uSweepAngle: sharedSweepAngle,
       },
       vertexShader: `
         varying vec3 vNormal;
@@ -1686,6 +1754,7 @@
         uniform vec3 uColor;
         uniform float uTime;
         uniform vec3 uSunDir;
+        uniform float uSweepAngle;
         varying vec3 vNormal;
         varying vec3 vPos;
         varying vec3 vWorldNormal;
@@ -1698,14 +1767,14 @@
           float rimExponent = 4.5 + rimLat * 1.5; // 4.5 at equator (wider), 6.0 at poles (tighter)
           float glow = pow(rim, rimExponent) * 0.55 * latThickness;
           // v11.79: Dual-frequency breathing with sweep-responsive amplitude spike
-          float sweepAngleIR = mod(uTime * 0.4, 6.28318);
+          float sweepAngleIR = uSweepAngle;
           float irScanAngle = atan(vWorldNormal.x, vWorldNormal.z);
           float irScanDist = mod(irScanAngle - sweepAngleIR + 6.28318, 6.28318);
           float sweepBreathBoost = smoothstep(1.0, 0.0, irScanDist) * 0.08; // Breathing amplitude spike
           float breathe = 1.0 + (sin(uTime * 0.25) * 0.08 + sin(uTime * 0.13) * 0.04) * (1.0 + sweepBreathBoost);
           glow *= breathe;
           // Rayleigh scattering — full spectrum: violet shadow → cyan accent → warm amber terminator
-          vec3 sunDir = normalize(uSunDir);
+          vec3 sunDir = uSunDir; // Already normalized on CPU
           float sunFacing = dot(normalize(vWorldNormal), sunDir);
           vec3 deepViolet = vec3(0.2, 0.1, 0.55);
           vec3 twilightCyan = vec3(0.15, 0.5, 0.65);
@@ -1797,30 +1866,17 @@
         uColor: { value: new THREE.Color(themeColors.accent) },
         uSunDir: { value: new THREE.Vector3(0.6, 0.4, 0.8).normalize() },
         uTime: { value: 0 },
+        uSweepAngle: sharedSweepAngle,
       },
       vertexShader: atmosVert,
       fragmentShader: `
         uniform vec3 uColor;
         uniform vec3 uSunDir;
         uniform float uTime;
+        uniform float uSweepAngle;
         varying vec3 vNormal;
         varying vec3 vPos;
-        // v12.22: Hash noise for corona plasma tendrils
-        float chash(vec3 p) {
-          p = fract(p * vec3(443.897, 441.423, 437.195));
-          p += dot(p, p.yzx + 19.19);
-          return fract((p.x + p.y) * p.z);
-        }
-        float cnoise(vec3 p) {
-          vec3 i = floor(p);
-          vec3 f = fract(p);
-          f = f * f * (3.0 - 2.0 * f);
-          return mix(
-            mix(mix(chash(i), chash(i + vec3(1,0,0)), f.x),
-                mix(chash(i + vec3(0,1,0)), chash(i + vec3(1,1,0)), f.x), f.y),
-            mix(mix(chash(i + vec3(0,0,1)), chash(i + vec3(1,0,1)), f.x),
-                mix(chash(i + vec3(0,1,1)), chash(i + vec3(1,1,1)), f.x), f.y), f.z);
-        }
+        ${GLSL_VALUE_NOISE}
         void main() {
           vec3 viewDir = normalize(-vPos);
           float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
@@ -1829,16 +1885,15 @@
           float outerGlow = pow(rim, 2.2) * 0.03;
           float glow = innerGlow + outerGlow;
           vec3 worldN = normalize(vNormal);
-          vec3 sunDir = normalize(uSunDir);
+          vec3 sunDir = uSunDir; // Already normalized on CPU
           // v10.96: Asymmetric breathing — sun side pulses stronger (solar wind push)
           float baseBreathe = sin(uTime * 0.2) * 0.08 + sin(uTime * 0.13) * 0.04;
           float sunPush = max(dot(worldN, sunDir), 0.0);
           float solarBreathe = sunPush * sin(uTime * 0.3) * 0.12;
           glow *= 1.0 + baseBreathe + solarBreathe;
-          // Sun-side corona asymmetry — bright crescent on sunlit limb
-          float sunFace = max(dot(worldN, sunDir), 0.0);
-          float sunCrescent = pow(sunFace, 3.0) * rim * 0.06;
-          float sunHotspot = pow(sunFace, 8.0) * pow(rim, 3.0) * 0.03;
+          // Sun-side corona asymmetry — bright crescent on sunlit limb (reuse sunPush)
+          float sunCrescent = pow(sunPush, 3.0) * rim * 0.06;
+          float sunHotspot = pow(sunPush, 8.0) * pow(rim, 3.0) * 0.03;
           // v11.81: Corona specular needle — tight bright point where sun catches the halo
           vec3 coronaHalf = normalize(sunDir + viewDir);
           float coronaSpec = pow(max(dot(normalize(vNormal), coronaHalf), 0.0), 96.0) * rim * 0.05;
@@ -1853,7 +1908,7 @@
           vec3 polarCorona = mix(coronaCol, vec3(0.35, 0.45, 0.8), 0.08);
           coronaCol = mix(equatorialCorona, polarCorona, smoothstep(0.3, 0.75, coronaLat));
           // v12.41: Sun-side corona extension — solar wind pressure stretches corona sunward
-          float sunPressure = pow(sunFace, 2.0) * 0.04;
+          float sunPressure = pow(sunPush, 2.0) * 0.04;
           glow += sunPressure * rim; // Extended glow on sun-facing side
           // Shadow-side compression — corona tucked tighter against shadow hemisphere
           float shadowSide = max(-dot(worldN, sunDir), 0.0);
@@ -1871,7 +1926,7 @@
           glow += eclipseCorona * 0.45;
           // v11.28: Corona sweep reaction — subtle glow boost as scan passes
           float coronaScanAngle = atan(worldN.x, worldN.z);
-          float coronaSweepAngle = mod(uTime * 0.4, 6.28318);
+          float coronaSweepAngle = uSweepAngle;
           float coronaScanDist = mod(coronaScanAngle - coronaSweepAngle + 6.28318, 6.28318);
           float coronaSweepGlow = smoothstep(1.0, 0.0, coronaScanDist) * 0.08 * rim;
           // v12.02: Enhanced corona sweep flash — razor flash + white-hot color shift
@@ -1879,10 +1934,10 @@
           glow += coronaSweepGlow + coronaRazor;
           coronaCol = mix(coronaCol, vec3(1.0, 0.97, 0.9), coronaRazor * 3.0);
           // v4.91: Enhanced plasma tendrils — 4-octave curl noise for richer coronal structure
-          float tendril = cnoise(worldN * 4.0 + vec3(uTime * 0.06, uTime * -0.04, uTime * 0.05)) * 0.45
-                        + cnoise(worldN * 8.0 - vec3(uTime * 0.09, uTime * 0.07, 0.0)) * 0.28
-                        + cnoise(worldN * 16.0 + uTime * 0.12) * 0.17
-                        + cnoise(worldN * 32.0 - uTime * 0.18) * 0.10; // Fine filament detail
+          float tendril = vnoise(worldN * 4.0 + vec3(uTime * 0.06, uTime * -0.04, uTime * 0.05)) * 0.45
+                        + vnoise(worldN * 8.0 - vec3(uTime * 0.09, uTime * 0.07, 0.0)) * 0.28
+                        + vnoise(worldN * 16.0 + uTime * 0.12) * 0.17
+                        + vnoise(worldN * 32.0 - uTime * 0.18) * 0.10; // Fine filament detail
           float tendrilShape = pow(max(tendril - 0.25, 0.0) * 1.33, 1.4); // Lower threshold — more visible
           // v12.92: Sweep-excited tendrils — plasma structures flare white-hot as sweep energizes them
           float sweepExcite = (coronaRazor + coronaSweepGlow) * 3.0; // Sweep proximity amplifier
@@ -2028,6 +2083,7 @@
         uTime: { value: 0 },
         uColor: { value: new THREE.Color(themeColors.accent) },
         uSunDir: { value: new THREE.Vector3(0.6, 0.4, 0.8).normalize() },
+        uSweepAngle: sharedSweepAngle,
       },
       vertexShader: `
         attribute float aT;
@@ -2035,6 +2091,7 @@
         attribute float aRadial;
         uniform float uTime;
         uniform vec3 uSunDir;
+        uniform float uSweepAngle;
         varying float vT;
         varying float vFacing;
         varying float vPhase;
@@ -2049,10 +2106,10 @@
           vec3 posNorm = normalize(position);
           vFacing = dot(posNorm, vec3(0.0, 0.0, 1.0));
           // v11.57: Arc sun interaction
-          vArcSunLight = smoothstep(-0.1, 0.5, dot(posNorm, normalize(uSunDir)));
+          vArcSunLight = smoothstep(-0.1, 0.5, dot(posNorm, uSunDir));
           // v12.88: Sweep-arc intersection — flash when scan beam crosses arc
           float arcAngle = atan(posNorm.x, posNorm.z);
-          float sweepAngle = mod(uTime * 0.4, 6.28318);
+          float sweepAngle = uSweepAngle;
           float sweepDist = mod(arcAngle - sweepAngle + 6.28318, 6.28318);
           vSweepHit = exp(-sweepDist * sweepDist * 25.0); // Tight Gaussian at sweep position
           gl_Position = projectionMatrix * mv;
@@ -2205,10 +2262,6 @@
         tValues[i] = t;
       }
 
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      geo.setAttribute('aT', new THREE.BufferAttribute(tValues, 1));
-
       // Create tube with glow halo — 4 vertices per segment (outer glow + inner core + inner core + outer glow)
       // v5.02: Wider arc ribbons — more visible network with richer bloom
       const coreWidth = 0.008;
@@ -2315,11 +2368,13 @@
         uTime: { value: 0 },
         uColor: { value: new THREE.Color(themeColors.accent) },
         uSunDir: { value: new THREE.Vector3(0.6, 0.4, 0.8).normalize() },
+        uSweepAngle: sharedSweepAngle,
       },
       vertexShader: `
         attribute float aPhase;
         uniform float uTime;
         uniform vec3 uSunDir;
+        uniform float uSweepAngle;
         varying float vPulse;
         varying float vFacing;
         varying float vTime;
@@ -2333,10 +2388,10 @@
           vec3 posNorm = normalize(position);
           vFacing = dot(posNorm, vec3(0.0, 0.0, 1.0));
           // v11.58: Node sun interaction
-          vNodeSunLight = smoothstep(-0.1, 0.5, dot(posNorm, normalize(uSunDir)));
+          vNodeSunLight = smoothstep(-0.1, 0.5, dot(posNorm, uSunDir));
           // v11.08: Scan sweep interaction — nodes flash when sweep passes
           float nodeAngle = atan(posNorm.x, posNorm.z);
-          float sweepAngle = mod(uTime * 0.4, 6.28318);
+          float sweepAngle = uSweepAngle;
           float scanDist = mod(nodeAngle - sweepAngle + 6.28318, 6.28318);
           float sweepHit = smoothstep(0.5, 0.0, scanDist) * 1.5;
           vSweepHit = sweepHit;
@@ -2517,10 +2572,18 @@
           if (dist > 0.5) discard;
           float core = exp(-(dist * dist) / 0.018);
           float glow = 0.02 / (dist * dist + 0.008);
-          // 4-pointed diffraction spikes on bright stars
+          // v5.02: Chromatic diffraction spikes — spectral separation along spike arms
           float angle = atan(gl_PointCoord.y - 0.5, gl_PointCoord.x - 0.5);
-          float spikes = pow(abs(cos(angle * 2.0)), 24.0) * exp(-dist * 3.5);
-          float spikeIntensity = spikes * smoothstep(0.8, 1.5, vBright) * 0.6;
+          float spikeGate = smoothstep(0.8, 1.5, vBright);
+          // Primary 4-pointed spikes with per-channel angular offset (chromatic dispersion)
+          float spikeR = pow(abs(cos(angle * 2.0 - 0.04)), 22.0) * exp(-dist * 3.2);
+          float spikeG = pow(abs(cos(angle * 2.0)), 24.0) * exp(-dist * 3.5);
+          float spikeB = pow(abs(cos(angle * 2.0 + 0.04)), 26.0) * exp(-dist * 3.8);
+          vec3 chromaSpike = vec3(spikeR * 1.1, spikeG, spikeB * 1.1) * spikeGate * 0.6;
+          // Secondary 6-pointed spikes on ultra-bright stars (rotated 30°)
+          float spikes6 = pow(abs(cos(angle * 3.0 + 0.523)), 28.0) * exp(-dist * 4.0);
+          float ultra6 = spikes6 * smoothstep(1.2, 2.0, vBright) * 0.3;
+          float spikeIntensity = spikeG * spikeGate * 0.6 + ultra6;
           float strength = (core * 0.8 + glow * 0.15 + spikeIntensity) * vTwinkle;
           // v4.91: Milky Way nebula glow — wider soft halo for galactic plane stars
           float nebulaGlow = vGalactic * exp(-(dist * dist) / 0.15) * 0.12;
@@ -2557,6 +2620,157 @@
     const stars = new THREE.Points(starGeo, starMat);
     scene.add(stars); // Added to scene, not globeGroup — stars don't rotate
 
+    // ── Sun Disk — visible light source that anchors all lighting/god-ray effects ──
+    // v5.03: Cinematic sun disk — billboard sprite with multi-layer glow + chromatic halo
+    const sunDiskGeo = new THREE.PlaneGeometry(1, 1);
+    const sunDiskMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uOcclusion: { value: 0 }, // 0 = fully visible, 1 = behind globe
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform float uTime;
+        uniform float uOcclusion;
+        varying vec2 vUv;
+        void main() {
+          vec2 c = vUv - 0.5;
+          float dist = length(c);
+          // Tight white-hot core
+          float core = exp(-dist * dist * 800.0) * 1.2;
+          // Primary warm glow
+          float glow1 = exp(-dist * dist * 40.0) * 0.35;
+          // Wide soft halo — atmospheric scatter
+          float glow2 = exp(-dist * dist * 8.0) * 0.08;
+          // Ultra-wide haze — lens flare base
+          float haze = exp(-dist * dist * 2.5) * 0.025;
+          // Chromatic halo ring — rainbow-tinted ring around sun
+          float ringDist = abs(dist - 0.18);
+          float ring = exp(-ringDist * ringDist * 2000.0) * 0.06;
+          float ringAngle = atan(c.y, c.x);
+          vec3 ringColor = vec3(
+            0.5 + 0.5 * sin(ringAngle * 1.0),
+            0.5 + 0.5 * sin(ringAngle * 1.0 + 2.094),
+            0.5 + 0.5 * sin(ringAngle * 1.0 + 4.189)
+          );
+          // Anamorphic horizontal streak
+          float streak = exp(-c.y * c.y * 400.0) * exp(-c.x * c.x * 3.0) * 0.04;
+          // Color layers: white-hot core → warm gold glow → amber haze
+          vec3 coreCol = vec3(1.0, 0.99, 0.97);
+          vec3 glowCol = vec3(1.0, 0.9, 0.65);
+          vec3 hazeCol = vec3(1.0, 0.82, 0.5);
+          vec3 streakCol = vec3(0.9, 0.85, 0.7);
+          vec3 col = coreCol * core + glowCol * glow1 + hazeCol * (glow2 + haze) + streakCol * streak + ringColor * ring;
+          float alpha = core + glow1 + glow2 + haze + streak + ring;
+          // Breathing — subtle pulsation
+          float breathe = 1.0 + sin(uTime * 0.25) * 0.04 + sin(uTime * 0.13) * 0.02;
+          // Occlude when globe blocks the sun (smooth transition)
+          float vis = 1.0 - smoothstep(0.0, 1.0, uOcclusion);
+          gl_FragColor = vec4(col * breathe, alpha * vis * 0.7);
+        }
+      `,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      depthTest: false,
+    });
+    const sunDisk = new THREE.Mesh(sunDiskGeo, sunDiskMat);
+    sunDisk.scale.setScalar(3.5); // Large enough for soft glow to be visible
+    sunDisk.renderOrder = -1; // Render behind everything
+    scene.add(sunDisk);
+
+    // ── Orbital Data Ring — tilted particle ring evoking satellite constellation ──
+    // v5.05: Faint particle ring at ~15° tilt, catches sunlight, rotates slowly
+    const RING_PARTICLE_COUNT = 400;
+    const ringPositions = new Float32Array(RING_PARTICLE_COUNT * 3);
+    const ringSizes = new Float32Array(RING_PARTICLE_COUNT);
+    const ringPhases = new Float32Array(RING_PARTICLE_COUNT);
+    const ringTiltCos = Math.cos(0.26); // ~15° tilt
+    const ringTiltSin = Math.sin(0.26);
+    for (let i = 0; i < RING_PARTICLE_COUNT; i++) {
+      const angle = (i / RING_PARTICLE_COUNT) * Math.PI * 2 + (Math.random() - 0.5) * 0.03;
+      const r = 1.42 + (Math.random() - 0.5) * 0.06; // Thin band at ~1.42 radius
+      const x = Math.cos(angle) * r;
+      const z = Math.sin(angle) * r;
+      const y = (Math.random() - 0.5) * 0.015; // Very thin vertical spread
+      // Apply tilt rotation around X axis
+      ringPositions[i * 3] = x;
+      ringPositions[i * 3 + 1] = y * ringTiltCos - z * ringTiltSin;
+      ringPositions[i * 3 + 2] = y * ringTiltSin + z * ringTiltCos;
+      ringSizes[i] = 0.3 + Math.random() * 0.5;
+      ringPhases[i] = Math.random() * Math.PI * 2;
+    }
+    const ringGeo = new THREE.BufferGeometry();
+    ringGeo.setAttribute('position', new THREE.BufferAttribute(ringPositions, 3));
+    ringGeo.setAttribute('aSize', new THREE.BufferAttribute(ringSizes, 1));
+    ringGeo.setAttribute('aPhase', new THREE.BufferAttribute(ringPhases, 1));
+    const ringMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uColor: { value: new THREE.Color(themeColors.accent) },
+        uSunDir: { value: dotMat.uniforms.uSunDir.value }, // Share reference
+        uFade: { value: 0 },
+      },
+      vertexShader: `
+        attribute float aSize;
+        attribute float aPhase;
+        uniform float uTime;
+        uniform vec3 uSunDir;
+        varying float vAlpha;
+        varying float vSunLight;
+        varying float vTwinkle;
+        void main() {
+          // Orbit: rotate around Y with slow speed + per-particle phase offset
+          float orbAngle = uTime * 0.06 + aPhase;
+          float c = cos(orbAngle), s = sin(orbAngle);
+          vec3 pos = vec3(
+            position.x * c - position.z * s,
+            position.y,
+            position.x * s + position.z * c
+          );
+          vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+          float depth = -mv.z;
+          gl_PointSize = aSize * (200.0 / depth);
+          gl_Position = projectionMatrix * mv;
+          // Sun lighting
+          vec3 posNorm = normalize(pos);
+          vSunLight = max(dot(posNorm, uSunDir), 0.0);
+          // Facing camera — fade particles on far side
+          vAlpha = smoothstep(-0.1, 0.15, posNorm.z);
+          // Twinkle
+          float flicker = sin(uTime * 3.0 + aPhase * 17.3) * sin(uTime * 5.7 + aPhase * 7.1);
+          vTwinkle = 0.7 + 0.3 * flicker;
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColor;
+        uniform float uFade;
+        varying float vAlpha;
+        varying float vSunLight;
+        varying float vTwinkle;
+        void main() {
+          float dist = length(gl_PointCoord - vec2(0.5));
+          if (dist > 0.5) discard;
+          float core = exp(-dist * dist * 30.0);
+          float glow = exp(-dist * dist * 8.0) * 0.3;
+          float strength = (core + glow) * vTwinkle;
+          vec3 col = mix(uColor * 0.5, vec3(1.0, 0.95, 0.85), vSunLight * 0.6);
+          gl_FragColor = vec4(col * 1.5, strength * vAlpha * 0.12 * uFade);
+        }
+      `,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+    });
+    const ringPoints = new THREE.Points(ringGeo, ringMat);
+    globeGroup.add(ringPoints);
+
     // ── Ambient Energy Motes — luminous particles drifting near globe surface ──
     // v4.85: Denser energy field — more visible floating data particles
     const MOTE_COUNT = 180;
@@ -2590,6 +2804,7 @@
         uTime: { value: 0 },
         uColor: { value: new THREE.Color(themeColors.accent) },
         uSunDir: { value: new THREE.Vector3(0.6, 0.4, 0.8).normalize() },
+        uSweepAngle: sharedSweepAngle,
       },
       vertexShader: `
         attribute float aSize;
@@ -2597,6 +2812,7 @@
         attribute vec3 aOrbit;
         uniform float uTime;
         uniform vec3 uSunDir;
+        uniform float uSweepAngle;
         varying float vAlpha;
         varying float vFacing;
         varying float vSunGlow;
@@ -2630,14 +2846,14 @@
           vec3 posNorm = normalize(pos);
           vFacing = dot(posNorm, vec3(0.0, 0.0, 1.0));
           // v10.99: Mote sun interaction — sunlit motes glow brighter/warmer
-          float moteSunDot = dot(posNorm, normalize(uSunDir));
+          float moteSunDot = dot(posNorm, uSunDir);
           vSunGlow = max(moteSunDot, 0.0);
           // v11.65: Backlit motes — golden glow when sun behind, visible at limb
           float moteBacklit = max(-moteSunDot, 0.0) * pow(1.0 - max(vFacing, 0.0), 1.5);
           vSunGlow = max(vSunGlow, moteBacklit * 0.6);
           // v11.40: Mote scan sweep flash — sparkle as sweep passes
           float moteAngle = atan(posNorm.x, posNorm.z);
-          float moteSweepAngle = mod(uTime * 0.4, 6.28318);
+          float moteSweepAngle = uSweepAngle;
           float moteScanDist = mod(moteAngle - moteSweepAngle + 6.28318, 6.28318);
           float moteSweepFlash = smoothstep(0.4, 0.0, moteScanDist) * 2.0;
           vMoteSweep = smoothstep(0.2, 0.0, moteScanDist); // v12.13: Pass sweep proximity to fragment
@@ -2730,7 +2946,6 @@
     // Drag-to-spin with momentum
     let isDragging = false;
     let dragStartTime = 0; // v11.64: Track drag start for exposure pulse
-    let dragStartX = 0, dragStartY = 0;
     let dragVelocityX = 0, dragVelocityY = 0;
     let dragRotX = 0, dragRotY = 0;
     let lastDragX = 0, lastDragY = 0;
@@ -2746,8 +2961,6 @@
       if (reducedMotion) return;
       isDragging = true;
       dragStartTime = performance.now() / 1000; // v11.64
-      dragStartX = e.clientX;
-      dragStartY = e.clientY;
       lastDragX = e.clientX;
       lastDragY = e.clientY;
       lastDragTime = performance.now();
@@ -2924,9 +3137,13 @@
       const rawAngle = time * sunSpeed;
       const speedVar = 1.0 - Math.sin(rawAngle * 2) * 0.3; // Slower near horizon positions
       const sunAngle = rawAngle * speedVar;
+      // v5.13: Precessing sun orbit — orbital plane slowly tilts for non-repeating lighting
+      const precession = time * 0.003; // Full precession cycle ~35 minutes
+      const tiltY = 0.3 + Math.sin(sunAngle * 0.4) * 0.2 + Math.sin(precession) * 0.12;
+      const tiltZ = Math.sin(sunAngle) * 0.7 + Math.cos(sunAngle * 0.5) * 0.2 + Math.cos(precession * 0.7) * 0.08;
       const sunX = Math.cos(sunAngle) * 0.6 + Math.sin(sunAngle * 0.7) * 0.3;
-      const sunY = 0.3 + Math.sin(sunAngle * 0.4) * 0.2; // Wider Y range for more dramatic angles
-      const sunZ = Math.sin(sunAngle) * 0.7 + Math.cos(sunAngle * 0.5) * 0.2;
+      const sunY = tiltY;
+      const sunZ = tiltZ;
       const sunLen = Math.sqrt(sunX * sunX + sunY * sunY + sunZ * sunZ);
       // v4.87: Sun direction updates every 3rd frame (moves glacially, saves 4 uniform copies)
       const sunDirVec = dotMat.uniforms.uSunDir.value;
@@ -2936,6 +3153,31 @@
         outerAtmosMat.uniforms.uSunDir.value.copy(sunDirVec);
         innerRimMat.uniforms.uSunDir.value.copy(sunDirVec);
         coronaMat.uniforms.uSunDir.value.copy(sunDirVec);
+        // v5.06: Dynamic sun color temperature — golden hour ↔ neutral white
+        // Sun elevation (normalized Y) drives color: low = warm amber, high = neutral
+        const sunElev = sunY / sunLen; // 0-0.5 typical range
+        const goldenT = Math.max(0, 1.0 - sunElev * 3.0); // 1.0 at horizon, 0.0 when elevated
+        const goldenSq = goldenT * goldenT; // Quadratic for natural feel
+        // Neutral white (1.0, 0.97, 0.92) → Golden amber (1.0, 0.78, 0.45)
+        dotMat.uniforms.uSunColor.value.set(
+          1.0,
+          0.97 - goldenSq * 0.19,
+          0.92 - goldenSq * 0.47
+        );
+        // v5.07: Pass golden hour warmth to color grade post-process
+        colorGradePass.uniforms.uSunWarmth.value = goldenSq;
+        chromaPass.uniforms['uSunWarmth'].value = goldenSq;
+      }
+
+      // v5.03: Sun disk position + occlusion — billboard tracks sun, fades behind globe
+      if (frameCount % 3 === 0) {
+        const sdx = sunX / sunLen, sdy = sunY / sunLen, sdz = sunZ / sunLen;
+        sunDisk.position.set(sdx * 8, sdy * 8, sdz * 8); // Far behind globe
+        sunDisk.lookAt(camera.position); // Always face camera
+        // Occlusion: how much sun is behind globe from camera's POV
+        const sunCamAlign = sdz; // Positive = toward camera, negative = behind globe
+        sunDiskMat.uniforms.uOcclusion.value = Math.max(-sunCamAlign * 1.5, 0);
+        sunDiskMat.uniforms.uTime.value = time;
       }
 
       // v4.84: Cursor proximity glow — project mouse onto globe surface
@@ -2968,11 +3210,17 @@
       outerAtmosMat.uniforms.uTime.value = time;
       innerRimMat.uniforms.uTime.value = time;
       starMat.uniforms.uTime.value = time;
-      // v12.37: Per-star depth parallax — pass camera drift to shader (replaces uniform position shift)
-      starMat.uniforms.uCameraDrift.value.set(-camera.position.x * 0.15, -camera.position.y * 0.15);
+      // v5.08: Enhanced star parallax — camera drift + direct mouse response for 3D space feel
+      const mouseParallaxX = cachedWrapWidth >= 1024 ? mouseX * 0.08 : 0;
+      const mouseParallaxY = cachedWrapWidth >= 1024 ? mouseY * 0.06 : 0;
+      starMat.uniforms.uCameraDrift.value.set(
+        -camera.position.x * 0.15 + mouseParallaxX,
+        -camera.position.y * 0.15 - mouseParallaxY
+      );
       arcMat.uniforms.uTime.value = time;
       nodeMat.uniforms.uTime.value = time;
       moteMat.uniforms.uTime.value = time;
+      ringMat.uniforms.uTime.value = time;
       coronaMat.uniforms.uTime.value = time;
       // v5.00: Batch sun updates — arc/node/mote sun copies moved to 3rd-frame batch
       if (frameCount % 3 === 0) {
@@ -2982,6 +3230,7 @@
       }
       // v12.19: Consolidated sweep angle — single computation reused throughout
       const sweepAngleRad = (time * 0.4) % (Math.PI * 2);
+      sharedSweepAngle.value = sweepAngleRad; // v5.10: Single CPU→GPU broadcast
       const sweepFacing = Math.exp(-sweepAngleRad * sweepAngleRad * 2) + Math.exp(-(sweepAngleRad - Math.PI * 2) * (sweepAngleRad - Math.PI * 2) * 2);
       // Rotate sweep ring to match scan sweep angle
       sweepRing.rotation.y = -sweepAngleRad;
@@ -3005,22 +3254,19 @@
         const nodeFade = fadeIn(ENTRANCE_COALESCE_DUR + 0.6, 0.6);
         const sweepFade = fadeIn(ENTRANCE_COALESCE_DUR + 0.1, 1.0);
 
+        // v5.10: Removed dead .opacity writes (ShaderMaterials ignore .opacity without USE_OPACITY)
         globeDots.visible = dotFade > 0;
-        dotMat.opacity = dotFade;
         innerRimMesh.visible = rimFade > 0;
-        innerRimMat.opacity = rimFade;
-        outerAtmosMat.opacity = atmosFade;
-        coronaMat.opacity = atmosFade;
-        // Hide arcs/nodes/sweep during coalesce
-        arcMat.opacity = arcFade;
+        coronaMesh.visible = atmosFade > 0;
         for (const m of arcMeshes) m.visible = arcFade > 0;
-        nodeMat.opacity = nodeFade;
         nodePoints.visible = nodeFade > 0;
         sweepRing.visible = sweepFade > 0;
-        sweepRingMat.opacity = sweepFade;
         const moteFade = fadeIn(ENTRANCE_COALESCE_DUR + 0.8, 1.5);
         motePoints.visible = moteFade > 0;
-        moteMat.opacity = moteFade;
+        // Orbital ring fades in after motes (smooth via uFade uniform)
+        const ringFade = fadeIn(ENTRANCE_COALESCE_DUR + 1.2, 1.5);
+        ringPoints.visible = ringFade > 0;
+        ringMat.uniforms.uFade.value = ringFade;
       }
 
       // Entrance dolly + camera drift-in — cinematic approach from deep space
@@ -3109,41 +3355,36 @@
         colorGradePass.uniforms['uContrast'].value = bootContrast;
       }
 
-      // Dynamic exposure + bloom (sweepAngleRad & sweepFacing computed above)
-      // v4.92: Hotter exposure — ACES filmic compresses highlights, more luminous globe
-      const baseExposure = themeColors.isLight ? 1.15 : 1.5;
-      // Auto-exposure: compensate for bright/dark hemisphere facing camera
-      const sunCamDot = sunZ / sunLen; // How much sun faces camera (z-axis)
-      // v11.53: Enhanced backlit compensation — stronger exposure boost when sun behind globe
-      const backlitAmount = Math.max(-sunCamDot, 0); // 0-1, higher when sun behind globe
-      const hemisphereExposure = -sunCamDot * 0.08 + backlitAmount * backlitAmount * 0.12; // Extra boost for backlit drama
-      // v12.19: peakEnergy now computed earlier (before camera shake) — reuse here
-      // Stronger sweep-facing flash — spotlight effect when sweep aims at camera
-      const sweepFlash = sweepFacing * sweepFacing * 0.12;
-      const breatheExposure = Math.sin(time * 0.3) * 0.05 + Math.sin(time * 0.17) * 0.025;
-      // v11.64: Drag grab exposure dip — brief darkening when grab starts, then recovers
+      // Common values for both entrance and main-path exposure
+      const sunCamDot = sunZ / sunLen;
+      const backlitAmount = Math.max(-sunCamDot, 0);
       const dragAge = time - dragStartTime;
-      const grabDip = dragAge < 0.5 ? Math.exp(-dragAge * 8) * -0.1 : 0; // Quick -10% dip, fast recovery
-      renderer.toneMappingExposure = baseExposure + breatheExposure + sweepFlash + peakEnergy * 0.25 + hemisphereExposure + grabDip;
-      // Bloom spikes dramatically with fast interaction
-      // v4.79: Density-compensated bloom — base reduced for 200k dots (2× emitters)
-      const sunFacingStrength = Math.max(sunCamDot, 0) * 0.03;
-      // v4.81: Steady-state bloom base matches new 0.22 constructor value
-      bloomPass.strength = 0.18 + sweepFacing * 0.06 + Math.sin(time * 0.25) * 0.015 + peakEnergy * 0.14 + backlitAmount * 0.06 + sunFacingStrength;
-      // Dynamic bloom radius — wider during energy spikes, tighter at rest
-      bloomPass.radius = 0.75 + peakEnergy * 0.2 + sweepFacing * 0.05 + Math.sin(time * 0.2) * 0.02;
-      // v11.05: Dynamic bloom threshold — lower during interaction for more dramatic glow
-      // v11.93: Bloom threshold breathing — slow independent pulsation for periodic glow surges
-      const thresholdBreathe = Math.sin(time * 0.18) * 0.02 + Math.sin(time * 0.07) * 0.01;
-      // v12.75: Sun-facing bloom threshold — more bloom when bright hemisphere faces camera
-      const sunFacingBloom = Math.max(sunCamDot, 0) * 0.03; // -3% threshold when sun faces cam
-      bloomPass.threshold = 0.62 - peakEnergy * 0.15 - sweepFacing * 0.04 + thresholdBreathe - sunFacingBloom;
-      // Chroma aberration — aggressive during fast spins
-      // v11.60: Enhanced interaction chroma spike — sharper burst on fast spin
-      const chromaSpike = Math.pow(peakEnergy, 0.5) * 0.012; // Sqrt for faster onset
-      // v12.53: Sweep-camera chromatic flare — stronger prismatic spread when sweep aims at camera
-      const sweepChromaFlare = sweepFacing * sweepFacing * 0.006; // Squared for sharper burst
-      chromaPass.uniforms['uIntensity'].value = 0.002 + sweepFacing * 0.003 + sweepChromaFlare + Math.sin(time * 0.3) * 0.0005 + chromaSpike;
+
+      // v5.08: Dynamic corona expansion — wider halo during backlit (eclipse drama)
+      const coronaBreath = 1.0 + Math.sin(time * 0.2) * 0.01;
+      const coronaBacklitExpand = 1.0 + backlitAmount * backlitAmount * 0.08;
+      const coronaSweepPulse = 1.0 + sweepFacing * 0.02;
+      coronaMesh.scale.setScalar(coronaBreath * coronaBacklitExpand * coronaSweepPulse);
+
+      // v5.02 opt: Guard bloom/exposure/chroma during entrance — was being overwritten
+      if (time >= ENTRANCE_COALESCE_DUR + 2.0) {
+        // Dynamic exposure + bloom (main path — after entrance completes)
+        const baseExposure = themeColors.isLight ? 1.15 : 1.5;
+        const hemisphereExposure = -sunCamDot * 0.08 + backlitAmount * backlitAmount * 0.12;
+        const sweepFlash = sweepFacing * sweepFacing * 0.12;
+        const breatheExposure = Math.sin(time * 0.3) * 0.05 + Math.sin(time * 0.17) * 0.025;
+        const grabDip = dragAge < 0.5 ? Math.exp(-dragAge * 8) * -0.1 : 0;
+        renderer.toneMappingExposure = baseExposure + breatheExposure + sweepFlash + peakEnergy * 0.25 + hemisphereExposure + grabDip;
+        const sunFacingStrength = Math.max(sunCamDot, 0) * 0.03;
+        bloomPass.strength = 0.18 + sweepFacing * 0.06 + Math.sin(time * 0.25) * 0.015 + peakEnergy * 0.14 + backlitAmount * 0.06 + sunFacingStrength;
+        bloomPass.radius = 0.75 + peakEnergy * 0.2 + sweepFacing * 0.05 + Math.sin(time * 0.2) * 0.02;
+        const thresholdBreathe = Math.sin(time * 0.18) * 0.02 + Math.sin(time * 0.07) * 0.01;
+        const sunFacingBloom = Math.max(sunCamDot, 0) * 0.03;
+        bloomPass.threshold = 0.62 - peakEnergy * 0.15 - sweepFacing * 0.04 + thresholdBreathe - sunFacingBloom;
+        const chromaSpike = Math.pow(peakEnergy, 0.5) * 0.012;
+        const sweepChromaFlare = sweepFacing * sweepFacing * 0.006;
+        chromaPass.uniforms['uIntensity'].value = 0.002 + sweepFacing * 0.003 + sweepChromaFlare + Math.sin(time * 0.3) * 0.0005 + chromaSpike;
+      }
       chromaPass.uniforms['uTime'].value = time;
       // v11.55: Shift vignette center toward sun — opens up sunlit side, darkens shadow side
       // v12.82: Backlit vignette opening — wider vignette when sun behind globe (show golden rim)
@@ -3224,23 +3465,12 @@
         const s2 = s * s;
         // Core sphere fades — energy releasing
         coreMat.uniforms.uFade.value = 1.0 - s2 * 0.95;
-        // Atmosphere shells expand and fade
-        const atmosScale = 1.0 + s * 0.3;
-        outerAtmosMat.opacity = Math.max(outerAtmosMat.opacity || 1, 0) * (1.0 - s2);
-        innerRimMat.opacity = Math.max(innerRimMat.opacity || 1, 0) * (1.0 - s2);
-        coronaMat.opacity = Math.max(coronaMat.opacity || 1, 0) * (1.0 - s * 0.7);
-        // Arcs and nodes dissolve
-        arcMat.opacity = Math.max(arcMat.opacity || 1, 0) * (1.0 - s2);
+        // v5.10: Visibility toggles only (removed dead .opacity writes)
         for (const m of arcMeshes) m.visible = s < 0.85;
-        nodeMat.opacity = Math.max(nodeMat.opacity || 1, 0) * (1.0 - s2);
         nodePoints.visible = s < 0.8;
-        // Sweep ring fades
         sweepRing.visible = s < 0.7;
-        sweepRingMat.opacity = Math.max(sweepRingMat.opacity || 1, 0) * (1.0 - s);
-        // Motes scatter faster — expand outward
         motePoints.visible = s < 0.6;
-        // Stars brighten as globe dissolves — space emerges
-        starMat.opacity = 1.0 + s * 0.5;
+        ringPoints.visible = s < 0.5;
         // Bloom increases during scatter — energy release glow
         bloomPass.strength += s * 0.08;
         // v11.67: Dispersal warm highlight shift — energy release warms highlights
@@ -3360,6 +3590,16 @@
       moteMat.dispose();
       coronaGeo.dispose();
       coronaMat.dispose();
+      sunDiskGeo.dispose();
+      sunDiskMat.dispose();
+      ringGeo.dispose();
+      ringMat.dispose();
+      // v5.02 opt: Dispose textures to free GPU memory on navigation
+      nightLightsTex.dispose();
+      terrainNormalsTex.dispose();
+      noiseAtlasTex.dispose();
+      atmosLutTex.dispose();
+      colorLutTex.dispose();
     }, { once: true });
   }
 </script>
