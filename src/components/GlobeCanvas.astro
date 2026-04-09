@@ -782,26 +782,37 @@
         float urbanFlicker = 1.0 + (fract(sin(flickerHash * 43.7 + uTime * (3.0 + flickerHash * 8.0)) * 17.3) - 0.5) * vCityGlow * 0.3;
         float cityBoost = (1.0 + vCityGlow * (2.5 + nightSquared * 3.5)) * urbanFlicker;
 
-        // Data pulse waves — expanding rings from 3 city centers (staggered timing)
+        // v4.83: Data pulse waves — expanding rings from 5 global hubs (staggered timing)
         vec3 city0 = normalize(vec3(-0.527, 0.653, -0.543)); // NYC
         vec3 city1 = normalize(vec3(-0.001, 0.788, 0.616));  // London
         vec3 city2 = normalize(vec3(0.772, 0.579, -0.264));  // Tokyo
+        vec3 city3 = normalize(vec3(0.554, 0.427, -0.712));  // Dubai
+        vec3 city4 = normalize(vec3(-0.423, 0.614, 0.666));  // San Francisco
         float geodist0 = acos(clamp(dot(posNorm, city0), -1.0, 1.0));
         float geodist1 = acos(clamp(dot(posNorm, city1), -1.0, 1.0));
         float geodist2 = acos(clamp(dot(posNorm, city2), -1.0, 1.0));
+        float geodist3 = acos(clamp(dot(posNorm, city3), -1.0, 1.0));
+        float geodist4 = acos(clamp(dot(posNorm, city4), -1.0, 1.0));
         // Sharper wavefronts with wider reach and stronger gating
         float wave0 = sin(geodist0 * 10.0 - uTime * 1.8);
         float pulse0 = max(0.0, wave0) * exp(-geodist0 * 1.5) * (0.5 + 0.5 * sin(uTime * 0.3));
-        pulse0 += max(0.0, -wave0) * exp(-geodist0 * 2.5) * 0.15; // Anti-wave echo
+        pulse0 += max(0.0, -wave0) * exp(-geodist0 * 2.5) * 0.15;
         float wave1 = sin(geodist1 * 10.0 - uTime * 1.8 + 2.1);
         float pulse1 = max(0.0, wave1) * exp(-geodist1 * 1.5) * (0.5 + 0.5 * sin(uTime * 0.3 + 2.1));
         pulse1 += max(0.0, -wave1) * exp(-geodist1 * 2.5) * 0.15;
         float wave2 = sin(geodist2 * 10.0 - uTime * 1.8 + 4.2);
         float pulse2 = max(0.0, wave2) * exp(-geodist2 * 1.5) * (0.5 + 0.5 * sin(uTime * 0.3 + 4.2));
         pulse2 += max(0.0, -wave2) * exp(-geodist2 * 2.5) * 0.15;
-        float rawPulse = max(max(pulse0, pulse1), pulse2) * 0.7;
+        float wave3 = sin(geodist3 * 10.0 - uTime * 1.8 + 1.05);
+        float pulse3 = max(0.0, wave3) * exp(-geodist3 * 1.5) * (0.5 + 0.5 * sin(uTime * 0.3 + 1.05));
+        pulse3 += max(0.0, -wave3) * exp(-geodist3 * 2.5) * 0.15;
+        float wave4 = sin(geodist4 * 10.0 - uTime * 1.8 + 3.15);
+        float pulse4 = max(0.0, wave4) * exp(-geodist4 * 1.5) * (0.5 + 0.5 * sin(uTime * 0.3 + 3.15));
+        pulse4 += max(0.0, -wave4) * exp(-geodist4 * 2.5) * 0.15;
+        float rawPulse = max(max(max(pulse0, pulse1), max(pulse2, pulse3)), pulse4) * 0.65;
         // v11.10: Track closest city distance for pulse color gradient
-        float closestDist = pulse0 >= max(pulse1, pulse2) ? geodist0 : (pulse1 >= pulse2 ? geodist1 : geodist2);
+        float maxP = max(max(max(pulse0, pulse1), max(pulse2, pulse3)), pulse4);
+        float closestDist = pulse0 >= maxP - 0.001 ? geodist0 : (pulse1 >= maxP - 0.001 ? geodist1 : (pulse2 >= maxP - 0.001 ? geodist2 : (pulse3 >= maxP - 0.001 ? geodist3 : geodist4)));
         vPulseDistance = closestDist;
         // Gate: only land/coastal dots get full pulse (ocean too faint — pulse makes them visible noise)
         float pulseGate = smoothstep(0.05, 0.3, aOpacity);
