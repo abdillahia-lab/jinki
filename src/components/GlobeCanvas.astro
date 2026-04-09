@@ -1009,9 +1009,13 @@
         float landBrightness = dot(vColor, vec3(0.299, 0.587, 0.114));
         float warmBlend = smoothstep(0.15, 0.5, landBrightness) * vSunLight * 0.08;
         baseCol += vec3(0.04, 0.015, -0.01) * warmBlend;
-        // v10.97: Sun specular highlight — bright dots catch direct sunlight
-        float sunSpecular = pow(max(vSunLight, 0.0), 4.0) * 0.12;
-        baseCol += vec3(1.0, 0.95, 0.85) * sunSpecular * (1.0 - vFresnel);
+        // v4.99: Concentrated sun specular hotspot — tight photorealistic catch
+        float broadSpec = pow(max(vSunLight, 0.0), 4.0) * 0.08; // Broad hemisphere fill
+        float hotspot = pow(max(vSunDotRaw, 0.0), 24.0) * 0.35; // Tight specular needle
+        float medSpec = pow(max(vSunDotRaw, 0.0), 10.0) * 0.15; // Mid-range specular lobe
+        float sunSpecular = broadSpec + hotspot + medSpec;
+        vec3 specColor = mix(vec3(1.0, 0.95, 0.85), vec3(1.0, 0.99, 0.97), hotspot * 2.0); // White-hot at peak
+        baseCol += specColor * sunSpecular * (1.0 - vFresnel * 0.7);
         // v10.92: Night-side ambient emission — faint self-illumination on dark hemisphere
         float nightEmission = (1.0 - vSunLight) * (1.0 - vSunLight);
         vec3 nightAmbient = mix(vec3(0.02, 0.04, 0.08), uAccentColor * 0.15, 0.2);
@@ -1509,7 +1513,9 @@
           float plasmaGlow = max(plasmaIntensity, 0.0) * rim * 0.08;
           float glow = innerRim + midBloom + outerFalloff + plasmaGlow;
           // Sun-side brightening (sunDir already declared for LUT sampling above)
-          float sunFacing = max(dot(normalize(vWorldNormal), sunDir), 0.0);
+          // v4.96 opt: single dot product, reused for sunFacing/shadowFace/terminator
+          float sunDot = dot(normalize(vWorldNormal), sunDir);
+          float sunFacing = max(sunDot, 0.0);
           glow += pow(sunFacing, 3.0) * rim * 0.1;
           // v11.96: Sun crescent flare — concentrated bright point where sun hits limb most directly
           vec3 viewDirOA = normalize(-vPos);
@@ -1525,7 +1531,7 @@
           float sunLimbWarm = pow(sunFacing, 2.0) * pow(rim, 2.5) * 0.25;
           atmosColor = mix(atmosColor, goldenLimb, sunLimbWarm);
           // v11.73: Enhanced shadow-side dimming — stronger day/night atmosphere contrast
-          float shadowFace = max(-dot(normalize(vWorldNormal), sunDir), 0.0);
+          float shadowFace = max(-sunDot, 0.0);
           float shadowMute = pow(shadowFace, 1.5) * 0.25;
           float atmosLum = dot(atmosColor, vec3(0.299, 0.587, 0.114));
           atmosColor = mix(atmosColor, vec3(atmosLum) * 0.8, shadowMute);
@@ -1594,12 +1600,13 @@
             atmosColor.b * (1.0 + caOffset * 1.0)
           );
           // Terminator atmospheric warming — day/night boundary glows amber
-          float sunDot = dot(normalize(vWorldNormal), sunDir);
+          // v4.96 opt: sunDot reused from early computation
           float terminatorAtmos = exp(-(sunDot - 0.1) * (sunDot - 0.1) / 0.03) * rim;
           vec3 terminatorWarm = vec3(1.0, 0.7, 0.3);
           caColor = mix(caColor, terminatorWarm, terminatorAtmos * 0.3);
           // v10.91: Shadow-side counter-glow — deep blue limb on the night hemisphere (ISS photo realism)
-          float shadowFacing = max(-sunDot, 0.0);
+          // v4.96 opt: shadowFace reused from early computation
+          float shadowFacing = shadowFace;
           float shadowRim = pow(rim, 4.0) * shadowFacing * 0.18;
           vec3 nightLimb = vec3(0.08, 0.12, 0.35); // Deep blue-violet counter-illumination
           caColor += nightLimb * shadowRim;
@@ -2191,8 +2198,9 @@
       geo.setAttribute('aT', new THREE.BufferAttribute(tValues, 1));
 
       // Create tube with glow halo — 4 vertices per segment (outer glow + inner core + inner core + outer glow)
-      const coreWidth = 0.006;
-      const glowWidth = 0.025; // Wide halo for volumetric look
+      // v5.02: Wider arc ribbons — more visible network with richer bloom
+      const coreWidth = 0.008;
+      const glowWidth = 0.032;
       const VERTS_PER_SEG = 4;
       const tubePositions = new Float32Array(ARC_SEGMENTS * VERTS_PER_SEG * 3);
       const tubeTs = new Float32Array(ARC_SEGMENTS * VERTS_PER_SEG);
