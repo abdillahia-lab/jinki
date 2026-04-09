@@ -672,18 +672,16 @@ html { scrollbar-width: thin; scrollbar-color: var(--text-tertiary) var(--bg-pri
   .hero-mesh { display: none !important; }
 
   /* Reduce backdrop-filter GPU cost on mobile — #1 paint bottleneck */
-  .glass-panel {
-    backdrop-filter: blur(8px) saturate(1.2) !important;
-    -webkit-backdrop-filter: blur(8px) saturate(1.2) !important;
-  }
-  .glass-card {
+  .glass-panel, .glass-card {
     backdrop-filter: blur(8px) saturate(1.2) !important;
     -webkit-backdrop-filter: blur(8px) saturate(1.2) !important;
   }
 
   /* Remove pseudo-element gloss effects that create extra composite layers */
   .glass-panel::before,
-  .glass-panel::after {
+  .glass-panel::after,
+  .glass-card::before,
+  .glass-card::after {
     display: none !important;
   }
 
@@ -691,6 +689,15 @@ html { scrollbar-width: thin; scrollbar-color: var(--text-tertiary) var(--bg-pri
   .reveal { transition-duration: 0.4s !important; }
   .reveal-delay-1, .reveal-delay-2, .reveal-delay-3, .reveal-delay-4 {
     transition-delay: 0s !important;
+  }
+
+  /* Kill heavy hero SVG animations on mobile — saves significant GPU/CPU */
+  .omega-hero-visual svg *,
+  .omega-hero-visual [class*="anim"],
+  [class*="-pulse"],
+  [class*="-ring"],
+  [class*="scan-line"] {
+    animation: none !important;
   }
 }
 
