@@ -2143,10 +2143,18 @@
       // v4.87: More dramatic arc heights — minimum lift + steeper long-route arcs
       const arcHeight = 1.02 + Math.max(midDist * 0.25, 0.08);
 
+      // v4.98: True spherical interpolation — great-circle accuracy for long routes
+      const startN = start.clone().normalize();
+      const endN = end.clone().normalize();
+      const omega = Math.acos(Math.min(startN.dot(endN), 1.0));
+      const sinOmega = Math.sin(omega);
       for (let i = 0; i < ARC_SEGMENTS; i++) {
         const t = i / (ARC_SEGMENTS - 1);
-        // Slerp between start and end
-        const p = new THREE.Vector3().copy(start).lerp(end, t).normalize();
+        // True slerp — follows great-circle path on sphere surface
+        const p = sinOmega > 0.001
+          ? startN.clone().multiplyScalar(Math.sin((1 - t) * omega) / sinOmega)
+              .add(endN.clone().multiplyScalar(Math.sin(t * omega) / sinOmega))
+          : startN.clone().lerp(endN, t); // Fallback for nearly identical points
         // Altitude: parabolic bulge peaking at midpoint
         const alt = 1.02 + Math.sin(t * Math.PI) * (arcHeight - 1.02);
         p.multiplyScalar(alt);
