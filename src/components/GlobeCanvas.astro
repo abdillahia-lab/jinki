@@ -2140,7 +2140,8 @@
       const positions = new Float32Array(ARC_SEGMENTS * 3);
       const tValues = new Float32Array(ARC_SEGMENTS);
       const midDist = start.distanceTo(end);
-      const arcHeight = 1.02 + midDist * 0.22; // Higher arcs for longer routes
+      // v4.87: More dramatic arc heights — minimum lift + steeper long-route arcs
+      const arcHeight = 1.02 + Math.max(midDist * 0.25, 0.08);
 
       for (let i = 0; i < ARC_SEGMENTS; i++) {
         const t = i / (ARC_SEGMENTS - 1);
