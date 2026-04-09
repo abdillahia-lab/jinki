@@ -392,6 +392,20 @@
           float centerWarm = exp(-vigDist * vigDist * 6.0) * 0.008;
           col.r += centerWarm;
           col.g += centerWarm * 0.5;
+          // v4.95: Tilt-shift depth of field — soft vertical blur at top/bottom of frame
+          float focusBand = abs(vUv.y - 0.5) * 2.0;
+          float dofStrength = smoothstep(0.45, 0.95, focusBand) * 0.0018;
+          if (dofStrength > 0.0001) {
+            vec3 dofBlur = col;
+            for (int j = 1; j <= 4; j++) {
+              float fj = float(j);
+              float w = exp(-fj * fj * 0.3);
+              dofBlur += texture2D(tDiffuse, warpedUv + vec2(0.0, dofStrength * fj)).rgb * w;
+              dofBlur += texture2D(tDiffuse, warpedUv - vec2(0.0, dofStrength * fj)).rgb * w;
+            }
+            dofBlur /= (1.0 + 2.0 * (exp(-0.3) + exp(-1.2) + exp(-2.7) + exp(-4.8)));
+            col = mix(col, dofBlur, smoothstep(0.45, 0.95, focusBand));
+          }
           // v4.89: Anamorphic lens streak — horizontal light smear from bright highlights
           // Samples along horizontal axis with exponential falloff, only from bright pixels
           vec3 streak = vec3(0.0);
@@ -2673,7 +2687,8 @@
     }
     positionGlobe();
     globeGroup.rotation.y = -0.4; // Atlantic facing
-    globeGroup.rotation.z = -0.12; // Subtle axial tilt
+    // v4.88: Stronger axial tilt — closer to Earth's real 23.5° for natural appearance
+    globeGroup.rotation.z = -0.20;
 
     // ── Interaction ──
     let mouseX = 0, mouseY = 0;
