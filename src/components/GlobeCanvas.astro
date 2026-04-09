@@ -52,6 +52,7 @@
   - v5.20: HUD connector beam — thin glowing line linking data readout to globe surface
   - v5.21: Composite viewport mask — radial vignette intersected with left fade for cinematic framing
   - v5.22: Deep core heartbeat — ~42s cubic pulse visible at rim, rewards prolonged observation
+  - v5.23: Enhanced scroll dispersal — bloom threshold drop, wider radius, desaturation, chroma spike
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -3604,10 +3605,17 @@
         ringPoints.visible = s < 0.5;
         // Bloom increases during scatter — energy release glow
         bloomPass.strength += s * 0.08;
+        // v5.23: Scatter bloom threshold drop — more particles glow as they disperse
+        bloomPass.threshold -= s * 0.12; // Lower threshold = more bloom sources
+        bloomPass.radius += s * 0.15; // Wider bloom = softer, more ethereal
         // v11.67: Dispersal warm highlight shift — energy release warms highlights
         const dispersalWarm = s * (1.0 - s); // Peaks at s=0.5, fades at full scatter
         colorGradePass.uniforms['uHighlightTint'].value.x += dispersalWarm * 0.08;
         colorGradePass.uniforms['uHighlightTint'].value.y += dispersalWarm * 0.03;
+        // v5.23: Scatter desaturation — energy dissipating loses color intensity
+        colorGradePass.uniforms['uSaturation'].value -= s * 0.15;
+        // v5.23: Scatter chroma spike — particles releasing energy creates prismatic flare
+        chromaPass.uniforms['uIntensity'].value += s * s * 0.003;
         // Exposure dims slightly — cinematic fade
         renderer.toneMappingExposure -= s2 * 0.3;
       }
