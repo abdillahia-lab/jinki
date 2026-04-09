@@ -44,6 +44,7 @@
   - v5.12: Film gate weave + lamp flicker — 35mm projector micro-drift and brightness variation
   - v5.13: Precessing sun orbit — orbital plane tilts over ~35min cycle for non-repeating lighting
   - v5.14: Bloom accent tint — neutral bright pixels shift toward brand accent for cohesive glow
+  - v5.15: Radial DOF — globe-centered oval focus replaces vertical tilt-shift for cinematic depth
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -434,19 +435,21 @@
           float centerWarm = exp(-vigDist * vigDist * 6.0) * 0.008;
           col.r += centerWarm;
           col.g += centerWarm * 0.5;
-          // v4.95: Tilt-shift depth of field — soft vertical blur at top/bottom of frame
-          float focusBand = abs(vUv.y - 0.5) * 2.0;
-          float dofStrength = smoothstep(0.45, 0.95, focusBand) * 0.0018;
+          // v5.15: Radial DOF — globe center sharp, periphery soft (replaces vertical tilt-shift)
+          vec2 focusCenter = vec2(0.6, 0.47); // Globe center (offset right on desktop)
+          float focusDist = length((vUv - focusCenter) * vec2(1.0, 1.3)); // Oval focus region
+          float dofStrength = smoothstep(0.28, 0.65, focusDist) * 0.0016;
           if (dofStrength > 0.0001) {
+            vec2 dofDir = normalize(vUv - focusCenter + 0.001); // Radial blur direction
             vec3 dofBlur = col;
             for (int j = 1; j <= 4; j++) {
               float fj = float(j);
               float w = exp(-fj * fj * 0.3);
-              dofBlur += texture2D(tDiffuse, warpedUv + vec2(0.0, dofStrength * fj)).rgb * w;
-              dofBlur += texture2D(tDiffuse, warpedUv - vec2(0.0, dofStrength * fj)).rgb * w;
+              dofBlur += texture2D(tDiffuse, warpedUv + dofDir * dofStrength * fj).rgb * w;
+              dofBlur += texture2D(tDiffuse, warpedUv - dofDir * dofStrength * fj).rgb * w;
             }
-            dofBlur /= 3.235; // v4.96 opt: precomputed 1+2*(e^-0.3+e^-1.2+e^-2.7+e^-4.8)
-            col = mix(col, dofBlur, smoothstep(0.45, 0.95, focusBand));
+            dofBlur /= 3.235;
+            col = mix(col, dofBlur, smoothstep(0.28, 0.65, focusDist));
           }
           // v4.89: Anamorphic lens streak — horizontal light smear from bright highlights
           // Samples along horizontal axis with exponential falloff, only from bright pixels
