@@ -1,6 +1,6 @@
 ---
 /*
-  GlobeCanvas v4.98 — Cinematic depth-of-field bokeh at silhouette edge.
+  GlobeCanvas v4.99 — Concentrated sun specular hotspot for photorealistic lighting.
 
   Architecture:
   - Fibonacci sphere sampling (100k desktop, 38k tablet)
@@ -27,6 +27,7 @@
   - v4.86: Optimization pass — zero-alloc raycast, unified bloom pipeline, eliminated all hash noise
   - v4.97: Tighter backface culling (3.2/2.1) + atmospheric rim luminance for cleaner silhouette
   - v4.98: Cinematic DOF — deeper bokeh sigma range + DOF size swell at silhouette
+  - v4.99: Concentrated sun specular hotspot — tight bright catch at sun-facing apex
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -684,6 +685,7 @@
       varying float vScanBoost;
       varying float vFresnel;
       varying float vSunLight;
+      varying float vSunDotRaw;
       varying float vCityGlow;
       varying float vDepthHaze;
       varying float vCoastalHalo;
@@ -749,6 +751,7 @@
         vec3 sunDir = normalize(uSunDir);
         float sunDot = dot(posNorm, sunDir);
         vSunLight = smoothstep(-0.15, 0.5, sunDot);
+        vSunDotRaw = sunDot; // v4.99: Raw sun dot for specular hotspot
 
         // Depth fog
         float depthFog = smoothstep(4.2, 2.0, depth);
@@ -962,6 +965,7 @@
       varying float vScanBoost;
       varying float vFresnel;
       varying float vSunLight;
+      varying float vSunDotRaw;
       varying float vCityGlow;
       varying float vDepthHaze;
       varying float vCoastalHalo;
@@ -2860,7 +2864,8 @@
         const approxSunY = 0.3 + Math.sin(sunAngleApprox * 0.4) * 0.2;
         const goldenHour = Math.exp(-approxSunY * approxSunY * 8.0) * 0.12; // Peaks when sun near horizon
         const goldenLinger = 1.0 - goldenHour;
-        const baseSpeed = 0.0008 * windUpEase * autoRotDamp * heartbeat * deepBreathe * slowDrift * terminatorLinger * goldenLinger;
+        // v4.89: Slightly faster rotation — visitors see more network in a 30s hero view
+        const baseSpeed = 0.0011 * windUpEase * autoRotDamp * heartbeat * deepBreathe * slowDrift * terminatorLinger * goldenLinger;
         const mouseSpeedMod = cachedWrapWidth >= 1024 && !isDragging
           ? mouseX * 0.0006 * windUpEase * autoRotDamp : 0;
 
