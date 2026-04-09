@@ -1701,7 +1701,8 @@
     globeGroup.add(innerRimMesh);
 
     // Shell 3: Corona — wide faint outer glow for cinematic depth
-    const coronaGeo = new THREE.IcosahedronGeometry(1.4, 32);
+    // v4.95: Wider corona halo — extended from 1.4→1.55 for premium depth
+    const coronaGeo = new THREE.IcosahedronGeometry(1.55, 32);
     const coronaMat = new THREE.ShaderMaterial({
       uniforms: {
         uColor: { value: new THREE.Color(themeColors.accent) },
@@ -1774,6 +1775,11 @@
           float backlitCorona = shadowSide * pow(rim, 2.0) * 0.18;
           coronaCol = mix(coronaCol, vec3(1.0, 0.78, 0.35), backlitCorona);
           glow += backlitCorona * 0.3;
+          // v4.92: Eclipse corona bloom — intensified outer halo with warm-to-white gradient
+          float eclipseCorona = pow(shadowSide, 2.0) * pow(rim, 1.5) * 0.22;
+          vec3 eclipseCoronaCol = mix(vec3(1.0, 0.82, 0.45), vec3(1.0, 0.97, 0.92), rim);
+          coronaCol = mix(coronaCol, eclipseCoronaCol, eclipseCorona);
+          glow += eclipseCorona * 0.45;
           // v11.28: Corona sweep reaction — subtle glow boost as scan passes
           float coronaScanAngle = atan(worldN.x, worldN.z);
           float coronaSweepAngle = mod(uTime * 0.4, 6.28318);
@@ -2818,6 +2824,29 @@
         outerAtmosMat.uniforms.uSunDir.value.copy(sunDirVec);
         innerRimMat.uniforms.uSunDir.value.copy(sunDirVec);
         coronaMat.uniforms.uSunDir.value.copy(sunDirVec);
+      }
+
+      // v4.84: Cursor proximity glow — project mouse onto globe surface
+      if (cachedWrapWidth >= 1024 && !isDragging) {
+        const ndcX = mouseX;
+        const ndcY = -mouseY;
+        const _rayDir = new THREE.Vector3(ndcX, ndcY, -1).unproject(camera).sub(camera.position).normalize();
+        const _oc = camera.position.clone().sub(globeGroup.position);
+        const _s = globeGroup.scale.x;
+        const _b = 2.0 * _oc.dot(_rayDir);
+        const _c = _oc.dot(_oc) - _s * _s;
+        const _disc = _b * _b - 4 * _c;
+        if (_disc > 0) {
+          const _t = (-_b - Math.sqrt(_disc)) / 2;
+          if (_t > 0) {
+            const hitW = camera.position.clone().add(_rayDir.clone().multiplyScalar(_t));
+            const hitL = hitW.sub(globeGroup.position).divideScalar(_s);
+            hitL.applyQuaternion(globeGroup.quaternion.clone().invert());
+            dotMat.uniforms.uMouseWorld.value.copy(hitL.normalize());
+          }
+        } else {
+          dotMat.uniforms.uMouseWorld.value.set(0, 0, -10);
+        }
       }
 
       // Update time uniforms
