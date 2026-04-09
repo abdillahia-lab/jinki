@@ -238,7 +238,7 @@
   var answers = {
     Assessment: {
       text: 'Our Facility Intelligence Scan is a one-time aerial assessment that delivers a prioritized report with thermal, structural, and environmental findings — typically within 48 hours.',
-      link: '/services/audit', cta: 'Learn about scans'
+      link: '/services/intelligence-scan', cta: 'Learn about scans'
     },
     Deployment: {
       text: 'Autonomous Deployment stations an on-site autonomous dock at your facility for persistent monitoring — 150 to 200 missions per month with no operator required.',
@@ -410,7 +410,7 @@
       sendBtn.style.opacity = '1';
       input.focus();
       var reply = d.reply || d.error || 'Please email info@jinki.ai.';
-      addBot(reply, '#lead-gen', 'Get Your Facility Report');
+      addBot(reply, '#lead-gen', 'Request Assessment');
       addQuickReplies();
     })
     .catch(function(err) {

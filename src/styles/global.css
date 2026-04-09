@@ -669,7 +669,23 @@ html { scrollbar-width: thin; scrollbar-color: var(--text-tertiary) var(--bg-pri
   }
 
   /* Disable GPU-heavy animations on mobile */
-  .hero-mesh { animation: none !important; }
+  .hero-mesh { display: none !important; }
+
+  /* Reduce backdrop-filter GPU cost on mobile — #1 paint bottleneck */
+  .glass-panel {
+    backdrop-filter: blur(8px) saturate(1.2) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(1.2) !important;
+  }
+  .glass-card {
+    backdrop-filter: blur(8px) saturate(1.2) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(1.2) !important;
+  }
+
+  /* Remove pseudo-element gloss effects that create extra composite layers */
+  .glass-panel::before,
+  .glass-panel::after {
+    display: none !important;
+  }
 
   /* Simplify reveal animations — instant instead of staggered */
   .reveal { transition-duration: 0.4s !important; }
