@@ -19,6 +19,7 @@
   - v4.87: IntersectionObserver rendering skip when off-screen
   - v4.87: Cached DOM reads — zero layout thrash per frame
   - v4.87: Slow uniform batching — sun/atmosphere update every 3rd frame
+  - v4.88: Half-resolution bloom — 4× fewer fragment ops for the most expensive pass
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -2086,9 +2087,12 @@
     }
 
     // ── Arc Node Markers — pulsing dots at city endpoints ──
+    // v4.79: All unique arc endpoint cities — matches expanded 16-route network
     const uniqueCities: [number, number][] = [
-      [40.7, -74.0], [51.5, -0.1], [25.3, 55.3],
-      [1.35, 103.8], [35.7, 139.7], [22.3, 114.2], [48.9, 2.35],
+      [40.7, -74.0], [51.5, -0.1], [25.3, 55.3],    // NYC, London, Dubai
+      [1.35, 103.8], [35.7, 139.7], [22.3, 114.2],   // Singapore, Tokyo, Hong Kong
+      [48.9, 2.35], [37.8, -122.4], [-23.5, -46.6],   // Paris, San Francisco, São Paulo
+      [19.1, 72.9], [-33.9, 151.2], [6.5, 3.4],       // Mumbai, Sydney, Lagos
     ];
     const nodePositions = new Float32Array(uniqueCities.length * 3);
     const nodePhases = new Float32Array(uniqueCities.length);
