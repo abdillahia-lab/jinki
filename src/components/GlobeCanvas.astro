@@ -1,6 +1,6 @@
 ---
 /*
-  GlobeCanvas v5.00 — Prismatic sun specular dispersion on dot surface.
+  GlobeCanvas v5.01 — GLSL optimization pass: consolidate redundant dot products, fix variable redeclarations, precompute constants.
 
   Architecture:
   - Fibonacci sphere sampling (100k desktop, 38k tablet)
@@ -406,7 +406,7 @@
               dofBlur += texture2D(tDiffuse, warpedUv + vec2(0.0, dofStrength * fj)).rgb * w;
               dofBlur += texture2D(tDiffuse, warpedUv - vec2(0.0, dofStrength * fj)).rgb * w;
             }
-            dofBlur /= (1.0 + 2.0 * (exp(-0.3) + exp(-1.2) + exp(-2.7) + exp(-4.8)));
+            dofBlur /= 3.235; // v4.96 opt: precomputed 1+2*(e^-0.3+e^-1.2+e^-2.7+e^-4.8)
             col = mix(col, dofBlur, smoothstep(0.45, 0.95, focusBand));
           }
           // v4.89: Anamorphic lens streak — horizontal light smear from bright highlights
@@ -1017,6 +1017,15 @@
         float sunSpecular = broadSpec + hotspot + medSpec;
         vec3 specColor = mix(vec3(1.0, 0.95, 0.85), vec3(1.0, 0.99, 0.97), hotspot * 2.0); // White-hot at peak
         baseCol += specColor * sunSpecular * (1.0 - vFresnel * 0.7);
+        // v5.00: Prismatic specular dispersion — rainbow fringe around hotspot like lens refraction
+        float prismZone = pow(max(vSunDotRaw, 0.0), 8.0) * (1.0 - pow(max(vSunDotRaw, 0.0), 16.0)); // Ring around hotspot
+        float prismAngle = atan(vColor.g - vColor.r, vColor.b - vColor.r) + vFresnel * 3.14; // Pseudorandom rotation
+        vec3 prismColor = vec3(
+          0.5 + 0.5 * sin(prismAngle),
+          0.5 + 0.5 * sin(prismAngle + 2.094),
+          0.5 + 0.5 * sin(prismAngle + 4.189)
+        );
+        baseCol += prismColor * prismZone * 0.08 * (1.0 - vFresnel);
         // v10.92: Night-side ambient emission — faint self-illumination on dark hemisphere
         float nightEmission = (1.0 - vSunLight) * (1.0 - vSunLight);
         vec3 nightAmbient = mix(vec3(0.02, 0.04, 0.08), uAccentColor * 0.15, 0.2);
@@ -1752,8 +1761,8 @@
           float equatorBoost = 1.0 - rimLat * 0.35 - rimLat * rimLat * 0.15;
           glow *= equatorBoost;
           // v4.94: City light scattering — warm amber atmosphere above night-side cities
-          float nightSide = max(-sunFacing, 0.0);
-          float cityScatter = nightSide * nightSide * (1.0 - rimLat * 0.7) * rim * 0.12;
+          // v4.96 opt: reuse backlitIR (identical to max(-sunFacing, 0.0))
+          float cityScatter = backlitIR * backlitIR * (1.0 - rimLat * 0.7) * rim * 0.12;
           vec3 cityScatterCol = vec3(1.0, 0.72, 0.32);
           rimColor = mix(rimColor, cityScatterCol, cityScatter);
           glow += cityScatter * 0.35;
@@ -2393,7 +2402,9 @@
           col = mix(col, ringBlend / max(ringTotal, 0.001), min(ringTotal * 0.5, 0.4));
           // v11.58: Node sun interaction — warmer/brighter on sunlit side
           col = mix(col * 0.8, col * vec3(1.05, 0.98, 0.9), vNodeSunLight);
-          gl_FragColor = vec4(col, strength);
+          // v5.04: Node bloom push — match arc energy level for cohesive network glow
+          float nodeBloom = 1.6 + vPulse * 0.4 + vSweepHit * 0.8;
+          gl_FragColor = vec4(col * nodeBloom, strength);
         }
       `,
       transparent: true,
