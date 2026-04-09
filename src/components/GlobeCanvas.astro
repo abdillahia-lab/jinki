@@ -2993,6 +2993,10 @@
     const motePoints = new THREE.Points(moteGeo, moteMat);
     globeGroup.add(motePoints);
 
+    // ── Cached DOM reads — declared early for positionGlobe ──
+    let cachedWrapWidth = wrap.clientWidth;
+    let cachedWrapHeight = wrap.clientHeight;
+
     // ── Position + Initial Rotation ──
     function positionGlobe() {
       if (cachedWrapWidth >= 1024) {
@@ -3073,8 +3077,6 @@
     const _sunScreenVec = new THREE.Vector3();
 
     // ── v4.87: Cached DOM reads — zero layout thrash in animate loop ──
-    let cachedWrapWidth = wrap.clientWidth;
-    let cachedWrapHeight = wrap.clientHeight;
     let cachedScrollY = window.scrollY;
     let cachedInnerHeight = window.innerHeight;
     // v4.86: Reusable vectors for cursor raycast — zero GC pressure per frame
