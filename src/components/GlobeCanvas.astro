@@ -2942,12 +2942,15 @@
       // v12.37: Per-star depth parallax — pass camera drift to shader (replaces uniform position shift)
       starMat.uniforms.uCameraDrift.value.set(-camera.position.x * 0.15, -camera.position.y * 0.15);
       arcMat.uniforms.uTime.value = time;
-      arcMat.uniforms.uSunDir.value.copy(sunDirVec);
       nodeMat.uniforms.uTime.value = time;
-      nodeMat.uniforms.uSunDir.value.copy(sunDirVec);
       moteMat.uniforms.uTime.value = time;
-      moteMat.uniforms.uSunDir.value.copy(sunDirVec);
       coronaMat.uniforms.uTime.value = time;
+      // v5.00: Batch sun updates — arc/node/mote sun copies moved to 3rd-frame batch
+      if (frameCount % 3 === 0) {
+        arcMat.uniforms.uSunDir.value.copy(sunDirVec);
+        nodeMat.uniforms.uSunDir.value.copy(sunDirVec);
+        moteMat.uniforms.uSunDir.value.copy(sunDirVec);
+      }
       // v12.19: Consolidated sweep angle — single computation reused throughout
       const sweepAngleRad = (time * 0.4) % (Math.PI * 2);
       const sweepFacing = Math.exp(-sweepAngleRad * sweepAngleRad * 2) + Math.exp(-(sweepAngleRad - Math.PI * 2) * (sweepAngleRad - Math.PI * 2) * 2);
