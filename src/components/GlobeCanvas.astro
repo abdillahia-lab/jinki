@@ -691,20 +691,74 @@
     const globeGroup = new THREE.Group();
     scene.add(globeGroup);
 
-    // ── Pre-baked Globe Geometry (generated on DGX Spark) ──
+    // ── Pre-baked Globe Geometry (quantized v2 format) ──
     const isTablet = wrap.clientWidth < 1024;
     const binUrl = isTablet ? '/globe-tablet.bin' : '/globe-desktop.bin';
     const binData = await fetch(binUrl).then(r => r.arrayBuffer());
-    const view = new DataView(binData);
-    const DOT_COUNT = view.getUint32(0, true);
-    let off = 4;
-    const dotPositions = new Float32Array(binData, off, DOT_COUNT * 3); off += DOT_COUNT * 12;
-    const dotSizes = new Float32Array(binData, off, DOT_COUNT); off += DOT_COUNT * 4;
-    const dotOpacities = new Float32Array(binData, off, DOT_COUNT); off += DOT_COUNT * 4;
-    const dotPhases = new Float32Array(binData, off, DOT_COUNT); off += DOT_COUNT * 4;
-    const dotColors = new Float32Array(binData, off, DOT_COUNT * 3); off += DOT_COUNT * 12;
-    const dotCityGlow = new Float32Array(binData, off, DOT_COUNT); off += DOT_COUNT * 4;
-    const dotRandom = new Float32Array(binData, off, DOT_COUNT * 3);
+    const binView = new DataView(binData);
+    const DOT_COUNT = binView.getUint32(0, true);
+    const binVersion = binView.getUint16(4, true);
+    let off: number;
+    let dotPositions: Float32Array, dotSizes: Float32Array, dotOpacities: Float32Array;
+    let dotPhases: Float32Array, dotColors: Float32Array, dotCityGlow: Float32Array;
+    let dotRandom: Float32Array;
+
+    if (binVersion === 2) {
+      // Quantized format — dequantize to Float32 for GPU
+      const posScale = binView.getFloat32(6, true);
+      const sizeScale = binView.getFloat32(10, true);
+      const sizeOffset = binView.getFloat32(14, true);
+      off = 18;
+      const TWO_PI = Math.PI * 2;
+
+      // Positions: Int16 → Float32
+      const rawPos = new Int16Array(binData, off, DOT_COUNT * 3); off += DOT_COUNT * 6;
+      dotPositions = new Float32Array(DOT_COUNT * 3);
+      const posInv = posScale / 32767;
+      for (let i = 0; i < rawPos.length; i++) dotPositions[i] = rawPos[i] * posInv;
+
+      // Sizes: Uint16 → Float32
+      const rawSizes = new Uint16Array(binData, off, DOT_COUNT); off += DOT_COUNT * 2;
+      dotSizes = new Float32Array(DOT_COUNT);
+      const sizeInv = sizeScale / 65535;
+      for (let i = 0; i < DOT_COUNT; i++) dotSizes[i] = rawSizes[i] * sizeInv + sizeOffset;
+
+      // Opacities: Uint8 → Float32
+      const rawOpac = new Uint8Array(binData, off, DOT_COUNT); off += DOT_COUNT;
+      dotOpacities = new Float32Array(DOT_COUNT);
+      for (let i = 0; i < DOT_COUNT; i++) dotOpacities[i] = rawOpac[i] / 255;
+
+      // Phases: Uint16 → Float32
+      const rawPhases = new Uint16Array(binData, off, DOT_COUNT); off += DOT_COUNT * 2;
+      dotPhases = new Float32Array(DOT_COUNT);
+      const phaseInv = TWO_PI / 65535;
+      for (let i = 0; i < DOT_COUNT; i++) dotPhases[i] = rawPhases[i] * phaseInv;
+
+      // Colors: Uint8 → Float32
+      const rawColors = new Uint8Array(binData, off, DOT_COUNT * 3); off += DOT_COUNT * 3;
+      dotColors = new Float32Array(DOT_COUNT * 3);
+      for (let i = 0; i < rawColors.length; i++) dotColors[i] = rawColors[i] / 255;
+
+      // CityGlow: Uint8 → Float32
+      const rawGlow = new Uint8Array(binData, off, DOT_COUNT); off += DOT_COUNT;
+      dotCityGlow = new Float32Array(DOT_COUNT);
+      for (let i = 0; i < DOT_COUNT; i++) dotCityGlow[i] = rawGlow[i] / 255;
+
+      // Random: Int8 → Float32
+      const rawRand = new Int8Array(binData, off, DOT_COUNT * 3);
+      dotRandom = new Float32Array(DOT_COUNT * 3);
+      for (let i = 0; i < rawRand.length; i++) dotRandom[i] = rawRand[i] / 127;
+    } else {
+      // Legacy Float32 format (v1)
+      off = 4;
+      dotPositions = new Float32Array(binData, off, DOT_COUNT * 3); off += DOT_COUNT * 12;
+      dotSizes = new Float32Array(binData, off, DOT_COUNT); off += DOT_COUNT * 4;
+      dotOpacities = new Float32Array(binData, off, DOT_COUNT); off += DOT_COUNT * 4;
+      dotPhases = new Float32Array(binData, off, DOT_COUNT); off += DOT_COUNT * 4;
+      dotColors = new Float32Array(binData, off, DOT_COUNT * 3); off += DOT_COUNT * 12;
+      dotCityGlow = new Float32Array(binData, off, DOT_COUNT); off += DOT_COUNT * 4;
+      dotRandom = new Float32Array(binData, off, DOT_COUNT * 3);
+    }
 
     const dotGeo = new THREE.BufferGeometry();
     dotGeo.setAttribute('position', new THREE.BufferAttribute(dotPositions, 3));
@@ -717,27 +771,27 @@
 
     // ── Load Pre-Computed Textures (generated on DGX Spark) ──
     const texLoader = new THREE.TextureLoader();
-    const nightLightsTex = texLoader.load('/textures/night-lights-2048.png');
+    const nightLightsTex = texLoader.load('/textures/night-lights-2048.webp');
     nightLightsTex.minFilter = THREE.LinearFilter;
     nightLightsTex.magFilter = THREE.LinearFilter;
     nightLightsTex.wrapS = THREE.RepeatWrapping;
     nightLightsTex.wrapT = THREE.ClampToEdgeWrapping;
-    const terrainNormalsTex = texLoader.load('/textures/terrain-normals-2048.png');
+    const terrainNormalsTex = texLoader.load('/textures/terrain-normals-2048.webp');
     terrainNormalsTex.minFilter = THREE.LinearFilter;
     terrainNormalsTex.magFilter = THREE.LinearFilter;
     terrainNormalsTex.wrapS = THREE.RepeatWrapping;
     terrainNormalsTex.wrapT = THREE.ClampToEdgeWrapping;
-    const noiseAtlasTex = texLoader.load('/textures/noise-atlas-1024.png');
+    const noiseAtlasTex = texLoader.load('/textures/noise-atlas-1024.webp');
     noiseAtlasTex.minFilter = THREE.LinearFilter;
     noiseAtlasTex.magFilter = THREE.LinearFilter;
     noiseAtlasTex.wrapS = THREE.RepeatWrapping;
     noiseAtlasTex.wrapT = THREE.RepeatWrapping;
-    const atmosLutTex = texLoader.load('/textures/atmosphere-lut.png');
+    const atmosLutTex = texLoader.load('/textures/atmosphere-lut.webp');
     atmosLutTex.minFilter = THREE.LinearFilter;
     atmosLutTex.magFilter = THREE.LinearFilter;
     atmosLutTex.wrapS = THREE.ClampToEdgeWrapping;
     atmosLutTex.wrapT = THREE.ClampToEdgeWrapping;
-    const colorLutTex = texLoader.load('/textures/color-lut-64.png');
+    const colorLutTex = texLoader.load('/textures/color-lut-64.webp');
     colorLutTex.minFilter = THREE.LinearFilter;
     colorLutTex.magFilter = THREE.LinearFilter;
     colorLutTex.wrapS = THREE.ClampToEdgeWrapping;

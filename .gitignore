@@ -28,3 +28,5 @@ jinki-site-package/
 
 # wrangler cache
 .wrangler/
+# Pre-quantization backups
+*.f32.bin
