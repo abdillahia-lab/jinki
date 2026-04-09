@@ -49,6 +49,7 @@
   - v5.17: Wire up HUD Active Routes counter — was showing static 0 since v5.02 cleanup
   - v5.18: Star field smooth fade-in — uFade uniform, 1.5s entrance before globe coalesces
   - v5.19: Sun disk entrance fade — appears 0.5s after stars over 2s ramp
+  - v5.20: HUD connector beam — thin glowing line linking data readout to globe surface
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -56,6 +57,7 @@
 
 <div class="globe-wrap" aria-hidden="true">
   <canvas id="globe-canvas"></canvas>
+  <div class="hud-connector" aria-hidden="true"></div>
   <div class="globe-hud">
     <div class="hud-status">
       <span class="hud-status-dot"></span>
@@ -145,6 +147,35 @@
       rgba(255, 255, 255, 0.3) 100%
     );
   }
+  /* v5.20: Connection beam — links HUD to globe surface */
+  .hud-connector {
+    position: absolute;
+    bottom: calc(12% + 98px); /* Aligns to top of HUD */
+    right: calc(8% + 10px);
+    width: 1px;
+    height: 50px;
+    opacity: 0;
+    transition: opacity 2s ease 2.8s;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 228, 255, 0.15) 30%, rgba(0, 228, 255, 0.4) 100%);
+    box-shadow: 0 0 6px rgba(0, 228, 255, 0.08), 0 0 2px rgba(0, 228, 255, 0.2);
+    transform: rotate(-15deg);
+    transform-origin: bottom center;
+  }
+  .hud-connector::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: -2px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: rgba(0, 228, 255, 0.5);
+    box-shadow: 0 0 8px rgba(0, 228, 255, 0.3);
+  }
+  .globe-wrap.ready .hud-connector { opacity: 0.6; }
+  :global([data-theme="light"]) .hud-connector { display: none; }
+  @media (max-width: 1023px) { .hud-connector { display: none; } }
   .globe-hud {
     position: absolute;
     bottom: 12%;
