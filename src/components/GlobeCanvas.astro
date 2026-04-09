@@ -1,6 +1,6 @@
 ---
 /*
-  GlobeCanvas v4.89 — Anamorphic lens streak on bright highlights.
+  GlobeCanvas v4.90 — Volumetric god rays from sun position.
 
   Architecture:
   - Fibonacci sphere sampling (100k desktop, 38k tablet)
@@ -327,6 +327,8 @@
         uIntensity: { value: 0.003 },
         uTime: { value: 0 },
         uVignetteShift: { value: new THREE.Vector2(0, 0) },
+        uSunScreenPos: { value: new THREE.Vector2(0.7, 0.4) },
+        uGodRayIntensity: { value: 0.0 },
       },
       vertexShader: `
         varying vec2 vUv;
@@ -340,6 +342,8 @@
         uniform float uIntensity;
         uniform float uTime;
         uniform vec2 uVignetteShift;
+        uniform vec2 uSunScreenPos;
+        uniform float uGodRayIntensity;
         varying vec2 vUv;
         void main() {
           vec2 center = vec2(0.5);
@@ -406,6 +410,32 @@
             // Streak color: warm teal-cyan tint (anamorphic coating color)
             vec3 streakTint = vec3(0.7, 0.9, 1.0);
             col += streak * streakTint;
+          }
+          // v4.90: Volumetric god rays — radial light shafts from sun screen position
+          if (uGodRayIntensity > 0.01) {
+            vec2 sunDir2D = vUv - uSunScreenPos;
+            float sunDist2D = length(sunDir2D);
+            vec2 rayDir = normalize(sunDir2D);
+            vec3 godRay = vec3(0.0);
+            float rayDecay = 1.0;
+            float stepSize = 0.008; // Step toward sun
+            vec2 samplePos = warpedUv;
+            // 12 samples along ray toward sun — accumulate bright pixels
+            for (int i = 0; i < 12; i++) {
+              samplePos -= rayDir * stepSize;
+              vec3 raySample = texture2D(tDiffuse, samplePos).rgb;
+              float rayLum = dot(raySample, vec3(0.299, 0.587, 0.114));
+              // Only bright pixels create god rays
+              float rayContrib = max(rayLum - 0.35, 0.0);
+              godRay += raySample * rayContrib * rayDecay;
+              rayDecay *= 0.88; // Exponential falloff along ray
+              stepSize *= 1.08; // Progressively wider steps
+            }
+            // Fade god rays with distance from sun (stronger near limb)
+            float rayFalloff = exp(-sunDist2D * sunDist2D * 3.0);
+            // Warm golden tint — sunlight through atmosphere
+            vec3 rayTint = vec3(1.0, 0.88, 0.65);
+            col += godRay * rayTint * uGodRayIntensity * rayFalloff * 0.035;
           }
           gl_FragColor = vec4(col, a);
         }
@@ -2838,10 +2868,10 @@
         // Tertiary subtle pulse — very gentle "settling" bloom
         const tertiaryT = Math.max(0, (time - ENTRANCE_COALESCE_DUR - 0.8) / 1.2);
         const tertiaryPulse = tertiaryT > 0 ? Math.exp(-tertiaryT * 4.0) * 0.1 : 0;
-        bloomPass.strength = 0.15 + scatterGlow + lockInFlash + secondaryBloom + tertiaryPulse;
+        bloomPass.strength = 0.22 + scatterGlow + lockInFlash + secondaryBloom + tertiaryPulse;
         // v12.33: Entrance focus pull — starts defocused (wider bloom), sharpens as globe forms
         const defocus = (1.0 - powerOn) * 0.4; // Wide bloom early, tight at lock-in
-        bloomPass.radius = 0.65 + defocus;
+        bloomPass.radius = 0.75 + defocus;
         renderer.toneMappingExposure = bootExposure;
         // v11.09: Entrance warmth — color temperature shifts warm during ignition, cools as it settles
         const ignitionWarmth = (1.0 - powerOn) * 0.06; // Warm during early boot
@@ -2879,15 +2909,16 @@
       // Bloom spikes dramatically with fast interaction
       // v4.79: Density-compensated bloom — base reduced for 200k dots (2× emitters)
       const sunFacingStrength = Math.max(sunCamDot, 0) * 0.03;
-      bloomPass.strength = 0.10 + sweepFacing * 0.05 + Math.sin(time * 0.25) * 0.012 + peakEnergy * 0.12 + backlitAmount * 0.05 + sunFacingStrength;
+      // v4.81: Steady-state bloom base matches new 0.22 constructor value
+      bloomPass.strength = 0.18 + sweepFacing * 0.06 + Math.sin(time * 0.25) * 0.015 + peakEnergy * 0.14 + backlitAmount * 0.06 + sunFacingStrength;
       // Dynamic bloom radius — wider during energy spikes, tighter at rest
-      bloomPass.radius = 0.65 + peakEnergy * 0.2 + sweepFacing * 0.05 + Math.sin(time * 0.2) * 0.02;
+      bloomPass.radius = 0.75 + peakEnergy * 0.2 + sweepFacing * 0.05 + Math.sin(time * 0.2) * 0.02;
       // v11.05: Dynamic bloom threshold — lower during interaction for more dramatic glow
       // v11.93: Bloom threshold breathing — slow independent pulsation for periodic glow surges
       const thresholdBreathe = Math.sin(time * 0.18) * 0.02 + Math.sin(time * 0.07) * 0.01;
       // v12.75: Sun-facing bloom threshold — more bloom when bright hemisphere faces camera
       const sunFacingBloom = Math.max(sunCamDot, 0) * 0.03; // -3% threshold when sun faces cam
-      bloomPass.threshold = 0.72 - peakEnergy * 0.15 - sweepFacing * 0.04 + thresholdBreathe - sunFacingBloom;
+      bloomPass.threshold = 0.62 - peakEnergy * 0.15 - sweepFacing * 0.04 + thresholdBreathe - sunFacingBloom;
       // Chroma aberration — aggressive during fast spins
       // v11.60: Enhanced interaction chroma spike — sharper burst on fast spin
       const chromaSpike = Math.pow(peakEnergy, 0.5) * 0.012; // Sqrt for faster onset
@@ -2899,6 +2930,17 @@
       // v12.82: Backlit vignette opening — wider vignette when sun behind globe (show golden rim)
       const backlitVigOpen = backlitAmount * 0.02; // Open up to 2% more
       chromaPass.uniforms['uVignetteShift'].value.set(sunX / sunLen * (0.04 + backlitVigOpen), sunY / sunLen * (0.025 + backlitVigOpen * 0.5));
+      // v4.90: God rays — project sun direction to screen UV for radial light shafts
+      {
+        const swp = new THREE.Vector3(sunX / sunLen, sunY / sunLen, sunZ / sunLen).multiplyScalar(5);
+        swp.applyMatrix4(globeGroup.matrixWorld);
+        swp.project(camera);
+        const su = swp.x * 0.5 + 0.5;
+        const sv = -swp.y * 0.5 + 0.5;
+        chromaPass.uniforms['uSunScreenPos'].value.set(su, sv);
+        const onScreen = (su > -0.3 && su < 1.3 && sv > -0.3 && sv < 1.3) ? 1.0 : 0.0;
+        chromaPass.uniforms['uGodRayIntensity'].value = (backlitAmount * 0.6 + Math.max(sunCamDot, 0) * 0.4) * onScreen;
+      }
       colorGradePass.uniforms['uTime'].value = time;
       colorGradePass.uniforms['uSweepPulse'].value = sweepFacing;
       // v12.29: Only apply main-path color grading AFTER entrance completes
