@@ -48,6 +48,7 @@
   - v5.16: Premium scroll fade — smoothstep ease-out curve, lower ambient floor at 15%
   - v5.17: Wire up HUD Active Routes counter — was showing static 0 since v5.02 cleanup
   - v5.18: Star field smooth fade-in — uFade uniform, 1.5s entrance before globe coalesces
+  - v5.19: Sun disk entrance fade — appears 0.5s after stars over 2s ramp
 
   Mobile (<768px): No WebGL. CSS mesh gradient fallback.
 */
@@ -2700,6 +2701,7 @@
       uniforms: {
         uTime: { value: 0 },
         uOcclusion: { value: 0 }, // 0 = fully visible, 1 = behind globe
+        uFade: { value: 0 },
       },
       vertexShader: `
         varying vec2 vUv;
@@ -2711,6 +2713,7 @@
       fragmentShader: `
         uniform float uTime;
         uniform float uOcclusion;
+        uniform float uFade;
         varying vec2 vUv;
         void main() {
           vec2 c = vUv - 0.5;
@@ -2745,7 +2748,7 @@
           float breathe = 1.0 + sin(uTime * 0.25) * 0.04 + sin(uTime * 0.13) * 0.02;
           // Occlude when globe blocks the sun (smooth transition)
           float vis = 1.0 - smoothstep(0.0, 1.0, uOcclusion);
-          gl_FragColor = vec4(col * breathe, alpha * vis * 0.7);
+          gl_FragColor = vec4(col * breathe, alpha * vis * 0.7 * uFade);
         }
       `,
       transparent: true,
@@ -3256,6 +3259,8 @@
         const sunCamAlign = sdz; // Positive = toward camera, negative = behind globe
         sunDiskMat.uniforms.uOcclusion.value = Math.max(-sunCamAlign * 1.5, 0);
         sunDiskMat.uniforms.uTime.value = time;
+        // v5.19: Sun disk entrance fade — appears after stars, before globe locks in
+        sunDiskMat.uniforms.uFade.value = Math.min(Math.max((time - 0.5) / 2.0, 0), 1.0);
       }
 
       // v4.84: Cursor proximity glow — project mouse onto globe surface
