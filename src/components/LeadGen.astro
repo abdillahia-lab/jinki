@@ -257,35 +257,7 @@
     font-family: var(--font-body); font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;
   }
 
-  /* Shimmer border on selected radio card */
-  @property --shimmer-angle {
-    syntax: '<angle>';
-    initial-value: 0deg;
-    inherits: false;
-  }
-  @keyframes shimmerRotate {
-    to { --shimmer-angle: 360deg; }
-  }
-  .lg-radio-card input:checked + .lg-card-inner {
-    border-color: transparent;
-    background-clip: padding-box;
-    position: relative;
-  }
-  .lg-radio-card input:checked + .lg-card-inner::before {
-    content: '';
-    position: absolute; inset: -1px;
-    border-radius: 13px;
-    background: conic-gradient(from var(--shimmer-angle), var(--accent), var(--accent-secondary), var(--accent-tertiary), var(--accent));
-    z-index: -1;
-    animation: shimmerRotate 3s linear infinite;
-  }
-  .lg-radio-card input:checked + .lg-card-inner::after {
-    content: '';
-    position: absolute; inset: 0;
-    border-radius: 12px;
-    background: color-mix(in srgb, var(--accent) 10%, var(--surface-container));
-    z-index: -1;
-  }
+  /* Clean selected state — no rotating border */
 
   /* Form fields */
   .lg-field { display: flex; flex-direction: column; gap: 0.375rem; }
@@ -391,15 +363,7 @@
     100% { transform: scale(1); }
   }
 
-  .lg-wizard-glow {
-    box-shadow: 0 0 60px color-mix(in srgb, var(--accent) 4%, transparent), var(--glass-shadow);
-  }
-  .lg-wizard-glow::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent 5%, var(--accent) 50%, transparent 95%);
-    opacity: 0.6; z-index: 3;
-  }
+  /* Wizard glow + accent bar removed — clean panel */
 
   /* Submit spinner */
   .lg-spinner {
