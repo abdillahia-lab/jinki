@@ -8,6 +8,7 @@
 import { Image } from 'astro:assets';
 import heroImg from '../../assets/images/powerline-aerial.jpg';
 import Layout from '../../layouts/Layout.astro';
+import ThermalLens from '../../components/ThermalLens.astro';
 import Nav from '../../components/Nav.astro';
 import LeadGen from '../../components/LeadGen.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
@@ -150,21 +151,13 @@ const techSections = [
             </button>
           </div>
         </div>
-        <div class="eg-hero-visual reveal reveal-delay-1" aria-hidden="true">
-          <div class="eg-grid-container">
-            <!-- Real aerial photo as base layer -->
-            <Image
-              src={heroImg}
-              alt=""
-              class="eg-hero-photo"
-              loading="eager"
-              fetchpriority="high"
-              decoding="async"
-              widths={[640, 960, 1280]}
-              sizes="(max-width: 767px) 100vw, (max-width: 1024px) 50vw, 640px"
-              format="webp"
-              quality={80}
-            />
+        <div class="eg-hero-visual reveal reveal-delay-1">
+          <ThermalLens
+            src="/images/powerline-aerial.webp"
+            thermalSrc="/images/powerline-aerial-thermal.webp"
+            alt="Aerial view of power transmission lines and towers"
+          />
+          <div style="display:none;">
             <svg viewBox="0 0 500 400" class="eg-grid-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animated power grid network visualization">
               <!-- Grid lines with flowing electricity -->
               <defs>
@@ -309,7 +302,7 @@ const techSections = [
               <span>37.5407 N / 77.4360 W</span>
               <span>ALT 120m AGL</span>
             </div>
-          </div>
+          </div><!-- end hidden old SVG -->
         </div>
       </div>
     </section>

@@ -16,6 +16,7 @@
 import { Image } from 'astro:assets';
 import heroImg from '../../assets/images/dc-rooftop-aerial.jpg';
 import Layout from '../../layouts/Layout.astro';
+import ThermalLens from '../../components/ThermalLens.astro';
 import Nav from '../../components/Nav.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import LeadGen from '../../components/LeadGen.astro';
@@ -164,62 +165,12 @@ const faqs = [
             </button>
           </div>
         </div>
-        <div class="omega-hero-visual reveal reveal-delay-1" aria-hidden="true">
-          <div class="facility-scene">
-            <!-- Real data center photo with thermal overlay -->
-            <Image
-              src={heroImg}
-              alt=""
-              class="facility-photo"
-              loading="eager"
-              decoding="async"
-              fetchpriority="high"
-              widths={[640, 960, 1280]}
-              sizes="(max-width: 767px) 100vw, (max-width: 1024px) 50vw, 640px"
-              format="webp"
-              quality={80}
-            />
-            <!-- Thermal color overlay -->
-            <div class="thermal-color-overlay"></div>
-            <!-- Grid overlay for intelligence aesthetic -->
-            <div class="facility-grid"></div>
-            <!-- HUD Overlay badges -->
-            <div class="hud-badge hud-tl">
-              <span class="hud-indicator hud-critical"></span>
-              <span class="hud-label">CRITICAL</span>
-              <span class="hud-value">47.3°C</span>
-            </div>
-            <div class="hud-badge hud-tr">
-              <span class="hud-indicator hud-warning"></span>
-              <span class="hud-label">WARNING</span>
-              <span class="hud-value">HVAC-07</span>
-            </div>
-            <div class="hud-badge hud-bl">
-              <span class="hud-indicator hud-normal"></span>
-              <span class="hud-label">NOMINAL</span>
-              <span class="hud-value">22.1°C avg</span>
-            </div>
-            <div class="hud-badge hud-br">
-              <span class="hud-indicator hud-live"></span>
-              <span class="hud-label">SCAN</span>
-              <span class="hud-value">LIVE</span>
-            </div>
-            <div class="scan-line"></div>
-            <div class="scan-line-h"></div>
-            <div class="scan-line-diag"></div>
-            <!-- Temperature scale legend -->
-            <div class="temp-scale-legend">
-              <span class="temp-scale-label">HOT</span>
-              <div class="temp-scale-bar"></div>
-              <span class="temp-scale-label">COOL</span>
-            </div>
-            <!-- Thermal hotspot glows -->
-            <div class="dc-hotspot dc-hotspot-1" aria-hidden="true"><div class="dc-hotspot-ring"></div></div>
-            <div class="dc-hotspot dc-hotspot-2" aria-hidden="true"><div class="dc-hotspot-ring"></div></div>
-            <div class="dc-hotspot dc-hotspot-3" aria-hidden="true"><div class="dc-hotspot-ring"></div></div>
-            <div class="dc-hotspot dc-hotspot-4" aria-hidden="true"><div class="dc-hotspot-ring"></div></div>
-            <div class="dc-hotspot dc-hotspot-5" aria-hidden="true"><div class="dc-hotspot-ring"></div></div>
-          </div>
+        <div class="omega-hero-visual reveal reveal-delay-1">
+          <ThermalLens
+            src="/images/dc-rooftop-aerial.webp"
+            thermalSrc="/images/dc-rooftop-aerial-thermal.webp"
+            alt="Aerial view of data center rooftop with HVAC equipment"
+          />
         </div>
       </div>
     </section>
