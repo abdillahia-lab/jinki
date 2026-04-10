@@ -107,22 +107,13 @@ const steps = [
     border-radius: 16px;
     padding: 2rem;
     overflow: hidden;
-    box-shadow: var(--inset-highlight), var(--shadow-rest);
-    transition: border-color 0.4s ease,
-                box-shadow 0.4s var(--ease-out-premium),
-                transform 0.4s var(--ease-out-premium);
-  }
-  .process-step::after {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent 10%, var(--accent) 50%, transparent 90%);
-    opacity: 0.3;
+    box-shadow: var(--shadow-rest);
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
   }
 
   .process-step:hover {
-    border-color: color-mix(in srgb, var(--accent) 20%, transparent);
-    box-shadow: var(--inset-highlight-strong), 0 8px 24px rgba(0, 0, 0, 0.15), 0 0 24px color-mix(in srgb, var(--accent) 6%, transparent);
-    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--accent) 15%, transparent);
+    box-shadow: var(--shadow-elevated);
   }
 
   .process-step-header {
