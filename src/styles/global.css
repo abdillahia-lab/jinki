@@ -640,6 +640,11 @@ html { scrollbar-width: thin; scrollbar-color: var(--text-tertiary) var(--bg-pri
 }
 
 /* --- Reduced Motion --- */
+/* Tone down hero SVG visuals — decorative, not primary content */
+.omega-hero-visual {
+  opacity: 0.5;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
