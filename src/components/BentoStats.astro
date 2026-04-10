@@ -129,39 +129,7 @@
     box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 30%, transparent); transform: translateY(-1px);
   }
   .bento-sidebar-cta:active { transform: translateY(0); }
-  .bento-icon-ring { animation: glow-pulse 4s ease-in-out infinite; }
-  @keyframes glow-pulse {
-    0%, 100% { box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 15%, transparent); }
-    50% { box-shadow: 0 0 40px color-mix(in srgb, var(--accent) 30%, transparent); }
-  }
-  /* === Animated rotating gradient border on main card === */
-  @property --bento-border-angle {
-    syntax: '<angle>';
-    initial-value: 0deg;
-    inherits: false;
-  }
-  .bento-main {
-    background-clip: padding-box;
-    border-color: transparent;
-  }
-  .bento-main::after {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    padding: 1px;
-    background: conic-gradient(from var(--bento-border-angle), transparent 40%, var(--accent) 50%, var(--accent-secondary) 55%, transparent 60%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    animation: rotateBentoBorder 6s linear infinite;
-    z-index: 1;
-  }
-
-  @keyframes rotateBentoBorder {
-    to { --bento-border-angle: 360deg; }
-  }
+  /* Glow pulse and rotating border removed — clean cards */
 
   /* === LIVE badge === */
   .live-badge {
