@@ -16,11 +16,7 @@ import GlobeCanvas from './GlobeCanvas.astro';
   <!-- 3D Globe (desktop/tablet only, dynamically loaded) -->
   <GlobeCanvas />
 
-  <!-- Noise texture overlay for physical depth -->
-  <div class="hero-noise" aria-hidden="true"></div>
-
-  <!-- Intelligence grid overlay -->
-  <div class="hero-grid" aria-hidden="true"></div>
+  <!-- Decorative overlays removed — simplicity by design -->
 
   <!-- Background dots removed — simplicity by design -->
 
@@ -159,34 +155,6 @@ import GlobeCanvas from './GlobeCanvas.astro';
   }
 
   /* Noise texture for physical depth */
-  .hero-noise {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-    opacity: 0.35;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 200px 200px;
-  }
-
-  /* Intelligence grid — topographic/tech grid, 60px spacing */
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    opacity: 0.04;
-    background-image:
-      linear-gradient(var(--accent) 1px, transparent 1px),
-      linear-gradient(90deg, var(--accent) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,0,0,0.6) 0%, transparent 70%);
-    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,0,0,0.6) 0%, transparent 70%);
-  }
-  :global([data-theme="light"]) .hero-grid { opacity: 0.03; }
-  @media (max-width: 767px) { .hero-grid { background-size: 60px 60px; } }
-
   /* Light mode: softer mesh */
   :global([data-theme="light"]) .hero-mesh {
     filter: blur(60px) saturate(1.4);
@@ -194,9 +162,6 @@ import GlobeCanvas from './GlobeCanvas.astro';
     background: radial-gradient(ellipse at 20% 50%, rgba(0,131,143,0.25) 0%, transparent 60%),
                 radial-gradient(ellipse at 70% 30%, rgba(0,80,88,0.15) 0%, transparent 50%),
                 radial-gradient(ellipse at 50% 80%, rgba(123,97,255,0.12) 0%, transparent 50%);
-  }
-  :global([data-theme="light"]) .hero-noise {
-    opacity: 0.08;
   }
 
   /* Mobile: reduce blur for performance */
