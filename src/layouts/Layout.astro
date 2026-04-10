@@ -272,15 +272,17 @@ const orgSchema = {
           var num = parseFloat(target);
           if (isNaN(num)) return;
           var isDecimal = target.indexOf('.') !== -1;
-          var duration = 1500;
+          var duration = 1400;
           var start = performance.now();
           function update(now) {
             var elapsed = now - start;
-            var progress = Math.min(elapsed / duration, 1);
-            var eased = 1 - Math.pow(1 - progress, 3);
-            var current = num * eased;
+            var t = Math.min(elapsed / duration, 1);
+            // Instrument calibration: fast spin → decelerate → overshoot → settle
+            var eased = 1 - Math.pow(1 - t, 4) * Math.cos(t * Math.PI * 2);
+            var current = num * Math.min(eased, 1.03); // Allow 3% overshoot
+            if (t >= 1) current = num; // Lock to exact value
             el.textContent = isDecimal ? current.toFixed(1) + suffix : Math.round(current) + suffix;
-            if (progress < 1) requestAnimationFrame(update);
+            if (t < 1) requestAnimationFrame(update);
           }
           requestAnimationFrame(update);
         }
