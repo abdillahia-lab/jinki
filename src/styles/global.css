@@ -656,21 +656,12 @@ html { scrollbar-width: thin; scrollbar-color: var(--text-tertiary) var(--bg-pri
   border-color: var(--glass-highlight);
 }
 
-/* --- Gradient Text Utility --- */
+/* --- Accent Text Utility (was gradient — simplified for clarity) --- */
 .gradient-text {
-  background: linear-gradient(135deg, var(--accent) 0%, #7B61FF 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent; /* fallback */
+  color: var(--accent);
 }
-
 [data-theme="light"] .gradient-text {
-  background: linear-gradient(135deg, #006875 0%, #4F46E5 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--accent);
 }
 
 /* --- Reduced Motion --- */
