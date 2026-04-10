@@ -93,62 +93,18 @@ import GlobeCanvas from './GlobeCanvas.astro';
 
 <style>
   /* === Hero Video (hidden until /videos/hero.mp4 exists) === */
-  /* === Animated Mesh Gradient (fallback until globe loads) === */
-  @property --mesh-x1 { syntax: '<percentage>'; initial-value: 25%; inherits: false; }
-  @property --mesh-y1 { syntax: '<percentage>'; initial-value: 35%; inherits: false; }
-  @property --mesh-x2 { syntax: '<percentage>'; initial-value: 70%; inherits: false; }
-  @property --mesh-y2 { syntax: '<percentage>'; initial-value: 55%; inherits: false; }
-
+  /* Static subtle gradient — just enough depth to break flat black */
   .hero-mesh {
     position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background:
-      radial-gradient(ellipse 700px 500px at var(--mesh-x1) var(--mesh-y1),
-        color-mix(in srgb, var(--accent) 18%, transparent) 0%, transparent 65%),
-      radial-gradient(ellipse 600px 600px at var(--mesh-x2) var(--mesh-y2),
-        rgba(123, 97, 255, 0.14) 0%, transparent 60%),
-      radial-gradient(ellipse 500px 400px at 55% 75%,
-        rgba(0, 180, 220, 0.10) 0%, transparent 55%),
-      radial-gradient(ellipse 550px 450px at 88% 85%,
-        rgba(139, 92, 246, 0.09) 0%, transparent 60%);
-    filter: blur(50px) saturate(1.6);
-    animation: meshDrift 25s ease-in-out infinite alternate;
+    background: radial-gradient(ellipse 60% 50% at 65% 45%,
+      color-mix(in srgb, var(--accent) 6%, transparent) 0%, transparent 70%);
   }
-  /* Noise grain composited on mesh for physical texture */
-  .hero-mesh::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 128 128' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-    background-size: 128px 128px;
-    opacity: 0.05;
-    mix-blend-mode: overlay;
-    pointer-events: none;
-  }
-
-  @keyframes meshDrift {
-    0%   { --mesh-x1: 25%; --mesh-y1: 35%; --mesh-x2: 70%; --mesh-y2: 55%; }
-    25%  { --mesh-x1: 45%; --mesh-y1: 25%; --mesh-x2: 60%; --mesh-y2: 65%; }
-    50%  { --mesh-x1: 60%; --mesh-y1: 45%; --mesh-x2: 35%; --mesh-y2: 40%; }
-    75%  { --mesh-x1: 35%; --mesh-y1: 55%; --mesh-x2: 75%; --mesh-y2: 30%; }
-    100% { --mesh-x1: 50%; --mesh-y1: 30%; --mesh-x2: 45%; --mesh-y2: 60%; }
-  }
-
-  /* Noise texture for physical depth */
-  /* Light mode: softer mesh */
   :global([data-theme="light"]) .hero-mesh {
-    filter: blur(60px) saturate(1.4);
-    opacity: 0.5;
-    background: radial-gradient(ellipse at 20% 50%, rgba(0,131,143,0.25) 0%, transparent 60%),
-                radial-gradient(ellipse at 70% 30%, rgba(0,80,88,0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, rgba(123,97,255,0.12) 0%, transparent 50%);
-  }
-
-  /* Mobile: reduce blur for performance */
-  @media (max-width: 767px) {
-    .hero-mesh { filter: blur(40px) saturate(1.3); }
+    background: radial-gradient(ellipse 60% 50% at 65% 45%,
+      rgba(0,131,143,0.06) 0%, transparent 70%);
   }
 
   /* === Floating CSS dots (replaces canvas particles) === */
