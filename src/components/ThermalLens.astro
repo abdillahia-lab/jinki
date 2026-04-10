@@ -1,0 +1,175 @@
+---
+/*
+  ThermalLens — The signature Jinki interaction.
+  Cursor reveals thermal imaging underneath a visible-light facility photo.
+  "See What You Can't" becomes literal — the visitor EXPERIENCES thermal intelligence.
+
+  Usage:
+    <ThermalLens
+      src="/images/facility.webp"
+      thermalSrc="/images/facility-thermal.webp"
+      alt="Facility aerial view"
+    />
+*/
+interface Props {
+  src: string;
+  thermalSrc: string;
+  alt: string;
+  class?: string;
+}
+const { src, thermalSrc, alt, class: className } = Astro.props;
+---
+
+<div class={`thermal-lens ${className || ''}`} data-thermal-lens>
+  <!-- Thermal layer (underneath) -->
+  <img
+    src={thermalSrc}
+    alt=""
+    aria-hidden="true"
+    class="thermal-layer"
+    loading="lazy"
+    decoding="async"
+  />
+  <!-- Visible layer (on top, clipped by cursor) -->
+  <img
+    src={src}
+    alt={alt}
+    class="visible-layer"
+    loading="lazy"
+    decoding="async"
+  />
+  <!-- Lens hint -->
+  <div class="lens-hint">
+    <span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">thermostat</span>
+    Hover to reveal thermal
+  </div>
+</div>
+
+<style>
+  .thermal-lens {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: crosshair;
+  }
+  .thermal-layer,
+  .visible-layer {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .thermal-layer {
+    position: absolute;
+    inset: 0;
+  }
+  .visible-layer {
+    position: relative;
+    z-index: 1;
+    /* Clip reveals thermal underneath — JS updates --mx, --my */
+    clip-path: circle(0px at var(--mx, 50%) var(--my, 50%));
+    transition: clip-path 0.15s ease-out;
+  }
+  .thermal-lens:hover .visible-layer,
+  .thermal-lens.active .visible-layer {
+    clip-path: circle(80px at var(--mx, 50%) var(--my, 50%));
+  }
+  /* Invert: thermal is underneath, visible clips AWAY to reveal it */
+  /* Actually we want the OPPOSITE: visible on top by default, thermal reveals on hover */
+  /* So: thermal underneath (always visible), visible on top clips to HIDE, revealing thermal */
+  /* clip-path on visible layer: full coverage by default, circle hole on hover */
+
+  /* Lens hint */
+  .lens-hint {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-label);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(0, 0, 0, 0.5);
+    padding: 6px 10px;
+    border-radius: 6px;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .thermal-lens:hover .lens-hint,
+  .thermal-lens.active .lens-hint {
+    opacity: 0;
+  }
+
+  @media (max-width: 767px) {
+    /* Touch devices: auto-reveal on scroll instead of hover */
+    .lens-hint { display: none; }
+    .visible-layer {
+      clip-path: none;
+      /* Mobile: use mix-blend-mode toggle instead of clip-path */
+    }
+  }
+</style>
+
+<script>
+  // Thermal lens cursor tracking — pure CSS custom properties (GPU-composited)
+  document.querySelectorAll('[data-thermal-lens]').forEach((lens) => {
+    const el = lens as HTMLElement;
+    const visible = el.querySelector('.visible-layer') as HTMLElement;
+    if (!visible) return;
+
+    // Default: visible layer covers everything (no clip = full coverage)
+    // We need to INVERT: visible layer is full by default, circle REMOVES visible to show thermal
+    // CSS clip-path approach: use polygon that excludes a circle
+    // Simpler: swap layers — put THERMAL on top with clip-path circle that INCLUDES
+
+    // Actually simplest: thermal on top (z-index 2), clip-path circle reveals it
+    const thermal = el.querySelector('.thermal-layer') as HTMLElement;
+    if (thermal) {
+      thermal.style.zIndex = '2';
+      visible.style.zIndex = '1';
+      visible.style.clipPath = 'none';
+      thermal.style.clipPath = 'circle(0px at 50% 50%)';
+      thermal.style.transition = 'clip-path 0.1s ease-out';
+    }
+
+    el.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (thermal) {
+        thermal.style.clipPath = `circle(80px at ${x}px ${y}px)`;
+      }
+    });
+
+    el.addEventListener('mouseleave', () => {
+      if (thermal) {
+        thermal.style.clipPath = 'circle(0px at 50% 50%)';
+      }
+    });
+
+    // Touch support
+    el.addEventListener('touchmove', (e: TouchEvent) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      const rect = el.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      el.classList.add('active');
+      if (thermal) {
+        thermal.style.clipPath = `circle(70px at ${x}px ${y}px)`;
+      }
+    }, { passive: false });
+
+    el.addEventListener('touchend', () => {
+      el.classList.remove('active');
+      if (thermal) {
+        thermal.style.clipPath = 'circle(0px at 50% 50%)';
+      }
+    });
+  });
+</script>
