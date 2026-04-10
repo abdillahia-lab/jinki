@@ -22,6 +22,7 @@
     mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0.3) 70%, transparent 90%);
     -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0.3) 70%, transparent 90%);
   }
+  #globe-canvas:hover { cursor: crosshair; }
   @media (max-width: 767px) {
     #globe-canvas { display: none; }
   }
@@ -72,7 +73,12 @@
     const specularMap = loadTex("/textures/earth-specular.webp", false);
     const cloudMap = loadTex("/textures/earth-clouds.webp", false);
 
-    const sunDir = new THREE.Vector3(0.8, 0.3, 0.6).normalize();
+    // Time-aware sun — matches visitor's local time
+    const hour = new Date().getHours() + new Date().getMinutes() / 60;
+    const sunAngle = ((hour - 6) / 24) * Math.PI * 2;
+    const sunDir = new THREE.Vector3(
+      Math.cos(sunAngle) * 0.8, 0.3, Math.sin(sunAngle) * 0.6
+    ).normalize();
 
     const earthUniforms = {
       uDayMap: { value: dayMap }, uNightMap: { value: nightMap },
@@ -122,6 +128,12 @@
         vec3 color = mix(nightColor, dayColor, dayMix);
         color += termColor * terminator;
         color += vec3(1.0, 0.95, 0.85) * specular * dayMix;
+        // Coordinate reticle — visible only at silhouette edges
+        vec3 vDir = normalize(-vPosition);
+        float rim = 1.0 - abs(dot(vDir, normal));
+        float gLon = 1.0 - smoothstep(0.0, fwidth(vUv.x) * 30.0, abs(fract(vUv.x * 12.0) - 0.5) * 2.0);
+        float gLat = 1.0 - smoothstep(0.0, fwidth(vUv.y) * 30.0, abs(fract(vUv.y * 6.0) - 0.5) * 2.0);
+        color += vec3(0.0, 0.9, 1.0) * max(gLon, gLat) * pow(rim, 4.0) * 0.12;
         gl_FragColor = vec4(color, 1.0);
       }
     `;
@@ -187,6 +199,58 @@
     const atmoMesh = new THREE.Mesh(new THREE.SphereGeometry(1.025, 48, 48), atmoMat);
     globeGroup.add(atmoMesh);
 
+    // ── Orbital Shell — satellite constellation at LEO altitude ──
+    const SAT_COUNT = 150;
+    const satPositions = new Float32Array(SAT_COUNT * 3);
+    const satPlanes = new Float32Array(SAT_COUNT);
+    const tilts = [53 * Math.PI / 180, 97 * Math.PI / 180, 45 * Math.PI / 180];
+    for (let i = 0; i < SAT_COUNT; i++) {
+      const plane = Math.floor(i / 50);
+      const angle = ((i % 50) / 50) * Math.PI * 2 + Math.random() * 0.1;
+      const r = 1.12;
+      const tilt = tilts[plane];
+      const x = Math.cos(angle) * r;
+      const y = Math.sin(angle) * Math.cos(tilt) * r;
+      const z = Math.sin(angle) * Math.sin(tilt) * r;
+      satPositions[i * 3] = x;
+      satPositions[i * 3 + 1] = y;
+      satPositions[i * 3 + 2] = z;
+      satPlanes[i] = plane;
+    }
+    const satGeo = new THREE.BufferGeometry();
+    satGeo.setAttribute("position", new THREE.BufferAttribute(satPositions, 3));
+    satGeo.setAttribute("aPlane", new THREE.BufferAttribute(satPlanes, 1));
+    const satUniforms = { uTime: { value: 0 }, uSunDir: { value: sunDir } };
+    const satMat = new THREE.ShaderMaterial({
+      uniforms: satUniforms,
+      vertexShader: `
+        attribute float aPlane;
+        uniform float uTime; uniform vec3 uSunDir;
+        varying float vBright;
+        void main() {
+          float speed = 0.08 + aPlane * 0.03;
+          float a = uTime * speed;
+          float ca = cos(a), sa = sin(a);
+          vec3 p = vec3(position.x*ca + position.z*sa, position.y, -position.x*sa + position.z*ca);
+          vBright = 0.15 + 0.85 * max(dot(normalize(p), uSunDir), 0.0);
+          vec4 mv = modelViewMatrix * vec4(p, 1.0);
+          gl_PointSize = 2.0;
+          gl_Position = projectionMatrix * mv;
+        }
+      `,
+      fragmentShader: `
+        varying float vBright;
+        void main() {
+          float d = length(gl_PointCoord - 0.5);
+          if (d > 0.5) discard;
+          gl_FragColor = vec4(0.6, 0.85, 1.0, (1.0 - d*2.0) * 0.5 * vBright);
+        }
+      `,
+      transparent: true, blending: THREE.AdditiveBlending,
+      depthWrite: false, depthTest: true,
+    });
+    globeGroup.add(new THREE.Points(satGeo, satMat));
+
     let isDragging = false;
     let prevMouse = { x: 0, y: 0 };
     let rotVelX = 0, rotVelY = 0;
@@ -251,6 +315,7 @@
       if (!isVisible) return;
       const elapsed = clock.getElapsedTime();
       earthUniforms.uTime.value = elapsed;
+      satUniforms.uTime.value = elapsed;
       if (!isDragging) {
         earthMesh.rotation.y += AUTO_ROT;
         rotVelX *= FRICTION;
@@ -261,8 +326,10 @@
       earthMesh.rotation.x = Math.max(-0.8, Math.min(0.8, earthMesh.rotation.x));
       cloudMesh.rotation.y = earthMesh.rotation.y * 0.9 - elapsed * 0.002;
       cloudMesh.rotation.x = earthMesh.rotation.x;
+      const scrollFactor = 1 - scrollOpacity; // 0 at top, 1 at fade-out
       camera.position.x = mouseParallaxX;
-      camera.position.y = -mouseParallaxY;
+      camera.position.y = -mouseParallaxY - scrollFactor * 0.15; // Globe drifts down
+      camera.position.z = 2.8 + scrollFactor * 0.3; // Globe pulls back
       camera.lookAt(globeGroup.position);
       canvas.style.opacity = String(scrollOpacity);
       renderer.render(scene, camera);
@@ -278,6 +345,7 @@
       document.removeEventListener("pointerup", onPointerUp);
       earthGeo.dispose(); earthMat.dispose();
       cloudMat.dispose(); atmoMat.dispose();
+      satGeo.dispose(); satMat.dispose();
       dayMap.dispose(); nightMap.dispose();
       normalMap.dispose(); specularMap.dispose();
       cloudMap.dispose(); renderer.dispose();
