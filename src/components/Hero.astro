@@ -22,15 +22,7 @@ import GlobeCanvas from './GlobeCanvas.astro';
   <!-- Intelligence grid overlay -->
   <div class="hero-grid" aria-hidden="true"></div>
 
-  <!-- Background container -->
-  <div aria-hidden="true" style="position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden;">
-    <!-- Ambient dots (CSS-only, no canvas) -->
-    <div class="dot dot-1"></div>
-    <div class="dot dot-2"></div>
-    <div class="dot dot-3"></div>
-    <div class="dot dot-4"></div>
-    <div class="dot dot-5"></div>
-  </div>
+  <!-- Background dots removed — simplicity by design -->
 
   <!-- Content -->
   <div class="hero-content" style="position: relative; z-index: 10; max-width: var(--container-max); width: 100%; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem;">
@@ -213,26 +205,9 @@ import GlobeCanvas from './GlobeCanvas.astro';
   }
 
   /* === Floating CSS dots (replaces canvas particles) === */
-  .dot {
-    position: absolute;
-    border-radius: 50%;
-    background: var(--accent);
-    opacity: 0;
-    animation: floatDot 12s ease-in-out infinite;
-  }
-  .dot-1 { width: 2px; height: 2px; left: 15%; bottom: 10%; animation-delay: 0s; }
-  .dot-2 { width: 2px; height: 2px; left: 55%; bottom: 5%;  animation-delay: 3s; }
-  .dot-3 { width: 2px; height: 2px; left: 80%; bottom: 15%; animation-delay: 6s; }
-  .dot-4 { width: 2px; height: 2px; left: 35%; bottom: 8%;  animation-delay: 1.5s; }
-  .dot-5 { width: 2px; height: 2px; left: 65%; bottom: 20%; animation-delay: 4.5s; }
-  @keyframes floatDot {
-    0%   { opacity: 0; transform: translateY(0); }
-    15%  { opacity: .2; }
-    85%  { opacity: .08; }
-    100% { opacity: 0; transform: translateY(-100px); }
-  }
+  /* Ambient dots removed — simplicity by design */
 
-  /* === Eyebrow pip pulse (subtle, luxury) === */
+  /* === Eyebrow pip pulse === */
   .eyebrow-pip { animation: pipPulse 3s ease-in-out infinite; }
   @keyframes pipPulse {
     0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--accent); }
