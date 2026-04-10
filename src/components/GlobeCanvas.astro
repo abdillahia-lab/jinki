@@ -1,511 +1,290 @@
 ---
 /*
-  GlobeCanvas v6.0 — "The Eye"
-  Photorealistic Earth with LWIR thermal intelligence on the dark hemisphere.
-
-  Architecture:
-  - Textured sphere with NASA Blue Marble (day) + thermal false-color (night)
-  - Physically-based Rayleigh atmosphere (BackSide sphere, r=1.025)
-  - SRTM-derived normal map for terrain relief at silhouette
-  - Semi-transparent cloud layer on separate sphere (r=1.005)
-  - Thermal scan line on dark hemisphere (ONE animated element)
-  - No post-processing. renderer.render(scene, camera) directly.
-  - Dynamic import('three') — zero initial bundle cost
-  - Mobile (<768px): No WebGL, CSS gradient fallback
-
-  Textures (all in public/textures/):
-  - earth-day.webp (4096x2048) — NASA Blue Marble, color-graded in shader
-  - earth-thermal.webp (4096x2048) — NASA Black Marble → LWIR cyan palette
-  - earth-normal.webp (4096x2048) — SRTM topography → Sobel normal map
-  - earth-specular.webp (2048x1024) — Ocean reflectivity mask
-  - earth-clouds.webp (2048x1024) — Cloud transparency layer
+  GlobeCanvas v6.0
+  Photorealistic Earth: Blue Marble day + LWIR thermal night
+  Rayleigh atmosphere, normal-mapped terrain, cloud layer, thermal scan
+  No post-processing, no fake HUD
 */
 ---
 
-<div class="globe-wrap" aria-hidden="true">
-  <canvas id="globe-canvas"></canvas>
-</div>
+<canvas id="globe-canvas"></canvas>
 
 <style>
-  .globe-wrap {
+  #globe-canvas {
     position: fixed;
-    top: 0;
-    right: 0;
-    width: 100vw;
-    height: 100vh;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     z-index: 0;
     pointer-events: none;
     opacity: 0;
-    will-change: opacity;
-    transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1);
-    mask-image: linear-gradient(to right, transparent 2%, rgba(0,0,0,0.12) 18%, rgba(0,0,0,0.6) 45%, black 65%);
-    -webkit-mask-image: linear-gradient(to right, transparent 2%, rgba(0,0,0,0.12) 18%, rgba(0,0,0,0.6) 45%, black 65%);
-  }
-  .globe-wrap.ready { opacity: 1; }
-  :global([data-theme="light"]) .globe-wrap.ready { opacity: 0.45; }
-  #globe-canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
+    transition: opacity 1.4s ease-out;
+    mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0.3) 70%, transparent 90%);
+    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0.3) 70%, transparent 90%);
   }
   @media (max-width: 767px) {
-    .globe-wrap { display: none; }
+    #globe-canvas { display: none; }
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    .globe-wrap {
-      mask-image: radial-gradient(ellipse 90% 90% at 60% 50%, rgba(0,0,0,0.25) 0%, transparent 65%);
-      -webkit-mask-image: radial-gradient(ellipse 90% 90% at 60% 50%, rgba(0,0,0,0.25) 0%, transparent 65%);
+    #globe-canvas {
+      mask-image: radial-gradient(ellipse 70% 80% at 50% 55%, rgba(0,0,0,0.6) 0%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 55%, rgba(0,0,0,0.6) 0%, transparent 100%);
     }
   }
 </style>
 
 <script>
-  (function () {
+  async function initGlobe(): Promise<void> {
     if (window.innerWidth < 768) return;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const start = () => initGlobe(reduced).catch(e => console.error('[Globe] Init failed:', e));
-    if ('requestIdleCallback' in window) {
-      (window as any).requestIdleCallback(start, { timeout: 2000 });
-    } else {
-      setTimeout(start, 300);
-    }
-  })();
+    const canvas = document.getElementById("globe-canvas") as HTMLCanvasElement | null;
+    if (!canvas) return;
 
-  async function initGlobe(reducedMotion: boolean) {
-    const wrap = document.querySelector('.globe-wrap') as HTMLDivElement;
-    const canvas = document.getElementById('globe-canvas') as HTMLCanvasElement;
-    if (!wrap || !canvas) return;
-
-    const THREE = await import('three');
-
-    // ── Scene ──
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, wrap.clientWidth / wrap.clientHeight, 0.1, 50);
-    camera.position.set(0, 0, 2.8);
+    const THREE = await import("three");
 
     const renderer = new THREE.WebGLRenderer({
-      canvas,
-      alpha: true,
-      antialias: true,
-      powerPreference: 'high-performance',
+      canvas, antialias: true, alpha: true, powerPreference: "high-performance",
     });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(wrap.clientWidth, wrap.clientHeight);
+    renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
 
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0, 2.8);
+
     const globeGroup = new THREE.Group();
     scene.add(globeGroup);
+    const isTablet = window.innerWidth < 1024;
+    globeGroup.position.x = isTablet ? 0 : 0.8;
+    globeGroup.scale.setScalar(isTablet ? 0.85 : 1.1);
 
-    // ── Load Textures ──
     const loader = new THREE.TextureLoader();
-    const loadTex = (url: string, wrap = true) => {
-      const tex = loader.load(url);
-      tex.minFilter = THREE.LinearFilter;
-      tex.magFilter = THREE.LinearFilter;
-      if (wrap) {
-        tex.wrapS = THREE.RepeatWrapping;
-        tex.wrapT = THREE.ClampToEdgeWrapping;
-      }
+    const loadTex = (path: string, srgb = true): THREE.Texture => {
+      const tex = loader.load(path);
+      if (srgb) tex.colorSpace = THREE.SRGBColorSpace;
+      tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
       return tex;
     };
+    const dayMap = loadTex("/textures/earth-day.webp");
+    const nightMap = loadTex("/textures/earth-thermal.webp");
+    const normalMap = loadTex("/textures/earth-normal.webp", false);
+    const specularMap = loadTex("/textures/earth-specular.webp", false);
+    const cloudMap = loadTex("/textures/earth-clouds.webp", false);
 
-    const dayTex = loadTex('/textures/earth-day.webp');
-    const thermalTex = loadTex('/textures/earth-thermal.webp');
-    const normalTex = loadTex('/textures/earth-normal.webp');
-    const specularTex = loadTex('/textures/earth-specular.webp');
-    const cloudTex = loadTex('/textures/earth-clouds.webp');
+    const sunDir = new THREE.Vector3(0.8, 0.3, 0.6).normalize();
 
-    // ── Sun Direction (fixed, gentle) ──
-    const sunDir = new THREE.Vector3(0.6, 0.3, 0.7).normalize();
+    const earthUniforms = {
+      uDayMap: { value: dayMap }, uNightMap: { value: nightMap },
+      uNormalMap: { value: normalMap }, uSpecular: { value: specularMap },
+      uSunDir: { value: sunDir }, uTime: { value: 0 },
+    };
 
-    // ── Earth Material ──
-    const earthGeo = new THREE.SphereGeometry(1, 64, 64);
+    const earthVS = `
+      varying vec2 vUv; varying vec3 vNormal; varying vec3 vPosition;
+      varying vec3 vTangent; varying vec3 vBitangent;
+      void main() {
+        vUv = uv;
+        vNormal = normalize(normalMatrix * normal);
+        vPosition = (modelViewMatrix * vec4(position, 1.0)).xyz;
+        vec3 t = normalize(normalMatrix * vec3(-sin(uv.x * 6.2832), 0.0, cos(uv.x * 6.2832)));
+        vTangent = t;
+        vBitangent = cross(vNormal, t);
+        gl_Position = projectionMatrix * vec4(vPosition, 1.0);
+      }
+    `;
+
+    const earthFS = `
+      uniform sampler2D uDayMap; uniform sampler2D uNightMap;
+      uniform sampler2D uNormalMap; uniform sampler2D uSpecular;
+      uniform vec3 uSunDir; uniform float uTime;
+      varying vec2 vUv; varying vec3 vNormal; varying vec3 vPosition;
+      varying vec3 vTangent; varying vec3 vBitangent;
+      void main() {
+        vec3 mapN = texture2D(uNormalMap, vUv).xyz * 2.0 - 1.0;
+        mapN.xy *= 0.6;
+        vec3 normal = normalize(vTangent * mapN.x + vBitangent * mapN.y + vNormal * mapN.z);
+        float sunDot = dot(normal, uSunDir);
+        float dayMix = smoothstep(-0.15, 0.1, sunDot);
+        vec3 dayColor = texture2D(uDayMap, vUv).rgb;
+        vec3 nightColor = texture2D(uNightMap, vUv).rgb;
+        float lum = dot(dayColor, vec3(0.299, 0.587, 0.114));
+        dayColor = mix(vec3(lum), dayColor, 0.85);
+        float terminator = exp(-sunDot * sunDot / 0.008) * 0.4;
+        vec3 termColor = vec3(1.0, 0.4, 0.13);
+        float spec = texture2D(uSpecular, vUv).r;
+        vec3 halfVec = normalize(uSunDir + normalize(-vPosition));
+        float specular = pow(max(dot(normal, halfVec), 0.0), 80.0) * spec * 0.6;
+        float scanY = fract(uTime * 0.05);
+        float scanDist = abs(vUv.y - scanY);
+        float scanLine = (1.0 - dayMix) * exp(-scanDist * scanDist * 8000.0) * 0.3;
+        nightColor += scanLine * vec3(0.0, 0.9, 1.0);
+        vec3 color = mix(nightColor, dayColor, dayMix);
+        color += termColor * terminator;
+        color += vec3(1.0, 0.95, 0.85) * specular * dayMix;
+        gl_FragColor = vec4(color, 1.0);
+      }
+    `;
+
     const earthMat = new THREE.ShaderMaterial({
-      uniforms: {
-        uDay: { value: dayTex },
-        uThermal: { value: thermalTex },
-        uNormal: { value: normalTex },
-        uSpecular: { value: specularTex },
-        uSunDir: { value: sunDir },
-        uTime: { value: 0 },
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        varying vec3 vNormal;
-        varying vec3 vPosition;
-        varying vec3 vWorldNormal;
-        void main() {
-          vUv = uv;
-          vNormal = normalize(normalMatrix * normal);
-          vWorldNormal = normalize(normal);
-          vPosition = (modelViewMatrix * vec4(position, 1.0)).xyz;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform sampler2D uDay;
-        uniform sampler2D uThermal;
-        uniform sampler2D uNormal;
-        uniform sampler2D uSpecular;
-        uniform vec3 uSunDir;
-        uniform float uTime;
-        varying vec2 vUv;
-        varying vec3 vNormal;
-        varying vec3 vPosition;
-        varying vec3 vWorldNormal;
-
-        void main() {
-          // Sample textures
-          vec3 dayColor = texture2D(uDay, vUv).rgb;
-          vec3 thermalColor = texture2D(uThermal, vUv).rgb;
-          vec3 normalMap = texture2D(uNormal, vUv).rgb * 2.0 - 1.0;
-          float specMask = texture2D(uSpecular, vUv).r;
-
-          // Color-grade day side: warm sandstone land, deep navy ocean
-          // Slight desaturation for photographic look
-          float dayLum = dot(dayColor, vec3(0.299, 0.587, 0.114));
-          dayColor = mix(vec3(dayLum), dayColor, 0.85); // 15% desaturation
-          dayColor.r *= 1.05; // Warm shift
-          dayColor.b *= 0.92; // Cool reduction
-
-          // Perturb normal with normal map (TBN approximation)
-          vec3 n = normalize(vNormal);
-          // Simple tangent-space perturbation
-          vec3 T = normalize(cross(n, vec3(0.0, 1.0, 0.0)));
-          vec3 B = cross(n, T);
-          float bumpStrength = 0.35;
-          n = normalize(n + (T * normalMap.x + B * normalMap.y) * bumpStrength);
-
-          // Day/night factor
-          float sunDot = dot(vWorldNormal, uSunDir);
-          // Sigmoid transition for realistic terminator
-          float dayFactor = smoothstep(-0.15, 0.1, sunDot);
-
-          // Diffuse lighting on day side
-          float diffuse = max(dot(n, uSunDir), 0.0);
-          float ambient = 0.06;
-          vec3 dayLit = dayColor * (ambient + diffuse * 0.94);
-
-          // Specular on oceans (Blinn-Phong)
-          vec3 viewDir = normalize(-vPosition);
-          vec3 halfDir = normalize(uSunDir + viewDir);
-          float spec = pow(max(dot(n, halfDir), 0.0), 80.0) * specMask;
-          dayLit += vec3(0.8, 0.85, 0.9) * spec * 0.6;
-
-          // Thermal scan line on dark hemisphere
-          float scanY = fract(uTime * 0.05); // Sweeps north to south over 20s
-          float scanDist = abs(vUv.y - scanY);
-          float scanLine = smoothstep(0.008, 0.0, scanDist) * (1.0 - dayFactor);
-          // Hotspots pulse as scan passes
-          float thermalLum = dot(thermalColor, vec3(0.299, 0.587, 0.114));
-          float hotspotPulse = exp(-scanDist * scanDist * 8000.0) * thermalLum * 0.3;
-          vec3 nightColor = thermalColor + thermalColor * hotspotPulse;
-          // Scan line itself: thin white-cyan band
-          nightColor += vec3(0.0, 0.9, 1.0) * scanLine * 0.15;
-
-          // Terminator edge: warm amber band
-          float terminator = exp(-(sunDot * sunDot) * 80.0);
-          vec3 terminatorColor = vec3(1.0, 0.4, 0.15) * terminator * 0.25;
-
-          // Blend day and night
-          vec3 color = mix(nightColor, dayLit, dayFactor) + terminatorColor;
-
-          // Fresnel rim darkening (atmosphere absorbs at edges)
-          float facing = max(dot(viewDir, vNormal), 0.0);
-          float rim = 1.0 - facing;
-          color *= (0.7 + 0.3 * facing); // Edges slightly darker
-
-          gl_FragColor = vec4(color, 1.0);
-        }
-      `,
+      uniforms: earthUniforms, vertexShader: earthVS, fragmentShader: earthFS,
     });
-    const earth = new THREE.Mesh(earthGeo, earthMat);
-    globeGroup.add(earth);
+    const earthGeo = new THREE.SphereGeometry(1, 64, 64);
+    const earthMesh = new THREE.Mesh(earthGeo, earthMat);
+    globeGroup.add(earthMesh);
 
-    // ── Atmosphere (Rayleigh scattering) ──
-    const atmosGeo = new THREE.SphereGeometry(1.025, 64, 64);
-    const atmosMat = new THREE.ShaderMaterial({
-      uniforms: {
-        uSunDir: { value: sunDir },
-      },
-      vertexShader: `
-        varying vec3 vNormal;
-        varying vec3 vPosition;
-        varying vec3 vWorldNormal;
-        void main() {
-          vNormal = normalize(normalMatrix * normal);
-          vWorldNormal = normalize(normal);
-          vPosition = (modelViewMatrix * vec4(position, 1.0)).xyz;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 uSunDir;
-        varying vec3 vNormal;
-        varying vec3 vPosition;
-        varying vec3 vWorldNormal;
-        void main() {
-          vec3 viewDir = normalize(-vPosition);
-          float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
-          float sunFacing = dot(vWorldNormal, uSunDir);
-
-          // Rayleigh-inspired scattering: blue on sunlit limb, dim on dark side
-          float scatter = pow(rim, 3.0) * 0.6;
-
-          // Color varies with sun angle
-          vec3 sunLimb = vec3(0.27, 0.53, 1.0); // Blue
-          vec3 darkLimb = vec3(0.1, 0.07, 0.25); // Deep violet, barely visible
-          vec3 termLimb = vec3(1.0, 0.4, 0.2); // Sunset orange
-
-          float sunSide = smoothstep(-0.2, 0.5, sunFacing);
-          float termBand = exp(-(sunFacing * sunFacing) * 40.0);
-
-          vec3 atmosColor = mix(darkLimb, sunLimb, sunSide);
-          atmosColor = mix(atmosColor, termLimb, termBand * 0.6);
-
-          float alpha = scatter * (0.3 + sunSide * 0.7);
-          gl_FragColor = vec4(atmosColor, alpha);
-        }
-      `,
-      transparent: true,
-      side: THREE.BackSide,
-      depthWrite: false,
-    });
-    globeGroup.add(new THREE.Mesh(atmosGeo, atmosMat));
-
-    // ── Clouds ──
-    const cloudGeo = new THREE.SphereGeometry(1.005, 64, 64);
+    const cloudUniforms = { uCloudMap: { value: cloudMap }, uSunDir: { value: sunDir } };
+    const cloudVS = `
+      varying vec2 vUv; varying vec3 vNormal;
+      void main() {
+        vUv = uv; vNormal = normalize(normalMatrix * normal);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `;
+    const cloudFS = `
+      uniform sampler2D uCloudMap; uniform vec3 uSunDir;
+      varying vec2 vUv; varying vec3 vNormal;
+      void main() {
+        float cloud = texture2D(uCloudMap, vUv).r;
+        float sunFace = max(dot(vNormal, uSunDir), 0.0);
+        vec3 cloudColor = mix(vec3(0.15, 0.18, 0.25), vec3(1.0), smoothstep(-0.1, 0.2, sunFace));
+        gl_FragColor = vec4(cloudColor, cloud * 0.3);
+      }
+    `;
     const cloudMat = new THREE.ShaderMaterial({
-      uniforms: {
-        uClouds: { value: cloudTex },
-        uSunDir: { value: sunDir },
-      },
-      vertexShader: `
-        varying vec2 vUv;
-        varying vec3 vWorldNormal;
-        void main() {
-          vUv = uv;
-          vWorldNormal = normalize(normal);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform sampler2D uClouds;
-        uniform vec3 uSunDir;
-        varying vec2 vUv;
-        varying vec3 vWorldNormal;
-        void main() {
-          vec4 cloud = texture2D(uClouds, vUv);
-          float sunDot = dot(vWorldNormal, uSunDir);
-          // Clouds visible on day side, dim on night
-          float dayFactor = smoothstep(-0.1, 0.2, sunDot);
-          // Slight blue tint on shadow side
-          vec3 cloudColor = mix(vec3(0.15, 0.2, 0.35), vec3(1.0), dayFactor);
-          float alpha = cloud.a * 0.25 * (0.15 + dayFactor * 0.85);
-          gl_FragColor = vec4(cloudColor, alpha);
-        }
-      `,
-      transparent: true,
-      depthWrite: false,
+      uniforms: cloudUniforms, vertexShader: cloudVS, fragmentShader: cloudFS,
+      transparent: true, depthWrite: false,
     });
-    const cloudMesh = new THREE.Mesh(cloudGeo, cloudMat);
+    const cloudMesh = new THREE.Mesh(new THREE.SphereGeometry(1.003, 48, 48), cloudMat);
     globeGroup.add(cloudMesh);
 
-    // ── Minimal Star Field ──
-    const STAR_COUNT = 400;
-    const starPositions = new Float32Array(STAR_COUNT * 3);
-    const starSizes = new Float32Array(STAR_COUNT);
-    for (let i = 0; i < STAR_COUNT; i++) {
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
-      const r = 8 + Math.random() * 10;
-      starPositions[i * 3] = Math.sin(phi) * Math.cos(theta) * r;
-      starPositions[i * 3 + 1] = Math.sin(phi) * Math.sin(theta) * r;
-      starPositions[i * 3 + 2] = Math.cos(phi) * r;
-      starSizes[i] = 0.3 + Math.random() * 0.8;
-    }
-    const starGeo = new THREE.BufferGeometry();
-    starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-    starGeo.setAttribute('aSize', new THREE.BufferAttribute(starSizes, 1));
-    const starMat = new THREE.ShaderMaterial({
-      uniforms: {},
-      vertexShader: `
-        attribute float aSize;
-        void main() {
-          vec4 mv = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = aSize * (200.0 / -mv.z);
-          gl_Position = projectionMatrix * mv;
-        }
-      `,
-      fragmentShader: `
-        void main() {
-          float d = length(gl_PointCoord - vec2(0.5));
-          if (d > 0.5) discard;
-          float alpha = exp(-d * d * 20.0) * 0.12;
-          gl_FragColor = vec4(1.0, 1.0, 1.0, alpha);
-        }
-      `,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
+    const atmoUniforms = { uSunDir: { value: sunDir } };
+    const atmoVS = `
+      varying vec3 vNormal; varying vec3 vPosition;
+      void main() {
+        vNormal = normalize(normalMatrix * normal);
+        vPosition = (modelViewMatrix * vec4(position, 1.0)).xyz;
+        gl_Position = projectionMatrix * vec4(vPosition, 1.0);
+      }
+    `;
+    const atmoFS = `
+      uniform vec3 uSunDir; varying vec3 vNormal; varying vec3 vPosition;
+      void main() {
+        vec3 viewDir = normalize(-vPosition);
+        float rim = 1.0 - max(dot(viewDir, vNormal), 0.0);
+        float atmosphere = pow(rim, 3.0) * 1.5;
+        float sunFacing = max(dot(vNormal, uSunDir), 0.0);
+        vec3 sunColor = mix(vec3(0.1, 0.07, 0.25), vec3(0.27, 0.53, 1.0), sunFacing);
+        float termGlow = exp(-pow(dot(vNormal, uSunDir), 2.0) * 8.0);
+        sunColor = mix(sunColor, vec3(1.0, 0.4, 0.2), termGlow * 0.5);
+        gl_FragColor = vec4(sunColor, atmosphere * 0.7);
+      }
+    `;
+    const atmoMat = new THREE.ShaderMaterial({
+      uniforms: atmoUniforms, vertexShader: atmoVS, fragmentShader: atmoFS,
+      transparent: true, depthWrite: false, side: THREE.BackSide,
     });
-    scene.add(new THREE.Points(starGeo, starMat));
+    const atmoMesh = new THREE.Mesh(new THREE.SphereGeometry(1.025, 48, 48), atmoMat);
+    globeGroup.add(atmoMesh);
 
-    // ── Cached DOM Values ──
-    let cachedScrollY = window.scrollY;
-    let cachedInnerHeight = window.innerHeight;
-    let cachedWrapWidth = wrap.clientWidth;
-    let cachedWrapHeight = wrap.clientHeight;
-    window.addEventListener('scroll', () => { cachedScrollY = window.scrollY; }, { passive: true });
-    window.addEventListener('resize', () => { cachedInnerHeight = window.innerHeight; }, { passive: true });
-    function updateCachedSize() {
-      cachedWrapWidth = wrap.clientWidth;
-      cachedWrapHeight = wrap.clientHeight;
-    }
-
-    // ── Interaction: Drag to Rotate ──
     let isDragging = false;
-    let dragVelocityX = 0, dragVelocityY = 0;
-    let prevPointerX = 0, prevPointerY = 0;
-    const DRAG_FRICTION = 0.94;
+    let prevMouse = { x: 0, y: 0 };
+    let rotVelX = 0, rotVelY = 0;
+    let mouseParallaxX = 0, mouseParallaxY = 0;
+    let isVisible = true, scrollOpacity = 1;
+    const AUTO_ROT = 0.00175;
+    const FRICTION = 0.95;
 
-    canvas.style.pointerEvents = 'auto';
-    wrap.style.pointerEvents = 'none';
-
-    canvas.addEventListener('pointerdown', (e) => {
+    const onPointerDown = (e: PointerEvent) => {
       isDragging = true;
-      prevPointerX = e.clientX;
-      prevPointerY = e.clientY;
-      canvas.setPointerCapture(e.pointerId);
-    });
-    canvas.addEventListener('pointermove', (e) => {
+      prevMouse.x = e.clientX; prevMouse.y = e.clientY;
+      canvas.style.pointerEvents = "auto";
+    };
+    const onPointerMove = (e: PointerEvent) => {
+      mouseParallaxX = (e.clientX / window.innerWidth - 0.5) * 0.15;
+      mouseParallaxY = (e.clientY / window.innerHeight - 0.5) * 0.1;
       if (!isDragging) return;
-      const dx = e.clientX - prevPointerX;
-      const dy = e.clientY - prevPointerY;
-      dragVelocityX = dx * 0.003;
-      dragVelocityY = dy * 0.001;
-      prevPointerX = e.clientX;
-      prevPointerY = e.clientY;
+      rotVelY = (e.clientX - prevMouse.x) * 0.003;
+      rotVelX = (e.clientY - prevMouse.y) * 0.003;
+      prevMouse.x = e.clientX; prevMouse.y = e.clientY;
+    };
+    const onPointerUp = () => {
+      isDragging = false;
+      canvas.style.pointerEvents = "none";
+    };
+
+    document.addEventListener("pointerdown", (e) => {
+      if (e.clientX > window.innerWidth * 0.3) onPointerDown(e);
     });
-    canvas.addEventListener('pointerup', () => { isDragging = false; });
-    canvas.addEventListener('pointercancel', () => { isDragging = false; });
+    document.addEventListener("pointermove", onPointerMove);
+    document.addEventListener("pointerup", onPointerUp);
 
-    // ── Visibility Skip ──
-    let globeVisible = true;
-    const visObserver = new IntersectionObserver(([e]) => {
-      globeVisible = e.isIntersecting;
-    }, { threshold: 0.01 });
-    visObserver.observe(wrap);
+    const onScroll = () => {
+      scrollOpacity = Math.max(0, 1 - window.scrollY / (window.innerHeight * 0.6));
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
 
-    // ── Animation ──
-    let animId = 0;
-    let time = 0;
-    let prevTimestamp = 0;
+    const observer = new IntersectionObserver(
+      (entries) => { isVisible = entries[0].isIntersecting; },
+      { threshold: 0 }
+    );
+    observer.observe(canvas);
 
-    function animate(timestamp: number) {
-      animId = requestAnimationFrame(animate);
-
-      if (!globeVisible && time > 3) {
-        prevTimestamp = timestamp;
-        return;
-      }
-
-      const dt = prevTimestamp ? Math.min((timestamp - prevTimestamp) / 1000, 0.1) : 0.016;
-      prevTimestamp = timestamp;
-      time += dt;
-
-      // Auto-rotation
-      if (!reducedMotion) {
-        const autoSpeed = isDragging ? 0 : 0.0008;
-        globeGroup.rotation.y += autoSpeed;
-
-        // Drag momentum
-        if (!isDragging) {
-          globeGroup.rotation.y += dragVelocityX;
-          globeGroup.rotation.x += dragVelocityY;
-          globeGroup.rotation.x = Math.max(-0.5, Math.min(0.5, globeGroup.rotation.x));
-          dragVelocityX *= DRAG_FRICTION;
-          dragVelocityY *= DRAG_FRICTION;
-        }
-
-        // Cloud layer rotates independently (very slow)
-        cloudMesh.rotation.y += 0.00003;
-      }
-
-      // Update uniforms
-      earthMat.uniforms.uTime.value = time;
-
-      // Scroll fade
-      const scrollFade = 1.0 - smoothstep(0, cachedInnerHeight * 0.7, cachedScrollY);
-      wrap.style.opacity = String(Math.max(0, scrollFade));
-
-      // Position globe
-      const isDesktop = cachedWrapWidth >= 1024;
-      const baseScale = isDesktop ? 1.1 : 0.85;
-      globeGroup.scale.setScalar(baseScale);
-      if (isDesktop) {
-        globeGroup.position.set(0.9, 0.05, 0);
-      }
-
-      // Entrance: simple dolly
-      if (time < 2.0) {
-        const t = Math.min(time / 2.0, 1.0);
-        const ease = 1.0 - Math.pow(1.0 - t, 4);
-        camera.position.z = 4.0 + (2.8 - 4.0) * ease;
-        wrap.style.opacity = String(Math.min(scrollFade, ease));
-      } else {
-        camera.position.z = 2.8;
-      }
-
-      camera.lookAt(0, 0, 0);
-
-      // Render directly — no post-processing
-      renderer.render(scene, camera);
-    }
-
-    function smoothstep(edge0: number, edge1: number, x: number): number {
-      const t = Math.max(0, Math.min(1, (x - edge0) / (edge1 - edge0)));
-      return t * t * (3 - 2 * t);
-    }
-
-    // ── Resize ──
-    const ro = new ResizeObserver(() => {
-      updateCachedSize();
-      const w = cachedWrapWidth;
-      const h = cachedWrapHeight;
+    const resizeObs = new ResizeObserver(() => {
+      const w = window.innerWidth, h = window.innerHeight;
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+      const t = w < 1024;
+      globeGroup.position.x = t ? 0 : 0.8;
+      globeGroup.scale.setScalar(t ? 0.85 : 1.1);
     });
-    ro.observe(wrap);
+    resizeObs.observe(document.documentElement);
 
-    // ── Launch ──
-    animate(0);
-    setTimeout(() => {
-      wrap.classList.add('ready');
-      wrap.dispatchEvent(new CustomEvent('globe-ready', { bubbles: true }));
-    }, 80);
+    requestAnimationFrame(() => { canvas.style.opacity = "1"; });
 
-    // ── Cleanup ──
-    document.addEventListener('astro:before-swap', () => {
+    const clock = new THREE.Clock();
+    let animId = 0;
+
+    const animate = () => {
+      animId = requestAnimationFrame(animate);
+      if (!isVisible) return;
+      const elapsed = clock.getElapsedTime();
+      earthUniforms.uTime.value = elapsed;
+      if (!isDragging) {
+        earthMesh.rotation.y += AUTO_ROT;
+        rotVelX *= FRICTION;
+        rotVelY *= FRICTION;
+      }
+      earthMesh.rotation.y += rotVelY;
+      earthMesh.rotation.x += rotVelX;
+      earthMesh.rotation.x = Math.max(-0.8, Math.min(0.8, earthMesh.rotation.x));
+      cloudMesh.rotation.y = earthMesh.rotation.y * 0.9 - elapsed * 0.002;
+      cloudMesh.rotation.x = earthMesh.rotation.x;
+      camera.position.x = mouseParallaxX;
+      camera.position.y = -mouseParallaxY;
+      camera.lookAt(globeGroup.position);
+      canvas.style.opacity = String(scrollOpacity);
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    const cleanup = () => {
       cancelAnimationFrame(animId);
-      ro.disconnect();
-      visObserver.disconnect();
-      renderer.dispose();
-      earthGeo.dispose();
-      earthMat.dispose();
-      atmosGeo.dispose();
-      atmosMat.dispose();
-      cloudGeo.dispose();
-      cloudMat.dispose();
-      starGeo.dispose();
-      starMat.dispose();
-      dayTex.dispose();
-      thermalTex.dispose();
-      normalTex.dispose();
-      specularTex.dispose();
-      cloudTex.dispose();
-    }, { once: true });
+      observer.disconnect();
+      resizeObs.disconnect();
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("pointermove", onPointerMove);
+      document.removeEventListener("pointerup", onPointerUp);
+      earthGeo.dispose(); earthMat.dispose();
+      cloudMat.dispose(); atmoMat.dispose();
+      dayMap.dispose(); nightMap.dispose();
+      normalMap.dispose(); specularMap.dispose();
+      cloudMap.dispose(); renderer.dispose();
+    };
+    document.addEventListener("astro:before-swap", cleanup, { once: true });
   }
+
+  initGlobe();
+  document.addEventListener("astro:after-swap", initGlobe);
 </script>
