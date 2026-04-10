@@ -124,7 +124,7 @@
   --glass-border: rgba(200, 220, 230, 0.07);
   --glass-highlight: rgba(200, 220, 230, 0.09);
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
-  --glossy-shine: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0.04) 100%);
+  --glossy-shine: none; /* Simplified — no faux-3D gloss */
 }
 
 /* --- Light Theme --- */
@@ -175,7 +175,7 @@
   --glass-border: rgba(0, 0, 0, 0.10);
   --glass-highlight: rgba(255, 255, 255, 0.5);
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.03);
-  --glossy-shine: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0.2) 100%);
+  --glossy-shine: none;
 
   /* Light mode shadow system — subtler than dark */
   --shadow-rest: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
@@ -420,17 +420,6 @@ html {
 /* Metallic gloss removed — clean cards, no faux-3D effects */
 
 /* --- Interactive Feedback --- */
-@keyframes btn-press {
-  0% { transform: scale(1); }
-  50% { transform: scale(0.97); }
-  100% { transform: scale(1); }
-}
-
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
@@ -641,18 +630,8 @@ html { scrollbar-width: thin; scrollbar-color: var(--text-tertiary) var(--bg-pri
               transform 0.35s var(--ease-out-premium);
 }
 
-.glass-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: var(--glossy-shine);
-  pointer-events: none;
-  z-index: 1;
-}
-
 .glass-card:hover {
-  box-shadow: var(--shadow-elevated), 0 0 24px var(--accent-glow);
+  box-shadow: var(--shadow-elevated);
   border-color: var(--glass-highlight);
 }
 
