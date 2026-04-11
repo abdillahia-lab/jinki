@@ -152,25 +152,11 @@ import GlobeCanvas from './GlobeCanvas.astro';
 
   /* === Headline accent === */
   .headline-accent {
-    background: linear-gradient(90deg, var(--accent), #9B7DFF, var(--accent));
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--accent);
     font-style: italic;
-    animation: heroShimmer 4s ease-in-out 1;
-    animation-delay: 0.5s;
-    animation-fill-mode: both;
-  }
-  @keyframes heroShimmer {
-    0% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
   }
   :global([data-theme="light"]) .headline-accent {
-    background: linear-gradient(135deg, #00838f, #5B4BC9);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--accent);
   }
 
   /* === Layout === */
@@ -247,20 +233,17 @@ import GlobeCanvas from './GlobeCanvas.astro';
   }
   @media (min-width: 1024px) { .hero-metrics { margin-top: 0; } }
   .metric-card {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border); border-radius: 12px;
+    background: rgba(5, 5, 8, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px;
     padding: 1.25rem 1.5rem; margin-bottom: 1rem;
-    backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3);
-    box-shadow: var(--glass-shadow);
     display: flex; align-items: center;
     transition: border-color 0.25s ease;
   }
   .metric-card:hover {
-    border-color: color-mix(in srgb, var(--accent) 15%, transparent);
+    border-color: rgba(255, 255, 255, 0.12);
   }
   @media (min-width: 1024px) { .mc-2 { margin-left: 2rem; } .mc-3 { margin-left: .5rem; } }
-  .metric-icon { width: 40px; height: 40px; border-radius: 12px; background: var(--accent-glow); display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; margin-right: 1rem; box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 15%, transparent), 0 0 4px color-mix(in srgb, var(--accent) 10%, transparent); transition: box-shadow 0.4s ease; }
-  .metric-card:hover .metric-icon { box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 30%, transparent), 0 0 8px color-mix(in srgb, var(--accent) 15%, transparent); }
+  .metric-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(0, 229, 255, 0.08); display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; margin-right: 1rem; }
   .metric-value { font-family: var(--font-mono); font-size: 1.75rem; font-weight: 700; color: var(--text-primary); line-height: 1; }
   .metric-unit  { font-family: var(--font-mono); font-size: 1rem; color: var(--accent); margin-left: 2px; }
   .metric-label { font-family: var(--font-label); font-size: .75rem; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .15em; margin-left: auto; text-align: right; white-space: nowrap; }
