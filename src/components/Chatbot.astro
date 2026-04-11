@@ -381,14 +381,33 @@
       addBot('Hello! I\'m here to help you learn about Jinki\'s aerial intelligence services. What would you like to know about?');
       addQuickReplies(); return;
     }
-    // No keyword match — call LLM
+    // No keyword match — call LLM (with safety checks)
+    if (v.length > 500) {
+      addBot('Please keep your message under 500 characters.'); return;
+    }
+    var blocked = /(system prompt|ignore.*instruct|you are now|override|jailbreak|bypass|pretend you)/i;
+    if (blocked.test(v)) {
+      addBot('I can only answer questions about Jinki\'s aerial intelligence services. How can I help?');
+      addQuickReplies(); return;
+    }
+    chatMsgCount++;
+    if (chatMsgCount > 20) {
+      addBot('You\'ve reached the message limit for this session. Please use our contact form for detailed inquiries.');
+      return;
+    }
     askLLM(v);
   }
 
+  var chatMsgCount = 0;
   function askLLM(q) {
     var t = document.createElement('div');
     t.className = 'jc-msg jc-bot';
-    t.innerHTML = '<span class="jc-typing-dots"><span></span><span></span><span></span></span>';
+    var dots = document.createElement('span');
+    dots.className = 'jc-typing-dots';
+    dots.appendChild(document.createElement('span'));
+    dots.appendChild(document.createElement('span'));
+    dots.appendChild(document.createElement('span'));
+    t.appendChild(dots);
     msgs.appendChild(t);
     msgs.scrollTop = msgs.scrollHeight;
     input.disabled = true;
