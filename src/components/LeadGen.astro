@@ -497,9 +497,14 @@
 
   // Submit — Web3Forms integration with loading/error states
   let submitting = false;
+  let lastSubmitTime = 0;
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (submitting) return;
+    // Rate limit: 5-second cooldown between submissions
+    const now = Date.now();
+    if (now - lastSubmitTime < 5000) return;
+    lastSubmitTime = now;
     submitting = true;
     // Honeypot check
     const hp = (document.getElementById('lg-botcheck') as HTMLInputElement);

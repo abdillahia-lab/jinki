@@ -132,9 +132,13 @@ const company = [
   var form = document.querySelector('.footer-newsletter-form');
   if (!form) return;
   var submitting = false;
+  var lastFooterSubmit = 0;
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     if (submitting) return;
+    var now = Date.now();
+    if (now - lastFooterSubmit < 5000) return;
+    lastFooterSubmit = now;
     var emailInput = form.querySelector('input[type="email"]');
     var btn = form.querySelector('.footer-submit-btn');
     var note = form.querySelector('.footer-newsletter-note');
