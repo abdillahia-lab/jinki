@@ -67,8 +67,7 @@ import GlobeCanvas from './GlobeCanvas.astro';
     </div>
   </div>
 
-  <!-- Bottom dissolve — smooth transition to next section -->
-  <div aria-hidden="true" style="position:absolute;bottom:0;left:0;right:0;height:12rem;background:linear-gradient(to bottom,transparent,var(--bg-primary));z-index:5;pointer-events:none;"></div>
+  <div class="hero-dissolve" aria-hidden="true"></div>
 </section>
 
 <style>
@@ -122,6 +121,11 @@ import GlobeCanvas from './GlobeCanvas.astro';
     display: flex; align-items: center; gap: 8px; letter-spacing: 0.04em;
   }
   .hero-urgency .material-symbols-outlined { font-size: 14px; }
+  .hero-dissolve {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 12rem;
+    background: linear-gradient(to bottom, transparent, var(--bg-primary));
+    z-index: 5; pointer-events: none;
+  }
 
   .hero-mesh {
     position: absolute;
