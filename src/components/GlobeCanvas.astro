@@ -298,7 +298,7 @@
           vBright = 0.4 + 0.6 * max(dot(n, uSunDir), 0.0);
           vPulse = 0.6 + 0.4 * sin(uTime * 1.5 + aPhase * 6.28);
           vec4 mv = modelViewMatrix * vec4(position, 1.0);
-          float baseSize = mix(6.0, 10.0, aIsHQ); // HQ is larger
+          float baseSize = mix(12.0, 18.0, aIsHQ); // HQ is larger
           gl_PointSize = baseSize * vPulse;
           gl_Position = projectionMatrix * mv;
         }
@@ -312,7 +312,7 @@
           float glow = exp(-d * d * 6.0) * 0.4;
           float alpha = (core + glow) * vPulse * vBright;
           // HQ = brand cyan, others = warm amber
-          vec3 col = mix(vec3(1.0, 0.42, 0.21), vec3(0.0, 0.9, 1.0), vHQ);
+          vec3 col = mix(vec3(0.2, 1.0, 0.4), vec3(0.0, 0.9, 1.0), vHQ);
           gl_FragColor = vec4(col, alpha * 0.8);
         }
       `,
@@ -362,16 +362,16 @@
       const cablePositions = buildGreatCircleLines(cables, 1.002, 16);
       const cableGeo = new THREE.BufferGeometry();
       cableGeo.setAttribute('position', new THREE.BufferAttribute(cablePositions, 3));
-      const cableMat = new THREE.LineBasicMaterial({ color: 0x00D4FF, transparent: true, opacity: 0.15 });
+      const cableMat = new THREE.LineBasicMaterial({ color: 0x00D4FF, transparent: true, opacity: 0.45 });
       globeGroup.add(new THREE.LineSegments(cableGeo, cableMat));
 
       // Shipping lanes — amber
       const lanePositions = buildGreatCircleLines(lanes, 1.001, 20);
       const laneGeo = new THREE.BufferGeometry();
       laneGeo.setAttribute('position', new THREE.BufferAttribute(lanePositions, 3));
-      const laneMat = new THREE.LineBasicMaterial({ color: 0xFF8C00, transparent: true, opacity: 0.08 });
+      const laneMat = new THREE.LineBasicMaterial({ color: 0xFF8C00, transparent: true, opacity: 0.30 });
       globeGroup.add(new THREE.LineSegments(laneGeo, laneMat));
-    }).catch(() => {}); // Silent fail — cables/lanes are decorative
+    }).catch(e => console.warn('[Globe] Overlays failed:', e));
 
     let isDragging = false;
     let prevMouse = { x: 0, y: 0 };
