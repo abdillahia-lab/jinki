@@ -22,6 +22,10 @@
     mask-image: radial-gradient(ellipse 110% 130% at 75% 45%, rgba(0,0,0,0.9) 15%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.15) 60%, transparent 75%);
     -webkit-mask-image: radial-gradient(ellipse 110% 130% at 75% 45%, rgba(0,0,0,0.9) 15%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.15) 60%, transparent 75%);
   }
+  #globe-canvas {
+    background: radial-gradient(ellipse 55% 50% at 65% 45%,
+      rgba(0, 40, 80, 0.35) 0%, rgba(0, 15, 35, 0.15) 40%, transparent 70%);
+  }
   #globe-canvas:hover { cursor: crosshair; }
   @media (max-width: 767px) {
     #globe-canvas { display: none; }
@@ -61,17 +65,22 @@
     globeGroup.scale.setScalar(isTablet ? 0.85 : 1.1);
 
     const loader = new THREE.TextureLoader();
-    const loadTex = (path: string, srgb = true): THREE.Texture => {
-      const tex = loader.load(path);
-      if (srgb) tex.colorSpace = THREE.SRGBColorSpace;
-      tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-      return tex;
-    };
-    const dayMap = loadTex("/textures/earth-day.webp");
-    const nightMap = loadTex("/textures/earth-thermal.webp");
-    const normalMap = loadTex("/textures/earth-normal.webp", false);
-    const specularMap = loadTex("/textures/earth-specular.webp", false);
-    const cloudMap = loadTex("/textures/earth-clouds.webp", false);
+    const maxAniso = renderer.capabilities.getMaxAnisotropy();
+    const loadTexAsync = (path: string, srgb = true): Promise<THREE.Texture> =>
+      new Promise((resolve) => {
+        const tex = loader.load(path, () => resolve(tex));
+        if (srgb) tex.colorSpace = THREE.SRGBColorSpace;
+        tex.anisotropy = maxAniso;
+      });
+
+    // Wait for ALL textures before showing the globe
+    const [dayMap, nightMap, normalMap, specularMap, cloudMap] = await Promise.all([
+      loadTexAsync("/textures/earth-day.webp"),
+      loadTexAsync("/textures/earth-thermal.webp"),
+      loadTexAsync("/textures/earth-normal.webp", false),
+      loadTexAsync("/textures/earth-specular.webp", false),
+      loadTexAsync("/textures/earth-clouds.webp", false),
+    ]);
 
     // Time-aware sun — matches visitor's local time
     const hour = new Date().getHours() + new Date().getMinutes() / 60;
