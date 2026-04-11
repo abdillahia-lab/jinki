@@ -1047,7 +1047,7 @@ const relatedLinks = (post.data.tags || [])
     if (articleContent && tocContainer) {
       const headings = articleContent.querySelectorAll('h2, h3');
       if (headings.length > 0) {
-        tocContainer.innerHTML = '';
+        while (tocContainer.firstChild) tocContainer.removeChild(tocContainer.firstChild);
         headings.forEach((heading, i) => {
           const id = `section-${i}`;
           heading.id = id;
@@ -1072,7 +1072,11 @@ const relatedLinks = (post.data.tags || [])
 
         headings.forEach(h => observer.observe(h));
       } else {
-        tocContainer.innerHTML = '<p class="omega-toc-empty" style="font-size: 12px; color: var(--text-tertiary);">No sections</p>';
+        var emptyP = document.createElement('p');
+        emptyP.className = 'omega-toc-empty';
+        emptyP.style.cssText = 'font-size: 12px; color: var(--text-tertiary);';
+        emptyP.textContent = 'No sections';
+        tocContainer.appendChild(emptyP);
       }
     }
 
