@@ -19,8 +19,8 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity 1.4s ease-out;
-    mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0.3) 70%, transparent 90%);
-    -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 40%, rgba(0,0,0,0.3) 70%, transparent 90%);
+    mask-image: radial-gradient(ellipse 110% 130% at 75% 45%, rgba(0,0,0,0.9) 15%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.15) 60%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 110% 130% at 75% 45%, rgba(0,0,0,0.9) 15%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.15) 60%, transparent 75%);
   }
   #globe-canvas:hover { cursor: crosshair; }
   @media (max-width: 767px) {
@@ -251,11 +251,63 @@
     });
     globeGroup.add(new THREE.Points(satGeo, satMat));
 
+    // ── Submarine Cables + Shipping Lanes ──
+    function latLngToVec3(lat: number, lng: number, r: number): [number, number, number] {
+      const phi = (90 - lat) * Math.PI / 180;
+      const theta = (lng + 180) * Math.PI / 180;
+      return [
+        -r * Math.sin(phi) * Math.cos(theta),
+        r * Math.cos(phi),
+        r * Math.sin(phi) * Math.sin(theta),
+      ];
+    }
+
+    function buildGreatCircleLines(routes: number[][][], radius: number, segments: number): Float32Array {
+      const allPositions: number[] = [];
+      for (const route of routes) {
+        // Route can be 2+ points; interpolate between consecutive pairs
+        for (let p = 0; p < route.length - 1; p++) {
+          const [lat1, lng1] = route[p];
+          const [lat2, lng2] = route[p + 1];
+          const start = new THREE.Vector3(...latLngToVec3(lat1, lng1, radius));
+          const end = new THREE.Vector3(...latLngToVec3(lat2, lng2, radius));
+          for (let i = 0; i < segments; i++) {
+            const t1 = i / segments;
+            const t2 = (i + 1) / segments;
+            const p1 = start.clone().lerp(end, t1).normalize().multiplyScalar(radius);
+            const p2 = start.clone().lerp(end, t2).normalize().multiplyScalar(radius);
+            allPositions.push(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z);
+          }
+        }
+      }
+      return new Float32Array(allPositions);
+    }
+
+    // Load and render cables + lanes in parallel
+    Promise.all([
+      fetch('/data/submarine-cables.json').then(r => r.json()),
+      fetch('/data/shipping-lanes.json').then(r => r.json()),
+    ]).then(([cables, lanes]) => {
+      // Submarine cables — cyan
+      const cablePositions = buildGreatCircleLines(cables, 1.002, 16);
+      const cableGeo = new THREE.BufferGeometry();
+      cableGeo.setAttribute('position', new THREE.BufferAttribute(cablePositions, 3));
+      const cableMat = new THREE.LineBasicMaterial({ color: 0x00D4FF, transparent: true, opacity: 0.15 });
+      globeGroup.add(new THREE.LineSegments(cableGeo, cableMat));
+
+      // Shipping lanes — amber
+      const lanePositions = buildGreatCircleLines(lanes, 1.001, 20);
+      const laneGeo = new THREE.BufferGeometry();
+      laneGeo.setAttribute('position', new THREE.BufferAttribute(lanePositions, 3));
+      const laneMat = new THREE.LineBasicMaterial({ color: 0xFF8C00, transparent: true, opacity: 0.08 });
+      globeGroup.add(new THREE.LineSegments(laneGeo, laneMat));
+    }).catch(() => {}); // Silent fail — cables/lanes are decorative
+
     let isDragging = false;
     let prevMouse = { x: 0, y: 0 };
     let rotVelX = 0, rotVelY = 0;
     let mouseParallaxX = 0, mouseParallaxY = 0;
-    let isVisible = true, scrollOpacity = 1;
+    let isVisible = true, scrollOpacity = 1, currentOpacity = 1;
     const AUTO_ROT = 0.00175;
     const FRICTION = 0.95;
 
@@ -284,7 +336,8 @@
     document.addEventListener("pointerup", onPointerUp);
 
     const onScroll = () => {
-      scrollOpacity = Math.max(0, 1 - window.scrollY / (window.innerHeight * 0.6));
+      const raw = Math.max(0, Math.min(1, 1 - window.scrollY / (window.innerHeight * 0.9)));
+      scrollOpacity = raw * raw * (3 - 2 * raw);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
 
@@ -326,12 +379,13 @@
       earthMesh.rotation.x = Math.max(-0.8, Math.min(0.8, earthMesh.rotation.x));
       cloudMesh.rotation.y = earthMesh.rotation.y * 0.9 - elapsed * 0.002;
       cloudMesh.rotation.x = earthMesh.rotation.x;
-      const scrollFactor = 1 - scrollOpacity; // 0 at top, 1 at fade-out
+      currentOpacity += (scrollOpacity - currentOpacity) * 0.08;
+      const scrollFactor = 1 - currentOpacity;
       camera.position.x = mouseParallaxX;
-      camera.position.y = -mouseParallaxY - scrollFactor * 0.15; // Globe drifts down
-      camera.position.z = 2.8 + scrollFactor * 0.3; // Globe pulls back
+      camera.position.y = -mouseParallaxY - scrollFactor * 0.06;
+      camera.position.z = 2.8 + scrollFactor * 0.12;
       camera.lookAt(globeGroup.position);
-      canvas.style.opacity = String(scrollOpacity);
+      canvas.style.opacity = String(currentOpacity);
       renderer.render(scene, camera);
     };
     animate();
