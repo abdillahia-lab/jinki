@@ -378,6 +378,75 @@
       laneGeo.setAttribute('position', new BufferAttribute(lanePositions, 3));
       const laneMat = new LineBasicMaterial({ color: 0xFF8C00, transparent: true, opacity: 0.35 });
       globeGroup.add(new LineSegments(laneGeo, laneMat));
+
+      // ── Simulated Live Shipping Traffic ──
+      // ~40 ship dots traveling along shipping lanes
+      const SHIP_COUNT = 40;
+      const shipRoutes: { points: Vector3[]; speed: number; offset: number }[] = [];
+      for (let i = 0; i < SHIP_COUNT; i++) {
+        const route = lanes[i % lanes.length];
+        const points: Vector3[] = [];
+        for (let p = 0; p < route.length - 1; p++) {
+          const [lat1, lng1] = route[p];
+          const [lat2, lng2] = route[p + 1];
+          const s = new Vector3(...latLngToVec3(lat1, lng1, 1.004));
+          const e = new Vector3(...latLngToVec3(lat2, lng2, 1.004));
+          for (let t = 0; t < 10; t++) {
+            const pt = s.clone().lerp(e, t / 10).normalize().multiplyScalar(1.004);
+            points.push(pt);
+          }
+        }
+        const lastPt = route[route.length - 1];
+        points.push(new Vector3(...latLngToVec3(lastPt[0], lastPt[1], 1.004)));
+        shipRoutes.push({
+          points,
+          speed: 0.015 + Math.random() * 0.025, // varied speeds
+          offset: Math.random(), // staggered start positions
+        });
+      }
+      const shipPositions = new Float32Array(SHIP_COUNT * 3);
+      const shipGeo = new BufferGeometry();
+      shipGeo.setAttribute('position', new BufferAttribute(shipPositions, 3));
+      const shipMat = new ShaderMaterial({
+        vertexShader: `
+          void main() {
+            vec4 mv = modelViewMatrix * vec4(position, 1.0);
+            gl_PointSize = 3.0;
+            gl_Position = projectionMatrix * mv;
+          }
+        `,
+        fragmentShader: `
+          void main() {
+            float d = length(gl_PointCoord - 0.5);
+            if (d > 0.5) discard;
+            float glow = exp(-d * d * 18.0);
+            gl_FragColor = vec4(1.0, 0.85, 0.5, glow * 0.7);
+          }
+        `,
+        transparent: true, blending: AdditiveBlending,
+        depthWrite: false, depthTest: true,
+      });
+      const shipPoints = new Points(shipGeo, shipMat);
+      globeGroup.add(shipPoints);
+
+      // Update ship positions each frame
+      const updateShips = (time: number) => {
+        for (let i = 0; i < SHIP_COUNT; i++) {
+          const route = shipRoutes[i];
+          const t = ((time * route.speed + route.offset) % 1);
+          const idx = t * (route.points.length - 1);
+          const a = Math.floor(idx);
+          const b = Math.min(a + 1, route.points.length - 1);
+          const frac = idx - a;
+          const pos = route.points[a].clone().lerp(route.points[b], frac);
+          shipPositions[i * 3] = pos.x;
+          shipPositions[i * 3 + 1] = pos.y;
+          shipPositions[i * 3 + 2] = pos.z;
+        }
+        shipGeo.attributes.position.needsUpdate = true;
+      };
+      // Store updateShips so the animate loop can call it
+      (window as any).__updateShips = updateShips;
     }).catch(e => console.warn('[Globe] Overlays failed:', e));
 
     let isDragging = false;
@@ -447,6 +516,7 @@
       earthUniforms.uTime.value = elapsed;
       satUniforms.uTime.value = elapsed;
       dcUniforms.uTime.value = elapsed;
+      if ((window as any).__updateShips) (window as any).__updateShips(elapsed);
       if (!isDragging) {
         globeGroup.rotation.y += AUTO_ROT;
         rotVelX *= FRICTION;

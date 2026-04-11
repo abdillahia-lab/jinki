@@ -33,32 +33,12 @@
 
 /* --- Dark Theme (default) --- */
 :root {
-  --surface: #121416;
   --surface-dim: #121416;
   --surface-container-lowest: #0c0e10;
   --surface-container-low: #1a1c1e;
   --surface-container: #1e2022;
   --surface-container-high: #282a2c;
   --surface-container-highest: #333537;
-  --surface-bright: #38393c;
-  --surface-tint: #00daf3;
-  --primary: #c3f5ff;
-  --primary-container: #00e5ff;
-  --on-primary: #00363d;
-  --on-primary-container: #00626e;
-  --on-surface: #e3e5e8;
-  --on-surface-variant: #b8c8cd;
-  --on-background: #e3e5e8;
-  --background: #121416;
-  --outline: #849396;
-  --outline-variant: #3b494c;
-  --error: #ffb4ab;
-  --error-container: #93000a;
-  --tertiary: #ffe7e2;
-  --secondary: #bbc8d0;
-  --secondary-container: #3c494f;
-  --inverse-surface: #e2e2e5;
-  --inverse-on-surface: #2f3133;
 
   /* Semantic aliases */
   --bg-primary: #121416;
@@ -74,7 +54,6 @@
   --accent-glow-strong: color-mix(in srgb, var(--accent) 8%, transparent);
   --border: rgba(59, 73, 76, 0.2);
   --border-hover: rgba(59, 73, 76, 0.4);
-  --nav-bg: rgba(18, 20, 22, 0.9);
 
   /* Multi-accent palette */
   --accent-secondary: #7B61FF;
@@ -88,14 +67,9 @@
   --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
 
   /* Typography — Scale (Major Third 1.25) */
-  --text-xs: 0.75rem;    /* 12px */
   --text-sm: 0.875rem;   /* 14px */
-  --text-base: 1rem;     /* 16px */
-  --text-md: 1.25rem;    /* 20px */
-  --text-lg: 1.5rem;     /* 24px */
   --text-xl: 2rem;       /* 32px */
   --text-2xl: 2.5rem;    /* 40px */
-  --text-3xl: 3.5rem;    /* 56px */
 
   /* Layout */
   --container-max: 1200px;
@@ -103,7 +77,6 @@
   /* Premium Easing Curves */
   --ease-out-premium: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-reveal: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-material: cubic-bezier(0.4, 0, 0.2, 1);
 
   /* 3-Tier Shadow System (luxury standard) */
@@ -124,26 +97,12 @@
 /* --- Light Theme --- */
 [data-theme="light"] {
   color-scheme: light;
-  --surface: #ffffff;
   --surface-dim: #f5f5f5;
   --surface-container-lowest: #ffffff;
   --surface-container-low: #f8f9fa;
   --surface-container: #f0f1f3;
   --surface-container-high: #e8e9eb;
   --surface-container-highest: #dcdee0;
-  --surface-bright: #ffffff;
-  --surface-tint: #006875;
-  --primary: #004f58;
-  --primary-container: #006875;
-  --on-surface: #1a1c1e;
-  --on-surface-variant: #3b494c;
-  --on-background: #1a1c1e;
-  --background: #fafbfc;
-  --outline: #6f7979;
-  --outline-variant: #bac9cc;
-  --error: #ba1a1a;
-  --tertiary: #8a1d00;
-  --secondary: #3c494f;
 
   --bg-primary: #fafbfc;
   --bg-elevated: #ffffff;
@@ -158,7 +117,6 @@
   --accent-glow-strong: rgba(0, 131, 143, 0.06);
   --border: rgba(0, 0, 0, 0.08);
   --border-hover: rgba(0, 0, 0, 0.15);
-  --nav-bg: rgba(250, 251, 252, 0.92);
 
   --accent-secondary: #6d28d9;
   --accent-tertiary: #059669;
