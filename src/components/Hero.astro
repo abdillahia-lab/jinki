@@ -8,8 +8,9 @@ import GlobeCanvas from './GlobeCanvas.astro';
   <!-- Animated Mesh Gradient Background (fallback until globe loads) -->
   <div class="hero-mesh" aria-hidden="true"></div>
 
-  <!-- 3D Globe (desktop/tablet only, dynamically loaded) -->
+  <!-- 3D Globe (desktop/tablet: WebGL, mobile: static image) -->
   <GlobeCanvas />
+  <div class="globe-mobile" aria-hidden="true"></div>
 
   <!-- Decorative overlays removed — simplicity by design -->
 
@@ -99,8 +100,26 @@ import GlobeCanvas from './GlobeCanvas.astro';
       rgba(0,131,143,0.06) 0%, transparent 70%);
   }
 
-  /* === Floating CSS dots (replaces canvas particles) === */
-  /* Ambient dots removed — simplicity by design */
+  /* === Mobile Globe — static image fallback === */
+  .globe-mobile {
+    display: none;
+  }
+  @media (max-width: 767px) {
+    .globe-mobile {
+      display: block;
+      position: absolute;
+      top: -5%;
+      right: -20%;
+      width: 85vw;
+      height: 85vw;
+      max-width: 400px;
+      max-height: 400px;
+      background: url('/images/globe-mobile.webp') center/contain no-repeat;
+      opacity: 0.25;
+      z-index: 0;
+      pointer-events: none;
+    }
+  }
 
   /* === Eyebrow pip pulse === */
   .eyebrow-pip { animation: pipPulse 3s ease-in-out infinite; }
