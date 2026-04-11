@@ -256,32 +256,31 @@ import GlobeCanvas from './GlobeCanvas.astro';
 
   /* === Responsive === */
   @media (max-width: 767px) {
-    .hero { min-height: auto !important; padding-top: 4rem !important; padding-bottom: 1.5rem !important; }
-    .hero .headline { font-size: clamp(1.75rem, 8vw, 2.25rem) !important; margin-bottom: 1.25rem !important; }
-    .hero .hero-text p { font-size: 0.95rem !important; line-height: 1.6 !important; margin-bottom: 1.75rem !important; }
+    .hero { min-height: auto !important; padding-top: 3.5rem !important; padding-bottom: 1rem !important; }
+    .hero .headline { font-size: clamp(1.5rem, 7vw, 2rem) !important; margin-bottom: 1rem !important; line-height: 1.1 !important; }
+    .hero .hero-text p { font-size: 0.875rem !important; line-height: 1.55 !important; margin-bottom: 1.5rem !important; }
+    .eyebrow-text { font-size: 0.5625rem !important; }
     .eyebrow-text::after { display: none; }
-    .eyebrow-pip { animation: none; }
-    .hero-actions { flex-direction: column; }
-    .cta-primary, .cta-secondary { width: 100%; max-width: none; padding: 14px 24px !important; }
+    .eyebrow-pip { animation: none; width: 6px !important; height: 6px !important; }
+    .hero-actions { flex-direction: column; gap: 0.5rem; }
+    .cta-primary, .cta-secondary { width: 100%; max-width: none; padding: 12px 20px !important; font-size: 0.75rem !important; }
 
-    /* Metric cards → compact horizontal strip on mobile */
+    /* Metric cards → compact horizontal strip */
     .hero-metrics {
       flex-direction: row;
       flex-wrap: nowrap;
       gap: 0;
-      margin-top: 2rem;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      margin-top: 1.5rem;
+      background: rgba(5, 5, 8, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
       overflow: hidden;
     }
     .metric-card {
       flex: 1;
       flex-direction: column;
       text-align: center;
-      padding: 0.75rem 0.5rem;
+      padding: 0.6rem 0.35rem;
       margin-bottom: 0;
       background: transparent;
       border: none;
@@ -292,18 +291,20 @@ import GlobeCanvas from './GlobeCanvas.astro';
     }
     .metric-card::before, .metric-card::after { display: none; }
     .metric-card:not(:last-child) {
-      border-right: 1px solid var(--glass-border);
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
     }
-    .metric-card:hover {
-      box-shadow: none;
-      transform: none;
-      border-color: transparent;
-    }
+    .metric-card:hover { box-shadow: none; transform: none; }
     .metric-icon { display: none; }
-    .metric-value { font-size: 1.25rem; }
-    .metric-unit { font-size: 0.75rem; }
-    .metric-label { margin-left: 0; text-align: center; font-size: 0.5625rem; margin-top: 0.25rem; letter-spacing: 0.04em; white-space: normal !important; }
-    .scroll-indicator { bottom: 1rem; }
+    .metric-value { font-size: 1rem; }
+    .metric-unit { font-size: 0.625rem; }
+    .metric-label { margin-left: 0; text-align: center; font-size: 0.5rem; margin-top: 0.15rem; letter-spacing: 0.03em; white-space: normal !important; }
+  }
+  @media (max-width: 374px) {
+    .hero .headline { font-size: 1.35rem !important; }
+    .hero .hero-text p { font-size: 0.8125rem !important; }
+    .metric-value { font-size: 0.875rem !important; }
+    .metric-label { font-size: 0.4375rem !important; }
+    .cta-primary, .cta-secondary { padding: 10px 16px !important; font-size: 0.6875rem !important; }
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     .hero-metrics { flex-direction: row; margin-top: 2rem; }
