@@ -19,6 +19,7 @@
     pointer-events: none;
     opacity: 0;
     transition: opacity 1.4s ease-out;
+    will-change: opacity;
     mask-image: radial-gradient(ellipse 110% 130% at 75% 45%, rgba(0,0,0,0.9) 15%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.15) 60%, transparent 75%);
     -webkit-mask-image: radial-gradient(ellipse 110% 130% at 75% 45%, rgba(0,0,0,0.9) 15%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.15) 60%, transparent 75%);
   }
@@ -44,32 +45,38 @@
     const canvas = document.getElementById("globe-canvas") as HTMLCanvasElement | null;
     if (!canvas) return;
 
-    const THREE = await import("three");
+    const {
+      WebGLRenderer, Scene, PerspectiveCamera, Group, Clock,
+      TextureLoader, SRGBColorSpace, ACESFilmicToneMapping,
+      ShaderMaterial, SphereGeometry, Mesh, BackSide,
+      BufferGeometry, BufferAttribute, Points, AdditiveBlending,
+      LineSegments, LineBasicMaterial, Vector3
+    } = await import("three");
 
-    const renderer = new THREE.WebGLRenderer({
+    const renderer = new WebGLRenderer({
       canvas, antialias: true, alpha: true, powerPreference: "high-performance",
     });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMapping = ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
     camera.position.set(0, 0, 2.8);
 
-    const globeGroup = new THREE.Group();
+    const globeGroup = new Group();
     scene.add(globeGroup);
     const isTablet = window.innerWidth < 1024;
     globeGroup.position.x = isTablet ? 0 : 0.8;
     globeGroup.scale.setScalar(isTablet ? 0.85 : 1.1);
 
-    const loader = new THREE.TextureLoader();
+    const loader = new TextureLoader();
     const maxAniso = renderer.capabilities.getMaxAnisotropy();
-    const loadTexAsync = (path: string, srgb = true): Promise<THREE.Texture> =>
+    const loadTexAsync = (path: string, srgb = true): Promise<any> =>
       new Promise((resolve) => {
         const tex = loader.load(path, () => resolve(tex));
-        if (srgb) tex.colorSpace = THREE.SRGBColorSpace;
+        if (srgb) tex.colorSpace = SRGBColorSpace;
         tex.anisotropy = maxAniso;
       });
 
@@ -85,7 +92,7 @@
     // Time-aware sun — matches visitor's local time
     const hour = new Date().getHours() + new Date().getMinutes() / 60;
     const sunAngle = ((hour - 6) / 24) * Math.PI * 2;
-    const sunDir = new THREE.Vector3(
+    const sunDir = new Vector3(
       Math.cos(sunAngle) * 0.8, 0.3, Math.sin(sunAngle) * 0.6
     ).normalize();
 
@@ -147,11 +154,11 @@
       }
     `;
 
-    const earthMat = new THREE.ShaderMaterial({
+    const earthMat = new ShaderMaterial({
       uniforms: earthUniforms, vertexShader: earthVS, fragmentShader: earthFS,
     });
-    const earthGeo = new THREE.SphereGeometry(1, 64, 64);
-    const earthMesh = new THREE.Mesh(earthGeo, earthMat);
+    const earthGeo = new SphereGeometry(1, 64, 64);
+    const earthMesh = new Mesh(earthGeo, earthMat);
     globeGroup.add(earthMesh);
 
     const cloudUniforms = { uCloudMap: { value: cloudMap }, uSunDir: { value: sunDir } };
@@ -172,11 +179,11 @@
         gl_FragColor = vec4(cloudColor, cloud * 0.3);
       }
     `;
-    const cloudMat = new THREE.ShaderMaterial({
+    const cloudMat = new ShaderMaterial({
       uniforms: cloudUniforms, vertexShader: cloudVS, fragmentShader: cloudFS,
       transparent: true, depthWrite: false,
     });
-    const cloudMesh = new THREE.Mesh(new THREE.SphereGeometry(1.003, 48, 48), cloudMat);
+    const cloudMesh = new Mesh(new SphereGeometry(1.003, 48, 48), cloudMat);
     globeGroup.add(cloudMesh);
 
     const atmoUniforms = { uSunDir: { value: sunDir } };
@@ -201,11 +208,11 @@
         gl_FragColor = vec4(sunColor, atmosphere * 0.7);
       }
     `;
-    const atmoMat = new THREE.ShaderMaterial({
+    const atmoMat = new ShaderMaterial({
       uniforms: atmoUniforms, vertexShader: atmoVS, fragmentShader: atmoFS,
-      transparent: true, depthWrite: false, side: THREE.BackSide,
+      transparent: true, depthWrite: false, side: BackSide,
     });
-    const atmoMesh = new THREE.Mesh(new THREE.SphereGeometry(1.025, 48, 48), atmoMat);
+    const atmoMesh = new Mesh(new SphereGeometry(1.025, 48, 48), atmoMat);
     globeGroup.add(atmoMesh);
 
     // ── Orbital Shell — satellite constellation at LEO altitude ──
@@ -226,11 +233,11 @@
       satPositions[i * 3 + 2] = z;
       satPlanes[i] = plane;
     }
-    const satGeo = new THREE.BufferGeometry();
-    satGeo.setAttribute("position", new THREE.BufferAttribute(satPositions, 3));
-    satGeo.setAttribute("aPlane", new THREE.BufferAttribute(satPlanes, 1));
+    const satGeo = new BufferGeometry();
+    satGeo.setAttribute("position", new BufferAttribute(satPositions, 3));
+    satGeo.setAttribute("aPlane", new BufferAttribute(satPlanes, 1));
     const satUniforms = { uTime: { value: 0 }, uSunDir: { value: sunDir } };
-    const satMat = new THREE.ShaderMaterial({
+    const satMat = new ShaderMaterial({
       uniforms: satUniforms,
       vertexShader: `
         attribute float aPlane;
@@ -255,10 +262,10 @@
           gl_FragColor = vec4(0.6, 0.85, 1.0, (1.0 - d*2.0) * 0.5 * vBright);
         }
       `,
-      transparent: true, blending: THREE.AdditiveBlending,
+      transparent: true, blending: AdditiveBlending,
       depthWrite: false, depthTest: true,
     });
-    globeGroup.add(new THREE.Points(satGeo, satMat));
+    globeGroup.add(new Points(satGeo, satMat));
 
     // ── Data Center Hub Markers ──
     // First entry is HQ (McLean, VA) — rendered larger + cyan
@@ -281,12 +288,12 @@
       dcPhases[i] = i * 0.29;
       dcIsHQ[i] = i === 0 ? 1.0 : 0.0;
     });
-    const dcGeo = new THREE.BufferGeometry();
-    dcGeo.setAttribute("position", new THREE.BufferAttribute(dcPositions, 3));
-    dcGeo.setAttribute("aPhase", new THREE.BufferAttribute(dcPhases, 1));
-    dcGeo.setAttribute("aIsHQ", new THREE.BufferAttribute(dcIsHQ, 1));
+    const dcGeo = new BufferGeometry();
+    dcGeo.setAttribute("position", new BufferAttribute(dcPositions, 3));
+    dcGeo.setAttribute("aPhase", new BufferAttribute(dcPhases, 1));
+    dcGeo.setAttribute("aIsHQ", new BufferAttribute(dcIsHQ, 1));
     const dcUniforms = { uTime: { value: 0 }, uSunDir: { value: sunDir } };
-    const dcMat = new THREE.ShaderMaterial({
+    const dcMat = new ShaderMaterial({
       uniforms: dcUniforms,
       vertexShader: `
         attribute float aPhase; attribute float aIsHQ;
@@ -316,10 +323,10 @@
           gl_FragColor = vec4(col, alpha * 0.8);
         }
       `,
-      transparent: true, blending: THREE.AdditiveBlending,
+      transparent: true, blending: AdditiveBlending,
       depthWrite: false, depthTest: true,
     });
-    globeGroup.add(new THREE.Points(dcGeo, dcMat));
+    globeGroup.add(new Points(dcGeo, dcMat));
 
     // ── Submarine Cables + Shipping Lanes ──
     function latLngToVec3(lat: number, lng: number, r: number): [number, number, number] {
@@ -339,8 +346,8 @@
         for (let p = 0; p < route.length - 1; p++) {
           const [lat1, lng1] = route[p];
           const [lat2, lng2] = route[p + 1];
-          const start = new THREE.Vector3(...latLngToVec3(lat1, lng1, radius));
-          const end = new THREE.Vector3(...latLngToVec3(lat2, lng2, radius));
+          const start = new Vector3(...latLngToVec3(lat1, lng1, radius));
+          const end = new Vector3(...latLngToVec3(lat2, lng2, radius));
           for (let i = 0; i < segments; i++) {
             const t1 = i / segments;
             const t2 = (i + 1) / segments;
@@ -360,17 +367,17 @@
     ]).then(([cables, lanes]) => {
       // Submarine cables — cyan
       const cablePositions = buildGreatCircleLines(cables, 1.002, 16);
-      const cableGeo = new THREE.BufferGeometry();
-      cableGeo.setAttribute('position', new THREE.BufferAttribute(cablePositions, 3));
-      const cableMat = new THREE.LineBasicMaterial({ color: 0x00D4FF, transparent: true, opacity: 0.45 });
-      globeGroup.add(new THREE.LineSegments(cableGeo, cableMat));
+      const cableGeo = new BufferGeometry();
+      cableGeo.setAttribute('position', new BufferAttribute(cablePositions, 3));
+      const cableMat = new LineBasicMaterial({ color: 0x00D4FF, transparent: true, opacity: 0.45 });
+      globeGroup.add(new LineSegments(cableGeo, cableMat));
 
       // Shipping lanes — amber
       const lanePositions = buildGreatCircleLines(lanes, 1.001, 20);
-      const laneGeo = new THREE.BufferGeometry();
-      laneGeo.setAttribute('position', new THREE.BufferAttribute(lanePositions, 3));
-      const laneMat = new THREE.LineBasicMaterial({ color: 0xFF8C00, transparent: true, opacity: 0.30 });
-      globeGroup.add(new THREE.LineSegments(laneGeo, laneMat));
+      const laneGeo = new BufferGeometry();
+      laneGeo.setAttribute('position', new BufferAttribute(lanePositions, 3));
+      const laneMat = new LineBasicMaterial({ color: 0xFF8C00, transparent: true, opacity: 0.30 });
+      globeGroup.add(new LineSegments(laneGeo, laneMat));
     }).catch(e => console.warn('[Globe] Overlays failed:', e));
 
     let isDragging = false;
@@ -430,7 +437,7 @@
 
     requestAnimationFrame(() => { canvas.style.opacity = "1"; });
 
-    const clock = new THREE.Clock();
+    const clock = new Clock();
     let animId = 0;
 
     const animate = () => {
