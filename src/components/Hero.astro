@@ -79,16 +79,6 @@ import GlobeCanvas from './GlobeCanvas.astro';
     </div>
   </div>
 
-  <!-- Scroll indicator -->
-  <div class="scroll-indicator reveal reveal-delay-4" aria-hidden="true" style="position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; flex-direction: column; align-items: center;">
-    <div style="width: 2px; height: 32px; background: rgba(255,255,255,.1); border-radius: 1px; position: relative; overflow: hidden;">
-      <div class="scroll-thumb" style="width: 2px; height: 10px; background: var(--accent); border-radius: 1px; box-shadow: 0 0 6px var(--accent);"></div>
-    </div>
-    <span style="font-family: var(--font-mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .2em; color: var(--text-tertiary); opacity: .7; margin-top: .5rem;">Scroll</span>
-    <svg class="scroll-chevron" width="14" height="8" viewBox="0 0 14 8" fill="none" style="margin-top: .35rem; opacity: .7;">
-      <path d="M1 1l6 5.5L13 1" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
   <!-- Bottom dissolve — smooth transition to next section -->
   <div aria-hidden="true" style="position:absolute;bottom:0;left:0;right:0;height:12rem;background:linear-gradient(to bottom,transparent,var(--bg-primary));z-index:5;pointer-events:none;"></div>
 </section>
@@ -120,20 +110,7 @@ import GlobeCanvas from './GlobeCanvas.astro';
   }
 
   /* === Eyebrow blinking cursor === */
-  .eyebrow-text::after {
-    content: '';
-    display: inline-block;
-    width: 1.5px;
-    height: 0.75em;
-    background: var(--accent);
-    margin-left: 0.35em;
-    vertical-align: middle;
-    animation: cursorBlink 1.2s step-end infinite;
-  }
-  @keyframes cursorBlink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
+  /* Cursor blink removed — visual noise */
 
   /* === Scroll thumb === */
   .scroll-thumb { animation: scrollBob 2.5s ease-in-out infinite; }
@@ -190,19 +167,19 @@ import GlobeCanvas from './GlobeCanvas.astro';
     overflow: hidden;
   }
   .cta-primary {
-    background: linear-gradient(135deg, var(--accent) 0%, #00b8cc 100%);
+    background: var(--accent);
     color: var(--text-on-accent);
     border: none;
-    box-shadow: 0 4px 20px color-mix(in srgb, var(--accent) 25%, transparent), inset 0 1px 0 rgba(255,255,255,.15);
-    text-shadow: 0 1px 2px rgba(0,0,0,.15);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 25%, transparent);
   }
   .cta-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px color-mix(in srgb, var(--accent) 45%, transparent), 0 2px 8px color-mix(in srgb, var(--accent) 20%, transparent), inset 0 1px 0 rgba(255,255,255,.3);
+    transform: translateY(-2px) scale(1.02);
+    filter: brightness(1.15);
+    box-shadow: 0 8px 30px color-mix(in srgb, var(--accent) 35%, transparent);
   }
   .cta-primary:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 12px color-mix(in srgb, var(--accent) 30%, transparent), inset 0 1px 0 rgba(255,255,255,.15);
+    transform: translateY(0) scale(1);
+    filter: brightness(1);
   }
   .cta-secondary {
     background: rgba(255,255,255,.04);
@@ -242,7 +219,7 @@ import GlobeCanvas from './GlobeCanvas.astro';
   .metric-card:hover {
     border-color: rgba(255, 255, 255, 0.12);
   }
-  @media (min-width: 1024px) { .mc-2 { margin-left: 2rem; } .mc-3 { margin-left: .5rem; } }
+  /* Asymmetric card margins removed — consistent gap via flex */
   .metric-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(0, 229, 255, 0.08); display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; margin-right: 1rem; }
   .metric-value { font-family: var(--font-mono); font-size: 1.75rem; font-weight: 700; color: var(--text-primary); line-height: 1; }
   .metric-unit  { font-family: var(--font-mono); font-size: 1rem; color: var(--accent); margin-left: 2px; }
