@@ -1087,9 +1087,9 @@ const relatedLinks = (post.data.tags || [])
         const url = copyBtn.dataset.url || window.location.href;
         try {
           await navigator.clipboard.writeText(url);
-          const originalHTML = copyBtn.innerHTML;
-          copyBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
-          setTimeout(() => { copyBtn.innerHTML = originalHTML; }, 2000);
+          const origNodes = Array.from(copyBtn.childNodes).map(n => n.cloneNode(true));
+          copyBtn.textContent = '✓ Copied';
+          setTimeout(() => { copyBtn.textContent = ''; origNodes.forEach(n => copyBtn.appendChild(n)); }, 2000);
         } catch {}
       });
     }

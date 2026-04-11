@@ -513,7 +513,7 @@
 
     // Show loading state with spinner
     const submitBtn = form.querySelector('.lg-btn-submit') as HTMLButtonElement;
-    const originalHTML = submitBtn.innerHTML;
+    const originalText = submitBtn.textContent || 'Submit Request';
     submitBtn.disabled = true;
     const spinner = document.createElement('span');
     spinner.className = 'lg-spinner';
