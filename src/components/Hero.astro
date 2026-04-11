@@ -3,53 +3,40 @@
 import GlobeCanvas from './GlobeCanvas.astro';
 ---
 
-<section id="hero" class="hero" aria-label="Hero — Aerial Intelligence Platform" style="position: relative; min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; overflow: hidden; padding-top: 6rem; padding-bottom: 3rem; background: transparent;">
-
-  <!-- Animated Mesh Gradient Background (fallback until globe loads) -->
+<section id="hero" class="hero" aria-label="Hero — Aerial Intelligence Platform">
   <div class="hero-mesh" aria-hidden="true"></div>
-
-  <!-- 3D Globe (desktop/tablet: WebGL, mobile: static image) -->
   <GlobeCanvas />
   <div class="globe-mobile" aria-hidden="true"></div>
 
-  <!-- Decorative overlays removed — simplicity by design -->
-
-  <!-- Background dots removed — simplicity by design -->
-
-  <!-- Content -->
-  <div class="hero-content" style="position: relative; z-index: 10; max-width: var(--container-max); width: 100%; margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem;">
+  <div class="hero-content">
     <div class="hero-text">
-      <!-- Eyebrow -->
-      <div class="eyebrow reveal" style="display: flex; align-items: center; margin-bottom: 1.5rem;">
-        <span class="eyebrow-pip" style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); flex-shrink: 0;"></span>
-        <span style="display: block; width: 2rem; height: 1px; background: var(--accent); opacity: .5; margin-left: .75rem; margin-right: .75rem; flex-shrink: 0;"></span>
-        <span class="eyebrow-text" style="font-family: var(--font-label); text-transform: uppercase; letter-spacing: .12em; font-size: 0.6875rem; color: var(--accent); white-space: nowrap;">Aerial Intelligence Platform</span>
+      <div class="eyebrow reveal">
+        <span class="eyebrow-pip"></span>
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">Aerial Intelligence Platform</span>
       </div>
 
-      <!-- Headline (static, no word-swap) -->
-      <h1 class="headline reveal reveal-delay-1" style="font-family: var(--font-headline); font-size: clamp(2.6rem,5vw + .5rem,5.5rem); font-weight: 700; line-height: 1.02; letter-spacing: -.035em; color: var(--text-primary); margin-bottom: 2rem;">
+      <h1 class="headline reveal reveal-delay-1">
         See What You Can't.<br/>Act Before It <span class="headline-accent">Fails.</span>
       </h1>
 
-      <!-- Subtitle -->
-      <p class="reveal reveal-delay-2" style="font-size: clamp(1.05rem,1.3vw + .4rem,1.3rem); color: var(--text-secondary); font-weight: 400; max-width: 34rem; line-height: 1.75; margin-bottom: 2.75rem;">
+      <p class="hero-subtitle reveal reveal-delay-2">
         Your rooftop infrastructure is degrading right now. Traditional inspections miss it. We find it — and deliver a prioritized fix list within 48 hours.
       </p>
 
-      <!-- CTAs -->
-      <div class="hero-actions reveal reveal-delay-3" style="display: flex; flex-wrap: wrap;">
-        <a href="#lead-gen" class="cta-primary btn-premium" style="margin-right: 1rem; margin-bottom: .5rem;">Request Assessment</a>
-        <a href="#process" class="cta-secondary btn-premium" style="margin-bottom: .5rem;">
+      <div class="hero-actions reveal reveal-delay-3">
+        <a href="#lead-gen" class="cta-primary btn-premium">Request Assessment</a>
+        <a href="#process" class="cta-secondary btn-premium">
           See How It Works
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="margin-left: .5rem;"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
-      <p class="hero-trust-line reveal reveal-delay-4" style="font-family: var(--font-body); font-size: 0.8rem; color: var(--text-tertiary); margin-top: 12px; display: flex; align-items: center; gap: 8px;">
-        <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 14px; color: var(--accent);">verified</span>
+      <p class="hero-trust-line reveal reveal-delay-4">
+        <span class="material-symbols-outlined" aria-hidden="true">verified</span>
         No commitment required. Zero risk.
       </p>
-      <p class="hero-urgency reveal reveal-delay-4" style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); margin-top: 8px; display: flex; align-items: center; gap: 8px; letter-spacing: 0.04em;">
-        <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 14px;">schedule</span>
+      <p class="hero-urgency reveal reveal-delay-4">
+        <span class="material-symbols-outlined" aria-hidden="true">schedule</span>
         Responding to new inquiries within 4 hours
       </p>
     </div>
@@ -85,8 +72,57 @@ import GlobeCanvas from './GlobeCanvas.astro';
 </section>
 
 <style>
-  /* === Hero Video (hidden until /videos/hero.mp4 exists) === */
-  /* Static subtle gradient — just enough depth to break flat black */
+  .hero {
+    position: relative; min-height: 100vh; min-height: 100dvh;
+    display: flex; align-items: center; overflow: hidden;
+    padding-top: 6rem; padding-bottom: 3rem; background: transparent;
+  }
+  .hero-content {
+    position: relative; z-index: 10;
+    max-width: var(--container-max); width: 100%;
+    margin-left: auto; margin-right: auto;
+    padding-left: 1.5rem; padding-right: 1.5rem;
+  }
+  .eyebrow { display: flex; align-items: center; margin-bottom: 1.5rem; }
+  .eyebrow-pip {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 12px var(--accent); flex-shrink: 0;
+  }
+  .eyebrow-line {
+    display: block; width: 2rem; height: 1px;
+    background: var(--accent); opacity: .5;
+    margin-left: .75rem; margin-right: .75rem; flex-shrink: 0;
+  }
+  .eyebrow-text {
+    font-family: var(--font-label); text-transform: uppercase;
+    letter-spacing: .12em; font-size: 0.6875rem;
+    color: var(--accent); white-space: nowrap;
+  }
+  .headline {
+    font-family: var(--font-headline); font-size: clamp(2.6rem, 5vw + .5rem, 5.5rem);
+    font-weight: 700; line-height: 1.02; letter-spacing: -.035em;
+    color: var(--text-primary); margin-bottom: 2rem;
+  }
+  .hero-subtitle {
+    font-size: clamp(1.05rem, 1.3vw + .4rem, 1.3rem);
+    color: var(--text-secondary); font-weight: 400;
+    max-width: 34rem; line-height: 1.75; margin-bottom: 2.75rem;
+  }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .hero-actions svg { margin-left: 0.5rem; }
+  .hero-trust-line {
+    font-family: var(--font-body); font-size: 0.8rem;
+    color: var(--text-tertiary); margin-top: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-trust-line .material-symbols-outlined { font-size: 14px; color: var(--accent); }
+  .hero-urgency {
+    font-family: var(--font-mono); font-size: 0.7rem;
+    color: var(--accent); margin-top: 8px;
+    display: flex; align-items: center; gap: 8px; letter-spacing: 0.04em;
+  }
+  .hero-urgency .material-symbols-outlined { font-size: 14px; }
+
   .hero-mesh {
     position: absolute;
     inset: 0;
@@ -122,7 +158,7 @@ import GlobeCanvas from './GlobeCanvas.astro';
   }
 
   /* === Eyebrow pip pulse === */
-  .eyebrow-pip { animation: pipPulse 3s ease-in-out infinite; }
+  /* pipPulse animation removed — static pip is cleaner */
   @keyframes pipPulse {
     0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--accent); }
     50%      { opacity: .7; box-shadow: 0 0 5px var(--accent); }
