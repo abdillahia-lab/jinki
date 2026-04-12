@@ -23,7 +23,6 @@
     "three": "^0.183.2"
   },
   "devDependencies": {
-    "d3-geo": "^3.1.1",
     "sharp": "^0.34.5"
   }
 }

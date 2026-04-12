@@ -12,37 +12,40 @@ const steps = [
     title: 'Scope & Plan',
     desc: 'We assess your facility, define the inspection area, and build a mission plan tailored to your infrastructure — rooftops, perimeters, corridors, or fields.',
     icon: 'assignment',
+    accent: 'var(--accent)',
   },
   {
     num: '02',
     title: 'Capture & Analyze',
     desc: 'Our aerial platform executes the mission — thermal and high-resolution visual sensors capture every surface. AI classifies findings by severity during post-flight analysis.',
     icon: 'precision_manufacturing',
+    accent: 'var(--accent-secondary)',
   },
   {
     num: '03',
     title: 'Deliver & Act',
     desc: 'You receive a prioritized intelligence report within 48 hours — not raw data, but clear recommendations your maintenance team can execute immediately.',
     icon: 'verified',
+    accent: 'var(--accent-tertiary)',
   },
 ];
 ---
 
-<section id="process" style="padding-top: 7rem; padding-bottom: 7rem; position: relative; overflow: hidden;" aria-label="How It Works">
-  <div aria-hidden="true" style="position: absolute; bottom: 10%; left: 30%; width: 400px; height: 350px; background: radial-gradient(ellipse, rgba(123,97,255,0.04) 0%, transparent 60%); filter: blur(60px); pointer-events: none;"></div>
-  <div style="max-width: var(--container-max); margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; position: relative; z-index: 1;">
+<section id="process" class="process-section" aria-label="How It Works">
+  <div class="process-ambient" aria-hidden="true"></div>
+  <div class="process-container">
 
     <!-- Header -->
-    <div class="reveal" style="text-align: center; max-width: 40rem; margin-left: auto; margin-right: auto; margin-bottom: 4rem;">
-      <div style="display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 1rem;">
-        <span style="display: block; height: 1px; width: 2rem; background: var(--accent);"></span>
+    <div class="process-header reveal">
+      <div class="process-eyebrow-row">
+        <span class="process-accent-line"></span>
         <span class="section-eyebrow">Process</span>
-        <span style="display: block; height: 1px; width: 2rem; background: var(--accent);"></span>
+        <span class="process-accent-line"></span>
       </div>
-      <h2 style="font-family: var(--font-headline); font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; color: var(--text-primary); margin-bottom: 1rem; line-height: 1.12; letter-spacing: -0.02em;">
-        From Contact to Intelligence<br/>in <span style="color: var(--accent);">Three Steps</span>
+      <h2 class="process-headline">
+        From Contact to Intelligence<br/>in <span class="process-headline-accent">Three Steps</span>
       </h2>
-      <p style="font-family: var(--font-body); font-size: 1.0625rem; color: var(--text-secondary); line-height: 1.65;">
+      <p class="process-subtitle">
         No complex procurement cycles. No multi-month onboarding. We move at the speed your operations demand.
       </p>
     </div>
@@ -50,7 +53,8 @@ const steps = [
     <!-- Steps -->
     <div class="process-grid">
       {steps.map((step, i) => (
-        <div class={`process-step reveal ${i > 0 ? `reveal-delay-${i}` : ''}`}>
+        <div class={`process-step reveal ${i > 0 ? `reveal-delay-${i}` : ''}`} style={`--step-accent: ${step.accent};`}>
+          <span class="process-watermark" aria-hidden="true">{step.num}</span>
           <div class="process-step-header">
             <span class="process-num-circle" aria-hidden="true">{step.num}</span>
             <span class="material-symbols-outlined process-icon" aria-hidden="true">{step.icon}</span>
@@ -69,18 +73,18 @@ const steps = [
     </div>
 
     <!-- What You Receive -->
-    <div class="reveal" style="margin-top: 4rem; text-align: center;">
-      <h3 style="font-family: var(--font-headline); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1.5rem;">Your Report Includes</h3>
-      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; max-width: 700px; margin: 0 auto;">
-        <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">pin_drop</span> GPS-located findings</span>
-        <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">thermostat</span> Annotated thermal imagery</span>
-        <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">priority_high</span> Severity rankings</span>
-        <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">payments</span> Estimated repair costs</span>
-        <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">calendar_month</span> Maintenance timeline</span>
-        <span class="deliverable-tag"><span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">summarize</span> Executive summary</span>
+    <div class="process-deliverables reveal">
+      <h3 class="deliverables-title">Your Report Includes</h3>
+      <div class="deliverables-grid">
+        <span class="deliverable-tag"><span class="material-symbols-outlined tag-icon" aria-hidden="true">pin_drop</span> GPS-located findings</span>
+        <span class="deliverable-tag"><span class="material-symbols-outlined tag-icon" aria-hidden="true">thermostat</span> Annotated thermal imagery</span>
+        <span class="deliverable-tag"><span class="material-symbols-outlined tag-icon" aria-hidden="true">priority_high</span> Severity rankings</span>
+        <span class="deliverable-tag"><span class="material-symbols-outlined tag-icon" aria-hidden="true">payments</span> Estimated repair costs</span>
+        <span class="deliverable-tag"><span class="material-symbols-outlined tag-icon" aria-hidden="true">calendar_month</span> Maintenance timeline</span>
+        <span class="deliverable-tag"><span class="material-symbols-outlined tag-icon" aria-hidden="true">summarize</span> Executive summary</span>
       </div>
-      <a href="#lead-gen" class="sample-report-link" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; padding: 12px 20px; border-radius: 8px; border: 1px solid color-mix(in srgb, var(--accent) 15%, transparent); font-family: var(--font-label); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); text-decoration: none; transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s var(--ease-out-premium);">
-        <span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">description</span>
+      <a href="#lead-gen" class="sample-report-link">
+        <span class="material-symbols-outlined tag-icon" aria-hidden="true">description</span>
         Request Sample Report
       </a>
     </div>
@@ -89,6 +93,77 @@ const steps = [
 </section>
 
 <style>
+  .process-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (min-width: 768px) { .process-section { padding-top: 8rem; padding-bottom: 8rem; } }
+
+  .process-ambient {
+    position: absolute;
+    bottom: 10%;
+    left: 30%;
+    width: 400px;
+    height: 350px;
+    background: radial-gradient(ellipse, rgba(123,97,255,0.04) 0%, transparent 60%);
+    filter: blur(60px);
+    pointer-events: none;
+  }
+
+  .process-container {
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .process-header {
+    text-align: center;
+    max-width: 40rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 4rem;
+  }
+
+  .process-eyebrow-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .process-accent-line {
+    display: block;
+    height: 1px;
+    width: 2rem;
+    background: var(--accent);
+  }
+
+  .process-headline {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+
+  .process-headline-accent { color: var(--accent); }
+
+  .process-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+  }
+
   .process-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -111,9 +186,28 @@ const steps = [
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
   }
 
+  .process-step::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent 10%, var(--step-accent) 50%, transparent 90%);
+    opacity: 0.6;
+  }
   .process-step:hover {
-    border-color: color-mix(in srgb, var(--accent) 15%, transparent);
+    border-color: color-mix(in srgb, var(--step-accent, var(--accent)) 15%, transparent);
     box-shadow: var(--shadow-elevated);
+  }
+  .process-watermark {
+    position: absolute;
+    top: -0.5rem;
+    right: 1rem;
+    font-family: var(--font-headline);
+    font-size: 6rem;
+    font-weight: 700;
+    color: var(--step-accent, var(--accent));
+    opacity: 0.04;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
   }
 
   .process-step-header {
@@ -154,9 +248,7 @@ const steps = [
     line-height: 1.65;
   }
 
-  .process-connector {
-    display: none;
-  }
+  .process-connector { display: none; }
 
   @media (min-width: 768px) {
     .process-connector {
@@ -175,19 +267,32 @@ const steps = [
     stroke-dashoffset: 0;
   }
 
-  @media (max-width: 767px) {
-    .process-grid { gap: 1rem; }
-    .process-step { padding: 1.25rem; border-radius: 12px; }
-    .process-num-circle { width: 2rem; height: 2rem; font-size: 0.7rem; }
-    .process-title { font-size: 1.1rem; }
-    .process-desc { font-size: 0.875rem; }
-    .deliverable-tag { padding: 6px 12px; font-size: 0.7rem; }
+  /* Deliverables */
+  .process-deliverables {
+    margin-top: 4rem;
+    text-align: center;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .process-step { transition: none; }
-    .process-connector-line line { transition: none; stroke-dashoffset: 0; }
-    .deliverable-tag { transition: none; }
+  .deliverables-title {
+    font-family: var(--font-headline);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+  }
+
+  .deliverables-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .tag-icon {
+    font-size: 16px;
+    font-variation-settings: 'FILL' 1;
   }
 
   .deliverable-tag {
@@ -215,14 +320,44 @@ const steps = [
     border-color: color-mix(in srgb, var(--accent) 30%, transparent);
   }
 
+  .sample-report-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid color-mix(in srgb, var(--accent) 15%, transparent);
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    text-decoration: none;
+    transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s var(--ease-out-premium);
+  }
   .sample-report-link:hover {
     background: color-mix(in srgb, var(--accent) 8%, transparent);
     border-color: color-mix(in srgb, var(--accent) 30%, transparent);
   }
 
-  :global([data-theme="light"]) .process-num-circle {
-    color: #fff;
+  @media (max-width: 767px) {
+    .process-grid { gap: 1rem; }
+    .process-step { padding: 1.25rem; border-radius: 12px; }
+    .process-num-circle { width: 2rem; height: 2rem; font-size: 0.7rem; }
+    .process-title { font-size: 1.1rem; }
+    .process-desc { font-size: 0.875rem; }
+    .deliverable-tag { padding: 6px 12px; font-size: 0.7rem; }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .process-step { transition: none; }
+    .process-connector-line line { transition: none; stroke-dashoffset: 0; }
+    .deliverable-tag { transition: none; }
+  }
+
+  :global([data-theme="light"]) .process-num-circle { color: #fff; }
   :global([data-theme="light"]) .deliverable-tag {
     background: rgba(0, 131, 143, 0.06);
     border-color: rgba(0, 131, 143, 0.15);
@@ -232,7 +367,6 @@ const steps = [
     box-shadow: 0 4px 12px rgba(0, 131, 143, 0.12);
     border-color: rgba(0, 131, 143, 0.3);
   }
-
   :global([data-theme="light"]) .sample-report-link {
     color: #00838f;
     border-color: rgba(0, 131, 143, 0.2);

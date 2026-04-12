@@ -2,33 +2,28 @@
 /* BentoStats — Bento grid stats section (counter animation handled by Layout.astro) */
 ---
 
-<section id="stats" class="bento-section" style="background: var(--surface-dim); padding: 7rem 0; position: relative; overflow: hidden;" aria-label="Platform Statistics">
-  <div aria-hidden="true" style="position: absolute; top: 20%; left: 60%; width: 500px; height: 400px; background: radial-gradient(ellipse, color-mix(in srgb, var(--accent) 4%, transparent) 0%, transparent 60%); filter: blur(60px); pointer-events: none;"></div>
-  <div class="bento-container" style="max-width: var(--container-max); margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem; position: relative; z-index: 1; container-type: inline-size;">
+<section id="stats" class="bento-section" aria-label="Platform Statistics">
+  <div class="bento-ambient" aria-hidden="true"></div>
+  <div class="bento-container">
     <div class="bento-grid">
       <!-- Main Panel -->
       <div class="bento-main reveal">
-        <!-- LIVE badge -->
-        <div class="live-badge" aria-hidden="true">
-          <span class="live-dot"></span>
-          <span class="live-text">LIVE</span>
-        </div>
         <div>
-          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-            <span style="display: block; height: 1px; width: 2rem; background: var(--accent);"></span>
+          <div class="bento-eyebrow-row">
+            <span class="bento-accent-line"></span>
             <span class="section-eyebrow">Platform</span>
           </div>
-          <h2 class="bento-headline" style="color: var(--text-primary); margin-bottom: 1.5rem;">
-            Always Watching. Always <span class="bento-headline-accent">Learning.</span>
+          <h2 class="bento-headline">
+            Your Data Stays on <span class="bento-headline-accent">Your Terms.</span>
           </h2>
-          <p class="bento-body" style="color: var(--text-secondary); margin-bottom: 3rem; max-width: 42rem;">
-            Our AI-powered aerial platform is designed to monitor your infrastructure continuously. It doesn't just capture data — it detects anomalies, identifies degradation trends, and delivers prioritized recommendations so you can act before problems escalate.
+          <p class="bento-body">
+            End-to-end encryption, mutual NDAs, and on-premises data processing. Your facility intelligence never leaves your control.
           </p>
         </div>
         <div class="stats-row">
           <div class="stat-item">
-            <span class="stat-value">0.5°C</span>
-            <span class="stat-label">Thermal Sensitivity</span>
+            <span class="stat-value">AES-256</span>
+            <span class="stat-label">Encryption Standard</span>
           </div>
           <div class="stat-item">
             <span class="stat-value">24/7</span>
@@ -41,15 +36,15 @@
         </div>
       </div>
       <!-- Sidebar Panel -->
-      <div class="bento-sidebar reveal" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-        <div class="bento-icon-ring" style="width: 6rem; height: 6rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--accent-glow); margin-bottom: 2rem;">
-          <span class="material-symbols-outlined" style="font-size: 3rem; color: var(--accent); font-variation-settings: 'FILL' 1;" aria-hidden="true">verified_user</span>
+      <div class="bento-sidebar reveal">
+        <div class="bento-icon-ring">
+          <span class="material-symbols-outlined bento-sidebar-icon" aria-hidden="true">verified_user</span>
         </div>
-        <h3 style="font-family: var(--font-headline); font-size: 1.75rem; font-weight: 700; color: var(--text-primary); margin-bottom: 1rem;">Your Data Stays Yours</h3>
-        <p style="color: var(--text-secondary); font-weight: 300; font-size: 1.125rem; margin-bottom: 2.5rem;">
-          All inspection data is processed on your premises or in your choice of secure cloud region. Nothing leaves your control.
+        <h3 class="bento-sidebar-title">Enterprise-Grade Security</h3>
+        <p class="bento-sidebar-desc">
+          SOC 2 in progress. $5M liability coverage per operation. Every engagement starts with a mutual NDA.
         </p>
-        <a href="/security" class="bento-sidebar-cta" style="display: block; width: 100%; padding: 1.25rem; font-family: var(--font-label); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.25em; text-align: center; text-decoration: none; border-radius: 0.75rem;">
+        <a href="/security" class="bento-sidebar-cta">
           Learn About Our Security
         </a>
       </div>
@@ -58,14 +53,50 @@
 </section>
 
 <style>
-  @media (min-width: 768px) { .bento-section { padding: 8rem 0 !important; } }
+  .bento-section {
+    background: var(--surface-dim);
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (min-width: 768px) { .bento-section { padding: 8rem 0; } }
+
+  .bento-ambient {
+    position: absolute;
+    top: 20%;
+    left: 60%;
+    width: 500px;
+    height: 400px;
+    background: radial-gradient(ellipse, color-mix(in srgb, var(--accent) 4%, transparent) 0%, transparent 60%);
+    filter: blur(60px);
+    pointer-events: none;
+  }
+
+  .bento-container {
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    position: relative;
+    z-index: 1;
+    container-type: inline-size;
+  }
+
   .bento-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
   @container (min-width: 1024px) { .bento-grid { grid-template-columns: 2fr 1fr; } }
+
   .bento-main {
-    background: var(--surface-container); padding: 2rem; min-height: 400px;
-    border-radius: 1rem; border: 1px solid var(--glass-border);
-    display: flex; flex-direction: column; justify-content: space-between;
-    position: relative; overflow: hidden;
+    background: var(--surface-container);
+    padding: 2rem;
+    min-height: 400px;
+    border-radius: 1rem;
+    border: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
     box-shadow: var(--shadow-rest);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
@@ -80,9 +111,31 @@
     opacity: 0.6;
   }
   @container (min-width: 768px) { .bento-main { padding: 4rem; min-height: 550px; } }
-  .bento-eyebrow { font-family: var(--font-label); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent); }
-  .bento-headline { font-family: var(--font-headline); font-weight: 700; font-size: 2rem; letter-spacing: -0.02em; }
+
+  .bento-eyebrow-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .bento-accent-line {
+    display: block;
+    height: 1px;
+    width: 2rem;
+    background: var(--accent);
+  }
+
+  .bento-headline {
+    font-family: var(--font-headline);
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+  }
   @container (min-width: 768px) { .bento-headline { font-size: 3rem; } }
+
   .bento-headline-accent {
     background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -92,18 +145,57 @@
     background: linear-gradient(135deg, #00838f, #5B4ACF);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
-  .bento-body { font-family: var(--font-body); font-size: 1.125rem; line-height: 1.65; font-weight: 300; }
+
+  .bento-body {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.65;
+    font-weight: 300;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+    max-width: 42rem;
+  }
   @container (min-width: 768px) { .bento-body { font-size: 1.5rem; } }
+
   .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
   @container (min-width: 768px) { .stats-row { gap: 3rem; } }
-  .stat-value { display: block; font-family: var(--font-headline); font-weight: 700; font-size: 1.5rem; color: var(--accent); font-variant-numeric: tabular-nums; }
+
+  .stat-value {
+    display: block;
+    font-family: var(--font-headline);
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
   @container (min-width: 768px) { .stat-value { font-size: 2.25rem; } }
-  .stat-label { display: block; font-family: var(--font-label); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-tertiary); margin-top: 0.5rem; }
+
+  .stat-label {
+    display: block;
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+    margin-top: 0.5rem;
+  }
+
   .stat-item + .stat-item { border-left: 1px solid var(--glass-border); padding-left: 1.5rem; }
   @container (min-width: 768px) { .stat-item + .stat-item { padding-left: 3rem; } }
+
   .bento-sidebar {
-    background: var(--surface-container); padding: 2rem; border-radius: 1rem; border: 1px solid var(--glass-border);
-    position: relative; overflow: hidden;
+    background: var(--surface-container);
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid var(--glass-border);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     transition: transform 0.4s var(--ease-out-premium),
                 box-shadow 0.4s var(--ease-out-premium);
   }
@@ -118,64 +210,68 @@
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25), 0 0 30px color-mix(in srgb, var(--accent) 5%, transparent);
   }
   @container (min-width: 768px) { .bento-sidebar { padding: 4rem; } }
+
+  .bento-icon-ring {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-glow);
+    margin-bottom: 2rem;
+  }
+
+  .bento-sidebar-icon {
+    font-size: 3rem;
+    color: var(--accent);
+    font-variation-settings: 'FILL' 1;
+  }
+
+  .bento-sidebar-title {
+    font-family: var(--font-headline);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+  }
+
+  .bento-sidebar-desc {
+    color: var(--text-secondary);
+    font-weight: 300;
+    font-size: 1.125rem;
+    margin-bottom: 2.5rem;
+  }
+
   .bento-sidebar-cta {
-    border: 1.5px solid color-mix(in srgb, var(--accent) 25%, transparent); color: var(--accent);
-    background: transparent; transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s var(--ease-out-premium), transform 0.3s var(--ease-out-premium);
+    display: block;
+    width: 100%;
+    padding: 1.25rem;
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 0.75rem;
+    border: 1.5px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    color: var(--accent);
+    background: transparent;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease,
+                box-shadow 0.3s var(--ease-out-premium), transform 0.3s var(--ease-out-premium);
   }
   .bento-sidebar-cta:hover {
     background: linear-gradient(135deg, var(--accent) 0%, #00a8b5 50%, #00626e 100%);
-    color: #fff; border-color: transparent;
-    box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 30%, transparent); transform: translateY(-1px);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 30%, transparent);
+    transform: translateY(-1px);
   }
   .bento-sidebar-cta:active { transform: translateY(0); }
-  /* Glow pulse and rotating border removed — clean cards */
-
-  /* === LIVE badge === */
-  .live-badge {
-    position: absolute;
-    top: 1.25rem;
-    right: 1.25rem;
-    z-index: 5;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 4px 12px;
-    border-radius: 9999px;
-    background: rgba(239, 68, 68, 0.12);
-    border: 1px solid rgba(239, 68, 68, 0.25);
-  }
-  .live-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #ef4444;
-    box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
-    animation: liveBlink 1.5s ease-in-out infinite;
-  }
-  .live-text {
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: #ef4444;
-  }
-
-  @keyframes liveBlink {
-    0%, 100% { opacity: 1; }
-    50%      { opacity: 0.3; }
-  }
 
   @media (prefers-reduced-motion: reduce) {
-    .bento-icon-ring { animation: none; }
-    .bento-main::after { animation: none; opacity: 0.5; }
-    .live-dot { animation: none; }
     .bento-main, .bento-sidebar { transition: none; }
-  }
-
-  @media (max-width: 767px) {
-    .bento-main::after { animation: none; }
-    .bento-icon-ring { animation: none; }
-    .live-dot { animation: none; }
   }
 
   :global([data-theme="light"]) .bento-sidebar-cta {

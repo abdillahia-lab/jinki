@@ -1,560 +1,328 @@
 ---
 /*
-  LeadGen — Intelligence Request Form
-  3-step wizard: service selection, contact info, message + submit.
-  Glass-panel styling, honeypot anti-spam, no confetti/canvas.
+  LeadGen — 2-field form for maximum conversion.
+  Email + Company only. Everything else comes in the follow-up.
+  Web3Forms integration, honeypot anti-spam, rate limiting.
 */
 ---
 
-<section id="lead-gen" class="relative" style="padding-top: 7rem; padding-bottom: 7rem;" aria-label="Request Intelligence Scan">
-  <div style="max-width: var(--container-max); margin-left: auto; margin-right: auto; padding-left: 1.5rem; padding-right: 1.5rem;">
-
-    <!-- Header -->
-    <div class="text-center" style="margin-bottom: 3rem;">
-      <div class="flex items-center justify-center" style="gap: 0.75rem; margin-bottom: 1rem;">
-        <span class="block" style="height: 1px; width: 2rem; background: var(--accent);"></span>
-        <span class="lg-eyebrow">Request Assessment</span>
-        <span class="block" style="height: 1px; width: 2rem; background: var(--accent);"></span>
-      </div>
-      <h2 class="font-headline text-4xl md:text-5xl font-bold" style="color: var(--text-primary);">
-        See What's Hiding on <span style="color: var(--accent);">Your Rooftop</span>
-      </h2>
-      <p class="text-xl font-light" style="color: var(--text-secondary); margin-top: 1rem; max-width: 36rem; margin-left: auto; margin-right: auto;">
-        Three quick steps to unlock aerial intelligence for your facility.
-      </p>
-      <p style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); margin-top: 12px; letter-spacing: 0.06em; display: flex; align-items: center; justify-content: center; gap: 8px;">
-        <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 14px;">schedule</span>
-        AVERAGE RESPONSE: WITHIN 1 BUSINESS DAY
-      </p>
-    </div>
-
-    <!-- Wizard Container -->
-    <div class="lg-wizard glass-panel lg-wizard-glow" style="border: 1px solid var(--glass-border); max-width: 52rem; margin-left: auto; margin-right: auto; padding: 2.5rem; border-radius: 16px; position: relative; overflow: hidden; background: var(--glass-bg);">
-
-      <!-- Progress Bar -->
-      <div class="lg-progress" style="display: flex; align-items: center; margin-bottom: 2rem; gap: 0.5rem;">
-        <div class="lg-step-dot active" data-step="1">1</div>
-        <div class="lg-step-line"><div class="lg-step-fill" id="lg-fill-1"></div></div>
-        <div class="lg-step-dot" data-step="2">2</div>
+<section id="lead-gen" class="leadgen-section reveal" aria-label="Schedule Your Facility Scan">
+  <div class="leadgen-container">
+    <div class="leadgen-inner">
+      <div class="leadgen-copy">
+        <h2 class="leadgen-headline">Schedule Your Facility Scan</h2>
+        <p class="leadgen-subtitle">
+          Get a prioritized report with thermal, structural, and environmental findings — typically within 48 hours of your aerial assessment.
+        </p>
       </div>
 
-      <form id="lg-form" action="https://api.web3forms.com/submit" method="POST">
-        <!-- Web3Forms integration -->
-        <input type="hidden" name="access_key" value="b2bd961c-acf2-48a6-bf10-a5717c2dea95" />
-        <input type="hidden" name="subject" value="New Intelligence Request from jinki.ai" />
-        <input type="hidden" name="from_name" value="Jinki Website" />
-        <input type="hidden" name="redirect" value="https://jinki.ai/?submitted=true" />
-        <!-- Honeypot (Web3Forms also uses this name) -->
-        <div aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px;">
-          <label for="lg-botcheck">Website</label>
-          <input type="text" id="lg-botcheck" name="botcheck" tabindex="-1" autocomplete="off" />
-        </div>
+      <div class="leadgen-form-wrap">
+        <form id="lg-form" action="https://api.web3forms.com/submit" method="POST" class="leadgen-form">
+          <input type="hidden" name="access_key" value="b2bd961c-acf2-48a6-bf10-a5717c2dea95" />
+          <input type="hidden" name="subject" value="New Assessment Request from jinki.ai" />
+          <input type="hidden" name="from_name" value="Jinki Website" />
+          <input type="hidden" name="redirect" value="https://jinki.ai/?submitted=true" />
+          <!-- Honeypot -->
+          <div aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px;">
+            <label for="lg-botcheck">Website</label>
+            <input type="text" id="lg-botcheck" name="botcheck" tabindex="-1" autocomplete="off" />
+          </div>
 
-        <!-- Step 1: Service Selection -->
-        <fieldset class="lg-step" id="lg-step-1" style="border: none; padding: 0; margin: 0;">
-          <legend class="lg-step-title">Select a Service</legend>
-          <p class="lg-step-desc">What type of intelligence engagement are you looking for?</p>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
-            <label class="lg-radio-card">
-              <input type="radio" name="service" value="scan" required aria-describedby="desc-scan" />
-              <span class="lg-card-inner">
-                <span class="material-symbols-outlined" style="font-size: 1.75rem; color: var(--accent);" aria-hidden="true">assignment</span>
-                <span class="lg-card-title">Intelligence Scan</span>
-                <span class="lg-card-desc" id="desc-scan">One-time aerial assessment with actionable report</span>
-              </span>
-            </label>
-            <label class="lg-radio-card">
-              <input type="radio" name="service" value="deployment" aria-describedby="desc-deploy" />
-              <span class="lg-card-inner">
-                <span class="material-symbols-outlined" style="font-size: 1.75rem; color: var(--accent);" aria-hidden="true">precision_manufacturing</span>
-                <span class="lg-card-title">Autonomous Deployment</span>
-                <span class="lg-card-desc" id="desc-deploy">Persistent monitoring with recurring missions</span>
-              </span>
-            </label>
-            <label class="lg-radio-card">
-              <input type="radio" name="service" value="consultation" aria-describedby="desc-consult" />
-              <span class="lg-card-inner">
-                <span class="material-symbols-outlined" style="font-size: 1.75rem; color: var(--accent);" aria-hidden="true">forum</span>
-                <span class="lg-card-title">Consultation</span>
-                <span class="lg-card-desc" id="desc-consult">Explore how aerial intelligence fits your needs</span>
-              </span>
-            </label>
+          <div class="leadgen-fields">
+            <input type="email" name="email" required placeholder="Work email" autocomplete="email" inputmode="email" maxlength="254" class="leadgen-input" aria-label="Work email address" />
+            <input type="text" name="company" placeholder="Company name" autocomplete="organization" maxlength="100" class="leadgen-input" aria-label="Company name" />
+            <button type="submit" class="leadgen-submit">Get Your Facility Report</button>
           </div>
-          <div style="display: flex; justify-content: flex-end; margin-top: 2rem;">
-            <button type="button" class="lg-btn lg-btn-next" data-next="2">Continue</button>
-          </div>
-        </fieldset>
 
-        <!-- Step 2: Contact Info -->
-        <fieldset class="lg-step" id="lg-step-2" style="border: none; padding: 0; margin: 0; display: none;">
-          <legend class="lg-step-title">Your Details</legend>
-          <p class="lg-step-desc">Tell us how to reach you.</p>
-          <div style="display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1.5rem;">
-            <div class="lg-field">
-              <label for="lg-name">Full Name</label>
-              <input type="text" id="lg-name" name="name" required placeholder="Jane Smith" autocomplete="name" maxlength="100" aria-describedby="lg-name-err" enterkeyhint="next" />
-              <span class="lg-field-error" id="lg-name-err" role="alert">Please enter your name.</span>
-            </div>
-            <div class="lg-field">
-              <label for="lg-company">Company</label>
-              <input type="text" id="lg-company" name="company" required placeholder="Acme Corp" autocomplete="organization" maxlength="100" aria-describedby="lg-company-err" enterkeyhint="next" />
-              <span class="lg-field-error" id="lg-company-err" role="alert">Please enter your company name.</span>
-            </div>
-            <div class="lg-field">
-              <label for="lg-role">Your Role</label>
-              <input type="text" id="lg-role" name="role" placeholder="VP of Facilities" autocomplete="organization-title" maxlength="100" enterkeyhint="next" />
-            </div>
-            <div class="lg-field">
-              <label for="lg-email">Work Email</label>
-              <input type="email" id="lg-email" name="email" required placeholder="jane@acme.com" autocomplete="email" inputmode="email" maxlength="254" aria-describedby="lg-email-err" enterkeyhint="next" />
-              <span class="lg-field-error" id="lg-email-err" role="alert">Please enter a valid email address.</span>
-            </div>
-          </div>
-          <div class="lg-field" style="margin-top: 0.25rem;">
-            <label for="lg-message">Message <span style="color: var(--text-tertiary); font-weight: 400;">(optional)</span></label>
-            <textarea id="lg-message" name="message" rows="3" placeholder="Tell us about your facility or specific challenges..." maxlength="2000" enterkeyhint="send"></textarea>
-          </div>
-          <div style="display: flex; justify-content: space-between; margin-top: 2rem;">
-            <button type="button" class="lg-btn lg-btn-back" data-prev="1">Back</button>
-            <button type="submit" class="lg-btn lg-btn-submit">Submit Request</button>
-          </div>
-          <div class="lg-trust-badges" style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; justify-content: center;">
-            <span style="display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-label); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-tertiary); padding: 8px 12px; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-container);">
-              <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 14px; color: var(--accent-tertiary);">lock</span>
+          <div class="leadgen-trust">
+            <span class="leadgen-badge">
+              <span class="material-symbols-outlined" aria-hidden="true">lock</span>
               AES-256 Encrypted
             </span>
-            <span style="display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-label); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-tertiary); padding: 8px 12px; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-container);">
-              <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 14px; color: var(--accent-tertiary);">handshake</span>
+            <span class="leadgen-badge">
+              <span class="material-symbols-outlined" aria-hidden="true">handshake</span>
               NDA by Default
             </span>
-            <span style="display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-label); font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-tertiary); padding: 8px 12px; border: 1px solid var(--glass-border); border-radius: 8px; background: var(--surface-container);">
-              <span class="material-symbols-outlined" aria-hidden="true" style="font-size: 14px; color: var(--accent-tertiary);">block</span>
-              No Spam
+            <span class="leadgen-badge">
+              <span class="material-symbols-outlined" aria-hidden="true">schedule</span>
+              Response within 4 hours
             </span>
           </div>
-        </fieldset>
-      </form>
+        </form>
 
-      <div style="text-align: center; margin-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; font-family: var(--font-body); font-size: 0.8125rem; color: var(--text-tertiary);">
-        <a href="mailto:info@jinki.ai?subject=Schedule%20a%20Call%20—%20Jinki%20AI&body=I'd%20like%20to%20schedule%20a%20call%20to%20discuss%20aerial%20intelligence%20for%20our%20facility.%0A%0ACompany:%0ARole:%0APreferred%20time:" style="display: inline-flex; align-items: center; gap: 8px; color: var(--accent); text-decoration: none; padding: 8px 16px; border: 1px solid color-mix(in srgb, var(--accent) 15%, transparent); border-radius: 8px; transition: background 0.2s ease;">
-          <span class="material-symbols-outlined" style="font-size: 16px;" aria-hidden="true">phone_in_talk</span>
-          Schedule a Call
-        </a>
-        <button type="button" onclick="document.getElementById('jc-launcher')?.click()" style="display: inline-flex; align-items: center; gap: 8px; background: none; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 8px 16px; color: var(--text-tertiary); cursor: pointer; font-family: inherit; font-size: inherit;">
-          <span class="material-symbols-outlined" style="font-size: 16px;" aria-hidden="true">chat</span>
-          Ask Jinki
-        </button>
-      </div>
-
-      <!-- Success Message -->
-      <div id="lg-success" style="display: none; text-align: center; padding: 2rem 0;">
-        <svg class="lg-check-svg" width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-          <circle cx="32" cy="32" r="29" stroke="#34d399" stroke-width="2.5" class="lg-check-circle"/>
-          <polyline points="20,33 28,41 44,25" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lg-check-mark" fill="none"/>
-        </svg>
-        <h3 style="font-family: var(--font-headline); font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-top: 1rem;">Request Received</h3>
-        <p style="font-family: var(--font-body); color: var(--text-secondary); margin-top: 0.5rem; max-width: 28rem; margin-left: auto; margin-right: auto;">
-          Here's what happens next:
-        </p>
-        <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 2rem; max-width: 26rem; margin-left: auto; margin-right: auto; text-align: left;">
-          <div style="display: flex; align-items: flex-start; gap: 16px;">
-            <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; min-width: 36px; border-radius: 50%; background: var(--accent-glow); border: 2px solid var(--accent); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: var(--accent);">1</span>
-            <div>
-              <span style="font-family: var(--font-headline); font-size: 0.875rem; font-weight: 700; color: var(--text-primary); display: block;">Review Your Request</span>
-              <span style="font-family: var(--font-body); font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5;">We review your submission within one business day</span>
-            </div>
-          </div>
-          <div style="display: flex; align-items: flex-start; gap: 16px;">
-            <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; min-width: 36px; border-radius: 50%; background: var(--accent-glow); border: 2px solid var(--accent); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: var(--accent);">2</span>
-            <div>
-              <span style="font-family: var(--font-headline); font-size: 0.875rem; font-weight: 700; color: var(--text-primary); display: block;">Scope Your Facility</span>
-              <span style="font-family: var(--font-body); font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5;">A Jinki team member reaches out to understand your needs</span>
-            </div>
-          </div>
-          <div style="display: flex; align-items: flex-start; gap: 16px;">
-            <span style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; min-width: 36px; border-radius: 50%; background: var(--accent-glow); border: 2px solid var(--accent); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; color: var(--accent);">3</span>
-            <div>
-              <span style="font-family: var(--font-headline); font-size: 0.875rem; font-weight: 700; color: var(--text-primary); display: block;">Custom Proposal</span>
-              <span style="font-family: var(--font-body); font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.5;">You receive a tailored proposal with timeline and approach</span>
-            </div>
-          </div>
+        <!-- Success -->
+        <div id="lg-success" class="leadgen-success" style="display: none;">
+          <svg class="lg-check-svg" width="48" height="48" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <circle cx="32" cy="32" r="29" stroke="#34d399" stroke-width="2.5" class="lg-check-circle"/>
+            <polyline points="20,33 28,41 44,25" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lg-check-mark" fill="none"/>
+          </svg>
+          <h3 class="leadgen-success-title">Request Received</h3>
+          <p class="leadgen-success-desc">We'll review your submission and reach out within one business day with next steps.</p>
         </div>
       </div>
+    </div>
+
+    <div class="leadgen-alt">
+      <a href="mailto:info@jinki.ai?subject=Facility%20Assessment%20—%20Jinki&body=I'm%20interested%20in%20an%20aerial%20assessment%20for%20our%20facility." class="leadgen-alt-link">
+        <span class="material-symbols-outlined" aria-hidden="true">email</span>
+        Or email us directly
+      </a>
     </div>
   </div>
 </section>
 
 <style>
-  .lg-eyebrow {
+  .leadgen-section {
+    padding: 8rem 0;
+    position: relative;
+  }
+  @media (min-width: 768px) { .leadgen-section { padding: 10rem 0; } }
+
+  .leadgen-container {
+    max-width: var(--container-max);
+    margin-left: auto; margin-right: auto;
+    padding-left: 1.5rem; padding-right: 1.5rem;
+  }
+
+  .leadgen-inner {
+    max-width: 48rem;
+    margin-left: auto; margin-right: auto;
+    background: var(--surface-container);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    padding: 3rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .leadgen-inner::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent 10%, var(--accent) 50%, transparent 90%);
+    opacity: 0.6;
+  }
+  @media (min-width: 768px) { .leadgen-inner { padding: 4rem 3rem; } }
+
+  .leadgen-copy { text-align: center; margin-bottom: 2.5rem; }
+  .leadgen-headline {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+  }
+  .leadgen-subtitle {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 32rem;
+    margin-left: auto; margin-right: auto;
+    line-height: 1.6;
+  }
+
+  .leadgen-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  @media (min-width: 640px) {
+    .leadgen-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .leadgen-submit { grid-column: 1 / -1; }
+  }
+
+  .leadgen-input {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--text-primary);
+    background: var(--surface-container-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    outline: none;
+    min-height: 48px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .leadgen-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
+  }
+  .leadgen-input::placeholder { color: var(--text-tertiary); }
+
+  .leadgen-submit {
+    font-family: var(--font-headline);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--accent);
+    color: var(--text-on-accent);
+    border: none;
+    border-radius: 0.75rem;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    min-height: 48px;
+    transition: filter 0.2s ease, transform 0.2s var(--ease-out-premium),
+                box-shadow 0.2s var(--ease-out-premium);
+  }
+  .leadgen-submit:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+  .leadgen-submit:active { transform: translateY(0); }
+  .leadgen-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .leadgen-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1.25rem;
+  }
+  .leadgen-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     font-family: var(--font-label);
     font-size: 0.6875rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--accent);
+    letter-spacing: 0.04em;
+    color: var(--text-tertiary);
+  }
+  .leadgen-badge .material-symbols-outlined {
+    font-size: 14px;
+    color: var(--accent-tertiary);
   }
 
-  /* Progress */
-  .lg-step-dot {
-    width: 2rem; height: 2rem; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700;
-    background: var(--surface-container); color: var(--text-tertiary);
-    border: 2px solid var(--glass-border);
-    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease; flex-shrink: 0;
-  }
-  .lg-step-dot.active, .lg-step-dot.done {
-    background: var(--accent); color: var(--text-on-accent); border-color: var(--accent);
-  }
-  .lg-step-line {
-    flex: 1; height: 2px; background: var(--glass-border); border-radius: 1px; overflow: hidden;
-  }
-  .lg-step-fill {
-    height: 100%; width: 100%; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease;
-  }
-
-  /* Step transitions */
-  .lg-step {
-    transition: opacity 0.2s ease, transform 0.2s ease;
-  }
-
-  /* Step content */
-  .lg-step-title {
-    font-family: var(--font-headline); font-size: 1.25rem; font-weight: 700;
-    color: var(--text-primary); margin-bottom: 0.25rem;
-  }
-  .lg-step-desc {
-    font-family: var(--font-body); font-size: 0.875rem; color: var(--text-secondary);
-  }
-
-  /* Radio cards */
-  .lg-radio-card input { position: absolute; opacity: 0; pointer-events: none; }
-  .lg-radio-card {
-    cursor: pointer; display: block;
-  }
-  .lg-card-inner {
-    display: flex; flex-direction: column; align-items: center; text-align: center;
-    padding: 1.5rem 1rem; border-radius: 12px;
-    border: 1px solid var(--glass-border); background: var(--surface-container);
-    transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.25s var(--ease-out-premium), transform 0.25s var(--ease-out-premium); gap: 0.5rem;
-    position: relative; z-index: 0; overflow: hidden;
-  }
-  .lg-radio-card:hover .lg-card-inner {
-    border-color: var(--accent); background: color-mix(in srgb, var(--accent) 5%, var(--surface-container));
-  }
-  .lg-radio-card input:checked + .lg-card-inner {
-    border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--surface-container));
-    box-shadow: 0 0 0 1px var(--accent), 0 4px 16px color-mix(in srgb, var(--accent) 10%, transparent);
-    transform: translateY(-2px);
-  }
-  .lg-radio-card input:focus-visible + .lg-card-inner {
-    outline: 2px solid var(--accent); outline-offset: 2px;
-  }
-  .lg-card-title {
-    font-family: var(--font-headline); font-size: 0.875rem; font-weight: 700; color: var(--text-primary);
-  }
-  .lg-card-desc {
-    font-family: var(--font-body); font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5;
-  }
-
-  /* Clean selected state — no rotating border */
-
-  /* Form fields */
-  .lg-field { display: flex; flex-direction: column; gap: 0.375rem; }
-  .lg-field label {
-    font-family: var(--font-label); font-size: 0.75rem; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary);
-    transition: color 0.25s ease;
-  }
-  .lg-field:focus-within label {
-    color: var(--accent);
-  }
-  .lg-field input, .lg-field textarea {
-    font-family: var(--font-body); font-size: 1rem; color: var(--text-primary);
-    background: var(--surface-container); border: 1px solid var(--glass-border);
-    border-radius: 12px; padding: 0.875rem 1rem; outline: none; min-height: 44px;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-  .lg-field input:focus, .lg-field textarea:focus {
-    border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
-  }
-  .lg-field input.invalid, .lg-field textarea.invalid {
-    border-color: var(--error, #ef4444);
-  }
-  .lg-field input.invalid::after, .lg-field .lg-field-error {
-    display: none;
-    font-family: var(--font-body);
-    font-size: 0.75rem;
-    color: var(--error, #ef4444);
-    margin-top: 4px;
-  }
-  .lg-field:has(input.invalid) .lg-field-error,
-  .lg-field:has(textarea.invalid) .lg-field-error {
-    display: block;
-  }
-  .lg-field input::placeholder, .lg-field textarea::placeholder { color: var(--text-tertiary); }
-  .lg-field textarea { resize: vertical; min-height: 5rem; }
-
-  /* Buttons */
-  .lg-btn {
-    font-family: var(--font-label); font-size: 0.8125rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.08em;
-    padding: 0.875rem 1.75rem; border-radius: 12px; border: none; cursor: pointer; min-height: 44px;
-    transition: filter 0.2s ease, transform 0.2s var(--ease-out-premium), box-shadow 0.2s var(--ease-out-premium), opacity 0.2s ease, border-color 0.2s ease;
-  }
-  .lg-btn-next, .lg-btn-submit {
-    background: var(--accent); color: var(--text-on-accent);
-  }
-  .lg-btn-next:hover, .lg-btn-submit:hover {
-    filter: brightness(1.1); transform: translateY(-2px);
-    box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 25%, transparent);
-  }
-  .lg-btn-back {
-    background: transparent; color: var(--text-secondary);
-    border: 1px solid var(--glass-border);
-  }
-  .lg-btn-back:hover { border-color: var(--text-secondary); }
-  .lg-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-  /* Light mode */
-  :global([data-theme="light"]) .lg-card-inner { background: var(--surface-container-low); }
-  :global([data-theme="light"]) .lg-field input,
-  :global([data-theme="light"]) .lg-field textarea { background: var(--surface-container-low); }
-
-  /* Error state */
-  .lg-error {
+  .leadgen-success { text-align: center; padding: 2rem 0; }
+  .leadgen-success-title {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
     margin-top: 1rem;
-    padding: 0.75rem 1rem;
-    border-radius: 12px;
-    background: rgba(239, 68, 68, 0.08);
-    border: 1px solid rgba(239, 68, 68, 0.2);
-    color: #ef4444;
+  }
+  .leadgen-success-desc {
+    font-family: var(--font-body);
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    max-width: 28rem;
+    margin-left: auto; margin-right: auto;
+  }
+
+  .leadgen-alt {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  .leadgen-alt-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     font-family: var(--font-body);
     font-size: 0.875rem;
-    text-align: center;
+    color: var(--text-tertiary);
+    text-decoration: none;
+    transition: color 0.2s ease;
   }
+  .leadgen-alt-link:hover { color: var(--accent); }
+  .leadgen-alt-link .material-symbols-outlined { font-size: 16px; }
 
-  /* Self-drawing checkmark SVG */
+  /* Self-drawing checkmark */
   .lg-check-circle {
-    stroke-dasharray: 183;
-    stroke-dashoffset: 183;
+    stroke-dasharray: 183; stroke-dashoffset: 183;
     animation: lgDrawCircle 0.6s ease forwards;
   }
   .lg-check-mark {
-    stroke-dasharray: 40;
-    stroke-dashoffset: 40;
+    stroke-dasharray: 40; stroke-dashoffset: 40;
     animation: lgDrawCheck 0.4s ease forwards 0.5s;
   }
-  @keyframes lgDrawCircle {
-    to { stroke-dashoffset: 0; }
-  }
-  @keyframes lgDrawCheck {
-    to { stroke-dashoffset: 0; }
-  }
+  @keyframes lgDrawCircle { to { stroke-dashoffset: 0; } }
+  @keyframes lgDrawCheck { to { stroke-dashoffset: 0; } }
 
-  /* Step dot bounce when transitioning to done */
-  .lg-step-dot.done {
-    animation: lgDotBounce 0.4s var(--ease-out-premium);
-  }
-  @keyframes lgDotBounce {
-    0% { transform: scale(1); }
-    40% { transform: scale(1.35); }
-    70% { transform: scale(0.9); }
-    100% { transform: scale(1); }
-  }
-
-  /* Wizard glow + accent bar removed — clean panel */
-
-  /* Submit spinner */
+  /* Spinner */
   .lg-spinner {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-top-color: #fff;
-    border-radius: 50%;
-    animation: lgSpin 0.6s linear infinite;
-    vertical-align: middle;
-    margin-right: 6px;
+    display: inline-block; width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+    border-radius: 50%; animation: lgSpin 0.6s linear infinite;
+    vertical-align: middle; margin-right: 6px;
   }
-  @keyframes lgSpin {
-    to { transform: rotate(360deg); }
-  }
+  @keyframes lgSpin { to { transform: rotate(360deg); } }
+
+  /* Light mode */
+  :global([data-theme="light"]) .leadgen-input { background: var(--surface-container-lowest); }
+  :global([data-theme="light"]) .leadgen-submit { color: #ffffff; }
 
   @media (prefers-reduced-motion: reduce) {
-    .lg-step-fill { transition: none; }
-    .lg-step { transition: none; }
-    .lg-btn { transition: none; }
-    .lg-card-inner { transition: none; }
-    .lg-field label { transition: none; }
-    .lg-radio-card input:checked + .lg-card-inner::before { animation: none; background: var(--accent); }
     .lg-check-circle, .lg-check-mark { animation: none; stroke-dashoffset: 0; }
-    .lg-step-dot.done { animation: none; }
     .lg-spinner { animation-duration: 1.5s; }
+    .leadgen-submit { transition: none; }
   }
 
   @media (max-width: 767px) {
-    .lg-wizard { padding: 1.25rem !important; }
-    .lg-progress { margin-bottom: 1.25rem !important; gap: 0.375rem !important; }
-    .lg-step-dot { width: 1.75rem; height: 1.75rem; font-size: 0.7rem; }
-    .lg-card-inner { padding: 1rem 0.75rem !important; }
-    .lg-card-title { font-size: 0.8125rem !important; }
-    .lg-card-desc { font-size: 0.7rem !important; }
-    .lg-step-title { font-size: 1.1rem !important; }
-    .lg-btn { padding: 0.75rem 1.25rem !important; font-size: 0.75rem !important; }
-    .lg-trust-badges { gap: 8px !important; }
+    .leadgen-inner { padding: 2rem 1.25rem !important; }
+    .leadgen-headline { font-size: 1.5rem !important; }
   }
 </style>
 
 <script>
   const form = document.getElementById('lg-form') as HTMLFormElement;
   const success = document.getElementById('lg-success')!;
-  const dots = document.querySelectorAll<HTMLElement>('.lg-step-dot');
-  const fills = [document.getElementById('lg-fill-1'), document.getElementById('lg-fill-2')];
-  let current = 1;
-
-  function showStep(n: number) {
-    const allSteps = document.querySelectorAll<HTMLElement>('.lg-step');
-    const step = document.getElementById(`lg-step-${n}`);
-    // Fade out current, fade in next
-    allSteps.forEach(s => {
-      if (s.id === `lg-step-${n}`) {
-        s.style.display = 'block';
-        requestAnimationFrame(() => {
-          s.style.opacity = '1';
-          s.style.transform = 'translateX(0)';
-        });
-      } else {
-        s.style.opacity = '0';
-        s.style.transform = n > current ? 'translateX(-20px)' : 'translateX(20px)';
-        setTimeout(() => { s.style.display = 'none'; }, 200);
-      }
-    });
-    dots.forEach((d, i) => {
-      const sn = i + 1;
-      d.classList.toggle('active', sn === n);
-      d.classList.toggle('done', sn < n);
-    });
-    fills.forEach((f, i) => {
-      if (f) f.style.transform = (i + 1) < n ? 'scaleX(1)' : 'scaleX(0)';
-    });
-    current = n;
-    // Autofocus first input in new step
-    if (step) {
-      const firstInput = step.querySelector<HTMLInputElement | HTMLTextAreaElement>('input:not([type=hidden]):not([type=radio]), textarea');
-      if (firstInput) setTimeout(() => firstInput.focus(), 200);
-    }
-  }
-
-  function validateStep(n: number): boolean {
-    const step = document.getElementById(`lg-step-${n}`);
-    if (!step) return false;
-    const fields = step.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('[required]');
-    let valid = true;
-    let firstInvalid: HTMLElement | null = null;
-    fields.forEach(f => {
-      if (f.type === 'radio') {
-        const radios = step.querySelectorAll<HTMLInputElement>(`input[name="${f.name}"]`);
-        const checked = Array.from(radios).some(r => r.checked);
-        if (!checked) { valid = false; if (!firstInvalid) firstInvalid = radios[0]?.closest('.lg-radio-card') as HTMLElement || f; }
-      } else if (!f.value.trim()) {
-        f.classList.add('invalid');
-        valid = false;
-        if (!firstInvalid) firstInvalid = f;
-      } else if (f.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value)) {
-        f.classList.add('invalid');
-        valid = false;
-        if (!firstInvalid) firstInvalid = f;
-      } else {
-        f.classList.remove('invalid');
-      }
-    });
-    if (!valid && firstInvalid) {
-      firstInvalid.focus();
-      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    return valid;
-  }
-
-  // Clear invalid on input
-  form.addEventListener('input', (e) => {
-    const t = e.target as HTMLElement;
-    if (t.classList.contains('invalid')) t.classList.remove('invalid');
-  });
-
-  // Next/Back buttons
-  form.addEventListener('click', (e) => {
-    const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-next],[data-prev]');
-    if (!btn) return;
-    const next = btn.dataset.next;
-    const prev = btn.dataset.prev;
-    if (next) {
-      if (validateStep(current)) showStep(Number(next));
-    } else if (prev) {
-      showStep(Number(prev));
-    }
-  });
-
-  // Submit — Web3Forms integration with loading/error states
   let submitting = false;
   let lastSubmitTime = 0;
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (submitting) return;
-    // Rate limit: 5-second cooldown between submissions
     const now = Date.now();
     if (now - lastSubmitTime < 5000) return;
     lastSubmitTime = now;
     submitting = true;
-    // Honeypot check
-    const hp = (document.getElementById('lg-botcheck') as HTMLInputElement);
-    if (hp && hp.value) { submitting = false; return; }
-    if (!validateStep(current)) { submitting = false; return; }
 
-    // Show loading state with spinner
-    const submitBtn = form.querySelector('.lg-btn-submit') as HTMLButtonElement;
-    const originalText = submitBtn.textContent || 'Submit Request';
+    // Honeypot check
+    const hp = document.getElementById('lg-botcheck') as HTMLInputElement;
+    if (hp && hp.value) { submitting = false; return; }
+
+    const submitBtn = form.querySelector('.leadgen-submit') as HTMLButtonElement;
+    const originalText = submitBtn.textContent || 'Get Your Facility Report';
     submitBtn.disabled = true;
     const spinner = document.createElement('span');
     spinner.className = 'lg-spinner';
     submitBtn.textContent = ' Sending...';
     submitBtn.prepend(spinner);
-    submitBtn.style.opacity = '0.7';
 
     try {
-      const formData = new FormData(form);
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        body: formData,
+        body: new FormData(form),
         headers: { 'Accept': 'application/json' },
       });
 
       if (response.ok) {
         form.style.display = 'none';
-        document.querySelector('.lg-progress')?.setAttribute('style', 'display:none');
         success.style.display = 'block';
-        // Announce to screen readers via aria-live region
         const liveRegion = document.getElementById('aria-live-region');
-        if (liveRegion) liveRegion.textContent = 'Your request has been received. We will review it within one business day.';
+        if (liveRegion) liveRegion.textContent = 'Your request has been received.';
       } else {
         throw new Error('Submission failed');
       }
-    } catch (err) {
+    } catch {
       submitting = false;
       submitBtn.disabled = false;
       submitBtn.querySelector('.lg-spinner')?.remove();
-      submitBtn.textContent = 'Submit Request';
-      submitBtn.style.opacity = '1';
-      // Create inline error message
+      submitBtn.textContent = originalText;
       let errMsg = form.querySelector('.lg-error') as HTMLElement;
       if (!errMsg) {
         errMsg = document.createElement('div');
         errMsg.className = 'lg-error';
         errMsg.setAttribute('role', 'alert');
-        errMsg.style.cssText = 'color: #FF6B6B; font-family: var(--font-body); font-size: 0.875rem; text-align: center; margin-top: 1rem; padding: 0.75rem; border: 1px solid rgba(255,107,107,0.2); border-radius: 8px; background: rgba(255,107,107,0.05);';
+        errMsg.style.cssText = 'color: #FF6B6B; font-size: 0.875rem; text-align: center; margin-top: 1rem; padding: 0.75rem; border: 1px solid rgba(255,107,107,0.2); border-radius: 8px; background: rgba(255,107,107,0.05);';
         submitBtn.parentElement?.appendChild(errMsg);
       }
-      errMsg.textContent = 'Something went wrong. Please try again or email us directly at info@jinki.ai';
+      errMsg.textContent = 'Something went wrong. Please try again or email info@jinki.ai directly.';
     }
   });
 </script>

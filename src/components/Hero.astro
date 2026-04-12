@@ -1,68 +1,27 @@
 ---
-/* Hero — Cinematic globe background + tactical intelligence layout. */
+/* Hero — 3-second executive comprehension. Globe breathes behind. */
 import GlobeCanvas from './GlobeCanvas.astro';
 ---
 
-<section id="hero" class="hero" aria-label="Hero — Aerial Intelligence Platform">
+<section id="hero" class="hero" aria-label="Aerial Intelligence for Critical Infrastructure">
   <div class="hero-mesh" aria-hidden="true"></div>
   <GlobeCanvas />
   <div class="globe-mobile" aria-hidden="true"></div>
 
   <div class="hero-content">
     <div class="hero-text">
-      <div class="eyebrow reveal">
-        <span class="eyebrow-pip"></span>
-        <span class="eyebrow-line"></span>
-        <span class="eyebrow-text">Aerial Intelligence Platform</span>
-      </div>
-
-      <h1 class="headline reveal reveal-delay-1">
-        See What You Can't.<br/>Act Before It <span class="headline-accent">Fails.</span>
+      <h1 class="headline">
+        Your Infrastructure Is Failing.<br/>You Just Can't See It <span class="headline-accent">Yet.</span>
       </h1>
 
-      <p class="hero-subtitle reveal reveal-delay-2">
-        Your rooftop infrastructure is degrading right now. Traditional inspections miss it. We find it — and deliver a prioritized fix list within 48 hours.
+      <p class="hero-subtitle">
+        73% of cooling failures show thermal signatures weeks before catastrophic failure. We find them in a single aerial pass and deliver a prioritized fix list within 48 hours.
       </p>
 
-      <div class="hero-actions reveal reveal-delay-3">
+      <p class="hero-proof">Trusted by data center operators across Northern Virginia.</p>
+
+      <div class="hero-actions">
         <a href="#lead-gen" class="cta-primary btn-premium">Request Assessment</a>
-        <a href="#process" class="cta-secondary btn-premium">
-          See How It Works
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-      <p class="hero-trust-line reveal reveal-delay-4">
-        <span class="material-symbols-outlined" aria-hidden="true">verified</span>
-        No commitment required. Zero risk.
-      </p>
-      <p class="hero-urgency reveal reveal-delay-4">
-        <span class="material-symbols-outlined" aria-hidden="true">schedule</span>
-        Responding to new inquiries within 4 hours
-      </p>
-    </div>
-
-    <!-- Metric Cards -->
-    <div class="hero-metrics reveal reveal-delay-2">
-      <div class="metric-card mc-1">
-        <span class="metric-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span class="metric-value" data-count="0.5">0</span><span class="metric-unit">°C</span>
-        <span class="metric-label">Invisible to the Eye</span>
-      </div>
-      <div class="metric-card mc-2">
-        <span class="metric-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        </span>
-        <span class="metric-value" data-count="48">0</span><span class="metric-unit">hr</span>
-        <span class="metric-label">Scan to Action Plan</span>
-      </div>
-      <div class="metric-card mc-3">
-        <span class="metric-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span class="metric-value">200</span><span class="metric-unit">/mo</span>
-        <span class="metric-label">Autonomous Persistence</span>
       </div>
     </div>
   </div>
@@ -82,45 +41,31 @@ import GlobeCanvas from './GlobeCanvas.astro';
     margin-left: auto; margin-right: auto;
     padding-left: 1.5rem; padding-right: 1.5rem;
   }
-  .eyebrow { display: flex; align-items: center; margin-bottom: 1.5rem; }
-  .eyebrow-pip {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: var(--accent); box-shadow: 0 0 12px var(--accent); flex-shrink: 0;
-  }
-  .eyebrow-line {
-    display: block; width: 2rem; height: 1px;
-    background: var(--accent); opacity: .5;
-    margin-left: .75rem; margin-right: .75rem; flex-shrink: 0;
-  }
-  .eyebrow-text {
-    font-family: var(--font-label); text-transform: uppercase;
-    letter-spacing: .12em; font-size: 0.6875rem;
-    color: var(--accent); white-space: nowrap;
-  }
   .headline {
-    font-family: var(--font-headline); font-size: clamp(2.6rem, 5vw + .5rem, 5.5rem);
+    font-family: var(--font-headline);
+    font-size: clamp(2.8rem, 6vw + .5rem, 5rem);
     font-weight: 700; line-height: 1.02; letter-spacing: -.035em;
     color: var(--text-primary); margin-bottom: 2rem;
+    max-width: 16ch;
+  }
+  .headline-accent {
+    color: var(--accent);
+    font-style: italic;
+  }
+  :global([data-theme="light"]) .headline-accent {
+    color: var(--accent);
   }
   .hero-subtitle {
-    font-size: clamp(1.05rem, 1.3vw + .4rem, 1.3rem);
+    font-size: clamp(1.1rem, 1.4vw + .4rem, 1.375rem);
     color: var(--text-secondary); font-weight: 400;
-    max-width: 34rem; line-height: 1.75; margin-bottom: 2.75rem;
+    max-width: 38rem; line-height: 1.7; margin-bottom: 1.5rem;
+  }
+  .hero-proof {
+    font-family: var(--font-label); font-size: 0.8125rem;
+    color: var(--text-tertiary); letter-spacing: 0.04em;
+    margin-bottom: 2rem;
   }
   .hero-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .hero-actions svg { margin-left: 0.5rem; }
-  .hero-trust-line {
-    font-family: var(--font-body); font-size: 0.8rem;
-    color: var(--text-tertiary); margin-top: 12px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .hero-trust-line .material-symbols-outlined { font-size: 14px; color: var(--accent); }
-  .hero-urgency {
-    font-family: var(--font-mono); font-size: 0.7rem;
-    color: var(--accent); margin-top: 8px;
-    display: flex; align-items: center; gap: 8px; letter-spacing: 0.04em;
-  }
-  .hero-urgency .material-symbols-outlined { font-size: 14px; }
   .hero-dissolve {
     position: absolute; bottom: 0; left: 0; right: 0; height: 12rem;
     background: linear-gradient(to bottom, transparent, var(--bg-primary));
@@ -128,10 +73,7 @@ import GlobeCanvas from './GlobeCanvas.astro';
   }
 
   .hero-mesh {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
     background: radial-gradient(ellipse 60% 50% at 65% 45%,
       color-mix(in srgb, var(--accent) 6%, transparent) 0%, transparent 70%);
   }
@@ -141,94 +83,33 @@ import GlobeCanvas from './GlobeCanvas.astro';
   }
 
   /* === Mobile Globe — static image fallback === */
-  .globe-mobile {
-    display: none;
-  }
+  .globe-mobile { display: none; }
   @media (max-width: 767px) {
     .globe-mobile {
-      display: block;
-      position: absolute;
-      top: -5%;
-      right: -20%;
-      width: 85vw;
-      height: 85vw;
-      max-width: 400px;
-      max-height: 400px;
+      display: block; position: absolute;
+      top: -5%; right: -20%;
+      width: 85vw; height: 85vw;
+      max-width: 400px; max-height: 400px;
       background: url('/images/globe-mobile.webp') center/contain no-repeat;
-      opacity: 0.25;
-      z-index: 0;
-      pointer-events: none;
+      opacity: 0.35; z-index: 0; pointer-events: none;
     }
   }
 
-  /* === Eyebrow pip pulse === */
-  /* pipPulse animation removed — static pip is cleaner */
-  @keyframes pipPulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 10px var(--accent); }
-    50%      { opacity: .7; box-shadow: 0 0 5px var(--accent); }
-  }
-
-  /* === Eyebrow blinking cursor === */
-  /* Cursor blink removed — visual noise */
-
-  /* === Scroll thumb === */
-  .scroll-thumb { animation: scrollBob 2.5s ease-in-out infinite; }
-  @keyframes scrollBob {
-    0%   { transform: translateY(0); opacity: 1; }
-    70%  { transform: translateY(22px); opacity: .3; }
-    100% { transform: translateY(0); opacity: 1; }
-  }
-
-  /* === Bouncing chevron === */
-  .scroll-chevron { animation: chevronBounce 2s ease-in-out infinite; }
-  @keyframes chevronBounce {
-    0%, 100% { transform: translateY(0); opacity: .4; }
-    50%      { transform: translateY(5px); opacity: .7; }
-  }
-
-  /* === Headline accent === */
-  .headline-accent {
-    color: var(--accent);
-    font-style: italic;
-  }
-  :global([data-theme="light"]) .headline-accent {
-    color: var(--accent);
-  }
-
   /* === Layout === */
-  .hero-content {
-    display: grid;
-    grid-template-columns: 1fr;
-    align-items: center;
-  }
   @media (min-width: 768px)  { .hero-content { padding-left: 3rem; padding-right: 3rem; } }
-  @media (min-width: 1024px) { .hero-content { grid-template-columns: 1.1fr .9fr; column-gap: 3rem; padding-left: 5rem; padding-right: 5rem; } }
+  @media (min-width: 1024px) { .hero-content { padding-left: 5rem; padding-right: 5rem; } }
 
-  /* === CTAs === */
-  .cta-primary, .cta-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-headline);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    font-size: .85rem;
-    padding: 1rem 2.5rem;
-    border-radius: 12px;
+  /* === CTA === */
+  .cta-primary {
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-headline); font-weight: 600;
+    text-transform: uppercase; letter-spacing: .08em; font-size: .85rem;
+    padding: 1rem 2.5rem; border-radius: 12px;
     transition: transform 0.35s var(--ease-out-premium),
                 box-shadow 0.35s var(--ease-out-premium),
-                background 0.35s ease,
-                border-color 0.35s ease;
-    text-decoration: none;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-primary {
-    background: var(--accent);
-    color: var(--text-on-accent);
-    border: none;
+                background 0.35s ease;
+    text-decoration: none; cursor: pointer;
+    background: var(--accent); color: var(--text-on-accent); border: none;
     box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 25%, transparent);
   }
   .cta-primary:hover {
@@ -236,133 +117,36 @@ import GlobeCanvas from './GlobeCanvas.astro';
     filter: brightness(1.15);
     box-shadow: 0 8px 30px color-mix(in srgb, var(--accent) 35%, transparent);
   }
-  .cta-primary:active {
-    transform: translateY(0) scale(1);
-    filter: brightness(1);
-  }
-  .cta-secondary {
-    background: rgba(255,255,255,.04);
-    color: var(--text-primary);
-    border: 1.5px solid rgba(255,255,255,.1);
-  }
-  .cta-secondary:hover {
-    background: rgba(255,255,255,.08);
-    border-color: rgba(255,255,255,.18);
-    transform: translateY(-2px);
-    box-shadow: var(--inset-highlight-strong), var(--shadow-elevated);
-  }
-  .cta-secondary:active {
-    transform: translateY(0);
-  }
-  .cta-secondary:hover svg { transform: translateX(4px); }
-  .cta-secondary svg { transition: transform 0.35s var(--ease-out-premium); }
-
-  /* === Metric Cards === */
-  .hero-metrics { display: flex; flex-direction: column; margin-top: 2.5rem; }
-  @media (max-width: 767px) {
-    .hero-metrics { flex-direction: row; flex-wrap: wrap; gap: 0.5rem; }
-    .metric-card { flex: 1 1 calc(50% - 0.5rem); margin-bottom: 0 !important; padding: 0.75rem 1rem !important; }
-    .metric-card .metric-value { font-size: 1.25rem !important; }
-    .metric-card .metric-unit { font-size: 0.75rem !important; }
-    .metric-card .metric-label { font-size: 0.5rem !important; }
-    .metric-card .metric-icon { display: none; }
-  }
-  @media (min-width: 1024px) { .hero-metrics { margin-top: 0; } }
-  .metric-card {
-    background: rgba(5, 5, 8, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px;
-    padding: 1.25rem 1.5rem; margin-bottom: 1rem;
-    display: flex; align-items: center;
-    transition: border-color 0.25s ease;
-  }
-  .metric-card:hover {
-    border-color: rgba(255, 255, 255, 0.12);
-  }
-  /* Asymmetric card margins removed — consistent gap via flex */
-  .metric-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(0, 229, 255, 0.08); display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0; margin-right: 1rem; }
-  .metric-value { font-family: var(--font-mono); font-size: 1.75rem; font-weight: 700; color: var(--text-primary); line-height: 1; }
-  .metric-unit  { font-family: var(--font-mono); font-size: 1rem; color: var(--accent); margin-left: 2px; }
-  .metric-label { font-family: var(--font-label); font-size: .75rem; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: .15em; margin-left: auto; text-align: right; white-space: nowrap; }
+  .cta-primary:active { transform: translateY(0) scale(1); filter: brightness(1); }
 
   /* === Light mode === */
   :global([data-theme="light"]) .cta-primary { background: var(--accent); color: #ffffff; box-shadow: 0 10px 30px rgba(0,131,143,.2); }
   :global([data-theme="light"]) .cta-primary:hover { background: #00969e; }
-  :global([data-theme="light"]) .cta-secondary { background: rgba(0,0,0,.04); color: var(--text-primary); border-color: rgba(0,0,0,.18); }
-  :global([data-theme="light"]) .cta-secondary:hover { background: var(--text-primary); color: var(--bg-primary); }
   :global([data-theme="light"]) .hero-text { text-shadow: 0 0 60px rgba(255,255,255,0.8), 0 0 120px rgba(255,255,255,0.4); }
-  :global([data-theme="light"]) .metric-icon { box-shadow: 0 0 10px rgba(0,131,143,0.12), 0 0 4px rgba(0,131,143,0.08); }
-  :global([data-theme="light"]) .metric-card:hover .metric-icon { box-shadow: 0 0 16px rgba(0,131,143,0.2), 0 0 6px rgba(0,131,143,0.12); }
-  /* Dead light-mode overrides for removed elements cleaned up */
 
   /* === Responsive === */
   @media (max-width: 767px) {
     .hero { min-height: auto !important; padding-top: 3.5rem !important; padding-bottom: 1rem !important; }
     .hero .headline { font-size: clamp(1.5rem, 7vw, 2rem) !important; margin-bottom: 1rem !important; line-height: 1.1 !important; }
-    .hero .hero-text p { font-size: 0.875rem !important; line-height: 1.55 !important; margin-bottom: 1.5rem !important; }
-    .eyebrow-text { font-size: 0.5625rem !important; }
-    .eyebrow-text::after { display: none; }
-    .eyebrow-pip { animation: none; width: 6px !important; height: 6px !important; }
+    .hero .hero-subtitle { font-size: 0.875rem !important; line-height: 1.55 !important; margin-bottom: 1rem !important; }
+    .hero-proof { font-size: 0.6875rem !important; margin-bottom: 1.5rem !important; }
     .hero-actions { flex-direction: column; gap: 0.5rem; }
-    .cta-primary, .cta-secondary { width: 100%; max-width: none; padding: 12px 20px !important; font-size: 0.75rem !important; }
-
-    /* Metric cards → compact horizontal strip */
-    .hero-metrics {
-      flex-direction: row;
-      flex-wrap: nowrap;
-      gap: 0;
-      margin-top: 1.5rem;
-      background: rgba(5, 5, 8, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    .metric-card {
-      flex: 1;
-      flex-direction: column;
-      text-align: center;
-      padding: 0.6rem 0.35rem;
-      margin-bottom: 0;
-      background: transparent;
-      border: none;
-      border-radius: 0;
-      box-shadow: none;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-    }
-    .metric-card::before, .metric-card::after { display: none; }
-    .metric-card:not(:last-child) {
-      border-right: 1px solid rgba(255, 255, 255, 0.06);
-    }
-    .metric-card:hover { box-shadow: none; transform: none; }
-    .metric-icon { display: none; }
-    .metric-value { font-size: 1rem; }
-    .metric-unit { font-size: 0.625rem; }
-    .metric-label { margin-left: 0; text-align: center; font-size: 0.5rem; margin-top: 0.15rem; letter-spacing: 0.03em; white-space: normal !important; }
+    .cta-primary { width: 100%; max-width: none; padding: 12px 20px !important; font-size: 0.75rem !important; }
   }
   @media (max-width: 374px) {
     .hero .headline { font-size: 1.35rem !important; }
-    .hero .hero-text p { font-size: 0.8125rem !important; }
-    .metric-value { font-size: 0.875rem !important; }
-    .metric-label { font-size: 0.4375rem !important; }
-    .cta-primary, .cta-secondary { padding: 10px 16px !important; font-size: 0.6875rem !important; }
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    .hero-metrics { flex-direction: row; margin-top: 2rem; }
-    .metric-card { flex: 1; margin-right: 1rem; }
-    .metric-card:last-child { margin-right: 0; }
+    .hero .hero-subtitle { font-size: 0.8125rem !important; }
+    .cta-primary { padding: 10px 16px !important; font-size: 0.6875rem !important; }
   }
 
   /* === Reduced motion === */
   @media (prefers-reduced-motion: reduce) {
-    .contour { stroke-dashoffset: 0 !important; animation: none !important; }
-    .mesh-canvas { animation: none !important; }
-    .dot, .eyebrow-pip, .scroll-thumb, .scroll-chevron, .eyebrow-text::after { animation: none !important; }
-    .dot { display: none; }
+    .cta-primary { transition: none; }
   }
 
   /* === Print === */
   @media print {
-    .dot, .scroll-indicator, .topo-map { display: none !important; }
+    .hero-mesh, .globe-mobile, .hero-dissolve { display: none !important; }
   }
 </style>
 
@@ -380,5 +164,3 @@ import GlobeCanvas from './GlobeCanvas.astro';
     });
   })();
 </script>
-
-<!-- Counter animation handled by Layout.astro -->

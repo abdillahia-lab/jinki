@@ -125,9 +125,9 @@ const storyBlocks = [
     </section>
 
     <!-- ============ SCROLLYTELLING NARRATIVE ============ -->
-    <section class="section" aria-label="Our Story" style="background: var(--surface-dim);">
+    <section class="section section--alt" aria-label="Our Story">
       <div class="section-inner">
-        <div class="story-header reveal" style="text-align: center; margin-bottom: 64px;">
+        <div class="section-header reveal">
           <span class="label">Our Story</span>
           <h2>How Jinki Came to Be</h2>
         </div>
@@ -136,13 +136,13 @@ const storyBlocks = [
             <div class={`story-block ${i % 2 === 0 ? 'story-block--left' : 'story-block--right'} reveal`}>
               <div class="story-visual" aria-hidden="true">
                 <div class="story-icon-wrap">
-                  <span class="material-symbols-outlined" style="font-size: 32px; font-variation-settings: 'FILL' 1;">{block.visual}</span>
+                  <span class="material-symbols-outlined story-icon" aria-hidden="true">{block.visual}</span>
                 </div>
                 <div class="story-connector"></div>
               </div>
               <div class="story-content">
-                <h3 style="margin-bottom: 12px;">{block.title}</h3>
-                <p style="line-height: 1.8;">{block.text}</p>
+                <h3>{block.title}</h3>
+                <p>{block.text}</p>
               </div>
             </div>
           ))}
@@ -153,7 +153,7 @@ const storyBlocks = [
     <!-- ============ BY THE NUMBERS ============ -->
     <section class="section stats-section" aria-label="By the Numbers">
       <div class="section-inner">
-        <div class="stats-header reveal" style="text-align: center; margin-bottom: 56px;">
+        <div class="section-header reveal">
           <span class="label">Platform Capabilities</span>
           <h2>Built for Scale</h2>
         </div>
@@ -169,12 +169,12 @@ const storyBlocks = [
     </section>
 
     <!-- ============ TEAM CAROUSEL ============ -->
-    <section class="section" style="background: var(--surface-dim);" aria-label="Our Team">
+    <section class="section section--alt" aria-label="Our Team">
       <div class="section-inner">
-        <div class="team-header reveal" style="text-align: center; margin-bottom: 56px;">
+        <div class="section-header reveal">
           <span class="label">Leadership</span>
           <h2>The Team Behind the Intelligence</h2>
-          <p style="max-width: 560px; margin: 16px auto 0; color: var(--text-secondary);">
+          <p class="section-desc">
             Security professionals, AI engineers, and operations specialists building
             the future of aerial intelligence.
           </p>
@@ -220,10 +220,10 @@ const storyBlocks = [
     <!-- ============ APPROACH / HOW WE THINK ============ -->
     <section class="section" aria-label="Our Approach">
       <div class="section-inner">
-        <div class="approach-header reveal" style="text-align: center; margin-bottom: 56px;">
+        <div class="section-header reveal">
           <span class="label">Our Approach</span>
           <h2>How We Think</h2>
-          <p style="max-width: 560px; margin: 16px auto 0; color: var(--text-secondary);">
+          <p class="section-desc">
             Three principles guide every mission, model, and deliverable.
           </p>
         </div>
@@ -237,16 +237,16 @@ const storyBlocks = [
                 data-pillar={pillar.id}
               >
                 <div class="pillar-icon-wrap">
-                  <span class="material-symbols-outlined" style="font-size: 28px; color: var(--accent); font-variation-settings: 'FILL' 1;" aria-hidden="true">{pillar.icon}</span>
+                  <span class="material-symbols-outlined pillar-icon" aria-hidden="true">{pillar.icon}</span>
                 </div>
                 <div class="pillar-text">
-                  <h3 style="margin-bottom: 8px;">{pillar.title}</h3>
+                  <h3>{pillar.title}</h3>
                   <p class="pillar-summary">{pillar.summary}</p>
                 </div>
                 <span class="pillar-chevron material-symbols-outlined" aria-hidden="true">expand_more</span>
               </button>
               <div class="pillar-detail" id={`pillar-detail-${pillar.id}`} aria-hidden="true">
-                <p style="line-height: 1.8;">{pillar.details}</p>
+                <p>{pillar.details}</p>
               </div>
             </div>
           ))}
@@ -255,9 +255,9 @@ const storyBlocks = [
     </section>
 
     <!-- ============ OFFICE / FIELD SPLIT ============ -->
-    <section class="section split-section" style="background: var(--surface-dim);" aria-label="How We Work">
+    <section class="section section--alt split-section" aria-label="How We Work">
       <div class="section-inner">
-        <div class="split-header reveal" style="text-align: center; margin-bottom: 56px;">
+        <div class="section-header reveal">
           <span class="label">How We Work</span>
           <h2>Intelligence Meets Operations</h2>
         </div>
@@ -265,9 +265,9 @@ const storyBlocks = [
           <div class="split-panel split-panel--office reveal">
             <div class="split-panel-inner">
               <div class="split-icon-row" aria-hidden="true">
-                <span class="material-symbols-outlined" style="font-size: 40px; color: var(--accent); font-variation-settings: 'FILL' 1;">monitoring</span>
+                <span class="material-symbols-outlined split-icon" aria-hidden="true">monitoring</span>
               </div>
-              <h3 style="margin-bottom: 16px;">The Intelligence Lab</h3>
+              <h3>The Intelligence Lab</h3>
               <ul class="split-list">
                 <li>AI model training & validation</li>
                 <li>Thermal & visual data fusion</li>
@@ -286,9 +286,9 @@ const storyBlocks = [
           <div class="split-panel split-panel--field reveal reveal-delay-1">
             <div class="split-panel-inner">
               <div class="split-icon-row" aria-hidden="true">
-                <span class="material-symbols-outlined" style="font-size: 40px; color: var(--accent-tertiary); font-variation-settings: 'FILL' 1;">flight_takeoff</span>
+                <span class="material-symbols-outlined split-icon split-icon--field" aria-hidden="true">flight_takeoff</span>
               </div>
-              <h3 style="margin-bottom: 16px;">The Field</h3>
+              <h3>The Field</h3>
               <ul class="split-list">
                 <li>Autonomous mission deployment</li>
                 <li>Facility intelligence scans</li>
@@ -304,12 +304,12 @@ const storyBlocks = [
     </section>
 
     <!-- CTA -->
-    <section class="section" aria-label="Get in Touch" style="text-align: center;">
-      <div class="section-inner" style="max-width: 640px; margin: 0 auto;">
+    <section class="section cta-section" aria-label="Get in Touch">
+      <div class="section-inner cta-inner">
         <div class="reveal">
           <span class="label">Ready to Talk?</span>
-          <h2 style="margin-bottom: 16px;">Let Us Show You What We See</h2>
-          <p style="margin-bottom: 32px; color: var(--text-secondary); line-height: 1.8;">
+          <h2>Let Us Show You What We See</h2>
+          <p class="cta-desc">
             Whether you need a one-time facility intelligence scan or persistent autonomous monitoring,
             we are ready to deliver the intelligence your operations demand.
           </p>
@@ -616,7 +616,7 @@ const storyBlocks = [
   }
 
   @media (max-width: 767px) {
-    .about-hero { min-height: auto !important; padding-top: 120px !important; }
+    .about-hero { min-height: auto; padding-top: 120px; }
     .about-mesh { filter: blur(40px); }
     .story-timeline::before {
       left: 28px;
@@ -1270,6 +1270,8 @@ const storyBlocks = [
     padding: 5rem clamp(20px, 5vw, 80px);
   }
 
+  .section--alt { background: var(--surface-dim); }
+
   @media (min-width: 768px) {
     .section { padding: 8rem clamp(20px, 5vw, 80px); }
   }
@@ -1277,6 +1279,17 @@ const storyBlocks = [
   .section-inner {
     max-width: var(--container-max);
     margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .section-desc {
+    max-width: 560px;
+    margin: 16px auto 0;
+    color: var(--text-secondary);
   }
 
   .label {
@@ -1293,6 +1306,43 @@ const storyBlocks = [
   h2 {
     font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
     line-height: 1.1;
+  }
+
+  /* Extracted inline styles */
+  .story-icon {
+    font-size: 32px;
+    font-variation-settings: 'FILL' 1;
+  }
+
+  .story-content h3 { margin-bottom: 12px; }
+  .story-content p { line-height: 1.8; }
+
+  .pillar-icon {
+    font-size: 28px;
+    color: var(--accent);
+    font-variation-settings: 'FILL' 1;
+  }
+
+  .pillar-text h3 { margin-bottom: 8px; }
+  .pillar-detail p { line-height: 1.8; }
+
+  .split-icon {
+    font-size: 40px;
+    color: var(--accent);
+    font-variation-settings: 'FILL' 1;
+  }
+
+  .split-icon--field { color: var(--accent-tertiary); }
+
+  .split-panel h3 { margin-bottom: 16px; }
+
+  .cta-section { text-align: center; }
+  .cta-inner { max-width: 640px; }
+  .cta-section h2 { margin-bottom: 16px; }
+  .cta-desc {
+    margin-bottom: 32px;
+    color: var(--text-secondary);
+    line-height: 1.8;
   }
 
   @media (prefers-reduced-motion: reduce) {

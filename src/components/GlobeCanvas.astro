@@ -42,6 +42,7 @@
 <script>
   async function initGlobe(): Promise<void> {
     if (window.innerWidth < 768) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const canvas = document.getElementById("globe-canvas") as HTMLCanvasElement | null;
     if (!canvas) return;
 
@@ -80,14 +81,28 @@
         tex.anisotropy = maxAniso;
       });
 
-    // Wait for ALL textures before showing the globe
-    const [dayMap, nightMap, normalMap, specularMap, cloudMap] = await Promise.all([
-      loadTexAsync("/textures/earth-day.webp"),
-      loadTexAsync("/textures/earth-thermal.webp"),
-      loadTexAsync("/textures/earth-normal.webp", false),
-      loadTexAsync("/textures/earth-specular.webp", false),
-      loadTexAsync("/textures/earth-clouds.webp", false),
-    ]);
+    // 8s timeout — on slow connections, skip globe gracefully
+    const textureTimeout = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('Texture timeout')), 8000)
+    );
+
+    let dayMap, nightMap, normalMap, specularMap, cloudMap;
+    try {
+      [dayMap, nightMap, normalMap, specularMap, cloudMap] = await Promise.race([
+        Promise.all([
+          loadTexAsync("/textures/earth-day.webp"),
+          loadTexAsync("/textures/earth-thermal.webp"),
+          loadTexAsync("/textures/earth-normal.webp", false),
+          loadTexAsync("/textures/earth-specular.webp", false),
+          loadTexAsync("/textures/earth-clouds.webp", false),
+        ]),
+        textureTimeout,
+      ]);
+    } catch {
+      // Textures didn't load in time — hide canvas gracefully
+      canvas.style.display = 'none';
+      return;
+    }
 
     // Time-aware sun — matches visitor's local time
     const hour = new Date().getHours() + new Date().getMinutes() / 60;
@@ -305,7 +320,7 @@
           vBright = 0.4 + 0.6 * max(dot(n, uSunDir), 0.0);
           vPulse = 0.6 + 0.4 * sin(uTime * 1.5 + aPhase * 6.28);
           vec4 mv = modelViewMatrix * vec4(position, 1.0);
-          float baseSize = mix(12.0, 18.0, aIsHQ); // HQ is larger
+          float baseSize = mix(14.0, 22.0, aIsHQ); // HQ is larger
           gl_PointSize = baseSize * vPulse;
           gl_Position = projectionMatrix * mv;
         }
@@ -315,9 +330,10 @@
         void main() {
           float d = length(gl_PointCoord - 0.5);
           if (d > 0.5) discard;
-          float core = exp(-d * d * 20.0);
-          float glow = exp(-d * d * 6.0) * 0.4;
-          float alpha = (core + glow) * vPulse * vBright;
+          float core = exp(-d * d * 16.0);
+          float glow = exp(-d * d * 4.0) * 0.5;
+          float bloom = exp(-d * d * 1.5) * 0.15;
+          float alpha = (core + glow + bloom) * vPulse * vBright;
           // HQ = brand cyan, others = warm amber
           vec3 col = mix(vec3(0.2, 1.0, 0.4), vec3(0.0, 0.9, 1.0), vHQ);
           gl_FragColor = vec4(col, alpha * 0.8);
@@ -360,6 +376,10 @@
       return new Float32Array(allPositions);
     }
 
+    // Closure variables for animate loop access
+    let cableMaterial: InstanceType<typeof LineBasicMaterial> | null = null;
+    let shipUpdateFn: ((time: number) => void) | null = null;
+
     // Load and render cables + lanes in parallel
     Promise.all([
       fetch('/data/submarine-cables.json').then(r => r.json()),
@@ -369,8 +389,8 @@
       const cablePositions = buildGreatCircleLines(cables, 1.002, 16);
       const cableGeo = new BufferGeometry();
       cableGeo.setAttribute('position', new BufferAttribute(cablePositions, 3));
-      const cableMat = new LineBasicMaterial({ color: 0x00D4FF, transparent: true, opacity: 0.55 });
-      globeGroup.add(new LineSegments(cableGeo, cableMat));
+      cableMaterial = new LineBasicMaterial({ color: 0x00D4FF, transparent: true, opacity: 0.55 });
+      globeGroup.add(new LineSegments(cableGeo, cableMaterial));
 
       // Shipping lanes — amber
       const lanePositions = buildGreatCircleLines(lanes, 1.001, 20);
@@ -445,8 +465,8 @@
         }
         shipGeo.attributes.position.needsUpdate = true;
       };
-      // Store updateShips so the animate loop can call it
-      (window as any).__updateShips = updateShips;
+      // Store updateShips in closure variable for animate loop
+      shipUpdateFn = updateShips;
     }).catch(e => console.warn('[Globe] Overlays failed:', e));
 
     let isDragging = false;
@@ -516,7 +536,8 @@
       earthUniforms.uTime.value = elapsed;
       satUniforms.uTime.value = elapsed;
       dcUniforms.uTime.value = elapsed;
-      if ((window as any).__updateShips) (window as any).__updateShips(elapsed);
+      if (shipUpdateFn) shipUpdateFn(elapsed);
+      if (cableMaterial) cableMaterial.opacity = 0.35 + 0.2 * Math.sin(elapsed * 0.8);
       if (!isDragging) {
         globeGroup.rotation.y += AUTO_ROT;
         rotVelX *= FRICTION;

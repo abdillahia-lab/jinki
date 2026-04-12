@@ -1,18 +1,17 @@
 ---
 /*
-  Home Page — Tactical Jinki | Aerial Intelligence & Infrastructure
+  Home Page — Jinki | Aerial Intelligence for Critical Infrastructure
 
-  Single-page layout: Nav → Hero (globe) → Verticals → Thermal HUD →
-  Bento Stats → Lead Gen → Footer.
+  Layout: Nav → Hero (globe) → TrustBar → Verticals →
+  Bento Stats → Process → Lead Gen → Footer.
 
-  Design spec: docs/superpowers/specs/2026-03-19-jinki-landing-page-transformation.md
+  6 content sections. No dividers. Premium spacing.
 */
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
 import TrustBar from '../components/TrustBar.astro';
 import Verticals from '../components/Verticals.astro';
-import ThermalHUD from '../components/ThermalHUD.astro';
 import BentoStats from '../components/BentoStats.astro';
 import Process from '../components/Process.astro';
 import LeadGen from '../components/LeadGen.astro';
@@ -69,23 +68,9 @@ import Footer from '../components/Footer.astro';
     <Hero />
     <TrustBar />
     <Verticals />
-    <div class="section-fade" aria-hidden="true"></div>
-    <div class="cv-auto"><ThermalHUD /></div>
-    <div class="section-fade" aria-hidden="true"></div>
-    <div class="cv-auto"><BentoStats /></div>
-    <div class="section-fade" aria-hidden="true"></div>
-    <div class="cv-auto"><Process /></div>
-    <div class="section-fade" aria-hidden="true"></div>
-    <div class="cv-auto"><LeadGen /></div>
+    <BentoStats />
+    <Process />
+    <LeadGen />
   </main>
   <Footer />
 </Layout>
-
-<style>
-  .section-fade {
-    height: 1px;
-    background: linear-gradient(to right, transparent 10%, color-mix(in srgb, var(--accent) 6%, transparent) 30%, color-mix(in srgb, var(--accent) 10%, transparent) 50%, color-mix(in srgb, var(--accent) 6%, transparent) 70%, transparent 90%);
-    max-width: 64rem;
-    margin: 0 auto;
-  }
-</style>

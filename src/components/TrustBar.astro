@@ -26,7 +26,7 @@ const outcomes = [
 const trustBadges = [
   { icon: 'flight_takeoff', label: 'FAA Part 107', full: 'FAA Remote Pilot Certificate — Part 107' },
   { icon: 'radar', label: 'DC SFRA Trained', full: 'Washington DC Special Flight Rules Area Certified' },
-  { icon: 'verified_user', label: 'SOC 2 Type I — Q3 2026', full: 'SOC 2 Type I Compliance — Target Q3 2026' },
+  { icon: 'verified_user', label: '$5M Liability Coverage', full: '$5M Commercial Liability Insurance Per Operation' },
   { icon: 'lock', label: 'End-to-End Encrypted', full: 'AES-256 End-to-End Data Encryption' },
   { icon: 'health_and_safety', label: 'OSHA Compliant', full: 'OSHA Workplace Safety Standards Compliant' },
   { icon: 'shield', label: 'NDA by Default', full: 'Non-Disclosure Agreement Included With Every Engagement' },
@@ -36,8 +36,8 @@ const trustBadges = [
 <section class="trust-bar" aria-label="Why teams choose Jinki">
 
   <!-- Stats Bar -->
-  <div class="trust-counters reveal">
-    <div class="trust-counters-grid">
+  <div class="trust-counters reveal-curtain">
+    <div class="trust-counters-grid reveal-stagger">
       <div class="trust-counter">
         <span class="trust-counter-val">0.5°C</span>
         <span class="trust-counter-lbl">Thermal Accuracy</span>
@@ -113,7 +113,9 @@ const trustBadges = [
   .trust-bar {
     display: flex;
     flex-direction: column;
+    padding: 5rem 0;
   }
+  @media (min-width: 768px) { .trust-bar { padding: 8rem 0; } }
 
   /* --- Stats bar --- */
   .trust-counters {
@@ -136,7 +138,7 @@ const trustBadges = [
   .trust-counter-val {
     display: block;
     font-family: var(--font-headline);
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 700;
     color: var(--accent);
     letter-spacing: -0.03em;

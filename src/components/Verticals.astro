@@ -60,22 +60,22 @@ const verticals = [
           <span class="section-eyebrow">Verticals</span>
         </div>
         <h2 class="verticals-title">
-          Industries We Serve
+          Find Your Industry
         </h2>
         <p class="verticals-subtitle">
-          Aerial intelligence tailored to each sector — from 0.5°C thermal precision for data centers to 50+ mile daily corridor inspections for energy infrastructure.
+          Each vertical gets purpose-built intelligence — not generic data dumps.
         </p>
       </div>
       <a href="#lead-gen" class="verticals-cta">
-        Get Started
+        Request Assessment
         <span class="arrow-icon">&rarr;</span>
       </a>
     </div>
 
     <!-- 4-column grid -->
-    <div class="verticals-grid">
+    <div class="verticals-grid reveal-stagger reveal">
       {verticals.map((v) => (
-        <a href={v.link} class="vertical-card reveal" data-tilt style={`--card-accent: ${v.accent};${v.gradient ? ` background: ${v.gradient};` : ''}`}>
+        <a href={v.link} class="vertical-card" data-tilt style={`--card-accent: ${v.accent};${v.gradient ? ` background: ${v.gradient};` : ''}`}>
           {v.img ? (
             <picture>
               {v.webp && <source srcset={v.webp} type="image/webp" />}
@@ -114,12 +114,12 @@ const verticals = [
   /* --- Section & container --- */
   .verticals-section {
     background: var(--surface-dim);
-    padding-top: 7rem;
-    padding-bottom: 7rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
   }
 
   @media (min-width: 768px) {
-    .verticals-section { padding-top: 8rem; padding-bottom: 8rem; }
+    .verticals-section { padding-top: 10rem; padding-bottom: 10rem; }
   }
 
   .verticals-container {
