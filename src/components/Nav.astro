@@ -26,36 +26,33 @@ function isDropdownActive(items: { href: string }[]) {
 }
 ---
 
-<header id="site-nav" class="site-nav" style="position:fixed;top:0;left:0;right:0;z-index:1000;padding:12px 24px;view-transition-name:site-nav;">
-  <nav class="nav-inner" style="max-width: var(--container-max);margin:0 auto;display:flex;align-items:center;justify-content:space-between;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:16px;padding:12px 20px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:box-shadow .3s,background .3s;" aria-label="Main navigation">
+<header id="site-nav" class="site-nav">
+  <nav class="nav-inner" aria-label="Main navigation">
 
     <!-- Logo -->
-    <a href="/" class="nav-logo" aria-label="Jinki — Home" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text-primary);flex-shrink:0;">
-      <svg class="jinki-mark" width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true" style="display:block;flex-shrink:0;">
-        <!-- Center ping dot -->
+    <a href="/" class="nav-logo" aria-label="Jinki — Home">
+      <svg class="jinki-mark" width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
         <circle class="mark-ping" cx="16" cy="16" r="2.5" fill="#00E5FF"/>
-        <!-- Scanning arcs -->
         <path class="mark-arc mark-arc-1" d="M 16 8 A 8 8 0 1 1 8.5 20" stroke="#00E5FF" stroke-width="2" fill="none" stroke-linecap="round"/>
         <path class="mark-arc mark-arc-2" d="M 22 4.5 A 14 14 0 0 1 22 27.5" stroke="#00E5FF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
         <path class="mark-arc mark-arc-3" d="M 9 2 A 18 18 0 0 1 29 20" stroke="#00E5FF" stroke-width="1" fill="none" stroke-linecap="round"/>
-        <!-- Sweep line (radar) -->
         <line class="mark-sweep" x1="16" y1="16" x2="16" y2="2" stroke="#00E5FF" stroke-width="0.8" stroke-linecap="round" opacity="0.4"/>
       </svg>
-      <span style="font-family:var(--font-headline);font-weight:700;font-size:18px;letter-spacing:-0.02em;">Jinki</span>
+      <span class="nav-wordmark">Jinki</span>
     </a>
 
     <!-- Desktop links -->
-    <ul class="nav-links" style="display:flex;align-items:center;gap:4px;list-style:none;margin:0;padding:0;">
+    <ul class="nav-links">
       <!-- Verticals dropdown -->
-      <li class="dropdown" style="position:relative;">
-        <button class={`nav-link dropdown-trigger${isDropdownActive(verticals) ? ' nav-link-active' : ''}`} aria-expanded="false" aria-haspopup="menu" style="display:flex;align-items:center;gap:4px;">
+      <li class="dropdown">
+        <button class={`nav-link dropdown-trigger${isDropdownActive(verticals) ? ' nav-link-active' : ''}`} aria-expanded="false" aria-haspopup="menu">
           Verticals
-          <span class="material-symbols-outlined" aria-hidden="true" style="font-size:16px;transition:transform .25s;">expand_more</span>
+          <span class="material-symbols-outlined dropdown-chevron" aria-hidden="true">expand_more</span>
         </button>
-        <div class="dropdown-panel" role="menu" aria-label="Industry verticals" style="position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:200px;background:var(--surface-container);border:1px solid var(--glass-border);border-radius:12px;padding:8px;transition:opacity .2s,visibility .2s;box-shadow:0 8px 32px rgba(0,0,0,.3);">
+        <div class="dropdown-panel" role="menu" aria-label="Industry verticals">
           {verticals.map(v => (
-            <a href={v.href} class={`dropdown-item${isActive(v.href) ? ' dropdown-item-active' : ''}`} role="menuitem" aria-current={isActive(v.href) ? 'page' : undefined} style={`display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;text-decoration:none;color:var(--text-primary);font-family:var(--font-label);font-size:14px;transition:background .15s;`}>
-              <span class="dot" style={`width:8px;height:8px;border-radius:50%;background:${v.color};flex-shrink:0;`} aria-hidden="true"></span>
+            <a href={v.href} class={`dropdown-item${isActive(v.href) ? ' dropdown-item-active' : ''}`} role="menuitem" aria-current={isActive(v.href) ? 'page' : undefined}>
+              <span class="dot" style={`background:${v.color};`} aria-hidden="true"></span>
               {v.label}
             </a>
           ))}
@@ -63,14 +60,14 @@ function isDropdownActive(items: { href: string }[]) {
       </li>
 
       <!-- Services dropdown -->
-      <li class="dropdown" style="position:relative;">
-        <button class={`nav-link dropdown-trigger${isDropdownActive(services) ? ' nav-link-active' : ''}`} aria-expanded="false" aria-haspopup="menu" style="display:flex;align-items:center;gap:4px;">
+      <li class="dropdown">
+        <button class={`nav-link dropdown-trigger${isDropdownActive(services) ? ' nav-link-active' : ''}`} aria-expanded="false" aria-haspopup="menu">
           Services
-          <span class="material-symbols-outlined" aria-hidden="true" style="font-size:16px;transition:transform .25s;">expand_more</span>
+          <span class="material-symbols-outlined dropdown-chevron" aria-hidden="true">expand_more</span>
         </button>
-        <div class="dropdown-panel" role="menu" aria-label="Services" style="position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);min-width:200px;background:var(--surface-container);border:1px solid var(--glass-border);border-radius:12px;padding:8px;transition:opacity .2s,visibility .2s;box-shadow:0 8px 32px rgba(0,0,0,.3);">
+        <div class="dropdown-panel" role="menu" aria-label="Services">
           {services.map(s => (
-            <a href={s.href} class={`dropdown-item${isActive(s.href) ? ' dropdown-item-active' : ''}`} role="menuitem" aria-current={isActive(s.href) ? 'page' : undefined} style={`display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:8px;text-decoration:none;color:var(--text-primary);font-family:var(--font-label);font-size:14px;transition:background .15s;`}>
+            <a href={s.href} class={`dropdown-item${isActive(s.href) ? ' dropdown-item-active' : ''}`} role="menuitem" aria-current={isActive(s.href) ? 'page' : undefined}>
               {s.label}
             </a>
           ))}
@@ -84,47 +81,47 @@ function isDropdownActive(items: { href: string }[]) {
     </ul>
 
     <!-- Right side: theme toggle + CTA -->
-    <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
-      <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme" style="background:none;border:1px solid var(--glass-border);border-radius:12px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-secondary);transition:color .2s,border-color .2s;">
-        <span class="material-symbols-outlined" aria-hidden="true" style="font-size:20px;">dark_mode</span>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+        <span class="material-symbols-outlined theme-icon" aria-hidden="true">dark_mode</span>
       </button>
-      <a href="#lead-gen" class="nav-cta" style="display:inline-flex;align-items:center;font-family:var(--font-label);font-size:14px;font-weight:600;padding:8px 18px;border-radius:12px;background:var(--accent);color:var(--text-on-accent);text-decoration:none;white-space:nowrap;transition:opacity .2s;">Request Assessment</a>
+      <a href="#lead-gen" class="nav-cta">Request Assessment</a>
 
       <!-- Mobile hamburger -->
-      <button id="mobile-toggle" class="mobile-toggle" aria-label="Open menu" aria-expanded="false" style="display:none;background:none;border:none;cursor:pointer;color:var(--text-primary);padding:8px;min-width:44px;min-height:44px;">
-        <span class="material-symbols-outlined" aria-hidden="true" style="font-size:26px;">menu</span>
+      <button id="mobile-toggle" class="mobile-toggle" aria-label="Open menu" aria-expanded="false">
+        <span class="material-symbols-outlined mobile-toggle-icon" aria-hidden="true">menu</span>
       </button>
     </div>
   </nav>
 
   <!-- Mobile slide-out panel -->
   <div id="mobile-panel" class="mobile-panel" aria-hidden="true">
-    <div class="mobile-panel-inner" style="display:flex;flex-direction:column;gap:4px;padding:20px;">
-      <div class="mobile-section-label" style="font-family:var(--font-label);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);padding:16px 16px 8px;">Verticals</div>
+    <div class="mobile-panel-inner">
+      <div class="mobile-section-label">Verticals</div>
       {verticals.map(v => (
-        <a href={v.href} class={`mobile-link${isActive(v.href) ? ' mobile-link-active' : ''}`} aria-current={isActive(v.href) ? 'page' : undefined} style="display:flex;align-items:center;gap:12px;">
-          <span style={`width:8px;height:8px;border-radius:50%;background:${v.color};flex-shrink:0;`}></span>
+        <a href={v.href} class={`mobile-link${isActive(v.href) ? ' mobile-link-active' : ''}`} aria-current={isActive(v.href) ? 'page' : undefined}>
+          <span class="dot" style={`background:${v.color};`}></span>
           {v.label}
         </a>
       ))}
 
-      <div class="mobile-section-label" style="font-family:var(--font-label);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-secondary);padding:16px 16px 8px;">Services</div>
+      <div class="mobile-section-label">Services</div>
       {services.map(s => (
         <a href={s.href} class={`mobile-link${isActive(s.href) ? ' mobile-link-active' : ''}`} aria-current={isActive(s.href) ? 'page' : undefined}>{s.label}</a>
       ))}
 
-      <div style="border-top:1px solid var(--glass-border);margin:12px 0;"></div>
+      <div class="mobile-divider"></div>
       <a href="/about" class={`mobile-link${isActive('/about') ? ' mobile-link-active' : ''}`} aria-current={isActive('/about') ? 'page' : undefined}>About</a>
       <a href="/careers" class={`mobile-link${isActive('/careers') ? ' mobile-link-active' : ''}`} aria-current={isActive('/careers') ? 'page' : undefined}>Careers</a>
       <a href="/security" class={`mobile-link${isActive('/security') ? ' mobile-link-active' : ''}`} aria-current={isActive('/security') ? 'page' : undefined}>Security</a>
       <a href="/data-security" class={`mobile-link${isActive('/data-security') ? ' mobile-link-active' : ''}`} aria-current={isActive('/data-security') ? 'page' : undefined}>Data Security</a>
       <a href="/blog" class={`mobile-link${isActive('/blog') ? ' mobile-link-active' : ''}`} aria-current={isActive('/blog') ? 'page' : undefined}>Blog</a>
 
-      <a href="#lead-gen" class="mobile-cta" style="display:block;text-align:center;margin-top:16px;font-family:var(--font-label);font-size:15px;font-weight:600;padding:16px;border-radius:12px;background:var(--accent);color:var(--text-on-accent);text-decoration:none;">Request Assessment</a>
+      <a href="#lead-gen" class="mobile-cta">Request Assessment</a>
 
-      <div style="border-top:1px solid var(--glass-border);margin:16px 0 8px;"></div>
-      <button id="mobile-theme-toggle" class="mobile-link" style="display:flex;align-items:center;gap:12px;width:100%;background:none;border:none;cursor:pointer;color:var(--text-primary);font-family:var(--font-body);font-size:15px;" aria-label="Toggle theme">
-        <span class="material-symbols-outlined" aria-hidden="true" style="font-size:20px;">dark_mode</span>
+      <div class="mobile-divider mobile-divider--tight"></div>
+      <button id="mobile-theme-toggle" class="mobile-link mobile-theme-btn" aria-label="Toggle theme">
+        <span class="material-symbols-outlined theme-icon" aria-hidden="true">dark_mode</span>
         <span class="mobile-theme-label">Dark mode</span>
       </button>
     </div>
@@ -135,11 +132,68 @@ function isDropdownActive(items: { href: string }[]) {
 </header>
 
 <!-- Spacer to prevent content from hiding behind fixed nav -->
-<div style="height:72px;" aria-hidden="true"></div>
+<div class="nav-spacer" aria-hidden="true"></div>
 
 <style>
-  /* Nav link base */
+  /* ==================== HEADER ==================== */
+  .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 12px 24px;
+    view-transition-name: site-nav;
+  }
+
+  .nav-inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 12px 20px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: box-shadow .3s, background .3s;
+  }
+
+  .nav-spacer { height: 72px; }
+
+  /* ==================== LOGO ==================== */
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--text-primary);
+    flex-shrink: 0;
+  }
+
+  .jinki-mark { display: block; flex-shrink: 0; }
+
+  .nav-wordmark {
+    font-family: var(--font-headline);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+  }
+
+  /* ==================== LINKS ==================== */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
   .nav-link {
+    position: relative;
     font-family: var(--font-label);
     font-size: 14px;
     font-weight: 500;
@@ -177,39 +231,56 @@ function isDropdownActive(items: { href: string }[]) {
   .nav-link-active {
     color: var(--text-primary);
   }
-  .nav-link {
-    position: relative;
-  }
   :global([data-theme="light"]) .nav-link:hover {
     background: rgba(0,0,0,0.05);
   }
 
-  /* Active dropdown item */
-  .dropdown-item-active {
-    background: color-mix(in srgb, var(--accent) 10%, transparent);
+  /* ==================== DROPDOWN ==================== */
+  .dropdown { position: relative; }
+
+  .dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 
-  /* Active mobile link */
-  .mobile-link-active {
-    color: var(--accent) !important;
-    background: color-mix(in srgb, var(--accent) 8%, transparent);
+  .dropdown-chevron {
+    font-size: 16px;
+    transition: transform .25s;
   }
 
-  /* Dropdown default hidden */
   .dropdown-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(8px) scale(0.97);
+    min-width: 200px;
+    background: var(--surface-container);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.3);
     opacity: 0;
     visibility: hidden;
-    transform: translateX(-50%) translateY(8px) scale(0.97);
     transition: opacity 0.3s var(--ease-out-premium),
                 visibility 0.3s var(--ease-out-premium),
                 transform 0.3s var(--ease-out-premium);
   }
 
-  /* Dropdown item stagger */
   .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-family: var(--font-label);
+    font-size: 14px;
+    position: relative;
     opacity: 0;
     transform: translateY(6px);
-    transition: opacity 0.2s ease, transform 0.2s ease, background 0.15s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease, background 0.15s ease, padding-left 0.2s ease;
   }
   .dropdown-item:nth-child(1) { transition-delay: 0s; }
   .dropdown-item:nth-child(2) { transition-delay: 0.03s; }
@@ -217,27 +288,10 @@ function isDropdownActive(items: { href: string }[]) {
   .dropdown-item:nth-child(4) { transition-delay: 0.09s; }
   .dropdown-item:nth-child(5) { transition-delay: 0.12s; }
 
-  /* Dropdown open state */
-  .dropdown:hover .dropdown-panel,
-  .dropdown.open .dropdown-panel {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0) scale(1);
-  }
-  .dropdown:hover .dropdown-item,
-  .dropdown.open .dropdown-item {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .dropdown:hover .dropdown-trigger span.material-symbols-outlined,
-  .dropdown.open .dropdown-trigger span.material-symbols-outlined {
-    transform: rotate(180deg);
+  .dropdown-item-active {
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
   }
 
-  .dropdown-item {
-    position: relative;
-    transition: background 0.2s ease, padding-left 0.2s ease;
-  }
   .dropdown-item:hover {
     background: rgba(255,255,255,0.06);
     padding-left: 18px;
@@ -258,14 +312,72 @@ function isDropdownActive(items: { href: string }[]) {
     color: var(--text-primary);
   }
 
-  /* Theme button hover */
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Dropdown open state */
+  .dropdown:hover .dropdown-panel,
+  .dropdown.open .dropdown-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  .dropdown:hover .dropdown-item,
+  .dropdown.open .dropdown-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .dropdown:hover .dropdown-chevron,
+  .dropdown.open .dropdown-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* ==================== ACTIONS (right side) ==================== */
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .theme-btn {
+    background: none;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-secondary);
+    transition: color .2s, border-color .2s;
+  }
   .theme-btn:hover {
     color: var(--text-primary);
     border-color: var(--accent);
   }
 
-  /* CTA hover */
+  .theme-icon { font-size: 20px; }
+
   .nav-cta {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-label);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 12px;
+    background: var(--accent);
+    color: var(--text-on-accent);
+    text-decoration: none;
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
   }
   .nav-cta:hover {
@@ -278,10 +390,40 @@ function isDropdownActive(items: { href: string }[]) {
     box-shadow: 0 2px 8px color-mix(in srgb, var(--accent) 20%, transparent);
   }
 
-  /* === Active scanning logo === */
+  /* CTA shimmer sweep */
+  .nav-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.4) 50%, transparent 80%);
+    animation: ctaShimmer 4s ease-in-out infinite;
+  }
+  @keyframes ctaShimmer {
+    0%, 85%, 100% { left: -100%; opacity: 0; }
+    88% { opacity: 1; }
+    95% { left: 150%; opacity: 1; }
+    96% { opacity: 0; }
+  }
+
+  .mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-primary);
+    padding: 8px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .mobile-toggle-icon { font-size: 26px; }
+
+  /* ==================== LOGO ANIMATION ==================== */
   .jinki-mark { overflow: visible; }
 
-  /* Center dot ping */
   .mark-ping {
     animation: markPing 3s ease-in-out infinite;
   }
@@ -290,7 +432,6 @@ function isDropdownActive(items: { href: string }[]) {
     50% { r: 3; opacity: 0.8; filter: drop-shadow(0 0 6px #00E5FF); }
   }
 
-  /* Arcs pulse outward sequentially with staggered boot */
   .mark-arc-1 {
     opacity: 0;
     animation: arcBoot 0.6s ease-out 0.2s forwards, arcPulse1 4s ease-in-out 0.8s infinite;
@@ -323,7 +464,6 @@ function isDropdownActive(items: { href: string }[]) {
     85% { opacity: 0.08; }
   }
 
-  /* Radar sweep line rotation */
   .mark-sweep {
     transform-origin: 16px 16px;
     animation: radarSweep 3s linear infinite;
@@ -343,7 +483,6 @@ function isDropdownActive(items: { href: string }[]) {
     .mark-sweep { opacity: 0; }
   }
 
-  /* Light mode: darken logo arcs for visibility on white */
   :global([data-theme="light"]) .jinki-mark circle,
   :global([data-theme="light"]) .jinki-mark path,
   :global([data-theme="light"]) .jinki-mark line {
@@ -354,12 +493,11 @@ function isDropdownActive(items: { href: string }[]) {
   :global([data-theme="light"]) .mark-arc-3 { stroke: #0891b2; }
   :global([data-theme="light"]) .mark-sweep { stroke: #0891b2; }
 
-  /* Logo icon hover */
   .nav-logo:hover .material-symbols-outlined {
     transform: rotate(20deg);
   }
 
-  /* Scrolled state — applied by JS */
+  /* ==================== SCROLLED STATE ==================== */
   .nav-inner.scrolled {
     box-shadow: 0 4px 24px rgba(0,0,0,0.25), 0 1px 0 rgba(200,220,230,0.05) inset;
     backdrop-filter: blur(12px) saturate(1.3);
@@ -388,34 +526,7 @@ function isDropdownActive(items: { href: string }[]) {
     ) 1 / 0 0 1px 0;
   }
 
-  /* CTA shimmer sweep */
-  .nav-cta {
-    position: relative;
-    overflow: hidden;
-  }
-  .nav-cta::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(
-      105deg,
-      transparent 20%,
-      rgba(255, 255, 255, 0.4) 50%,
-      transparent 80%
-    );
-    animation: ctaShimmer 4s ease-in-out infinite;
-  }
-  @keyframes ctaShimmer {
-    0%, 85%, 100% { left: -100%; opacity: 0; }
-    88% { opacity: 1; }
-    95% { left: 150%; opacity: 1; }
-    96% { opacity: 0; }
-  }
-
-  /* ---- Mobile ---- */
+  /* ==================== MOBILE PANEL ==================== */
   .mobile-panel {
     position: fixed;
     top: 0;
@@ -438,6 +549,23 @@ function isDropdownActive(items: { href: string }[]) {
     transform: translateX(0);
     visibility: visible;
     pointer-events: auto;
+  }
+
+  .mobile-panel-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 20px;
+  }
+
+  .mobile-section-label {
+    font-family: var(--font-label);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+    padding: 16px 16px 8px;
   }
 
   .mobile-backdrop {
@@ -466,6 +594,7 @@ function isDropdownActive(items: { href: string }[]) {
     min-height: 44px;
     display: flex;
     align-items: center;
+    gap: 12px;
   }
   .mobile-link:hover,
   .mobile-link:active {
@@ -476,20 +605,50 @@ function isDropdownActive(items: { href: string }[]) {
     background: rgba(0,0,0,0.05);
   }
 
-  /* ---- Responsive ---- */
-  @media (max-width: 767px) {
-    .nav-links {
-      display: none !important;
-    }
-    .nav-cta {
-      display: none !important;
-    }
-    .mobile-toggle {
-      display: flex !important;
-    }
+  .mobile-link-active {
+    color: var(--accent) !important;
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
   }
 
-  /* Reduced motion */
+  .mobile-divider {
+    border-top: 1px solid var(--glass-border);
+    margin: 12px 0;
+  }
+  .mobile-divider--tight {
+    margin: 16px 0 8px;
+  }
+
+  .mobile-cta {
+    display: block;
+    text-align: center;
+    margin-top: 16px;
+    font-family: var(--font-label);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 16px;
+    border-radius: 12px;
+    background: var(--accent);
+    color: var(--text-on-accent);
+    text-decoration: none;
+  }
+
+  .mobile-theme-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 15px;
+  }
+
+  /* ==================== RESPONSIVE ==================== */
+  @media (max-width: 767px) {
+    .nav-links { display: none !important; }
+    .nav-cta { display: none !important; }
+    .mobile-toggle { display: flex !important; }
+  }
+
+  /* ==================== REDUCED MOTION ==================== */
   @media (prefers-reduced-motion: reduce) {
     .nav-inner,
     .mobile-panel,
@@ -567,7 +726,6 @@ function isDropdownActive(items: { href: string }[]) {
       var icon = mobileToggle?.querySelector('.material-symbols-outlined');
       if (icon) icon.textContent = 'close';
       document.body.style.overflow = 'hidden';
-      // Focus first link for keyboard users
       var firstLink = mobilePanel?.querySelector('a');
       if (firstLink) setTimeout(function() { firstLink.focus(); }, 100);
     }
@@ -580,7 +738,6 @@ function isDropdownActive(items: { href: string }[]) {
       var icon = mobileToggle?.querySelector('.material-symbols-outlined');
       if (icon) icon.textContent = 'menu';
       document.body.style.overflow = '';
-      // Return focus to toggle button
       mobileToggle?.focus();
     }
 
@@ -591,12 +748,10 @@ function isDropdownActive(items: { href: string }[]) {
 
     backdrop?.addEventListener('click', closeMobile);
 
-    /* Close mobile menu on link click */
     mobilePanel?.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', closeMobile);
     });
 
-    /* Close mobile menu on Escape + focus trap */
     document.addEventListener('keydown', function (e) {
       if (!mobilePanel?.classList.contains('open')) return;
       if (e.key === 'Escape') { closeMobile(); return; }
@@ -619,14 +774,12 @@ function isDropdownActive(items: { href: string }[]) {
         var parent = btn.closest('.dropdown');
         if (!parent) return;
         var isOpen = parent.classList.contains('open');
-        /* close all */
         document.querySelectorAll('.dropdown').forEach(function (d) { d.classList.remove('open'); });
         if (!isOpen) parent.classList.add('open');
         btn.setAttribute('aria-expanded', String(!isOpen));
       });
     });
 
-    /* Arrow key navigation within dropdown menus */
     document.querySelectorAll('.dropdown-trigger').forEach(function (btn) {
       btn.addEventListener('keydown', function (e) {
         if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
@@ -682,7 +835,6 @@ function isDropdownActive(items: { href: string }[]) {
       });
     });
 
-    /* Close dropdowns on outside click */
     document.addEventListener('click', function (e) {
       if (!e.target.closest('.dropdown')) {
         document.querySelectorAll('.dropdown').forEach(function (d) {
