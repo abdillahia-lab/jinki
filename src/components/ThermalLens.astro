@@ -40,7 +40,7 @@ const { src, thermalSrc, alt, class: className } = Astro.props;
   />
   <!-- Lens hint -->
   <div class="lens-hint">
-    <span class="material-symbols-outlined" style="font-size: 16px; font-variation-settings: 'FILL' 1;" aria-hidden="true">thermostat</span>
+    <span class="material-symbols-outlined lens-hint-icon" aria-hidden="true">thermostat</span>
     Hover to reveal thermal
   </div>
 </div>
@@ -99,6 +99,10 @@ const { src, thermalSrc, alt, class: className } = Astro.props;
     border-radius: 6px;
     pointer-events: none;
     transition: opacity 0.3s ease;
+  }
+  .lens-hint-icon {
+    font-size: 16px;
+    font-variation-settings: 'FILL' 1;
   }
   .thermal-lens:hover .lens-hint,
   .thermal-lens.active .lens-hint {
