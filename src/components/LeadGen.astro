@@ -23,7 +23,7 @@
           <input type="hidden" name="from_name" value="Jinki Website" />
           <input type="hidden" name="redirect" value="https://jinki.ai/?submitted=true" />
           <!-- Honeypot -->
-          <div aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px;">
+          <div aria-hidden="true" class="lg-honeypot">
             <label for="lg-botcheck">Website</label>
             <input type="text" id="lg-botcheck" name="botcheck" tabindex="-1" autocomplete="off" />
           </div>
@@ -51,7 +51,7 @@
         </form>
 
         <!-- Success -->
-        <div id="lg-success" class="leadgen-success" style="display: none;">
+        <div id="lg-success" class="leadgen-success lg-hidden">
           <svg class="lg-check-svg" width="48" height="48" viewBox="0 0 64 64" fill="none" aria-hidden="true">
             <circle cx="32" cy="32" r="29" stroke="#34d399" stroke-width="2.5" class="lg-check-circle"/>
             <polyline points="20,33 28,41 44,25" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lg-check-mark" fill="none"/>
@@ -187,7 +187,7 @@
     align-items: center;
     gap: 6px;
     font-family: var(--font-label);
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -198,6 +198,8 @@
     color: var(--accent-tertiary);
   }
 
+  .lg-honeypot { position: absolute; left: -9999px; top: -9999px; }
+  .lg-hidden { display: none; }
   .leadgen-success { text-align: center; padding: 2rem 0; }
   .leadgen-success-title {
     font-family: var(--font-headline);
@@ -263,8 +265,8 @@
   }
 
   @media (max-width: 767px) {
-    .leadgen-inner { padding: 2rem 1.25rem !important; }
-    .leadgen-headline { font-size: 1.5rem !important; }
+    .leadgen-inner { padding: 2rem 1.25rem; }
+    .leadgen-headline { font-size: 1.5rem; }
   }
 </style>
 
@@ -303,7 +305,7 @@
 
       if (response.ok) {
         form.style.display = 'none';
-        success.style.display = 'block';
+        success.classList.remove('lg-hidden');
         const liveRegion = document.getElementById('aria-live-region');
         if (liveRegion) liveRegion.textContent = 'Your request has been received.';
       } else {

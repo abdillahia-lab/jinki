@@ -127,16 +127,16 @@ import GlobeCanvas from './GlobeCanvas.astro';
   /* === Responsive === */
   @media (max-width: 767px) {
     .hero { min-height: auto; padding-top: 3.5rem; padding-bottom: 1rem; }
-    .hero .headline { font-size: clamp(1.5rem, 7vw, 2rem) !important; margin-bottom: 1rem !important; line-height: 1.1 !important; }
-    .hero .hero-subtitle { font-size: 0.875rem !important; line-height: 1.55 !important; margin-bottom: 1rem !important; }
-    .hero-proof { font-size: 0.75rem !important; margin-bottom: 1.5rem !important; }
+    .hero .headline { font-size: clamp(1.5rem, 7vw, 2rem); margin-bottom: 1rem; line-height: 1.1; }
+    .hero .hero-subtitle { font-size: 0.9375rem; line-height: 1.55; margin-bottom: 1rem; }
+    .hero-proof { font-size: 0.75rem; margin-bottom: 1.5rem; }
     .hero-actions { flex-direction: column; gap: 0.5rem; }
-    .cta-primary { width: 100%; max-width: none; padding: 12px 20px !important; font-size: 0.75rem !important; }
+    .cta-primary { width: 100%; max-width: none; padding: 14px 24px; font-size: 0.8125rem; min-height: 48px; }
   }
   @media (max-width: 374px) {
-    .hero .headline { font-size: 1.35rem !important; }
-    .hero .hero-subtitle { font-size: 0.8125rem !important; }
-    .cta-primary { padding: 10px 16px !important; font-size: 0.6875rem !important; }
+    .hero .headline { font-size: 1.35rem; }
+    .hero .hero-subtitle { font-size: 0.8125rem; }
+    .cta-primary { padding: 12px 20px; font-size: 0.75rem; min-height: 44px; }
   }
 
   /* === Reduced motion === */
