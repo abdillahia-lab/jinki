@@ -33,20 +33,20 @@ function estimateReadTime(description: string): number {
   <Nav />
   <main id="main-content" class="omega-blog-page">
     <!-- Hero Header -->
-    <section class="omega-blog-hero" style="padding-top: 140px; padding-bottom: 64px;">
+    <section class="omega-blog-hero">
       <div class="omega-blog-inner">
         <div class="omega-blog-header reveal">
           <span class="omega-label">Blog</span>
-          <h1 style="margin-bottom: 16px;">
+          <h1>
             <span class="omega-gradient-text">Insights</span> & Intelligence
           </h1>
-          <p class="omega-subtitle" style="margin-bottom: 20px;">
+          <p class="omega-subtitle">
             Expert perspectives on aerial intelligence, autonomous operations, and the future of infrastructure monitoring.
           </p>
-          <a href="#blog-newsletter-section" style="display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-label); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); text-decoration: none; transition: gap 0.3s ease;">
-            <span class="material-symbols-outlined" style="font-size: 16px;" aria-hidden="true">mail</span>
+          <a href="#blog-newsletter-section" class="blog-subscribe-link">
+            <span class="material-symbols-outlined blog-subscribe-icon" aria-hidden="true">mail</span>
             Subscribe to the Intelligence Brief
-            <span style="transition: transform 0.3s ease; display: inline-block;">&darr;</span>
+            <span class="blog-subscribe-arrow">&darr;</span>
           </a>
         </div>
 
@@ -84,7 +84,7 @@ function estimateReadTime(description: string): number {
 
     <!-- Featured + Sidebar Magazine Layout -->
     {posts.length > 0 && (
-      <section class="omega-featured-section" style="padding-bottom: 48px;">
+      <section class="omega-featured-section">
         <div class="omega-blog-inner">
           <div class="omega-magazine-layout reveal">
             <!-- Featured (large) card -->
@@ -105,8 +105,8 @@ function estimateReadTime(description: string): number {
                 )}
                 <div class="omega-card-overlay"></div>
               </div>
-              <div class="omega-card-body" style="padding: 32px;">
-                <div class="omega-card-meta" style="margin-bottom: 12px;">
+              <div class="omega-card-body omega-card-body--featured">
+                <div class="omega-card-meta">
                   {posts[0].data.tags[0] && (
                     <span class="omega-tag">{posts[0].data.tags[0]}</span>
                   )}
@@ -115,9 +115,9 @@ function estimateReadTime(description: string): number {
                   </time>
                   <span class="omega-read-time">{estimateReadTime(posts[0].data.description)} min read</span>
                 </div>
-                <h2 class="omega-card-title" style="margin-bottom: 12px;">{posts[0].data.title}</h2>
+                <h2 class="omega-card-title">{posts[0].data.title}</h2>
                 <p class="omega-card-desc">{posts[0].data.description}</p>
-                <span class="omega-read-link" style="margin-top: 20px;">
+                <span class="omega-read-link omega-read-link--featured">
                   Read article
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
@@ -146,8 +146,8 @@ function estimateReadTime(description: string): number {
                     )}
                     <div class="omega-card-overlay"></div>
                   </div>
-                  <div class="omega-card-body" style="padding: 20px;">
-                    <div class="omega-card-meta" style="margin-bottom: 8px;">
+                  <div class="omega-card-body omega-card-body--sidebar">
+                    <div class="omega-card-meta">
                       {post.data.tags[0] && (
                         <span class="omega-tag">{post.data.tags[0]}</span>
                       )}
@@ -155,7 +155,7 @@ function estimateReadTime(description: string): number {
                         {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                       </time>
                     </div>
-                    <h3 class="omega-card-title-sm" style="margin-bottom: 8px;">{post.data.title}</h3>
+                    <h3 class="omega-card-title-sm">{post.data.title}</h3>
                     <p class="omega-card-desc-sm">{post.data.description}</p>
                   </div>
                 </a>
@@ -167,18 +167,18 @@ function estimateReadTime(description: string): number {
     )}
 
     <!-- Newsletter Signup -->
-    <section id="blog-newsletter-section" class="omega-newsletter-section" style="padding: 48px 0;">
+    <section id="blog-newsletter-section" class="omega-newsletter-section">
       <div class="omega-blog-inner">
-        <div class="omega-newsletter glass-panel reveal" style="padding: 48px; border-radius: 16px;">
+        <div class="omega-newsletter glass-panel reveal">
           <div class="omega-newsletter-content">
             <div class="omega-newsletter-text">
-              <span class="omega-label" style="margin-bottom: 8px;">Stay Informed</span>
-              <h3 style="margin-bottom: 8px;">Get aerial intelligence insights delivered</h3>
+              <span class="omega-label">Stay Informed</span>
+              <h3>Get aerial intelligence insights delivered</h3>
               <p>Join industry leaders receiving our monthly briefing on autonomous operations, thermal analytics, and infrastructure monitoring.</p>
             </div>
             <form class="omega-newsletter-form" id="blog-newsletter">
               <!-- Honeypot anti-spam -->
-              <div aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px;">
+              <div aria-hidden="true" class="honeypot">
                 <input type="text" name="botcheck" tabindex="-1" autocomplete="off" />
               </div>
               <div class="omega-input-group">
@@ -206,9 +206,9 @@ function estimateReadTime(description: string): number {
 
     <!-- All Posts Grid / List -->
     {posts.length > 3 && (
-      <section class="omega-all-posts" style="padding: 48px 0 96px;">
+      <section class="omega-all-posts">
         <div class="omega-blog-inner">
-          <h2 class="reveal" style="margin-bottom: 32px; font-size: 1.5rem;">All Articles</h2>
+          <h2 class="reveal omega-all-posts-title">All Articles</h2>
           <div class="omega-posts-grid" id="omega-posts-container">
             {posts.slice(3).map((post, i) => (
               <a href={`/blog/${post.id}`}
@@ -229,8 +229,8 @@ function estimateReadTime(description: string): number {
                   )}
                   <div class="omega-card-overlay"></div>
                 </div>
-                <div class="omega-card-body" style="padding: 24px;">
-                  <div class="omega-card-meta" style="margin-bottom: 8px;">
+                <div class="omega-card-body">
+                  <div class="omega-card-meta">
                     {post.data.tags[0] && (
                       <span class="omega-tag">{post.data.tags[0]}</span>
                     )}
@@ -240,7 +240,7 @@ function estimateReadTime(description: string): number {
                   </div>
                   <h3 class="omega-card-title-sm" style="margin-bottom: 8px;">{post.data.title}</h3>
                   <p class="omega-card-desc-sm">{post.data.description}</p>
-                  <span class="omega-read-link" style="margin-top: 16px;">
+                  <span class="omega-read-link">
                     Read article
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
@@ -255,8 +255,8 @@ function estimateReadTime(description: string): number {
     )}
 
     {posts.length === 0 && (
-      <section style="padding: 120px 0; text-align: center;">
-        <p style="color: var(--text-tertiary); font-size: 1.1rem;">No posts yet. Check back soon.</p>
+      <section class="omega-empty-state">
+        <p class="omega-empty-text">No posts yet. Check back soon.</p>
       </section>
     )}
   </main>
@@ -278,7 +278,60 @@ function estimateReadTime(description: string): number {
     padding-right: 24px;
   }
 
-  /* ===== Header ===== */
+  /* ===== Hero ===== */
+  .omega-blog-hero {
+    padding-top: 140px;
+    padding-bottom: 64px;
+  }
+
+  .omega-blog-header h1 {
+    margin-bottom: 16px;
+  }
+
+  .omega-subtitle {
+    margin-bottom: 20px;
+  }
+
+  .blog-subscribe-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    transition: gap 0.3s ease;
+  }
+
+  .blog-subscribe-icon { font-size: 16px; }
+  .blog-subscribe-arrow { transition: transform 0.3s ease; display: inline-block; }
+
+  /* ===== Cards ===== */
+  .omega-card-body { padding: 24px; }
+  .omega-card-body--featured { padding: 32px; }
+  .omega-card-body--sidebar { padding: 20px; }
+  .omega-card-meta { margin-bottom: 8px; }
+  .omega-card-body--featured .omega-card-meta { margin-bottom: 12px; }
+  .omega-card-title { margin-bottom: 12px; }
+  .omega-card-title-sm { margin-bottom: 8px; }
+  .omega-read-link { margin-top: 16px; }
+  .omega-read-link--featured { margin-top: 20px; }
+
+  /* ===== Sections ===== */
+  .omega-featured-section { padding-bottom: 48px; }
+  .omega-newsletter-section { padding: 48px 0; }
+  .omega-newsletter { padding: 48px; border-radius: 16px; }
+  .omega-newsletter-text .omega-label { margin-bottom: 8px; }
+  .omega-newsletter-text h3 { margin-bottom: 8px; }
+  .omega-all-posts { padding: 48px 0 96px; }
+  .omega-all-posts-title { margin-bottom: 32px; font-size: 1.5rem; }
+  .omega-empty-state { padding: 120px 0; text-align: center; }
+  .omega-empty-text { color: var(--text-tertiary); font-size: 1.1rem; }
+  .honeypot { position: absolute; left: -9999px; top: -9999px; }
+
   .omega-label {
     display: inline-block;
     font-family: var(--font-mono);

@@ -621,6 +621,19 @@ html { scrollbar-width: thin; scrollbar-color: rgba(0,229,255,0.2) var(--bg-prim
   }
 }
 
+/* --- Mobile Touch Feedback --- */
+@media (max-width: 767px) {
+  .btn-premium:active,
+  .cta-primary:active,
+  .nav-cta:active,
+  .mobile-cta:active,
+  .bento-sidebar-cta:active,
+  .sample-report-link:active {
+    transform: scale(0.97) !important;
+    transition-duration: 0.1s !important;
+  }
+}
+
 /* --- Glass Card Utility --- */
 .glass-card {
   background: var(--glass-bg);
