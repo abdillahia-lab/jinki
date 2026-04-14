@@ -1,0 +1,244 @@
+---
+/*
+  Contact Page — Jinki Aerial Intelligence
+  Hero + embedded LeadGen form + contact details + "What Happens Next" process.
+*/
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import LeadGen from '../components/LeadGen.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const contactSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Jinki Aerial Intelligence",
+  "url": "https://jinki.ai",
+  "email": "info@jinki.ai",
+  "areaServed": {
+    "@type": "GeoCircle",
+    "geoMidpoint": { "@type": "GeoCoordinates", "latitude": 38.9, "longitude": -77.4 },
+    "geoRadius": "200 mi",
+  },
+  "description": "Aerial intelligence platform for critical infrastructure — data centers, energy grids, security perimeters, and agriculture.",
+};
+
+const steps = [
+  { icon: 'mark_email_read', title: 'We Review Your Submission', desc: 'Your request is reviewed by our operations team within 4 business hours. No auto-responders — a real person reads every message.' },
+  { icon: 'call', title: 'Scoping Call', desc: 'A 15-minute call to understand your facility, objectives, and timeline. We ask the right questions so the proposal fits.' },
+  { icon: 'description', title: 'Proposal Within One Business Day', desc: 'A clear scope, timeline, and investment summary — no 20-page RFPs. You\'ll know exactly what you\'re getting and when.' },
+];
+---
+
+<Layout title="Contact — Jinki Aerial Intelligence" description="Get in touch with Jinki. Request a facility assessment, ask a question, or schedule a scoping call. We respond within 4 business hours." ogImage="/images/og-default.png" jsonLd={contactSchema}>
+  <Nav />
+  <Breadcrumb items={[{ label: "Contact" }]} />
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="contact-hero" aria-label="Contact Us">
+      <div class="contact-hero-inner reveal">
+        <div class="vert-eyebrow">
+          <span class="vert-eyebrow-line"></span>
+          <span class="vert-eyebrow-text">Contact</span>
+        </div>
+        <h1 class="contact-hero-title">Get in Touch</h1>
+        <p class="contact-hero-subtitle">Whether you need an aerial assessment, have a technical question, or want to explore what aerial intelligence can do for your facility — we're here. Every inquiry gets a response within 4 business hours.</p>
+      </div>
+    </section>
+
+    <!-- Contact Details -->
+    <section class="contact-details" aria-label="Contact Information">
+      <div class="contact-details-inner">
+        <div class="contact-card reveal">
+          <span class="material-symbols-outlined contact-card-icon" aria-hidden="true">mail</span>
+          <h3 class="contact-card-title">Email</h3>
+          <a href="mailto:info@jinki.ai" class="contact-card-value">info@jinki.ai</a>
+        </div>
+        <div class="contact-card reveal">
+          <span class="material-symbols-outlined contact-card-icon" aria-hidden="true">location_on</span>
+          <h3 class="contact-card-title">Service Area</h3>
+          <p class="contact-card-value">Northern Virginia &amp; Mid-Atlantic</p>
+        </div>
+        <div class="contact-card reveal">
+          <span class="material-symbols-outlined contact-card-icon" aria-hidden="true">schedule</span>
+          <h3 class="contact-card-title">Response Time</h3>
+          <p class="contact-card-value">Within 4 business hours</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What Happens Next -->
+    <section class="contact-process" aria-label="What Happens Next">
+      <div class="contact-process-inner">
+        <h2 class="contact-process-title reveal">What Happens Next</h2>
+        <div class="contact-steps">
+          {steps.map((step, i) => (
+            <div class="contact-step reveal">
+              <div class="contact-step-num">{i + 1}</div>
+              <div class="contact-step-content">
+                <span class="material-symbols-outlined contact-step-icon" aria-hidden="true">{step.icon}</span>
+                <h3 class="contact-step-label">{step.title}</h3>
+                <p class="contact-step-desc">{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <LeadGen />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .contact-hero {
+    padding: 140px 24px 64px;
+    text-align: center;
+    background: var(--surface-dim);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .contact-hero-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .contact-hero-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  .contact-hero-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  /* Contact Details Cards */
+  .contact-details {
+    padding: 64px 24px;
+  }
+  .contact-details-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .contact-card {
+    text-align: center;
+    padding: 32px 24px;
+    border-radius: 16px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+  }
+  .contact-card-icon {
+    font-size: 28px;
+    color: var(--accent);
+    font-variation-settings: 'FILL' 1;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .contact-card-title {
+    font-family: var(--font-headline);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+  .contact-card-value {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-decoration: none;
+  }
+  a.contact-card-value:hover {
+    color: var(--accent);
+  }
+
+  /* What Happens Next */
+  .contact-process {
+    padding: 64px 24px 80px;
+    background: var(--surface-dim);
+    border-top: 1px solid var(--glass-border);
+  }
+  .contact-process-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .contact-process-title {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .contact-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .contact-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .contact-step-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--text-on-accent);
+    font-family: var(--font-headline);
+    font-weight: 700;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .contact-step-content {
+    flex: 1;
+  }
+  .contact-step-icon {
+    font-size: 20px;
+    color: var(--accent);
+    font-variation-settings: 'FILL' 1;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .contact-step-label {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+  }
+  .contact-step-desc {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 767px) {
+    .contact-hero { padding: 120px 20px 48px; }
+    .contact-details { padding: 40px 20px; }
+    .contact-details-inner { grid-template-columns: 1fr; gap: 16px; }
+    .contact-process { padding: 48px 20px 64px; }
+    .contact-process-title { margin-bottom: 32px; }
+  }
+</style>
