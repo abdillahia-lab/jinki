@@ -86,6 +86,18 @@ const trustBadges = [
     </div>
   </div>
 
+  <!-- Market Position -->
+  <div class="trust-position reveal">
+    <div class="trust-position-inner">
+      <span class="material-symbols-outlined trust-position-icon" aria-hidden="true">hub</span>
+      <div class="trust-position-content">
+        <h3 class="trust-position-title">First and Only</h3>
+        <p class="trust-position-desc">No aerial intelligence provider focuses on data center operations as a primary vertical. Purpose-built for the world's largest data center market.</p>
+        <span class="trust-position-source">Northern Virginia — 70%+ of global internet traffic</span>
+      </div>
+    </div>
+  </div>
+
   <!-- Business Outcomes — Wharton-grade positioning -->
   <div class="trust-outcomes reveal">
     <h2 class="trust-outcomes-title">Why Operations Teams Choose Jinki</h2>
@@ -241,6 +253,52 @@ const trustBadges = [
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: var(--text-primary);
+  }
+
+  /* --- Market position --- */
+  .trust-position {
+    padding: 48px 24px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .trust-position-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 28px 32px;
+    border-radius: 16px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+  }
+  .trust-position-icon {
+    font-size: 28px;
+    color: var(--accent);
+    font-variation-settings: 'FILL' 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .trust-position-title {
+    font-family: var(--font-headline);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .trust-position-desc {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+  .trust-position-source {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+  }
+  @media (max-width: 767px) {
+    .trust-position-inner { flex-direction: column; gap: 12px; padding: 24px 20px; }
   }
 
   /* --- Business outcomes --- */
