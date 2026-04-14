@@ -1,0 +1,210 @@
+---
+/*
+  500 — "System Fault" error page
+  Jinki Aerial Intelligence
+  Matches 404 radar theme but with amber/warning color.
+*/
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout ogImage="/images/og-homepage.png" title="500 — System Fault | Jinki Aerial Intelligence" description="Something went wrong. Our team has been notified.">
+  <Nav />
+  <main id="main-content" class="error-page-500">
+
+    <div class="err-grid-bg" aria-hidden="true"></div>
+
+    <!-- Warning icon -->
+    <div class="err-icon-wrap" aria-hidden="true">
+      <span class="material-symbols-outlined err-icon">warning</span>
+    </div>
+
+    <!-- Content -->
+    <div class="err-content">
+      <h1 class="err-code" data-text="500">500</h1>
+      <p class="err-subtitle">System Fault</p>
+      <p class="err-message">
+        Something went wrong on our end. Our team has been notified and is investigating.<br/>
+        <span class="err-mono">ERR::INTERNAL_SYSTEM_FAULT</span>
+      </p>
+    </div>
+
+    <!-- Actions -->
+    <nav class="err-actions" aria-label="Error page navigation">
+      <a href="/" class="err-btn err-btn-primary">
+        <span class="material-symbols-outlined" aria-hidden="true">home</span>
+        Return Home
+      </a>
+      <a href="mailto:info@jinki.ai" class="err-btn err-btn-ghost">
+        <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+        Contact Support
+      </a>
+    </nav>
+
+    <!-- Status bar -->
+    <div class="err-status" aria-hidden="true">
+      <span><span class="err-status-dot"></span>SYSTEM FAULT</span>
+      <span id="err500-timestamp"></span>
+    </div>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .error-page-500 {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 120px 24px 80px;
+    overflow: hidden;
+  }
+
+  .err-grid-bg {
+    position: absolute;
+    inset: -60px;
+    z-index: 0;
+    background-image:
+      linear-gradient(var(--glass-border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.3;
+  }
+
+  .err-icon-wrap {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 32px;
+  }
+  .err-icon {
+    font-size: 80px;
+    color: #FFBD2E;
+    font-variation-settings: 'FILL' 1;
+    animation: errPulse 3s ease-in-out infinite;
+  }
+  @keyframes errPulse {
+    0%, 100% { opacity: 1; filter: drop-shadow(0 0 12px rgba(255, 189, 46, 0.4)); }
+    50% { opacity: 0.6; filter: drop-shadow(0 0 4px rgba(255, 189, 46, 0.2)); }
+  }
+
+  .err-content {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  .err-code {
+    font-family: var(--font-headline);
+    font-size: clamp(64px, 12vw, 120px);
+    font-weight: 700;
+    color: #FFBD2E;
+    line-height: 1;
+    margin-bottom: 8px;
+    text-shadow: 0 0 30px rgba(255, 189, 46, 0.3);
+  }
+  .err-subtitle {
+    font-family: var(--font-headline);
+    font-size: clamp(20px, 3vw, 28px);
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .err-message {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.8vw, 16px);
+    color: var(--text-tertiary);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+  .err-mono {
+    font-family: var(--font-mono);
+    color: #FFBD2E;
+    font-size: 0.85em;
+  }
+
+  .err-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .err-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-headline);
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 12px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.3s var(--ease-out-premium), box-shadow 0.3s ease;
+    min-height: 44px;
+  }
+  .err-btn .material-symbols-outlined { font-size: 18px; }
+  .err-btn-primary {
+    background: var(--accent);
+    color: var(--text-on-accent);
+  }
+  .err-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-glow); }
+  .err-btn-ghost {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--glass-border);
+  }
+  .err-btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .err-status {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 24px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    background: var(--surface-container-highest);
+    border-top: 1px solid var(--glass-border);
+    z-index: 10;
+  }
+  .err-status-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #FFBD2E;
+    margin-right: 8px;
+    animation: errDotPulse 2s ease infinite;
+  }
+  @keyframes errDotPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  @media (max-width: 600px) {
+    .error-page-500 { padding: 100px 20px 100px; }
+    .err-icon { font-size: 60px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .err-icon, .err-status-dot { animation: none; }
+  }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+</style>
+
+<script>
+  function updateTimestamp500() {
+    const el = document.getElementById('err500-timestamp');
+    if (el) el.textContent = new Date().toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+  }
+  updateTimestamp500();
+  setInterval(updateTimestamp500, 10000);
+</script>
