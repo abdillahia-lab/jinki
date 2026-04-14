@@ -1,0 +1,330 @@
+---
+/*
+  FAQ Page — Jinki Aerial Intelligence
+  Standalone FAQ with accordion sections, FAQPage schema,
+  and internal links to relevant pages.
+*/
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import LeadGen from '../components/LeadGen.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+
+const sections = [
+  {
+    title: 'General',
+    icon: 'help_center',
+    questions: [
+      {
+        q: 'What is Jinki?',
+        a: 'Jinki is an aerial intelligence platform that turns aerial data into prioritized maintenance recommendations for critical infrastructure — <a href="/verticals/data-centers">data centers</a>, <a href="/verticals/energy-grid">power grids</a>, <a href="/verticals/security">perimeters</a>, and <a href="/verticals/agriculture">agricultural operations</a>. We deliver actionable intelligence, not raw data.',
+      },
+      {
+        q: 'What is a Facility Intelligence Scan?',
+        a: 'A one-time aerial assessment that delivers a prioritized report with thermal, structural, and environmental findings — typically within 48 hours. <a href="/services/intelligence-scan">Learn more about Intelligence Scans</a>.',
+      },
+      {
+        q: 'What industries does Jinki serve?',
+        a: 'Jinki provides aerial intelligence for <a href="/verticals/data-centers">data centers</a>, <a href="/verticals/energy-grid">energy and utility infrastructure</a>, <a href="/verticals/security">perimeter security</a>, and <a href="/verticals/agriculture">agricultural operations</a> across the Mid-Atlantic United States.',
+      },
+      {
+        q: 'Where does Jinki operate?',
+        a: 'Jinki currently serves facilities in the Mid-Atlantic United States, with a focus on the Northern Virginia data center corridor — the world\'s largest concentration of data center capacity.',
+      },
+    ],
+  },
+  {
+    title: 'Equipment & Technology',
+    icon: 'precision_manufacturing',
+    questions: [
+      {
+        q: 'What equipment does Jinki use?',
+        a: 'Jinki operates a piloted aerial platform with radiometric thermal sensors for assessment missions and an autonomous aerial platform with on-site dock station for persistent monitoring — capable of 150–200 missions per month.',
+      },
+      {
+        q: 'What is radiometric thermal imaging?',
+        a: 'Unlike standard thermal cameras that show relative heat patterns, radiometric sensors capture precise temperature values at every pixel (±0.5°C accuracy). This enables quantitative analysis — identifying components operating outside specification before they fail.',
+      },
+      {
+        q: 'How is autonomous monitoring different from one-time assessments?',
+        a: 'One-time <a href="/services/intelligence-scan">Intelligence Scans</a> provide a comprehensive facility snapshot. <a href="/services/deployment">Autonomous Deployment</a> adds a permanently stationed platform that flies recurring missions — building thermal baselines over time and flagging degradation velocity trends.',
+      },
+    ],
+  },
+  {
+    title: 'Data Centers',
+    icon: 'dns',
+    questions: [
+      {
+        q: 'Why do data centers need aerial intelligence?',
+        a: 'Data centers generate enormous heat loads. Rooftop cooling infrastructure — chillers, CRAHs, condensers — develops thermal anomalies that signal degradation weeks before failure. Aerial thermal inspections identify these signatures without roof access or operational disruption.',
+      },
+      {
+        q: 'What does an aerial thermal scan reveal at a data center?',
+        a: 'Common findings include hot spots on cooling equipment, HVAC bypass or short-cycling, rooftop membrane degradation, electrical connection anomalies, and water intrusion signatures. Each finding is severity-ranked with recommended remediation.',
+      },
+      {
+        q: 'Does aerial inspection require shutting down operations?',
+        a: 'No. Aerial operations are completely non-invasive — no roof access, no scaffolding, no operational disruption. Your facility continues normal operations throughout the assessment.',
+      },
+    ],
+  },
+  {
+    title: 'Data Security & Privacy',
+    icon: 'security',
+    questions: [
+      {
+        q: 'How is my facility data protected?',
+        a: 'All data is encrypted with AES-256 at rest and TLS 1.3 in transit. Every engagement begins with a mutual NDA. SOC 2 Type I certification targeted for Q3 2026. <a href="/data-security">View our full security architecture</a>.',
+      },
+      {
+        q: 'Who has access to my facility imagery?',
+        a: 'Access is strictly limited to authorized Jinki analysts assigned to your engagement. All team members undergo background checks. Data is never shared with third parties without explicit written consent.',
+      },
+      {
+        q: 'How long is data retained?',
+        a: 'Data retention follows your contract terms. By default, raw imagery is retained for 90 days after report delivery. Extended retention is available for clients using autonomous monitoring with trend analysis.',
+      },
+    ],
+  },
+  {
+    title: 'Process & Pricing',
+    icon: 'receipt_long',
+    questions: [
+      {
+        q: 'What does the engagement process look like?',
+        a: 'Step 1: Submit a request and we respond within 4 business hours. Step 2: Scoping call to understand your facility and objectives. Step 3: Proposal within one business day. Step 4: Mission execution. Step 5: Prioritized intelligence report delivered within 48 hours.',
+      },
+      {
+        q: 'How much does an Intelligence Scan cost?',
+        a: 'Pricing depends on facility size, complexity, and sensor requirements. Contact us for a custom quote — we respond within 4 business hours.',
+      },
+      {
+        q: 'Do you require long-term contracts?',
+        a: 'No. Intelligence Scans are available as one-time engagements. Autonomous Deployment involves a service agreement for the stationed platform, but there are no hidden long-term lock-ins.',
+      },
+    ],
+  },
+];
+
+const allFaqs = sections.flatMap(s => s.questions);
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": allFaqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a.replace(/<[^>]*>/g, ''),
+    },
+  })),
+};
+---
+
+<Layout title="FAQ — Jinki Aerial Intelligence" description="Frequently asked questions about Jinki's aerial intelligence services, equipment, data security, and engagement process." ogImage="/images/og-default.png" jsonLd={faqSchema}>
+  <Nav />
+  <Breadcrumb items={[{ label: "FAQ" }]} />
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="faq-hero" aria-label="FAQ">
+      <div class="faq-hero-inner reveal">
+        <div class="vert-eyebrow">
+          <span class="vert-eyebrow-line"></span>
+          <span class="vert-eyebrow-text">FAQ</span>
+        </div>
+        <h1 class="faq-hero-title">Frequently Asked Questions</h1>
+        <p class="faq-hero-subtitle">Everything you need to know about Jinki's aerial intelligence services. Can't find what you're looking for? <a href="#lead-gen">Get in touch</a> — we respond within 4 hours.</p>
+      </div>
+    </section>
+
+    <!-- FAQ Sections -->
+    <section class="faq-sections">
+      {sections.map((section) => (
+        <div class="faq-section reveal">
+          <div class="faq-section-header">
+            <span class="material-symbols-outlined faq-section-icon" aria-hidden="true">{section.icon}</span>
+            <h2 class="faq-section-title">{section.title}</h2>
+          </div>
+          <div class="faq-list">
+            {section.questions.map((faq) => (
+              <details class="faq-item">
+                <summary class="faq-question">
+                  <span class="faq-q-text">{faq.q}</span>
+                  <span class="material-symbols-outlined faq-chevron" aria-hidden="true">expand_more</span>
+                </summary>
+                <div class="faq-answer" set:html={faq.a} />
+              </details>
+            ))}
+          </div>
+        </div>
+      ))}
+    </section>
+
+    <!-- CTA -->
+    <section class="faq-cta reveal">
+      <div class="faq-cta-inner">
+        <h2 class="faq-cta-title">Still Have Questions?</h2>
+        <p class="faq-cta-desc">We respond within 4 business hours. No sales pressure — just honest answers about what aerial intelligence can do for your facility.</p>
+        <a href="#lead-gen" class="btn-premium">Get in Touch</a>
+      </div>
+    </section>
+
+    <LeadGen />
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* Hero */
+  .faq-hero {
+    padding: 140px 24px 64px;
+    text-align: center;
+    background: var(--surface-dim);
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .faq-hero-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .faq-hero-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+  .faq-hero-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .faq-hero-subtitle a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .faq-hero-subtitle a:hover {
+    text-decoration: underline;
+  }
+
+  /* Sections */
+  .faq-sections {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 64px 24px 32px;
+  }
+  .faq-section {
+    margin-bottom: 48px;
+  }
+  .faq-section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .faq-section-icon {
+    font-size: 22px;
+    color: var(--accent);
+    font-variation-settings: 'FILL' 1;
+  }
+  .faq-section-title {
+    font-family: var(--font-headline);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  /* Accordion items */
+  .faq-item {
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 4px;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: color 0.2s ease;
+    min-height: 44px;
+  }
+  .faq-question::-webkit-details-marker { display: none; }
+  .faq-question::marker { content: ''; }
+  .faq-question:hover { color: var(--accent); }
+  .faq-q-text { flex: 1; }
+  .faq-chevron {
+    font-size: 20px;
+    color: var(--text-tertiary);
+    transition: transform 0.3s var(--ease-out-premium);
+    flex-shrink: 0;
+  }
+  .faq-item[open] .faq-chevron {
+    transform: rotate(180deg);
+  }
+  .faq-answer {
+    padding: 0 4px 20px;
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+  .faq-answer a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .faq-answer a:hover {
+    text-decoration: underline;
+  }
+
+  /* CTA */
+  .faq-cta {
+    padding: 64px 24px 80px;
+    text-align: center;
+  }
+  .faq-cta-inner {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 48px 32px;
+    border-radius: 16px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+  }
+  .faq-cta-title {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+  .faq-cta-desc {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 767px) {
+    .faq-hero { padding: 120px 20px 48px; }
+    .faq-sections { padding: 40px 20px 24px; }
+    .faq-section { margin-bottom: 36px; }
+    .faq-cta { padding: 40px 20px 64px; }
+    .faq-cta-inner { padding: 36px 20px; }
+  }
+</style>
