@@ -1,0 +1,338 @@
+---
+/*
+  ScrollCTA — Conversion nudges for engaged visitors.
+  1. Scroll banner: appears after 60% scroll, dismissible, once per session.
+  2. Exit intent (desktop only): modal on mouse leave, once per session.
+  Both respect prefers-reduced-motion. Neither fires on mobile.
+*/
+---
+
+<!-- Scroll Banner -->
+<div class="scroll-cta-banner" id="scroll-cta-banner" role="complementary" aria-label="Call to action" hidden>
+  <div class="scroll-cta-inner">
+    <p class="scroll-cta-text">Ready to see what your facility is hiding?</p>
+    <a href="#lead-gen" class="scroll-cta-btn">Request Assessment</a>
+    <button class="scroll-cta-close" aria-label="Dismiss" id="scroll-cta-close">
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+    </button>
+  </div>
+</div>
+
+<!-- Exit Intent Modal -->
+<div class="exit-modal-overlay" id="exit-modal-overlay" hidden>
+  <div class="exit-modal" role="dialog" aria-label="Before you go" aria-modal="true">
+    <button class="exit-modal-close" aria-label="Close" id="exit-modal-close">
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+    </button>
+    <span class="material-symbols-outlined exit-modal-icon" aria-hidden="true">description</span>
+    <h2 class="exit-modal-title">Before You Go</h2>
+    <p class="exit-modal-desc">Get a sample Intelligence Scan report structure — see exactly what you'd receive after an aerial assessment.</p>
+    <form class="exit-modal-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="b2bd961c-acf2-48a6-bf10-a5717c2dea95" />
+      <input type="hidden" name="subject" value="Sample Report Request from jinki.ai (Exit Intent)" />
+      <input type="hidden" name="from_name" value="Jinki Exit Intent" />
+      <div aria-hidden="true" class="exit-honeypot"><input type="text" name="botcheck" tabindex="-1" autocomplete="off" /></div>
+      <div class="exit-modal-input-row">
+        <input type="email" name="email" placeholder="your@email.com" required aria-label="Email address" class="exit-modal-input" autocomplete="email" inputmode="email" />
+        <button type="submit" class="exit-modal-submit">Send</button>
+      </div>
+    </form>
+    <p class="exit-modal-success" id="exit-modal-success" hidden>Sent! Check your inbox.</p>
+    <button class="exit-modal-dismiss" id="exit-modal-no-thanks">No thanks</button>
+  </div>
+</div>
+
+<style>
+  /* ===== Scroll Banner ===== */
+  .scroll-cta-banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9996;
+    transform: translateY(-100%);
+    transition: transform 0.4s var(--ease-out-premium);
+    background: rgba(18, 20, 22, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid color-mix(in srgb, var(--accent) 15%, transparent);
+  }
+  .scroll-cta-banner[data-visible] {
+    transform: translateY(0);
+  }
+  .scroll-cta-inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+  .scroll-cta-text {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .scroll-cta-btn {
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 8px 20px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--text-on-accent);
+    text-decoration: none;
+    white-space: nowrap;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .scroll-cta-close {
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+  }
+  .scroll-cta-close .material-symbols-outlined { font-size: 20px; }
+
+  :global([data-theme="light"]) .scroll-cta-banner {
+    background: rgba(255, 255, 255, 0.96);
+    border-bottom-color: rgba(0, 0, 0, 0.08);
+  }
+
+  /* ===== Exit Intent Modal ===== */
+  .exit-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .exit-modal-overlay[data-visible] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .exit-modal {
+    position: relative;
+    max-width: 440px;
+    width: calc(100% - 48px);
+    padding: 40px 32px;
+    border-radius: 20px;
+    background: var(--surface-container);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    transform: translateY(20px);
+    transition: transform 0.3s var(--ease-out-premium);
+  }
+  .exit-modal-overlay[data-visible] .exit-modal {
+    transform: translateY(0);
+  }
+  .exit-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: 4px;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .exit-modal-icon {
+    font-size: 36px;
+    color: var(--accent);
+    font-variation-settings: 'FILL' 1;
+    margin-bottom: 16px;
+  }
+  .exit-modal-title {
+    font-family: var(--font-headline);
+    font-size: 1.375rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .exit-modal-desc {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+  .exit-honeypot { position: absolute; left: -9999px; }
+  .exit-modal-input-row {
+    display: flex;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    background: var(--surface-container-low);
+  }
+  .exit-modal-input-row:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+  }
+  .exit-modal-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 14px 16px;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--text-primary);
+    min-width: 0;
+    min-height: 44px;
+  }
+  .exit-modal-input::placeholder { color: var(--text-tertiary); }
+  .exit-modal-submit {
+    padding: 14px 24px;
+    background: var(--accent);
+    color: var(--text-on-accent);
+    border: none;
+    font-family: var(--font-label);
+    font-size: 0.875rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .exit-modal-success {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--accent-tertiary);
+    margin-top: 16px;
+  }
+  .exit-modal-dismiss {
+    margin-top: 16px;
+    background: none;
+    border: none;
+    color: var(--text-tertiary);
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    cursor: pointer;
+    padding: 8px;
+    min-height: 44px;
+  }
+  .exit-modal-dismiss:hover { color: var(--text-secondary); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-cta-banner, .exit-modal-overlay, .exit-modal { transition: none; }
+  }
+</style>
+
+<script is:inline>
+(function() {
+  var isMobile = window.innerWidth < 768;
+
+  // ===== Scroll Banner =====
+  var banner = document.getElementById('scroll-cta-banner');
+  var closeBtn = document.getElementById('scroll-cta-close');
+  if (banner && !sessionStorage.getItem('jk_scroll_cta_dismissed')) {
+    var shown = false;
+    window.addEventListener('scroll', function() {
+      if (shown) return;
+      var scrollPct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      if (scrollPct > 0.6) {
+        shown = true;
+        banner.removeAttribute('hidden');
+        requestAnimationFrame(function() {
+          banner.setAttribute('data-visible', '');
+        });
+      }
+    }, { passive: true });
+
+    closeBtn.addEventListener('click', function() {
+      banner.removeAttribute('data-visible');
+      sessionStorage.setItem('jk_scroll_cta_dismissed', '1');
+      setTimeout(function() { banner.setAttribute('hidden', ''); }, 400);
+    });
+
+    var ctaLink = banner.querySelector('.scroll-cta-btn');
+    if (ctaLink) {
+      ctaLink.addEventListener('click', function() {
+        banner.removeAttribute('data-visible');
+        sessionStorage.setItem('jk_scroll_cta_dismissed', '1');
+      });
+    }
+  }
+
+  // ===== Exit Intent (desktop only) =====
+  if (isMobile) return;
+  var overlay = document.getElementById('exit-modal-overlay');
+  var exitClose = document.getElementById('exit-modal-close');
+  var exitNo = document.getElementById('exit-modal-no-thanks');
+  if (!overlay || sessionStorage.getItem('jk_exit_intent_shown')) return;
+
+  var exitFired = false;
+  document.addEventListener('mouseleave', function(e) {
+    if (exitFired || e.clientY > 5) return;
+    exitFired = true;
+    sessionStorage.setItem('jk_exit_intent_shown', '1');
+    overlay.removeAttribute('hidden');
+    requestAnimationFrame(function() {
+      overlay.setAttribute('data-visible', '');
+    });
+  });
+
+  function closeExit() {
+    overlay.removeAttribute('data-visible');
+    setTimeout(function() { overlay.setAttribute('hidden', ''); }, 300);
+  }
+  if (exitClose) exitClose.addEventListener('click', closeExit);
+  if (exitNo) exitNo.addEventListener('click', closeExit);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeExit();
+  });
+
+  // Form submission
+  var form = overlay.querySelector('.exit-modal-form');
+  var successMsg = document.getElementById('exit-modal-success');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var emailInput = form.querySelector('input[type="email"]');
+      if (!emailInput.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) return;
+      var submitBtn = form.querySelector('.exit-modal-submit');
+      submitBtn.disabled = true;
+      submitBtn.textContent = '...';
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function(r) { return r.json(); }).then(function(d) {
+        if (d.success) {
+          form.hidden = true;
+          if (successMsg) successMsg.removeAttribute('hidden');
+          setTimeout(closeExit, 2000);
+        } else {
+          submitBtn.textContent = 'Retry';
+          submitBtn.disabled = false;
+        }
+      }).catch(function() {
+        submitBtn.textContent = 'Retry';
+        submitBtn.disabled = false;
+      });
+    });
+  }
+})();
+</script>

@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Chatbot from '../components/Chatbot.astro';
 import CookieConsent from '../components/CookieConsent.astro';
+import ScrollCTA from '../components/ScrollCTA.astro';
 
 interface Props {
   title?: string;
@@ -204,6 +205,7 @@ const websiteSchema = {
     <div id="aria-live-region" aria-live="polite" aria-atomic="true" class="sr-only" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;"></div>
 
     <Chatbot />
+    <ScrollCTA />
     <CookieConsent />
 
     <!-- Mobile sticky CTA -->
