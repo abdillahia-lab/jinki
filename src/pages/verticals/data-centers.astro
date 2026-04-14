@@ -499,6 +499,44 @@ const faqs = [
       </div>
     </section>
 
+    <!-- NFPA 70B Compliance + Why Jinki -->
+    <section class="dc-why-jinki" aria-label="Why Jinki for Data Centers">
+      <div class="dc-why-inner">
+        <!-- Compliance callout -->
+        <div class="dc-compliance reveal">
+          <div class="dc-compliance-icon-wrap">
+            <span class="material-symbols-outlined" aria-hidden="true">verified_user</span>
+          </div>
+          <div class="dc-compliance-content">
+            <h3 class="dc-compliance-title">NFPA 70B Compliance Support</h3>
+            <p class="dc-compliance-desc">Aerial thermal inspections aligned with NFPA 70B electrical equipment maintenance requirements. Findings classified using NFPA 70B severity levels — giving your maintenance team a standards-based priority list.</p>
+            <a href="/services/intelligence-scan" class="dc-compliance-link">
+              <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+              View Intelligence Scan deliverables
+            </a>
+          </div>
+        </div>
+
+        <!-- Why Jinki proof points -->
+        <h2 class="dc-why-title reveal">Why Jinki for Data Centers</h2>
+        <p class="dc-why-subtitle reveal">No aerial intelligence provider focuses on data center operations as a primary vertical.</p>
+        <div class="dc-why-grid">
+          <div class="dc-why-card reveal">
+            <span class="dc-why-stat">0.5°C</span>
+            <span class="dc-why-label">Radiometric thermal sensitivity — precise enough to detect early-stage degradation</span>
+          </div>
+          <div class="dc-why-card reveal">
+            <span class="dc-why-stat">NFPA 70B</span>
+            <span class="dc-why-label">Aligned severity classification for electrical equipment findings</span>
+          </div>
+          <div class="dc-why-card reveal">
+            <span class="dc-why-stat">48hr</span>
+            <span class="dc-why-label">Prioritized intelligence report — from mission to maintenance plan</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <LeadGen />
   </main>
   <Footer />
@@ -2394,6 +2432,113 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   :global([data-theme="light"]) .testimonial-stars svg {
     fill: var(--accent);
+  }
+
+  /* ============================================================
+     WHY JINKI + NFPA 70B
+     ============================================================ */
+  .dc-why-jinki {
+    padding: 80px 24px;
+    background: var(--surface-dim);
+    border-top: 1px solid var(--glass-border);
+  }
+  .dc-why-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .dc-compliance {
+    display: flex;
+    gap: 20px;
+    padding: 28px 32px;
+    border-radius: 16px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    margin-bottom: 56px;
+  }
+  .dc-compliance-icon-wrap {
+    flex-shrink: 0;
+  }
+  .dc-compliance-icon-wrap .material-symbols-outlined {
+    font-size: 28px;
+    color: var(--accent);
+    font-variation-settings: 'FILL' 1;
+  }
+  .dc-compliance-title {
+    font-family: var(--font-headline);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .dc-compliance-desc {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+  .dc-compliance-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-label);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .dc-compliance-link .material-symbols-outlined {
+    font-size: 16px;
+  }
+  .dc-compliance-link:hover {
+    text-decoration: underline;
+  }
+  .dc-why-title {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .dc-why-subtitle {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .dc-why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .dc-why-card {
+    text-align: center;
+    padding: 28px 20px;
+    border-radius: 16px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+  }
+  .dc-why-stat {
+    display: block;
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .dc-why-label {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+  @media (max-width: 767px) {
+    .dc-why-jinki { padding: 56px 20px; }
+    .dc-compliance { flex-direction: column; gap: 12px; padding: 24px 20px; }
+    .dc-why-grid { grid-template-columns: 1fr; gap: 16px; }
+    .dc-why-title { font-size: 1.25rem; }
   }
 
   /* ============================================================
