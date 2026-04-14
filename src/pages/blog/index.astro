@@ -13,8 +13,7 @@ import { getCollection } from 'astro:content';
 const allPosts = (await getCollection('blog')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
 );
-// Show only 2 most recent posts (site launched March 21, 2026)
-const posts = allPosts.slice(0, 2);
+const posts = allPosts;
 
 const allTags = [...new Set(posts.flatMap(p => p.data.tags))];
 
