@@ -110,11 +110,13 @@
     border-bottom-color: rgba(0, 0, 0, 0.08);
   }
 
-  /* ===== Exit Intent Modal ===== */
+  /* ===== Exit Intent Modal =====
+     z-index: 9998 — intentionally below CookieConsent (10000/10001) so the
+     legally-required cookie banner is always reachable if both are visible. */
   .exit-modal-overlay {
     position: fixed;
     inset: 0;
-    z-index: 10001;
+    z-index: 9998;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(4px);
     display: flex;

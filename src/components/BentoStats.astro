@@ -59,7 +59,9 @@
     position: relative;
     overflow: hidden;
   }
-  @media (min-width: 768px) { .bento-section { padding: 8rem 0; } }
+  /* Asymmetric desktop padding — top reduced from 8rem to 4rem to tighten the
+     Verticals→BentoStats transition. Bottom kept for breathing room above Process. */
+  @media (min-width: 768px) { .bento-section { padding: 4rem 0 8rem; } }
 
   .bento-ambient {
     position: absolute;

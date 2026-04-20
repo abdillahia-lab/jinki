@@ -844,8 +844,12 @@ const reportTabs = [
   /* The thermal reveal layer: same image as visible, processed through the
      false-color SVG filter so the cursor reveals an actual heat-map look
      instead of just a tinted copy. A subtle contrast/saturation nudge gives
-     the revealed circle more "instrument" feel. */
-  .si-lens :global(.thermal-layer) {
+     the revealed circle more "instrument" feel.
+     NOTE: the whole selector must be wrapped in :global() — .si-lens is
+     rendered as the root of the ThermalLens component and carries THAT
+     component's Astro scope, not this page's scope. A scoped selector here
+     would compile to .si-lens[data-astro-cid-PAGE] and never match. */
+  :global(.si-lens .thermal-layer) {
     filter: url(#jinki-thermal-lookup) saturate(1.15) contrast(1.05);
   }
 
