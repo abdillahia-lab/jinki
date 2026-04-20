@@ -2,7 +2,9 @@
 /*
   Nav.astro — Lightweight marketing nav
   Logo, links, verticals dropdown, theme toggle, CTA
+  Followed by a narrow always-visible TrustStrip below the nav-spacer.
 */
+import TrustStrip from './TrustStrip.astro';
 
 const verticals = [
   { href: '/verticals/data-centers', label: 'Data Centers', color: '#00E5FF' },
@@ -156,6 +158,9 @@ function isDropdownActive(items: { href: string }[]) {
 
 <!-- Spacer to prevent content from hiding behind fixed nav -->
 <div class="nav-spacer" aria-hidden="true"></div>
+
+<!-- Always-visible trust signals below the nav on every page -->
+<TrustStrip />
 
 <style>
   /* ==================== HEADER ==================== */
