@@ -9,7 +9,6 @@ import Nav from '../../components/Nav.astro';
 import LeadGen from '../../components/LeadGen.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import Footer from '../../components/Footer.astro';
-import ThermalLens from '../../components/ThermalLens.astro';
 
 const process = [
   { step: '01', title: 'Scoping Call', desc: 'We learn your facility, your priorities, and your pain points. A real conversation about what matters to your operations team.', icon: 'call' },
@@ -21,10 +20,42 @@ const process = [
 ];
 
 const findings = [
-  { type: 'CRITICAL', label: 'Cooling Unit Thermal Anomaly', category: 'Thermal', color: '#FF3B30', img: 'thermostat' },
-  { type: 'HIGH', label: 'Roof Membrane Degradation', category: 'Structural', color: '#FF6B35', img: 'roofing' },
-  { type: 'MEDIUM', label: 'Camera Blind Spot — NE Gate', category: 'Security', color: '#FFBD2E', img: 'security' },
-  { type: 'LOW', label: 'Insulation Gap — Mech Room 2', category: 'Efficiency', color: '#00E5FF', img: 'electric_bolt' },
+  {
+    type: 'CRITICAL',
+    label: 'Cooling Unit Thermal Anomaly',
+    category: 'Thermal',
+    color: '#FF3B30',
+    crop: '42% 26%',          // HVAC row top of roof
+    readout: 'HVAC-05 · ΔT +12.4°C',
+    location: 'Rooftop HVAC Bank · Zone 3',
+  },
+  {
+    type: 'HIGH',
+    label: 'Roof Membrane Degradation',
+    category: 'Structural',
+    color: '#FF6B35',
+    crop: '30% 60%',          // mid-roof membrane area
+    readout: 'Membrane split · 12m²',
+    location: 'Roof Section B · West Span',
+  },
+  {
+    type: 'MEDIUM',
+    label: 'Camera Blind Spot — NE Gate',
+    category: 'Security',
+    color: '#FFBD2E',
+    crop: '82% 20%',          // perimeter edge / corner
+    readout: 'NE Gate · 18° gap',
+    location: 'Perimeter · Northeast Corner',
+  },
+  {
+    type: 'LOW',
+    label: 'Insulation Gap — Mech Room 2',
+    category: 'Efficiency',
+    color: '#00E5FF',
+    crop: '65% 70%',          // mechanical zone
+    readout: 'Mech Rm 2 · 6°C Δ',
+    location: 'Mechanical Annex · Ground Level',
+  },
 ];
 
 const reportTabs = [
@@ -88,45 +119,68 @@ const reportTabs = [
               </div>
             </div>
 
-            <!-- Main scan viewport -->
+            <!-- Main scan viewport: real aerial photo + HUD annotation overlay.
+                 No simulated thermal — a false-colored visible-light photo is
+                 NOT a thermal image. Instead we show what a real Facility
+                 Intelligence Scan deliverable looks like: the aerial photo
+                 with geolocated finding pins + measurement callouts, plus
+                 an always-on scan-line sweep for ambient motion. -->
             <div class="si-viewport">
-              <!--
-                Inline SVG filter: converts any image into a true thermal
-                false-color map. The feColorMatrix grayscales by luminance,
-                then feComponentTransfer maps that intensity to R/G/B lookup
-                tables producing the classic inferno-style palette
-                (dark blue → cyan → yellow → orange → red → white).
-                The filter is invisible — only applied via `filter: url(#jinki-thermal-lookup)`.
-              -->
-              <svg aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute;overflow:hidden;pointer-events:none;">
-                <defs>
-                  <filter id="jinki-thermal-lookup" color-interpolation-filters="sRGB">
-                    <!-- 1. Luminance matrix → grayscale intensity -->
-                    <feColorMatrix type="matrix" values="0.299 0.587 0.114 0 0  0.299 0.587 0.114 0 0  0.299 0.587 0.114 0 0  0 0 0 1 0"/>
-                    <!-- 2. Map intensity → inferno-style false color -->
-                    <feComponentTransfer>
-                      <feFuncR tableValues="0.0 0.0 0.05 0.25 0.55 0.85 1.0 1.0 1.0"/>
-                      <feFuncG tableValues="0.0 0.02 0.05 0.1 0.25 0.5 0.75 0.9 1.0"/>
-                      <feFuncB tableValues="0.25 0.4 0.55 0.45 0.2 0.05 0.0 0.25 0.7"/>
-                    </feComponentTransfer>
-                    <!-- 3. Boost contrast for that "scanner" look -->
-                    <feComponentTransfer>
-                      <feFuncR type="linear" slope="1.15" intercept="-0.03"/>
-                      <feFuncG type="linear" slope="1.15" intercept="-0.03"/>
-                      <feFuncB type="linear" slope="1.15" intercept="-0.03"/>
-                    </feComponentTransfer>
-                  </filter>
-                </defs>
-              </svg>
+              <div class="si-hud-stage">
+                <img
+                  src="/images/dc-rooftop-aerial.webp"
+                  alt="Data center rooftop aerial view with illustrative finding annotations"
+                  class="si-hud-base"
+                  loading="eager"
+                  decoding="async"
+                  fetchpriority="high"
+                />
 
-              <ThermalLens
-                src="/images/dc-rooftop-aerial.webp"
-                thermalSrc="/images/dc-rooftop-aerial.webp"
-                alt="Data center rooftop aerial view — hover or drag to reveal simulated thermal"
-                class="si-lens"
-              />
+                <!-- Animated scan-line — drops top to bottom every 8s -->
+                <div class="si-hud-scanline" aria-hidden="true"></div>
 
-              <!-- Thermal scale bar (CSS overlay) -->
+                <!-- Illustrative finding pins (positions tuned visually to the photo) -->
+                <div class="si-hud-pin si-hud-pin--critical" style="left: 42%; top: 24%;" aria-hidden="true">
+                  <span class="si-hud-pin-ring"></span>
+                  <span class="si-hud-pin-dot"></span>
+                  <span class="si-hud-pin-callout">
+                    <span class="si-hud-pin-sev">CRITICAL</span>
+                    <span class="si-hud-pin-val">HVAC-05 · 47.3°C</span>
+                  </span>
+                </div>
+
+                <div class="si-hud-pin si-hud-pin--warning" style="left: 32%; top: 60%;" aria-hidden="true">
+                  <span class="si-hud-pin-ring"></span>
+                  <span class="si-hud-pin-dot"></span>
+                  <span class="si-hud-pin-callout">
+                    <span class="si-hud-pin-sev">WARNING</span>
+                    <span class="si-hud-pin-val">Membrane split · 12m</span>
+                  </span>
+                </div>
+
+                <div class="si-hud-pin si-hud-pin--moderate si-hud-pin--left" style="left: 64%; top: 46%;" aria-hidden="true">
+                  <span class="si-hud-pin-ring"></span>
+                  <span class="si-hud-pin-dot"></span>
+                  <span class="si-hud-pin-callout">
+                    <span class="si-hud-pin-sev">MODERATE</span>
+                    <span class="si-hud-pin-val">CT-3 · ΔT +8.2°C</span>
+                  </span>
+                </div>
+
+                <div class="si-hud-pin si-hud-pin--info si-hud-pin--left" style="left: 80%; top: 28%;" aria-hidden="true">
+                  <span class="si-hud-pin-ring"></span>
+                  <span class="si-hud-pin-dot"></span>
+                  <span class="si-hud-pin-callout">
+                    <span class="si-hud-pin-sev">INFO</span>
+                    <span class="si-hud-pin-val">Genset · nominal</span>
+                  </span>
+                </div>
+
+                <!-- Sample watermark — buyer shouldn't mistake illustrative pins for real data -->
+                <span class="si-hud-sample" aria-hidden="true">SAMPLE SCAN · ILLUSTRATIVE ANNOTATIONS</span>
+              </div>
+
+              <!-- Thermal scale bar (atmospheric chrome — orients the eye, not a claim) -->
               <div class="si-thermal-scale">
                 <div class="si-scale-gradient"></div>
                 <div class="si-scale-labels">
@@ -304,104 +358,21 @@ const reportTabs = [
             {findings.map((f, i) => (
               <div class={`finding-card reveal reveal-delay-${(i % 4) + 1}`}>
                 <div class="finding-image-area">
-                  {/* Rich CSS-only visual per finding type */}
-                  <div class={`finding-visual finding-visual-${i}`} aria-hidden="true">
-                    {i === 0 && (
-                      <Fragment>
-                        {/* Thermal heatmap visualization */}
-                        <div class="thermal-grid">
-                          <div class="thermal-cell t-cool"></div><div class="thermal-cell t-cool"></div><div class="thermal-cell t-warm"></div><div class="thermal-cell t-hot"></div>
-                          <div class="thermal-cell t-cool"></div><div class="thermal-cell t-warm"></div><div class="thermal-cell t-hot"></div><div class="thermal-cell t-critical"></div>
-                          <div class="thermal-cell t-warm"></div><div class="thermal-cell t-hot"></div><div class="thermal-cell t-critical"></div><div class="thermal-cell t-hot"></div>
-                          <div class="thermal-cell t-cool"></div><div class="thermal-cell t-warm"></div><div class="thermal-cell t-hot"></div><div class="thermal-cell t-warm"></div>
-                        </div>
-                        <div class="thermal-crosshair"></div>
-                        <div class="thermal-readout">
-                          <span class="thermal-temp">ΔT +12.4°C</span>
-                          <span class="thermal-label">ANOMALY DETECTED</span>
-                        </div>
-                      </Fragment>
-                    )}
-                    {i === 1 && (
-                      <Fragment>
-                        {/* Structural degradation visualization */}
-                        <svg class="structural-svg" viewBox="0 0 200 150" fill="none">
-                          <rect x="10" y="10" width="180" height="130" rx="4" stroke="rgba(255,107,53,0.15)" stroke-width="1" fill="none" />
-                          <line x1="20" y1="40" x2="180" y2="40" stroke="rgba(255,107,53,0.08)" stroke-width="1" />
-                          <line x1="20" y1="70" x2="180" y2="70" stroke="rgba(255,107,53,0.08)" stroke-width="1" />
-                          <line x1="20" y1="100" x2="180" y2="100" stroke="rgba(255,107,53,0.08)" stroke-width="1" />
-                          {/* Crack pattern */}
-                          <path d="M60 30 L65 55 L58 70 L68 95 L62 120" stroke="#FF6B35" stroke-width="2" stroke-linecap="round" opacity="0.8" />
-                          <path d="M65 55 L80 60" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round" opacity="0.5" />
-                          <path d="M68 95 L82 90" stroke="#FF6B35" stroke-width="1.5" stroke-linecap="round" opacity="0.5" />
-                          {/* Damage zones */}
-                          <circle cx="65" cy="55" r="12" fill="rgba(255,107,53,0.1)" stroke="rgba(255,107,53,0.3)" stroke-width="1" stroke-dasharray="3,3" />
-                          <circle cx="68" cy="95" r="15" fill="rgba(255,107,53,0.1)" stroke="rgba(255,107,53,0.3)" stroke-width="1" stroke-dasharray="3,3" />
-                          {/* Measurement annotations */}
-                          <line x1="120" y1="35" x2="120" y2="105" stroke="rgba(255,107,53,0.4)" stroke-width="1" stroke-dasharray="4,4" />
-                          <text x="128" y="73" fill="#FF6B35" font-size="8" font-family="var(--font-mono)">12.3m²</text>
-                        </svg>
-                        <div class="structural-badge">
-                          <span class="structural-rating">D+</span>
-                          <span class="structural-label">CONDITION</span>
-                        </div>
-                      </Fragment>
-                    )}
-                    {i === 2 && (
-                      <Fragment>
-                        {/* Security radar / blind spot visualization */}
-                        <div class="radar-container">
-                          <svg class="radar-svg" viewBox="0 0 200 200" fill="none">
-                            <circle cx="100" cy="100" r="80" stroke="rgba(255,189,46,0.08)" stroke-width="1" fill="none" />
-                            <circle cx="100" cy="100" r="55" stroke="rgba(255,189,46,0.08)" stroke-width="1" fill="none" />
-                            <circle cx="100" cy="100" r="30" stroke="rgba(255,189,46,0.08)" stroke-width="1" fill="none" />
-                            <line x1="100" y1="20" x2="100" y2="180" stroke="rgba(255,189,46,0.06)" stroke-width="1" />
-                            <line x1="20" y1="100" x2="180" y2="100" stroke="rgba(255,189,46,0.06)" stroke-width="1" />
-                            {/* Camera coverage arcs */}
-                            <path d="M100 100 L160 40 A85 85 0 0 1 170 90 Z" fill="rgba(39,201,63,0.1)" stroke="rgba(39,201,63,0.25)" stroke-width="1" />
-                            <path d="M100 100 L40 140 A85 85 0 0 1 30 90 Z" fill="rgba(39,201,63,0.1)" stroke="rgba(39,201,63,0.25)" stroke-width="1" />
-                            <path d="M100 100 L130 170 A85 85 0 0 1 60 165 Z" fill="rgba(39,201,63,0.1)" stroke="rgba(39,201,63,0.25)" stroke-width="1" />
-                            {/* Blind spot — highlighted */}
-                            <path d="M100 100 L35 45 A85 85 0 0 1 90 22 Z" fill="rgba(255,189,46,0.15)" stroke="#FFBD2E" stroke-width="1.5" stroke-dasharray="4,3" />
-                            <text x="50" y="50" fill="#FFBD2E" font-size="7" font-family="var(--font-mono)" text-anchor="middle">BLIND SPOT</text>
-                          </svg>
-                          <div class="radar-sweep"></div>
-                        </div>
-                      </Fragment>
-                    )}
-                    {i === 3 && (
-                      <Fragment>
-                        {/* Efficiency / insulation gap visualization */}
-                        <svg class="efficiency-svg" viewBox="0 0 200 150" fill="none">
-                          {/* Building cross-section outline */}
-                          <rect x="30" y="20" width="140" height="110" rx="3" stroke="rgba(0,229,255,0.12)" stroke-width="1" fill="none" />
-                          <line x1="100" y1="20" x2="100" y2="130" stroke="rgba(0,229,255,0.06)" stroke-width="1" />
-                          {/* Insulation layers - left side (good) */}
-                          <rect x="35" y="25" width="60" height="100" rx="2" fill="rgba(0,229,255,0.04)" />
-                          <line x1="35" y1="45" x2="95" y2="45" stroke="rgba(0,229,255,0.12)" stroke-width="1" stroke-dasharray="2,4" />
-                          <line x1="35" y1="65" x2="95" y2="65" stroke="rgba(0,229,255,0.12)" stroke-width="1" stroke-dasharray="2,4" />
-                          <line x1="35" y1="85" x2="95" y2="85" stroke="rgba(0,229,255,0.12)" stroke-width="1" stroke-dasharray="2,4" />
-                          <line x1="35" y1="105" x2="95" y2="105" stroke="rgba(0,229,255,0.12)" stroke-width="1" stroke-dasharray="2,4" />
-                          {/* Right side — gap highlighted */}
-                          <rect x="105" y="25" width="60" height="40" rx="2" fill="rgba(0,229,255,0.04)" />
-                          <rect x="105" y="90" width="60" height="35" rx="2" fill="rgba(0,229,255,0.04)" />
-                          {/* The gap */}
-                          <rect x="105" y="65" width="60" height="25" rx="2" fill="rgba(0,229,255,0.08)" stroke="#00E5FF" stroke-width="1.5" stroke-dasharray="4,3" />
-                          <text x="135" y="81" fill="#00E5FF" font-size="7" font-family="var(--font-mono)" text-anchor="middle">GAP</text>
-                          {/* Heat flow arrows */}
-                          <path d="M135 60 L135 68" stroke="#FF3B30" stroke-width="1.5" opacity="0.6" marker-end="url(#arrowRed)" />
-                          <path d="M120 88 L120 80" stroke="#FF3B30" stroke-width="1.5" opacity="0.6" marker-end="url(#arrowRed)" />
-                          <path d="M150 60 L150 68" stroke="#FF3B30" stroke-width="1.5" opacity="0.6" marker-end="url(#arrowRed)" />
-                          <defs>
-                            <marker id="arrowRed" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#FF3B30" opacity="0.6" /></marker>
-                          </defs>
-                        </svg>
-                        <div class="efficiency-readout">
-                          <span class="efficiency-loss">~18% loss</span>
-                          <span class="efficiency-label">THERMAL EFFICIENCY</span>
-                        </div>
-                      </Fragment>
-                    )}
+                  {/* Unified finding visual: same real aerial photo cropped to a
+                      different region of the rooftop per finding type, plus a
+                      pulsing severity pin and a mono-text readout in the corner.
+                      No invented thermal grids, no hand-drawn cracks — the card
+                      matches the visual language a real deliverable would use. */}
+                  <div class="finding-crop" style={`background-position: ${f.crop}; --sev-color: ${f.color};`} aria-hidden="true">
+                    <div class="finding-pin">
+                      <span class="finding-pin-ring"></span>
+                      <span class="finding-pin-dot"></span>
+                    </div>
+                    <div class="finding-readout">
+                      <span class="finding-readout-sev" style={`color: ${f.color};`}>{f.type}</span>
+                      <span class="finding-readout-val">{f.readout}</span>
+                    </div>
+                    <span class="finding-sample-mark" aria-hidden="true">SAMPLE</span>
                   </div>
                   <span class="finding-severity-badge" style={`background: ${f.color}20; color: ${f.color}; border-color: ${f.color}40;`}>{f.type}</span>
                   <span class="finding-category-badge">{f.category}</span>
@@ -411,7 +382,7 @@ const reportTabs = [
                   <div class="finding-meta">
                     <span class="finding-meta-item">
                       <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 14px;" aria-hidden="true">location_on</span>
-                      Building C, Zone 3
+                      {f.location}
                     </span>
                     <span class="finding-meta-item">
                       <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 14px;" aria-hidden="true">priority_high</span>
@@ -834,23 +805,143 @@ const reportTabs = [
 
   .si-viewport { position: relative; background: #04080e; }
 
-  /* ThermalLens sizing inside the viewport chrome. Aspect matches the
-     old SVG viewBox (600×420) so layout is preserved on desktop. */
-  .si-lens {
+  /* ========== HUD stage — aerial photo + scan-line + finding pins ========== */
+  .si-hud-stage {
+    position: relative;
     width: 100%;
     aspect-ratio: 600 / 420;
-    border-radius: 0;
+    overflow: hidden;
   }
-  /* The thermal reveal layer: same image as visible, processed through the
-     false-color SVG filter so the cursor reveals an actual heat-map look
-     instead of just a tinted copy. A subtle contrast/saturation nudge gives
-     the revealed circle more "instrument" feel.
-     NOTE: the whole selector must be wrapped in :global() — .si-lens is
-     rendered as the root of the ThermalLens component and carries THAT
-     component's Astro scope, not this page's scope. A scoped selector here
-     would compile to .si-lens[data-astro-cid-PAGE] and never match. */
-  :global(.si-lens .thermal-layer) {
-    filter: url(#jinki-thermal-lookup) saturate(1.15) contrast(1.05);
+
+  .si-hud-base {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Sample watermark — upper-left, low opacity, non-interactive */
+  .si-hud-sample {
+    position: absolute;
+    top: 10px;
+    left: 14px;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: rgba(255, 255, 255, 0.45);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* Scan-line: a glowing gradient band sweeping top to bottom every 8s */
+  .si-hud-scanline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    pointer-events: none;
+    background: linear-gradient(to bottom,
+      transparent 0%,
+      color-mix(in srgb, var(--accent) 12%, transparent) 55%,
+      color-mix(in srgb, var(--accent) 42%, transparent) 94%,
+      color-mix(in srgb, var(--accent) 72%, transparent) 100%
+    );
+    mix-blend-mode: screen;
+    animation: si-hud-scanline-sweep 8s linear infinite;
+    will-change: transform, opacity;
+  }
+  @keyframes si-hud-scanline-sweep {
+    0%   { transform: translateY(-64px); opacity: 0; }
+    6%   { opacity: 1; }
+    94%  { opacity: 1; }
+    100% { transform: translateY(calc(100% + 64px)); opacity: 0; }
+  }
+
+  /* Finding pins — absolute-positioned dots with pulsing ring + callout */
+  .si-hud-pin {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    transform: translate(-50%, -50%);
+    --sev: var(--accent);
+  }
+  .si-hud-pin--critical { --sev: #FF3B30; }
+  .si-hud-pin--warning  { --sev: #FFBD2E; }
+  .si-hud-pin--moderate { --sev: #FF8C00; }
+  .si-hud-pin--info     { --sev: #00E5FF; }
+
+  .si-hud-pin-dot {
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: var(--sev);
+    box-shadow:
+      0 0 8px var(--sev),
+      0 0 16px color-mix(in srgb, var(--sev) 45%, transparent);
+    animation: si-hud-pin-breathe 2s ease-in-out infinite;
+  }
+  @keyframes si-hud-pin-breathe {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50%      { transform: scale(1.25); opacity: 0.85; }
+  }
+
+  .si-hud-pin-ring {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--sev);
+    border-radius: 50%;
+    opacity: 0.65;
+    animation: si-hud-pin-ring 2.5s ease-out infinite;
+  }
+  @keyframes si-hud-pin-ring {
+    0%   { transform: scale(0.75); opacity: 0.7; }
+    100% { transform: scale(2.6);  opacity: 0; }
+  }
+
+  .si-hud-pin-callout {
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 10px);
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 9px;
+    background: rgba(8, 12, 16, 0.75);
+    border: 1px solid color-mix(in srgb, var(--sev) 45%, transparent);
+    border-radius: 5px;
+    white-space: nowrap;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    pointer-events: none;
+  }
+  /* Right-side pins flip the callout to the left of the pin */
+  .si-hud-pin--left .si-hud-pin-callout {
+    left: auto;
+    right: calc(100% + 10px);
+  }
+  .si-hud-pin-sev {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--sev);
+  }
+  .si-hud-pin-val {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .si-hud-scanline  { animation: none; opacity: 0.35; }
+    .si-hud-pin-dot   { animation: none; }
+    .si-hud-pin-ring  { animation: none; opacity: 0.4; transform: scale(1.8); }
   }
 
   /* Thermal scale */
@@ -1283,172 +1374,106 @@ const reportTabs = [
     overflow: hidden;
   }
 
-  .finding-visual {
+  /* Unified finding-card visual: same real aerial photo, cropped to a
+     different region per finding type via background-position. One pulsing
+     severity pin at center, one mono-text readout in the bottom-left.
+     Replaces: .finding-visual / .thermal-grid / .thermal-cell / .t-cool/warm
+     / .t-hot / .t-critical / .thermal-crosshair / .thermal-readout /
+     .thermal-temp / .thermal-label / .structural-svg / .structural-badge /
+     .structural-rating / .structural-label / .radar-container / .radar-svg /
+     .radar-sweep / .efficiency-svg / .efficiency-readout / .efficiency-loss /
+     .efficiency-label (all removed). */
+  .finding-crop {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+    background-image: url('/images/dc-rooftop-aerial.webp');
+    background-size: 220%;
+    background-repeat: no-repeat;
+    /* background-position is set inline per-card */
+    --sev-color: var(--accent);
   }
-
-  /* --- Thermal Heatmap --- */
-  .thermal-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 3px;
-    width: 85%;
-    height: 75%;
-    padding: 8px;
-  }
-  .thermal-cell {
-    border-radius: 4px;
-    transition: opacity 0.3s;
-  }
-  .t-cool { background: linear-gradient(135deg, #1a237e, #283593); }
-  .t-warm { background: linear-gradient(135deg, #e65100, #f57c00); }
-  .t-hot { background: linear-gradient(135deg, #d84315, #ff3d00); }
-  .t-critical {
-    background: linear-gradient(135deg, #b71c1c, #ff1744);
-    animation: thermal-pulse 2s ease-in-out infinite;
-  }
-  .thermal-crosshair {
-    position: absolute;
-    top: 35%;
-    right: 28%;
-    width: 40px;
-    height: 40px;
-    border: 1.5px solid rgba(255, 59, 48, 0.7);
-    border-radius: 50%;
-    box-shadow: 0 0 12px rgba(255, 59, 48, 0.3);
-  }
-  .thermal-crosshair::before,
-  .thermal-crosshair::after {
+  .finding-crop::after {
     content: '';
     position: absolute;
-    background: rgba(255, 59, 48, 0.5);
-  }
-  .thermal-crosshair::before {
-    top: 50%;
-    left: -8px;
-    right: -8px;
-    height: 1px;
-  }
-  .thermal-crosshair::after {
-    left: 50%;
-    top: -8px;
-    bottom: -8px;
-    width: 1px;
-  }
-  .thermal-readout {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 2px;
-  }
-  .thermal-temp {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    font-weight: 700;
-    color: #FF3B30;
-    text-shadow: 0 0 8px rgba(255, 59, 48, 0.4);
-  }
-  .thermal-label {
-    font-family: var(--font-mono);
-    font-size: 8px;
-    letter-spacing: 0.12em;
-    color: rgba(255, 59, 48, 0.6);
-  }
-  @keyframes thermal-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+    inset: 0;
+    background: linear-gradient(180deg, rgba(4, 8, 14, 0.15) 0%, rgba(4, 8, 14, 0.55) 100%);
+    pointer-events: none;
   }
 
-  /* --- Structural Degradation --- */
-  .structural-svg {
-    width: 85%;
-    height: 85%;
-  }
-  .structural-badge {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: rgba(255, 107, 53, 0.1);
-    border: 1px solid rgba(255, 107, 53, 0.25);
-    border-radius: 8px;
-    padding: 8px 12px;
-  }
-  .structural-rating {
-    font-family: var(--font-mono);
-    font-size: 18px;
-    font-weight: 800;
-    color: #FF6B35;
-  }
-  .structural-label {
-    font-family: var(--font-mono);
-    font-size: 7px;
-    letter-spacing: 0.12em;
-    color: rgba(255, 107, 53, 0.6);
-  }
-
-  /* --- Security Radar --- */
-  .radar-container {
-    position: relative;
-    width: 85%;
-    height: 85%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .radar-svg {
-    width: 100%;
-    height: 100%;
-  }
-  .radar-sweep {
+  .finding-pin {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 50%;
-    height: 2px;
-    transform-origin: left center;
-    background: linear-gradient(90deg, rgba(255, 189, 46, 0.6), transparent);
-    animation: radar-spin 3s linear infinite;
+    width: 18px;
+    height: 18px;
+    transform: translate(-50%, -50%);
+    z-index: 1;
   }
-  @keyframes radar-spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+  .finding-pin-dot {
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: var(--sev-color);
+    box-shadow:
+      0 0 10px var(--sev-color),
+      0 0 20px color-mix(in srgb, var(--sev-color) 45%, transparent);
+    animation: si-hud-pin-breathe 2s ease-in-out infinite;
+  }
+  .finding-pin-ring {
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid var(--sev-color);
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: si-hud-pin-ring 2.5s ease-out infinite;
   }
 
-  /* --- Efficiency / Insulation --- */
-  .efficiency-svg {
-    width: 85%;
-    height: 85%;
-  }
-  .efficiency-readout {
+  .finding-readout {
     position: absolute;
     bottom: 12px;
     left: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 10px;
+    background: rgba(8, 12, 16, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 2;
   }
-  .efficiency-loss {
+  .finding-readout-sev {
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: 0.5625rem;
     font-weight: 700;
-    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
-  .efficiency-label {
+  .finding-readout-val {
     font-family: var(--font-mono);
-    font-size: 8px;
-    letter-spacing: 0.12em;
-    color: color-mix(in srgb, var(--accent) 50%, transparent);
+    font-size: 0.625rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .finding-sample-mark {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.45);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    user-select: none;
+    z-index: 2;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .finding-pin-dot  { animation: none; }
+    .finding-pin-ring { animation: none; opacity: 0.4; transform: scale(1.8); }
   }
 
   .finding-severity-badge {
@@ -2136,14 +2161,21 @@ const reportTabs = [
     }
 
     .si-viewport {
-      max-height: 240px;
+      max-height: 280px;
       overflow: hidden;
     }
 
-    .si-lens {
+    .si-hud-stage {
       /* Tighter mobile aspect so the hero doesn't eat the viewport */
       aspect-ratio: 16 / 10;
     }
+
+    /* Mobile: hide pin callouts (they cramp). Keep the pulsing dots so the
+       viewer still sees annotated regions, just without the text labels. */
+    .si-hud-pin-callout { display: none; }
+
+    /* Mobile: trim the sample watermark so it doesn't fight hero content */
+    .si-hud-sample { font-size: 0.5rem; }
   }
 
   /* ================ LIGHT MODE ================ */
