@@ -349,30 +349,78 @@ const process = [
     gap: 24px;
   }
 
+  /* Primary CTA — accent-filled pill, matches the homepage hero CTA. */
   .omega-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-family: var(--font-headline);
     font-size: 0.8125rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    padding: 0.875rem 2rem;
+    padding: 0.95rem 2rem;
     border-radius: 12px;
-    color: #fff;
+    background: var(--accent);
+    color: var(--text-on-accent, #04080e);
     text-decoration: none;
+    border: none;
+    box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 25%, transparent);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
   }
+  .omega-cta:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.12);
+    box-shadow: 0 8px 28px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+  .omega-cta:active { transform: translateY(0); filter: brightness(1); }
 
+  /* Secondary CTA — outlined ghost button so it has real presence next to
+     the filled primary, not a faint gray text link. */
   .omega-cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-family: var(--font-headline);
     font-size: 0.8125rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: var(--text-secondary);
+    padding: 0.9rem 1.75rem;
+    border-radius: 12px;
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    background: transparent;
+    color: var(--text-primary);
     text-decoration: none;
-    transition: color 0.2s ease;
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
   }
+  .omega-cta-secondary:hover {
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .omega-cta-secondary:active { transform: translateY(0); }
 
-  .omega-cta-secondary:hover { color: var(--accent); }
+  /* Light-mode keeps the same structure with appropriate color-mix on the
+     outline button. */
+  :global([data-theme="light"]) .omega-cta {
+    background: var(--accent);
+    color: #ffffff;
+    box-shadow: 0 8px 24px rgba(0, 131, 143, 0.2);
+  }
+  :global([data-theme="light"]) .omega-cta:hover {
+    filter: brightness(1.05);
+  }
+  :global([data-theme="light"]) .omega-cta-secondary {
+    color: var(--text-primary);
+    border-color: rgba(0, 131, 143, 0.35);
+  }
+  :global([data-theme="light"]) .omega-cta-secondary:hover {
+    background: rgba(0, 131, 143, 0.08);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
 
   /* ===== SCAN INTERFACE ===== */
   .scan-interface {
