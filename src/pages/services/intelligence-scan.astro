@@ -9,6 +9,7 @@ import Nav from '../../components/Nav.astro';
 import LeadGen from '../../components/LeadGen.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import Footer from '../../components/Footer.astro';
+import ThermalLens from '../../components/ThermalLens.astro';
 
 const process = [
   { step: '01', title: 'Scoping Call', desc: 'We learn your facility, your priorities, and your pain points. A real conversation about what matters to your operations team.', icon: 'call' },
@@ -89,164 +90,41 @@ const reportTabs = [
 
             <!-- Main scan viewport -->
             <div class="si-viewport">
-              <svg class="si-svg" viewBox="0 0 600 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!--
+                Inline SVG filter: converts any image into a true thermal
+                false-color map. The feColorMatrix grayscales by luminance,
+                then feComponentTransfer maps that intensity to R/G/B lookup
+                tables producing the classic inferno-style palette
+                (dark blue → cyan → yellow → orange → red → white).
+                The filter is invisible — only applied via `filter: url(#jinki-thermal-lookup)`.
+              -->
+              <svg aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute;overflow:hidden;pointer-events:none;">
                 <defs>
-                  <filter id="si-glow"><feGaussianBlur stdDeviation="3"/></filter>
-                  <filter id="si-hot"><feGaussianBlur stdDeviation="10"/></filter>
-                  <filter id="si-warm"><feGaussianBlur stdDeviation="6"/></filter>
-                  <radialGradient id="therm-crit" cx="50%" cy="50%"><stop offset="0%" stop-color="#FF3C3C" stop-opacity="0.5"/><stop offset="60%" stop-color="#FF6B35" stop-opacity="0.15"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-                  <radialGradient id="therm-warn" cx="50%" cy="50%"><stop offset="0%" stop-color="#FFB400" stop-opacity="0.4"/><stop offset="60%" stop-color="#FF8C00" stop-opacity="0.1"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-                  <radialGradient id="therm-mod" cx="50%" cy="50%"><stop offset="0%" stop-color="#FF8C00" stop-opacity="0.3"/><stop offset="50%" stop-color="#FF6B35" stop-opacity="0.08"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-                  <radialGradient id="therm-cool" cx="50%" cy="50%"><stop offset="0%" stop-color="#00E5FF" stop-opacity="0.06"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+                  <filter id="jinki-thermal-lookup" color-interpolation-filters="sRGB">
+                    <!-- 1. Luminance matrix → grayscale intensity -->
+                    <feColorMatrix type="matrix" values="0.299 0.587 0.114 0 0  0.299 0.587 0.114 0 0  0.299 0.587 0.114 0 0  0 0 0 1 0"/>
+                    <!-- 2. Map intensity → inferno-style false color -->
+                    <feComponentTransfer>
+                      <feFuncR tableValues="0.0 0.0 0.05 0.25 0.55 0.85 1.0 1.0 1.0"/>
+                      <feFuncG tableValues="0.0 0.02 0.05 0.1 0.25 0.5 0.75 0.9 1.0"/>
+                      <feFuncB tableValues="0.25 0.4 0.55 0.45 0.2 0.05 0.0 0.25 0.7"/>
+                    </feComponentTransfer>
+                    <!-- 3. Boost contrast for that "scanner" look -->
+                    <feComponentTransfer>
+                      <feFuncR type="linear" slope="1.15" intercept="-0.03"/>
+                      <feFuncG type="linear" slope="1.15" intercept="-0.03"/>
+                      <feFuncB type="linear" slope="1.15" intercept="-0.03"/>
+                    </feComponentTransfer>
+                  </filter>
                 </defs>
-                <!-- Subtle grid -->
-                <g opacity="0.3" stroke="rgba(0,229,255,0.08)" stroke-width="0.5">
-                  <line x1="0" y1="0" x2="0" y2="420"/><line x1="60" y1="0" x2="60" y2="420"/><line x1="120" y1="0" x2="120" y2="420"/><line x1="180" y1="0" x2="180" y2="420"/><line x1="240" y1="0" x2="240" y2="420"/><line x1="300" y1="0" x2="300" y2="420"/><line x1="360" y1="0" x2="360" y2="420"/><line x1="420" y1="0" x2="420" y2="420"/><line x1="480" y1="0" x2="480" y2="420"/><line x1="540" y1="0" x2="540" y2="420"/><line x1="600" y1="0" x2="600" y2="420"/>
-                  <line x1="0" y1="0" x2="600" y2="0"/><line x1="0" y1="60" x2="600" y2="60"/><line x1="0" y1="120" x2="600" y2="120"/><line x1="0" y1="180" x2="600" y2="180"/><line x1="0" y1="240" x2="600" y2="240"/><line x1="0" y1="300" x2="600" y2="300"/><line x1="0" y1="360" x2="600" y2="360"/><line x1="0" y1="420" x2="600" y2="420"/>
-                </g>
-                <!-- ===== FACILITY COMPLEX ===== -->
-                <!-- Main building -->
-                <rect x="50" y="50" width="380" height="280" rx="3" fill="rgba(0,229,255,0.02)" stroke="rgba(0,229,255,0.18)" stroke-width="1.5"/>
-                <!-- Roof sections with thermal base colors -->
-                <rect x="65" y="65" width="170" height="120" rx="2" fill="rgba(0,229,255,0.04)" stroke="rgba(0,229,255,0.1)" stroke-width="0.8"/>
-                <rect x="245" y="65" width="170" height="120" rx="2" fill="rgba(0,229,255,0.04)" stroke="rgba(0,229,255,0.1)" stroke-width="0.8"/>
-                <rect x="65" y="200" width="170" height="115" rx="2" fill="rgba(0,229,255,0.04)" stroke="rgba(0,229,255,0.1)" stroke-width="0.8"/>
-                <rect x="245" y="200" width="170" height="115" rx="2" fill="rgba(0,229,255,0.04)" stroke="rgba(0,229,255,0.1)" stroke-width="0.8"/>
-                <!-- Annex building -->
-                <rect x="460" y="100" width="110" height="170" rx="3" fill="rgba(0,229,255,0.02)" stroke="rgba(0,229,255,0.12)" stroke-width="1"/>
-                <rect x="472" y="115" width="86" height="60" rx="2" fill="rgba(0,229,255,0.03)" stroke="rgba(0,229,255,0.08)" stroke-width="0.5"/>
-                <rect x="472" y="190" width="86" height="60" rx="2" fill="rgba(0,229,255,0.03)" stroke="rgba(0,229,255,0.08)" stroke-width="0.5"/>
-                <!-- Parking / pad area -->
-                <rect x="460" y="300" width="110" height="50" rx="2" fill="none" stroke="rgba(0,229,255,0.06)" stroke-width="0.5" stroke-dasharray="4 3"/>
-                <!-- Section labels -->
-                <text x="150" y="130" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(0,229,255,0.15)" letter-spacing="2">HALL A</text>
-                <text x="330" y="130" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(0,229,255,0.15)" letter-spacing="2">HALL B</text>
-                <text x="150" y="260" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(0,229,255,0.15)" letter-spacing="2">MECH PLANT</text>
-                <text x="330" y="260" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(0,229,255,0.15)" letter-spacing="2">COOLING</text>
-                <text x="515" y="150" text-anchor="middle" font-family="monospace" font-size="6" fill="rgba(0,229,255,0.12)" letter-spacing="1.5">GENSET</text>
-                <text x="515" y="224" text-anchor="middle" font-family="monospace" font-size="6" fill="rgba(0,229,255,0.12)" letter-spacing="1.5">SWITCH</text>
-                <text x="515" y="328" text-anchor="middle" font-family="monospace" font-size="6" fill="rgba(0,229,255,0.12)" letter-spacing="1.5">LOADING</text>
-                <!-- HVAC units row — Hall A -->
-                <rect x="80" y="78" width="14" height="9" rx="1" fill="rgba(0,229,255,0.06)" stroke="rgba(0,229,255,0.12)" stroke-width="0.5"/>
-                <rect x="102" y="78" width="14" height="9" rx="1" fill="rgba(0,229,255,0.06)" stroke="rgba(0,229,255,0.12)" stroke-width="0.5"/>
-                <rect x="124" y="78" width="14" height="9" rx="1" fill="rgba(0,229,255,0.06)" stroke="rgba(0,229,255,0.12)" stroke-width="0.5"/>
-                <rect x="146" y="78" width="14" height="9" rx="1" fill="rgba(0,229,255,0.06)" stroke="rgba(0,229,255,0.12)" stroke-width="0.5"/>
-                <rect x="168" y="78" width="14" height="9" rx="1" fill="rgba(0,229,255,0.06)" stroke="rgba(0,229,255,0.12)" stroke-width="0.5"/>
-                <rect x="190" y="78" width="14" height="9" rx="1" fill="rgba(0,229,255,0.06)" stroke="rgba(0,229,255,0.12)" stroke-width="0.5"/>
-                <!-- HVAC units — Hall B -->
-                <rect x="260" y="78" width="14" height="9" rx="1" fill="rgba(0,229,255,0.06)" stroke="rgba(0,229,255,0.12)" stroke-width="0.5"/>
-                <rect x="282" y="78" width="14" height="9" rx="1" fill="rgba(0,229,255,0.06)" stroke="rgba(0,229,255,0.12)" stroke-width="0.5"/>
-                <rect x="304" y="78" width="14" height="9" rx="1" fill="rgba(0,229,255,0.06)" stroke="rgba(0,229,255,0.12)" stroke-width="0.5"/>
-                <rect x="326" y="78" width="14" height="9" rx="1" fill="rgba(0,229,255,0.06)" stroke="rgba(0,229,255,0.12)" stroke-width="0.5"/>
-                <rect x="348" y="78" width="14" height="9" rx="1" fill="rgba(0,229,255,0.06)" stroke="rgba(0,229,255,0.12)" stroke-width="0.5"/>
-                <rect x="370" y="78" width="14" height="9" rx="1" fill="rgba(0,229,255,0.06)" stroke="rgba(0,229,255,0.12)" stroke-width="0.5"/>
-                <!-- Cooling tower circles -->
-                <circle cx="280" cy="240" r="15" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="0.8"/>
-                <circle cx="320" cy="240" r="15" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="0.8"/>
-                <circle cx="360" cy="240" r="15" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="0.8"/>
-                <circle cx="280" cy="280" r="15" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="0.8"/>
-                <circle cx="320" cy="280" r="15" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="0.8"/>
-                <circle cx="360" cy="280" r="15" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="0.8"/>
-
-                <!-- ===== THERMAL SIGNATURES ===== -->
-                <!-- Critical: HVAC-05 running hot -->
-                <circle cx="170" cy="83" r="28" fill="url(#therm-crit)"/>
-                <circle cx="170" cy="83" r="16" fill="url(#therm-crit)">
-                  <animate attributeName="r" values="14;20;14" dur="2s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="170" cy="83" r="6" fill="rgba(255,60,60,0.7)">
-                  <animate attributeName="opacity" values="1;0.5;1" dur="1.5s" repeatCount="indefinite"/>
-                </circle>
-                <!-- Warning: membrane degradation area -->
-                <ellipse cx="130" cy="240" rx="40" ry="25" fill="url(#therm-warn)" opacity="0.7">
-                  <animate attributeName="opacity" values="0.5;0.8;0.5" dur="4s" repeatCount="indefinite"/>
-                </ellipse>
-                <circle cx="120" cy="235" r="5" fill="rgba(255,180,0,0.5)"/>
-                <circle cx="140" cy="245" r="3" fill="rgba(255,180,0,0.35)"/>
-                <!-- Moderate: cooling tower delta -->
-                <circle cx="320" cy="260" r="45" fill="url(#therm-mod)" opacity="0.6">
-                  <animate attributeName="opacity" values="0.4;0.7;0.4" dur="5s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="320" cy="240" r="4" fill="rgba(255,140,0,0.4)"/>
-                <circle cx="360" cy="280" r="3" fill="rgba(255,140,0,0.3)"/>
-                <!-- Info: slight warm spot on genset -->
-                <circle cx="515" cy="145" r="20" fill="url(#therm-cool)" opacity="0.8"/>
-                <!-- Normal thermal: ambient zones -->
-                <circle cx="100" cy="110" r="30" fill="url(#therm-cool)"/>
-                <circle cx="350" cy="110" r="25" fill="url(#therm-cool)"/>
-
-                <!-- ===== FINDING CALLOUTS ===== -->
-                <!-- F1: Critical HVAC -->
-                <g class="finding-tag ft-1">
-                  <line x1="185" y1="75" x2="260" y2="32" stroke="rgba(255,60,60,0.5)" stroke-width="0.8"/>
-                  <circle cx="260" cy="32" r="2" fill="#FF3C3C"/>
-                  <rect x="265" y="18" width="140" height="30" rx="4" fill="rgba(20,10,10,0.85)" stroke="rgba(255,60,60,0.5)" stroke-width="0.8"/>
-                  <circle cx="278" cy="28" r="3.5" fill="#FF3C3C"><animate attributeName="opacity" values="1;0.3;1" dur="1.2s" repeatCount="indefinite"/></circle>
-                  <text x="287" y="27" font-family="monospace" font-size="6.5" fill="#FF6B6B" letter-spacing="0.8">CRITICAL</text>
-                  <text x="340" y="27" font-family="monospace" font-size="6" fill="rgba(255,255,255,0.35)">F-001</text>
-                  <text x="278" y="40" font-family="monospace" font-size="7.5" fill="rgba(255,255,255,0.7)">HVAC-05</text>
-                  <text x="330" y="40" font-family="monospace" font-size="7.5" fill="#FF6B6B" font-weight="bold">47.3°C</text>
-                </g>
-                <!-- F2: Warning membrane -->
-                <g class="finding-tag ft-2">
-                  <line x1="110" y1="258" x2="48" y2="355" stroke="rgba(255,180,0,0.4)" stroke-width="0.8"/>
-                  <circle cx="48" cy="355" r="2" fill="#FFB400"/>
-                  <rect x="15" y="358" width="150" height="30" rx="4" fill="rgba(15,12,5,0.85)" stroke="rgba(255,180,0,0.4)" stroke-width="0.8"/>
-                  <circle cx="28" cy="368" r="3.5" fill="#FFB400"><animate attributeName="opacity" values="1;0.3;1" dur="1.2s" begin="0.4s" repeatCount="indefinite"/></circle>
-                  <text x="37" y="367" font-family="monospace" font-size="6.5" fill="#FFD060" letter-spacing="0.8">WARNING</text>
-                  <text x="92" y="367" font-family="monospace" font-size="6" fill="rgba(255,255,255,0.35)">F-004</text>
-                  <text x="28" y="380" font-family="monospace" font-size="7.5" fill="rgba(255,255,255,0.7)">Membrane split 12m</text>
-                </g>
-                <!-- F3: Moderate cooling -->
-                <g class="finding-tag ft-3">
-                  <line x1="345" y1="235" x2="440" y2="185" stroke="rgba(255,140,0,0.35)" stroke-width="0.8"/>
-                  <circle cx="440" cy="185" r="2" fill="#FF8C00"/>
-                  <rect x="445" y="172" width="145" height="30" rx="4" fill="rgba(15,10,5,0.85)" stroke="rgba(255,140,0,0.3)" stroke-width="0.8"/>
-                  <circle cx="458" cy="182" r="3.5" fill="#FF8C00"><animate attributeName="opacity" values="1;0.3;1" dur="1.2s" begin="0.8s" repeatCount="indefinite"/></circle>
-                  <text x="467" y="181" font-family="monospace" font-size="6.5" fill="#FFB060" letter-spacing="0.8">MODERATE</text>
-                  <text x="530" y="181" font-family="monospace" font-size="6" fill="rgba(255,255,255,0.35)">F-007</text>
-                  <text x="458" y="194" font-family="monospace" font-size="7.5" fill="rgba(255,255,255,0.7)">CT-3 ΔT +8.2°C</text>
-                </g>
-                <!-- F4: Info genset -->
-                <g class="finding-tag ft-4">
-                  <line x1="530" y1="140" x2="545" y2="90" stroke="rgba(0,229,255,0.2)" stroke-width="0.8"/>
-                  <circle cx="545" cy="90" r="2" fill="#00E5FF"/>
-                  <rect x="448" y="72" width="140" height="22" rx="4" fill="rgba(5,15,20,0.8)" stroke="rgba(0,229,255,0.2)" stroke-width="0.8"/>
-                  <text x="458" y="86" font-family="monospace" font-size="6.5" fill="rgba(0,229,255,0.6)" letter-spacing="0.8">INFO</text>
-                  <text x="485" y="86" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.5)">Genset exhaust nominal</text>
-                </g>
-
-                <!-- ===== SCAN ELEMENTS ===== -->
-                <!-- Horizontal scan line -->
-                <line x1="0" y1="0" x2="600" y2="0" stroke="rgba(0,229,255,0.3)" stroke-width="1.5" class="si-scanline">
-                  <animate attributeName="y1" values="-10;430;-10" dur="8s" repeatCount="indefinite"/>
-                  <animate attributeName="y2" values="-10;430;-10" dur="8s" repeatCount="indefinite"/>
-                </line>
-                <!-- Scan line glow trail -->
-                <rect x="0" y="0" width="600" height="30" fill="url(#scan-grad-v)" opacity="0.4" class="si-scantrail">
-                  <animate attributeName="y" values="-40;430;-40" dur="8s" repeatCount="indefinite"/>
-                </rect>
-                <linearGradient id="scan-grad-v" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="transparent"/><stop offset="80%" stop-color="#00E5FF" stop-opacity="0.08"/><stop offset="100%" stop-color="#00E5FF" stop-opacity="0.15"/></linearGradient>
-
-                <!-- Aerial platform with FOV cone -->
-                <g class="si-platform-group">
-                  <animateMotion dur="14s" repeatCount="indefinite" path="M50,45 L430,45 L430,175 L50,175 L50,200 L430,320 L430,345 L50,345 L50,45"/>
-                  <!-- FOV cone -->
-                  <polygon points="0,0 -20,30 20,30" fill="rgba(0,229,255,0.04)" stroke="rgba(0,229,255,0.08)" stroke-width="0.5"/>
-                  <!-- Platform body -->
-                  <circle r="4" fill="#00E5FF" filter="url(#si-glow)"/>
-                  <circle r="9" fill="none" stroke="#00E5FF" stroke-width="0.8" opacity="0.35">
-                    <animate attributeName="r" values="8;14;8" dur="1.8s" repeatCount="indefinite"/>
-                    <animate attributeName="opacity" values="0.35;0.08;0.35" dur="1.8s" repeatCount="indefinite"/>
-                  </circle>
-                </g>
-
-                <!-- Crosshair center -->
-                <g opacity="0.1">
-                  <line x1="295" y1="200" x2="305" y2="200" stroke="#00E5FF" stroke-width="0.5"/>
-                  <line x1="300" y1="195" x2="300" y2="205" stroke="#00E5FF" stroke-width="0.5"/>
-                </g>
               </svg>
+
+              <ThermalLens
+                src="/images/dc-rooftop-aerial.webp"
+                thermalSrc="/images/dc-rooftop-aerial.webp"
+                alt="Data center rooftop aerial view — hover or drag to reveal simulated thermal"
+                class="si-lens"
+              />
 
               <!-- Thermal scale bar (CSS overlay) -->
               <div class="si-thermal-scale">
@@ -955,15 +833,21 @@ const reportTabs = [
   .si-alt { color: color-mix(in srgb, var(--accent) 45%, transparent); font-weight: 600; }
 
   .si-viewport { position: relative; background: #04080e; }
-  .si-svg { width: 100%; display: block; }
 
-  /* Finding callouts */
-  .finding-tag { opacity: 0; animation: ftAppear 0.8s var(--ease-out-premium) forwards; }
-  .ft-1 { animation-delay: 1s; }
-  .ft-2 { animation-delay: 2.5s; }
-  .ft-3 { animation-delay: 4s; }
-  .ft-4 { animation-delay: 5.5s; }
-  @keyframes ftAppear { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  /* ThermalLens sizing inside the viewport chrome. Aspect matches the
+     old SVG viewBox (600×420) so layout is preserved on desktop. */
+  .si-lens {
+    width: 100%;
+    aspect-ratio: 600 / 420;
+    border-radius: 0;
+  }
+  /* The thermal reveal layer: same image as visible, processed through the
+     false-color SVG filter so the cursor reveals an actual heat-map look
+     instead of just a tinted copy. A subtle contrast/saturation nudge gives
+     the revealed circle more "instrument" feel. */
+  .si-lens :global(.thermal-layer) {
+    filter: url(#jinki-thermal-lookup) saturate(1.15) contrast(1.05);
+  }
 
   /* Thermal scale */
   .si-thermal-scale {
@@ -2247,13 +2131,14 @@ const reportTabs = [
       min-height: 160px;
     }
 
-    .si-svg text {
-      display: none;
-    }
-
     .si-viewport {
       max-height: 240px;
       overflow: hidden;
+    }
+
+    .si-lens {
+      /* Tighter mobile aspect so the hero doesn't eat the viewport */
+      aspect-ratio: 16 / 10;
     }
   }
 
