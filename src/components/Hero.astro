@@ -11,14 +11,12 @@ import GlobeCanvas from './GlobeCanvas.astro';
   <div class="hero-content">
     <div class="hero-text">
       <h1 class="headline">
-        Your Infrastructure Is Failing.<br/>You Just Can't See It <span class="headline-accent">Yet.</span>
+        Thermal-grade situational awareness for critical infrastructure — delivered in <span class="headline-accent">48 hours</span>.
       </h1>
 
       <p class="hero-subtitle">
-        73% of cooling failures show thermal signatures weeks before catastrophic failure. We find them in a single aerial pass and deliver a prioritized fix list within 48 hours.
+        One aerial pass. Every thermal signature, every moisture path, every anomaly — geolocated, ranked, and ready for your next work order.
       </p>
-
-      <p class="hero-proof">The only aerial intelligence platform purpose-built for data center operations.</p>
 
       <div class="hero-actions">
         <a href="#lead-gen" class="cta-primary btn-premium">Request Assessment</a>
@@ -43,10 +41,12 @@ import GlobeCanvas from './GlobeCanvas.astro';
   }
   .headline {
     font-family: var(--font-headline);
-    font-size: clamp(2.8rem, 6vw + .5rem, 5rem);
-    font-weight: 700; line-height: 1.02; letter-spacing: -.035em;
+    font-size: clamp(2.5rem, 5vw + .5rem, 4.5rem);
+    font-weight: 700; line-height: 1.05; letter-spacing: -.03em;
     color: var(--text-primary); margin-bottom: 2rem;
-    max-width: 16ch;
+    max-width: 22ch;
+    /* Prevent ugly breaks on long compound words like "Thermal-grade" */
+    hyphens: auto;
   }
   .headline-accent {
     color: var(--accent);
@@ -59,11 +59,6 @@ import GlobeCanvas from './GlobeCanvas.astro';
     font-size: clamp(1.1rem, 1.4vw + .4rem, 1.375rem);
     color: var(--text-secondary); font-weight: 400;
     max-width: 38rem; line-height: 1.7; margin-bottom: 1.5rem;
-  }
-  .hero-proof {
-    font-family: var(--font-label); font-size: 0.8125rem;
-    color: var(--text-tertiary); letter-spacing: 0.04em;
-    margin-bottom: 2rem;
   }
   .hero-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .hero-dissolve {
@@ -128,8 +123,7 @@ import GlobeCanvas from './GlobeCanvas.astro';
   @media (max-width: 767px) {
     .hero { min-height: auto; padding-top: 3.5rem; padding-bottom: 1rem; }
     .hero .headline { font-size: clamp(1.5rem, 7vw, 2rem); margin-bottom: 1rem; line-height: 1.1; }
-    .hero .hero-subtitle { font-size: 0.9375rem; line-height: 1.55; margin-bottom: 1rem; }
-    .hero-proof { font-size: 0.75rem; margin-bottom: 1.5rem; }
+    .hero .hero-subtitle { font-size: 0.9375rem; line-height: 1.55; margin-bottom: 1.5rem; }
     .hero-actions { flex-direction: column; gap: 0.5rem; }
     .cta-primary { width: 100%; max-width: none; padding: 14px 24px; font-size: 0.8125rem; min-height: 48px; }
   }
