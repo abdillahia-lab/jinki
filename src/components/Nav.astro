@@ -16,6 +16,14 @@ const services = [
   { href: '/services/deployment', label: 'Autonomous Deployment' },
 ];
 
+const company = [
+  { href: '/about', label: 'About' },
+  { href: '/careers', label: 'Careers' },
+  { href: '/security', label: 'Security' },
+  { href: '/data-security', label: 'Data Security' },
+  { href: '/faq', label: 'FAQ' },
+];
+
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 function isActive(href: string) {
   const clean = href.replace(/\/$/, '') || '/';
@@ -74,11 +82,22 @@ function isDropdownActive(items: { href: string }[]) {
         </div>
       </li>
 
-      <li><a href="/about" class={`nav-link${isActive('/about') ? ' nav-link-active' : ''}`} aria-current={isActive('/about') ? 'page' : undefined}>About</a></li>
-      <li><a href="/security" class={`nav-link${isActive('/security') ? ' nav-link-active' : ''}`} aria-current={isActive('/security') ? 'page' : undefined}>Security</a></li>
-      <li><a href="/data-security" class={`nav-link${isActive('/data-security') ? ' nav-link-active' : ''}`} aria-current={isActive('/data-security') ? 'page' : undefined}>Data Security</a></li>
+      <!-- Company dropdown -->
+      <li class="dropdown">
+        <button class={`nav-link dropdown-trigger${isDropdownActive(company) ? ' nav-link-active' : ''}`} aria-expanded="false" aria-haspopup="menu">
+          Company
+          <span class="material-symbols-outlined dropdown-chevron" aria-hidden="true">expand_more</span>
+        </button>
+        <div class="dropdown-panel" role="menu" aria-label="Company">
+          {company.map(c => (
+            <a href={c.href} class={`dropdown-item${isActive(c.href) ? ' dropdown-item-active' : ''}`} role="menuitem" aria-current={isActive(c.href) ? 'page' : undefined}>
+              {c.label}
+            </a>
+          ))}
+        </div>
+      </li>
+
       <li><a href="/blog" class={`nav-link${isActive('/blog') ? ' nav-link-active' : ''}`} aria-current={isActive('/blog') ? 'page' : undefined}>Blog</a></li>
-      <li><a href="/faq" class={`nav-link${isActive('/faq') ? ' nav-link-active' : ''}`} aria-current={isActive('/faq') ? 'page' : undefined}>FAQ</a></li>
       <li><a href="/contact" class={`nav-link${isActive('/contact') ? ' nav-link-active' : ''}`} aria-current={isActive('/contact') ? 'page' : undefined}>Contact</a></li>
     </ul>
 
@@ -112,13 +131,13 @@ function isDropdownActive(items: { href: string }[]) {
         <a href={s.href} class={`mobile-link${isActive(s.href) ? ' mobile-link-active' : ''}`} aria-current={isActive(s.href) ? 'page' : undefined}>{s.label}</a>
       ))}
 
+      <div class="mobile-section-label">Company</div>
+      {company.map(c => (
+        <a href={c.href} class={`mobile-link${isActive(c.href) ? ' mobile-link-active' : ''}`} aria-current={isActive(c.href) ? 'page' : undefined}>{c.label}</a>
+      ))}
+
       <div class="mobile-divider"></div>
-      <a href="/about" class={`mobile-link${isActive('/about') ? ' mobile-link-active' : ''}`} aria-current={isActive('/about') ? 'page' : undefined}>About</a>
-      <a href="/careers" class={`mobile-link${isActive('/careers') ? ' mobile-link-active' : ''}`} aria-current={isActive('/careers') ? 'page' : undefined}>Careers</a>
-      <a href="/security" class={`mobile-link${isActive('/security') ? ' mobile-link-active' : ''}`} aria-current={isActive('/security') ? 'page' : undefined}>Security</a>
-      <a href="/data-security" class={`mobile-link${isActive('/data-security') ? ' mobile-link-active' : ''}`} aria-current={isActive('/data-security') ? 'page' : undefined}>Data Security</a>
       <a href="/blog" class={`mobile-link${isActive('/blog') ? ' mobile-link-active' : ''}`} aria-current={isActive('/blog') ? 'page' : undefined}>Blog</a>
-      <a href="/faq" class={`mobile-link${isActive('/faq') ? ' mobile-link-active' : ''}`} aria-current={isActive('/faq') ? 'page' : undefined}>FAQ</a>
       <a href="/contact" class={`mobile-link${isActive('/contact') ? ' mobile-link-active' : ''}`} aria-current={isActive('/contact') ? 'page' : undefined}>Contact</a>
 
       <a href="#lead-gen" class="mobile-cta">Request Assessment</a>
@@ -646,7 +665,8 @@ function isDropdownActive(items: { href: string }[]) {
   }
 
   /* ==================== RESPONSIVE ==================== */
-  @media (max-width: 767px) {
+  /* 1023px and below: collapse to hamburger. Tablets and narrow laptops use the mobile panel. */
+  @media (max-width: 1023px) {
     .nav-links { display: none !important; }
     .nav-cta { display: none !important; }
     .mobile-toggle { display: flex !important; }
