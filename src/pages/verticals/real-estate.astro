@@ -23,50 +23,84 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import Footer from '../../components/Footer.astro';
 
 const stats = [
-  { value: '4K + 45MP', label: 'Hi-res stills and cinematic 4K video captured every flight.' },
-  { value: 'Golden Hour', label: 'Weather-windowed scheduling for the 30-minute window that makes listings move.' },
-  { value: '48 hr', label: 'Edited deliverables returned inside two business days of the flight.' },
-  { value: 'FAA 107', label: 'Licensed pilot, $5M liability, and NDA-by-default for pre-market listings.' },
+  {
+    value: '4K + 45MP',
+    label: 'Hi-res stills and cinematic 4K video. Aerial or interior — same craft, same gear.',
+  },
+  {
+    value: 'LAANC Ready',
+    label: 'Authorized for the DC Special Flight Rules Area. We file the FAA paperwork; you do not see the friction.',
+  },
+  {
+    value: '48 hr',
+    label: 'From flight day to edited deliverables. End-to-end timelines quoted per property — LAANC waivers add 5–14 days when the airspace requires it.',
+  },
+  {
+    value: 'FAA 107 · $5M',
+    label: 'Licensed pilot, $5M liability, NDA by default for pre-market listings.',
+  },
 ];
 
 const useCases = [
   {
-    title: 'Luxury Estates',
+    title: 'Luxury Lobbies & Amenity Spaces',
     icon: 'villa',
-    desc: 'Multi-acre residential properties where a single listing photo cannot carry the story. We fly the surround — treeline, shoreline, approach drive — at the altitude that makes scale legible.',
-    crop: '18% 30%',
+    desc: 'When the building sits inside DC SFRA or class-B controlled airspace and outdoor flight is off the table, the lobby, amenity deck, spa, and cityscape-through-windows carry the listing. Architectural interior photography, not snapshots.',
+    crop: '30% 40%',
   },
   {
     title: 'Penthouse & High-Rise Condos',
     icon: 'apartment',
-    desc: 'Exterior tower aerials, roof-deck views, and surround context that a ground camera cannot capture. Ideal for marketing pre-sale or for resale of top-floor units.',
+    desc: 'Cityscape views from inside the unit plus exterior aerial when airspace permits. Ideal for pre-sale marketing and for resale of top-floor units where the view is the product.',
     crop: '62% 25%',
+  },
+  {
+    title: 'Luxury Single-Family Estates',
+    icon: 'house',
+    desc: 'Multi-acre residential properties outside restricted airspace. We fly the full surround — treeline, approach drive, shoreline — at the altitude that makes scale legible.',
+    crop: '18% 30%',
   },
   {
     title: 'Luxury Apartment Communities',
     icon: 'location_city',
-    desc: 'Full-property aerials for leasing marketing — amenity decks, pool zones, parking structure, pedestrian paths. Delivered as a campaign-ready photo set plus a 30-second edit for social.',
+    desc: 'Amenity-deck, pool, and pedestrian-path aerials for leasing marketing, plus architectural interior of common areas. Delivered as a campaign-ready set plus a 30-second social edit.',
     crop: '40% 55%',
   },
   {
     title: 'New Construction Marketing',
     icon: 'construction',
-    desc: 'Pre-listing launch aerials captured during final finishing. Monthly progress flights for developer and lender reporting, with date-stamped chain of custody.',
+    desc: 'Pre-listing aerials during final finishing. Monthly progress flights for developer and lender reporting, with date-stamped chain of custody for closing files.',
     crop: '78% 40%',
   },
   {
-    title: 'Twilight & Golden Hour',
+    title: 'Twilight & Blue Hour',
     icon: 'wb_twilight',
-    desc: 'Scheduled sunset and blue-hour flights for the signature hero photo. Weather-windowed with 24-hour rescheduling if conditions do not match the shot list.',
+    desc: 'Scheduled weather-windowed flights (or interior lit-for-listing shoots when aerial is not an option). Rescheduling at no charge if the sky does not cooperate.',
     crop: '30% 70%',
   },
 ];
 
 const process = [
-  { step: '01', title: 'Scope Call', desc: 'Fifteen-minute brief on the property, the shot list, and the listing timeline. We quote within one business day.' },
-  { step: '02', title: 'Flight Window', desc: 'Golden hour or twilight slot confirmed 24 hours before the shoot. If the weather window misses, we reschedule at no charge.' },
-  { step: '03', title: 'On-Site Flight', desc: 'Typically 45–90 minutes on the property. Multiple altitudes, orbit passes, context shots, and hero angles per a pre-approved shot list.' },
-  { step: '04', title: 'Edit & Delivery', desc: 'Edited hi-res stills plus a 4K video master delivered within 48 hours via secure link. Unedited archive retained for 90 days.' },
+  {
+    step: '01',
+    title: 'Scope Call',
+    desc: 'Fifteen-minute brief on the property and shot list. We pull airspace on the call and flag any LAANC or SFRA waiver work up front.',
+  },
+  {
+    step: '02',
+    title: 'Airspace Plan',
+    desc: 'Indoor-only shoots skip this and go straight to scheduling. Outdoor aerial in controlled airspace gets a LAANC authorization — same-day approval in most zones, 5–14 days where a Part 107 waiver is needed. We quote the end-to-end timeline after this step.',
+  },
+  {
+    step: '03',
+    title: 'On-Site',
+    desc: '45–90 minutes for exterior and aerial work. 2–3 hours for interior, lobby, and amenity shoots with proper lighting. Multiple altitudes and angles, pre-approved shot list, signed off before we pack up.',
+  },
+  {
+    step: '04',
+    title: 'Edit & Delivery',
+    desc: 'Edited hi-res stills and a 4K video master delivered within 48 hours of the shoot, via secure link. Unedited archive retained for 90 days in case you need a reshoot of a specific angle.',
+  },
 ];
 ---
 
@@ -92,9 +126,9 @@ const process = [
     <section class="re-hero" aria-label="Real Estate Aerial Photography">
       <div class="re-hero-bg" aria-hidden="true">
         <picture>
-          <source srcset="/images/facility-night-aerial.webp" type="image/webp" />
+          <source srcset="/images/luxury-lobby.webp" type="image/webp" />
           <img
-            src="/images/facility-night-aerial.jpg"
+            src="/images/luxury-lobby.jpg"
             alt=""
             class="re-hero-img"
             loading="eager"
@@ -109,10 +143,10 @@ const process = [
         <div class="re-hero-content reveal">
           <span class="re-eyebrow">Real Estate</span>
           <h1 class="re-hero-title">
-            Aerial photography for the listings that <span class="re-hero-accent">move.</span>
+            Photography for the listings that move. <span class="re-hero-accent">Indoors and up.</span>
           </h1>
           <p class="re-hero-subtitle">
-            Luxury homes, condos, and apartment developments — captured with the same craft and delivery discipline as our thermal inspection work. Golden-hour scheduled. Delivered inside 48 hours. Never a stock photo in sight.
+            Luxury homes, condos, and apartment developments across the Mid-Atlantic. When airspace allows, we fly. When it does not — DC SFRA, class-B controlled zones — we deliver gallery-grade interior, lobby, and amenity photography instead. Either way, your listing ships with imagery that matches the price tier.
           </p>
           <div class="re-hero-actions">
             <a href="#lead-gen" class="re-cta-primary">Request a Quote</a>
@@ -271,14 +305,25 @@ const process = [
     height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: saturate(0.9);
+    /* Interior lobby photos are much brighter than the previous night
+       aerial. We slightly darken + warm the photo itself (preserves the
+       brass/marble richness) and let the scrim below carry the rest. */
+    filter: brightness(0.78) saturate(1.05) contrast(1.02);
   }
   .re-hero-scrim {
     position: absolute;
     inset: 0;
+    /* Deeper scrim at the bottom where headline and subtitle live;
+       top stays lighter so the ceiling detail of the lobby is still
+       visible and the image doesn't read as a flat dark block. */
     background:
-      linear-gradient(180deg, rgba(4,8,14,0.3) 0%, rgba(4,8,14,0.65) 55%, rgba(4,8,14,0.92) 100%),
-      radial-gradient(ellipse 80% 70% at 30% 60%, color-mix(in srgb, var(--re-accent) 8%, transparent), transparent 60%);
+      linear-gradient(180deg,
+        rgba(4, 8, 14, 0.25) 0%,
+        rgba(4, 8, 14, 0.55) 38%,
+        rgba(4, 8, 14, 0.82) 72%,
+        rgba(4, 8, 14, 0.95) 100%
+      ),
+      radial-gradient(ellipse 85% 70% at 25% 70%, color-mix(in srgb, var(--re-accent) 10%, transparent), transparent 55%);
   }
 
   .re-hero-inner {
