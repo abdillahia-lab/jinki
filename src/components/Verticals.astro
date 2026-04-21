@@ -47,6 +47,17 @@ const verticals = [
     desc: "Thermal crop stress detection, irrigation analysis, and yield intelligence across thousands of acres \u2014 identifying water stress and field issues before they impact harvest.",
     link: "/verticals/agriculture",
   },
+  {
+    title: "Real Estate",
+    icon: "home_work",
+    img: "/images/facility-night-aerial.jpg",
+    webp: "/images/facility-night-aerial.webp",
+    imgAlt: "Illuminated residential buildings at twilight from an aerial perspective",
+    gradient: "",
+    accent: "#EAB308",
+    desc: "Premium aerial photography for luxury homes, condos, and apartment developments — golden-hour scheduled, 4K + hi-res stills delivered inside 48 hours.",
+    link: "/verticals/real-estate",
+  },
 ];
 ---
 
@@ -199,7 +210,13 @@ const verticals = [
     .verticals-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
   }
   @media (min-width: 1024px) {
-    .verticals-grid { grid-template-columns: repeat(4, 1fr); }
+    /* 3 across, with the 4th and 5th wrapping to a second row — cleaner
+       rhythm than a cramped 5-column line. Each card keeps breathing room. */
+    .verticals-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 1440px) {
+    /* Wide screens: all 5 fit comfortably on one row. */
+    .verticals-grid { grid-template-columns: repeat(5, 1fr); gap: 1.5rem; }
   }
 
   .vertical-card {
