@@ -1,3 +1,4 @@
+/* cache-bust: mobile-sprint-2026-04-21 — forces CSS hash churn after prior deploy surfaced a bad-asset edge-cache entry */
 @import "tailwindcss";
 
 /* ============================================================
@@ -184,7 +185,7 @@ html {
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100vh; min-height: 100dvh;
   line-height: 1.7;
   font-size: 1.125rem;
   letter-spacing: 0.015em;

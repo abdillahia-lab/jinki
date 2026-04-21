@@ -372,8 +372,8 @@ function isDropdownActive(items: { href: string }[]) {
     background: none;
     border: 1px solid var(--glass-border);
     border-radius: 12px;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -742,15 +742,26 @@ function isDropdownActive(items: { href: string }[]) {
     themeToggle?.addEventListener('click', toggleTheme);
     mobileThemeToggle?.addEventListener('click', toggleTheme);
 
-    /* ---- Mobile menu ---- */
+    /* ---- Mobile menu ----
+       iOS scroll-lock pattern: overflow:hidden alone does NOT stop touch
+       scrolling on iOS Safari. We store scrollY, set body to
+       position:fixed;top:-scrollY, then restore on close. This is the
+       same pattern used by major iOS-first sites (Apple.com, Stripe). */
+    var savedScrollY = 0;
     function openMobile() {
+      savedScrollY = window.scrollY || window.pageYOffset || 0;
       mobilePanel?.classList.add('open');
       mobilePanel?.setAttribute('aria-hidden', 'false');
       backdrop?.classList.add('open');
       mobileToggle?.setAttribute('aria-expanded', 'true');
       var icon = mobileToggle?.querySelector('.material-symbols-outlined');
       if (icon) icon.textContent = 'close';
+      document.body.style.position = 'fixed';
+      document.body.style.top = '-' + savedScrollY + 'px';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
       document.body.style.overflow = 'hidden';
+      document.body.style.width = '100%';
       var firstLink = mobilePanel?.querySelector('a');
       if (firstLink) setTimeout(function() { firstLink.focus(); }, 100);
     }
@@ -762,7 +773,13 @@ function isDropdownActive(items: { href: string }[]) {
       mobileToggle?.setAttribute('aria-expanded', 'false');
       var icon = mobileToggle?.querySelector('.material-symbols-outlined');
       if (icon) icon.textContent = 'menu';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
       document.body.style.overflow = '';
+      document.body.style.width = '';
+      window.scrollTo(0, savedScrollY);
       mobileToggle?.focus();
     }
 

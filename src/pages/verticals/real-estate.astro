@@ -360,6 +360,22 @@ const process = [
     color: var(--text-secondary);
     max-width: 640px;
   }
+  /* Mobile: line-clamp to 5 so the SFRA/LAANC-heavy subtitle doesn't
+     become a wall of text at 375px. CTAs stay above the fold. */
+  @media (max-width: 767px) {
+    .re-hero-subtitle {
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      margin-top: 1.25rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .re-hero-title {
+      font-size: clamp(1.75rem, 7.5vw, 2.4rem);
+    }
+  }
 
   .re-hero-actions {
     display: flex;

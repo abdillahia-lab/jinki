@@ -28,6 +28,13 @@ import GlobeCanvas from './GlobeCanvas.astro';
 </section>
 
 <style>
+  /* Cache-bust sentinel: real CSS rule with a unique attribute selector.
+     No element matches it (no [data-cb-2026-04-21] exists in markup), but
+     its bytes are part of the scoped bundle so it changes the CSS hash.
+     This forces Cloudflare edge to re-propagate after a bad edge-cache
+     entry was left by a prior deploy. Safe to leave permanently. */
+  [data-cb-2026-04-21] { display: contents; }
+
   .hero {
     position: relative; min-height: 100vh; min-height: 100dvh;
     display: flex; align-items: center; overflow: hidden;
@@ -121,15 +128,33 @@ import GlobeCanvas from './GlobeCanvas.astro';
 
   /* === Responsive === */
   @media (max-width: 767px) {
+    /* Mobile hero: compact so both CTAs fit above the fold at 375×667
+       (iPhone SE). Target budget: padding-top 56px + H1 ~80px + gap +
+       subtitle max 3 lines + gap + CTAs 96px + padding-bottom ≤ 620px. */
     .hero { min-height: auto; padding-top: 3.5rem; padding-bottom: 1rem; }
-    .hero .headline { font-size: clamp(1.5rem, 7vw, 2rem); margin-bottom: 1rem; line-height: 1.1; }
-    .hero .hero-subtitle { font-size: 0.9375rem; line-height: 1.55; margin-bottom: 1.5rem; }
+    .hero .headline {
+      font-size: clamp(1.55rem, 7vw, 1.95rem);   /* tightened from 2rem upper */
+      margin-bottom: 0.9rem;
+      line-height: 1.08;
+      max-width: 18ch;
+    }
+    .hero .hero-subtitle {
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+      /* 3-line clamp — prevents wall-of-text on narrow widths */
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
     .hero-actions { flex-direction: column; gap: 0.5rem; }
     .cta-primary { width: 100%; max-width: none; padding: 14px 24px; font-size: 0.8125rem; min-height: 48px; }
   }
   @media (max-width: 374px) {
+    /* iPhone SE 1st gen / iPhone 5 sized — tighter still */
     .hero .headline { font-size: 1.35rem; }
-    .hero .hero-subtitle { font-size: 0.8125rem; }
+    .hero .hero-subtitle { font-size: 0.8125rem; -webkit-line-clamp: 4; }
     .cta-primary { padding: 12px 20px; font-size: 0.75rem; min-height: 44px; }
   }
 

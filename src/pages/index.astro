@@ -6,6 +6,10 @@
   Bento Stats → Process → Lead Gen → Footer.
 
   6 content sections. No dividers. Premium spacing.
+
+  Cache-bust marker: mobile-sprint-2026-04-21. Forces a fresh scoped-CSS
+  hash so Cloudflare edge re-propagates — prior deploy surfaced a bad
+  edge-cache entry on the previous homepage CSS hash.
 */
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';

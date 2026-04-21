@@ -766,6 +766,21 @@ const process = [
       gap: 16px;
     }
 
+    /* Mobile hero copy tightening: cap subtitle height so CTAs stay in
+       the first viewport on iPhone SE (375×667). */
+    .omega-hero-title {
+      font-size: clamp(1.7rem, 7vw, 2.15rem);
+      margin-bottom: 16px;
+    }
+    .omega-hero-subtitle {
+      font-size: 0.9375rem;
+      line-height: 1.55;
+      margin-bottom: 20px;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
 
     .si-viewport {
       max-height: 280px;
