@@ -9,6 +9,7 @@
 /mission /about 301
 /services /services/intelligence-scan 301
 /services/audit /services/intelligence-scan 301
+/security /verticals/security 301
 
 # Block common attack probes — return 404
 /wp-admin/* /404 404

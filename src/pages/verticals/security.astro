@@ -95,6 +95,57 @@ const integrations = [
   { id: 'alarm', label: 'Alarm Systems', icon: 'notification_important', x: 85, y: 25 },
   { id: 'siem', label: 'SIEM / SOC', icon: 'hub', x: 85, y: 75 },
 ];
+
+const environments = [
+  {
+    icon: 'dns',
+    title: 'Data Centers',
+    metric: '<90s',
+    metricLabel: 'alert to verification',
+    desc: 'Multi-layered perimeter protection for facilities housing critical digital infrastructure. Thermal anomaly detection at the fence line.',
+    capabilities: ['Perimeter patrol', 'Thermal fence-line', 'Alarm verification', 'SOC integration'],
+  },
+  {
+    icon: 'construction',
+    title: 'Construction Sites',
+    metric: '200+',
+    metricLabel: 'missions per month',
+    desc: 'After-hours theft prevention and equipment monitoring with autonomous patrol routes and time-stamped evidence capture.',
+    capabilities: ['Theft deterrence', 'Equipment monitoring', 'Progress docs', 'Evidence capture'],
+  },
+  {
+    icon: 'stadium',
+    title: 'Events & Gatherings',
+    metric: '500+',
+    metricLabel: 'acres per event',
+    desc: 'Real-time crowd monitoring and perimeter surveillance from above — providing situational awareness ground teams cannot achieve alone.',
+    capabilities: ['Crowd analysis', 'Perimeter breach', 'Incident response', 'Post-event sweep'],
+  },
+  {
+    icon: 'school',
+    title: 'Private Schools & Campuses',
+    metric: '24/7',
+    metricLabel: 'campus coverage',
+    desc: 'Discreet autonomous surveillance protecting students and staff across sprawling campus grounds, athletic fields, and parking areas.',
+    capabilities: ['Campus perimeter', 'After-hours patrol', 'Event security', 'Pickup monitoring'],
+  },
+  {
+    icon: 'downhill_skiing',
+    title: 'Ski Resorts & Recreation',
+    metric: '1,000+',
+    metricLabel: 'acres per patrol',
+    desc: 'Terrain-aware aerial patrols across slopes, lodges, and backcountry. Thermal detection in whiteout conditions when traditional cameras fail.',
+    capabilities: ['Slope monitoring', 'Lodge perimeter', 'Night thermal', 'Search support'],
+  },
+  {
+    icon: 'villa',
+    title: 'Resorts & Hospitality',
+    metric: '0',
+    metricLabel: 'visible infrastructure',
+    desc: 'Protecting guests across expansive luxury grounds without the visible security presence that disrupts the experience.',
+    capabilities: ['Guest safety', 'Waterfront', 'Night thermal', 'Perimeter coverage'],
+  },
+];
 ---
 
 <Layout ogImage="/images/og-security-vertical.png" title="Security — Jinki Aerial Intelligence" description="Aerial perimeter surveillance and thermal threat detection for critical infrastructure. Autonomous patrol covering 500+ acre perimeters." jsonLd={{
@@ -600,6 +651,46 @@ const integrations = [
               </div>
               <h3 class="service-title">{svc.title}</h3>
               <p class="service-desc">{svc.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ENVIRONMENTS / USE CASES ==================== -->
+    <section id="environments" class="section" aria-label="Environments">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="sec-eyebrow">
+            <span class="sec-eyebrow-line"></span>
+            <span class="sec-eyebrow-text">Environments</span>
+          </div>
+          <h2>Aerial Security for<br/>Every Environment</h2>
+          <p class="section-subtitle">
+            From single-night events to persistent facility protection,
+            aerial thermal intelligence adapts to the scale, terrain, and threat profile
+            of your operating environment.
+          </p>
+        </div>
+        <div class="env-grid">
+          {environments.map((env, i) => (
+            <div class={`env-card reveal reveal-delay-${(i % 3) + 1}`}>
+              <div class="env-card-top">
+                <div class="env-card-icon-wrap">
+                  <span class="material-symbols-outlined" style="font-size:22px;color:var(--accent-secondary);font-variation-settings:'FILL' 1;" aria-hidden="true">{env.icon}</span>
+                </div>
+                <div class="env-card-metric">
+                  <span class="env-metric-val">{env.metric}</span>
+                  <span class="env-metric-lbl">{env.metricLabel}</span>
+                </div>
+              </div>
+              <h3 class="env-card-title">{env.title}</h3>
+              <p class="env-card-desc">{env.desc}</p>
+              <div class="env-card-caps">
+                {env.capabilities.map(c => (
+                  <span class="env-cap-tag">{c}</span>
+                ))}
+              </div>
             </div>
           ))}
         </div>
@@ -2085,6 +2176,100 @@ const integrations = [
     font-size: 0.875rem;
     color: var(--text-secondary);
     line-height: 1.7;
+  }
+
+  /* ================================================================
+     ENVIRONMENTS GRID
+     ================================================================ */
+  .env-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 768px) { .env-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .env-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .env-card {
+    background: rgba(123, 97, 255, 0.04);
+    border: 1px solid rgba(123, 97, 255, 0.12);
+    border-radius: 16px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .env-card:hover {
+    border-color: rgba(123, 97, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 0 16px rgba(123, 97, 255, 0.08);
+    transform: translateY(-2px);
+  }
+  .env-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  .env-card-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(123, 97, 255, 0.15);
+    border: 1px solid rgba(123, 97, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .env-card-metric { text-align: right; }
+  .env-metric-val {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #c4b5ff;
+    display: block;
+    line-height: 1;
+  }
+  .env-metric-lbl {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: rgba(123, 97, 255, 0.4);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 4px;
+  }
+  .env-card-title {
+    font-family: var(--font-headline);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 8px;
+  }
+  .env-card-desc {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+    margin-bottom: 20px;
+    flex: 1;
+  }
+  .env-card-caps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    border-top: 1px solid rgba(123, 97, 255, 0.08);
+    padding-top: 16px;
+  }
+  .env-cap-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: rgba(196, 181, 255, 0.9);
+    background: rgba(123, 97, 255, 0.1);
+    border: 1px solid rgba(123, 97, 255, 0.12);
+    border-radius: 6px;
+    padding: 4px 8px;
+    letter-spacing: 0.03em;
   }
 
   /* ================================================================
