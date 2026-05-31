@@ -1,0 +1,451 @@
+---
+/*
+  Embodied AI — Coming Soon page
+  Unlinked from nav. Direct URL only.
+  Sets direction without committing to specifics.
+  Pink/magenta accent (#FF3DAA) to differentiate from existing verticals.
+*/
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const directions = [
+  {
+    label: '01',
+    title: 'Perception that doesn\'t depend on the cloud',
+    desc: 'Edge inference for systems that must reason in real time, in environments without reliable connectivity. The same intelligence we run aloft, running on-device.',
+  },
+  {
+    label: '02',
+    title: 'Multi-modal sensor fusion',
+    desc: 'Thermal, visual, depth, and inertial — synthesized into a single situational picture. Built on the perception stack we\'ve been refining for aerial operations.',
+  },
+  {
+    label: '03',
+    title: 'Autonomy across modalities',
+    desc: 'The hard part of autonomy isn\'t the platform. It\'s the decision-making layer that translates perception into action — and transfers across air, ground, and surface domains.',
+  },
+];
+---
+
+<Layout
+  title="Embodied AI — Jinki"
+  description="Embodied AI research at Jinki. Extending the perception and autonomy stack from aerial platforms into broader embodied systems. In development — coming soon."
+  noindex={true}
+>
+  <Nav />
+  <main id="main-content" class="embodied-page">
+
+    <!-- ==================== HERO ==================== -->
+    <section class="emb-hero" aria-label="Embodied AI">
+      <div aria-hidden="true" class="emb-hero-glow"></div>
+
+      <!-- Subtle schematic background -->
+      <svg class="emb-hero-bg" viewBox="0 0 1200 800" fill="none" aria-hidden="true">
+        <defs>
+          <pattern id="emb-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+            <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(255,61,170,0.05)" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+        <rect width="1200" height="800" fill="url(#emb-grid)"/>
+        <!-- Wireframe node graph hinting at robotics/AI -->
+        <g class="emb-nodes" stroke="rgba(255,61,170,0.18)" stroke-width="0.6" fill="none">
+          <line x1="200" y1="180" x2="400" y2="250"/>
+          <line x1="400" y1="250" x2="620" y2="220"/>
+          <line x1="620" y1="220" x2="820" y2="320"/>
+          <line x1="400" y1="250" x2="480" y2="450"/>
+          <line x1="620" y1="220" x2="700" y2="450"/>
+          <line x1="480" y1="450" x2="700" y2="450"/>
+          <line x1="700" y1="450" x2="900" y2="520"/>
+          <line x1="200" y1="180" x2="280" y2="430"/>
+          <line x1="280" y1="430" x2="480" y2="450"/>
+        </g>
+        <g class="emb-node-dots" fill="rgba(255,61,170,0.5)">
+          <circle cx="200" cy="180" r="3"/>
+          <circle cx="400" cy="250" r="4"/>
+          <circle cx="620" cy="220" r="3"/>
+          <circle cx="820" cy="320" r="3"/>
+          <circle cx="480" cy="450" r="4"/>
+          <circle cx="700" cy="450" r="3"/>
+          <circle cx="900" cy="520" r="3"/>
+          <circle cx="280" cy="430" r="3"/>
+        </g>
+        <!-- Slow pulse on one node -->
+        <circle cx="620" cy="220" r="3" fill="#FF3DAA">
+          <animate attributeName="r" values="3;18;3" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.9;0;0.9" dur="4s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+
+      <div class="emb-hero-inner">
+        <div class="emb-status">
+          <span class="emb-status-dot" aria-hidden="true"></span>
+          <span class="emb-status-text">In Development &middot; Not Yet Available</span>
+        </div>
+
+        <div class="emb-eyebrow">
+          <span class="emb-eyebrow-line"></span>
+          <span class="emb-eyebrow-text">Embodied AI &nbsp;//&nbsp; Research</span>
+        </div>
+
+        <h1 class="emb-hero-title">
+          Aerial intelligence<br/>
+          <span class="emb-gradient">brought down to earth.</span>
+        </h1>
+
+        <p class="emb-hero-subtitle">
+          We've spent the last year teaching machines to see, classify, and reason
+          about the physical world from above. The same perception stack is the foundation
+          for what comes next — embodied systems that don't just watch the world, they move through it.
+        </p>
+
+        <p class="emb-hero-note">
+          We're not ready to share specifics yet. This page exists so the URL does.
+        </p>
+      </div>
+    </section>
+
+    <!-- ==================== DIRECTION ==================== -->
+    <section class="section emb-direction" aria-label="Research Direction">
+      <div class="section-inner">
+        <div class="section-header reveal">
+          <div class="emb-eyebrow">
+            <span class="emb-eyebrow-line"></span>
+            <span class="emb-eyebrow-text">Direction</span>
+          </div>
+          <h2 class="emb-h2">What we're working on</h2>
+          <p class="emb-section-subtitle">
+            Three research threads, deliberately framed as directions rather than products.
+            We'll talk about specifics when there's something real to show.
+          </p>
+        </div>
+
+        <div class="emb-grid">
+          {directions.map((d) => (
+            <div class="emb-card reveal">
+              <span class="emb-card-label">{d.label}</span>
+              <h3 class="emb-card-title">{d.title}</h3>
+              <p class="emb-card-desc">{d.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== NOTIFY ==================== -->
+    <section class="section emb-notify" aria-label="Stay Informed">
+      <div class="emb-notify-inner reveal">
+        <h2 class="emb-notify-title">When there's something to show,<br/>you'll be among the first to know.</h2>
+        <p class="emb-notify-desc">
+          If you work on embodied systems, edge inference, or autonomy and want to
+          stay in the loop — reach out directly.
+        </p>
+        <a href="mailto:hello@jinki.ai?subject=Embodied%20AI%20%E2%80%94%20stay%20in%20the%20loop" class="emb-notify-cta">
+          <span>hello@jinki.ai</span>
+          <span class="material-symbols-outlined" style="font-size:18px;" aria-hidden="true">arrow_forward</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  /* ============================================================
+     EMBODIED AI — coming soon page
+     Force dark aesthetic with magenta accent
+     ============================================================ */
+  .embodied-page {
+    --emb-accent: #FF3DAA;
+    --emb-accent-soft: rgba(255, 61, 170, 0.12);
+    --emb-accent-faint: rgba(255, 61, 170, 0.04);
+    --emb-bg: #08060c;
+    --emb-surface: #0e0a18;
+    --emb-text-primary: #f0e8f4;
+    --emb-text-secondary: #b8a8c8;
+    --emb-text-muted: #7a6a8a;
+    --emb-border: rgba(255, 61, 170, 0.14);
+
+    background: var(--emb-bg);
+    color-scheme: dark;
+  }
+
+  /* === HERO === */
+  .emb-hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 140px clamp(20px, 5vw, 80px) 80px;
+    background: var(--emb-bg);
+    overflow: hidden;
+  }
+
+  .emb-hero-glow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse at 30% 35%, rgba(255, 61, 170, 0.12) 0%, transparent 55%),
+      radial-gradient(ellipse at 75% 65%, rgba(123, 97, 255, 0.06) 0%, transparent 50%);
+    filter: blur(60px);
+  }
+
+  .emb-hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .emb-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* Status badge */
+  .emb-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: var(--emb-accent-soft);
+    border: 1px solid var(--emb-border);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--emb-accent);
+  }
+  .emb-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--emb-accent);
+    box-shadow: 0 0 12px var(--emb-accent);
+    animation: emb-pulse 2s ease-in-out infinite;
+  }
+  @keyframes emb-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+
+  /* Eyebrow */
+  .emb-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .emb-eyebrow-line {
+    width: 32px;
+    height: 1px;
+    background: var(--emb-accent);
+  }
+  .emb-eyebrow-text {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--emb-accent);
+  }
+
+  /* Hero typography */
+  .emb-hero-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 4.5vw + 0.5rem, 3.75rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--emb-text-primary);
+    margin: 0;
+  }
+  .emb-gradient {
+    background: linear-gradient(135deg, #FF3DAA 0%, #C661FF 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .emb-hero-subtitle {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.1vw + 0.5rem, 1.125rem);
+    line-height: 1.7;
+    color: var(--emb-text-secondary);
+    max-width: 580px;
+    margin: 8px 0 0;
+  }
+  .emb-hero-note {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--emb-text-muted);
+    letter-spacing: 0.02em;
+    margin: 4px 0 0;
+    font-style: italic;
+  }
+
+  @media (max-width: 767px) {
+    .emb-hero { min-height: auto; padding-top: 110px; padding-bottom: 56px; }
+  }
+
+  /* === SECTION SHELL === */
+  .section {
+    padding: 5rem clamp(20px, 5vw, 80px);
+  }
+  @media (min-width: 768px) {
+    .section { padding: 6rem clamp(20px, 5vw, 80px); }
+  }
+  .section-inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+  .section-header {
+    margin-bottom: 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .emb-h2 {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--emb-text-primary);
+    margin: 0;
+  }
+  .emb-section-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--emb-text-secondary);
+    max-width: 640px;
+    margin: 0;
+  }
+
+  /* === DIRECTION CARDS === */
+  .emb-direction {
+    background: var(--emb-surface);
+    border-top: 1px solid var(--emb-border);
+    border-bottom: 1px solid var(--emb-border);
+  }
+
+  .emb-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  @media (min-width: 768px) { .emb-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .emb-card {
+    background: var(--emb-accent-faint);
+    border: 1px solid var(--emb-border);
+    border-radius: 16px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .emb-card:hover {
+    border-color: rgba(255, 61, 170, 0.32);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25), 0 0 24px rgba(255, 61, 170, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .emb-card-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: var(--emb-accent);
+    text-transform: uppercase;
+  }
+  .emb-card-title {
+    font-family: var(--font-headline);
+    font-size: 1.125rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--emb-text-primary);
+    margin: 0;
+  }
+  .emb-card-desc {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--emb-text-secondary);
+    margin: 0;
+  }
+
+  /* === NOTIFY === */
+  .emb-notify {
+    text-align: center;
+    background: var(--emb-bg);
+  }
+  .emb-notify-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  .emb-notify-title {
+    font-family: var(--font-headline);
+    font-size: clamp(1.5rem, 2.4vw + 0.5rem, 2rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--emb-text-primary);
+    margin: 0;
+  }
+  .emb-notify-desc {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--emb-text-secondary);
+    margin: 0;
+    max-width: 480px;
+  }
+  .emb-notify-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    margin-top: 8px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #FF3DAA 0%, #C661FF 100%);
+    color: #fff;
+    font-family: var(--font-headline);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(255, 61, 170, 0.28);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .emb-notify-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(255, 61, 170, 0.42);
+  }
+
+  /* === MOTION FALLBACKS === */
+  @media (prefers-reduced-motion: reduce) {
+    .emb-status-dot, .emb-hero-bg circle, .emb-hero-bg animate { animation: none !important; }
+    .emb-card, .emb-notify-cta { transition: none !important; }
+  }
+</style>

@@ -13,5 +13,10 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [sitemap(), compressor({ gzip: false, brotli: true })]
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/embodied-ai'),
+    }),
+    compressor({ gzip: false, brotli: true }),
+  ]
 });

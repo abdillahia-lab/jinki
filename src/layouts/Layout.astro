@@ -9,6 +9,7 @@ interface Props {
   description?: string;
   jsonLd?: Record<string, any>;
   ogImage?: string;
+  noindex?: boolean;
 }
 
 const {
@@ -16,6 +17,7 @@ const {
   description = 'Jinki turns aerial data into prioritized maintenance recommendations for critical infrastructure — data centers, power grids, perimeters, and agricultural operations.',
   jsonLd,
   ogImage = '/images/og-default.png',
+  noindex = false,
 } = Astro.props;
 
 const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://jinki.ai${ogImage}`;
@@ -60,7 +62,7 @@ const websiteSchema = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta name="robots" content={noindex ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1"} />
     <meta name="author" content="Jinki Aerial Intelligence" />
     <meta name="theme-color" content="#121416" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#fafbfc" media="(prefers-color-scheme: light)" />
