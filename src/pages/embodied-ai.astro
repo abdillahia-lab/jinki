@@ -40,68 +40,168 @@ const directions = [
     <section class="emb-hero" aria-label="Embodied AI">
       <div aria-hidden="true" class="emb-hero-glow"></div>
 
-      <!-- Subtle schematic background -->
-      <svg class="emb-hero-bg" viewBox="0 0 1200 800" fill="none" aria-hidden="true">
+      <!-- Faint grid backdrop only — hand moved into its own column below -->
+      <svg class="emb-hero-bg" viewBox="0 0 1200 800" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
         <defs>
           <pattern id="emb-grid" width="48" height="48" patternUnits="userSpaceOnUse">
-            <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(255,61,170,0.05)" stroke-width="0.5"/>
+            <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(255,61,170,0.04)" stroke-width="0.5"/>
           </pattern>
         </defs>
         <rect width="1200" height="800" fill="url(#emb-grid)"/>
-        <!-- Wireframe node graph hinting at robotics/AI -->
-        <g class="emb-nodes" stroke="rgba(255,61,170,0.18)" stroke-width="0.6" fill="none">
-          <line x1="200" y1="180" x2="400" y2="250"/>
-          <line x1="400" y1="250" x2="620" y2="220"/>
-          <line x1="620" y1="220" x2="820" y2="320"/>
-          <line x1="400" y1="250" x2="480" y2="450"/>
-          <line x1="620" y1="220" x2="700" y2="450"/>
-          <line x1="480" y1="450" x2="700" y2="450"/>
-          <line x1="700" y1="450" x2="900" y2="520"/>
-          <line x1="200" y1="180" x2="280" y2="430"/>
-          <line x1="280" y1="430" x2="480" y2="450"/>
-        </g>
-        <g class="emb-node-dots" fill="rgba(255,61,170,0.5)">
-          <circle cx="200" cy="180" r="3"/>
-          <circle cx="400" cy="250" r="4"/>
-          <circle cx="620" cy="220" r="3"/>
-          <circle cx="820" cy="320" r="3"/>
-          <circle cx="480" cy="450" r="4"/>
-          <circle cx="700" cy="450" r="3"/>
-          <circle cx="900" cy="520" r="3"/>
-          <circle cx="280" cy="430" r="3"/>
-        </g>
-        <!-- Slow pulse on one node -->
-        <circle cx="620" cy="220" r="3" fill="#FF3DAA">
-          <animate attributeName="r" values="3;18;3" dur="4s" repeatCount="indefinite"/>
-          <animate attributeName="opacity" values="0.9;0;0.9" dur="4s" repeatCount="indefinite"/>
-        </circle>
       </svg>
 
       <div class="emb-hero-inner">
-        <div class="emb-status">
-          <span class="emb-status-dot" aria-hidden="true"></span>
-          <span class="emb-status-text">In Development &middot; Not Yet Available</span>
+
+        <!-- Left column — copy -->
+        <div class="emb-hero-copy">
+          <div class="emb-status">
+            <span class="emb-status-dot" aria-hidden="true"></span>
+            <span class="emb-status-text">In Development &middot; Not Yet Available</span>
+          </div>
+
+          <div class="emb-eyebrow">
+            <span class="emb-eyebrow-line"></span>
+            <span class="emb-eyebrow-text">Embodied AI &nbsp;//&nbsp; Research</span>
+          </div>
+
+          <h1 class="emb-hero-title">
+            Aerial intelligence<br/>
+            <span class="emb-gradient">brought down to earth.</span>
+          </h1>
+
+          <p class="emb-hero-subtitle">
+            We've spent the last year teaching machines to see, classify, and reason
+            about the physical world from above. The same perception stack is the foundation
+            for what comes next — embodied systems that don't just watch the world, they
+            <em>move through it</em>.
+          </p>
+
+          <p class="emb-hero-note">
+            We're not ready to share specifics yet. This page exists so the URL does.
+          </p>
         </div>
 
-        <div class="emb-eyebrow">
-          <span class="emb-eyebrow-line"></span>
-          <span class="emb-eyebrow-text">Embodied AI &nbsp;//&nbsp; Research</span>
+        <!-- Right column — robotic hand wireframe -->
+        <div class="emb-hero-visual" aria-hidden="true">
+          <svg viewBox="380 130 540 640" fill="none" preserveAspectRatio="xMidYMid meet" class="emb-hand-svg">
+            <defs>
+              <radialGradient id="emb-tip-glow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#FF3DAA" stop-opacity="0.95"/>
+                <stop offset="55%" stop-color="#FF3DAA" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#FF3DAA" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="emb-palm-fill" cx="50%" cy="70%" r="60%">
+                <stop offset="0%" stop-color="#FF3DAA" stop-opacity="0.10"/>
+                <stop offset="100%" stop-color="#FF3DAA" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+
+            <!-- Soft ambient ring behind hand -->
+            <circle cx="650" cy="450" r="280" fill="url(#emb-palm-fill)" opacity="0.7"/>
+
+            <g class="emb-hand" stroke="rgba(255,61,170,0.55)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none">
+
+              <!-- Palm outline -->
+              <path d="M 540 720 L 460 480 L 510 450 L 570 440 L 630 450 L 690 460 L 740 520 L 720 720 Z"
+                    stroke="rgba(255,61,170,0.35)" stroke-width="1.2" fill="rgba(255,61,170,0.04)"/>
+
+              <!-- Wrist band -->
+              <line x1="540" y1="720" x2="720" y2="720" stroke-width="1.4"/>
+              <line x1="545" y1="735" x2="715" y2="735" stroke="rgba(255,61,170,0.3)"/>
+              <line x1="550" y1="750" x2="710" y2="750" stroke="rgba(255,61,170,0.18)"/>
+
+              <!-- Pinky -->
+              <line x1="460" y1="480" x2="445" y2="395"/>
+              <line x1="445" y1="395" x2="438" y2="335"/>
+              <line x1="438" y1="335" x2="435" y2="290"/>
+
+              <!-- Ring -->
+              <line x1="510" y1="450" x2="505" y2="335"/>
+              <line x1="505" y1="335" x2="503" y2="260"/>
+              <line x1="503" y1="260" x2="503" y2="210"/>
+
+              <!-- Middle -->
+              <line x1="570" y1="440" x2="572" y2="315"/>
+              <line x1="572" y1="315" x2="575" y2="225"/>
+              <line x1="575" y1="225" x2="578" y2="170"/>
+
+              <!-- Index -->
+              <line x1="630" y1="450" x2="640" y2="335"/>
+              <line x1="640" y1="335" x2="648" y2="260"/>
+              <line x1="648" y1="260" x2="654" y2="210"/>
+
+              <!-- Thumb -->
+              <line x1="740" y1="520" x2="800" y2="465"/>
+              <line x1="800" y1="465" x2="845" y2="425"/>
+              <line x1="845" y1="425" x2="880" y2="395"/>
+
+              <!-- Inner palm metacarpals -->
+              <g stroke="rgba(255,61,170,0.25)" stroke-width="0.9">
+                <line x1="630" y1="700" x2="460" y2="480"/>
+                <line x1="630" y1="700" x2="510" y2="450"/>
+                <line x1="630" y1="700" x2="570" y2="440"/>
+                <line x1="630" y1="700" x2="630" y2="450"/>
+                <line x1="630" y1="700" x2="740" y2="520"/>
+              </g>
+            </g>
+
+            <!-- Joint nodes -->
+            <g class="emb-joints" fill="rgba(255,61,170,0.75)">
+              <circle cx="460" cy="480" r="4"/>
+              <circle cx="510" cy="450" r="4"/>
+              <circle cx="570" cy="440" r="4"/>
+              <circle cx="630" cy="450" r="4"/>
+              <circle cx="740" cy="520" r="4"/>
+              <circle cx="445" cy="395" r="3"/>
+              <circle cx="438" cy="335" r="3"/>
+              <circle cx="505" cy="335" r="3"/>
+              <circle cx="503" cy="260" r="3"/>
+              <circle cx="572" cy="315" r="3"/>
+              <circle cx="575" cy="225" r="3"/>
+              <circle cx="640" cy="335" r="3"/>
+              <circle cx="648" cy="260" r="3"/>
+              <circle cx="800" cy="465" r="3"/>
+              <circle cx="845" cy="425" r="3"/>
+              <circle cx="630" cy="720" r="3.5"/>
+            </g>
+
+            <!-- Fingertips -->
+            <g class="emb-tips" fill="#FF3DAA">
+              <circle cx="435" cy="290" r="3.5"/>
+              <circle cx="503" cy="210" r="3.5"/>
+              <circle cx="578" cy="170" r="3.5"/>
+              <circle cx="654" cy="210" r="3.5"/>
+              <circle cx="880" cy="395" r="3.5"/>
+            </g>
+
+            <!-- Active middle fingertip — pulsing glow -->
+            <circle cx="578" cy="170" r="16" fill="url(#emb-tip-glow)">
+              <animate attributeName="r" values="10;30;10" dur="4s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.95;0.15;0.95" dur="4s" repeatCount="indefinite"/>
+            </circle>
+
+            <!-- Signal traveling up middle finger from wrist -->
+            <circle r="3" fill="#FF3DAA">
+              <animateMotion dur="3.2s" repeatCount="indefinite" path="M 630 720 L 570 440 L 572 315 L 575 225 L 578 170"/>
+              <animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.12;0.88;1" dur="3.2s" repeatCount="indefinite"/>
+            </circle>
+
+            <!-- Telemetry ticker top-right -->
+            <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="rgba(255,61,170,0.5)" letter-spacing="0.08em">
+              <text x="780" y="200">DOF&#8201;&middot;&#8201;16</text>
+              <text x="780" y="220">RATE&#8201;&middot;&#8201;1000HZ</text>
+              <text x="780" y="240">CTRL&#8201;&middot;&#8201;TORQUE</text>
+            </g>
+
+            <!-- Coordinate frame markers at wrist -->
+            <g stroke="rgba(255,61,170,0.4)" stroke-width="0.8" fill="rgba(255,61,170,0.5)" font-family="ui-monospace, monospace" font-size="10" letter-spacing="0.05em">
+              <line x1="450" y1="765" x2="490" y2="765"/>
+              <line x1="450" y1="765" x2="450" y2="745"/>
+              <text x="496" y="769">x</text>
+              <text x="446" y="738">y</text>
+            </g>
+          </svg>
         </div>
-
-        <h1 class="emb-hero-title">
-          Aerial intelligence<br/>
-          <span class="emb-gradient">brought down to earth.</span>
-        </h1>
-
-        <p class="emb-hero-subtitle">
-          We've spent the last year teaching machines to see, classify, and reason
-          about the physical world from above. The same perception stack is the foundation
-          for what comes next — embodied systems that don't just watch the world, they move through it.
-        </p>
-
-        <p class="emb-hero-note">
-          We're not ready to share specifics yet. This page exists so the URL does.
-        </p>
       </div>
     </section>
 
@@ -200,20 +300,69 @@ const directions = [
     width: 100%;
     height: 100%;
     z-index: 0;
-    opacity: 0.55;
+    opacity: 0.45;
     pointer-events: none;
   }
 
   .emb-hero-inner {
     position: relative;
     z-index: 1;
-    max-width: 720px;
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+  @media (min-width: 1024px) {
+    .emb-hero-inner {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      gap: 64px;
+    }
+  }
+
+  /* Left column — text */
+  .emb-hero-copy {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 20px;
+    text-align: left;
+    max-width: 600px;
+  }
+  @media (max-width: 1023px) {
+    .emb-hero-copy {
+      align-items: center;
+      text-align: center;
+      margin: 0 auto;
+    }
+  }
+
+  /* Right column — hand visual */
+  .emb-hero-visual {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 540px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .emb-hand-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: drop-shadow(0 0 24px rgba(255, 61, 170, 0.18));
+    animation: emb-hand-float 9s ease-in-out infinite;
+  }
+  @keyframes emb-hand-float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(-0.6deg); }
+  }
+  @media (max-width: 1023px) {
+    .emb-hero-visual { max-width: 380px; }
   }
 
   /* Status badge */
@@ -445,7 +594,9 @@ const directions = [
 
   /* === MOTION FALLBACKS === */
   @media (prefers-reduced-motion: reduce) {
-    .emb-status-dot, .emb-hero-bg circle, .emb-hero-bg animate { animation: none !important; }
+    .emb-status-dot, .emb-hand-svg, .emb-hand-svg circle, .emb-hand-svg animate {
+      animation: none !important;
+    }
     .emb-card, .emb-notify-cta { transition: none !important; }
   }
 </style>
