@@ -18,7 +18,7 @@ export default defineConfig({
   integrations: [
     icon(),
     sitemap({
-      filter: (page) => !page.includes('/embodied-ai'),
+      filter: (page) => !page.includes('/embodied-ai') && !page.includes('/cafimaad'),
     }),
     compressor({ gzip: false, brotli: true }),
   ]

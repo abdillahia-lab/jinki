@@ -1,0 +1,107 @@
+---
+/*
+  Cafimaad — direction note. Unlinked, noindex, direct URL only.
+  "Caafimaad" is Somali for health/wellness. Deliberately conservative:
+  no medical claims, no launch promises — the page exists so the URL does.
+*/
+import Base from '../layouts/Base.astro';
+import Nav from '../components/ui/Nav.astro';
+import Footer from '../components/ui/Footer.astro';
+import Section from '../components/ui/Section.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+
+const threads = [
+  {
+    t: 'Voice-first, in Somali',
+    d: 'Health guidance that meets people in their own language, by voice — built for those who cannot easily reach a doctor, not those who already can.',
+  },
+  {
+    t: 'Assessment-first, conservative by design',
+    d: 'The system asks before it answers. Guidance stays deliberately cautious, and crisis situations escalate to humans — always.',
+  },
+  {
+    t: 'Research before build',
+    d: 'Every capability is grounded in clinical research first, then built, then verified against evaluations with native-speaker and clinician review. The same discipline we apply to infrastructure intelligence.',
+  },
+];
+---
+
+<Base
+  title="Cafimaad — Jinki"
+  description="Cafimaad — an AI-native, voice-first health companion in Somali. In development at Jinki. Assessment-first, conservative by design, always-on crisis escalation."
+  noindex={true}
+>
+  <Nav />
+  <Breadcrumb items={[{ label: 'Cafimaad' }]} />
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section aria-label="Cafimaad" class="pt-10 md:pt-16">
+      <div class="max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16">
+        <div class="folio-rule rule-draw flex items-baseline justify-between gap-4 pt-3 mb-12">
+          <span class="mono-label text-ink-3"><span class="text-signal">CF</span>&nbsp;/&nbsp;CAFIMAAD</span>
+          <span class="mono-label text-ink-3">IN DEVELOPMENT · NOT YET AVAILABLE</span>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-10">
+          <div class="lg:col-span-8">
+            <h1 class="text-display font-display font-medium text-ink max-w-[16ch] rise">
+              Health guidance, <em class="not-italic text-signal">in your own voice.</em>
+            </h1>
+            <p class="text-lede text-ink-2 mt-8 max-w-[52ch] rise">
+              Cafimaad — <span class="font-mono text-caption">CAAFIMAAD · SOMALI FOR HEALTH</span> —
+              is an AI health companion for people who can't easily reach a doctor.
+              Voice-first. In Somali. Built to assess before it advises, to stay
+              conservative in what it says, and to hand off to humans the moment
+              a situation is serious.
+            </p>
+            <p class="font-mono text-caption text-ink-3 mt-8 rise">
+              We're not ready to share specifics. This page exists so the URL does.
+            </p>
+          </div>
+          <div class="lg:col-span-3 lg:col-start-10 mono-label text-ink-3 flex flex-col gap-3 lg:items-end rise">
+            <span>VOICE-FIRST</span>
+            <span>AF-SOOMAALI</span>
+            <span>ASSESSMENT-FIRST</span>
+            <span>HUMAN ESCALATION · ALWAYS</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIRECTION -->
+    <Section label="Direction" cv>
+      <div class="folio-rule rule-draw flex items-baseline justify-between gap-4 pt-3 mb-10">
+        <span class="mono-label text-ink-3"><span class="text-signal">01</span>&nbsp;/&nbsp;DIRECTION</span>
+        <span class="mono-label text-ink-3">03 COMMITMENTS</span>
+      </div>
+      <ul class="list-none m-0 p-0">
+        {threads.map((th, i) => (
+          <li class="folio-rule">
+            <div class="grid grid-cols-[auto_1fr] lg:grid-cols-12 items-baseline gap-x-4 lg:gap-x-6 gap-y-1 py-6">
+              <span class="mono-label text-signal tabular lg:col-span-1">{String(i + 1).padStart(2, '0')}</span>
+              <span class="font-display font-medium text-h3 text-ink lg:col-span-4">{th.t}</span>
+              <span class="text-body text-ink-2 col-start-2 lg:col-start-6 lg:col-span-6">{th.d}</span>
+            </div>
+          </li>
+        ))}
+        <li class="folio-rule" aria-hidden="true"></li>
+      </ul>
+      <p class="text-caption text-ink-3 mt-8 max-w-prose">
+        Cafimaad is not a medical device and does not provide diagnosis or treatment.
+        It is in active development and not available for use.
+      </p>
+    </Section>
+
+    <!-- CONTACT -->
+    <Section label="Contact" spacing="compact">
+      <div class="folio-rule rule-draw pt-4 pb-2">
+        <p class="mono-label text-ink-3 max-w-none">
+          WORKING ON SOMALI HEALTH ACCESS, CLINICAL SAFETY, OR SPEECH FOR LOW-RESOURCE LANGUAGES?
+          &nbsp;<a href="mailto:info@jinki.ai?subject=Cafimaad" class="text-ink-2 no-underline hover:text-ink">INFO@JINKI.AI</a>
+        </p>
+      </div>
+    </Section>
+
+  </main>
+  <Footer />
+</Base>

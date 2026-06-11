@@ -4,5 +4,6 @@ Disallow: /api/
 Disallow: /_astro/
 Disallow: /docs/
 Disallow: /embodied-ai
+Disallow: /cafimaad
 
 Sitemap: https://jinki.ai/sitemap-index.xml
