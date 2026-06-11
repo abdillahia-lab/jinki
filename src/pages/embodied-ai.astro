@@ -1,602 +1,197 @@
 ---
 /*
-  Embodied AI — Coming Soon page
-  Unlinked from nav. Direct URL only.
-  Sets direction without committing to specifics.
-  Pink/magenta accent (#FF3DAA) to differentiate from existing verticals.
+  Embodied AI — direction note. Unlinked from nav, noindex, direct URL only.
+  Monochrome restraint: ink wireframe hand, one signal fingertip, no promises.
 */
-import Layout from '../layouts/Layout.astro';
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
+import Base from '../layouts/Base.astro';
+import Nav from '../components/ui/Nav.astro';
+import Footer from '../components/ui/Footer.astro';
+import Section from '../components/ui/Section.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
 
-const directions = [
+const threads = [
   {
-    label: '01',
-    title: 'Perception that doesn\'t depend on the cloud',
-    desc: 'Edge inference for systems that must reason in real time, in environments without reliable connectivity. The same intelligence we run aloft, running on-device.',
+    t: 'Edge perception without the cloud',
+    d: 'Inference that runs on the machine itself, in environments where connectivity is intermittent or absent. The same perception stack we run aloft, moved on-device.',
   },
   {
-    label: '02',
-    title: 'Multi-modal sensor fusion',
-    desc: 'Thermal, visual, depth, and inertial — synthesized into a single situational picture. Built on the perception stack we\'ve been refining for aerial operations.',
+    t: 'Multi-modal sensor fusion',
+    d: 'Thermal, visual, depth, and inertial streams synthesized into a single model of the scene — built on the pipeline we refine across aerial operations.',
   },
   {
-    label: '03',
-    title: 'Autonomy across modalities',
-    desc: 'The hard part of autonomy isn\'t the platform. It\'s the decision-making layer that translates perception into action — and transfers across air, ground, and surface domains.',
+    t: 'Autonomy across modalities',
+    d: 'The hard part of autonomy is not the platform. It is the decision layer that turns perception into action — and transfers across air, ground, and surface domains.',
   },
 ];
 ---
 
-<Layout
+<Base
   title="Embodied AI — Jinki"
-  description="Embodied AI research at Jinki. Extending the perception and autonomy stack from aerial platforms into broader embodied systems. In development — coming soon."
+  description="Embodied AI research at Jinki. Extending the perception and autonomy stack from aerial platforms into broader embodied systems. In development."
   noindex={true}
 >
   <Nav />
-  <main id="main-content" class="embodied-page">
+  <Breadcrumb items={[{ label: 'Embodied AI' }]} />
+  <main id="main-content">
 
-    <!-- ==================== HERO ==================== -->
-    <section class="emb-hero" aria-label="Embodied AI">
-      <div aria-hidden="true" class="emb-hero-glow"></div>
-
-      <!-- Faint grid backdrop only — hand moved into its own column below -->
-      <svg class="emb-hero-bg" viewBox="0 0 1200 800" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <pattern id="emb-grid" width="48" height="48" patternUnits="userSpaceOnUse">
-            <path d="M 48 0 L 0 0 0 48" fill="none" stroke="rgba(255,61,170,0.04)" stroke-width="0.5"/>
-          </pattern>
-        </defs>
-        <rect width="1200" height="800" fill="url(#emb-grid)"/>
-      </svg>
-
-      <div class="emb-hero-inner">
-
-        <!-- Left column — copy -->
-        <div class="emb-hero-copy">
-          <div class="emb-status">
-            <span class="emb-status-dot" aria-hidden="true"></span>
-            <span class="emb-status-text">In Development &middot; Not Yet Available</span>
-          </div>
-
-          <div class="emb-eyebrow">
-            <span class="emb-eyebrow-line"></span>
-            <span class="emb-eyebrow-text">Embodied AI &nbsp;//&nbsp; Research</span>
-          </div>
-
-          <h1 class="emb-hero-title">
-            Aerial intelligence<br/>
-            <span class="emb-gradient">brought down to earth.</span>
-          </h1>
-
-          <p class="emb-hero-subtitle">
-            We've spent the last year teaching machines to see, classify, and reason
-            about the physical world from above. The same perception stack is the foundation
-            for what comes next — embodied systems that don't just watch the world, they
-            <em>move through it</em>.
-          </p>
-
-          <p class="emb-hero-note">
-            We're not ready to share specifics yet. This page exists so the URL does.
-          </p>
+    <!-- HERO -->
+    <section aria-label="Embodied AI" class="pt-10 md:pt-16">
+      <div class="max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16">
+        <div class="folio-rule rule-draw flex items-baseline justify-between gap-4 pt-3 mb-12">
+          <span class="mono-label text-ink-3"><span class="text-signal">EA</span>&nbsp;/&nbsp;EMBODIED AI</span>
+          <span class="mono-label text-ink-3">IN DEVELOPMENT · NOT YET AVAILABLE</span>
         </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-12 items-center">
+          <div class="lg:col-span-7">
+            <h1 class="text-display font-display font-medium text-ink max-w-[16ch] rise">
+              Aerial intelligence, <em class="not-italic text-signal">brought down to earth.</em>
+            </h1>
+            <p class="text-lede text-ink-2 mt-8 rise">
+              We have spent our time so far teaching machines to see, classify, and rank
+              what matters in the physical world from above. That perception stack is the
+              foundation for what comes next — embodied systems that do not just observe
+              the world, but act in it.
+            </p>
+            <p class="font-mono text-caption text-ink-3 mt-8 rise">
+              We're not ready to share specifics. This page exists so the URL does.
+            </p>
+          </div>
 
-        <!-- Right column — robotic hand wireframe -->
-        <div class="emb-hero-visual" aria-hidden="true">
-          <svg viewBox="380 130 540 640" fill="none" preserveAspectRatio="xMidYMid meet" class="emb-hand-svg">
-            <defs>
-              <radialGradient id="emb-tip-glow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stop-color="#FF3DAA" stop-opacity="0.95"/>
-                <stop offset="55%" stop-color="#FF3DAA" stop-opacity="0.18"/>
-                <stop offset="100%" stop-color="#FF3DAA" stop-opacity="0"/>
-              </radialGradient>
-              <radialGradient id="emb-palm-fill" cx="50%" cy="70%" r="60%">
-                <stop offset="0%" stop-color="#FF3DAA" stop-opacity="0.10"/>
-                <stop offset="100%" stop-color="#FF3DAA" stop-opacity="0"/>
-              </radialGradient>
-            </defs>
+          <!-- Wireframe hand -->
+          <div class="lg:col-span-4 lg:col-start-9 max-w-sm mx-auto w-full" aria-hidden="true">
+            <svg viewBox="380 130 540 640" fill="none" preserveAspectRatio="xMidYMid meet" class="w-full h-auto block">
+              <defs>
+                <radialGradient id="emb-tip-glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="var(--signal)" stop-opacity="0.9"/>
+                  <stop offset="55%" stop-color="var(--signal)" stop-opacity="0.16"/>
+                  <stop offset="100%" stop-color="var(--signal)" stop-opacity="0"/>
+                </radialGradient>
+              </defs>
 
-            <!-- Soft ambient ring behind hand -->
-            <circle cx="650" cy="450" r="280" fill="url(#emb-palm-fill)" opacity="0.7"/>
-
-            <g class="emb-hand" stroke="rgba(255,61,170,0.55)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none">
-
-              <!-- Palm outline -->
-              <path d="M 540 720 L 460 480 L 510 450 L 570 440 L 630 450 L 690 460 L 740 520 L 720 720 Z"
-                    stroke="rgba(255,61,170,0.35)" stroke-width="1.2" fill="rgba(255,61,170,0.04)"/>
-
-              <!-- Wrist band -->
-              <line x1="540" y1="720" x2="720" y2="720" stroke-width="1.4"/>
-              <line x1="545" y1="735" x2="715" y2="735" stroke="rgba(255,61,170,0.3)"/>
-              <line x1="550" y1="750" x2="710" y2="750" stroke="rgba(255,61,170,0.18)"/>
-
-              <!-- Pinky -->
-              <line x1="460" y1="480" x2="445" y2="395"/>
-              <line x1="445" y1="395" x2="438" y2="335"/>
-              <line x1="438" y1="335" x2="435" y2="290"/>
-
-              <!-- Ring -->
-              <line x1="510" y1="450" x2="505" y2="335"/>
-              <line x1="505" y1="335" x2="503" y2="260"/>
-              <line x1="503" y1="260" x2="503" y2="210"/>
-
-              <!-- Middle -->
-              <line x1="570" y1="440" x2="572" y2="315"/>
-              <line x1="572" y1="315" x2="575" y2="225"/>
-              <line x1="575" y1="225" x2="578" y2="170"/>
-
-              <!-- Index -->
-              <line x1="630" y1="450" x2="640" y2="335"/>
-              <line x1="640" y1="335" x2="648" y2="260"/>
-              <line x1="648" y1="260" x2="654" y2="210"/>
-
-              <!-- Thumb -->
-              <line x1="740" y1="520" x2="800" y2="465"/>
-              <line x1="800" y1="465" x2="845" y2="425"/>
-              <line x1="845" y1="425" x2="880" y2="395"/>
-
-              <!-- Inner palm metacarpals -->
-              <g stroke="rgba(255,61,170,0.25)" stroke-width="0.9">
-                <line x1="630" y1="700" x2="460" y2="480"/>
-                <line x1="630" y1="700" x2="510" y2="450"/>
-                <line x1="630" y1="700" x2="570" y2="440"/>
-                <line x1="630" y1="700" x2="630" y2="450"/>
-                <line x1="630" y1="700" x2="740" y2="520"/>
+              <g stroke="var(--rule-strong)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                <!-- Palm outline -->
+                <path d="M 540 720 L 460 480 L 510 450 L 570 440 L 630 450 L 690 460 L 740 520 L 720 720 Z" stroke-width="1.2"/>
+                <!-- Wrist band -->
+                <line x1="540" y1="720" x2="720" y2="720" stroke-width="1.4"/>
+                <line x1="545" y1="735" x2="715" y2="735" stroke-opacity="0.6"/>
+                <line x1="550" y1="750" x2="710" y2="750" stroke-opacity="0.35"/>
+                <!-- Pinky -->
+                <line x1="460" y1="480" x2="445" y2="395"/>
+                <line x1="445" y1="395" x2="438" y2="335"/>
+                <line x1="438" y1="335" x2="435" y2="290"/>
+                <!-- Ring -->
+                <line x1="510" y1="450" x2="505" y2="335"/>
+                <line x1="505" y1="335" x2="503" y2="260"/>
+                <line x1="503" y1="260" x2="503" y2="210"/>
+                <!-- Middle -->
+                <line x1="570" y1="440" x2="572" y2="315"/>
+                <line x1="572" y1="315" x2="575" y2="225"/>
+                <line x1="575" y1="225" x2="578" y2="170"/>
+                <!-- Index -->
+                <line x1="630" y1="450" x2="640" y2="335"/>
+                <line x1="640" y1="335" x2="648" y2="260"/>
+                <line x1="648" y1="260" x2="654" y2="210"/>
+                <!-- Thumb -->
+                <line x1="740" y1="520" x2="800" y2="465"/>
+                <line x1="800" y1="465" x2="845" y2="425"/>
+                <line x1="845" y1="425" x2="880" y2="395"/>
+                <!-- Inner palm metacarpals -->
+                <g stroke-opacity="0.5" stroke-width="0.9">
+                  <line x1="630" y1="700" x2="460" y2="480"/>
+                  <line x1="630" y1="700" x2="510" y2="450"/>
+                  <line x1="630" y1="700" x2="570" y2="440"/>
+                  <line x1="630" y1="700" x2="630" y2="450"/>
+                  <line x1="630" y1="700" x2="740" y2="520"/>
+                </g>
               </g>
-            </g>
 
-            <!-- Joint nodes -->
-            <g class="emb-joints" fill="rgba(255,61,170,0.75)">
-              <circle cx="460" cy="480" r="4"/>
-              <circle cx="510" cy="450" r="4"/>
-              <circle cx="570" cy="440" r="4"/>
-              <circle cx="630" cy="450" r="4"/>
-              <circle cx="740" cy="520" r="4"/>
-              <circle cx="445" cy="395" r="3"/>
-              <circle cx="438" cy="335" r="3"/>
-              <circle cx="505" cy="335" r="3"/>
-              <circle cx="503" cy="260" r="3"/>
-              <circle cx="572" cy="315" r="3"/>
-              <circle cx="575" cy="225" r="3"/>
-              <circle cx="640" cy="335" r="3"/>
-              <circle cx="648" cy="260" r="3"/>
-              <circle cx="800" cy="465" r="3"/>
-              <circle cx="845" cy="425" r="3"/>
-              <circle cx="630" cy="720" r="3.5"/>
-            </g>
+              <!-- Joint nodes -->
+              <g fill="var(--ink-1)" fill-opacity="0.45">
+                <circle cx="460" cy="480" r="4"/>
+                <circle cx="510" cy="450" r="4"/>
+                <circle cx="570" cy="440" r="4"/>
+                <circle cx="630" cy="450" r="4"/>
+                <circle cx="740" cy="520" r="4"/>
+                <circle cx="445" cy="395" r="3"/>
+                <circle cx="438" cy="335" r="3"/>
+                <circle cx="505" cy="335" r="3"/>
+                <circle cx="503" cy="260" r="3"/>
+                <circle cx="572" cy="315" r="3"/>
+                <circle cx="575" cy="225" r="3"/>
+                <circle cx="640" cy="335" r="3"/>
+                <circle cx="648" cy="260" r="3"/>
+                <circle cx="800" cy="465" r="3"/>
+                <circle cx="845" cy="425" r="3"/>
+                <circle cx="630" cy="720" r="3.5"/>
+              </g>
 
-            <!-- Fingertips -->
-            <g class="emb-tips" fill="#FF3DAA">
-              <circle cx="435" cy="290" r="3.5"/>
-              <circle cx="503" cy="210" r="3.5"/>
-              <circle cx="578" cy="170" r="3.5"/>
-              <circle cx="654" cy="210" r="3.5"/>
-              <circle cx="880" cy="395" r="3.5"/>
-            </g>
+              <!-- Fingertips -->
+              <g fill="var(--signal)">
+                <circle cx="435" cy="290" r="3.5"/>
+                <circle cx="503" cy="210" r="3.5"/>
+                <circle cx="578" cy="170" r="3.5"/>
+                <circle cx="654" cy="210" r="3.5"/>
+                <circle cx="880" cy="395" r="3.5"/>
+              </g>
 
-            <!-- Active middle fingertip — pulsing glow -->
-            <circle cx="578" cy="170" r="16" fill="url(#emb-tip-glow)">
-              <animate attributeName="r" values="10;30;10" dur="4s" repeatCount="indefinite"/>
-              <animate attributeName="opacity" values="0.95;0.15;0.95" dur="4s" repeatCount="indefinite"/>
-            </circle>
+              <!-- Active middle fingertip — pulsing glow -->
+              <circle class="hand-motion" cx="578" cy="170" r="16" fill="url(#emb-tip-glow)">
+                <animate attributeName="r" values="10;30;10" dur="4s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.9;0.15;0.9" dur="4s" repeatCount="indefinite"/>
+              </circle>
 
-            <!-- Signal traveling up middle finger from wrist -->
-            <circle r="3" fill="#FF3DAA">
-              <animateMotion dur="3.2s" repeatCount="indefinite" path="M 630 720 L 570 440 L 572 315 L 575 225 L 578 170"/>
-              <animate attributeName="opacity" values="0;0.95;0.95;0" keyTimes="0;0.12;0.88;1" dur="3.2s" repeatCount="indefinite"/>
-            </circle>
+              <!-- Signal traveling up middle finger from wrist -->
+              <circle class="hand-motion" r="3" fill="var(--signal)">
+                <animateMotion dur="3.2s" repeatCount="indefinite" path="M 630 720 L 570 440 L 572 315 L 575 225 L 578 170"/>
+                <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.12;0.88;1" dur="3.2s" repeatCount="indefinite"/>
+              </circle>
 
-            <!-- Telemetry ticker top-right -->
-            <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="rgba(255,61,170,0.5)" letter-spacing="0.08em">
-              <text x="780" y="200">DOF&#8201;&middot;&#8201;16</text>
-              <text x="780" y="220">RATE&#8201;&middot;&#8201;1000HZ</text>
-              <text x="780" y="240">CTRL&#8201;&middot;&#8201;TORQUE</text>
-            </g>
-
-            <!-- Coordinate frame markers at wrist -->
-            <g stroke="rgba(255,61,170,0.4)" stroke-width="0.8" fill="rgba(255,61,170,0.5)" font-family="ui-monospace, monospace" font-size="10" letter-spacing="0.05em">
-              <line x1="450" y1="765" x2="490" y2="765"/>
-              <line x1="450" y1="765" x2="450" y2="745"/>
-              <text x="496" y="769">x</text>
-              <text x="446" y="738">y</text>
-            </g>
-          </svg>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== DIRECTION ==================== -->
-    <section class="section emb-direction" aria-label="Research Direction">
-      <div class="section-inner">
-        <div class="section-header reveal">
-          <div class="emb-eyebrow">
-            <span class="emb-eyebrow-line"></span>
-            <span class="emb-eyebrow-text">Direction</span>
+              <!-- Coordinate frame markers at wrist -->
+              <g stroke="var(--rule-strong)" stroke-width="0.8" fill="var(--ink-3)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" letter-spacing="0.05em">
+                <line x1="450" y1="765" x2="490" y2="765"/>
+                <line x1="450" y1="765" x2="450" y2="745"/>
+                <text x="496" y="769">x</text>
+                <text x="446" y="738">y</text>
+              </g>
+            </svg>
           </div>
-          <h2 class="emb-h2">What we're working on</h2>
-          <p class="emb-section-subtitle">
-            Three research threads, deliberately framed as directions rather than products.
-            We'll talk about specifics when there's something real to show.
-          </p>
-        </div>
-
-        <div class="emb-grid">
-          {directions.map((d) => (
-            <div class="emb-card reveal">
-              <span class="emb-card-label">{d.label}</span>
-              <h3 class="emb-card-title">{d.title}</h3>
-              <p class="emb-card-desc">{d.desc}</p>
-            </div>
-          ))}
         </div>
       </div>
     </section>
 
-    <!-- ==================== NOTIFY ==================== -->
-    <section class="section emb-notify" aria-label="Stay Informed">
-      <div class="emb-notify-inner reveal">
-        <h2 class="emb-notify-title">When there's something to show,<br/>you'll be among the first to know.</h2>
-        <p class="emb-notify-desc">
-          If you work on embodied systems, edge inference, or autonomy and want to
-          stay in the loop — reach out directly.
-        </p>
-        <a href="mailto:hello@jinki.ai?subject=Embodied%20AI%20%E2%80%94%20stay%20in%20the%20loop" class="emb-notify-cta">
-          <span>hello@jinki.ai</span>
-          <span class="material-symbols-outlined" style="font-size:18px;" aria-hidden="true">arrow_forward</span>
-        </a>
+    <!-- DIRECTION -->
+    <Section label="Research direction" cv>
+      <SectionHeader
+        index="01" label="DIRECTION" datum="03 THREADS"
+        title="What we're working toward."
+        lede="Three research threads, framed as directions rather than products. Specifics ship when there is something real to show."
+      />
+      <div>
+        {threads.map((item, i) => (
+          <div class="folio-rule rule-draw grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-3 pt-5 pb-10">
+            <span class="mono-label text-signal tabular lg:col-span-1">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="text-h3 font-display font-medium text-ink lg:col-span-4">{item.t}</h3>
+            <p class="text-body text-ink-2 lg:col-span-6 lg:col-start-7">{item.d}</p>
+          </div>
+        ))}
       </div>
-    </section>
+    </Section>
+
+    <!-- CONTACT -->
+    <Section label="Contact" spacing="compact" cv>
+      <div class="folio-rule rule-draw flex flex-wrap items-baseline justify-between gap-4 pt-4 pb-2">
+        <span class="mono-label text-ink-3 max-w-none">WORKING IN EMBODIED SYSTEMS, EDGE INFERENCE, OR AUTONOMY?</span>
+        <a href="mailto:info@jinki.ai?subject=Embodied%20AI" class="mono-label text-ink-2 no-underline hover:text-ink max-w-none">INFO@JINKI.AI&nbsp;→</a>
+      </div>
+    </Section>
 
   </main>
   <Footer />
-</Layout>
+</Base>
 
 <style>
-  /* ============================================================
-     EMBODIED AI — coming soon page
-     Force dark aesthetic with magenta accent
-     ============================================================ */
-  .embodied-page {
-    --emb-accent: #FF3DAA;
-    --emb-accent-soft: rgba(255, 61, 170, 0.12);
-    --emb-accent-faint: rgba(255, 61, 170, 0.04);
-    --emb-bg: #08060c;
-    --emb-surface: #0e0a18;
-    --emb-text-primary: #f0e8f4;
-    --emb-text-secondary: #b8a8c8;
-    --emb-text-muted: #7a6a8a;
-    --emb-border: rgba(255, 61, 170, 0.14);
-
-    background: var(--emb-bg);
-    color-scheme: dark;
-  }
-
-  /* === HERO === */
-  .emb-hero {
-    position: relative;
-    min-height: 92vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 140px clamp(20px, 5vw, 80px) 80px;
-    background: var(--emb-bg);
-    overflow: hidden;
-  }
-
-  .emb-hero-glow {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(ellipse at 30% 35%, rgba(255, 61, 170, 0.12) 0%, transparent 55%),
-      radial-gradient(ellipse at 75% 65%, rgba(123, 97, 255, 0.06) 0%, transparent 50%);
-    filter: blur(60px);
-  }
-
-  .emb-hero-bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    opacity: 0.45;
-    pointer-events: none;
-  }
-
-  .emb-hero-inner {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 48px;
-    align-items: center;
-  }
-  @media (min-width: 1024px) {
-    .emb-hero-inner {
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-      gap: 64px;
-    }
-  }
-
-  /* Left column — text */
-  .emb-hero-copy {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    text-align: left;
-    max-width: 600px;
-  }
-  @media (max-width: 1023px) {
-    .emb-hero-copy {
-      align-items: center;
-      text-align: center;
-      margin: 0 auto;
-    }
-  }
-
-  /* Right column — hand visual */
-  .emb-hero-visual {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    max-width: 540px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-  .emb-hand-svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-    filter: drop-shadow(0 0 24px rgba(255, 61, 170, 0.18));
-    animation: emb-hand-float 9s ease-in-out infinite;
-  }
-  @keyframes emb-hand-float {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-8px) rotate(-0.6deg); }
-  }
-  @media (max-width: 1023px) {
-    .emb-hero-visual { max-width: 380px; }
-  }
-
-  /* Status badge */
-  .emb-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 16px;
-    border-radius: 999px;
-    background: var(--emb-accent-soft);
-    border: 1px solid var(--emb-border);
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--emb-accent);
-  }
-  .emb-status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--emb-accent);
-    box-shadow: 0 0 12px var(--emb-accent);
-    animation: emb-pulse 2s ease-in-out infinite;
-  }
-  @keyframes emb-pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.85); }
-  }
-
-  /* Eyebrow */
-  .emb-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .emb-eyebrow-line {
-    width: 32px;
-    height: 1px;
-    background: var(--emb-accent);
-  }
-  .emb-eyebrow-text {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.22em;
-    color: var(--emb-accent);
-  }
-
-  /* Hero typography */
-  .emb-hero-title {
-    font-family: var(--font-headline);
-    font-size: clamp(2rem, 4.5vw + 0.5rem, 3.75rem);
-    font-weight: 700;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    color: var(--emb-text-primary);
-    margin: 0;
-  }
-  .emb-gradient {
-    background: linear-gradient(135deg, #FF3DAA 0%, #C661FF 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-  }
-
-  .emb-hero-subtitle {
-    font-family: var(--font-body);
-    font-size: clamp(1rem, 1.1vw + 0.5rem, 1.125rem);
-    line-height: 1.7;
-    color: var(--emb-text-secondary);
-    max-width: 580px;
-    margin: 8px 0 0;
-  }
-  .emb-hero-note {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--emb-text-muted);
-    letter-spacing: 0.02em;
-    margin: 4px 0 0;
-    font-style: italic;
-  }
-
-  @media (max-width: 767px) {
-    .emb-hero { min-height: auto; padding-top: 110px; padding-bottom: 56px; }
-  }
-
-  /* === SECTION SHELL === */
-  .section {
-    padding: 5rem clamp(20px, 5vw, 80px);
-  }
-  @media (min-width: 768px) {
-    .section { padding: 6rem clamp(20px, 5vw, 80px); }
-  }
-  .section-inner {
-    max-width: var(--container-max);
-    margin: 0 auto;
-  }
-  .section-header {
-    margin-bottom: 56px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-  .emb-h2 {
-    font-family: var(--font-headline);
-    font-size: clamp(1.75rem, 3vw + 0.5rem, 2.5rem);
-    font-weight: 700;
-    line-height: 1.15;
-    color: var(--emb-text-primary);
-    margin: 0;
-  }
-  .emb-section-subtitle {
-    font-family: var(--font-body);
-    font-size: 1.0625rem;
-    line-height: 1.7;
-    color: var(--emb-text-secondary);
-    max-width: 640px;
-    margin: 0;
-  }
-
-  /* === DIRECTION CARDS === */
-  .emb-direction {
-    background: var(--emb-surface);
-    border-top: 1px solid var(--emb-border);
-    border-bottom: 1px solid var(--emb-border);
-  }
-
-  .emb-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  @media (min-width: 768px) { .emb-grid { grid-template-columns: repeat(3, 1fr); } }
-
-  .emb-card {
-    background: var(--emb-accent-faint);
-    border: 1px solid var(--emb-border);
-    border-radius: 16px;
-    padding: 32px 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-  }
-  .emb-card:hover {
-    border-color: rgba(255, 61, 170, 0.32);
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25), 0 0 24px rgba(255, 61, 170, 0.08);
-    transform: translateY(-2px);
-  }
-
-  .emb-card-label {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    color: var(--emb-accent);
-    text-transform: uppercase;
-  }
-  .emb-card-title {
-    font-family: var(--font-headline);
-    font-size: 1.125rem;
-    font-weight: 700;
-    line-height: 1.3;
-    color: var(--emb-text-primary);
-    margin: 0;
-  }
-  .emb-card-desc {
-    font-family: var(--font-body);
-    font-size: 0.9375rem;
-    line-height: 1.65;
-    color: var(--emb-text-secondary);
-    margin: 0;
-  }
-
-  /* === NOTIFY === */
-  .emb-notify {
-    text-align: center;
-    background: var(--emb-bg);
-  }
-  .emb-notify-inner {
-    max-width: 640px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-  }
-  .emb-notify-title {
-    font-family: var(--font-headline);
-    font-size: clamp(1.5rem, 2.4vw + 0.5rem, 2rem);
-    font-weight: 700;
-    line-height: 1.2;
-    color: var(--emb-text-primary);
-    margin: 0;
-  }
-  .emb-notify-desc {
-    font-family: var(--font-body);
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--emb-text-secondary);
-    margin: 0;
-    max-width: 480px;
-  }
-  .emb-notify-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 14px 28px;
-    margin-top: 8px;
-    border-radius: 12px;
-    background: linear-gradient(135deg, #FF3DAA 0%, #C661FF 100%);
-    color: #fff;
-    font-family: var(--font-headline);
-    font-size: 0.875rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-decoration: none;
-    box-shadow: 0 10px 30px rgba(255, 61, 170, 0.28);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-  }
-  .emb-notify-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 40px rgba(255, 61, 170, 0.42);
-  }
-
-  /* === MOTION FALLBACKS === */
   @media (prefers-reduced-motion: reduce) {
-    .emb-status-dot, .emb-hand-svg, .emb-hand-svg circle, .emb-hand-svg animate {
-      animation: none !important;
-    }
-    .emb-card, .emb-notify-cta { transition: none !important; }
+    .hand-motion { display: none; }
   }
 </style>

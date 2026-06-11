@@ -1,0 +1,136 @@
+---
+/*
+  Service template — typeset as a document: spec table reads like a
+  report title page (the "report cover" hero for intelligence-scan,
+  the uptime schedule for deployment — both from data, no forks).
+*/
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/ui/Nav.astro';
+import Footer from '../../components/ui/Footer.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import Button from '../../components/ui/Button.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import StatRow from '../../components/ui/StatRow.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import ProcessTimeline from '../../components/ui/ProcessTimeline.astro';
+import CTABlock from '../../components/ui/CTABlock.astro';
+import LeadForm from '../../components/ui/LeadForm.astro';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((s) => ({ params: { slug: s.id }, props: { service: s } }));
+}
+
+const { service } = Astro.props;
+const d = service.data;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: d.metaTitle,
+  provider: { '@type': 'Organization', name: 'Jinki Aerial Intelligence' },
+  description: d.metaDescription,
+  areaServed: 'Mid-Atlantic United States',
+  serviceType: d.serviceType,
+};
+---
+
+<Base title={d.metaTitle} description={d.metaDescription} ogImage={d.ogImage} jsonLd={jsonLd}>
+  <Nav />
+  <Breadcrumb items={[{ label: 'Services', href: '/#services' }, { label: d.title }]} />
+  <main id="main-content">
+
+    <!-- HERO: the document title page -->
+    <section aria-label={d.title} class="pt-8 md:pt-12">
+      <div class="max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16">
+        <div class="folio-rule rule-draw flex items-baseline justify-between gap-4 pt-3 mb-10">
+          <span class="mono-label text-ink-3"><span class="text-signal">{d.index}</span>&nbsp;/&nbsp;{d.hero.kicker}</span>
+          <span class="mono-label text-signal">{d.hero.datum}</span>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-12">
+          <div class="lg:col-span-7">
+            <h1 class="text-h1 font-display font-medium text-ink max-w-[18ch] rise" set:html={d.hero.headline} />
+            <p class="text-lede text-ink-2 mt-8 max-w-[52ch] rise">{d.hero.sub}</p>
+            <div class="flex flex-wrap items-center gap-3 mt-10 rise">
+              <Button href="#lead-gen" event={`cta-assessment:hero-${service.id}`}>Request Q3 assessment</Button>
+              <Button href="/sample-report" kind="secondary" event={`cta-sample:hero-${service.id}`}>See the sample report</Button>
+            </div>
+          </div>
+          <!-- Spec table: the engagement, typeset as a document -->
+          <div class="lg:col-span-5 lg:col-start-8 rise">
+            <div class="border border-rule rounded-panel bg-surface-1 p-6 md:p-8">
+              <div class="flex items-baseline justify-between gap-4 border-b border-rule pb-4 mb-5">
+                <span class="mono-label text-signal">ENGAGEMENT SPEC</span>
+                <span class="mono-label text-ink-3">{d.title.toUpperCase()}</span>
+              </div>
+              <dl class="m-0 grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 font-mono text-caption">
+                {d.specs.map((s) => (
+                  <>
+                    <dt class="text-ink-3 uppercase">{s.key}</dt>
+                    <dd class="m-0 text-ink">{s.value}</dd>
+                  </>
+                ))}
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <Section label="Key figures" spacing="compact" class="mt-10">
+      <StatRow stats={d.stats} />
+    </Section>
+
+    <!-- DELIVERABLES -->
+    <Section label="Deliverables" cv>
+      <SectionHeader
+        index="01" label="DELIVERABLES" datum="WHAT YOU RECEIVE"
+        title="What you receive."
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+        {d.deliverables.map((item) => (
+          <div class="folio-rule rule-draw pt-5 pb-6">
+            <span class="mono-label text-signal block mb-2">{item.tag}</span>
+            <h3 class="text-h3 font-display font-medium text-ink mb-2">{item.title}</h3>
+            <p class="text-body text-ink-2">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+
+    <!-- PROCESS -->
+    <Section label="Timeline" cv>
+      <SectionHeader
+        index="02" label="TIMELINE" datum={`${String(d.process.length).padStart(2, '0')} STEPS`}
+        title="How the engagement runs."
+      />
+      <ProcessTimeline steps={d.process} />
+    </Section>
+
+    <!-- MID CTA -->
+    <Section label="Engage" spacing="compact">
+      <CTABlock
+        title={d.midCta.title}
+        body={d.midCta.body}
+        primary={{ label: 'Request Q3 assessment', href: '#lead-gen', event: `cta-assessment:mid-${service.id}` }}
+        secondary={{ label: 'See the sample report', href: '/sample-report', kind: 'secondary', event: `cta-sample:mid-${service.id}` }}
+      />
+    </Section>
+
+    <!-- FAQ -->
+    <Section label="Questions" cv>
+      <SectionHeader
+        index="03" label="QUESTIONS" datum={`${String(d.faqs.length).padStart(2, '0')} ANSWERED`}
+        title="Asked before engaging."
+      />
+      <Accordion items={d.faqs} jsonLd />
+    </Section>
+
+    <LeadForm context={`/services/${service.id}`} />
+
+  </main>
+  <Footer />
+</Base>

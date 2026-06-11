@@ -1,5 +1,4 @@
 # Redirect old/alternative paths to canonical pages
-/contact /#lead-gen 301
 /demo /#lead-gen 301
 /request-demo /#lead-gen 301
 /get-started /#lead-gen 302

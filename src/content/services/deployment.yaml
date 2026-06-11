@@ -1,0 +1,98 @@
+title: Autonomous Deployment
+index: '02'
+order: 2
+metaTitle: Autonomous Deployment — Jinki Aerial Intelligence
+metaDescription: Persistent autonomous monitoring from an on-site dock station. 150-200 missions per month — thermal
+  baselines, degradation tracking, verified alerts.
+ogImage: /images/og-deployment.png
+hero:
+  kicker: AUTONOMOUS DEPLOYMENT // PERSISTENT
+  headline: Persistent intelligence. <em>Zero intervention.</em>
+  sub: For facilities that need continuous visibility, not periodic snapshots. An autonomous dock station on your
+    site launches, captures, analyzes, and delivers intelligence — around the clock, with no operator required.
+  datum: 150-200 /MO
+specs:
+- key: SCOPE
+  value: Persistent autonomous monitoring, single facility
+- key: PLATFORM
+  value: On-site autonomous dock station + aerial platform
+- key: SENSORS
+  value: Thermal (IR) + visual, day and night
+- key: CADENCE
+  value: 150-200 missions/mo, 6-8 per day
+- key: RESPONSE
+  value: Alarm to airborne in under 90 seconds
+- key: OPERATION
+  value: 24/7, all-weather, zero on-site operators
+- key: TIMELINE
+  value: Site survey to persistent ops within the first month
+- key: INTEGRATION
+  value: SCADA, VMS, BMS, CMMS, digital twin
+stats:
+- value: 150-200
+  label: Missions per month
+- value: <90
+  suffix: s
+  label: Dock-to-airborne on alarm
+- value: '4'
+  label: Night thermal patrols per day
+- value: '0'
+  label: Operators required on site
+deliverables:
+- tag: THERMAL BASELINE
+  title: Facility thermal baseline
+  body: Nightly thermal sweeps of every rooftop, mechanical system, and exterior surface build the reference state
+    of your facility. Every future reading is measured against it, so anomalies surface before failures escalate.
+- tag: DEGRADATION
+  title: Degradation velocity tracking
+  body: Continuous trend analysis across every data point measures how fast each asset is drifting from its baseline
+    — flagging maintenance needs weeks before they become emergencies.
+- tag: ALERT EVIDENCE
+  title: Verified alert response
+  body: On alarm activation the platform launches autonomously and reaches the alert zone in under 90 seconds, capturing
+    thermal and visual evidence so your security operations center can verify before dispatching anyone.
+- tag: SYSTEM FEED
+  title: Direct integration delivery
+  body: Intelligence flows into the platforms you already run — SCADA, VMS, BMS, CMMS, and digital twin environments.
+    No new dashboards. No manual data transfers.
+- tag: COMPLIANCE LOG
+  title: Scheduled compliance records
+  body: Thermal plume monitoring and visual compliance documentation captured on schedule, with automated regulatory
+    reporting generation.
+process:
+- mono: WK 1
+  title: Site survey
+  sub: Facility mapping, airspace review, patrol route design, and dock station placement.
+- mono: WK 2
+  title: Install & commission
+  sub: Autonomous dock station installed, connectivity verified, every route flight-tested end to end.
+- mono: MO 1
+  title: Thermal baseline
+  sub: Nightly patrols build the thermal baseline that every future anomaly is measured against.
+- mono: ONGOING
+  title: Persistent operations
+  sub: 150-200 missions per month — degradation tracking, alert verification, and delivery straight into your systems.
+midCta:
+  title: Continuous visibility, not periodic snapshots.
+  body: Tell us about your facility and we will scope a single-dock persistent deployment.
+faqs:
+- q: Does anyone need to be on site to operate it?
+  a: No. The dock station launches, recovers, and recharges the aerial platform autonomously. Missions run on schedule
+    or trigger on alarms — zero operators required, 365 days a year.
+- q: What happens when an alarm activates?
+  a: The platform launches automatically and reaches the alert zone in under 90 seconds, streaming thermal and visual
+    evidence to your security operations center so the alert can be verified before anyone is dispatched.
+- q: Why do thermal patrols run at night?
+  a: Thermal anomalies are most visible at night. Four night thermal patrols build and maintain the facility's thermal
+    baseline, so degradation shows up as a measured trend rather than a surprise.
+- q: Will my team need to learn a new dashboard?
+  a: No. Intelligence is delivered into the systems you already run — SCADA, VMS, BMS, CMMS, and digital twin environments.
+    No new dashboards, no manual data transfers.
+- q: Can it operate in bad weather?
+  a: Yes. The dock station is weatherproof, rated for -20 to 50 C, and the platform recharges in about 25 minutes
+    between missions — operations continue around the clock through all seasons.
+- q: How is this different from the one-time intelligence scan?
+  a: 'The scan is a one-time assessment of your facility''s current condition. Autonomous deployment is the persistent
+    version: a dock station on your site running 150-200 missions a month, tracking change over time instead of
+    capturing a single snapshot.'
+serviceType: Autonomous Aerial Monitoring

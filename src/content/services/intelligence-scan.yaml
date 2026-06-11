@@ -1,0 +1,108 @@
+title: Facility Intelligence Scan
+index: '01'
+order: 1
+metaTitle: Facility Intelligence Scan — Jinki Aerial Intelligence
+metaDescription: Comprehensive aerial thermal and visual assessment of facility infrastructure. Severity-ranked
+  intelligence report delivered within 48 hours.
+ogImage: /images/og-audit.png
+hero:
+  kicker: FACILITY INTELLIGENCE SCAN // ONE-TIME
+  headline: One mission. <em>Total facility intelligence.</em>
+  sub: Thermal diagnostics, structural assessment, and security evaluation in a single engagement. You receive a
+    prioritized recommendations report — not raw data. Clear findings. Clear next steps.
+  datum: 48 HR
+specs:
+- key: SCOPE
+  value: Full-facility exterior — thermal, structural, security
+- key: SENSORS
+  value: Radiometric thermal + high-resolution visual
+- key: COVERAGE
+  value: 100% rooftop, single mission day
+- key: TIMELINE
+  value: Report within 48 hours of capture
+- key: DELIVERABLE
+  value: Severity-ranked Facility Intelligence Report (PDF)
+- key: CLASSIFICATION
+  value: NFPA 70B-aligned severity ranking
+- key: ENGAGEMENT
+  value: One-time, two to three weeks end-to-end
+- key: AREA SERVED
+  value: Mid-Atlantic United States
+stats:
+- value: '0.5'
+  suffix: °C
+  label: Radiometric thermal sensitivity — early-stage degradation detected before operational impact
+- value: '100'
+  suffix: '%'
+  label: Rooftop coverage per mission — no scaffolding, no personnel on the membrane, no operational disruption
+- value: '1'
+  suffix: DAY
+  label: On-site capture — thermal and high-resolution visual data across every structure, typically in a single
+    day
+- value: '73'
+  suffix: '%'
+  label: Of cooling system failures show detectable thermal signatures weeks before catastrophic failure
+  source: ASHRAE / Uptime Institute
+deliverables:
+- tag: SUMMARY
+  title: Executive Summary
+  body: Facility health score, total findings by severity, and recommended priority actions for leadership review.
+- tag: FINDINGS
+  title: Geolocated Findings
+  body: Every anomaly mapped to a specific rooftop coordinate, with ΔT measurements, equipment ID, and severity
+    rating.
+- tag: STRUCTURE
+  title: Structural Assessment
+  body: Membrane condition ratings, area measurements, degradation velocity, and projected repair cost for every
+    roof section.
+- tag: COMPLIANCE
+  title: Compliance Package
+  body: NFPA 70B alignment, ASHRAE temperature verification, inspection certificates, and a full verification trail
+    for every data point.
+process:
+- mono: T+0
+  title: Scoping Call
+  sub: We learn your facility, your priorities, and your pain points — a real conversation about what matters to
+    your operations team.
+- mono: WK 1
+  title: Flight Planning
+  sub: Airspace authorization, safety planning, and mission design tailored to your site geometry and inspection
+    requirements.
+- mono: DAY 1
+  title: Data Capture
+  sub: On-site aerial operations. Thermal and high-resolution visual data across every structure — typically completed
+    in a single day.
+- mono: HR 24
+  title: AI Analysis
+  sub: 'Our analytics pipeline processes thousands of data points: anomaly detection, severity classification, and
+    automated damage assessment.'
+- mono: HR 48
+  title: Report Delivered
+  sub: 'The Facility Intelligence Report: severity-ranked findings, remediation priorities, cost estimates, and
+    suggested timelines.'
+- mono: WK 2-3
+  title: Review & Handoff
+  sub: We walk your team through every finding. Questions answered, priorities confirmed, and a clear path forward.
+midCta:
+  title: Signed Monday, flying Friday.
+  body: From signed engagement to delivered report, typically inside fifteen business days.
+faqs:
+- q: How fast do we get the report?
+  a: Severity-ranked findings are delivered within 48 hours of the mission — two business days from capture to prioritized
+    report.
+- q: How long does the full engagement take?
+  a: Two to three weeks end-to-end. From signed engagement to delivered report, typically inside fifteen business
+    days, with on-site capture usually completed in a single day.
+- q: What do we actually receive?
+  a: One PDF engineered for your next maintenance window — not a file dump of raw imagery. It includes an executive
+    summary, geolocated findings with ΔT measurements and severity ratings, a structural assessment, and a compliance
+    package.
+- q: Will the scan disrupt our operations?
+  a: No. A single aerial mission covers 100% of the rooftop with no scaffolding, no personnel on the membrane, and
+    no operational disruption.
+- q: How are findings classified?
+  a: Severity classification is aligned to NFPA 70B, so reports map directly to the electrical maintenance standard
+    your team already uses, with ASHRAE temperature verification included.
+- q: Can we see a sample report first?
+  a: Yes. Request the sample report PDF — no sales call required.
+serviceType: Aerial Infrastructure Inspection
