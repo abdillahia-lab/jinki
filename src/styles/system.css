@@ -216,6 +216,17 @@
   ::-webkit-scrollbar-thumb { background: var(--rule-strong); border-radius: 2px; }
 }
 
+/* ---------- z-ladder utilities ----------
+   Tailwind v4 has NO --z-* theme namespace: a bare `z-nav` class would
+   silently generate nothing (this shipped once — the nav rendered with
+   no z-index and section animations stacked above it). Define them as
+   real utilities; the build gate asserts they exist in the bundle. */
+@utility z-nav { z-index: var(--z-nav); }
+@utility z-sticky { z-index: var(--z-sticky); }
+@utility z-overlay { z-index: var(--z-overlay); }
+@utility z-modal { z-index: var(--z-modal); }
+@utility z-skip { z-index: var(--z-skip); }
+
 /* ---------- Instrument voice + signature elements ---------- */
 @utility mono-label {
   font-family: var(--font-mono);

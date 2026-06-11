@@ -29,6 +29,17 @@ const REGRESSIONS = [
   { pattern: /<link rel="preload" as="fetch"/, why: 'as=fetch preloads double-download' },
 ];
 
+// Critical utilities that MUST exist in the CSS bundle. Tailwind v4 only
+// generates utilities it recognizes — a typo'd or non-namespace class
+// (e.g. z-nav before the @utility existed) silently generates NOTHING
+// and ships as a dead class. This gate catches that class of bug.
+const REQUIRED_CSS_CLASSES = [
+  'z-nav', 'mono-label', 'folio-rule', 'rise', 'link-draw',
+  'text-display', 'text-h1', 'text-h2', 'bg-surface-0', 'text-ink',
+  'border-rule', 'text-signal', 'bg-btn', 'rounded-pill', 'rounded-panel',
+  'py-section', 'max-w-brief',
+];
+
 function* walk(dir) {
   for (const name of readdirSync(dir)) {
     const p = join(dir, name);
@@ -44,6 +55,22 @@ if (!existsSync(DIST)) {
 
 const failures = [];
 const rows = [];
+
+// Phantom-utility gate: every required class must exist in the bundle
+{
+  const astroDir = join(DIST, '_astro');
+  let css = '';
+  if (existsSync(astroDir)) {
+    for (const f of readdirSync(astroDir)) {
+      if (f.endsWith('.css')) css += readFileSync(join(astroDir, f), 'utf8');
+    }
+  }
+  for (const cls of REQUIRED_CSS_CLASSES) {
+    if (!new RegExp('\\.' + cls.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + '(?![\\w-])').test(css)) {
+      failures.push(`CSS bundle: required utility .${cls} did not generate (phantom class)`);
+    }
+  }
+}
 
 for (const file of walk(DIST)) {
   if (!file.endsWith('.html')) continue;
