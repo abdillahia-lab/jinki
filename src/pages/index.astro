@@ -17,6 +17,7 @@ import ProcessTimeline from '../components/ui/ProcessTimeline.astro';
 import CTABlock from '../components/ui/CTABlock.astro';
 import LeadForm from '../components/ui/LeadForm.astro';
 import InspectionInstrument from '../components/ui/InspectionInstrument.astro';
+import MissionPlayer from '../components/scenes/MissionPlayer.astro';
 
 import heroVisible from '../assets/images/dc-rooftop-aerial.webp';
 import heroThermal from '../assets/images/dc-rooftop-aerial-thermal.webp';
@@ -132,10 +133,13 @@ const process = [
       </div>
     </Section>
 
-    <!-- ============ S4 VERTICALS MANIFEST ============ -->
+    <!-- ============ S4 THE MISSION (live scene) ============ -->
+    <MissionPlayer />
+
+    <!-- ============ S5 VERTICALS MANIFEST ============ -->
     <Section id="verticals" label="Verticals" cv>
       <SectionHeader
-        index="02" label="VERTICALS" datum="05 SECTORS"
+        index="03" label="VERTICALS" datum="05 SECTORS"
         title="Built for infrastructure that can't go down."
         lede="Each sector has named failure modes. We scan for them specifically — not generically."
       />
@@ -145,7 +149,7 @@ const process = [
     <!-- ============ S5 TWO SERVICES ============ -->
     <Section id="services" label="Services" cv>
       <SectionHeader
-        index="03" label="SERVICES" datum="02 ENGAGEMENT MODES"
+        index="04" label="SERVICES" datum="02 ENGAGEMENT MODES"
         title="One scan, or a standing watch."
         lede="Most engagements begin with a Scan. Deployments extend it into persistent, autonomous coverage."
       />
@@ -168,7 +172,7 @@ const process = [
     <!-- ============ S6 PROCESS ============ -->
     <Section id="process" label="Process" cv>
       <SectionHeader
-        index="04" label="PROCESS" datum="NDA → REPORT"
+        index="05" label="PROCESS" datum="NDA → REPORT"
         title="What happens after you submit."
         lede="Four steps, NDA to report. Your data is processed on-premises, encrypted AES-256 in transit and at rest, and never leaves your control."
       />
@@ -181,7 +185,7 @@ const process = [
     <!-- ============ S7 FOUNDING CLIENT PROGRAM ============ -->
     <Section id="founding" label="Founding client program" cv>
       <div class="folio-rule rule-draw flex items-baseline justify-between gap-4 pt-3 mb-10">
-        <span class="mono-label text-ink-3"><span class="text-signal">05</span>&nbsp;/&nbsp;FOUNDING CLIENT PROGRAM</span>
+        <span class="mono-label text-ink-3"><span class="text-signal">06</span>&nbsp;/&nbsp;FOUNDING CLIENT PROGRAM</span>
         <span class="mono-label text-ink-3">Q3 2026 COHORT</span>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-10">

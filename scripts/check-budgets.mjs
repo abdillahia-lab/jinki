@@ -14,7 +14,10 @@ const DIST = new URL('../dist', import.meta.url).pathname;
 const STRICT = process.argv.includes('--strict');
 
 const BUDGET = {
-  htmlKB: 70,
+  // Experience-layer revision: inline scene fallbacks + sidecar grids in
+  // HTML (≈14KB br on the wire at 85KB raw). Eager JS cap unchanged —
+  // heavy scenes load ONLY via capability-gated dynamic import.
+  htmlKB: 85,
   cssKB: 60,
   jsKB: 20,
 };
