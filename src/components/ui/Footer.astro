@@ -68,13 +68,30 @@ const cols = [
       ))}
     </div>
 
-    <div class="folio-rule pt-6 pb-8 flex flex-wrap items-center justify-between gap-4">
+    <div class="folio-rule pt-6 pb-8 flex flex-wrap items-center justify-between gap-x-8 gap-y-5">
       <p class="mono-label text-ink-3 max-w-none">
         © {year} JINKI AERIAL INTELLIGENCE · BOOKING Q3 2026 ASSESSMENTS ·
         <a href="mailto:info@jinki.ai" class="text-ink-2 no-underline hover:text-ink">INFO@JINKI.AI</a>
       </p>
-      <p class="mono-label text-ink-3 max-w-none" data-page-stamp></p>
+      <div class="flex items-center gap-6">
+        <a
+          href="https://www.nvidia.com/en-us/startups/"
+          target="_blank" rel="noopener noreferrer"
+          aria-label="NVIDIA Inception Program member"
+          class="opacity-80 hover:opacity-100 transition-opacity"
+        >
+          <img src="/images/nvidia-inception-badge-color.svg" alt="NVIDIA Inception Program" class="badge-dark h-12 w-auto" width="180" height="78" loading="lazy" decoding="async" />
+          <img src="/images/nvidia-inception-badge-black.svg" alt="NVIDIA Inception Program" class="badge-light h-12 w-auto" width="180" height="78" loading="lazy" decoding="async" />
+        </a>
+        <p class="mono-label text-ink-3 max-w-none" data-page-stamp></p>
+      </div>
     </div>
+
+    <style>
+      .badge-light { display: none; }
+      :global([data-theme='light']) .badge-dark { display: none; }
+      :global([data-theme='light']) .badge-light { display: block; }
+    </style>
   </div>
   <div class="h-0.5 thermal-band" aria-hidden="true"></div>
 </footer>
