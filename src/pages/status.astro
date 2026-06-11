@@ -61,16 +61,18 @@ const rows = [
       </ul>
     </Section>
 
-    <Section id="scan-window" label="What the scan window means" spacing="compact" cv>
+    <Section id="scan-window" label="What the flight window means" spacing="compact" cv>
       <div class="folio-rule rule-draw pt-4 pb-2 grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-4">
-        <span class="mono-label text-signal lg:col-span-2">SCAN WINDOW</span>
+        <span class="mono-label text-signal lg:col-span-2">FLIGHT WINDOW</span>
         <p class="text-body text-ink-2 lg:col-span-9 lg:col-start-4 max-w-prose">
-          Thermal inspection is physics-bound: anomalies show strongest when the gap between
-          a component's heat and its surroundings peaks — pre-dawn (coolest ambient) and just
-          after sunset (stored heat releasing). The telemetry value is computed live from solar
-          elevation over the Mid-Atlantic corridor; <span class="font-mono text-caption">OPEN</span> means
-          conditions favor maximum ΔT contrast right now, otherwise we show the next window. It's
-          the same calculation we use to schedule missions.
+          In plain terms: <strong class="text-ink font-medium">the hours when a thermal scan works best.</strong>
+          A failing component shows up because it's hotter than everything around it — and that
+          contrast peaks before dawn (everything else has cooled all night) and just after sunset
+          (the day's stored heat is releasing). Outside those hours, the sun heats every surface
+          and the anomaly hides in the noise. The number in our telemetry is computed live from
+          the sun's actual position over the Mid-Atlantic corridor — <span class="font-mono text-caption">OPEN NOW</span>
+          means conditions favor a scan at this moment; otherwise we show when the next window opens.
+          It's the same calculation we use to schedule your mission.
         </p>
       </div>
     </Section>

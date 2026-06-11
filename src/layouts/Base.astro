@@ -120,7 +120,7 @@ const orgSchema = {
         import('../lib/solar').then(({ scanWindow, fmtTimeET }) => {
           const w = scanWindow();
           const el = dock.querySelector('[data-dock-window]');
-          if (el) el.textContent = w.state === 'open' ? 'SCAN WINDOW OPEN' : `NEXT WINDOW ${fmtTimeET(w.at)}`;
+          if (el) el.textContent = w.state === 'open' ? 'FLIGHT WINDOW OPEN NOW' : `NEXT WINDOW ${fmtTimeET(w.at)}`;
         }).catch(() => {});
         let shown = false;
         const onScroll = () => {

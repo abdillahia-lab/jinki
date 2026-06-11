@@ -209,8 +209,13 @@ const inServices = services.some((s) => isActive(s.href));
       const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', next);
       try { localStorage.setItem('jinki-theme', next); } catch {}
-      setLabels();
     });
+  });
+  // Labels track data-theme from ANY source (toggle, page-forced theme,
+  // future auto-twilight) — not just our own click handler.
+  new MutationObserver(setLabels).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme'],
   });
 
   // Mobile sheet

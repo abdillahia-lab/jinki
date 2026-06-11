@@ -30,10 +30,10 @@ const build = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
   <a
     href="/status#scan-window"
     class="whitespace-nowrap no-underline text-ink-3 hover:text-ink-2 transition-colors"
-    title="The flight window when thermal contrast peaks — computed live from solar elevation over the Mid-Atlantic corridor. Best radiometric capture happens pre-dawn and post-sunset."
+    title="When thermal contrast peaks, we fly — computed live from solar elevation over the Mid-Atlantic corridor. Best capture is pre-dawn and just after sunset."
     data-t-scan-wrap hidden
   >
-    SCAN WINDOW <span class="text-signal" data-t-scan></span>
+    <span data-t-scan-label>NEXT FLIGHT WINDOW</span> <span class="text-signal" data-t-scan></span>
   </a>
   <span class="whitespace-nowrap" data-t-wind-wrap hidden>
     FIELD WIND <span class="text-signal tabular" data-t-wind></span>
@@ -54,12 +54,20 @@ const build = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
       setInterval(tick, 1000);
     }
 
-    // Solar scan window — computed locally, always true.
+    // Solar flight window — computed locally, always true. Plain words:
+    // "FLIGHT WINDOW OPEN NOW" or "NEXT FLIGHT WINDOW OPENS 19:56 ET".
     const scanWrap = root.querySelector('[data-t-scan-wrap]') as HTMLElement | null;
     const scan = root.querySelector('[data-t-scan]');
-    if (scanWrap && scan) {
+    const scanLabel = root.querySelector('[data-t-scan-label]');
+    if (scanWrap && scan && scanLabel) {
       const w = scanWindow();
-      scan.textContent = w.state === 'open' ? `OPEN · ${w.reason}` : `NEXT ${fmtTimeET(w.at)}`;
+      if (w.state === 'open') {
+        scanLabel.textContent = 'FLIGHT WINDOW';
+        scan.textContent = 'OPEN NOW';
+      } else {
+        scanLabel.textContent = 'NEXT FLIGHT WINDOW';
+        scan.textContent = `OPENS ${fmtTimeET(w.at)}`;
+      }
       scanWrap.hidden = false;
     }
 
