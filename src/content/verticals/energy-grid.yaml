@@ -12,30 +12,31 @@ hero:
     findings before degradation becomes downtime.
   datum: 50+ MI/MISSION
 frame:
-  caption: FRAME 0347 · DEMONSTRATION ANALYSIS · TRANSMISSION CORRIDOR
-  alt: Aerial view of high-voltage transmission lines and lattice towers crossing open terrain, with thermal analysis
-    overlays marking a hot connection point, a vegetation clearance violation, and a contaminated insulator.
+  caption: FRAME 0347 · DEMONSTRATION ANALYSIS · TRANSMISSION RIGHT-OF-WAY
+  alt: Top-down aerial thermal view of a transmission corridor cut through forest canopy, with analysis overlays
+    marking a hot connection on the structure, vegetation encroachment at the clearance edge, and a contaminated
+    insulator.
   annotations:
-  - x: 38
-    y: 22
-    w: 16
-    h: 14
+  - x: 43
+    y: 36
+    w: 13
+    h: 16
     label: HOT JOINT · DELTA-T +12.4°C
     labelAt: top
     confidence: 0.93
   - x: 12
-    y: 55
-    w: 22
-    h: 18
+    y: 50
+    w: 21
+    h: 15
     label: VEGETATION · 2.1 M CLEARANCE
     labelAt: bottom
     confidence: 0.88
-  - x: 60
-    y: 35
-    w: 14
-    h: 12
+  - x: 58
+    y: 41
+    w: 11
+    h: 11
     label: INSULATOR · CONTAMINATION
-    labelAt: top
+    labelAt: bottom
     confidence: 0.84
 stats:
 - value: '50'

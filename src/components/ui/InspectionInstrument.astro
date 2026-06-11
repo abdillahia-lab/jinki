@@ -1,0 +1,366 @@
+---
+/*
+  InspectionInstrument — the frame is a working console, not a picture.
+
+  Sequence: visible photo -> scan sweep converts it to radiometric thermal
+  -> annotations draw -> the lens tours the findings -> armed.
+  Armed: the pointer carries a circular lens that looks THROUGH the thermal
+  back to visible light (the real thermography workflow: thermal finds it,
+  visible identifies it). Live spot-temperature readout from the generated
+  sidecar grid — the numbers agree with the pixels by construction.
+  Findings dock chips sync two-way with the lens; visiting a finding flips
+  it UNVERIFIED -> VERIFIED.
+
+  No-JS: static thermal + annotations + caption. Reduced-motion: armed
+  immediately, lens works (input-driven), no tours.
+*/
+import type { ImageMetadata } from 'astro';
+import { Picture } from 'astro:assets';
+
+export interface Finding {
+  x: number; y: number; w: number; h: number;   // percent
+  label: string;
+  confidence?: number;
+  severity?: 'SEV-1' | 'SEV-2' | 'SEV-3';
+  title?: string;                                // dock chip title
+  labelAt?: 'top' | 'bottom';
+}
+
+interface Grid {
+  tMin: number; tMax: number; cols: number; rows: number; data: number[][];
+}
+
+interface Props {
+  image: ImageMetadata;
+  thermalImage: ImageMetadata;
+  alt: string;
+  findings: Finding[];
+  caption: string;            // must carry DEMONSTRATION ANALYSIS
+  grid?: Grid;                // sidecar temperature grid
+  geo?: { latTop: number; latBottom: number; lonLeft: number; lonRight: number };
+  loading?: 'eager' | 'lazy';
+  class?: string;
+}
+
+const { image, thermalImage, alt, findings, caption, grid, geo, loading = 'lazy', class: className = '' } = Astro.props;
+
+const VW = 1000;
+const VH = Math.round((VW * image.height) / image.width);
+const sizes = '(max-width: 768px) 100vw, (max-width: 1360px) 90vw, 1280px';
+const uid = `inst-${Math.abs([...caption].reduce((a, c) => (a * 33 + c.charCodeAt(0)) | 0, 5381)).toString(36)}`;
+---
+
+<figure class={`m-0 ${className}`}>
+  <div
+    class="instrument relative overflow-hidden select-none touch-none"
+    id={uid}
+    data-instrument
+    data-findings={JSON.stringify(findings.map((f, i) => ({ ...f, i })))}
+    data-grid={grid ? JSON.stringify(grid) : undefined}
+    data-geo={geo ? JSON.stringify(geo) : undefined}
+  >
+    <!-- Base: thermal (radiometric synthesis) -->
+    <div class="inst-thermal">
+      <Picture
+        src={thermalImage} alt="" formats={['avif', 'webp']}
+        widths={[480, 800, 1200, 1600]} sizes={sizes} loading={loading}
+        class="w-full block"
+      />
+    </div>
+
+    <!-- Visible light: full image pre-reveal; lens-clipped after arming -->
+    <div class="inst-visible" data-visible>
+      <Picture
+        src={image} alt={alt} formats={['avif', 'webp']}
+        widths={[480, 800, 1200, 1600]} sizes={sizes} loading={loading}
+        fetchpriority={loading === 'eager' ? 'high' : 'auto'}
+        class="w-full block"
+      />
+    </div>
+
+    <!-- Lens ring + scan line -->
+    <div class="inst-lens-ring" aria-hidden="true" data-lens-ring></div>
+    <div class="inst-scan" aria-hidden="true" data-scan></div>
+
+    <!-- Annotations -->
+    <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox={`0 0 ${VW} ${VH}`} preserveAspectRatio="none" aria-hidden="true">
+      <g class="annotation-tick">
+        <path d="M 8 28 V 8 H 28" /><path d={`M ${VW - 28} 8 H ${VW - 8} V 28`} />
+        <path d={`M ${VW - 8} ${VH - 28} V ${VH - 8} H ${VW - 28}`} /><path d={`M 28 ${VH - 8} H 8 V ${VH - 28}`} />
+      </g>
+      {findings.map((f, i) => {
+        const x = (f.x / 100) * VW, y = (f.y / 100) * VH;
+        const w = (f.w / 100) * VW, h = (f.h / 100) * VH;
+        const labelY = f.labelAt === 'bottom' ? y + h + 22 : y - 10;
+        return (
+          <g class="inst-ann opacity-0" data-ann={i}>
+            <rect x={x} y={y} width={w} height={h} fill="none" stroke="var(--signal)" stroke-width="1.5" stroke-opacity="0.9" />
+            <text
+              x={x} y={labelY} fill="var(--signal)"
+              font-family="JetBrains Mono, monospace" font-size="15" letter-spacing="1"
+            >{f.label}{f.confidence != null ? ` · CONF ${f.confidence.toFixed(2)}` : ''}</text>
+          </g>
+        );
+      })}
+    </svg>
+
+    <!-- Spot readout chip -->
+    <div class="inst-readout mono-label" data-readout hidden aria-hidden="true">
+      <span class="text-signal tabular" data-readout-temp></span>
+      <span class="text-ink-3 tabular" data-readout-geo></span>
+    </div>
+
+    <!-- Prompt -->
+    <div class="inst-prompt mono-label" data-prompt hidden>
+      INSPECT THE FRAME — <span class="text-signal">{findings.length} FINDINGS</span>
+    </div>
+  </div>
+
+  <!-- Findings dock -->
+  <div class="border-x border-b border-rule" data-dock>
+    <div class="flex flex-wrap items-stretch">
+      {findings.map((f, i) => (
+        <button
+          type="button"
+          class="inst-chip group flex-1 min-w-44 text-left bg-transparent border-0 border-r border-rule last:border-r-0 cursor-pointer px-4 py-3 transition-colors hover:bg-surface-1"
+          data-chip={i}
+        >
+          <span class="flex items-baseline justify-between gap-2">
+            <span class="mono-label text-ink-3 tabular">F-{String(i + 1).padStart(2, '0')}{f.severity ? ` · ${f.severity}` : ''}</span>
+            <span class="mono-label text-ink-3" data-chip-state>UNVERIFIED</span>
+          </span>
+          <span class="block font-mono text-caption text-ink mt-1.5 truncate">{f.title ?? f.label}</span>
+        </button>
+      ))}
+    </div>
+    <figcaption class="flex flex-wrap items-center justify-between gap-2 border-t border-rule px-4 py-2.5">
+      <span class="mono-label text-ink-3">{caption}</span>
+      <span class="mono-label text-ink-3" data-verified-count>0/{findings.length} VERIFIED</span>
+    </figcaption>
+  </div>
+</figure>
+
+<style>
+  .instrument { cursor: crosshair; }
+  .inst-thermal, .inst-visible { position: relative; }
+  .inst-visible {
+    position: absolute; inset: 0; z-index: 1;
+  }
+  /* Phase 2+: visible clipped to the lens */
+  .instrument[data-phase='armed'] .inst-visible,
+  .instrument[data-phase='tour'] .inst-visible {
+    clip-path: circle(var(--lr, 0px) at var(--lx, 50%) var(--ly, 50%));
+    transition: --lx 0.45s var(--ease-settle), --ly 0.45s var(--ease-settle), --lr 0.3s var(--ease-settle);
+  }
+  .instrument[data-phase='armed'].inst-live .inst-visible {
+    transition: --lr 0.3s var(--ease-settle); /* pointer drives lx/ly directly */
+  }
+  /* Scan reveal: visible wipes away L->R exposing thermal */
+  .instrument[data-phase='reveal'] .inst-visible {
+    animation: inst-wipe 1.6s var(--ease-settle) forwards;
+  }
+  @keyframes inst-wipe {
+    from { clip-path: inset(0 0 0 0); }
+    to { clip-path: inset(0 0 0 100%); }
+  }
+  .inst-scan {
+    position: absolute; top: 0; bottom: 0; left: -2px; width: 2px; z-index: 2;
+    background: var(--signal); box-shadow: 0 0 14px var(--signal);
+    opacity: 0; pointer-events: none;
+  }
+  .instrument[data-phase='reveal'] .inst-scan { animation: inst-scanline 1.6s var(--ease-settle) forwards; }
+  @keyframes inst-scanline {
+    0% { left: 0; opacity: 1; } 96% { opacity: 1; } 100% { left: 100%; opacity: 0; }
+  }
+  .inst-lens-ring {
+    position: absolute; z-index: 3; pointer-events: none;
+    width: calc(var(--lr, 0px) * 2); height: calc(var(--lr, 0px) * 2);
+    left: var(--lx, 50%); top: var(--ly, 50%);
+    transform: translate(-50%, -50%);
+    border: 1.5px solid var(--signal); border-radius: 999px;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.35), inset 0 0 24px rgb(0 0 0 / 0.18);
+    opacity: 0; transition: opacity 0.3s ease, --lx 0.45s var(--ease-settle), --ly 0.45s var(--ease-settle), --lr 0.3s var(--ease-settle);
+  }
+  .instrument[data-phase='armed'] .inst-lens-ring,
+  .instrument[data-phase='tour'] .inst-lens-ring { opacity: 1; }
+  .instrument.inst-live .inst-lens-ring { transition: opacity 0.3s ease, --lr 0.3s var(--ease-settle); }
+
+  .inst-ann { transition: opacity 0.4s var(--ease-settle); }
+  .inst-ann.on { opacity: 1; }
+
+  .inst-readout {
+    position: absolute; z-index: 4; pointer-events: none;
+    left: var(--rx, 50%); top: var(--ry, 50%);
+    transform: translate(14px, 14px);
+    background: color-mix(in srgb, var(--surface-0) 88%, transparent);
+    border: 1px solid var(--rule); border-radius: 4px;
+    padding: 0.4rem 0.6rem; display: flex; flex-direction: column; gap: 0.2rem;
+    white-space: nowrap;
+  }
+  .inst-prompt {
+    position: absolute; z-index: 4; left: 50%; bottom: 0.9rem; transform: translateX(-50%);
+    background: color-mix(in srgb, var(--surface-0) 85%, transparent);
+    border: 1px solid var(--rule); border-radius: 999px;
+    padding: 0.45rem 1rem; pointer-events: none;
+    animation: prompt-fade 6s ease forwards;
+  }
+  @keyframes prompt-fade { 0%, 70% { opacity: 1; } 100% { opacity: 0; } }
+
+  .inst-chip[data-state='verified'] [data-chip-state] { color: var(--signal); }
+  .inst-chip[data-state='active'] { background: var(--surface-1); }
+
+  /* No-JS: thermal visible w/ annotations (visible layer stays on top
+     otherwise, so hide it) + dock interactive states irrelevant */
+  @media (scripting: none) {
+    .inst-visible { display: none; }
+    .inst-ann { opacity: 1 !important; }
+  }
+</style>
+
+<script>
+  const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('[data-instrument]').forEach((inst) => {
+    const findings = JSON.parse(inst.dataset.findings || '[]');
+    const grid = inst.dataset.grid ? JSON.parse(inst.dataset.grid) : null;
+    const geo = inst.dataset.geo ? JSON.parse(inst.dataset.geo) : null;
+    const figure = inst.closest('figure')!;
+    const chips = [...figure.querySelectorAll<HTMLElement>('[data-chip]')];
+    const anns = [...inst.querySelectorAll<SVGGElement>('[data-ann]')];
+    const readout = inst.querySelector<HTMLElement>('[data-readout]')!;
+    const readoutTemp = inst.querySelector<HTMLElement>('[data-readout-temp]')!;
+    const readoutGeo = inst.querySelector<HTMLElement>('[data-readout-geo]')!;
+    const prompt = inst.querySelector<HTMLElement>('[data-prompt]')!;
+    const verifiedCount = figure.querySelector<HTMLElement>('[data-verified-count]')!;
+    const verified = new Set<number>();
+    let live = false; // pointer has control
+
+    const setLens = (xPct: number, yPct: number, r = 90) => {
+      inst.style.setProperty('--lx', xPct + '%');
+      inst.style.setProperty('--ly', yPct + '%');
+      inst.style.setProperty('--lr', r + 'px');
+    };
+
+    const sampleTemp = (xPct: number, yPct: number): number | null => {
+      if (!grid) return null;
+      const gx = Math.min(grid.cols - 1.001, Math.max(0, (xPct / 100) * grid.cols - 0.5));
+      const gy = Math.min(grid.rows - 1.001, Math.max(0, (yPct / 100) * grid.rows - 0.5));
+      const x0 = Math.floor(gx), y0 = Math.floor(gy);
+      const fx = gx - x0, fy = gy - y0;
+      const g = grid.data;
+      const x1 = Math.min(grid.cols - 1, x0 + 1), y1 = Math.min(grid.rows - 1, y0 + 1);
+      return g[y0][x0] * (1 - fx) * (1 - fy) + g[y0][x1] * fx * (1 - fy) + g[y1][x0] * (1 - fx) * fy + g[y1][x1] * fx * fy;
+    };
+
+    const updateReadout = (xPct: number, yPct: number) => {
+      const t = sampleTemp(xPct, yPct);
+      if (t != null) readoutTemp.textContent = t.toFixed(1) + ' °C SPOT';
+      if (geo) {
+        const lat = geo.latTop + (geo.latBottom - geo.latTop) * (yPct / 100);
+        const lon = geo.lonLeft + (geo.lonRight - geo.lonLeft) * (xPct / 100);
+        readoutGeo.textContent = `${Math.abs(lat).toFixed(4)}°${lat >= 0 ? 'N' : 'S'} ${Math.abs(lon).toFixed(4)}°${lon >= 0 ? 'E' : 'W'}`;
+      }
+      inst.style.setProperty('--rx', Math.min(xPct, 72) + '%');
+      inst.style.setProperty('--ry', Math.min(yPct, 86) + '%');
+      readout.hidden = t == null && !geo;
+    };
+
+    const verify = (i: number) => {
+      if (verified.has(i)) return;
+      verified.add(i);
+      const chip = chips[i];
+      chip?.setAttribute('data-state', 'verified');
+      const st = chip?.querySelector('[data-chip-state]');
+      if (st) st.textContent = 'VERIFIED ✓';
+      verifiedCount.textContent = `${verified.size}/${findings.length} VERIFIED`;
+    };
+
+    const checkHit = (xPct: number, yPct: number) => {
+      findings.forEach((f: any, i: number) => {
+        const inside = xPct >= f.x && xPct <= f.x + f.w && yPct >= f.y && yPct <= f.y + f.h;
+        chips[i]?.setAttribute('data-state', verified.has(i) ? 'verified' : inside ? 'active' : '');
+        if (inside) { anns[i]?.classList.add('on'); verify(i); }
+      });
+    };
+
+    const arm = () => {
+      inst.dataset.phase = 'armed';
+      anns.forEach((a) => a.classList.add('on'));
+      if (!REDUCED) prompt.hidden = false;
+    };
+
+    // Choreography: reveal -> annotations -> tour -> armed
+    const run = async () => {
+      if (REDUCED) { setLens(50, 50, 90); arm(); return; }
+      inst.dataset.phase = 'reveal';
+      await new Promise((r) => setTimeout(r, 1700));
+      inst.dataset.phase = 'tour';
+      for (let i = 0; i < findings.length; i++) {
+        const f = findings[i];
+        anns[i]?.classList.add('on');
+        setLens(f.x + f.w / 2, f.y + f.h / 2, 80);
+        chips[i]?.setAttribute('data-state', 'active');
+        updateReadout(f.x + f.w / 2, f.y + f.h / 2);
+        readout.hidden = false;
+        await new Promise((r) => setTimeout(r, 1000));
+        chips[i]?.setAttribute('data-state', '');
+      }
+      readout.hidden = true;
+      setLens(50, 50, 90);
+      arm();
+    };
+
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) { io.disconnect(); run(); }
+    }, { threshold: 0.4 });
+    io.observe(inst);
+
+    // Pointer drive
+    const toPct = (e: PointerEvent) => {
+      const r = inst.getBoundingClientRect();
+      return [
+        Math.min(100, Math.max(0, ((e.clientX - r.left) / r.width) * 100)),
+        Math.min(100, Math.max(0, ((e.clientY - r.top) / r.height) * 100)),
+      ];
+    };
+    inst.addEventListener('pointermove', (e) => {
+      if (inst.dataset.phase !== 'armed') return;
+      if (e.pointerType === 'mouse') {
+        if (!live) { live = true; inst.classList.add('inst-live'); }
+        const [x, y] = toPct(e);
+        setLens(x, y, 90);
+        updateReadout(x, y);
+        readout.hidden = false;
+        checkHit(x, y);
+      }
+    });
+    inst.addEventListener('pointerdown', (e) => {
+      if (inst.dataset.phase !== 'armed') return;
+      const [x, y] = toPct(e);
+      if (e.pointerType !== 'mouse') {
+        live = false; inst.classList.remove('inst-live'); // glide on touch
+      }
+      setLens(x, y, 90);
+      updateReadout(x, y);
+      readout.hidden = false;
+      checkHit(x, y);
+    });
+    inst.addEventListener('pointerleave', () => { readout.hidden = true; });
+
+    // Chips drive the lens
+    chips.forEach((chip, i) => {
+      chip.addEventListener('click', () => {
+        if (inst.dataset.phase !== 'armed') return;
+        live = false; inst.classList.remove('inst-live');
+        const f = findings[i];
+        const cx = f.x + f.w / 2, cy = f.y + f.h / 2;
+        setLens(cx, cy, 80);
+        anns[i]?.classList.add('on');
+        updateReadout(cx, cy);
+        readout.hidden = false;
+        verify(i);
+        inst.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'nearest' });
+      });
+    });
+  });
+</script>

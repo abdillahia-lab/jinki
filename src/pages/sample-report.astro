@@ -11,10 +11,11 @@ import Footer from '../components/ui/Footer.astro';
 import Section from '../components/ui/Section.astro';
 import SectionHeader from '../components/ui/SectionHeader.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
-import AnnotatedFrame from '../components/ui/AnnotatedFrame.astro';
+import InspectionInstrument from '../components/ui/InspectionInstrument.astro';
 
 import sampleVisible from '../assets/images/dc-rooftop-aerial.webp';
 import sampleThermal from '../assets/images/dc-rooftop-aerial-thermal.webp';
+import sampleGrid from '../data/thermal/dc-rooftop-aerial.json';
 
 const ACCESS_KEY = 'b2bd961c-acf2-48a6-bf10-a5717c2dea95';
 
@@ -25,9 +26,9 @@ const reportSections = [
   { n: '04', t: 'Methodology & chain of custody', d: 'Sensor calibration, capture parameters, processing steps, data-handling record. Audit-ready.' },
 ];
 
-const sampleAnnotations = [
-  { x: 14, y: 22, w: 17, h: 19, label: 'SEV-1 · ΔT +14.2°C', confidence: 0.94, labelAt: 'top' as const },
-  { x: 58, y: 48, w: 14, h: 15, label: 'SEV-2 · CRAH BEARING', confidence: 0.88, labelAt: 'bottom' as const },
+const sampleFindings = [
+  { x: 14, y: 22, w: 17, h: 19, label: 'SEV-1 · ΔT +14.2°C', confidence: 0.94, labelAt: 'top' as const, severity: 'SEV-1' as const, title: 'Rooftop unit thermal anomaly' },
+  { x: 58, y: 48, w: 14, h: 15, label: 'SEV-2 · CRAH BEARING', confidence: 0.88, labelAt: 'bottom' as const, severity: 'SEV-2' as const, title: 'CRAH bearing signature' },
 ];
 ---
 
@@ -45,12 +46,13 @@ const sampleAnnotations = [
         title="Read the deliverable before you buy the engagement."
         lede="This is the document your team receives 48 hours after a scan — structure, ranking logic, and evidence format. Every page is watermarked illustrative: the analysis style is real, the site is a demonstration."
       />
-      <AnnotatedFrame
+      <InspectionInstrument
         image={sampleVisible}
         thermalImage={sampleThermal}
         alt="Annotated thermal sample frame from the illustrative intelligence report"
-        annotations={sampleAnnotations}
-        meta={{ caption: 'SAMPLE FRAME · DEMONSTRATION ANALYSIS · SEVERITY CLASSES PER NFPA 70B' }}
+        findings={sampleFindings}
+        caption="SAMPLE FRAME · DEMONSTRATION ANALYSIS · SEVERITY CLASSES PER NFPA 70B"
+        grid={sampleGrid}
       />
     </Section>
 

@@ -17,17 +17,24 @@ import StatRow from '../../components/ui/StatRow.astro';
 import Accordion from '../../components/ui/Accordion.astro';
 import CTABlock from '../../components/ui/CTABlock.astro';
 import LeadForm from '../../components/ui/LeadForm.astro';
-import AnnotatedFrame from '../../components/ui/AnnotatedFrame.astro';
+import InspectionInstrument from '../../components/ui/InspectionInstrument.astro';
 
 import dcVisible from '../../assets/images/dc-rooftop-aerial.webp';
 import dcThermal from '../../assets/images/dc-rooftop-aerial-thermal.webp';
-import energyVisible from '../../assets/images/energy-powerlines.jpg';
-import energyThermal from '../../assets/images/energy-powerlines-thermal.webp';
+import energyVisible from '../../assets/images/powerline-aerial.webp';
+import energyThermal from '../../assets/images/powerline-aerial-thermal.webp';
 import securityVisible from '../../assets/images/facility-night-aerial.webp';
 import securityThermal from '../../assets/images/facility-night-aerial-thermal.webp';
 import agVisible from '../../assets/images/agriculture-fields.jpg';
 import agThermal from '../../assets/images/agriculture-fields-thermal.webp';
 import reVisible from '../../assets/images/luxury-lobby.webp';
+import reThermal from '../../assets/images/luxury-lobby-thermal.webp';
+
+import dcGrid from '../../data/thermal/dc-rooftop-aerial.json';
+import energyGrid from '../../data/thermal/powerline-aerial.json';
+import securityGrid from '../../data/thermal/facility-night-aerial.json';
+import agGrid from '../../data/thermal/agriculture-fields.json';
+import reGrid from '../../data/thermal/luxury-lobby.json';
 
 export async function getStaticPaths() {
   const verticals = await getCollection('verticals');
@@ -37,14 +44,22 @@ export async function getStaticPaths() {
 const { vertical } = Astro.props;
 const d = vertical.data;
 
-const FRAMES: Record<string, { visible: ImageMetadata; thermal?: ImageMetadata }> = {
-  'data-centers': { visible: dcVisible, thermal: dcThermal },
-  'energy-grid': { visible: energyVisible, thermal: energyThermal },
-  'security': { visible: securityVisible, thermal: securityThermal },
-  'agriculture': { visible: agVisible, thermal: agThermal },
-  'real-estate': { visible: reVisible },
+const FRAMES: Record<string, { visible: ImageMetadata; thermal: ImageMetadata; grid: any }> = {
+  'data-centers': { visible: dcVisible, thermal: dcThermal, grid: dcGrid },
+  'energy-grid': { visible: energyVisible, thermal: energyThermal, grid: energyGrid },
+  'security': { visible: securityVisible, thermal: securityThermal, grid: securityGrid },
+  'agriculture': { visible: agVisible, thermal: agThermal, grid: agGrid },
+  'real-estate': { visible: reVisible, thermal: reThermal, grid: reGrid },
 };
 const frame = FRAMES[vertical.id];
+
+// Dock chips: severity from finding order, title from the label's lead segment
+const SEVS = ['SEV-1', 'SEV-2', 'SEV-2', 'SEV-3'] as const;
+const findings = d.frame.annotations.map((a, i) => ({
+  ...a,
+  severity: SEVS[Math.min(i, SEVS.length - 1)],
+  title: a.label.split('·')[0].trim(),
+}));
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -77,12 +92,13 @@ const jsonLd = {
           </div>
         </div>
         <div class="mt-12 md:mt-16">
-          <AnnotatedFrame
+          <InspectionInstrument
             image={frame.visible}
             thermalImage={frame.thermal}
             alt={d.frame.alt}
-            annotations={d.frame.annotations}
-            meta={{ caption: d.frame.caption }}
+            findings={findings}
+            caption={d.frame.caption}
+            grid={frame.grid}
             loading="eager"
           />
         </div>

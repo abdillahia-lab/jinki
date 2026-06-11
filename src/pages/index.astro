@@ -16,10 +16,11 @@ import Manifest from '../components/ui/Manifest.astro';
 import ProcessTimeline from '../components/ui/ProcessTimeline.astro';
 import CTABlock from '../components/ui/CTABlock.astro';
 import LeadForm from '../components/ui/LeadForm.astro';
-import AnnotatedFrame from '../components/ui/AnnotatedFrame.astro';
+import InspectionInstrument from '../components/ui/InspectionInstrument.astro';
 
 import heroVisible from '../assets/images/dc-rooftop-aerial.webp';
 import heroThermal from '../assets/images/dc-rooftop-aerial-thermal.webp';
+import heroGrid from '../data/thermal/dc-rooftop-aerial.json';
 
 const verticalRows = [
   { index: '01', title: 'Data Centers', description: 'Rooftop HVAC cascade, membrane moisture, NFPA 70B hot spots — found before the outage.', datum: '±0.5°C', href: '/verticals/data-centers' },
@@ -29,10 +30,10 @@ const verticalRows = [
   { index: '05', title: 'Real Estate', description: 'Envelope performance, roof condition, and documentation for luxury portfolios.', datum: 'PORTFOLIO', href: '/verticals/real-estate' },
 ];
 
-const heroAnnotations = [
-  { x: 14, y: 22, w: 17, h: 19, label: 'ANOMALY · ΔT +14.2°C', confidence: 0.94, labelAt: 'top' as const },
-  { x: 58, y: 48, w: 14, h: 15, label: 'CRAH-7 BEARING HEAT', confidence: 0.88, labelAt: 'bottom' as const },
-  { x: 38, y: 70, w: 19, h: 12, label: 'MEMBRANE MOISTURE PATH', confidence: 0.81, labelAt: 'bottom' as const },
+const heroFindings = [
+  { x: 14, y: 22, w: 17, h: 19, label: 'ANOMALY · ΔT +14.2°C', confidence: 0.94, labelAt: 'top' as const, severity: 'SEV-1' as const, title: 'Rooftop unit thermal anomaly' },
+  { x: 58, y: 48, w: 14, h: 15, label: 'CRAH-7 BEARING HEAT', confidence: 0.88, labelAt: 'bottom' as const, severity: 'SEV-2' as const, title: 'CRAH bearing signature' },
+  { x: 38, y: 70, w: 19, h: 12, label: 'MEMBRANE MOISTURE PATH', confidence: 0.81, labelAt: 'bottom' as const, severity: 'SEV-2' as const, title: 'Membrane moisture path' },
 ];
 
 const stats = [
@@ -94,18 +95,16 @@ const process = [
         </div>
       </div>
 
-      <!-- Full-bleed annotated thermal frame with scan reveal -->
+      <!-- The Inspection Instrument: scan reveal -> findings tour -> live lens -->
       <div class="max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16 mt-14 md:mt-20">
-        <AnnotatedFrame
+        <InspectionInstrument
           image={heroVisible}
           thermalImage={heroThermal}
           alt="Aerial view of a data center rooftop transitioning from visible light to annotated radiometric thermal imagery"
-          annotations={heroAnnotations}
-          meta={{
-            caption: 'FRAME 0331 · DEMONSTRATION ANALYSIS · DATA CENTER ROOFTOP · 39.02°N 77.45°W',
-            geo: { latTop: 39.0226, latBottom: 39.0194, lonLeft: -77.4528, lonRight: -77.4472 },
-          }}
-          crosshair
+          findings={heroFindings}
+          caption="FRAME 0331 · DEMONSTRATION ANALYSIS · DATA CENTER ROOFTOP · 39.02°N 77.45°W"
+          grid={heroGrid}
+          geo={{ latTop: 39.0226, latBottom: 39.0194, lonLeft: -77.4528, lonRight: -77.4472 }}
           loading="eager"
         />
       </div>

@@ -310,6 +310,11 @@
 @keyframes box-draw { to { stroke-dashoffset: 0; } }
 @keyframes label-in { to { opacity: 1; } }
 
+/* ---------- Inspection lens: registered props so the lens GLIDES ---------- */
+@property --lx { syntax: '<percentage>'; inherits: true; initial-value: 50%; }
+@property --ly { syntax: '<percentage>'; inherits: true; initial-value: 50%; }
+@property --lr { syntax: '<length>'; inherits: true; initial-value: 0px; }
+
 /* ---------- Thermal reveal (B1): scan line sweeps, thermal layer follows ---------- */
 .thermal-reveal { position: relative; overflow: hidden; }
 .thermal-reveal .thermal-layer {
