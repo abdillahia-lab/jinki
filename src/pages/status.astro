@@ -61,6 +61,20 @@ const rows = [
       </ul>
     </Section>
 
+    <Section id="scan-window" label="What the scan window means" spacing="compact" cv>
+      <div class="folio-rule rule-draw pt-4 pb-2 grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-4">
+        <span class="mono-label text-signal lg:col-span-2">SCAN WINDOW</span>
+        <p class="text-body text-ink-2 lg:col-span-9 lg:col-start-4 max-w-prose">
+          Thermal inspection is physics-bound: anomalies show strongest when the gap between
+          a component's heat and its surroundings peaks — pre-dawn (coolest ambient) and just
+          after sunset (stored heat releasing). The telemetry value is computed live from solar
+          elevation over the Mid-Atlantic corridor; <span class="font-mono text-caption">OPEN</span> means
+          conditions favor maximum ΔT contrast right now, otherwise we show the next window. It's
+          the same calculation we use to schedule missions.
+        </p>
+      </div>
+    </Section>
+
     <Section label="Operating area" cv>
       <SectionHeader
         index="01" label="OPERATING AREA" datum="MID-ATLANTIC"

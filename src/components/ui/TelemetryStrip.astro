@@ -27,9 +27,14 @@ const build = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
 >
   <span class="whitespace-nowrap">UTC <span class="text-signal tabular" data-t-utc>--:--:--</span></span>
   <span class="whitespace-nowrap">MID-ATLANTIC SECTOR</span>
-  <span class="whitespace-nowrap" data-t-scan-wrap hidden>
+  <a
+    href="/status#scan-window"
+    class="whitespace-nowrap no-underline text-ink-3 hover:text-ink-2 transition-colors"
+    title="The flight window when thermal contrast peaks — computed live from solar elevation over the Mid-Atlantic corridor. Best radiometric capture happens pre-dawn and post-sunset."
+    data-t-scan-wrap hidden
+  >
     SCAN WINDOW <span class="text-signal" data-t-scan></span>
-  </span>
+  </a>
   <span class="whitespace-nowrap" data-t-wind-wrap hidden>
     FIELD WIND <span class="text-signal tabular" data-t-wind></span>
   </span>

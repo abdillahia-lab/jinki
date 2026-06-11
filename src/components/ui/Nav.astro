@@ -104,10 +104,14 @@ const inServices = services.some((s) => isActive(s.href));
 
     <div class="flex items-center gap-3">
       <button
-        class="hidden md:block bg-transparent border-0 cursor-pointer mono-label text-ink-3 hover:text-ink transition-colors py-2"
-        data-theme-toggle aria-live="polite"
+        class="hidden md:flex items-center gap-1.5 bg-transparent border-0 cursor-pointer mono-label py-2"
+        data-theme-toggle
+        title="Display mode — NIGHT OPS is the operational default; DAY runs the paper theme"
+        aria-label="Switch display mode"
       >
-        <span data-theme-label>NIGHT OPS</span>
+        <span class="text-ink-3 transition-colors" data-mode-day>DAY</span>
+        <span class="text-ink-3" aria-hidden="true">/</span>
+        <span class="text-signal transition-colors" data-mode-night>NIGHT OPS</span>
       </button>
       <a
         href="#lead-gen"
@@ -170,8 +174,10 @@ const inServices = services.some((s) => isActive(s.href));
       </ul>
     </nav>
     <div class="mt-auto flex flex-col gap-4">
-      <button class="bg-transparent border-0 cursor-pointer mono-label text-ink-3 text-left p-0" data-theme-toggle>
-        <span data-theme-label>NIGHT OPS</span>
+      <button class="flex items-center gap-1.5 bg-transparent border-0 cursor-pointer mono-label text-left p-0" data-theme-toggle aria-label="Switch display mode">
+        <span class="text-ink-3 transition-colors" data-mode-day>DAY</span>
+        <span class="text-ink-3" aria-hidden="true">/</span>
+        <span class="text-signal transition-colors" data-mode-night>NIGHT OPS</span>
       </button>
       <a href="#lead-gen" data-sheet-close-link class="inline-flex items-center justify-center h-12 rounded-pill bg-btn text-btn-fg no-underline font-sans text-caption font-medium">
         Request assessment
@@ -181,11 +187,20 @@ const inServices = services.some((s) => isActive(s.href));
 </dialog>
 
 <script>
-  // Theme toggle: DAY OPS / NIGHT OPS
+  // Theme: segmented DAY / NIGHT OPS — the ACTIVE mode is lit in signal,
+  // so state and target are both always visible (a label that read only
+  // the current state made the toggle feel inverted).
   const setLabels = () => {
-    const t = document.documentElement.getAttribute('data-theme');
-    document.querySelectorAll('[data-theme-label]').forEach((el) => {
-      el.textContent = t === 'light' ? 'DAY OPS' : 'NIGHT OPS';
+    const dark = document.documentElement.getAttribute('data-theme') !== 'light';
+    document.querySelectorAll<HTMLElement>('[data-mode-day]').forEach((el) => {
+      el.classList.toggle('text-signal', !dark);
+      el.classList.toggle('text-ink-3', dark);
+      el.textContent = dark ? 'DAY' : 'DAY OPS';
+    });
+    document.querySelectorAll<HTMLElement>('[data-mode-night]').forEach((el) => {
+      el.classList.toggle('text-signal', dark);
+      el.classList.toggle('text-ink-3', !dark);
+      el.textContent = dark ? 'NIGHT OPS' : 'NIGHT';
     });
   };
   setLabels();
