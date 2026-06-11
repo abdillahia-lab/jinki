@@ -2,25 +2,27 @@
   mission.ts — the Mission Player scene. Loaded ONLY via dynamic import
   behind a capability gate (desktop-class, fine pointer, no reduced-motion).
 
-  A procedural low-poly data-center campus in the Intelligence Brief
-  palette: ink world, hairline edges, signal-orange heat. One mission loop:
-    FLY   t 0.00-0.30  aircraft enters on a drawn path, camera settles
-    SEE   t 0.30-0.62  scan cone sweeps the roof, tiles paint ironbow
-    FIND  t 0.62-0.85  three findings flare + leader lines + labels
-    REPORT t 0.85-1.0  camera pulls back, report card collates
-  Driven by scroll progress through the host section; drag orbits ±35°.
+  Art direction: TACTICAL HOLOGRAM. Near-black faces, bright drawn edges
+  (hidden-line look), wireframe perimeter, mono labels, signal-orange heat.
+  The campus reads like a planning-table hologram, not a game prototype.
+
+  Mission loop:
+    FLY    t 0.00-0.30  craft enters on a drawn path, camera settles
+    SEE    t 0.30-0.62  scan cone sweeps; outlined roof cells paint ironbow
+    FIND   t 0.62-0.85  three findings flare + leader lines + labels
+    REPORT t 0.85-1.0   camera pulls back, report card collates
+  Scroll-scrubbed; drag orbits ±35°.
 */
 import * as THREE from 'three';
 
 const INK_BG = 0x0a0a0a;
-const SURFACE = 0x181818;
-const BUILDING = 0x262626;
-const EDGE = 0x4a4a4a;
+const FACE = 0x101010;       // occluding faces, nearly black
+const EDGE = 0x9a9a96;       // drawn lines — the actual geometry read
+const EDGE_DIM = 0x3c3c3a;
 const SIGNAL = 0xff4f00;
 
-// ironbow stops for roof-tile heat (cold -> hot)
 const IRON: [number, THREE.Color][] = [
-  [0.0, new THREE.Color(0x16001f)],
+  [0.0, new THREE.Color(0x1a0526)],
   [0.3, new THREE.Color(0x4a0a6e)],
   [0.55, new THREE.Color(0xa01a78)],
   [0.75, new THREE.Color(0xe05a28)],
@@ -32,10 +34,7 @@ function ironColor(t: number, out: THREE.Color) {
   for (let i = 0; i < IRON.length - 1; i++) {
     const [t0, c0] = IRON[i];
     const [t1, c1] = IRON[i + 1];
-    if (t >= t0 && t <= t1) {
-      out.copy(c0).lerp(c1, (t - t0) / (t1 - t0));
-      return;
-    }
+    if (t >= t0 && t <= t1) { out.copy(c0).lerp(c1, (t - t0) / (t1 - t0)); return; }
   }
   out.copy(IRON[IRON.length - 1][1]);
 }
@@ -51,88 +50,121 @@ export function createMission(canvas: HTMLCanvasElement, labelLayer: HTMLElement
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(INK_BG);
-  scene.fog = new THREE.Fog(INK_BG, 60, 160);
+  scene.fog = new THREE.Fog(INK_BG, 70, 190);
+  const camera = new THREE.PerspectiveCamera(36, 16 / 9, 0.5, 400);
 
-  const camera = new THREE.PerspectiveCamera(38, 16 / 9, 0.5, 400);
-
-  scene.add(new THREE.AmbientLight(0xffffff, 0.9));
-  const key = new THREE.DirectionalLight(0xffffff, 1.5);
-  key.position.set(-30, 50, 20);
-  scene.add(key);
-  const rim = new THREE.DirectionalLight(0x6688ff, 0.25);
-  rim.position.set(40, 20, -30);
-  scene.add(rim);
-
-  /* ---------- ground: plane + mono grid ---------- */
-  const ground = new THREE.Mesh(
-    new THREE.PlaneGeometry(400, 400),
-    new THREE.MeshLambertMaterial({ color: SURFACE })
-  );
-  ground.rotation.x = -Math.PI / 2;
-  scene.add(ground);
-  const grid = new THREE.GridHelper(400, 80, 0x222222, 0x1a1a1a);
-  (grid.material as THREE.Material).transparent = true;
-  (grid.material as THREE.Material).opacity = 0.5;
-  grid.position.y = 0.02;
-  scene.add(grid);
-
-  /* ---------- campus: two halls + plant ---------- */
+  /* ---------- materials (basic — hologram doesn't need lighting) ---------- */
+  const faceMat = new THREE.MeshBasicMaterial({
+    color: FACE, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1,
+  });
   const edgeMat = new THREE.LineBasicMaterial({ color: EDGE });
-  function building(w: number, h: number, d: number, x: number, z: number) {
-    const g = new THREE.BoxGeometry(w, h, d);
-    const m = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ color: BUILDING }));
-    m.position.set(x, h / 2, z);
-    scene.add(m);
-    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(g), edgeMat);
-    edges.position.copy(m.position);
+  const edgeDimMat = new THREE.LineBasicMaterial({ color: EDGE_DIM });
+
+  /* ---------- ground: plane + two-tier grid, radial fade via fog ---------- */
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(420, 420), new THREE.MeshBasicMaterial({ color: 0x0c0c0c }));
+  ground.rotation.x = -Math.PI / 2;
+  ground.position.y = -0.05;
+  scene.add(ground);
+  const gridFine = new THREE.GridHelper(420, 140, 0x161616, 0x141414);
+  gridFine.position.y = 0;
+  scene.add(gridFine);
+  const gridCoarse = new THREE.GridHelper(420, 28, 0x232322, 0x1d1d1c);
+  gridCoarse.position.y = 0.01;
+  scene.add(gridCoarse);
+
+  /* ---------- hologram solids: dark faces + bright edges ---------- */
+  function holo(geo: THREE.BufferGeometry, x: number, y: number, z: number, dim = false) {
+    const mesh = new THREE.Mesh(geo, faceMat);
+    mesh.position.set(x, y, z);
+    scene.add(mesh);
+    const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo, 24), dim ? edgeDimMat : edgeMat);
+    edges.position.copy(mesh.position);
     scene.add(edges);
-    return m;
-  }
-  const hallA = building(36, 7, 16, -6, -4);
-  building(24, 6, 12, 14, 12);          // hall B
-  building(8, 4, 8, -28, 10);           // plant
-  // cooling towers
-  for (let i = 0; i < 3; i++) {
-    const cyl = new THREE.Mesh(
-      new THREE.CylinderGeometry(1.6, 1.8, 3.2, 12),
-      new THREE.MeshLambertMaterial({ color: 0x242424 })
-    );
-    cyl.position.set(-28 + i * 5, 1.6, 17);
-    scene.add(cyl);
+    return mesh;
   }
 
-  /* ---------- roof tiles on hall A (the scan target) ---------- */
+  // Hall A — the scan target (long data hall)
+  holo(new THREE.BoxGeometry(36, 7, 16), -6, 3.5, -4);
+  // Hall B
+  holo(new THREE.BoxGeometry(24, 6, 12), 14, 3, 14);
+  // Plant + cooling
+  holo(new THREE.BoxGeometry(8, 4, 8), -28, 2, 10);
+  for (let i = 0; i < 3; i++) holo(new THREE.CylinderGeometry(1.6, 1.8, 3.2, 10), -28 + i * 5, 1.6, 17, true);
+  // Substation yard (small frames)
+  for (let i = 0; i < 4; i++) holo(new THREE.BoxGeometry(1.4, 2.2, 1.4), 28 + (i % 2) * 4, 1.1, -12 + Math.floor(i / 2) * 4, true);
+
+  // Perimeter fence — wireframe ring (the SECURITY read)
+  const fencePts: THREE.Vector3[] = [];
+  const FENCE: [number, number][] = [[-44, -26], [34, -26], [42, -8], [42, 24], [-20, 30], [-44, 18], [-44, -26]];
+  for (const [x, z] of FENCE) fencePts.push(new THREE.Vector3(x, 0, z), new THREE.Vector3(x, 1.6, z));
+  const fenceGeo = new THREE.BufferGeometry();
+  {
+    const verts: number[] = [];
+    for (let i = 0; i < FENCE.length - 1; i++) {
+      const [x1, z1] = FENCE[i], [x2, z2] = FENCE[i + 1];
+      verts.push(x1, 1.6, z1, x2, 1.6, z2); // top rail
+      verts.push(x1, 0, z1, x1, 1.6, z1);   // post
+    }
+    fenceGeo.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+  }
+  scene.add(new THREE.LineSegments(fenceGeo, edgeDimMat));
+
+  // Road strips
+  for (const [w, d, x, z] of [[120, 4, -10, 26], [4, 56, 38, 0]] as const) {
+    const road = new THREE.Mesh(new THREE.PlaneGeometry(w, d), new THREE.MeshBasicMaterial({ color: 0x121211 }));
+    road.rotation.x = -Math.PI / 2;
+    road.position.set(x, 0.02, z);
+    scene.add(road);
+  }
+
+  /* ---------- roof grid on hall A: outlined cells, ironbow fill ---------- */
   const TX = 12, TZ = 5;
-  const tileGeo = new THREE.BoxGeometry(36 / TX - 0.35, 0.22, 16 / TZ - 0.35);
-  const tileMat = new THREE.MeshBasicMaterial();
-  const tiles = new THREE.InstancedMesh(tileGeo, tileMat, TX * TZ);
+  const CELL_W = 36 / TX, CELL_D = 16 / TZ;
+  const tileGeo = new THREE.PlaneGeometry(CELL_W - 0.3, CELL_D - 0.3);
+  const tiles = new THREE.InstancedMesh(
+    tileGeo,
+    new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.92, side: THREE.DoubleSide }),
+    TX * TZ
+  );
   const tilePos: THREE.Vector3[] = [];
   const dummy = new THREE.Object3D();
-  const cold = new THREE.Color(0x141414);
+  const coldTile = new THREE.Color(0x141414);
   let ti = 0;
   for (let ix = 0; ix < TX; ix++) {
     for (let iz = 0; iz < TZ; iz++) {
-      const x = -6 - 18 + (ix + 0.5) * (36 / TX);
-      const z = -4 - 8 + (iz + 0.5) * (16 / TZ);
-      dummy.position.set(x, 7.13, z);
+      const x = -6 - 18 + (ix + 0.5) * CELL_W;
+      const z = -4 - 8 + (iz + 0.5) * CELL_D;
+      dummy.position.set(x, 7.06, z);
+      dummy.rotation.x = -Math.PI / 2;
       dummy.updateMatrix();
       tiles.setMatrixAt(ti, dummy.matrix);
-      tiles.setColorAt(ti, cold);
-      tilePos.push(new THREE.Vector3(x, 7.13, z));
+      tiles.setColorAt(ti, coldTile);
+      tilePos.push(new THREE.Vector3(x, 7.06, z));
       ti++;
     }
   }
   tiles.instanceColor!.needsUpdate = true;
   scene.add(tiles);
-  // RTU blocks on some tiles
+  // crisp grid lines over the roof
+  {
+    const verts: number[] = [];
+    for (let ix = 0; ix <= TX; ix++) {
+      const x = -24 + ix * CELL_W;
+      verts.push(x, 7.1, -12, x, 7.1, 4);
+    }
+    for (let iz = 0; iz <= TZ; iz++) {
+      const z = -12 + iz * CELL_D;
+      verts.push(-24, 7.1, z, 12, 7.1, z);
+    }
+    const g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.Float32BufferAttribute(verts, 3));
+    scene.add(new THREE.LineSegments(g, edgeDimMat));
+  }
+  // RTU blocks (hologram)
   const rtuIdx = [7, 18, 26, 33, 41, 52];
   for (const i of rtuIdx) {
-    const rtu = new THREE.Mesh(
-      new THREE.BoxGeometry(1.6, 0.9, 1.2),
-      new THREE.MeshLambertMaterial({ color: 0x2a2a2a })
-    );
-    rtu.position.copy(tilePos[i]).y += 0.55;
-    scene.add(rtu);
+    const p = tilePos[i];
+    holo(new THREE.BoxGeometry(1.6, 0.9, 1.2), p.x, p.y + 0.5, p.z, true);
   }
   const exposure = new Float32Array(TX * TZ);
   const FINDINGS = [
@@ -141,61 +173,72 @@ export function createMission(canvas: HTMLCanvasElement, labelLayer: HTMLElement
     { tile: 33, boost: 0.7, label: 'SEV-2 · MOISTURE' },
   ];
 
-  /* ---------- aircraft + path + scan cone ---------- */
+  /* ---------- flight path + craft (delta glyph) + scan ---------- */
   const pathPts: THREE.Vector3[] = [];
   for (let i = 0; i <= 100; i++) {
     const u = i / 100;
-    // approach arc then a lawnmower pass over hall A
     if (u < 0.35) {
       const a = u / 0.35;
-      pathPts.push(new THREE.Vector3(
-        -70 + a * 40, 26 - a * 8, 50 - a * 44
-      ));
+      pathPts.push(new THREE.Vector3(-70 + a * 40, 26 - a * 8, 50 - a * 44));
     } else {
       const s = (u - 0.35) / 0.65;
       const lane = Math.floor(s * 3);
       const lu = (s * 3) % 1;
       const dir = lane % 2 === 0 ? 1 : -1;
-      pathPts.push(new THREE.Vector3(
-        -24 + (dir > 0 ? lu : 1 - lu) * 36,
-        18,
-        -10 + lane * 6
-      ));
+      pathPts.push(new THREE.Vector3(-24 + (dir > 0 ? lu : 1 - lu) * 36, 17, -10 + lane * 6));
     }
   }
   const curve = new THREE.CatmullRomCurve3(pathPts);
   const pathGeo = new THREE.BufferGeometry().setFromPoints(curve.getPoints(220));
-  const pathLine = new THREE.Line(
-    pathGeo,
-    new THREE.LineBasicMaterial({ color: SIGNAL, transparent: true, opacity: 0.55 })
-  );
+  const pathLine = new THREE.Line(pathGeo, new THREE.LineDashedMaterial({
+    color: SIGNAL, dashSize: 1.2, gapSize: 0.8, transparent: true, opacity: 0.85,
+  }));
+  pathLine.computeLineDistances();
   scene.add(pathLine);
   pathGeo.setDrawRange(0, 0);
 
+  // craft: white delta wedge oriented along the path tangent + glow sprite
   const craft = new THREE.Group();
-  const body = new THREE.Mesh(
-    new THREE.SphereGeometry(0.55, 12, 8),
-    new THREE.MeshBasicMaterial({ color: 0xf4f4f2 })
-  );
-  craft.add(body);
-  const beacon = new THREE.PointLight(SIGNAL, 8, 24);
-  craft.add(beacon);
+  const wedge = new THREE.Mesh(new THREE.ConeGeometry(0.7, 2.2, 4), new THREE.MeshBasicMaterial({ color: 0xf4f4f2 }));
+  wedge.rotation.x = Math.PI / 2; // cone +Y -> +Z (forward)
+  craft.add(wedge);
+  const glowTex = (() => {
+    const c = document.createElement('canvas');
+    c.width = c.height = 64;
+    const g = c.getContext('2d')!;
+    const grad = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    grad.addColorStop(0, 'rgba(255,79,0,0.9)');
+    grad.addColorStop(0.4, 'rgba(255,79,0,0.25)');
+    grad.addColorStop(1, 'rgba(255,79,0,0)');
+    g.fillStyle = grad;
+    g.fillRect(0, 0, 64, 64);
+    return new THREE.CanvasTexture(c);
+  })();
+  const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, depthWrite: false }));
+  glow.scale.setScalar(4.5);
+  craft.add(glow);
   scene.add(craft);
 
+  // scan cone + expanding ground ring
   const cone = new THREE.Mesh(
-    new THREE.ConeGeometry(5.2, 12, 24, 1, true),
-    new THREE.MeshBasicMaterial({ color: SIGNAL, transparent: true, opacity: 0.10, side: THREE.DoubleSide, depthWrite: false })
+    new THREE.ConeGeometry(5.2, 10, 24, 1, true),
+    new THREE.MeshBasicMaterial({ color: SIGNAL, transparent: true, opacity: 0.08, side: THREE.DoubleSide, depthWrite: false })
   );
-  cone.rotation.x = Math.PI; // point down
-  scene.add(cone);
+  cone.rotation.x = Math.PI;
   cone.visible = false;
+  scene.add(cone);
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(4.6, 5.0, 40),
+    new THREE.MeshBasicMaterial({ color: SIGNAL, transparent: true, opacity: 0.35, side: THREE.DoubleSide, depthWrite: false })
+  );
+  ring.rotation.x = -Math.PI / 2;
+  ring.visible = false;
+  scene.add(ring);
 
-  /* ---------- finding markers (leader line + HTML label) ---------- */
+  /* ---------- finding markers ---------- */
   const markers = FINDINGS.map((f) => {
     const p = tilePos[f.tile];
-    const lineGeo = new THREE.BufferGeometry().setFromPoints([
-      p.clone(), p.clone().setY(p.y + 7),
-    ]);
+    const lineGeo = new THREE.BufferGeometry().setFromPoints([p.clone(), p.clone().setY(p.y + 7)]);
     const line = new THREE.Line(lineGeo, new THREE.LineBasicMaterial({ color: SIGNAL }));
     line.visible = false;
     scene.add(line);
@@ -207,82 +250,75 @@ export function createMission(canvas: HTMLCanvasElement, labelLayer: HTMLElement
     return { ...f, line, el, anchor: p.clone().setY(p.y + 7.4) };
   });
 
-  /* ---------- camera rig ---------- */
-  let azimuth = 0; // drag offset
-  let dragging = false, lastX = 0;
+  /* ---------- camera rig + drag orbit ---------- */
+  let azimuth = 0, dragging = false, lastX = 0;
   canvas.addEventListener('pointerdown', (e) => { dragging = true; lastX = e.clientX; });
   addEventListener('pointermove', (e) => {
     if (!dragging) return;
-    azimuth += (e.clientX - lastX) * 0.004;
-    azimuth = Math.max(-0.6, Math.min(0.6, azimuth));
+    azimuth = Math.max(-0.6, Math.min(0.6, azimuth + (e.clientX - lastX) * 0.004));
     lastX = e.clientX;
   });
   addEventListener('pointerup', () => { dragging = false; });
 
   const camTarget = new THREE.Vector3(-4, 4, 0);
   function placeCamera(t: number) {
-    // FLY: wide arrival -> SEE: high oblique -> FIND: push in -> REPORT: pull back
     let r: number, h: number, baseAz: number;
-    if (t < 0.3) {
-      const a = t / 0.3;
-      r = 70 - a * 22; h = 34 - a * 10; baseAz = -0.9 + a * 0.5;
-    } else if (t < 0.62) {
-      const a = (t - 0.3) / 0.32;
-      r = 48 - a * 6; h = 24 - a * 2; baseAz = -0.4 + a * 0.25;
-    } else if (t < 0.85) {
-      const a = (t - 0.62) / 0.23;
-      r = 42 - a * 14; h = 22 - a * 8; baseAz = -0.15 + a * 0.2;
-    } else {
-      const a = (t - 0.85) / 0.15;
-      r = 28 + a * 26; h = 14 + a * 16; baseAz = 0.05 + a * 0.25;
-    }
+    if (t < 0.3) { const a = t / 0.3; r = 66 - a * 20; h = 30 - a * 8; baseAz = -0.9 + a * 0.5; }
+    else if (t < 0.62) { const a = (t - 0.3) / 0.32; r = 46 - a * 6; h = 22 - a * 2; baseAz = -0.4 + a * 0.25; }
+    else if (t < 0.85) { const a = (t - 0.62) / 0.23; r = 40 - a * 13; h = 20 - a * 7; baseAz = -0.15 + a * 0.2; }
+    else { const a = (t - 0.85) / 0.15; r = 27 + a * 27; h = 13 + a * 16; baseAz = 0.05 + a * 0.25; }
     const az = baseAz + azimuth;
     camera.position.set(camTarget.x + r * Math.sin(az), h, camTarget.z + r * Math.cos(az));
     camera.lookAt(camTarget);
   }
 
   /* ---------- timeline ---------- */
-  let progress = 0;
-  let currentPhase = -1;
+  let progress = 0, currentPhase = -1;
   let phaseCb: (p: number) => void = () => {};
   const tmpColor = new THREE.Color();
+  const tangent = new THREE.Vector3();
 
   function update() {
     const t = progress;
     const phase = t < 0.3 ? 0 : t < 0.62 ? 1 : t < 0.85 ? 2 : 3;
     if (phase !== currentPhase) { currentPhase = phase; phaseCb(phase); }
 
-    // path draw + craft position
     const pu = Math.min(1, t / 0.62);
     pathGeo.setDrawRange(0, Math.floor(221 * pu));
-    const cp = curve.getPointAt(Math.max(0.001, pu));
+    const u = Math.max(0.001, Math.min(0.999, pu));
+    const cp = curve.getPointAt(u);
     craft.position.copy(cp);
+    curve.getTangentAt(u, tangent);
+    craft.lookAt(cp.clone().add(tangent));
 
-    // scan cone + exposure
     const scanning = t >= 0.3 && t < 0.66;
     cone.visible = scanning;
+    ring.visible = scanning;
     if (scanning) {
-      cone.position.set(cp.x, cp.y - 6, cp.z);
+      cone.position.set(cp.x, cp.y - 5, cp.z);
+      ring.position.set(cp.x, 7.12, cp.z);
+      const pulse = 0.8 + 0.4 * Math.sin(performance.now() / 240);
+      ring.scale.setScalar(pulse);
+      (ring.material as THREE.MeshBasicMaterial).opacity = 0.5 - 0.25 * pulse * 0.5;
       for (let i = 0; i < tilePos.length; i++) {
         const d = Math.hypot(tilePos[i].x - cp.x, tilePos[i].z - cp.z);
         if (d < 5.2) exposure[i] = Math.min(1, exposure[i] + 0.08);
       }
     }
-    // findings flare during FIND
     for (const f of FINDINGS) {
       const flareT = t < 0.62 ? 0 : Math.min(1, (t - 0.62) / 0.1);
       exposure[f.tile] = Math.max(exposure[f.tile], Math.min(1, exposure[f.tile] + flareT * f.boost));
     }
-    // paint tiles
     for (let i = 0; i < tilePos.length; i++) {
       const isFinding = FINDINGS.some((f) => f.tile === i);
       const e = exposure[i];
+      if (e <= 0) continue;
       const heat = isFinding && t >= 0.62 ? Math.min(1, 0.55 + e * 0.45) : e * 0.45;
-      if (e > 0) { ironColor(heat, tmpColor); tiles.setColorAt(i, tmpColor); }
+      ironColor(heat, tmpColor);
+      tiles.setColorAt(i, tmpColor);
     }
     tiles.instanceColor!.needsUpdate = true;
 
-    // markers + labels
     markers.forEach((m, i) => {
       const on = t >= 0.64 + i * 0.05 && t < 0.97;
       m.line.visible = on;
@@ -301,7 +337,7 @@ export function createMission(canvas: HTMLCanvasElement, labelLayer: HTMLElement
   /* ---------- resize + rAF ---------- */
   function resize() {
     const w = canvas.clientWidth, h = canvas.clientHeight;
-    if (w === 0 || h === 0) return;
+    if (!w || !h) return;
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
@@ -310,12 +346,8 @@ export function createMission(canvas: HTMLCanvasElement, labelLayer: HTMLElement
   ro.observe(canvas);
   resize();
 
-  let raf = 0;
-  let running = true;
-  const loop = () => {
-    if (running) update();
-    raf = requestAnimationFrame(loop);
-  };
+  let raf = 0, running = true;
+  const loop = () => { if (running) update(); raf = requestAnimationFrame(loop); };
   raf = requestAnimationFrame(loop);
   const onVis = () => { running = document.visibilityState === 'visible'; };
   document.addEventListener('visibilitychange', onVis);
