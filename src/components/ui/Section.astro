@@ -1,0 +1,43 @@
+---
+/*
+  Section — the page scaffolding. Replaces every per-page
+  "<section><div class=container>" reimplementation.
+*/
+interface Props {
+  id?: string;
+  width?: 'brief' | 'prose' | 'full';
+  tone?: 'default' | 'raised';
+  spacing?: 'default' | 'compact' | 'none';
+  cv?: boolean; // content-visibility for below-fold sections
+  class?: string;
+  label?: string; // aria-label
+}
+
+const {
+  id,
+  width = 'brief',
+  tone = 'default',
+  spacing = 'default',
+  cv = false,
+  class: className = '',
+  label,
+} = Astro.props;
+
+const widths = {
+  brief: 'max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16',
+  prose: 'max-w-prose mx-auto px-5 sm:px-8',
+  full: '',
+};
+const spacings = {
+  default: 'py-section',
+  compact: 'py-block',
+  none: '',
+};
+const tones = { default: '', raised: 'bg-surface-1' };
+---
+
+<section id={id} aria-label={label} class={`${tones[tone]} ${cv ? 'cv-auto' : ''} ${className}`}>
+  <div class={`${widths[width]} ${spacings[spacing]}`}>
+    <slot />
+  </div>
+</section>

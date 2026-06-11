@@ -1,0 +1,37 @@
+---
+/*
+  Button — monochrome pills. The brightest object on a dark page is the
+  button itself; no color, no glow, no lift. Arrow nudges 4px on hover.
+*/
+interface Props {
+  href: string;
+  kind?: 'primary' | 'secondary' | 'ghost';
+  arrow?: boolean;
+  class?: string;
+  id?: string;
+  /** data-event for analytics virtual pageviews */
+  event?: string;
+}
+
+const { href, kind = 'primary', arrow = true, class: className = '', id, event } = Astro.props;
+
+const base =
+  'group inline-flex items-center justify-center gap-2 h-12 px-7 rounded-pill font-sans text-caption font-medium no-underline transition-opacity duration-200 min-w-11';
+const kinds = {
+  primary: 'bg-btn text-btn-fg hover:opacity-90',
+  secondary: 'border border-rule-strong text-ink hover:border-ink',
+  ghost: 'text-ink-2 hover:text-ink link-draw px-2',
+};
+---
+
+<a href={href} id={id} data-event={event} class={`${base} ${kinds[kind]} ${className}`}>
+  <slot />
+  {arrow && (
+    <svg
+      width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"
+      class="transition-transform duration-200 group-hover:translate-x-1"
+    >
+      <path d="M1 7h11M8 2.5 12.5 7 8 11.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  )}
+</a>

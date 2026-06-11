@@ -1,0 +1,92 @@
+---
+/*
+  TelemetryStrip — the Living Instrument (Layer A).
+  Server renders static truths (region, build); client enhances with
+  live UTC, solar scan-window state (computed locally, NOAA math) and
+  field conditions (Open-Meteo, free/keyless, sessionStorage-cached).
+  Honest degradation: if anything fails, static truths remain — nothing
+  fake is ever styled as live.
+*/
+interface Props {
+  /** 'rail' = vertical stack (home hero); 'strip' = horizontal row (footer) */
+  variant?: 'rail' | 'strip';
+  class?: string;
+}
+
+const { variant = 'strip', class: className = '' } = Astro.props;
+const build = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
+---
+
+<div
+  class={`telemetry font-mono text-label uppercase tracking-[0.12em] text-ink-3 ${
+    variant === 'rail'
+      ? 'flex flex-col gap-3'
+      : 'flex flex-wrap items-center gap-x-6 gap-y-2'
+  } ${className}`}
+  data-telemetry
+>
+  <span class="whitespace-nowrap">UTC <span class="text-signal tabular" data-t-utc>--:--:--</span></span>
+  <span class="whitespace-nowrap">MID-ATLANTIC SECTOR</span>
+  <span class="whitespace-nowrap" data-t-scan-wrap hidden>
+    SCAN WINDOW <span class="text-signal" data-t-scan></span>
+  </span>
+  <span class="whitespace-nowrap" data-t-wind-wrap hidden>
+    FIELD WIND <span class="text-signal tabular" data-t-wind></span>
+  </span>
+  <span class="whitespace-nowrap">BUILD <span class="text-signal">{build}</span></span>
+</div>
+
+<script>
+  import { scanWindow, fmtTimeET } from '../../lib/solar';
+
+  function initTelemetry(root: Element) {
+    const utc = root.querySelector('[data-t-utc]');
+    if (utc) {
+      const tick = () => {
+        utc.textContent = new Date().toISOString().slice(11, 19);
+      };
+      tick();
+      setInterval(tick, 1000);
+    }
+
+    // Solar scan window — computed locally, always true.
+    const scanWrap = root.querySelector('[data-t-scan-wrap]') as HTMLElement | null;
+    const scan = root.querySelector('[data-t-scan]');
+    if (scanWrap && scan) {
+      const w = scanWindow();
+      scan.textContent = w.state === 'open' ? `OPEN · ${w.reason}` : `NEXT ${fmtTimeET(w.at)}`;
+      scanWrap.hidden = false;
+    }
+
+    // Field conditions — Open-Meteo, cached 15 min, silent failure.
+    const windWrap = root.querySelector('[data-t-wind-wrap]') as HTMLElement | null;
+    const wind = root.querySelector('[data-t-wind]');
+    if (windWrap && wind) {
+      const KEY = 'jinki-wx';
+      const apply = (kt: number) => {
+        const status = kt <= 17 ? 'OPS NORMAL' : 'HOLD';
+        wind.textContent = `${Math.round(kt)} KT · ${status}`;
+        windWrap.hidden = false;
+      };
+      try {
+        const cached = JSON.parse(sessionStorage.getItem(KEY) || 'null');
+        if (cached && Date.now() - cached.t < 15 * 60 * 1000) {
+          apply(cached.kt);
+          return;
+        }
+      } catch {}
+      fetch('https://api.open-meteo.com/v1/forecast?latitude=39.02&longitude=-77.45&current=wind_speed_10m&wind_speed_unit=kn')
+        .then((r) => r.json())
+        .then((d) => {
+          const kt = d?.current?.wind_speed_10m;
+          if (typeof kt === 'number') {
+            try { sessionStorage.setItem(KEY, JSON.stringify({ t: Date.now(), kt })); } catch {}
+            apply(kt);
+          }
+        })
+        .catch(() => {}); // honest degradation: row stays hidden
+    }
+  }
+
+  document.querySelectorAll('[data-telemetry]').forEach(initTelemetry);
+</script>

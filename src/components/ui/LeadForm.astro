@@ -1,0 +1,143 @@
+---
+/*
+  LeadForm — Track A (assessment request). Two fields, underline inputs,
+  posts to Web3Forms without JS; enhancement renders the filing receipt
+  (D2) with a timestamp-derived reference ID that also routes the
+  founder's inbox via the subject line. Always renders id="lead-gen"
+  (anchor contract — 301 targets depend on it).
+*/
+interface Props {
+  heading?: string;
+  context?: string; // page slug passed through to the founder
+}
+
+const {
+  heading = 'Request a Q3 assessment',
+  context = '',
+} = Astro.props;
+
+const ACCESS_KEY = 'b2bd961c-acf2-48a6-bf10-a5717c2dea95';
+---
+
+<section id="lead-gen" aria-label="Request an assessment" class="scroll-mt-24">
+  <div class="max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16 py-section">
+    <div class="folio-rule rule-draw flex items-baseline justify-between gap-4 pt-3 mb-10">
+      <span class="mono-label text-ink-3"><span class="text-signal">REQ</span>&nbsp;/&nbsp;ASSESSMENT</span>
+      <span class="mono-label text-ink-3">RESPONSE &lt; 1 BUSINESS DAY</span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-10">
+      <div class="lg:col-span-6">
+        <h2 class="text-h2 font-display font-medium text-ink rise">{heading}</h2>
+        <p class="text-lede text-ink-2 mt-4 rise">
+          Two fields. One business day. A mutual NDA before we see your site.
+        </p>
+        <ul class="list-none m-0 p-0 mt-8 flex flex-col gap-2.5">
+          {['Mutual NDA by default', '$5M liability coverage per operation', 'Your data never leaves your control'].map((t) => (
+            <li class="flex items-baseline gap-3 text-caption text-ink-2">
+              <span class="mono-label text-signal" aria-hidden="true">+</span>{t}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="lg:col-span-5 lg:col-start-8">
+        <form
+          action="https://api.web3forms.com/submit"
+          method="POST"
+          class="flex flex-col gap-8"
+          data-lead-form
+        >
+          <input type="hidden" name="access_key" value={ACCESS_KEY} />
+          <input type="hidden" name="subject" value="New Assessment Request — jinki.ai" data-subject />
+          <input type="hidden" name="page" value={context} data-page-field />
+          <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" aria-hidden="true" />
+
+          <label class="block">
+            <span class="mono-label text-ink-3 block mb-2">WORK EMAIL</span>
+            <input
+              type="email" name="email" required autocomplete="email" inputmode="email"
+              class="w-full h-12 bg-transparent border-0 border-b border-rule-strong text-body text-ink focus:border-signal focus:outline-none transition-colors rounded-none"
+            />
+          </label>
+          <label class="block">
+            <span class="mono-label text-ink-3 block mb-2">COMPANY</span>
+            <input
+              type="text" name="company" required autocomplete="organization"
+              class="w-full h-12 bg-transparent border-0 border-b border-rule-strong text-body text-ink focus:border-signal focus:outline-none transition-colors rounded-none"
+            />
+          </label>
+
+          <div>
+            <button
+              type="submit"
+              class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-pill bg-btn text-btn-fg font-sans text-caption font-medium border-0 cursor-pointer hover:opacity-90 transition-opacity min-w-11"
+            >
+              Submit request
+            </button>
+            <p class="text-caption text-ink-3 mt-4 max-w-none">
+              Your request goes directly to our founder — CISSP/CCSP, enterprise security background. No SDRs, no handoffs.
+            </p>
+          </div>
+        </form>
+
+        <!-- Filing receipt (D2) — revealed client-side on success -->
+        <div data-receipt hidden class="border border-rule rounded-panel p-6 bg-surface-1">
+          <p class="mono-label text-signal mb-4 max-w-none">REQUEST FILED</p>
+          <dl class="m-0 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 font-mono text-caption">
+            <dt class="text-ink-3">REF</dt><dd class="m-0 text-ink tabular" data-receipt-ref></dd>
+            <dt class="text-ink-3">FILED</dt><dd class="m-0 text-ink tabular" data-receipt-time></dd>
+            <dt class="text-ink-3">SCOPE</dt><dd class="m-0 text-ink" data-receipt-scope>FACILITY ASSESSMENT</dd>
+            <dt class="text-ink-3">NEXT</dt><dd class="m-0 text-ink">FOUNDER RESPONSE &lt; 1 BUSINESS DAY</dd>
+          </dl>
+          <p class="text-caption text-ink-2 mt-5 max-w-none">
+            Filed directly with Adnan Abdillahi, founder. Keep the reference for your reply.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Enhance: AJAX submit -> render filing receipt; falls back to normal POST.
+  document.querySelectorAll<HTMLFormElement>('[data-lead-form]').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector<HTMLButtonElement>('button[type=submit]');
+      if (btn) { btn.disabled = true; btn.textContent = 'Filing…'; }
+
+      const now = new Date();
+      const ref = `JNK-${now.toISOString().slice(0, 10).replace(/-/g, '')}-${now.toISOString().slice(11, 16).replace(':', '')}Z`;
+      const subj = form.querySelector<HTMLInputElement>('[data-subject]');
+      if (subj) subj.value = `${subj.value} [${ref}]`;
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' },
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        const wrap = form.closest('div');
+        const receipt = wrap?.querySelector<HTMLElement>('[data-receipt]');
+        if (receipt) {
+          const refEl = receipt.querySelector('[data-receipt-ref]');
+          const timeEl = receipt.querySelector('[data-receipt-time]');
+          if (refEl) refEl.textContent = ref;
+          if (timeEl) timeEl.textContent = now.toISOString().slice(0, 16).replace('T', ' ') + 'Z';
+          form.hidden = true;
+          receipt.hidden = false;
+          // Analytics: virtual pageview (Cloudflare Web Analytics)
+          try {
+            const from = location.pathname;
+            history.pushState({}, '', `/events/assessment-submitted?from=${encodeURIComponent(from)}`);
+            history.replaceState({}, '', from);
+          } catch {}
+        }
+      } catch {
+        form.submit(); // graceful: native POST -> Web3Forms hosted success page
+      }
+    });
+  });
+</script>

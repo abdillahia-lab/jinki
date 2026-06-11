@@ -1,0 +1,37 @@
+---
+/*
+  Icon — astro-icon wrapper, build-time inline SVG.
+  Accepts the site's existing snake_case Material Symbols names and maps
+  them to @iconify-json/material-symbols ids. Zero requests, no icon font.
+*/
+import { Icon as Iconify } from 'astro-icon/components';
+
+interface Props {
+  name: string;
+  size?: number;
+  class?: string;
+}
+
+const { name, size = 20, class: className } = Astro.props;
+
+// snake_case → material-symbols kebab id; explicit exceptions first.
+const EXCEPTIONS: Record<string, string> = {
+  dns: 'material-symbols:dns-outline',
+  bolt: 'material-symbols:bolt-outline',
+  shield: 'material-symbols:shield-outline',
+  agriculture: 'material-symbols:agriculture-outline',
+  villa: 'material-symbols:villa-outline',
+  search_insights: 'material-symbols:search-insights',
+  rocket_launch: 'material-symbols:rocket-launch-outline',
+  expand_more: 'material-symbols:expand-more',
+  arrow_forward: 'material-symbols:arrow-forward',
+  arrow_outward: 'material-symbols:arrow-outward',
+  check: 'material-symbols:check',
+  close: 'material-symbols:close',
+  menu: 'material-symbols:menu',
+};
+
+const id = EXCEPTIONS[name] ?? `material-symbols:${name.replace(/_/g, '-')}-outline`;
+---
+
+<Iconify name={id} width={size} height={size} class={className} aria-hidden="true" />

@@ -1,0 +1,49 @@
+---
+/*
+  Accordion — native details/summary, zero JS.
+  Optionally emits FAQPage JSON-LD from the same data.
+*/
+interface Item {
+  q: string;
+  a: string; // may contain inline HTML (links)
+}
+
+interface Props {
+  items: Item[];
+  jsonLd?: boolean;
+  class?: string;
+}
+
+const { items, jsonLd = false, class: className = '' } = Astro.props;
+
+const faqSchema = jsonLd
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: items.map((i) => ({
+        '@type': 'Question',
+        name: i.q,
+        acceptedAnswer: { '@type': 'Answer', text: i.a.replace(/<[^>]+>/g, '') },
+      })),
+    }
+  : null;
+---
+
+{faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+
+<div class={className}>
+  {items.map((item) => (
+    <details class="group folio-rule">
+      <summary class="flex items-baseline justify-between gap-4 py-5 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+        <span class="text-h3 font-display font-medium text-ink">{item.q}</span>
+        <span class="mono-label text-ink-3 transition-colors group-open:text-signal shrink-0" aria-hidden="true">
+          <span class="group-open:hidden">+</span><span class="hidden group-open:inline">−</span>
+        </span>
+      </summary>
+      <div class="pb-6 max-w-prose">
+        <p class="text-body text-ink-2" set:html={item.a} />
+      </div>
+    </details>
+  ))}
+  <div class="folio-rule" aria-hidden="true"></div>
+</div>

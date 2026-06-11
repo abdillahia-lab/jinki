@@ -1,0 +1,100 @@
+---
+/*
+  Base.astro — "The Intelligence Brief" shell.
+  Slim head: 2 font preloads, theme-by-twilight init, OG/JSON-LD.
+  No icon font, no globe textures, no chatbot, no cookie banner,
+  no splash screens — the budget lives here.
+*/
+import '../styles/system.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  jsonLd?: Record<string, any>;
+  noindex?: boolean;
+  /** Folio index shown by Nav/Breadcrumb context, e.g. "03" */
+  folioIndex?: string;
+  /** Force a theme for this page (agriculture defaults light) */
+  theme?: 'dark' | 'light';
+}
+
+const {
+  title = 'Jinki — Aerial Intelligence for Critical Infrastructure',
+  description = 'Every anomaly on your facility — found from the air, ranked by severity, delivered in 48 hours. Aerial thermal inspections that turn into prioritized maintenance work orders.',
+  ogImage = '/images/og-default.png',
+  jsonLd,
+  noindex = false,
+  theme,
+} = Astro.props;
+
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : `https://jinki.ai${ogImage}`;
+const canonicalUrl = new URL(Astro.url.pathname, 'https://jinki.ai').href;
+
+const orgSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Jinki Aerial Intelligence",
+  "url": "https://jinki.ai",
+  "logo": "https://jinki.ai/images/jinki-logo-512.png",
+  "description": "Aerial intelligence for critical infrastructure: radiometric thermal inspection, severity-ranked findings, autonomous monitoring. Mid-Atlantic United States.",
+  "contactPoint": { "@type": "ContactPoint", "contactType": "sales", "email": "info@jinki.ai" },
+  "areaServed": "Mid-Atlantic United States",
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
+    <meta name="author" content="Jinki Aerial Intelligence" />
+    <meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F7F6F3" media="(prefers-color-scheme: light)" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Jinki Aerial Intelligence" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+    <link rel="preload" href="/fonts/SpaceGrotesk-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="alternate" type="application/rss+xml" title="Jinki Blog" href="/rss.xml" />
+
+    <!-- Theme init: stored preference > page-forced > dark (NIGHT OPS) default. -->
+    <script is:inline data-page-theme={theme ?? ''}>
+      (function () {
+        var forced = document.currentScript.getAttribute('data-page-theme');
+        var t = 'dark';
+        try {
+          var saved = localStorage.getItem('jinki-theme');
+          if (saved === 'dark' || saved === 'light') t = saved;
+          else if (forced) t = forced;
+        } catch (e) { if (forced) t = forced; }
+        document.documentElement.setAttribute('data-theme', t);
+      })();
+    </script>
+  </head>
+  <body class="bg-surface-0 text-ink font-sans" data-brief>
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,34 @@
+---
+/*
+  FeatureCard — rule-row, not glass card. Icon optional, mono tag optional.
+  Lives inside CardGrid or any grid; hairline top rule is the structure.
+*/
+import Icon from './Icon.astro';
+
+interface Props {
+  icon?: string;
+  tag?: string;       // mono label above title, e.g. "DETECTION"
+  title: string;
+  body: string;
+  href?: string;
+  class?: string;
+}
+
+const { icon, tag, title, body, href, class: className = '' } = Astro.props;
+const Wrapper = href ? 'a' : 'div';
+---
+
+<Wrapper
+  href={href}
+  class={`folio-rule rule-draw block pt-5 pb-2 no-underline ${href ? 'group transition-colors duration-200 hover:bg-surface-1 px-2 -mx-2' : ''} ${className}`}
+>
+  <div class="flex items-start justify-between gap-3">
+    <div>
+      {tag && <span class="mono-label text-signal block mb-2">{tag}</span>}
+      <h3 class="text-h3 font-display font-medium text-ink mb-2">{title}</h3>
+    </div>
+    {icon && <Icon name={icon} size={22} class="text-ink-3 shrink-0 mt-1" />}
+  </div>
+  <p class="text-body text-ink-2">{body}</p>
+  <slot />
+</Wrapper>

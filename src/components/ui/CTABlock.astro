@@ -1,0 +1,37 @@
+---
+/*
+  CTABlock — mid-page conversion moment. Folio rule, hanging layout:
+  statement left, actions right. Never boxed, never glowing.
+*/
+import Button from './Button.astro';
+
+interface Action {
+  label: string;
+  href: string;
+  kind?: 'primary' | 'secondary' | 'ghost';
+  event?: string;
+}
+
+interface Props {
+  title: string;
+  body?: string;
+  primary: Action;
+  secondary?: Action;
+  class?: string;
+}
+
+const { title, body, primary, secondary, class: className = '' } = Astro.props;
+---
+
+<div class={`folio-rule rule-draw pt-10 md:pt-14 pb-4 grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-8 items-end ${className}`}>
+  <div class="lg:col-span-7">
+    <h2 class="text-h2 font-display font-medium text-ink rise">{title}</h2>
+    {body && <p class="text-lede text-ink-2 mt-4 rise">{body}</p>}
+  </div>
+  <div class="lg:col-span-5 flex flex-wrap items-center gap-3 lg:justify-end rise">
+    <Button href={primary.href} kind={primary.kind ?? 'primary'} event={primary.event}>{primary.label}</Button>
+    {secondary && (
+      <Button href={secondary.href} kind={secondary.kind ?? 'secondary'} event={secondary.event}>{secondary.label}</Button>
+    )}
+  </div>
+</div>

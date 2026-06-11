@@ -1,0 +1,48 @@
+---
+/*
+  Manifest — the signature index table. Replaces card grids.
+  Each row: mono index, display title, one-line description, mono datum.
+  Hover: surface shifts, index turns signal, title slides 8px right.
+*/
+interface Row {
+  index: string;     // "01"
+  title: string;
+  description: string;
+  datum?: string;    // "±0.5°C"
+  href: string;
+}
+
+interface Props {
+  rows: Row[];
+  class?: string;
+}
+
+const { rows, class: className = '' } = Astro.props;
+---
+
+<ul class={`list-none m-0 p-0 ${className}`} role="list">
+  {rows.map((row) => (
+    <li class="folio-rule rule-draw">
+      <a
+        href={row.href}
+        class="group grid grid-cols-[auto_1fr] lg:grid-cols-12 items-baseline gap-x-4 lg:gap-x-6 gap-y-1 py-6 md:py-8 px-2 -mx-2 no-underline transition-colors duration-200 hover:bg-surface-1 focus-visible:bg-surface-1"
+      >
+        <span class="mono-label text-ink-3 transition-colors duration-200 group-hover:text-signal lg:col-span-1 tabular">
+          {row.index}
+        </span>
+        <span class="font-display font-medium text-h2 text-ink transition-transform duration-200 group-hover:translate-x-2 lg:col-span-5">
+          {row.title}
+        </span>
+        <span class="text-body text-ink-2 col-start-2 lg:col-start-7 lg:col-span-4">
+          {row.description}
+        </span>
+        {row.datum && (
+          <span class="mono-label text-ink-3 col-start-2 lg:col-start-11 lg:col-span-2 lg:text-right">
+            {row.datum}
+          </span>
+        )}
+      </a>
+    </li>
+  ))}
+  <li class="folio-rule" aria-hidden="true"></li>
+</ul>

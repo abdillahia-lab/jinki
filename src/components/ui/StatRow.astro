@@ -1,0 +1,69 @@
+---
+/*
+  StatRow — oversized numerals as a typeset table, not a bento.
+  Rule above each row, display-size numeral (ink, never orange),
+  mono unit in signal, label + optional source below.
+*/
+interface Stat {
+  value: string;
+  suffix?: string;
+  label: string;
+  source?: string;
+}
+
+interface Props {
+  stats: Stat[];
+  animate?: boolean;
+  class?: string;
+}
+
+const { stats, animate = true, class: className = '' } = Astro.props;
+---
+
+<dl class={`grid grid-cols-2 lg:grid-cols-4 gap-x-8 ${className}`}>
+  {stats.map((s) => (
+    <div class="folio-rule rule-draw pt-5 pb-2">
+      <dd class="font-display font-medium text-h1 tabular text-ink leading-none" data-count={animate ? s.value : undefined}>
+        {s.value}<span class="font-mono text-h3 text-signal align-baseline ml-0.5">{s.suffix}</span>
+      </dd>
+      <dt class="mono-label text-ink-3 mt-3">{s.label}</dt>
+      {s.source && <p class="text-caption text-ink-3 mt-1.5 max-w-none">{s.source}</p>}
+    </div>
+  ))}
+</dl>
+
+{animate && (
+  <script>
+    // Count-up: 900ms ease-out, fires once at 50% visibility, tabular-safe.
+    const els = document.querySelectorAll<HTMLElement>('[data-count]');
+    if (els.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            io.unobserve(e.target);
+            const el = e.target as HTMLElement;
+            const raw = el.dataset.count || '';
+            const m = raw.match(/^([^0-9]*)([\d,.]+)(.*)$/);
+            if (!m) continue;
+            const [, pre, numStr] = m;
+            const target = parseFloat(numStr.replace(/,/g, ''));
+            if (!isFinite(target)) continue;
+            const dec = (numStr.split('.')[1] || '').length;
+            const t0 = performance.now();
+            const numNode = el.firstChild; // text node before suffix span
+            const step = (t: number) => {
+              const p = Math.min((t - t0) / 900, 1);
+              const v = target * (1 - Math.pow(1 - p, 3));
+              if (numNode) numNode.textContent = pre + v.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+              if (p < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+          }
+        },
+        { threshold: 0.5 }
+      );
+      els.forEach((el) => io.observe(el));
+    }
+  </script>
+)}

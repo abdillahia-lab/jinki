@@ -1,0 +1,33 @@
+---
+/*
+  ProcessTimeline — the pipeline. Horizontal on desktop, vertical stack
+  on mobile, the thermal band as the progress spine. Mono step indices.
+*/
+interface Step {
+  title: string;
+  sub: string;
+  mono?: string; // e.g. "T+0H"
+}
+
+interface Props {
+  steps: Step[];
+  class?: string;
+}
+
+const { steps, class: className = '' } = Astro.props;
+const colClass = { 2: 'md:grid-cols-2', 3: 'md:grid-cols-3', 4: 'md:grid-cols-4' }[Math.min(steps.length, 4) as 2 | 3 | 4] ?? 'md:grid-cols-4';
+---
+
+<ol class={`list-none m-0 p-0 grid grid-cols-1 ${colClass} gap-y-8 md:gap-x-6 relative ${className}`} role="list">
+  <div class="hidden md:block absolute top-0 left-0 right-0 h-0.5 thermal-band" aria-hidden="true"></div>
+  {steps.map((step, i) => (
+    <li class="relative pt-6 md:pt-8 pl-6 md:pl-0 border-l md:border-l-0 border-rule">
+      <div class="md:hidden absolute left-0 top-6 bottom-0 w-0.5 thermal-band" aria-hidden="true" style={i === steps.length - 1 ? 'display:none' : ''}></div>
+      <span class="mono-label text-signal block mb-3 tabular">
+        {String(i + 1).padStart(2, '0')}{step.mono && <span class="text-ink-3"> · {step.mono}</span>}
+      </span>
+      <h3 class="text-h3 font-display font-medium text-ink mb-2">{step.title}</h3>
+      <p class="text-body text-ink-2">{step.sub}</p>
+    </li>
+  ))}
+</ol>

@@ -1,0 +1,396 @@
+/* ============================================================
+   JINKI — "The Intelligence Brief" design system
+   Two voices: the Editor (Space Grotesk, large, calm) and the
+   Instrument (JetBrains Mono, small, signal orange). The Editor
+   makes the claim; the Instrument proves it.
+   Tailwind v4 native — tokens defined in @theme generate utilities.
+   ============================================================ */
+@import "tailwindcss";
+
+/* ---------- Fonts (self-hosted; no icon font — icons are inline SVG) ---------- */
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/SpaceGrotesk-Variable.woff2') format('woff2-variations');
+  font-weight: 300 700;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter-Variable.woff2') format('woff2-variations');
+  font-weight: 300 700;
+  font-display: swap;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');
+  font-weight: 400 700;
+  font-display: swap;
+  font-style: normal;
+}
+/* Fallback metrics — eliminate swap-shift (CLS) */
+@font-face {
+  font-family: 'Space Grotesk Fallback';
+  src: local('Arial');
+  size-adjust: 97%;
+  ascent-override: 98%;
+  descent-override: 29%;
+}
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial');
+  size-adjust: 107%;
+  ascent-override: 90%;
+  descent-override: 22%;
+}
+
+/* ---------- Static tokens → Tailwind utilities ---------- */
+@theme {
+  /* Reset Tailwind default palette/fonts we don't use */
+  --color-*: initial;
+  --font-*: initial;
+  --text-*: initial;
+  --shadow-*: initial;
+
+  /* Families: font-display / font-sans / font-mono */
+  --font-display: 'Space Grotesk', 'Space Grotesk Fallback', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Inter', 'Inter Fallback', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* 8-step fluid type scale — line-height + tracking baked into utilities */
+  --text-label: clamp(0.6875rem, 0.65rem + 0.2vw, 0.78125rem);
+  --text-label--line-height: 1.1;
+  --text-label--letter-spacing: 0.12em;
+  --text-caption: clamp(0.8125rem, 0.79rem + 0.15vw, 0.875rem);
+  --text-caption--line-height: 1.5;
+  --text-body: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  --text-body--line-height: 1.65;
+  --text-lede: clamp(1.125rem, 1.04rem + 0.45vw, 1.375rem);
+  --text-lede--line-height: 1.55;
+  --text-lede--letter-spacing: -0.005em;
+  --text-h3: clamp(1.3125rem, 1.17rem + 0.75vw, 1.75rem);
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.015em;
+  --text-h2: clamp(1.75rem, 1.45rem + 1.6vw, 2.625rem);
+  --text-h2--line-height: 1.08;
+  --text-h2--letter-spacing: -0.03em;
+  --text-h1: clamp(2.375rem, 1.7rem + 3.5vw, 4.25rem);
+  --text-h1--line-height: 1.02;
+  --text-h1--letter-spacing: -0.04em;
+  --text-display: clamp(2.875rem, 1.4rem + 7.5vw, 7rem);
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.045em;
+
+  /* Spacing — dynamic scale (p-1 … p-96) + section rhythm */
+  --spacing: 0.25rem;
+  --spacing-section: clamp(5rem, 3rem + 10vw, 11rem);
+  --spacing-block: clamp(2.5rem, 2rem + 3vw, 5rem);
+
+  /* Radii — panels are sharp-ish, buttons are pills */
+  --radius-panel: 4px;
+  --radius-pill: 999px;
+
+  /* One sanctioned shadow (dropdowns/sheets only) */
+  --shadow-overlay: 0 8px 24px rgb(0 0 0 / 0.4);
+
+  /* Motion */
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Layout */
+  --container-brief: 85rem;     /* 1360px — max-w-brief */
+  --container-prose: 42.5rem;   /* 680px reading column — max-w-prose */
+
+  /* Z ladder */
+  --z-sticky: 40;
+  --z-nav: 50;
+  --z-overlay: 60;
+  --z-modal: 70;
+  --z-skip: 100;
+}
+
+/* ---------- Runtime-switchable semantic colors ----------
+   `inline` emits var() refs so [data-theme] flips them live.
+   Utilities: bg-surface-0..3, text-ink/-2/-3, border-rule/-strong,
+   text-signal, bg-signal, border-signal-dim, bg-btn / text-btn-fg */
+@theme inline {
+  --color-surface-0: var(--surface-0);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-ink: var(--ink-1);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-signal: var(--signal);
+  --color-signal-dim: var(--signal-dim);
+  --color-btn: var(--btn-bg);
+  --color-btn-fg: var(--btn-fg);
+}
+
+/* ---------- Theme values ---------- */
+:root {
+  color-scheme: dark;
+  --surface-0: #0A0A0A;
+  --surface-1: #111111;
+  --surface-2: #181818;
+  --surface-3: #202020;
+  --ink-1: #F4F4F2;
+  --ink-2: rgba(244, 244, 242, 0.66);
+  --ink-3: rgba(244, 244, 242, 0.42);
+  --rule: rgba(244, 244, 242, 0.12);
+  --rule-strong: rgba(244, 244, 242, 0.26);
+  --signal: #FF4F00;
+  --signal-dim: rgba(255, 79, 0, 0.32);
+  --btn-bg: #F4F4F2;
+  --btn-fg: #0A0A0A;
+  /* The only polychrome element — 2-3px strips only */
+  --thermal-ramp: linear-gradient(90deg, #0A0A0A 0%, #2B0B5E 18%, #8B1E9B 38%, #E33F1E 62%, #FF8A00 80%, #FFD24A 92%, #FFF8E0 100%);
+}
+[data-theme="light"] {
+  color-scheme: light;
+  --surface-0: #F7F6F3;
+  --surface-1: #FFFFFF;
+  --surface-2: #EFEDE8;
+  --surface-3: #E7E5DF;
+  --ink-1: #121210;
+  --ink-2: rgba(18, 18, 16, 0.66);
+  --ink-3: rgba(18, 18, 16, 0.42);
+  --rule: rgba(18, 18, 16, 0.14);
+  --rule-strong: rgba(18, 18, 16, 0.30);
+  --signal: #C23A00;
+  --signal-dim: rgba(194, 58, 0, 0.32);
+  --btn-bg: #121210;
+  --btn-fg: #F7F6F3;
+}
+
+/* ---------- Base layer ---------- */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--surface-0);
+    color: var(--ink-1);
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--rule-strong) var(--surface-0);
+    scroll-padding-top: 5rem;
+  }
+  body {
+    min-height: 100dvh;
+    font-size: var(--text-body);
+    line-height: 1.65;
+    text-rendering: optimizeLegibility;
+  }
+  [id] { scroll-margin-top: 5rem; }
+
+  /* Editor voice */
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    color: var(--ink-1);
+    text-wrap: balance;
+  }
+  p { color: var(--ink-2); text-wrap: pretty; max-width: 68ch; }
+  ::marker { color: var(--signal); }
+
+  a { color: inherit; }
+  a, button, [role="button"], input, select, textarea { touch-action: manipulation; }
+  * { -webkit-tap-highlight-color: transparent; }
+
+  img, svg, video { display: block; max-width: 100%; height: auto; }
+
+  :focus-visible {
+    outline: 2px solid var(--signal);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  ::selection { background: var(--signal); color: #0A0A0A; }
+
+  input, select, textarea { accent-color: var(--signal); caret-color: var(--signal); }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--surface-0); }
+  ::-webkit-scrollbar-thumb { background: var(--rule-strong); border-radius: 2px; }
+}
+
+/* ---------- Instrument voice + signature elements ---------- */
+@utility mono-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+@utility tabular { font-variant-numeric: tabular-nums; }
+@utility thermal-band { background: var(--thermal-ramp); }
+@utility folio-rule {
+  border-top: 1px solid var(--rule-strong);
+}
+
+/* ---------- View transitions ---------- */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: 0.25s ease-out both vt-fade-out; }
+::view-transition-new(root) { animation: 0.25s ease-in both vt-fade-in; }
+@keyframes vt-fade-out { to { opacity: 0; } }
+@keyframes vt-fade-in { from { opacity: 0; } }
+::view-transition-old(site-nav), ::view-transition-new(site-nav) { animation: none; }
+::view-transition-group(folio-index) { animation-duration: 0.35s; }
+
+/* ---------- Motion: the document composes itself ----------
+   CSS-only scroll-driven reveals (Chromium). Non-supporting browsers
+   render final state immediately — graceful, zero JS. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .rise {
+      animation: rise-settle 1ms var(--ease-settle) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 30%;
+    }
+    .rise-stagger > * {
+      animation: rise-settle 1ms var(--ease-settle) both;
+      animation-timeline: view();
+    }
+    .rise-stagger > *:nth-child(1) { animation-range: entry 0% entry 28%; }
+    .rise-stagger > *:nth-child(2) { animation-range: entry 4% entry 32%; }
+    .rise-stagger > *:nth-child(3) { animation-range: entry 8% entry 36%; }
+    .rise-stagger > *:nth-child(4) { animation-range: entry 12% entry 40%; }
+    .rise-stagger > *:nth-child(5) { animation-range: entry 16% entry 44%; }
+    .rise-stagger > *:nth-child(6) { animation-range: entry 20% entry 48%; }
+    .rule-draw {
+      transform-origin: left;
+      animation: rule-draw 1ms var(--ease-settle) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+@keyframes rise-settle {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes rule-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Micro-interactions ≤200ms */
+.link-draw {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.2s var(--ease-settle);
+}
+.link-draw:hover, .link-draw:focus-visible { background-size: 100% 1px; }
+
+/* ---------- Annotation system (powers AnnotatedFrame) ---------- */
+.annotation-box {
+  fill: none;
+  stroke: var(--signal-dim);
+  stroke-width: 1.5;
+}
+.annotation-tick { stroke: var(--rule-strong); stroke-width: 1.5; fill: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .annotation-box {
+    stroke-dasharray: var(--box-perimeter, 400);
+    stroke-dashoffset: var(--box-perimeter, 400);
+    animation: box-draw 0.5s var(--ease-settle) forwards;
+    animation-delay: var(--annotation-delay, 0.3s);
+  }
+  .annotation-label {
+    opacity: 0;
+    animation: label-in 0.3s var(--ease-settle) forwards;
+    animation-delay: calc(var(--annotation-delay, 0.3s) + 0.4s);
+  }
+}
+@keyframes box-draw { to { stroke-dashoffset: 0; } }
+@keyframes label-in { to { opacity: 1; } }
+
+/* ---------- Thermal reveal (B1): scan line sweeps, thermal layer follows ---------- */
+.thermal-reveal { position: relative; overflow: hidden; }
+.thermal-reveal .thermal-layer {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 100% 0 0);
+}
+.thermal-reveal .scan-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: var(--signal);
+  box-shadow: 0 0 12px var(--signal-dim);
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .thermal-reveal[data-armed] .thermal-layer { animation: thermal-wipe 1.8s var(--ease-settle) 0.5s forwards; }
+  .thermal-reveal[data-armed] .scan-line { animation: scan-sweep 1.8s var(--ease-settle) 0.5s forwards; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .thermal-reveal .thermal-layer { clip-path: inset(0); }
+}
+@keyframes thermal-wipe { to { clip-path: inset(0 0% 0 0); } }
+@keyframes scan-sweep {
+  0% { left: 0; opacity: 1; }
+  95% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+/* ---------- Content visibility ---------- */
+.cv-auto { content-visibility: auto; contain-intrinsic-size: auto 600px; }
+
+/* ---------- Skip link ---------- */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: var(--z-skip);
+  padding: 0.75rem 1.5rem;
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 0 0 4px 4px;
+  transition: top 0.2s ease;
+}
+.skip-to-content:focus { top: 0; }
+
+/* ---------- Reduced motion: snap to final state ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- High contrast ---------- */
+@media (prefers-contrast: more) {
+  :root { --rule: rgba(244,244,242,0.3); --rule-strong: rgba(244,244,242,0.5); --ink-2: rgba(244,244,242,0.85); }
+  [data-theme="light"] { --rule: rgba(18,18,16,0.3); --rule-strong: rgba(18,18,16,0.5); --ink-2: rgba(18,18,16,0.85); }
+}
+
+/* ---------- Print: every page is a typeset brief (D3) ---------- */
+@media print {
+  :root {
+    --surface-0: #fff; --surface-1: #fff; --surface-2: #fff; --surface-3: #fff;
+    --ink-1: #000; --ink-2: #222; --ink-3: #555;
+    --rule: #ccc; --rule-strong: #888;
+    --signal: #C23A00;
+  }
+  nav, .skip-to-content, [data-sticky-cta], .no-print { display: none !important; }
+  body { font-size: 11pt; }
+  main { padding-top: 0 !important; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 8pt; color: #555; }
+  .thermal-reveal .thermal-layer { clip-path: inset(0); }
+  @page { margin: 18mm 16mm; }
+}

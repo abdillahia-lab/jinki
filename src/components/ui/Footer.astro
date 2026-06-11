@@ -1,0 +1,80 @@
+---
+/*
+  Footer — telemetry strip on the opening rule, four mono-labeled link
+  columns, page-weight stamp slot, thermal band as the closing line.
+*/
+import TelemetryStrip from './TelemetryStrip.astro';
+
+const year = new Date().getFullYear();
+
+const cols = [
+  {
+    label: 'SERVICES',
+    links: [
+      { href: '/services/intelligence-scan', label: 'Intelligence Scan' },
+      { href: '/services/deployment', label: 'Autonomous Deployment' },
+      { href: '/sample-report', label: 'Sample Report' },
+      { href: '/data-security', label: 'Data Security' },
+    ],
+  },
+  {
+    label: 'VERTICALS',
+    links: [
+      { href: '/verticals/data-centers', label: 'Data Centers' },
+      { href: '/verticals/energy-grid', label: 'Energy Grid' },
+      { href: '/verticals/security', label: 'Security' },
+      { href: '/verticals/agriculture', label: 'Agriculture' },
+      { href: '/verticals/real-estate', label: 'Real Estate' },
+    ],
+  },
+  {
+    label: 'COMPANY',
+    links: [
+      { href: '/about', label: 'About' },
+      { href: '/blog', label: 'Blog' },
+      { href: '/faq', label: 'FAQ' },
+      { href: '/careers', label: 'Careers' },
+      { href: '/status', label: 'Status' },
+    ],
+  },
+  {
+    label: 'LEGAL',
+    links: [
+      { href: '/privacy', label: 'Privacy' },
+      { href: '/terms', label: 'Terms' },
+    ],
+  },
+];
+---
+
+<footer class="mt-section">
+  <div class="max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16">
+    <div class="folio-rule pt-4 pb-10">
+      <TelemetryStrip variant="strip" />
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 pb-16">
+      {cols.map((col) => (
+        <div>
+          <p class="mono-label text-ink-3 mb-4">{col.label}</p>
+          <ul class="list-none m-0 p-0 flex flex-col gap-2.5">
+            {col.links.map((l) => (
+              <li>
+                <a href={l.href} class="no-underline text-caption text-ink-2 hover:text-ink transition-colors link-draw">{l.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="folio-rule pt-6 pb-8 flex flex-wrap items-center justify-between gap-4">
+      <p class="mono-label text-ink-3 max-w-none">
+        © {year} JINKI AERIAL INTELLIGENCE · BOOKING Q3 2026 ASSESSMENTS ·
+        <a href="mailto:info@jinki.ai" class="text-ink-2 no-underline hover:text-ink">INFO@JINKI.AI</a>
+      </p>
+      <p class="mono-label text-ink-3 max-w-none" data-page-stamp></p>
+    </div>
+  </div>
+  <div class="h-0.5 thermal-band" aria-hidden="true"></div>
+</footer>

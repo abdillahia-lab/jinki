@@ -1,0 +1,43 @@
+---
+/*
+  SectionHeader — the folio line + hanging header.
+  Every section opens with a full-width hairline rule, a mono index on the
+  left ("02 / VERTICALS") and an optional mono datum on the right.
+  Header text hangs asymmetrically: title cols 1-6, lede cols 8-12.
+*/
+interface Props {
+  index?: string;       // "02"
+  label?: string;       // "VERTICALS"
+  datum?: string;       // "05 SECTORS"
+  title?: string;
+  lede?: string;
+  level?: 1 | 2;
+}
+
+const { index, label, datum, title, lede, level = 2 } = Astro.props;
+const Heading = level === 1 ? 'h1' : 'h2';
+---
+
+<header class="mb-10 md:mb-14">
+  {(index || label || datum) && (
+    <div class="folio-rule rule-draw flex items-baseline justify-between gap-4 pt-3 mb-8 md:mb-12">
+      <span class="mono-label text-ink-3">
+        {index && <span class="text-signal" style="view-transition-name: none;">{index}</span>}
+        {index && label && <span aria-hidden="true">&nbsp;/&nbsp;</span>}
+        {label}
+      </span>
+      {datum && <span class="mono-label text-ink-3">{datum}</span>}
+    </div>
+  )}
+  {title && (
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-5 items-baseline">
+      <Heading class={`rise col-span-1 lg:col-span-6 ${level === 1 ? 'text-h1' : 'text-h2'} font-display`}>
+        {title}
+      </Heading>
+      {lede && (
+        <p class="rise col-span-1 lg:col-span-5 lg:col-start-8 text-lede text-ink-2">{lede}</p>
+      )}
+      <slot name="aside" />
+    </div>
+  )}
+</header>
