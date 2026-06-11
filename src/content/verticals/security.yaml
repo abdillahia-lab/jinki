@@ -1,0 +1,121 @@
+title: Perimeter Security
+index: '03'
+order: 3
+metaTitle: Perimeter Security — Jinki Aerial Intelligence
+metaDescription: Aerial perimeter surveillance and thermal threat detection for critical infrastructure. Autonomous
+  patrol covering 500+ acre perimeters.
+ogImage: /images/og-security-vertical.png
+hero:
+  kicker: PERIMETER SECURITY // MID-ATLANTIC
+  headline: Your perimeter has gaps. <em>We close them.</em>
+  sub: Fixed cameras have blind spots. Guard patrols take minutes. Aerial thermal surveillance covers your entire
+    perimeter in seconds — a force multiplier, not a replacement.
+  datum: <90 S RESPONSE
+frame:
+  caption: FRAME 0241 · DEMONSTRATION ANALYSIS · EAST FENCE LINE
+  alt: Aerial thermal view of a facility perimeter at night, with annotation boxes marking two human heat signatures
+    near the east fence line and a camera coverage gap along the patrol corridor.
+  annotations:
+  - x: 38
+    y: 30
+    w: 12
+    h: 22
+    label: SUBJ-01 · 37.2°C
+    confidence: 0.93
+    labelAt: top
+  - x: 62
+    y: 32
+    w: 12
+    h: 20
+    label: SUBJ-02 · 36.8°C
+    confidence: 0.88
+    labelAt: top
+  - x: 12
+    y: 58
+    w: 24
+    h: 14
+    label: COVERAGE GAP · CAM-07
+    confidence: 0.84
+    labelAt: bottom
+stats:
+- value: '500'
+  suffix: +
+  label: acre perimeter coverage per mission
+  source: Platform Capability
+- value: <90
+  suffix: s
+  label: dock-to-airborne response
+  source: Autonomous Dock Station
+- value: Thermal
+  label: day and night detection capability
+  source: Integrated IR Camera
+- value: 24/7
+  label: persistent autonomous patrol
+  source: Autonomous Platform
+problems:
+- tag: PATROL SPEED
+  title: Guard patrols can't cover large campuses fast enough
+  body: Aerial thermal surveillance covers your entire perimeter in minutes. Threats are detected and verified before
+    ground teams reach the location.
+- tag: BLIND SPOTS
+  title: Fixed cameras have inherent blind spots
+  body: Aerial vantage reduces coverage gaps caused by terrain, structures, and vegetation. Thermal imaging is designed
+    to detect concealed activity that visible cameras miss.
+- tag: FALSE ALARMS
+  title: False alarm response wastes security resources
+  body: Aerial verification classifies alerts before ground teams are dispatched. Real threats get immediate attention
+    while unnecessary responses get filtered out.
+- tag: SCALING COST
+  title: Monitoring costs escalate with facility size
+  body: One aerial system covers more ground than multiple fixed camera installations and guard posts. Scale coverage
+    without scaling headcount.
+capabilities:
+- title: Perimeter Thermal Surveillance
+  body: Complete thermal and HD coverage of your facility perimeter. Identify blind spots, assess coverage gaps,
+    and catch intrusion attempts that fixed cameras miss.
+  datum: 24/7
+- title: Event-Triggered Response
+  body: When sensors detect activity, the autonomous dock station launches aerial assets to verify and classify.
+    Live thermal video streams straight to your SOC.
+  datum: <90 S
+- title: Vulnerability Assessment
+  body: Comprehensive aerial evaluation of your physical security posture. Identifies sight-line gaps, lighting
+    deficiencies, and monitoring blind spots with remediation priorities.
+- title: VMS & Access Control Integration
+  body: Aerial surveillance connects with your existing video management system, access control, and perimeter sensors.
+    A complete alert-response-verify workflow.
+- title: Executive Protection & Events
+  body: Temporary aerial overwatch for high-value events, executive visits, and elevated threat periods. Your security
+    team sees the whole site in real time.
+  datum: 500+ AC
+- title: Post-Incident Documentation
+  body: Rapid aerial documentation of security incidents for investigation, insurance claims, and law enforcement.
+    HD and thermal evidence with GPS-tagged imagery.
+  datum: GPS-TAGGED
+midCta:
+  title: Find the gaps before someone else does.
+  body: Request an aerial vulnerability assessment — sight-line gaps, lighting deficiencies, and monitoring blind
+    spots, mapped with remediation priorities.
+faqs:
+- q: How fast can an aerial unit respond to a perimeter alert?
+  a: The autonomous dock station goes from alert to airborne in under 90 seconds. A full sequence runs from detection
+    to resolution in under two minutes, with every event classified, tracked, and documented automatically.
+- q: Does this replace our guards and cameras?
+  a: No. Aerial surveillance is a force multiplier, not a replacement. It completes your existing security stack
+    with bidirectional integration into CCTV, access control, alarm systems, and SIEM, supporting a full alert-response-verify
+    workflow.
+- q: Can it detect intruders at night?
+  a: Yes. Thermal imaging detects body heat, vehicle signatures, and equipment activity regardless of lighting or
+    visual obstructions. Darkness and concealment become irrelevant when you see heat.
+- q: How much ground can one system cover?
+  a: A single mission covers 500+ acre perimeters, and terrain-aware patrols range across 1,000+ acres at large
+    recreation properties. One aerial system covers more ground than multiple fixed camera installations and guard
+    posts.
+- q: How does aerial verification cut false alarm costs?
+  a: When a sensor trips, an aerial unit verifies and classifies the alert before ground teams are dispatched. Real
+    threats get immediate attention, and false alarms stop consuming your security resources.
+- q: What do we receive after an incident?
+  a: 'Rapid aerial documentation for investigation, insurance claims, and law enforcement: HD and thermal evidence
+    with GPS-tagged imagery. Every engagement also delivers threat classifications, vulnerability findings, and
+    remediation priorities — not raw video feeds.'
+serviceType: Perimeter Security Aerial Monitoring

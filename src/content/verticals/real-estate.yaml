@@ -1,0 +1,123 @@
+title: Real Estate
+index: '05'
+order: 5
+metaTitle: Real Estate — Jinki Aerial Intelligence
+metaDescription: Premium aerial photography for luxury homes, condos, and apartment developments. 4K + hi-res stills,
+  48-hour delivery, FAA Part 107 certified, NDA by default.
+ogImage: /images/og-default.png
+hero:
+  kicker: REAL ESTATE // MID-ATLANTIC
+  headline: Photography for the listings that move. <em>Indoors and up.</em>
+  sub: Luxury homes, condos, and apartment developments across the Mid-Atlantic. When airspace allows, we fly. When
+    it does not — DC SFRA, class-B controlled zones — we deliver gallery-grade interior, lobby, and amenity photography
+    instead. Either way, your listing ships with imagery that matches the price tier.
+  datum: 4K + 45MP
+frame:
+  caption: FRAME 0347 · DEMONSTRATION ANALYSIS · LUXURY RESIDENTIAL
+  alt: Aerial twilight photograph of an illuminated luxury residential property, with annotated shot-planning overlays
+    marking the penthouse terrace, amenity deck, and approach drive.
+  annotations:
+  - x: 12
+    y: 16
+    w: 22
+    h: 16
+    label: PENTHOUSE TERRACE · HERO ANGLE
+    labelAt: top
+    confidence: 0.93
+  - x: 48
+    y: 40
+    w: 20
+    h: 18
+    label: AMENITY DECK · TWILIGHT SET
+    labelAt: top
+    confidence: 0.88
+  - x: 28
+    y: 66
+    w: 24
+    h: 14
+    label: APPROACH DRIVE · SCALE FRAME
+    labelAt: bottom
+    confidence: 0.84
+stats:
+- value: '68'
+  suffix: '%'
+  label: Faster sale for listings with aerial photography
+  source: National Association of Realtors · MLS data analysis
+- value: '48'
+  suffix: HR
+  label: From flight day to edited deliverables, via secure link
+- value: 4K + 45MP
+  label: Cinematic video and hi-res stills — aerial or interior, same craft, same gear
+- value: $5M
+  label: Liability coverage per operation, FAA Part 107 licensed pilot
+problems:
+- tag: DC SFRA
+  title: Controlled airspace grounds the exterior shot.
+  body: Inside the DC Special Flight Rules Area and class-B controlled zones, outdoor flight is often off the table.
+    The lobby, amenity deck, and cityscape-through-windows have to carry the listing instead.
+- tag: RAW DUMPS
+  title: Unretouched stills undercut the price tier.
+  body: A raw dump of unedited frames sells a luxury property short. Every engagement here is shot-listed before
+    the flight, reviewed by the owner or agent, and delivered edited.
+- tag: MLS TIMING
+  title: The listing window does not wait.
+  body: A photography delay pushes the MLS date and stalls the launch. LAANC waivers alone add 5–14 days when the
+    airspace requires one — unless someone files early.
+- tag: WEATHER
+  title: Twilight is a gamble without a plan.
+  body: Blue-hour imagery depends on a sky no one can schedule. Without weather-windowed flights, the twilight shoot
+    becomes a coin flip.
+- tag: CONFIDENTIALITY
+  title: Pre-market listings leak.
+  body: Imagery of an unlisted property circulating early can compromise the launch. Pre-market work stays confidential
+    under NDA by default.
+capabilities:
+- title: Luxury Lobbies & Amenity Spaces
+  body: When the building sits inside DC SFRA or class-B airspace and outdoor flight is off the table, the lobby,
+    amenity deck, spa, and cityscape-through-windows carry the listing. Architectural interior photography, not
+    snapshots.
+  datum: 2–3 HR ON-SITE
+- title: Penthouse & High-Rise Condos
+  body: Cityscape views from inside the unit, plus exterior aerial when airspace permits. Built for pre-sale marketing
+    and resale of top-floor units where the view is the product.
+- title: Luxury Single-Family Estates
+  body: Multi-acre residential properties outside restricted airspace get the full surround — treeline, approach
+    drive, shoreline — at the altitude that makes scale legible.
+  datum: MULTI-ACRE
+- title: Luxury Apartment Communities
+  body: Amenity-deck, pool, and pedestrian-path aerials for leasing marketing, plus architectural interiors of common
+    areas. Delivered as a campaign-ready set with a 30-second social edit.
+  datum: 30-SEC EDIT
+- title: New Construction Marketing
+  body: Pre-listing aerials during final finishing, plus monthly progress flights for developer and lender reporting.
+    Date-stamped chain of custody for closing files.
+  datum: MONTHLY
+- title: Twilight & Blue Hour
+  body: Scheduled weather-windowed flights, or interior lit-for-listing shoots when aerial is not an option. Rescheduling
+    at no charge if the sky does not cooperate.
+midCta:
+  title: Signed Friday. Shot by Tuesday. Delivered by Thursday.
+  body: The flight itself takes less than two hours — the timeline is built so your listing hits MLS the week you
+    planned for it.
+faqs:
+- q: Can you fly inside DC's restricted airspace?
+  a: We are cleared for the Washington DC Special Flight Rules Area and file the FAA paperwork ourselves. LAANC
+    authorization is same-day in most zones; where a Part 107 waiver is needed, it adds 5 to 14 days, and we quote
+    the end-to-end timeline up front. Indoor-only shoots skip airspace planning entirely.
+- q: How fast do you deliver?
+  a: Edited hi-res stills and a 4K video master arrive within 48 hours of the shoot via secure link. The unedited
+    archive is retained for 90 days in case you need a reshoot of a specific angle.
+- q: How long is the shoot itself?
+  a: 45 to 90 minutes for exterior and aerial work, and 2 to 3 hours for interior, lobby, and amenity shoots with
+    proper lighting. We work from a pre-approved shot list at multiple altitudes and angles, signed off before we
+    pack up.
+- q: What if the property cannot be flown at all?
+  a: We deliver gallery-grade interior, lobby, and amenity photography instead — architectural photography, not
+    snapshots — so the listing still ships with imagery that matches the price tier.
+- q: Do you keep pre-market listings confidential?
+  a: Yes. NDA is the default for pre-market listings, and a mutual NDA is available before the first shoot. Every
+    operation carries $5M in liability coverage, with proof available on request.
+- q: What happens if weather ruins a twilight shoot?
+  a: Twilight and blue-hour flights are scheduled in weather windows, and we reschedule at no charge if the sky
+    does not cooperate.
+serviceType: Real Estate Aerial Photography

@@ -1,0 +1,159 @@
+---
+/*
+  Vertical brief template — one template, five sectors.
+  Uniqueness comes from data (copy, annotations), imagery (visible/thermal
+  pairs per slug), and theme (agriculture runs on paper). Never forks.
+*/
+import type { ImageMetadata } from 'astro';
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/ui/Nav.astro';
+import Footer from '../../components/ui/Footer.astro';
+import Section from '../../components/ui/Section.astro';
+import SectionHeader from '../../components/ui/SectionHeader.astro';
+import Button from '../../components/ui/Button.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import StatRow from '../../components/ui/StatRow.astro';
+import Accordion from '../../components/ui/Accordion.astro';
+import CTABlock from '../../components/ui/CTABlock.astro';
+import LeadForm from '../../components/ui/LeadForm.astro';
+import AnnotatedFrame from '../../components/ui/AnnotatedFrame.astro';
+
+import dcVisible from '../../assets/images/dc-rooftop-aerial.webp';
+import dcThermal from '../../assets/images/dc-rooftop-aerial-thermal.webp';
+import energyVisible from '../../assets/images/energy-powerlines.jpg';
+import energyThermal from '../../assets/images/energy-powerlines-thermal.webp';
+import securityVisible from '../../assets/images/facility-night-aerial.webp';
+import securityThermal from '../../assets/images/facility-night-aerial-thermal.webp';
+import agVisible from '../../assets/images/agriculture-fields.jpg';
+import agThermal from '../../assets/images/agriculture-fields-thermal.webp';
+import reVisible from '../../assets/images/luxury-lobby.webp';
+
+export async function getStaticPaths() {
+  const verticals = await getCollection('verticals');
+  return verticals.map((v) => ({ params: { slug: v.id }, props: { vertical: v } }));
+}
+
+const { vertical } = Astro.props;
+const d = vertical.data;
+
+const FRAMES: Record<string, { visible: ImageMetadata; thermal?: ImageMetadata }> = {
+  'data-centers': { visible: dcVisible, thermal: dcThermal },
+  'energy-grid': { visible: energyVisible, thermal: energyThermal },
+  'security': { visible: securityVisible, thermal: securityThermal },
+  'agriculture': { visible: agVisible, thermal: agThermal },
+  'real-estate': { visible: reVisible },
+};
+const frame = FRAMES[vertical.id];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: d.metaTitle,
+  provider: { '@type': 'Organization', name: 'Jinki Aerial Intelligence' },
+  description: d.metaDescription,
+  areaServed: 'Mid-Atlantic United States',
+  serviceType: d.serviceType,
+};
+---
+
+<Base title={d.metaTitle} description={d.metaDescription} ogImage={d.ogImage} jsonLd={jsonLd} theme={d.theme}>
+  <Nav />
+  <Breadcrumb items={[{ label: 'Verticals', href: '/#verticals' }, { label: d.title }]} />
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section aria-label={d.title} class="pt-8 md:pt-12">
+      <div class="max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16">
+        <div class="folio-rule rule-draw flex items-baseline justify-between gap-4 pt-3 mb-10">
+          <span class="mono-label text-ink-3"><span class="text-signal">{d.index}</span>&nbsp;/&nbsp;{d.hero.kicker}</span>
+          <span class="mono-label text-ink-3">{d.hero.datum}</span>
+        </div>
+        <h1 class="text-h1 font-display font-medium text-ink max-w-[18ch] rise" set:html={d.hero.headline} />
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-6 mt-8">
+          <p class="text-lede text-ink-2 lg:col-span-7 rise">{d.hero.sub}</p>
+          <div class="lg:col-span-4 lg:col-start-9 flex flex-wrap items-start gap-3 lg:justify-end rise">
+            <Button href="#lead-gen" event={`cta-assessment:hero-${vertical.id}`}>Request Q3 assessment</Button>
+          </div>
+        </div>
+        <div class="mt-12 md:mt-16">
+          <AnnotatedFrame
+            image={frame.visible}
+            thermalImage={frame.thermal}
+            alt={d.frame.alt}
+            annotations={d.frame.annotations}
+            meta={{ caption: d.frame.caption }}
+            loading="eager"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <Section label="Key figures" spacing="compact" class="mt-8">
+      <StatRow stats={d.stats} />
+    </Section>
+
+    <!-- PROBLEMS -->
+    <Section label="Failure modes" cv>
+      <SectionHeader
+        index="01" label="FAILURE MODES" datum={`${String(d.problems.length).padStart(2, '0')} NAMED`}
+        title="What goes wrong here."
+        lede="Every sector fails in specific, nameable ways. These are the ones we scan for."
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+        {d.problems.map((p) => (
+          <div class="folio-rule rule-draw pt-5 pb-6">
+            <span class="mono-label text-signal block mb-2">{p.tag}</span>
+            <h3 class="text-h3 font-display font-medium text-ink mb-2">{p.title}</h3>
+            <p class="text-body text-ink-2">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+
+    <!-- CAPABILITIES -->
+    <Section label="Capabilities" cv>
+      <SectionHeader
+        index="02" label="CAPABILITIES" datum="WHAT WE DELIVER"
+        title="What the scan finds."
+      />
+      <ul class="list-none m-0 p-0">
+        {d.capabilities.map((c, i) => (
+          <li class="folio-rule rule-draw">
+            <div class="grid grid-cols-[auto_1fr] lg:grid-cols-12 items-baseline gap-x-4 lg:gap-x-6 gap-y-1 py-5">
+              <span class="mono-label text-ink-3 tabular lg:col-span-1">{String(i + 1).padStart(2, '0')}</span>
+              <span class="font-display font-medium text-h3 text-ink lg:col-span-4">{c.title}</span>
+              <span class="text-body text-ink-2 col-start-2 lg:col-start-6 lg:col-span-5">{c.body}</span>
+              {c.datum && <span class="mono-label text-ink-3 col-start-2 lg:col-start-11 lg:col-span-2 lg:text-right">{c.datum}</span>}
+            </div>
+          </li>
+        ))}
+        <li class="folio-rule" aria-hidden="true"></li>
+      </ul>
+    </Section>
+
+    <!-- MID CTA -->
+    <Section label="Engage" spacing="compact">
+      <CTABlock
+        title={d.midCta.title}
+        body={d.midCta.body}
+        primary={{ label: 'Request Q3 assessment', href: '#lead-gen', event: `cta-assessment:mid-${vertical.id}` }}
+        secondary={{ label: 'See the sample report', href: '/sample-report', kind: 'secondary', event: `cta-sample:mid-${vertical.id}` }}
+      />
+    </Section>
+
+    <!-- FAQ -->
+    <Section label="Questions" cv>
+      <SectionHeader
+        index="03" label="QUESTIONS" datum={`${String(d.faqs.length).padStart(2, '0')} ANSWERED`}
+        title="Asked before engaging."
+      />
+      <Accordion items={d.faqs} jsonLd />
+    </Section>
+
+    <LeadForm context={`/verticals/${vertical.id}`} />
+
+  </main>
+  <Footer />
+</Base>

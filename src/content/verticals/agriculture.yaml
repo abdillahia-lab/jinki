@@ -1,0 +1,110 @@
+title: Agriculture
+index: '04'
+order: 4
+theme: light
+metaTitle: Agriculture — Jinki Aerial Intelligence
+metaDescription: 'Precision agriculture intelligence: crop stress detection, irrigation analysis, and yield forecasting
+  from aerial thermal data.'
+ogImage: /images/og-agriculture.png
+hero:
+  kicker: AGRICULTURE // MID-ATLANTIC
+  headline: Your fields are telling you something. <em>Now you can listen.</em>
+  sub: Thermal aerial intelligence replaces weeks of manual scouting with field-level crop stress maps, irrigation
+    prescriptions, and yield intelligence across your entire operation.
+  datum: 1,000+ AC
+frame:
+  caption: FRAME 0467 · DEMONSTRATION ANALYSIS · IRRIGATED ROW CROP
+  alt: Aerial view of irrigated row-crop fields with thermal analysis overlays marking moisture stress zones, an
+    irrigation gap, and a low canopy-health zone
+  annotations:
+  - x: 14
+    y: 42
+    w: 22
+    h: 18
+    label: MOISTURE STRESS · ZONE B4
+    labelAt: top
+    confidence: 0.91
+  - x: 58
+    y: 18
+    w: 17
+    h: 14
+    label: IRRIGATION GAP · ROW 06
+    labelAt: bottom
+    confidence: 0.86
+  - x: 38
+    y: 60
+    w: 15
+    h: 12
+    label: CANOPY INDEX 0.42
+    labelAt: top
+    confidence: 0.88
+stats:
+- value: '0.1'
+  suffix: m
+  label: Spatial resolution
+- value: 1,000
+  suffix: +
+  label: Acres covered per mission
+- value: Thermal
+  label: Crop stress & irrigation analysis
+- value: AI
+  label: Anomaly detection & classification
+problems:
+- tag: SCOUTING
+  title: Manual scouting can't keep up
+  body: Walking fields takes weeks and only samples where you happen to look. One thermal mission maps stress across
+    1,000+ acres at 0.1m resolution.
+- tag: MOISTURE
+  title: Irrigation problems hide in the canopy
+  body: Irrigation inefficiencies, drainage problems, and canopy temperature anomalies are invisible to the eye.
+    Temperature differential analysis exposes them across every field.
+- tag: PEST PRESSURE
+  title: Pests and disease show up late
+  body: By the time damage is visible from the ground, it has already spread. AI anomaly detection flags pest and
+    disease activity from weekly thermal scans.
+- tag: YIELD
+  title: Harvest timing runs on gut feel
+  body: Without field-level data, yield forecasting and harvest planning default to guesswork. Variable-rate prescription
+    maps make the call data-driven.
+capabilities:
+- title: Thermal crop stress mapping
+  datum: 0.1 M
+  body: Thermal imaging identifies irrigation irregularities, crop stress patterns, and drainage issues through
+    temperature differential analysis across fields.
+- title: Irrigation & drainage analysis
+  body: Distribution uniformity analysis reveals irrigation inefficiencies and drainage problems invisible to the
+    eye. Zone-level moisture alerts tell you exactly where to act.
+- title: Pest & disease early detection
+  datum: 4–8 FLIGHTS/MO
+  body: Weekly thermal crop health scans in peak season catch pest and disease anomalies early. AI classification
+    turns detections into actionable alerts.
+- title: Yield intelligence & prescription maps
+  body: Fall scans feed yield forecasting, harvest planning, and variable-rate prescription maps. Machine learning
+    synthesizes every data layer into zone-level recommendations your agronomist can act on immediately.
+- title: Season-over-season intelligence
+  datum: 4 SEASONS
+  body: Coverage runs from pre-plant soil moisture mapping in spring to drainage and erosion mapping in winter.
+    The data history compounds in value year over year.
+midCta:
+  title: Your operation. Your intelligence plan.
+  body: Tell us about your acreage, crops, and challenges — we'll design an aerial intelligence approach tailored
+    to your operation.
+faqs:
+- q: How much area can one mission cover?
+  a: A single mission covers more than 1,000 acres at 0.1-meter spatial resolution, producing field-level stress
+    maps for your entire operation.
+- q: What does thermal imaging find that scouting misses?
+  a: Irrigation inefficiencies, drainage problems, and canopy temperature anomalies that are invisible to the eye.
+    Temperature differentials reveal crop stress before it shows visually.
+- q: How often do you fly during the growing season?
+  a: Active monitoring in summer runs four to eight flights per month for weekly thermal crop health scans. Cadence
+    adjusts by season — pre-plant soil moisture mapping in spring, yield forecasting in fall, cover crop and drainage
+    assessment in winter.
+- q: What do I actually receive after a flight?
+  a: A field health dashboard with zone-level scores, trend analysis, and actionable alerts, plus variable-rate
+    prescription maps your agronomist can act on immediately. No interpretation required.
+- q: Does the data stay useful after harvest?
+  a: Yes. Fall scans support yield forecasting and harvest planning, winter scans cover drainage, erosion, and cover
+    crop assessment, and season-over-season trend reports build a data history that compounds in value year over
+    year.
+serviceType: Precision Agriculture Aerial Intelligence

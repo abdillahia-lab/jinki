@@ -1,0 +1,132 @@
+title: Data Centers
+index: '01'
+order: 1
+metaTitle: Data Centers — Jinki Aerial Intelligence
+metaDescription: Aerial thermal intelligence for data centers. Detect cooling failures, roof damage, and structural
+  risks before they cause downtime.
+ogImage: /images/og-data-centers.png
+hero:
+  kicker: DATA CENTERS // NOVA CORRIDOR
+  headline: Find the hidden problem <em>before the outage</em>.
+  sub: Aerial thermal intelligence that turns invisible risks into scheduled maintenance. Every rooftop system surveyed,
+    classified, and prioritized within 48 hours.
+  datum: ±0.5°C
+frame:
+  caption: FRAME 0147 · DEMONSTRATION ANALYSIS · ROOFTOP HVAC ARRAY
+  alt: Aerial view of a data center rooftop showing HVAC arrays and mechanical equipment, overlaid with thermal
+    annotation boxes marking demonstration findings
+  annotations:
+  - x: 14
+    y: 20
+    w: 22
+    h: 16
+    label: HVAC-07 · DELTA-T +9.4°C
+    labelAt: top
+    confidence: 0.93
+  - x: 48
+    y: 46
+    w: 18
+    h: 14
+    label: MOISTURE · SECTION R-12
+    labelAt: bottom
+    confidence: 0.87
+  - x: 66
+    y: 14
+    w: 13
+    h: 12
+    label: XFMR T-3 · +2.1°C/WK
+    labelAt: top
+    confidence: 0.84
+stats:
+- value: '29'
+  suffix: '%'
+  label: of unplanned outages are thermal failures
+  source: Uptime Institute
+- value: $9K
+  label: per minute average downtime cost
+  source: Ponemon Institute
+- value: '575'
+  suffix: +
+  label: facilities in Northern Virginia alone
+  source: JLARC 2024
+- value: '13'
+  suffix: '%'
+  label: of global capacity in our backyard
+  source: CBRE Research
+problems:
+- tag: HVAC CASCADE
+  title: HVAC Failure
+  body: Aerial thermal imaging identifies failing compressors, blocked condensers, and refrigerant leaks across
+    rooftop HVAC arrays. Pattern recognition flags units operating outside thermal envelopes weeks before total
+    failure.
+- tag: MOISTURE
+  title: Roof Moisture Intrusion
+  body: Thermal differentials reveal trapped moisture beneath roofing membranes that visual inspection cannot detect.
+    Post-sunset surveys map affected square footage for targeted repair before water reaches critical infrastructure
+    below.
+- tag: ELECTRICAL
+  title: Electrical Hot Spots
+  body: External switchgear, transformers, and bus connections emit thermal signatures as connections degrade. Aerial
+    surveys cover entire electrical infrastructure in minutes, with findings classified to NFPA 70B severity levels.
+- tag: LIQUID COOLING
+  title: Liquid Cooling Infrastructure
+  body: As rack densities push beyond 40kW toward 140kW+ for AI workloads, liquid cooling brings new failure modes
+    — micro-leaks at manifold connections, quick-disconnect fittings, and CDU piping. Aerial thermal imaging detects
+    these anomalies across exterior cooling loops before a single leak becomes a cascade failure.
+- tag: MEMBRANE
+  title: Membrane Degradation
+  body: High-resolution visual and thermal imaging identifies UV degradation, seam failures, and mechanical damage
+    across roofing membranes. AI-generated heatmaps prioritize sections by remaining service life.
+- tag: BACKUP SYSTEMS
+  title: Equipment Overheating
+  body: Exterior thermal signatures from generators, UPS housings, and fuel systems reveal internal stress conditions.
+    Trend analysis across autonomous missions tracks degradation velocity before emergency conditions develop.
+capabilities:
+- title: Radiometric Thermal Mapping
+  datum: ±0.5°C
+  body: Full rooftop arrays surveyed in a single pass with 0.5°C thermal sensitivity — precise enough to detect
+    early-stage degradation. Units operating outside their thermal envelopes are flagged weeks before failure.
+- title: NFPA 70B Severity Classification
+  datum: NFPA 70B
+  body: Electrical findings classified using NFPA 70B severity levels, giving your maintenance team a standards-based
+    priority list. Deliverables also align with ASHRAE temperature monitoring guidelines.
+- title: 48-Hour Intelligence Report
+  datum: 48 HR
+  body: Georeferenced thermal and visual imagery, severity rankings, and recommended next steps delivered within
+    48 hours of the mission. Includes an executive summary suitable for leadership and insurance stakeholders.
+- title: Post-Sunset Moisture Surveys
+  body: Thermal surveys after sunset exploit differential cooling rates between wet and dry insulation to find sub-surface
+    moisture. Severity is classified and affected square footage mapped for targeted remediation.
+- title: Autonomous Thermal Trending
+  datum: 150–200 MISSIONS/MO
+  body: A permanently stationed aerial platform conducts 150-200 scheduled missions per month from an on-site dock.
+    Trend analysis detects degradation velocity over time — not just current state.
+- title: Zero-Disruption Operations
+  body: All inspections are conducted externally — rooftops, perimeters, and mechanical equipment areas. No roof
+    access, no IT coordination, no impact on interior operations.
+midCta:
+  title: One day of flight. Every hidden risk, ranked.
+  body: A typical data center campus is surveyed in a single day of aerial operations, with prioritized findings
+    delivered within 48 hours.
+faqs:
+- q: How long does a full facility assessment take?
+  a: A typical data center campus can be surveyed in a single day of aerial operations. The prioritized findings
+    report includes severity rankings and recommended next steps. Turnaround depends on facility size and scope
+    — contact us for specifics.
+- q: Do aerial operations disrupt data center operations?
+  a: No. All inspections are conducted externally — from rooftops, perimeters, and mechanical equipment areas. There
+    is zero impact on interior operations, no roof access required, and no coordination needed with IT teams.
+- q: What compliance requirements do your inspections satisfy?
+  a: Our thermal inspections align with NFPA 70B electrical maintenance requirements, ASHRAE temperature monitoring
+    guidelines, and support environmental compliance documentation. Each deliverable maps findings to relevant standards.
+- q: How does autonomous monitoring differ from a one-time assessment?
+  a: Autonomous monitoring uses a permanently stationed aerial platform with an on-site dock that conducts 150-200
+    scheduled missions per month. This enables thermal trend analysis over time — detecting degradation velocity,
+    not just current state.
+- q: What is included in the findings report?
+  a: Every report includes georeferenced thermal and visual imagery, severity classifications, priority rankings,
+    recommended next steps, and an executive summary suitable for leadership and insurance stakeholders.
+- q: How do you handle data security for sensitive facilities?
+  a: All data is encrypted in transit and at rest using AES-256 and TLS 1.3, with SOC 2 Type I preparation underway.
+    Data is purged according to your retention policy, and we execute NDAs and security agreements before any engagement.
+serviceType: Data Center Aerial Thermal Inspection

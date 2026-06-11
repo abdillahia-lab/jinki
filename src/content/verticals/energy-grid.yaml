@@ -1,0 +1,116 @@
+title: Energy & Grid
+index: '02'
+order: 2
+metaTitle: Energy & Grid — Jinki Aerial Intelligence
+metaDescription: Predictive aerial intelligence for power lines, solar farms, and substations. Severity-ranked findings
+  within 48 hours across 50+ mile corridors.
+ogImage: /images/og-energy-grid.png
+hero:
+  kicker: ENERGY & GRID // MID-ATLANTIC
+  headline: Find the failing component <em>before the outage finds you</em>.
+  sub: Towers, lines, solar farms, and substations — inspected across 50+ mile corridors per mission. Severity-ranked
+    findings before degradation becomes downtime.
+  datum: 50+ MI/MISSION
+frame:
+  caption: FRAME 0347 · DEMONSTRATION ANALYSIS · TRANSMISSION CORRIDOR
+  alt: Aerial view of high-voltage transmission lines and lattice towers crossing open terrain, with thermal analysis
+    overlays marking a hot connection point, a vegetation clearance violation, and a contaminated insulator.
+  annotations:
+  - x: 38
+    y: 22
+    w: 16
+    h: 14
+    label: HOT JOINT · DELTA-T +12.4°C
+    labelAt: top
+    confidence: 0.93
+  - x: 12
+    y: 55
+    w: 22
+    h: 18
+    label: VEGETATION · 2.1 M CLEARANCE
+    labelAt: bottom
+    confidence: 0.88
+  - x: 60
+    y: 35
+    w: 14
+    h: 12
+    label: INSULATOR · CONTAMINATION
+    labelAt: top
+    confidence: 0.84
+stats:
+- value: '50'
+  suffix: + mi
+  label: corridor coverage per mission
+  source: Platform Capability
+- value: '0.5'
+  suffix: °C
+  label: thermal detection sensitivity
+  source: Radiometric Thermal Sensor
+- value: '48'
+  suffix: hr
+  label: findings report turnaround
+  source: Service Commitment
+- value: 3D
+  label: sub-meter clearance mapping
+  source: 3D Spatial Intelligence
+problems:
+- tag: STALE CYCLES
+  title: Six-month inspection gaps
+  body: Manual crews on foot or in helicopters leave months between inspections. Assets sit unmonitored while defects
+    develop.
+- tag: COST
+  title: High per-tower costs
+  body: Helicopter time, crew mobilization, traffic management, and equipment shutdowns make traditional inspection
+    expensive.
+- tag: REACTIVE
+  title: Failures found after the outage
+  body: Defects surface only once the lights go out. Emergency repairs cost 4 to 8 times more than planned maintenance.
+- tag: PAPER TRAIL
+  title: Reports that arrive too late
+  body: Handwritten notes, inconsistent grading, and weeks of delay before findings reach maintenance teams.
+capabilities:
+- title: Vegetation Encroachment
+  datum: SUB-METER
+  body: Precision-measured clearance violations along rights-of-way. Sub-meter accuracy identifies encroachment
+    before contact events.
+- title: Insulator Damage
+  datum: 80 M STANDOFF
+  body: Cracked, chipped, or contaminated insulators detected via high-resolution visual and thermal contrast analysis.
+    Crack and chip detection resolves from an 80 m standoff.
+- title: Hot Joints & Connections
+  datum: ΔT +10°C
+  body: Thermal anomalies at splice points, connectors, and bolted joints. Temperature differentials flagged at
+    10°C above ambient.
+- title: Conductor Sag
+  body: Precision-derived sag measurements compared against design clearances. Identifies overloaded spans and thermal
+    elongation.
+- title: Corrosion & Wear
+  body: Surface degradation on towers, hardware, and conductors. AI-assisted detection of rust patterns and material
+    loss.
+- title: Lightning & Storm Damage
+  datum: 48 HR REPORT
+  body: Post-event rapid assessment of arc marks, shattered insulators, bent crossarms, and conductor displacement.
+midCta:
+  title: Stop inspecting on a six-month cycle.
+  body: One aerial mission covers 50+ miles of corridor and returns severity-ranked findings within 48 hours.
+faqs:
+- q: How much corridor can one mission cover?
+  a: A single mission inspects 50 or more miles of transmission corridor, capturing thermal, visual, and 3D spatial
+    data simultaneously — no second passes, no data gaps.
+- q: Do assets need to be de-energized for inspection?
+  a: No. Inspection is fully non-contact, so lines stay energized and customers stay connected. No shutdowns, no
+    road closures, no service interruptions.
+- q: What defects can you detect?
+  a: 'Six failure modes are identified and severity-ranked on every flight: vegetation encroachment, insulator damage,
+    hot joints and connections, conductor sag, corrosion and wear, and lightning or storm damage.'
+- q: How sensitive is the thermal detection?
+  a: Radiometric thermal imaging resolves temperature differences of 0.5°C across a -20°C to 150°C range. Connection-point
+    differentials are flagged at 10°C above ambient.
+- q: What do the deliverables look like?
+  a: Severity-ranked findings with GPS coordinates, component IDs, thermal data, clearance measurements, remediation
+    recommendations, and estimated repair costs — delivered within 48 hours. Your crews get prioritized work orders,
+    not raw data.
+- q: Why does predictive inspection matter financially?
+  a: Emergency repairs cost 4 to 8 times more than planned maintenance. Identifying failing components months before
+    an outage converts emergency spend into scheduled work.
+serviceType: Energy Grid Aerial Infrastructure Inspection

@@ -46,7 +46,7 @@ const { stats, animate = true, class: className = '' } = Astro.props;
             const raw = el.dataset.count || '';
             const m = raw.match(/^([^0-9]*)([\d,.]+)(.*)$/);
             if (!m) continue;
-            const [, pre, numStr] = m;
+            const [, pre, numStr, post] = m;
             const target = parseFloat(numStr.replace(/,/g, ''));
             if (!isFinite(target)) continue;
             const dec = (numStr.split('.')[1] || '').length;
@@ -55,7 +55,7 @@ const { stats, animate = true, class: className = '' } = Astro.props;
             const step = (t: number) => {
               const p = Math.min((t - t0) / 900, 1);
               const v = target * (1 - Math.pow(1 - p, 3));
-              if (numNode) numNode.textContent = pre + v.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+              if (numNode) numNode.textContent = pre + v.toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + post;
               if (p < 1) requestAnimationFrame(step);
             };
             requestAnimationFrame(step);
