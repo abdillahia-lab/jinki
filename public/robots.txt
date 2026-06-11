@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /_astro/
-Disallow: /docs/jinki-security-brief.pdf
+Disallow: /docs/
 Disallow: /embodied-ai
 
 Sitemap: https://jinki.ai/sitemap-index.xml

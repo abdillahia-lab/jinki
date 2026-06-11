@@ -1,0 +1,276 @@
+---
+/*
+  /sample-report — Track B (research-stage funnel) + Scope Composer (D1).
+  Methodology transparency IS the trust artifact: what a report contains,
+  how findings are ranked, watermarked ILLUSTRATIVE throughout.
+  Composer composes scope (never ROI) and pre-fills the form.
+*/
+import Base from '../layouts/Base.astro';
+import Nav from '../components/ui/Nav.astro';
+import Footer from '../components/ui/Footer.astro';
+import Section from '../components/ui/Section.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import AnnotatedFrame from '../components/ui/AnnotatedFrame.astro';
+
+import sampleVisible from '../assets/images/dc-rooftop-aerial.webp';
+import sampleThermal from '../assets/images/dc-rooftop-aerial-thermal.webp';
+
+const ACCESS_KEY = 'b2bd961c-acf2-48a6-bf10-a5717c2dea95';
+
+const reportSections = [
+  { n: '01', t: 'Executive summary', d: 'Findings count by severity class, scan conditions, coverage map. One page your leadership reads.' },
+  { n: '02', t: 'Severity-ranked findings', d: 'Every anomaly: geolocated, thermal delta quantified, classified against NFPA 70B severity classes, recommended action attached.' },
+  { n: '03', t: 'Thermal evidence frames', d: 'Radiometric stills per finding with calibrated temperature scales and visible-light pairs.' },
+  { n: '04', t: 'Methodology & chain of custody', d: 'Sensor calibration, capture parameters, processing steps, data-handling record. Audit-ready.' },
+];
+
+const sampleAnnotations = [
+  { x: 14, y: 22, w: 17, h: 19, label: 'SEV-1 · ΔT +14.2°C', confidence: 0.94, labelAt: 'top' as const },
+  { x: 58, y: 48, w: 14, h: 15, label: 'SEV-2 · CRAH BEARING', confidence: 0.88, labelAt: 'bottom' as const },
+];
+---
+
+<Base
+  title="Sample Intelligence Report — Jinki"
+  description="See exactly what a Jinki Facility Intelligence Scan delivers: severity-ranked findings, thermal evidence frames, methodology, and chain of custody. Download the illustrative sample."
+>
+  <Nav />
+  <Breadcrumb items={[{ label: 'Sample Report' }]} />
+  <main id="main-content">
+
+    <Section spacing="compact">
+      <SectionHeader
+        index="SR" label="SAMPLE REPORT" datum="ILLUSTRATIVE THROUGHOUT" level={1}
+        title="Read the deliverable before you buy the engagement."
+        lede="This is the document your team receives 48 hours after a scan — structure, ranking logic, and evidence format. Every page is watermarked illustrative: the analysis style is real, the site is a demonstration."
+      />
+      <AnnotatedFrame
+        image={sampleVisible}
+        thermalImage={sampleThermal}
+        alt="Annotated thermal sample frame from the illustrative intelligence report"
+        annotations={sampleAnnotations}
+        meta={{ caption: 'SAMPLE FRAME · DEMONSTRATION ANALYSIS · SEVERITY CLASSES PER NFPA 70B' }}
+      />
+    </Section>
+
+    <Section label="What the report contains" cv>
+      <SectionHeader
+        index="01" label="CONTENTS" datum="04 SECTIONS"
+        title="What's inside."
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+        {reportSections.map((s) => (
+          <div class="folio-rule rule-draw pt-5 pb-6">
+            <span class="mono-label text-signal tabular">{s.n}</span>
+            <h3 class="text-h3 font-display font-medium text-ink mt-2 mb-2">{s.t}</h3>
+            <p class="text-body text-ink-2">{s.d}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+
+    <!-- ============ SCOPE COMPOSER (D1) ============ -->
+    <Section id="composer" label="Scope composer" cv>
+      <SectionHeader
+        index="02" label="SCOPE COMPOSER" datum="LIVE SPEC"
+        title="Compose your engagement spec."
+        lede="Pick a facility profile. The spec sheet typesets itself — coverage approach, sensor class, deliverables, timeline. No pricing games, no ROI theater: scope, stated plainly."
+      />
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-10">
+        <div class="lg:col-span-5">
+          <fieldset class="border-0 p-0 m-0">
+            <legend class="mono-label text-ink-3 mb-4">FACILITY TYPE</legend>
+            <div class="flex flex-wrap gap-2" data-composer-type>
+              {['Data Center', 'Energy / Utility', 'Security Perimeter', 'Agriculture', 'Real Estate'].map((t, i) => (
+                <button
+                  type="button"
+                  class={`composer-chip mono-label cursor-pointer px-4 h-10 rounded-pill border transition-colors min-w-11 ${i === 0 ? 'border-signal text-signal' : 'border-rule-strong text-ink-2 hover:border-ink'}`}
+                  data-type={t}
+                  aria-pressed={i === 0 ? 'true' : 'false'}
+                >
+                  {t.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+          <fieldset class="border-0 p-0 m-0 mt-8">
+            <legend class="mono-label text-ink-3 mb-4">APPROXIMATE FOOTPRINT</legend>
+            <div class="flex flex-wrap gap-2" data-composer-size>
+              {['< 10 acres', '10–100 acres', '100+ acres / corridor'].map((s, i) => (
+                <button
+                  type="button"
+                  class={`composer-chip mono-label cursor-pointer px-4 h-10 rounded-pill border transition-colors min-w-11 ${i === 0 ? 'border-signal text-signal' : 'border-rule-strong text-ink-2 hover:border-ink'}`}
+                  data-size={s}
+                  aria-pressed={i === 0 ? 'true' : 'false'}
+                >
+                  {s.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="lg:col-span-6 lg:col-start-7">
+          <div class="border border-rule rounded-panel bg-surface-1 p-6 md:p-8" data-spec-sheet aria-live="polite">
+            <div class="flex items-baseline justify-between gap-4 border-b border-rule pb-4 mb-5">
+              <span class="mono-label text-signal">ENGAGEMENT SPEC</span>
+              <span class="mono-label text-ink-3">DRAFT — NOT A QUOTE</span>
+            </div>
+            <dl class="m-0 grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 font-mono text-caption">
+              <dt class="text-ink-3">PROFILE</dt><dd class="m-0 text-ink" data-spec-profile>DATA CENTER</dd>
+              <dt class="text-ink-3">FOOTPRINT</dt><dd class="m-0 text-ink" data-spec-size>&lt; 10 ACRES</dd>
+              <dt class="text-ink-3">COVERAGE</dt><dd class="m-0 text-ink" data-spec-coverage>Full rooftop array + perimeter, single-mission capture</dd>
+              <dt class="text-ink-3">SENSORS</dt><dd class="m-0 text-ink">Radiometric thermal (±0.5°C) + HD visual</dd>
+              <dt class="text-ink-3">ANALYSIS</dt><dd class="m-0 text-ink" data-spec-analysis>HVAC cascade, membrane moisture, NFPA 70B electrical classes</dd>
+              <dt class="text-ink-3">DELIVERABLE</dt><dd class="m-0 text-ink">Severity-ranked findings report, geolocated, work-order ready</dd>
+              <dt class="text-ink-3">TIMELINE</dt><dd class="m-0 text-ink" data-spec-timeline>48 HR scan-to-report</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </Section>
+
+    <!-- ============ TRACK B FORM ============ -->
+    <Section id="lead-gen" label="Get the sample report">
+      <div class="folio-rule rule-draw flex items-baseline justify-between gap-4 pt-3 mb-10">
+        <span class="mono-label text-ink-3"><span class="text-signal">REQ</span>&nbsp;/&nbsp;SAMPLE REPORT</span>
+        <span class="mono-label text-ink-3">PDF · WATERMARKED ILLUSTRATIVE</span>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-10">
+        <div class="lg:col-span-6">
+          <h2 class="text-h2 font-display font-medium text-ink rise">Take the report. Judge the work.</h2>
+          <p class="text-lede text-ink-2 mt-4 rise">
+            One field required. We'll follow up once by email — no drip sequence, no list.
+          </p>
+        </div>
+        <div class="lg:col-span-5 lg:col-start-8">
+          <form action="https://api.web3forms.com/submit" method="POST" class="flex flex-col gap-8" data-sample-form>
+            <input type="hidden" name="access_key" value={ACCESS_KEY} />
+            <input type="hidden" name="subject" value="Sample Report Request — jinki.ai" />
+            <input type="hidden" name="page" value="/sample-report" />
+            <input type="hidden" name="composed_scope" value="" data-scope-field />
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" aria-hidden="true" />
+            <label class="block">
+              <span class="mono-label text-ink-3 block mb-2">WORK EMAIL</span>
+              <input
+                type="email" name="email" required autocomplete="email" inputmode="email"
+                class="w-full h-12 bg-transparent border-0 border-b border-rule-strong text-body text-ink focus:border-signal focus:outline-none transition-colors rounded-none"
+              />
+            </label>
+            <label class="block">
+              <span class="mono-label text-ink-3 block mb-2">WHAT DO YOU MANAGE? <span class="text-ink-3 normal-case tracking-normal">(optional)</span></span>
+              <select
+                name="vertical" data-vertical-select
+                class="w-full h-12 bg-transparent border-0 border-b border-rule-strong text-body text-ink focus:border-signal focus:outline-none transition-colors rounded-none appearance-none cursor-pointer"
+              >
+                <option value="" class="bg-surface-1 text-ink">—</option>
+                {['Data Centers', 'Energy / Utility', 'Security', 'Agriculture', 'Real Estate', 'Other'].map((v) => (
+                  <option value={v} class="bg-surface-1 text-ink">{v}</option>
+                ))}
+              </select>
+            </label>
+            <div>
+              <button type="submit" class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-pill bg-btn text-btn-fg font-sans text-caption font-medium border-0 cursor-pointer hover:opacity-90 transition-opacity min-w-11">
+                Get the sample report
+              </button>
+            </div>
+          </form>
+          <div data-sample-success hidden class="border border-rule rounded-panel p-6 bg-surface-1">
+            <p class="mono-label text-signal mb-3 max-w-none">REPORT READY</p>
+            <p class="text-body text-ink-2 mb-5 max-w-none">
+              Here's your report. We'll follow up once by email — no drip sequence, no list.
+            </p>
+            <a
+              href="/docs/jinki-sample-intelligence-report.pdf"
+              class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-pill bg-btn text-btn-fg no-underline font-sans text-caption font-medium hover:opacity-90 transition-opacity"
+              download
+            >
+              Download PDF
+            </a>
+          </div>
+        </div>
+      </div>
+    </Section>
+
+  </main>
+  <Footer />
+</Base>
+
+<script>
+  // Scope Composer (D1): chip toggles re-typeset the spec sheet and
+  // mirror into the form (composed_scope + vertical select).
+  const SPEC: Record<string, { coverage: string; analysis: string; vertical: string }> = {
+    'Data Center': { coverage: 'Full rooftop array + perimeter, single-mission capture', analysis: 'HVAC cascade, membrane moisture, NFPA 70B electrical classes', vertical: 'Data Centers' },
+    'Energy / Utility': { coverage: 'Corridor sweep, structure-by-structure capture', analysis: 'Component heat signatures, vegetation encroachment, hardware condition', vertical: 'Energy / Utility' },
+    'Security Perimeter': { coverage: 'Full perimeter + approach zones, thermal-first capture', analysis: 'Sight-line gaps, lighting deficiencies, monitoring blind spots', vertical: 'Security' },
+    'Agriculture': { coverage: 'Full-acreage grid pattern, multispectral-ready', analysis: 'Irrigation anomalies, crop stress zones, drainage mapping', vertical: 'Agriculture' },
+    'Real Estate': { coverage: 'Envelope + roof + grounds, documentation-grade capture', analysis: 'Envelope performance, roof condition, moisture intrusion', vertical: 'Real Estate' },
+  };
+  const TIMELINE: Record<string, string> = {
+    '< 10 acres': '48 HR scan-to-report',
+    '10–100 acres': '48–72 HR scan-to-report',
+    '100+ acres / corridor': 'Scoped per corridor — multi-mission plan',
+  };
+
+  let type = 'Data Center';
+  let size = '< 10 acres';
+
+  const $ = (s: string) => document.querySelector(s);
+  function render() {
+    const spec = SPEC[type];
+    ($('[data-spec-profile]') as HTMLElement).textContent = type.toUpperCase();
+    ($('[data-spec-size]') as HTMLElement).textContent = size.toUpperCase();
+    ($('[data-spec-coverage]') as HTMLElement).textContent = spec.coverage;
+    ($('[data-spec-analysis]') as HTMLElement).textContent = spec.analysis;
+    ($('[data-spec-timeline]') as HTMLElement).textContent = TIMELINE[size];
+    const scopeField = $('[data-scope-field]') as HTMLInputElement | null;
+    if (scopeField) scopeField.value = `${type} / ${size}`;
+    const sel = $('[data-vertical-select]') as HTMLSelectElement | null;
+    if (sel && !sel.value) sel.value = spec.vertical;
+  }
+
+  function wireChips(containerSel: string, attr: string, set: (v: string) => void) {
+    const container = $(containerSel);
+    container?.querySelectorAll<HTMLButtonElement>('.composer-chip').forEach((chip) => {
+      chip.addEventListener('click', () => {
+        container.querySelectorAll('.composer-chip').forEach((c) => {
+          c.classList.remove('border-signal', 'text-signal');
+          c.classList.add('border-rule-strong', 'text-ink-2');
+          c.setAttribute('aria-pressed', 'false');
+        });
+        chip.classList.add('border-signal', 'text-signal');
+        chip.classList.remove('border-rule-strong', 'text-ink-2');
+        chip.setAttribute('aria-pressed', 'true');
+        set(chip.dataset[attr]!);
+        render();
+      });
+    });
+  }
+  wireChips('[data-composer-type]', 'type', (v) => (type = v));
+  wireChips('[data-composer-size]', 'size', (v) => (size = v));
+  render();
+
+  // Track B submit -> reveal PDF (honest: no fake email automation)
+  const form = $('[data-sample-form]') as HTMLFormElement | null;
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector<HTMLButtonElement>('button[type=submit]');
+    if (btn) { btn.disabled = true; btn.textContent = 'One moment…'; }
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error(String(res.status));
+      form.hidden = true;
+      const ok = $('[data-sample-success]') as HTMLElement | null;
+      if (ok) ok.hidden = false;
+      try {
+        const sel = $('[data-vertical-select]') as HTMLSelectElement | null;
+        const from = location.pathname;
+        history.pushState({}, '', `/events/sample-requested?vertical=${encodeURIComponent(sel?.value || '')}`);
+        history.replaceState({}, '', from);
+      } catch {}
+    } catch {
+      form.submit();
+    }
+  });
+</script>
