@@ -1,0 +1,140 @@
+---
+/*
+  NdviSweep — a field-zone health map painting itself. A 10×6 zone grid
+  inside an irregular field boundary colorizes in a diagonal wave
+  (canopy-index sweep); three stress zones resolve to signal orange.
+  Pure CSS animation — zero JS. Reduced motion renders the completed map.
+*/
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+
+const COLS = 10;
+const ROWS = 6;
+const X0 = 185;
+const Y0 = 128;
+const CELL = 44;
+const STEP = 46; // cell + 2px gap
+
+// Stress zones: B4, C9, E7 (row,col zero-indexed)
+const stress = new Set(['1,3', '2,8', '4,6']);
+
+// Deterministic health tone per zone, 1 (thin) … 4 (dense)
+const tone = (r: number, c: number): number => {
+  const n = (r * 7 + c * 5 + ((r * c) % 4)) % 10;
+  return n < 4 ? 4 : n < 7 ? 3 : n < 9 ? 2 : 1;
+};
+
+const cells = Array.from({ length: ROWS * COLS }, (_, i) => {
+  const r = Math.floor(i / COLS);
+  const c = i % COLS;
+  return {
+    x: X0 + c * STEP,
+    y: Y0 + r * STEP,
+    cls: stress.has(`${r},${c}`) ? 'cell stress' : `cell h${tone(r, c)}`,
+    d: ((r + c) * 0.3).toFixed(1),
+  };
+});
+
+const colNums = Array.from({ length: COLS }, (_, i) => ({ n: i + 1, x: X0 + i * STEP + CELL / 2 }));
+const rowChars = Array.from({ length: ROWS }, (_, i) => ({ ch: 'ABCDEF'[i], y: Y0 + i * STEP + CELL / 2 + 3 }));
+---
+
+<figure class={`ndvi m-0 ${className}`}>
+  <div class="border border-rule rounded-panel overflow-hidden bg-surface-1">
+    <svg viewBox="0 0 800 520" class="w-full block" role="img" aria-label="Zone health map: a 10 by 6 grid of field zones colorized by canopy index, with three stress zones flagged in orange, including zone B4">
+      <!-- field boundary — irregular rounded quad -->
+      <path
+        d="M 186 100 L 652 89 Q 670 88 671 106 L 685 400 Q 686 418 668 419 L 172 437 Q 154 438 153 420 L 140 122 Q 139 104 157 103 Z"
+        fill="var(--surface-2)" stroke="var(--rule-strong)" stroke-width="1.2" />
+
+      <!-- zone grid -->
+      <g shape-rendering="crispEdges">
+        {cells.map((cell) => (
+          <rect class={cell.cls} x={cell.x} y={cell.y} width={CELL} height={CELL} rx="1" style={`--d:${cell.d}s`} />
+        ))}
+      </g>
+
+      <!-- grid coordinates -->
+      <g fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">
+        {colNums.map((col) => <text x={col.x} y="120" text-anchor="middle">{col.n}</text>)}
+        {rowChars.map((row) => <text x="170" y={row.y} text-anchor="middle">{row.ch}</text>)}
+      </g>
+
+      <!-- B4 stress callout -->
+      <rect x="320" y="171" width="50" height="50" fill="none" stroke="var(--signal)" stroke-width="1.2" />
+      <line x1="370" y1="171" x2="412" y2="146" stroke="var(--signal)" stroke-width="1" />
+      <text x="418" y="149" fill="var(--signal)" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">ZONE B4 · STRESS</text>
+
+      <!-- canopy-index legend (color axis) -->
+      <g transform="translate(154, 458)">
+        <rect class="swatch h1" x="0" y="0" width="30" height="8" />
+        <rect class="swatch h2" x="32" y="0" width="30" height="8" />
+        <rect class="swatch h3" x="64" y="0" width="30" height="8" />
+        <rect class="swatch h4" x="96" y="0" width="30" height="8" />
+        <rect class="swatch stress-swatch" x="142" y="0" width="30" height="8" />
+        <text x="0" y="24" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">CANOPY INDEX</text>
+        <text x="142" y="24" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">STRESS</text>
+      </g>
+
+      <!-- coverage datum -->
+      <g text-anchor="end" font-family="JetBrains Mono, monospace">
+        <text x="690" y="461" fill="var(--ink-3)" font-size="9" letter-spacing="1">COVERAGE RATE</text>
+        <text x="690" y="478" fill="var(--ink-1)" font-size="12" letter-spacing="0.5">1,000+ AC / MISSION</text>
+      </g>
+    </svg>
+  </div>
+  <figcaption class="flex flex-wrap items-center justify-between gap-2 border-x border-b border-rule px-4 py-2.5">
+    <span class="mono-label text-ink-3">ZONE HEALTH MAP · WEEKLY CADENCE · DEMONSTRATION</span>
+    <span class="mono-label text-ink-3">GRID 10×6 · 60 ZONES</span>
+  </figcaption>
+</figure>
+
+<style>
+  /* Theme-safe crop green — mixed with surface so steps adapt to paper/dark */
+  .ndvi {
+    --crop: #7da37d;
+  }
+  :global([data-theme='light']) .ndvi {
+    --crop: #557f4e;
+  }
+
+  .h1 { --c: color-mix(in srgb, var(--crop) 30%, var(--surface-2)); }
+  .h2 { --c: color-mix(in srgb, var(--crop) 48%, var(--surface-2)); }
+  .h3 { --c: color-mix(in srgb, var(--crop) 66%, var(--surface-2)); }
+  .h4 { --c: color-mix(in srgb, var(--crop) 84%, var(--surface-2)); }
+  .stress,
+  .stress-swatch { --c: var(--signal); }
+
+  /* Static / reduced-motion state: the completed map */
+  .cell,
+  .swatch {
+    fill: var(--c, var(--surface-3));
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* Diagonal paint wave — delay is f(row+col), 10s loop */
+    .cell {
+      animation: paint 10s linear var(--d, 0s) infinite both;
+    }
+    .stress {
+      animation-name: paint-stress;
+    }
+
+    @keyframes paint {
+      0%, 4%      { fill: var(--surface-3); }
+      12%, 80%    { fill: var(--c); }
+      92%, 100%   { fill: var(--surface-3); }
+    }
+
+    /* Stress zones resolve orange, then pulse subtly while held */
+    @keyframes paint-stress {
+      0%, 4%              { fill: var(--surface-3); fill-opacity: 1; }
+      12%                 { fill: var(--c); fill-opacity: 1; }
+      20%, 36%, 52%, 68%  { fill: var(--c); fill-opacity: 0.62; }
+      28%, 44%, 60%, 80%  { fill: var(--c); fill-opacity: 1; }
+      92%, 100%           { fill: var(--surface-3); fill-opacity: 1; }
+    }
+  }
+</style>

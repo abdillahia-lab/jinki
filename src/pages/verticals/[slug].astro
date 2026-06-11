@@ -18,6 +18,11 @@ import Accordion from '../../components/ui/Accordion.astro';
 import CTABlock from '../../components/ui/CTABlock.astro';
 import LeadForm from '../../components/ui/LeadForm.astro';
 import InspectionInstrument from '../../components/ui/InspectionInstrument.astro';
+import AisleHeat from '../../components/scenes/AisleHeat.astro';
+import CorridorRuler from '../../components/scenes/CorridorRuler.astro';
+import PerimeterRadar from '../../components/scenes/PerimeterRadar.astro';
+import NdviSweep from '../../components/scenes/NdviSweep.astro';
+import LightStudy from '../../components/scenes/LightStudy.astro';
 
 import dcVisible from '../../assets/images/dc-rooftop-aerial.webp';
 import dcThermal from '../../assets/images/dc-rooftop-aerial-thermal.webp';
@@ -60,6 +65,15 @@ const findings = d.frame.annotations.map((a, i) => ({
   severity: SEVS[Math.min(i, SEVS.length - 1)],
   title: a.label.split('·')[0].trim(),
 }));
+
+const SCENES: Record<string, any> = {
+  'data-centers': AisleHeat,
+  'energy-grid': CorridorRuler,
+  'security': PerimeterRadar,
+  'agriculture': NdviSweep,
+  'real-estate': LightStudy,
+};
+const Scene = SCENES[vertical.id];
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -109,6 +123,13 @@ const jsonLd = {
     <Section label="Key figures" spacing="compact" class="mt-8">
       <StatRow stats={d.stats} />
     </Section>
+
+    <!-- SECTOR SCENE -->
+    {Scene && (
+      <Section label="Sector telemetry" spacing="compact" cv>
+        <Scene />
+      </Section>
+    )}
 
     <!-- PROBLEMS -->
     <Section label="Failure modes" cv>

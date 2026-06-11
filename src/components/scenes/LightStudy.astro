@@ -1,0 +1,182 @@
+---
+/*
+  LightStudy — golden-hour exposure planner for the real-estate vertical.
+  A property elevation under a dotted sun arc: the sun marker rides the
+  arc on a 16s loop while a warm wash sweeps the facade; the GOLDEN HR
+  time marker lights when the sun enters its segment. Hand-built SVG,
+  zero JS. Animation is CSS-only and reduced-motion safe (static state
+  shows the sun parked at golden hour, facade washed, marker lit).
+*/
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+
+/* Sun arc: M 70 350 Q 400 10 730 350 — apex y=180, horizon y=350 */
+const ARC = 'M 70 350 Q 400 10 730 350';
+
+/* Solar elevation gridlines */
+const elev = [
+  { y: 296, label: '15°' },
+  { y: 242, label: '30°' },
+  { y: 188, label: '45°' },
+];
+
+/* Facade mullions: left wing / tower / right wing (all drop to y=344) */
+const mullions = [
+  ...[330, 350, 370].map((x) => ({ x, y1: 294 })),
+  ...[406, 424, 442, 460].map((x) => ({ x, y1: 220 })),
+  ...[496, 514, 532, 550].map((x) => ({ x, y1: 280 })),
+];
+
+/* Shot-window time markers under the arc */
+const marks = [
+  { x: 70, label: '06:40', golden: false },
+  { x: 260, label: 'BLUE HR', golden: false },
+  { x: 540, label: 'GOLDEN HR', golden: true },
+  { x: 730, label: '19:58', golden: false },
+];
+---
+
+<figure class={`m-0 ${className}`}>
+  <div class="border border-rule rounded-panel overflow-hidden bg-surface-1">
+    <svg
+      viewBox="0 0 800 440"
+      class="w-full block"
+      role="img"
+      aria-label="Golden-hour exposure planner: a sun arc over a property elevation with shot-window markers from 06:40 sunrise through blue hour and golden hour to 19:58 sunset"
+    >
+      <defs>
+        <clipPath id="ls-face">
+          <path d="M 310 350 L 310 286 L 392 286 L 392 212 L 420 212 L 420 198 L 436 198 L 436 212 L 478 212 L 478 272 L 570 272 L 570 350 Z" />
+        </clipPath>
+      </defs>
+
+      <!-- datums -->
+      <text x="40" y="36" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">SUN PATH · ELEVATION STUDY</text>
+      <text x="760" y="36" text-anchor="end" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">WEATHER-WINDOWED</text>
+
+      <!-- solar elevation gridlines -->
+      {elev.map((e) => (
+        <g>
+          <line x1="70" y1={e.y} x2="730" y2={e.y} stroke="var(--rule)" stroke-width="0.75" stroke-dasharray="2 6" />
+          <text x="58" y={e.y + 3} text-anchor="end" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="9">{e.label}</text>
+        </g>
+      ))}
+
+      <!-- sun arc (dotted) -->
+      <path d={ARC} fill="none" stroke="var(--rule-strong)" stroke-width="1.2" stroke-dasharray="1 6" stroke-linecap="round" />
+
+      <!-- property elevation -->
+      <path
+        d="M 310 350 L 310 286 L 392 286 L 392 212 L 420 212 L 420 198 L 436 198 L 436 212 L 478 212 L 478 272 L 570 272 L 570 350 Z"
+        fill="var(--surface-2)" stroke="var(--rule-strong)" stroke-width="1.5"
+      />
+      {mullions.map((m) => (
+        <line x1={m.x} y1={m.y1} x2={m.x} y2="344" stroke="var(--rule)" stroke-width="0.75" />
+      ))}
+      <line x1="312" y1="312" x2="568" y2="312" stroke="var(--rule)" stroke-width="0.75" />
+      <line x1="312" y1="332" x2="568" y2="332" stroke="var(--rule)" stroke-width="0.75" />
+
+      <!-- warm wash: three facade bands fading in sequence, clipped to the elevation -->
+      <g clip-path="url(#ls-face)" aria-hidden="true">
+        <rect class="wash wash-1" x="308" y="190" width="88" height="162" />
+        <rect class="wash wash-2" x="396" y="190" width="88" height="162" />
+        <rect class="wash wash-3" x="484" y="190" width="88" height="162" />
+      </g>
+
+      <!-- horizon -->
+      <line x1="40" y1="350" x2="760" y2="350" stroke="var(--rule-strong)" stroke-width="1" />
+
+      <!-- shot-window time markers -->
+      {marks.map((m) => (
+        <g>
+          <line x1={m.x} y1="350" x2={m.x} y2="358" stroke="var(--rule-strong)" stroke-width="1" />
+          <text
+            class={m.golden ? 'mark-golden' : undefined}
+            x={m.x} y="376" text-anchor="middle"
+            fill={m.golden ? undefined : 'var(--ink-3)'}
+            font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="1"
+          >{m.label}</text>
+        </g>
+      ))}
+
+      <!-- sun marker (rides the arc; parked at golden hour when static) -->
+      <g class="sun" aria-hidden="true">
+        <circle r="11" fill="none" stroke="var(--signal-dim)" stroke-width="1" />
+        <circle r="4.5" fill="var(--signal)" />
+      </g>
+    </svg>
+  </div>
+  <figcaption class="flex flex-wrap items-center justify-between gap-2 border-x border-b border-rule px-4 py-2.5">
+    <span class="mono-label text-ink-3">SHOT-WINDOW PLANNER · TWILIGHT SET</span>
+    <span class="mono-label text-ink-3">DEMONSTRATION</span>
+  </figcaption>
+</figure>
+
+<style>
+  /* Static state = evening golden hour: complete without any animation */
+  .wash { fill: var(--signal); }
+  .wash-1 { opacity: 0.03; }
+  .wash-2 { opacity: 0.06; }
+  .wash-3 { opacity: 0.12; }
+  .mark-golden { fill: var(--signal); }
+
+  /* Fallback sun position (golden hour, t≈0.75 on the arc) for engines
+     without offset-path; replaced by the motion path where supported */
+  .sun { transform: translate(565px, 222px); }
+  @supports (offset-path: path('M 0 0 H 1')) {
+    .sun {
+      transform: none;
+      offset-path: path('M 70 350 Q 400 10 730 350');
+      offset-rotate: 0deg;
+      offset-distance: 72%;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (offset-path: path('M 0 0 H 1')) {
+      .sun { animation: sun-travel 16s linear infinite; }
+    }
+    .wash-1 { animation: wash-east 16s linear infinite; }
+    .wash-2 { animation: wash-mid 16s linear infinite; }
+    .wash-3 { animation: wash-west 16s linear infinite; }
+    .mark-golden { animation: golden-mark 16s linear infinite; }
+  }
+
+  /* One shared 16s clock — sun position, facade wash, and the GOLDEN HR
+     highlight (62–84%) stay in phase by matched keyframe percentages */
+  @keyframes sun-travel {
+    0% { offset-distance: 0%; opacity: 0.35; }
+    5% { opacity: 1; }
+    95% { opacity: 1; }
+    100% { offset-distance: 100%; opacity: 0.35; }
+  }
+  @keyframes wash-east {
+    0% { opacity: 0; }
+    16% { opacity: 0.1; }
+    38% { opacity: 0.02; }
+    72% { opacity: 0.03; }
+    100% { opacity: 0; }
+  }
+  @keyframes wash-mid {
+    0% { opacity: 0; }
+    18% { opacity: 0.04; }
+    45% { opacity: 0.08; }
+    72% { opacity: 0.06; }
+    92%, 100% { opacity: 0; }
+  }
+  @keyframes wash-west {
+    0% { opacity: 0; }
+    40% { opacity: 0.02; }
+    62% { opacity: 0.08; }
+    72% { opacity: 0.12; }
+    84% { opacity: 0.1; }
+    94%, 100% { opacity: 0; }
+  }
+  @keyframes golden-mark {
+    0%, 58% { fill: var(--ink-3); }
+    64%, 82% { fill: var(--signal); }
+    88%, 100% { fill: var(--ink-3); }
+  }
+</style>

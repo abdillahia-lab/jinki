@@ -6,6 +6,7 @@
   no splash screens — the budget lives here.
 */
 import '../styles/system.css';
+import SectionMinimap from '../components/ui/SectionMinimap.astro';
 
 interface Props {
   title?: string;
@@ -96,5 +97,44 @@ const orgSchema = {
   <body class="bg-surface-0 text-ink font-sans" data-brief>
     <a href="#main-content" class="skip-to-content">Skip to content</a>
     <slot />
+    <SectionMinimap />
+
+    <!-- Mobile CTA dock — single bottom-fixed element; live scan window -->
+    <div
+      class="cta-dock md:hidden fixed bottom-0 left-0 right-0 bg-surface-0/95 border-t border-rule backdrop-blur-sm"
+      style="z-index: var(--z-sticky); padding-bottom: max(0.6rem, env(safe-area-inset-bottom)); transform: translateY(100%); transition: transform 0.3s var(--ease-settle);"
+      data-cta-dock data-sticky-cta hidden
+    >
+      <div class="flex items-center justify-between gap-3 px-4 pt-2.5 pb-1">
+        <span class="mono-label text-ink-3" data-dock-window>BOOKING Q3 2026</span>
+        <a
+          href="#lead-gen"
+          class="inline-flex items-center h-10 px-5 rounded-pill bg-btn text-btn-fg no-underline font-sans text-caption font-medium min-w-11"
+          data-event="cta-assessment:dock"
+        >Request Q3</a>
+      </div>
+    </div>
+    <script>
+      const dock = document.querySelector<HTMLElement>('[data-cta-dock]');
+      if (dock && document.getElementById('lead-gen')) {
+        import('../lib/solar').then(({ scanWindow, fmtTimeET }) => {
+          const w = scanWindow();
+          const el = dock.querySelector('[data-dock-window]');
+          if (el) el.textContent = w.state === 'open' ? 'SCAN WINDOW OPEN' : `NEXT WINDOW ${fmtTimeET(w.at)}`;
+        }).catch(() => {});
+        let shown = false;
+        const onScroll = () => {
+          const past = scrollY > 600;
+          const nearForm = (document.getElementById('lead-gen')?.getBoundingClientRect().top ?? 1e4) < innerHeight;
+          const want = past && !nearForm;
+          if (want !== shown) {
+            shown = want;
+            dock.hidden = false;
+            dock.style.transform = want ? 'translateY(0)' : 'translateY(100%)';
+          }
+        };
+        addEventListener('scroll', onScroll, { passive: true });
+      }
+    </script>
   </body>
 </html>

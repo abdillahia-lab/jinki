@@ -1,0 +1,154 @@
+---
+/*
+  AisleHeat — server-hall cold/hot-aisle cross-section drawn as a precise
+  diagram strip. Eight racks, alternating C/H aisles, heat shimmer rising
+  from hot aisles only, one flagged rack, supply/return airflow datums.
+  Hand-built SVG, zero JS. Animation is CSS-only and reduced-motion safe.
+*/
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+
+const RACK_W = 70;
+const GAP = 50;
+const X0 = 45;
+const RACK_Y = 92;
+const RACK_H = 80;
+const SLOT_YS = [114, 134, 154];
+
+const racks = Array.from({ length: 8 }, (_, i) => X0 + i * (RACK_W + GAP));
+/* 7 aisles between 8 racks — alternating C H C H C H C */
+const aisles = Array.from({ length: 7 }, (_, i) => ({
+  cx: X0 + RACK_W + i * (RACK_W + GAP) + GAP / 2,
+  hot: i % 2 === 1,
+}));
+/* 3 shimmer paths per hot aisle, staggered so no two rise in phase */
+const shimmer = aisles
+  .filter((a) => a.hot)
+  .flatMap((a, ai) =>
+    [-11, 0, 11].map((off, i) => ({
+      x: a.cx + off,
+      delay: (i * 1.1 + ai * 0.4).toFixed(1),
+    }))
+  );
+---
+
+<figure class={`m-0 ${className}`}>
+  <div class="border border-rule rounded-panel overflow-hidden bg-surface-1">
+    <svg
+      viewBox="0 0 1000 210"
+      class="w-full block"
+      role="img"
+      aria-label="Server hall cross-section: eight racks with alternating cold and hot aisles, heat rising above hot aisles, rack 14 flagged at plus 9.4 degrees Celsius above envelope"
+    >
+      <!-- return air path (ceiling) -->
+      <line class="flow flow-l" x1="30" y1="12" x2="970" y2="12" />
+      <path d="M 38 8 L 30 12 L 38 16" fill="none" stroke="var(--ink-3)" stroke-width="0.75" />
+      <text x="30" y="29" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="1.5">RETURN</text>
+
+      <!-- datum -->
+      <text x="970" y="29" text-anchor="end" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.5">ΔT ENVELOPE MONITORED</text>
+
+      <!-- hot-aisle floor tint -->
+      {aisles.filter((a) => a.hot).map((a) => (
+        <rect x={a.cx - GAP / 2} y={RACK_Y} width={GAP} height={RACK_H} fill="var(--signal-dim)" opacity="0.12" />
+      ))}
+
+      <!-- heat shimmer above hot aisles only -->
+      {shimmer.map((s) => (
+        <path
+          class="shimmer"
+          d={`M ${s.x} 90 q 5 -9 0 -18 q -5 -9 0 -18 q 5 -9 0 -18`}
+          style={`animation-delay:${s.delay}s`}
+        />
+      ))}
+
+      <!-- racks -->
+      {racks.map((x) => (
+        <g>
+          <rect x={x} y={RACK_Y} width={RACK_W} height={RACK_H} fill="var(--surface-3)" stroke="var(--rule)" stroke-width="1" />
+          {SLOT_YS.map((y) => (
+            <line x1={x + 8} y1={y} x2={x + RACK_W - 8} y2={y} stroke="var(--rule)" stroke-width="0.75" />
+          ))}
+        </g>
+      ))}
+
+      <!-- aisle labels -->
+      {aisles.map((a) => (
+        <text
+          x={a.cx}
+          y="146"
+          text-anchor="middle"
+          fill={a.hot ? 'var(--signal)' : 'var(--ink-3)'}
+          font-family="JetBrains Mono, monospace"
+          font-size="11"
+          letter-spacing="1.5"
+        >{a.hot ? 'H' : 'C'}</text>
+      ))}
+
+      <!-- flagged rack: rack 14 exceeds ΔT envelope -->
+      <text x="680" y="54" text-anchor="middle" fill="var(--signal)" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1">RACK 14 · +9.4°C</text>
+      <line x1="680" y1="60" x2="680" y2="86" stroke="var(--signal-dim)" stroke-width="1" />
+      <circle class="alert-dot" cx="680" cy="92" r="3" fill="var(--signal)" />
+
+      <!-- hall floor -->
+      <line x1="30" y1="172" x2="970" y2="172" stroke="var(--rule-strong)" stroke-width="1" />
+
+      <!-- supply air path (plenum) -->
+      <line class="flow flow-r" x1="30" y1="192" x2="970" y2="192" />
+      <path d="M 962 188 L 970 192 L 962 196" fill="none" stroke="var(--ink-3)" stroke-width="0.75" />
+      <text x="30" y="207" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="1.5">SUPPLY</text>
+    </svg>
+  </div>
+  <figcaption class="flex flex-wrap items-center justify-between gap-2 border-x border-b border-rule px-4 py-2.5">
+    <span class="mono-label text-ink-3">AISLE THERMAL PROFILE · CONTINUOUS</span>
+    <span class="mono-label text-ink-3">DEMONSTRATION</span>
+  </figcaption>
+</figure>
+
+<style>
+  .shimmer {
+    fill: none;
+    stroke: var(--signal);
+    stroke-width: 1;
+    opacity: 0.3; /* reduced-motion static state: heat visibly present */
+  }
+  .flow {
+    stroke: var(--ink-3);
+    stroke-width: 0.75;
+    stroke-dasharray: 5 7;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .shimmer {
+      animation: shimmer-rise 3s linear infinite;
+    }
+    .flow-r {
+      animation: dash-march-r 4s linear infinite;
+    }
+    .flow-l {
+      animation: dash-march-l 4s linear infinite;
+    }
+    .alert-dot {
+      animation: dot-pulse 2.4s ease-in-out infinite;
+    }
+  }
+
+  @keyframes shimmer-rise {
+    0% { transform: translateY(8px); opacity: 0; }
+    20% { opacity: 0.5; }
+    70% { opacity: 0.3; }
+    100% { transform: translateY(-14px); opacity: 0; }
+  }
+  @keyframes dash-march-r {
+    to { stroke-dashoffset: -48; }
+  }
+  @keyframes dash-march-l {
+    to { stroke-dashoffset: 48; }
+  }
+  @keyframes dot-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+</style>

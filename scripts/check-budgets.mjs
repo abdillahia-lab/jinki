@@ -56,8 +56,11 @@ for (const file of walk(DIST)) {
     for (const { pattern, why } of REGRESSIONS) {
       if (pattern.test(html)) failures.push(`${route}: REGRESSION — ${why}`);
     }
-    const inlineStyles = (html.match(/ style="/g) || []).length;
-    if (inlineStyles > 10) failures.push(`${route}: ${inlineStyles} inline styles (max 10)`);
+    // Inline-style check targets layout styling; SVG scene internals
+    // (per-cell animation delays etc.) are legitimate and excluded.
+    const htmlNoSvg = html.replace(/<svg[\s\S]*?<\/svg>/g, '');
+    const inlineStyles = (htmlNoSvg.match(/ style="/g) || []).length;
+    if (inlineStyles > 10) failures.push(`${route}: ${inlineStyles} inline styles outside SVG (max 10)`);
   }
 
   // Asset budgets

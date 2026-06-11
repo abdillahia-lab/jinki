@@ -1,0 +1,212 @@
+---
+/*
+  SectionMinimap — the brief's index rail. A fixed right-edge spine
+  (desktop lg+ only) that self-builds at runtime from every
+  `main section[aria-label]` on the page: one dot + mono folio index per
+  section, expanding to the section name on hover/focus. The section
+  currently in the reading band is marked in signal. Click navigates.
+  Renders nothing (removes itself from the a11y tree via [hidden]) when
+  fewer than 4 sections exist — a two-section page needs no index.
+*/
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<nav id="section-minimap" class={className} aria-label="Section index" hidden>
+  <ol></ol>
+  <span class="smm-cap" aria-hidden="true">INDEX</span>
+</nav>
+
+<style is:global>
+  /* Hidden below lg; never shown until JS confirms >=4 sections. */
+  #section-minimap {
+    display: none;
+    position: fixed;
+    top: 50%;
+    right: clamp(1rem, 1.5vw, 1.5rem);
+    transform: translateY(-50%);
+    z-index: var(--z-sticky);
+    pointer-events: none; /* only the buttons take input */
+  }
+  @media (min-width: 64rem) {
+    #section-minimap:not([hidden]) {
+      display: block;
+    }
+  }
+
+  /* The spine: a hairline the dots sit on. */
+  #section-minimap ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+  #section-minimap ol::before {
+    content: '';
+    position: absolute;
+    top: 0.625rem;
+    bottom: 0.625rem;
+    right: 4px;
+    width: 1px;
+    background: var(--rule-strong);
+  }
+
+  .smm-item {
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.375rem 0;
+    margin: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1;
+    color: var(--ink-3);
+  }
+  .smm-item:hover { color: var(--ink-2); }
+
+  .smm-idx { font-variant-numeric: tabular-nums; }
+
+  .smm-dot {
+    flex: none;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 1px solid var(--rule-strong);
+    background: var(--surface-0); /* masks the spine behind it */
+  }
+
+  /* Name label: collapsed by default, expands on hover/focus. */
+  .smm-name {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--ink-2);
+    background: var(--surface-1);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-panel);
+  }
+  .smm-item:hover .smm-name,
+  .smm-item:focus-visible .smm-name {
+    max-width: 16rem;
+    opacity: 1;
+    padding: 0.3125rem 0.5rem;
+  }
+
+  /* Current section: the only signal on the rail. */
+  .smm-item[aria-current='true'] { color: var(--ink-1); }
+  .smm-item[aria-current='true'] .smm-idx { color: var(--signal); }
+  .smm-item[aria-current='true'] .smm-dot {
+    background: var(--signal);
+    border-color: var(--signal);
+  }
+
+  /* Caption — the rail's mono colophon, set vertically along the spine. */
+  .smm-cap {
+    display: block;
+    margin-top: 0.875rem;
+    margin-left: auto;
+    writing-mode: vertical-rl;
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    color: var(--ink-3);
+  }
+
+  /* Sections targeted by the rail clear the fixed nav when scrolled to. */
+  main section[aria-label] { scroll-margin-top: 5rem; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    #section-minimap:not([hidden]) {
+      animation: smm-in 0.45s var(--ease-settle) both;
+    }
+    .smm-name {
+      transition:
+        max-width 0.25s var(--ease-settle),
+        opacity 0.2s var(--ease-settle),
+        padding 0.25s var(--ease-settle);
+    }
+    .smm-dot {
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+  }
+  @keyframes smm-in {
+    from { opacity: 0; transform: translate(6px, -50%); }
+    to { opacity: 1; transform: translate(0, -50%); }
+  }
+</style>
+
+<script>
+  const rail = document.getElementById('section-minimap');
+  const list = rail?.querySelector('ol');
+  const sections = Array.from(
+    document.querySelectorAll<HTMLElement>('main section[aria-label]')
+  );
+
+  if (rail && list && sections.length >= 4) {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const items = new Map<Element, HTMLButtonElement>();
+
+    sections.forEach((section, i) => {
+      // Ordinal position — page folio indexes repeat across pages and
+      // would render as a jumbled sequence here.
+      const index = String(i + 1).padStart(2, '0');
+      const name = section.getAttribute('aria-label') ?? `Section ${i + 1}`;
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'smm-item';
+      const nameEl = document.createElement('span');
+      nameEl.className = 'smm-name';
+      nameEl.textContent = name;
+      const idxEl = document.createElement('span');
+      idxEl.className = 'smm-idx';
+      idxEl.textContent = index;
+      const dot = document.createElement('span');
+      dot.className = 'smm-dot';
+      dot.setAttribute('aria-hidden', 'true');
+      btn.append(nameEl, idxEl, dot);
+
+      btn.addEventListener('click', () => {
+        section.scrollIntoView({
+          behavior: reduced.matches ? 'auto' : 'smooth',
+          block: 'start',
+        });
+      });
+
+      const li = document.createElement('li');
+      li.appendChild(btn);
+      list.appendChild(li);
+      items.set(section, btn);
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          items.forEach((b) => b.removeAttribute('aria-current'));
+          items.get(entry.target)?.setAttribute('aria-current', 'true');
+        }
+      },
+      { rootMargin: '-40% 0px -55% 0px' }
+    );
+    sections.forEach((s) => observer.observe(s));
+
+    rail.hidden = false;
+  }
+</script>

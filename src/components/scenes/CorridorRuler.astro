@@ -1,0 +1,121 @@
+---
+/*
+  CorridorRuler — a transmission-corridor mile ruler drawn as a horizontal
+  instrument strip. Baseline with mile ticks (MI 00–MI 50), lattice tower
+  silhouettes every 5 miles, and a capture swath that sweeps the corridor
+  on a 14s CSS loop. Towers inside the swath flash to signal as it passes.
+  Zero JS. Reduced motion: swath parked mid-corridor, tower lit.
+*/
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+
+const PX_PER_MI = 21.6; // 50 mi mapped to 1080 px (x: 60 → 1140)
+const x = (mi: number) => +(60 + mi * PX_PER_MI).toFixed(1);
+const ticks = Array.from({ length: 51 }, (_, m) => m);
+const majors = [0, 10, 20, 30, 40, 50];
+const towerMiles = Array.from({ length: 11 }, (_, i) => i * 5);
+// Towers that flash as the swath passes (delays matched to sweep timing)
+const flash: Record<number, string> = { 10: 'twr-f1', 25: 'twr-f2', 40: 'twr-f3' };
+---
+
+<figure class={`m-0 ${className}`}>
+  <div class="border border-rule rounded-panel overflow-hidden bg-surface-1">
+    <svg viewBox="0 0 1200 200" class="w-full block" role="img" aria-label="Corridor sweep diagram: a 50-mile transmission corridor ruler with lattice tower structures captured one by one by a moving aerial swath">
+      <defs>
+        <!-- lattice tower silhouette, base at origin, apex at y -52 -->
+        <g id="cr-tower" fill="none" stroke-width="1.2">
+          <path d="M -14 0 L 0 -52 L 14 0" />
+          <path d="M -10.2 -14 H 10.2 M -6.5 -28 H 6.5 M -3.2 -40 H 3.2" />
+          <path d="M -10.2 -14 L 6.5 -28 M 10.2 -14 L -6.5 -28 M -6.5 -28 L 3.2 -40 M 6.5 -28 L -3.2 -40" />
+          <path d="M -11 -44 H 11 M -8 -44 V -40 M 8 -44 V -40" />
+        </g>
+      </defs>
+
+      <!-- header datums -->
+      <text x="60" y="32" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">TRANSMISSION CORRIDOR · SWEEP PROFILE</text>
+      <text x="1140" y="32" text-anchor="end" fill="var(--signal)" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="1.5">50 MI / MISSION</text>
+
+      <!-- baseline -->
+      <line x1="40" y1="150" x2="1160" y2="150" stroke="var(--rule-strong)" stroke-width="1.2" />
+
+      <!-- mile ticks: minor 1 mi, mid 5 mi, major 10 mi -->
+      <g stroke="var(--rule-strong)" stroke-width="1">
+        {ticks.map((m) => (
+          <line x1={x(m)} y1="150" x2={x(m)} y2={m % 10 === 0 ? 162 : m % 5 === 0 ? 158 : 155} />
+        ))}
+      </g>
+
+      <!-- major mile numerals -->
+      <g fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1">
+        {majors.map((m) => (
+          <text x={x(m)} y="178" text-anchor="middle">MI {String(m).padStart(2, '0')}</text>
+        ))}
+      </g>
+
+      <!-- tower structures -->
+      {towerMiles.map((mi) => (
+        <use href="#cr-tower" x={x(mi)} y="150" class={`twr ${flash[mi] ?? ''}`} />
+      ))}
+
+      <!-- capture swath: slides the full corridor on a 14s loop -->
+      <g class="swath" aria-hidden="true">
+        <rect x="0" y="58" width="144" height="92" fill="var(--signal)" opacity="0.07" />
+        <line x1="0" y1="58" x2="0" y2="150" stroke="var(--signal-dim)" stroke-width="1" />
+        <line x1="144" y1="58" x2="144" y2="150" stroke="var(--signal-dim)" stroke-width="1" />
+        <path d="M 66 52 L 72 58 L 78 52" fill="none" stroke="var(--signal)" stroke-width="1.2" />
+        <text x="72" y="74" text-anchor="middle" fill="var(--signal)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="2">CAPTURE</text>
+      </g>
+    </svg>
+  </div>
+  <figcaption class="flex flex-wrap items-center justify-between gap-2 border-x border-b border-rule px-4 py-2.5">
+    <span class="mono-label text-ink-3">CORRIDOR SWEEP · STRUCTURE-BY-STRUCTURE · DEMONSTRATION</span>
+    <span class="mono-label text-ink-3">SCALE SCHEMATIC</span>
+  </figcaption>
+</figure>
+
+<style>
+  .twr {
+    stroke: var(--ink-2);
+  }
+
+  /* Static state (and reduced motion): swath parked over MI 25, tower lit */
+  .swath {
+    transform: translateX(528px);
+  }
+  .twr-f2 {
+    stroke: var(--signal);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .swath {
+      animation: cr-sweep 14s linear infinite;
+      will-change: transform;
+    }
+
+    /*
+      Sweep covers 1360 px in 14 s (97.1 px/s). Flash delays place the
+      3%–11% signal window inside each tower's coverage interval.
+    */
+    .twr-f1,
+    .twr-f2,
+    .twr-f3 {
+      animation: cr-flash 14s linear infinite;
+    }
+    .twr-f1 { animation-delay: -11.55s; } /* MI 10 */
+    .twr-f2 { animation-delay: -8.21s; }  /* MI 25 */
+    .twr-f3 { animation-delay: -4.88s; }  /* MI 40 */
+  }
+
+  @keyframes cr-sweep {
+    from { transform: translateX(-160px); }
+    to { transform: translateX(1200px); }
+  }
+
+  @keyframes cr-flash {
+    0%, 1% { stroke: var(--ink-2); }
+    3%, 11% { stroke: var(--signal); }
+    13%, 100% { stroke: var(--ink-2); }
+  }
+</style>

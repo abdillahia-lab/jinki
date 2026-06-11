@@ -1,0 +1,157 @@
+---
+/*
+  PerimeterRadar — a live perimeter watch console for the security
+  vertical. Facility footprint, range rings, an 8-second radar sweep,
+  three detections that flare as the arm passes their bearing. One
+  active track (signal) with dotted history. Pure CSS/SVG; zero JS.
+*/
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+
+/* Bearing ticks every 15° on the outer ring (r 202→210, centre 400,260) */
+const ticks = Array.from({ length: 24 }, (_, i) => {
+  const a = (i * 15 * Math.PI) / 180;
+  return {
+    x1: (400 + 202 * Math.sin(a)).toFixed(1),
+    y1: (260 - 202 * Math.cos(a)).toFixed(1),
+    x2: (400 + 210 * Math.sin(a)).toFixed(1),
+    y2: (260 - 210 * Math.cos(a)).toFixed(1),
+  };
+});
+---
+
+<figure class={`m-0 ${className}`}>
+  <div class="border border-rule rounded-panel overflow-hidden bg-surface-1">
+    <svg viewBox="0 0 800 520" class="w-full block" role="img" aria-label="Perimeter watch console: facility footprint with range rings, a rotating radar sweep on an eight second period, and three detections — one active track with dotted history">
+      <defs>
+        <linearGradient id="pr-fade" gradientUnits="userSpaceOnUse" x1="400" y1="155" x2="326" y2="186">
+          <stop offset="0" style="stop-color: var(--signal); stop-opacity: 0.16"></stop>
+          <stop offset="1" style="stop-color: var(--signal); stop-opacity: 0"></stop>
+        </linearGradient>
+      </defs>
+
+      <!-- corner brackets + sector ids -->
+      <g stroke="var(--rule-strong)" stroke-width="1" fill="none">
+        <path d="M 20 46 L 20 20 L 46 20" />
+        <path d="M 754 20 L 780 20 L 780 46" />
+        <path d="M 780 474 L 780 500 L 754 500" />
+        <path d="M 46 500 L 20 500 L 20 474" />
+      </g>
+      <g fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5">
+        <text x="56" y="31">SEC 1</text>
+        <text x="744" y="31" text-anchor="end">SEC 2</text>
+        <text x="744" y="497" text-anchor="end">SEC 3</text>
+        <text x="56" y="497">SEC 4</text>
+      </g>
+
+      <!-- crosshair through centroid -->
+      <g stroke="var(--rule)" stroke-width="1" stroke-dasharray="1 4">
+        <line x1="400" y1="50" x2="400" y2="470" />
+        <line x1="190" y1="260" x2="610" y2="260" />
+      </g>
+
+      <!-- range rings + bearing ticks -->
+      <g fill="none" stroke="var(--rule)" stroke-width="1">
+        <circle cx="400" cy="260" r="110" />
+        <circle cx="400" cy="260" r="160" />
+        <circle cx="400" cy="260" r="210" stroke="var(--rule-strong)" />
+      </g>
+      <g stroke="var(--rule-strong)" stroke-width="1">
+        {ticks.map((t) => <line x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} />)}
+      </g>
+      <g fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">
+        <text x="400" y="38" text-anchor="middle">000</text>
+        <text x="622" y="263">090</text>
+        <text x="400" y="488" text-anchor="middle">180</text>
+        <text x="178" y="263" text-anchor="end">270</text>
+        <text x="252" y="420" text-anchor="end">R 300 M</text>
+      </g>
+
+      <!-- facility footprint -->
+      <path d="M 352 196 L 452 188 L 492 248 L 468 318 L 372 330 L 332 262 Z"
+        fill="var(--rule)" fill-opacity="0.5" stroke="var(--rule-strong)" stroke-width="1.2" />
+      <text x="416" y="240" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">FAC 01</text>
+
+      <!-- sweep arm: leading edge + fading wedge, 8 s / revolution -->
+      <g class="pr-sweep">
+        <path d="M 400 260 L 251.5 111.5 A 210 210 0 0 1 400 50 Z" fill="url(#pr-fade)" />
+        <line x1="400" y1="260" x2="400" y2="50" stroke="var(--signal)" stroke-width="1.2" opacity="0.9" />
+      </g>
+
+      <!-- detection blips: flare as the sweep passes their bearing -->
+      <!-- passive contact · bearing 215° -->
+      <circle class="pr-halo pr-d2" cx="331" cy="358" r="11" fill="none" stroke="var(--ink-2)" stroke-width="1" />
+      <circle class="pr-blip pr-d2" cx="331" cy="358" r="4" fill="var(--ink-1)" />
+      <!-- passive contact · bearing 318° -->
+      <circle class="pr-halo pr-d3" cx="276" cy="122" r="11" fill="none" stroke="var(--ink-2)" stroke-width="1" />
+      <circle class="pr-blip pr-d3" cx="276" cy="122" r="4" fill="var(--ink-1)" />
+
+      <!-- active track · bearing 110° · dotted history trail -->
+      <path d="M 604 226 L 586 262 L 570 292 L 558 310" fill="none"
+        stroke="var(--signal-dim)" stroke-width="1.2" stroke-dasharray="1 4" />
+      <g fill="var(--signal-dim)">
+        <circle cx="604" cy="226" r="1.5" />
+        <circle cx="586" cy="262" r="1.5" />
+        <circle cx="570" cy="292" r="1.5" />
+      </g>
+      <circle cx="555" cy="316" r="11" fill="none" stroke="var(--signal-dim)" stroke-width="1" stroke-dasharray="2 3" />
+      <circle class="pr-halo pr-d1" cx="555" cy="316" r="16" fill="none" stroke="var(--signal)" stroke-width="1" />
+      <circle class="pr-blip pr-d1" cx="555" cy="316" r="4" fill="var(--signal)" />
+      <g font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">
+        <text x="572" y="322" fill="var(--signal)">TRK 0419</text>
+        <text x="572" y="336" fill="var(--ink-3)">DWELL &lt;90 S</text>
+      </g>
+    </svg>
+  </div>
+  <figcaption class="flex flex-wrap items-center justify-between gap-2 border-x border-b border-rule px-4 py-2.5">
+    <span class="mono-label text-ink-3">PERIMETER WATCH · SWEEP 8 S · DEMONSTRATION</span>
+    <span class="mono-label text-ink-3">SEC 1–4 MONITORED</span>
+  </figcaption>
+</figure>
+
+<style>
+  /* Static state is complete on its own: sweep frozen at 000, blips lit,
+     trail + designation ring visible. Motion is additive below. */
+  .pr-sweep {
+    transform-box: view-box;
+    transform-origin: 400px 260px;
+  }
+  .pr-blip {
+    opacity: 0.85;
+  }
+  .pr-halo {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .pr-sweep {
+      animation: pr-rotate 8s linear infinite;
+    }
+    .pr-blip {
+      animation: pr-flare 8s linear infinite;
+    }
+    .pr-halo {
+      animation: pr-halo-pulse 8s linear infinite;
+    }
+    /* delays = bearing/360 × 8 s, negative so phase is correct on load */
+    .pr-d1 { animation-delay: -5.556s; } /* bearing 110° → swept at 2.444 s */
+    .pr-d2 { animation-delay: -3.222s; } /* bearing 215° → swept at 4.778 s */
+    .pr-d3 { animation-delay: -0.933s; } /* bearing 318° → swept at 7.067 s */
+  }
+
+  @keyframes pr-rotate {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes pr-flare {
+    0%, 4% { opacity: 1; }
+    50%, 100% { opacity: 0.3; }
+  }
+  @keyframes pr-halo-pulse {
+    0% { transform: scale(0.25); opacity: 0.6; }
+    22%, 100% { transform: scale(1); opacity: 0; }
+  }
+</style>

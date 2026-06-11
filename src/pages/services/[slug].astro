@@ -26,6 +26,16 @@ export async function getStaticPaths() {
 const { service } = Astro.props;
 const d = service.data;
 
+// Scan vs Deployment — same table on both pages, current column marked
+const COMPARE = [
+  { row: 'CADENCE', scan: 'One mission', deploy: '150–200 missions / month' },
+  { row: 'RESPONSE', scan: 'Scheduled window', deploy: 'Alarm to airborne < 90 s' },
+  { row: 'DELIVERABLE', scan: 'Severity-ranked report, 48 hr', deploy: 'Live feeds + trend reports' },
+  { row: 'BASELINE', scan: 'Point-in-time state', deploy: 'Degradation velocity over time' },
+  { row: 'COMMITMENT', scan: 'Two–three weeks end-to-end', deploy: 'Standing engagement' },
+];
+const isScan = service.id === 'intelligence-scan';
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -110,6 +120,43 @@ const jsonLd = {
       <ProcessTimeline steps={d.process} />
     </Section>
 
+    <!-- SCAN VS DEPLOYMENT -->
+    <Section label="Compare engagement modes" cv>
+      <SectionHeader
+        index="03" label="COMPARE" datum="02 MODES"
+        title="Scan or standing watch."
+        lede="Most engagements begin with a Scan; Deployments extend it into persistent coverage."
+      />
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse font-mono text-caption">
+          <thead>
+            <tr class="text-left">
+              <th class="mono-label text-ink-3 font-medium border-b border-rule-strong py-3 pr-4"></th>
+              <th class={`mono-label font-medium border-b border-rule-strong py-3 pr-4 ${isScan ? 'text-signal' : 'text-ink-3'}`}>
+                INTELLIGENCE SCAN {isScan && '· THIS PAGE'}
+              </th>
+              <th class={`mono-label font-medium border-b border-rule-strong py-3 ${!isScan ? 'text-signal' : 'text-ink-3'}`}>
+                AUTONOMOUS DEPLOYMENT {!isScan && '· THIS PAGE'}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {COMPARE.map((r) => (
+              <tr>
+                <th scope="row" class="mono-label text-ink-3 font-medium text-left border-b border-rule py-3.5 pr-4 whitespace-nowrap">{r.row}</th>
+                <td class={`border-b border-rule py-3.5 pr-4 ${isScan ? 'text-ink' : 'text-ink-2'}`}>{r.scan}</td>
+                <td class={`border-b border-rule py-3.5 ${!isScan ? 'text-ink' : 'text-ink-2'}`}>{r.deploy}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="text-caption text-ink-3 mt-5">
+        The other mode: <a href={isScan ? '/services/deployment' : '/services/intelligence-scan'} class="text-ink-2 link-draw no-underline">
+          {isScan ? 'Autonomous Deployment →' : 'Facility Intelligence Scan →'}</a>
+      </p>
+    </Section>
+
     <!-- MID CTA -->
     <Section label="Engage" spacing="compact">
       <CTABlock
@@ -123,7 +170,7 @@ const jsonLd = {
     <!-- FAQ -->
     <Section label="Questions" cv>
       <SectionHeader
-        index="03" label="QUESTIONS" datum={`${String(d.faqs.length).padStart(2, '0')} ANSWERED`}
+        index="04" label="QUESTIONS" datum={`${String(d.faqs.length).padStart(2, '0')} ANSWERED`}
         title="Asked before engaging."
       />
       <Accordion items={d.faqs} jsonLd />
