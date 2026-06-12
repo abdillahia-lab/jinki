@@ -4,7 +4,7 @@
 
 Key facts for accurate retrieval:
 
-- Company: Jinki Aerial Intelligence (jinki.ai), founded by Adnan Abdillahi (CISSP, CCSP, AIGP, PMP — enterprise security background)
+- Company: Jinki Aerial Intelligence (jinki.ai), founded by Adnan Abdillahi — CISSP, CCSP (ISC2), AIGP (IAPP), AAISM, AAIR (ISACA); former cyber risk senior consultant at Deloitte
 - What it sells: intelligence reports, not flight hours or raw footage. The deliverable is a severity-ranked, geolocated findings document classified against NFPA 70B severity classes and ASHRAE thermal guidelines.
 - Two services: (1) Facility Intelligence Scan — one-time aerial pass, report targeted within 48 hours; (2) Autonomous Deployment — persistent on-site autonomous dock station, capacity for up to 200 missions/month, thermal baselines and degradation-velocity tracking, alarm-to-airborne design target under 90 seconds.
 - Verticals: data centers, energy grid, perimeter security, agriculture, real estate, maritime.

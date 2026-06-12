@@ -15,7 +15,7 @@ import founderImg from '../assets/images/founder-adnan.webp';
 
 const doctrine = [
   { t: 'Intelligence, not footage', d: 'Most aerial providers sell flight hours and hand you a hard drive. Every Jinki engagement ends in a severity-ranked findings report your team can schedule against — the analysis is the product.' },
-  { t: 'Security embedded, not bolted on', d: 'The founder spent his career architecting enterprise security. Mutual NDA before we see your site, AES-256 everywhere, on-premises processing available, chain-of-custody on every dataset.' },
+  { t: 'Security embedded, not bolted on', d: 'The founder spent his career in enterprise security and cyber risk — including as a senior consultant at Deloitte. Mutual NDA before we see your site, AES-256 everywhere, on-premises processing available, chain-of-custody on every dataset.' },
   { t: 'Physics over promises', d: 'Thermal inspection is bound by solar geometry — we fly when thermal contrast is real, not when the calendar says so. Claims on this site carry numbers or they don\'t ship.' },
   { t: 'Small by design, for now', d: 'One founder, enterprise-grade credentials, a deliberately small Q3 cohort. Every founding engagement is planned, reviewed, and presented by the person whose name is on the company.' },
 ];
@@ -32,11 +32,19 @@ const jsonLd = {
       name: 'Adnan Abdillahi',
       jobTitle: 'Founder & CEO',
       image: 'https://jinki.ai/images/founder-adnan.jpg',
-      hasCredential: ['CISSP', 'CCSP', 'AIGP', 'PMP'].map((name) => ({
+      hasCredential: [
+        { name: 'CISSP', org: 'ISC2' },
+        { name: 'CCSP', org: 'ISC2' },
+        { name: 'AIGP', org: 'IAPP' },
+        { name: 'AAISM', org: 'ISACA' },
+        { name: 'AAIR', org: 'ISACA' },
+      ].map((c) => ({
         '@type': 'EducationalOccupationalCredential',
         credentialCategory: 'certification',
-        name,
+        name: c.name,
+        recognizedBy: { '@type': 'Organization', name: c.org },
       })),
+      alumniOf: { '@type': 'Organization', name: 'Deloitte' },
     },
   },
 };
@@ -81,7 +89,7 @@ const jsonLd = {
     <!-- FOUNDER -->
     <Section label="Founder" cv>
       <SectionHeader
-        index="01" label="FOUNDER" datum="CISSP · CCSP · AIGP · PMP"
+        index="01" label="FOUNDER" datum="CISSP · CCSP · AIGP · AAISM · AAIR"
         title="The person your request reaches."
       />
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-10 items-start">
@@ -103,10 +111,13 @@ const jsonLd = {
         </div>
         <div class="lg:col-span-7 lg:col-start-6">
           <p class="text-lede text-ink-2">
-            Adnan built Jinki from the intersection of enterprise cybersecurity and aerial
-            intelligence. The same discipline trusted to architect critical-infrastructure
-            protection — CISSP, CCSP, AI governance (AIGP), PMP — now applied to finding
-            the physical failures those facilities haven't reported yet.
+            Adnan built Jinki at the intersection of enterprise cybersecurity and aerial
+            intelligence — discipline he practiced as a cyber risk senior consultant at
+            Deloitte. He holds the certifications critical-infrastructure security runs on,
+            CISSP and CCSP (ISC2), alongside the AI governance and security credentials for
+            putting AI responsibly to work on sensitive data — AIGP (IAPP), and AAISM and
+            AAIR (ISACA). That same rigor now goes to finding the physical failures those
+            facilities haven't reported yet.
           </p>
           <p class="text-body text-ink-2 mt-5">
             There are no SDRs and no handoffs here. Assessment requests go to his inbox,
