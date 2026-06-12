@@ -19,7 +19,10 @@ const PHASES = [
     <div class="max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16 pt-6">
       <div class="folio-rule rule-draw flex items-baseline justify-between gap-4 pt-3 mb-6">
         <span class="mono-label text-ink-3"><span class="text-signal">02</span>&nbsp;/&nbsp;THE MISSION</span>
-        <span class="mono-label text-ink-3" data-mission-phase-label>SCROLL TO RUN THE MISSION</span>
+        <span class="flex items-baseline gap-5">
+          <span class="mono-label text-ink-3" data-mission-phase-label>SCROLL TO RUN THE MISSION</span>
+          <a href="#verticals" class="mono-label text-ink-3 no-underline hover:text-ink transition-colors" data-mission-skip>SKIP ↓</a>
+        </span>
       </div>
     </div>
 
@@ -77,7 +80,7 @@ const PHASES = [
 </section>
 
 <style>
-  .mission-host { position: relative; height: 280vh; }
+  .mission-host { position: relative; height: 220vh; }
   .mission-sticky { position: sticky; top: 4rem; }
   .mission-stage [data-mission-frame] { aspect-ratio: 16 / 8.5; max-height: min(62vh, 640px); width: 100%; }
   .mission-canvas { opacity: 0; transition: opacity 0.6s ease; }

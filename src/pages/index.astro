@@ -22,13 +22,21 @@ import MissionPlayer from '../components/scenes/MissionPlayer.astro';
 import heroVisible from '../assets/images/dc-rooftop-aerial.webp';
 import heroThermal from '../assets/images/dc-rooftop-aerial-thermal.webp';
 import heroGrid from '../data/thermal/dc-rooftop-aerial.json';
+import reportP1 from '../assets/images/report-p1.webp';
+import reportP3 from '../assets/images/report-p3.webp';
+import thumbDc from '../assets/images/thumb-data-centers.webp';
+import thumbEnergy from '../assets/images/thumb-energy-grid.webp';
+import thumbSecurity from '../assets/images/thumb-security.webp';
+import thumbAg from '../assets/images/thumb-agriculture.webp';
+import thumbRe from '../assets/images/thumb-real-estate.webp';
+import { Image } from 'astro:assets';
 
 const verticalRows = [
-  { index: '01', title: 'Data Centers', description: 'Rooftop HVAC cascade, membrane moisture, NFPA 70B hot spots — found before the outage.', datum: '±0.5°C', href: '/verticals/data-centers' },
-  { index: '02', title: 'Energy Grid', description: 'Corridor sweeps for line hardware, vegetation encroachment, and component heat signatures.', datum: '50 MI/DAY', href: '/verticals/energy-grid' },
-  { index: '03', title: 'Security', description: 'Perimeter thermal surveillance with sub-90-second alert-to-verification.', datum: '<90 S', href: '/verticals/security' },
-  { index: '04', title: 'Agriculture', description: 'Irrigation anomalies, crop stress, and drainage mapped across full acreage.', datum: '1,000+ AC', href: '/verticals/agriculture' },
-  { index: '05', title: 'Real Estate', description: 'Envelope performance, roof condition, and documentation for luxury portfolios.', datum: 'PORTFOLIO', href: '/verticals/real-estate' },
+  { index: '01', title: 'Data Centers', description: 'Rooftop HVAC cascade, membrane moisture, NFPA 70B hot spots — found before the outage.', datum: '±0.5°C', href: '/verticals/data-centers', thumb: thumbDc },
+  { index: '02', title: 'Energy Grid', description: 'Corridor sweeps for line hardware, vegetation encroachment, and component heat signatures.', datum: '50 MI/DAY', href: '/verticals/energy-grid', thumb: thumbEnergy },
+  { index: '03', title: 'Security', description: 'Perimeter thermal surveillance with sub-90-second alert-to-verification.', datum: '<90 S', href: '/verticals/security', thumb: thumbSecurity },
+  { index: '04', title: 'Agriculture', description: 'Irrigation anomalies, crop stress, and drainage mapped across full acreage.', datum: '1,000+ AC', href: '/verticals/agriculture', thumb: thumbAg },
+  { index: '05', title: 'Real Estate', description: 'Envelope performance, roof condition, and documentation for luxury portfolios.', datum: 'PORTFOLIO', href: '/verticals/real-estate', thumb: thumbRe },
 ];
 
 const heroFindings = [
@@ -82,15 +90,21 @@ const process = [
               <Button href="#lead-gen" event="cta-assessment:hero">Request Q3 assessment</Button>
               <Button href="/sample-report" kind="secondary" event="cta-sample:hero">See the sample report</Button>
             </div>
-            <p class="mono-label text-ink-3 mt-10 rise max-w-none">
-              BUILT FOR:&nbsp;
-              {verticalRows.map((v, i) => (
-                <>
-                  <a href={v.href} class="text-ink-2 no-underline hover:text-signal transition-colors">{v.title.toUpperCase()}</a>
-                  {i < verticalRows.length - 1 && <span aria-hidden="true"> · </span>}
-                </>
-              ))}
-            </p>
+            <!-- Self-selection chips: a facilities director finds their
+                 door in <3s (was an 11px mono footnote) -->
+            <nav aria-label="Built for" class="mt-8 rise">
+              <p class="mono-label text-ink-3 mb-3">BUILT FOR</p>
+              <ul class="list-none m-0 p-0 flex flex-wrap gap-2">
+                {verticalRows.map((v) => (
+                  <li>
+                    <a
+                      href={v.href}
+                      class="inline-flex items-center h-10 px-4 rounded-pill border border-rule-strong no-underline font-mono text-caption text-ink-2 transition-colors hover:border-signal hover:text-ink"
+                    >{v.title}</a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
           <div class="hidden lg:flex lg:col-span-3 flex-col justify-end pb-2">
             <TelemetryStrip variant="rail" />
@@ -113,14 +127,31 @@ const process = [
       </div>
     </section>
 
-    <!-- ============ S2 CREDENTIALS ============ -->
+    <!-- ============ S2 CREDENTIALS (label pairs, half the caps weight) ============ -->
     <div class="max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16 mt-10">
-      <div class="folio-rule rule-draw pt-4 pb-1">
-        <p class="mono-label text-ink-3 max-w-none leading-relaxed">
-          FAA PART 107 · DC SFRA CERTIFIED · $5M LIABILITY PER OPERATION · NDA BY DEFAULT · NVIDIA INCEPTION
-        </p>
+      <div class="folio-rule rule-draw pt-5 pb-2 flex flex-wrap items-center gap-x-10 gap-y-4">
+        {[
+          ['FAA', 'Part 107'],
+          ['DC SFRA', 'Certified'],
+          ['$5M', 'Liability / op'],
+          ['NDA', 'By default'],
+        ].map(([k, v]) => (
+          <span class="flex items-baseline gap-2">
+            <span class="mono-label text-signal-soft">{k}</span>
+            <span class="text-caption text-ink-2">{v}</span>
+          </span>
+        ))}
+        <a href="https://www.nvidia.com/en-us/startups/" target="_blank" rel="noopener noreferrer" aria-label="NVIDIA Inception Program member" class="ml-auto opacity-75 hover:opacity-100 transition-opacity">
+          <img src="/images/nvidia-inception-badge-color.svg" alt="NVIDIA Inception Program" class="cred-badge-dark h-9 w-auto" width="180" height="78" loading="lazy" decoding="async" />
+          <img src="/images/nvidia-inception-badge-black.svg" alt="NVIDIA Inception Program" class="cred-badge-light h-9 w-auto" width="180" height="78" loading="lazy" decoding="async" />
+        </a>
       </div>
     </div>
+    <style>
+      .cred-badge-light { display: none; }
+      :global([data-theme='light']) .cred-badge-dark { display: none; }
+      :global([data-theme='light']) .cred-badge-light { display: block; }
+    </style>
 
     <!-- ============ S3 THE DELIVERABLE + STATS ============ -->
     <Section id="deliverable" label="The deliverable" cv>
@@ -129,9 +160,28 @@ const process = [
         title="The report is the product."
         lede="Not footage. Not a dashboard login. A severity-ranked findings document — every anomaly geolocated, classified against NFPA 70B and ASHRAE thresholds, with a recommended action your team can schedule."
       />
-      <StatRow stats={stats} />
-      <div class="mt-10 flex flex-wrap gap-3">
-        <Button href="/sample-report" kind="secondary" event="cta-sample:deliverable">Download the sample report</Button>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-12 items-start">
+        <div class="lg:col-span-7">
+          <StatRow stats={stats} />
+          <div class="mt-10 flex flex-wrap gap-3">
+            <Button href="/sample-report" kind="secondary" event="cta-sample:deliverable">Download the sample report</Button>
+          </div>
+        </div>
+        <!-- The actual document, rendered from the actual PDF -->
+        <a href="/sample-report" class="lg:col-span-4 lg:col-start-9 no-underline group" aria-label="Preview the sample report">
+          <div class="relative">
+            <div class="border border-rule rounded-panel overflow-hidden rotate-1 translate-x-4 absolute inset-0 opacity-60 transition-transform duration-300 group-hover:rotate-2 group-hover:translate-x-6">
+              <Image src={reportP3} alt="" width={360} loading="lazy" class="w-full" />
+            </div>
+            <div class="relative border border-rule-strong rounded-panel overflow-hidden bg-surface-1 transition-transform duration-300 group-hover:-rotate-1">
+              <Image src={reportP1} alt="Cover page of the sample facility intelligence report" width={360} loading="lazy" class="w-full" />
+              <span class="absolute bottom-0 left-0 right-0 flex items-center justify-between px-3 py-2 bg-surface-0/90 border-t border-rule mono-label text-ink-3">
+                <span>SAMPLE REPORT · 6 PP</span>
+                <span class="text-signal-soft">READ →</span>
+              </span>
+            </div>
+          </div>
+        </a>
       </div>
     </Section>
 
@@ -157,7 +207,7 @@ const process = [
       />
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10">
         <a href="/services/intelligence-scan" class="group folio-rule rule-draw block pt-6 pb-4 no-underline transition-colors hover:bg-surface-1 px-2 -mx-2">
-          <span class="mono-label text-signal block mb-3">01 · ONE-TIME</span>
+          <span class="mono-label block mb-3"><span class="text-signal-soft">01 · ONE-TIME</span>&ensp;<span class="text-ink bg-signal-dim px-2 py-0.5 rounded-[2px]">START HERE</span></span>
           <h3 class="text-h2 font-display font-medium text-ink mb-3 transition-transform duration-200 group-hover:translate-x-2">Facility Intelligence Scan</h3>
           <p class="text-body text-ink-2 mb-4">One aerial pass. Full thermal + visual capture, AI analysis, and a severity-ranked report in 48 hours. The entry point.</p>
           <span class="mono-label text-ink-3">48 HR TURNAROUND →</span>

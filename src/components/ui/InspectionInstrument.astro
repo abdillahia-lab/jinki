@@ -134,8 +134,14 @@ const uid = `inst-${Math.abs([...caption].reduce((a, c) => (a * 33 + c.charCodeA
       ))}
     </div>
     <figcaption class="flex flex-wrap items-center justify-between gap-2 border-t border-rule px-4 py-2.5">
-      <span class="mono-label text-ink-3">{caption}</span>
-      <span class="mono-label text-ink-3" data-verified-count>0/{findings.length} VERIFIED</span>
+      <span class="mono-label-long text-ink-3">{caption}</span>
+      <span class="flex items-center gap-5">
+        <span class="mono-label text-signal-soft" data-affordance>
+          <span class="hidden md:inline">MOVE THE LENS · CLICK A FINDING</span>
+          <span class="md:hidden">TAP TO INSPECT · TAP A FINDING</span>
+        </span>
+        <span class="mono-label text-ink-3" data-verified-count>0/{findings.length} VERIFIED</span>
+      </span>
     </figcaption>
   </div>
 </figure>

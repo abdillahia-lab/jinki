@@ -68,6 +68,20 @@ const ACCESS_KEY = 'b2bd961c-acf2-48a6-bf10-a5717c2dea95';
             />
           </label>
 
+          <!-- Optional context: two-field speed for the fast path, room
+               for detail for serious buyers (collapsed by default) -->
+          <details class="group">
+            <summary class="mono-label text-ink-3 cursor-pointer list-none [&::-webkit-details-marker]:hidden hover:text-ink-2 transition-colors">
+              <span class="group-open:hidden">+ ANYTHING WE SHOULD KNOW? (OPTIONAL)</span>
+              <span class="hidden group-open:inline">− ANYTHING WE SHOULD KNOW?</span>
+            </summary>
+            <textarea
+              name="message" rows="3"
+              placeholder="Site type, acreage, timeline, anything else…"
+              class="mt-3 w-full bg-surface-1 border border-rule rounded-[2px] px-3.5 py-3 text-body text-ink placeholder:text-ink-3 focus:border-signal focus:outline-none transition-colors resize-y"
+            ></textarea>
+          </details>
+
           <div>
             <button
               type="submit"

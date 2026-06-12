@@ -1,15 +1,20 @@
 ---
 /*
   Manifest — the signature index table. Replaces card grids.
-  Each row: mono index, display title, one-line description, mono datum.
+  Each row: mono index, optional thermal thumbnail (instant recognition
+  for first-contact clients), display title, description, mono datum.
   Hover: surface shifts, index turns signal, title slides 8px right.
 */
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
 interface Row {
   index: string;     // "01"
   title: string;
   description: string;
   datum?: string;    // "±0.5°C"
   href: string;
+  thumb?: ImageMetadata;
 }
 
 interface Props {
@@ -18,6 +23,7 @@ interface Props {
 }
 
 const { rows, class: className = '' } = Astro.props;
+const hasThumbs = rows.some((r) => r.thumb);
 ---
 
 <ul class={`list-none m-0 p-0 ${className}`} role="list">
@@ -25,12 +31,22 @@ const { rows, class: className = '' } = Astro.props;
     <li class="folio-rule rule-draw">
       <a
         href={row.href}
-        class="group grid grid-cols-[auto_1fr] lg:grid-cols-12 items-baseline gap-x-4 lg:gap-x-6 gap-y-1 py-6 md:py-8 px-2 -mx-2 no-underline transition-colors duration-200 hover:bg-surface-1 focus-visible:bg-surface-1"
+        class="group grid grid-cols-[auto_1fr] lg:grid-cols-12 items-center gap-x-4 lg:gap-x-6 gap-y-1 py-5 md:py-6 px-2 -mx-2 no-underline transition-colors duration-200 hover:bg-surface-1 focus-visible:bg-surface-1"
       >
-        <span class="mono-label text-ink-3 transition-colors duration-200 group-hover:text-signal lg:col-span-1 tabular">
+        <span class="mono-label text-ink-3 transition-colors duration-200 group-hover:text-signal lg:col-span-1 tabular self-baseline lg:self-center">
           {row.index}
         </span>
-        <span class="font-display font-medium text-h2 text-ink transition-transform duration-200 group-hover:translate-x-2 lg:col-span-5">
+        {hasThumbs && (
+          <span class="hidden md:block lg:col-span-1 -my-1">
+            {row.thumb && (
+              <Image
+                src={row.thumb} alt="" width={96} height={64} loading="lazy"
+                class="w-24 h-16 object-cover rounded-[2px] border border-rule opacity-85 transition-opacity duration-200 group-hover:opacity-100"
+              />
+            )}
+          </span>
+        )}
+        <span class={`font-display font-medium text-h2 text-ink transition-transform duration-200 group-hover:translate-x-2 ${hasThumbs ? 'lg:col-span-4' : 'lg:col-span-5'}`}>
           {row.title}
         </span>
         <span class="text-body text-ink-2 col-start-2 lg:col-start-7 lg:col-span-4">
