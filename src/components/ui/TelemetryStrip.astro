@@ -2,10 +2,10 @@
 /*
   TelemetryStrip — the Living Instrument (Layer A).
   Server renders static truths (region, build); client enhances with
-  live UTC, solar scan-window state (computed locally, NOAA math) and
-  field conditions (Open-Meteo, free/keyless, sessionStorage-cached).
-  Honest degradation: if anything fails, static truths remain — nothing
-  fake is ever styled as live.
+  the visitor's local clock, solar scan-window state (computed locally,
+  NOAA math, for the NoVA corridor) and field conditions (Open-Meteo,
+  free/keyless, sessionStorage-cached). Honest degradation: if anything
+  fails, static truths remain — nothing fake is ever styled as live.
 */
 interface Props {
   /** 'rail' = vertical stack (home hero); 'strip' = horizontal row (footer) */
@@ -25,7 +25,7 @@ const build = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
   } ${className}`}
   data-telemetry
 >
-  <span class="whitespace-nowrap"><span class="text-signal tabular" data-t-clock>--:--:--</span> ET</span>
+  <span class="whitespace-nowrap"><span class="text-signal tabular" data-t-clock>--:--:--</span> <span data-t-zone></span></span>
   <span class="whitespace-nowrap">OPS AREA · MID-ATLANTIC</span>
   <a
     href="/status#scan-window"
@@ -45,19 +45,25 @@ const build = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
   import { scanWindow, fmtTimeET } from '../../lib/solar';
 
   function initTelemetry(root: Element) {
-    // Operating-corridor clock — Eastern Time. This is NOT the visitor's
-    // location: it's our ops reference clock (the brand flies ET; the
-    // flight-window line below is ET too). Formatted from the device clock
-    // into the corridor's zone, so it reads correctly wherever the visitor is.
+    // Visitor's local clock — their own browser timezone (no timeZone
+    // option = runtime default). The flight-window line stays ET because
+    // that's a real fact about the NoVA corridor, not about the visitor.
     const clock = root.querySelector('[data-t-clock]');
+    const zone = root.querySelector('[data-t-zone]');
     if (clock) {
       const fmt = new Intl.DateTimeFormat('en-US', {
-        timeZone: 'America/New_York', hourCycle: 'h23',
-        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hourCycle: 'h23', hour: '2-digit', minute: '2-digit', second: '2-digit',
       });
       const tick = () => { clock.textContent = fmt.format(new Date()); };
       tick();
       setInterval(tick, 1000);
+      if (zone) {
+        try {
+          const parts = new Intl.DateTimeFormat('en-US', { timeZoneName: 'short' }).formatToParts(new Date());
+          const z = parts.find((p) => p.type === 'timeZoneName');
+          if (z) zone.textContent = z.value; // EDT, BST, GMT+9 …
+        } catch {}
+      }
     }
 
     // Solar flight window — computed locally, always true. Plain words:
