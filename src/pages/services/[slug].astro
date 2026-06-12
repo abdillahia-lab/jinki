@@ -157,6 +157,30 @@ const jsonLd = {
       </p>
     </Section>
 
+    <!-- THE LADDER — pilot path, named (M4) -->
+    <Section label="Engagement ladder" cv>
+      <SectionHeader
+        index="04" label="THE LADDER" datum="03 RUNGS"
+        title="Start small. Scale on evidence."
+        lede="No engagement asks for trust we haven't earned yet — each rung produces the proof the next one stands on."
+      />
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6">
+        {[
+          { n: '01', name: 'FOUNDING SCAN', datum: 'T+48H', body: 'One mission at the locked founding rate. Full facility pass, severity-ranked report in 48 hours. Zero integration required.' },
+          { n: '02', name: '90-DAY PILOT', datum: 'ONE QUARTER', body: 'Persistent coverage on one site for one quarter — baselines, alert verification, and the trend line that makes the case.' },
+          { n: '03', name: 'ANNUAL PROGRAM', datum: 'STANDING', body: 'Standing coverage with degradation-velocity tracking and founder-direct reporting, priced on scope.' },
+        ].map((r) => (
+          <div class="folio-rule rule-draw pt-5 pb-6">
+            <div class="flex items-baseline justify-between gap-4 mb-2">
+              <span class="mono-label text-signal">{r.n} · {r.name}</span>
+              <span class="mono-label text-ink-3">{r.datum}</span>
+            </div>
+            <p class="text-body text-ink-2">{r.body}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+
     <!-- MID CTA -->
     <Section label="Engage" spacing="compact">
       <CTABlock
@@ -170,7 +194,7 @@ const jsonLd = {
     <!-- FAQ -->
     <Section label="Questions" cv>
       <SectionHeader
-        index="04" label="QUESTIONS" datum={`${String(d.faqs.length).padStart(2, '0')} ANSWERED`}
+        index="05" label="QUESTIONS" datum={`${String(d.faqs.length).padStart(2, '0')} ANSWERED`}
         title="Asked before engaging."
       />
       <Accordion items={d.faqs} jsonLd />

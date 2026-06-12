@@ -17,9 +17,19 @@ import CTABlock from '../components/ui/CTABlock.astro';
 
 const build = new Date().toISOString().slice(0, 10);
 
+// Owner-set cohort capacity. Publish real numbers only — while null the
+// row stays qualitative. e.g.: const FOUNDING_SLOTS = { open: 6, total: 8 };
+const FOUNDING_SLOTS: { open: number; total: number } | null = null;
+
 const rows = [
   { label: 'BOOKING WINDOW', value: 'Q3 2026 ASSESSMENTS — OPEN', state: 'ok' },
-  { label: 'FOUNDING COHORT', value: 'ACCEPTING — LIMITED SLOTS', state: 'ok' },
+  {
+    label: 'FOUNDING COHORT',
+    value: FOUNDING_SLOTS
+      ? `${FOUNDING_SLOTS.open} OF ${FOUNDING_SLOTS.total} SLOTS OPEN`
+      : 'ACCEPTING — LIMITED SLOTS',
+    state: 'ok',
+  },
   { label: 'RESPONSE COMMITMENT', value: '< 1 BUSINESS DAY, FOUNDER-DIRECT', state: 'ok' },
   { label: 'OPERATING AUTHORITY', value: 'FAA PART 107 · DC SFRA AUTHORIZATION', state: 'ok' },
   { label: 'LIABILITY COVERAGE', value: '$5M PER OPERATION', state: 'ok' },

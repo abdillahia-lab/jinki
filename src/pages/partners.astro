@@ -1,0 +1,125 @@
+---
+/*
+  Partners — the referral motion (M4). The firms already inside the
+  client's building (MEP, roofing, commissioning, loss control) refer
+  the aerial layer; their client relationship stays theirs. No fake
+  partner logos, no fabricated program tiers — the offer, plainly.
+*/
+import Base from '../layouts/Base.astro';
+import Nav from '../components/ui/Nav.astro';
+import Footer from '../components/ui/Footer.astro';
+import Section from '../components/ui/Section.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import Button from '../components/ui/Button.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import Accordion from '../components/ui/Accordion.astro';
+import LeadForm from '../components/ui/LeadForm.astro';
+
+const WHO = [
+  { tag: 'MEP + COMMISSIONING', title: 'Engineering & commissioning firms', body: 'Your punch list gains a thermal layer — envelope and plant anomalies documented from above, delivered under your engagement, on your letterhead requirements.' },
+  { tag: 'ROOFING CONSULTANTS', title: 'Roof consultants & contractors', body: 'Moisture mapping across the whole membrane in one pass — the survey that scopes the core cuts before anyone walks the roof.' },
+  { tag: 'LOSS CONTROL', title: 'Insurance loss-control teams', body: 'Geolocated, time-stamped condition evidence for the facilities you already inspect — pre-season baselines and post-event documentation in 48 hours.' },
+  { tag: 'FACILITY MANAGEMENT', title: 'FM and property-management firms', body: 'One aerial program across your whole portfolio, one report format, findings ranked so your work-order queue writes itself.' },
+];
+
+const HOW = [
+  { mono: '01', title: 'You refer the site', sub: 'A name and a contact — or bring us in under your own engagement as a sub.' },
+  { mono: '02', title: 'We fly and analyze', sub: 'Mission, AI analysis, severity-ranked findings in 48 hours. Your client deals with you; the NDA covers everyone.' },
+  { mono: '03', title: 'You deliver the value', sub: 'Findings feed your deliverable — your scope grows, your client relationship stays exactly yours.' },
+];
+
+const FAQS = [
+  { q: 'Do you compete with us for the follow-on work?', a: 'No. Jinki sells intelligence — we do not perform repairs, roofing, MEP work, or remediation, so every finding in the report is scope for you, not for us.' },
+  { q: 'Can the report be delivered under our engagement?', a: 'Yes. Findings can be packaged as an input to your deliverable, with Jinki as the named subconsultant — or directly to the client with you credited for the referral. Your call.' },
+  { q: 'Is there a formal referral fee?', a: 'Partner terms are agreed directly and in writing per engagement — talk to the founder. What we will not do is hide a fee in the client\'s price.' },
+  { q: 'What does it cost to be a partner?', a: 'Nothing. There is no certification tier, no portal fee, no quota. The program is an agreement and a phone number.' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Partner Program — Jinki Aerial Intelligence',
+  description: 'Referral and subconsultant program for MEP firms, roofing consultants, commissioning agents, and insurance loss-control teams.',
+};
+---
+
+<Base
+  title="Partner Program — Jinki Aerial Intelligence"
+  description="For MEP firms, roofing consultants, commissioning agents, and loss-control teams: add an aerial thermal layer to your engagements. Your client stays yours; every finding is your scope."
+  jsonLd={jsonLd}
+>
+  <Nav />
+  <Breadcrumb items={[{ label: 'Partners' }]} />
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section aria-label="Partner program" class="pt-8 md:pt-12">
+      <div class="max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16">
+        <div class="folio-rule rule-draw flex items-baseline justify-between gap-4 pt-3 mb-10">
+          <span class="mono-label text-ink-3"><span class="text-signal">PTR</span>&nbsp;/&nbsp;PARTNERS // REFERRAL · SUBCONSULTANT</span>
+          <span class="mono-label text-ink-3">NO FEES · NO TIERS</span>
+        </div>
+        <h1 class="text-h1 font-display font-medium text-ink max-w-[20ch] rise">
+          You're already in the building. <em class="not-italic text-signal">We're the layer above it.</em>
+        </h1>
+        <p class="text-lede text-ink-2 max-w-[58ch] mt-6 rise">
+          MEP engineers, roof consultants, commissioning agents, loss-control teams —
+          your engagements gain an aerial thermal layer, your client relationship
+          stays yours, and every finding in the report is scope for your firm, not ours.
+        </p>
+        <div class="flex flex-wrap items-center gap-3 mt-7 rise">
+          <Button href="#lead-gen" event="cta-partner:hero">Start a partner conversation</Button>
+          <Button href="/sample-report" kind="secondary" event="cta-sample:partners">See the deliverable</Button>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHO -->
+    <Section label="Who this is for" cv class="mt-8">
+      <SectionHeader
+        index="01" label="WHO" datum="04 PRACTICES"
+        title="Firms the findings belong to."
+        lede="We deliberately do not perform remediation. That makes every severity-ranked finding downstream work for the firm that brought us in."
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+        {WHO.map((w) => (
+          <div class="folio-rule rule-draw pt-5 pb-6">
+            <span class="mono-label text-signal block mb-2">{w.tag}</span>
+            <h3 class="text-h3 font-display font-medium text-ink mb-2">{w.title}</h3>
+            <p class="text-body text-ink-2">{w.body}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+
+    <!-- HOW -->
+    <Section label="How it works" cv>
+      <SectionHeader
+        index="02" label="MECHANICS" datum="03 STEPS"
+        title="The whole program."
+      />
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6">
+        {HOW.map((h) => (
+          <div class="folio-rule rule-draw pt-5 pb-6">
+            <span class="mono-label text-signal block mb-2">{h.mono}</span>
+            <h3 class="text-h3 font-display font-medium text-ink mb-2">{h.title}</h3>
+            <p class="text-body text-ink-2">{h.sub}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+
+    <!-- FAQ -->
+    <Section label="Questions" cv>
+      <SectionHeader
+        index="03" label="QUESTIONS" datum="PARTNER SPECIFIC"
+        title="Asked by firms first."
+      />
+      <Accordion items={FAQS} jsonLd />
+    </Section>
+
+    <LeadForm heading="Start a partner conversation" context="/partners" />
+
+  </main>
+  <Footer />
+</Base>

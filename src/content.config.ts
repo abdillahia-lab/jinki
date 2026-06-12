@@ -105,44 +105,4 @@ const services = defineCollection({
   }),
 });
 
-// Metro pages: one YAML per metro; each lists only the verticals with a
-// real local story (curated matrix, not a cross-product — every page must
-// carry airspace/infrastructure content competitors can't template out).
-const locations = defineCollection({
-  loader: glob({ pattern: '*.yaml', base: './src/content/locations' }),
-  schema: z.object({
-    title: z.string(),                 // "Northern Virginia"
-    short: z.string(),                 // "NOVA" — mono chips and datums
-    order: z.number(),
-    metaTitle: z.string(),
-    metaDescription: z.string(),
-    hero: z.object({
-      kicker: z.string(),
-      headline: z.string(),            // may contain ONE <em>
-      sub: z.string(),
-      datum: z.string(),
-    }),
-    airspace: z.object({
-      label: z.string(),               // "DC SFRA · IAD CLASS B"
-      body: z.string(),                // the moat paragraph
-      facts: z.array(z.object({ key: z.string(), value: z.string() })).min(3).max(6),
-    }),
-    coverage: z.object({
-      body: z.string(),                // response/drive-time framing
-      areas: z.array(z.string()).min(3).max(10),  // named coverage areas
-    }),
-    verticals: z.array(z.object({
-      slug: z.string(),                // must match a verticals collection id
-      headline: z.string(),
-      intro: z.string(),               // local-specific paragraph
-      points: z.array(z.object({
-        tag: z.string(),
-        body: z.string(),
-      })).min(3).max(5),
-      faqs: z.array(faq).min(2).max(4),
-    })).min(2).max(6),
-    areaServed: z.array(z.string()).min(1),  // JSON-LD areaServed names
-  }),
-});
-
-export const collections = { blog, verticals, services, locations };
+export const collections = { blog, verticals, services };

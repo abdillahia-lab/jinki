@@ -1,0 +1,132 @@
+---
+/*
+  Procurement — the enterprise unlock (M4). Vendor-onboarding readiness,
+  stated plainly: what documents exist, what arrives on request, and the
+  four-step path to an open vendor record. The pack itself is sent by the
+  founder same-day — the form below is the gate.
+*/
+import Base from '../layouts/Base.astro';
+import Nav from '../components/ui/Nav.astro';
+import Footer from '../components/ui/Footer.astro';
+import Section from '../components/ui/Section.astro';
+import SectionHeader from '../components/ui/SectionHeader.astro';
+import Button from '../components/ui/Button.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import Accordion from '../components/ui/Accordion.astro';
+import LeadForm from '../components/ui/LeadForm.astro';
+
+const PACK = [
+  { doc: 'MUTUAL NDA', status: 'ON REQUEST', body: 'Our two-page mutual template, or redline yours — every engagement starts here, before we see your site.' },
+  { doc: 'CERTIFICATE OF INSURANCE', status: 'ON REQUEST', body: '$5M liability per operation; your entity named as additional insured for the engagement.' },
+  { doc: 'W-9', status: 'ON REQUEST', body: 'Current signed W-9 for your vendor record, same-day.' },
+  { doc: 'SECURITY BRIEF', status: 'DOWNLOAD NOW', href: '/docs/jinki-security-brief.pdf', body: 'Data handling, encryption posture, NIST 800-53-based controls, on-premises processing option — the one-pager your security review wants first.' },
+  { doc: 'OPERATING AUTHORITY', status: 'ON REQUEST', body: 'FAA Part 107 certification and DC SFRA authorization documentation for your compliance file.' },
+];
+
+const STEPS = [
+  { title: 'Request the pack', sub: 'The form below, or info@jinki.ai. Documents arrive same business day.', mono: 'T+0' },
+  { title: 'Mutual NDA executed', sub: 'Ours or yours. Nothing about your facility is discussed in detail before this.', mono: 'DAY 1' },
+  { title: 'Vendor record opened', sub: 'COI, W-9, and any questionnaire your portal requires — we complete them in your format.', mono: 'DAYS 2-5' },
+  { title: 'Scan scheduled', sub: 'Scope agreed in a fixed-price SOW; mission scheduled against weather and airspace windows.', mono: 'WEEK 2' },
+];
+
+const FAQS = [
+  { q: 'Can you complete our security questionnaire?', a: 'Yes. Controls are built on NIST 800-53; the founder holds CISSP and CCSP and answers questionnaires personally. SOC 2 Type I is on the roadmap and we say so plainly — we will not claim it before it is attained.' },
+  { q: 'Will you register in our procurement portal?', a: 'Yes — vendor portals, supplier questionnaires, and onboarding workflows are part of the engagement, not a surcharge.' },
+  { q: 'Does your insurance meet standard facility-services requirements?', a: 'Coverage is $5M liability per operation with additional-insured naming available. Send your requirements with the pack request and we confirm against them directly.' },
+  { q: 'How is pricing structured for procurement?', a: 'Fixed-price SOW per engagement, scoped before signature. No hourly billing, no change-order culture — the founding-rate scan is a single line item.' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Procurement — Jinki Aerial Intelligence',
+  description: 'Vendor onboarding documents and process: mutual NDA, $5M COI, W-9, security brief, FAA operating authority.',
+};
+---
+
+<Base
+  title="Procurement & Vendor Onboarding — Jinki Aerial Intelligence"
+  description="Everything your vendor review needs, unprompted: mutual NDA, $5M certificate of insurance, W-9, security brief, and FAA operating authority — same business day."
+  jsonLd={jsonLd}
+>
+  <Nav />
+  <Breadcrumb items={[{ label: 'Procurement' }]} />
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section aria-label="Procurement" class="pt-8 md:pt-12">
+      <div class="max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16">
+        <div class="folio-rule rule-draw flex items-baseline justify-between gap-4 pt-3 mb-10">
+          <span class="mono-label text-ink-3"><span class="text-signal">PRC</span>&nbsp;/&nbsp;PROCUREMENT // VENDOR ONBOARDING</span>
+          <span class="mono-label text-ink-3">SAME BUSINESS DAY</span>
+        </div>
+        <h1 class="text-h1 font-display font-medium text-ink max-w-[20ch] rise">
+          Built to pass your vendor review <em class="not-italic text-signal">before it starts</em>.
+        </h1>
+        <p class="text-lede text-ink-2 max-w-[58ch] mt-6 rise">
+          Enterprise buyers can't even open a vendor record without the paperwork.
+          Ours is assembled, current, and sent the same business day you ask —
+          NDA, insurance, tax forms, security posture, operating authority.
+        </p>
+        <div class="flex flex-wrap items-center gap-3 mt-7 rise">
+          <Button href="#lead-gen" event="cta-pack:hero">Request the procurement pack</Button>
+          <Button href="/docs/jinki-security-brief.pdf" kind="secondary" event="dl-security-brief:procurement">Download the security brief</Button>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE PACK -->
+    <Section label="The pack" cv class="mt-8">
+      <SectionHeader
+        index="01" label="THE PACK" datum={`${String(PACK.length).padStart(2, '0')} DOCUMENTS`}
+        title="What's in it."
+        lede="The documents a facilities, risk, or sourcing team needs to onboard an inspection vendor — offered unprompted, because waiting to be asked is how vendors signal they've never done this."
+      />
+      <ul class="list-none m-0 p-0">
+        {PACK.map((p) => (
+          <li class="folio-rule rule-draw">
+            <div class="grid grid-cols-[1fr_auto] md:grid-cols-12 items-baseline gap-x-4 md:gap-x-6 gap-y-1.5 py-5">
+              <span class="mono-label text-ink md:col-span-3">{p.doc}</span>
+              {p.href
+                ? <a href={p.href} class="mono-label text-signal no-underline hover:text-signal-soft transition-colors md:col-start-11 md:col-span-2 md:text-right md:order-last">{p.status}&nbsp;→</a>
+                : <span class="mono-label text-ink-3 md:col-start-11 md:col-span-2 md:text-right md:order-last">{p.status}</span>}
+              <span class="text-body text-ink-2 col-span-2 md:col-span-7 md:col-start-4">{p.body}</span>
+            </div>
+          </li>
+        ))}
+        <li class="folio-rule" aria-hidden="true"></li>
+      </ul>
+    </Section>
+
+    <!-- THE PROCESS -->
+    <Section label="Onboarding path" cv>
+      <SectionHeader
+        index="02" label="ONBOARDING" datum="04 STEPS"
+        title="Request to scheduled, in two weeks."
+      />
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-x-6">
+        {STEPS.map((s) => (
+          <div class="folio-rule rule-draw pt-5 pb-6">
+            <span class="mono-label text-signal block mb-2">{s.mono}</span>
+            <h3 class="text-h3 font-display font-medium text-ink mb-2">{s.title}</h3>
+            <p class="text-body text-ink-2">{s.sub}</p>
+          </div>
+        ))}
+      </div>
+    </Section>
+
+    <!-- FAQ -->
+    <Section label="Questions" cv>
+      <SectionHeader
+        index="03" label="QUESTIONS" datum="PROCUREMENT SPECIFIC"
+        title="Asked by sourcing teams."
+      />
+      <Accordion items={FAQS} jsonLd />
+    </Section>
+
+    <LeadForm heading="Request the procurement pack" context="/procurement" />
+
+  </main>
+  <Footer />
+</Base>
