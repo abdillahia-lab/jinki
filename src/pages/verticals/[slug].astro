@@ -96,7 +96,7 @@ const jsonLd = {
     <section aria-label={d.title} class="pt-8 md:pt-12">
       <div class="max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16">
         <div class="folio-rule rule-draw flex items-baseline justify-between gap-4 pt-3 mb-10">
-          <span class="mono-label text-ink-3"><span class="text-signal">{d.index}</span>&nbsp;/&nbsp;{d.hero.kicker}</span>
+          <span class="mono-label text-ink-3"><span class="text-signal" style={`view-transition-name: folio-${vertical.id}`}>{d.index}</span>&nbsp;/&nbsp;{d.hero.kicker}</span>
           <span class="mono-label text-ink-3">{d.hero.datum}</span>
         </div>
         <h1 class="text-h1 font-display font-medium text-ink max-w-[18ch] rise" set:html={d.hero.headline} />

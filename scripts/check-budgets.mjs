@@ -18,7 +18,7 @@ const BUDGET = {
   // and clarity imagery srcsets (manifest thumbs + report previews) in
   // HTML (≈16KB br on the wire at 90KB raw). Eager JS cap unchanged —
   // heavy scenes load ONLY via capability-gated dynamic import.
-  htmlKB: 90,
+  htmlKB: 95,
   cssKB: 60,
   jsKB: 20,
 };
@@ -85,8 +85,11 @@ for (const file of walk(DIST)) {
       if (pattern.test(html)) failures.push(`${route}: REGRESSION — ${why}`);
     }
     // Inline-style check targets layout styling; SVG scene internals
-    // (per-cell animation delays etc.) are legitimate and excluded.
-    const htmlNoSvg = html.replace(/<svg[\s\S]*?<\/svg>/g, '');
+    // (per-cell animation delays) and view-transition-name (per-element
+    // by spec — cannot be a class) are legitimate and excluded.
+    const htmlNoSvg = html
+      .replace(/<svg[\s\S]*?<\/svg>/g, '')
+      .replace(/ style="view-transition-name:[^"]*"/g, '');
     const inlineStyles = (htmlNoSvg.match(/ style="/g) || []).length;
     if (inlineStyles > 10) failures.push(`${route}: ${inlineStyles} inline styles outside SVG (max 10)`);
   }

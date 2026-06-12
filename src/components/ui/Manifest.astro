@@ -33,7 +33,10 @@ const hasThumbs = rows.some((r) => r.thumb);
         href={row.href}
         class="group grid grid-cols-[auto_1fr] lg:grid-cols-12 items-center gap-x-4 lg:gap-x-6 gap-y-1 py-5 md:py-6 px-2 -mx-2 no-underline transition-colors duration-200 hover:bg-surface-1 focus-visible:bg-surface-1"
       >
-        <span class="mono-label text-ink-3 transition-colors duration-200 group-hover:text-signal lg:col-span-1 tabular self-baseline lg:self-center">
+        <span
+          class="mono-label text-ink-3 transition-colors duration-200 group-hover:text-signal lg:col-span-1 tabular self-baseline lg:self-center"
+          style={`view-transition-name: folio-${row.href.split('/').filter(Boolean).pop()}`}
+        >
           {row.index}
         </span>
         {hasThumbs && (

@@ -1,0 +1,27 @@
+---
+/*
+  ActBreak — the act boundary (W3). A full-bleed thermal band that
+  draws across the viewport as it enters: the only polychrome element,
+  marking the document's act structure. Chromium: scroll-linked scaleX;
+  elsewhere: the W1 .in fallback plays it once.
+*/
+interface Props {
+  /** Mono annotation centered under the band, e.g. "ACT II · THE PROOF" */
+  label?: string;
+}
+const { label } = Astro.props;
+---
+
+<div class="act-break" role="presentation">
+  <div class="act-break-band thermal-band rule-draw"></div>
+  {label && <p class="mono-label text-ink-3 text-center mt-4 max-w-none">{label}</p>}
+</div>
+
+<style>
+  .act-break { padding-block: clamp(1.5rem, 1rem + 2vw, 3rem); }
+  .act-break-band {
+    height: 2px;
+    width: 100%;
+    transform-origin: center;
+  }
+</style>

@@ -216,9 +216,18 @@ const inServices = services.some((s) => isActive(s.href));
       try { localStorage.setItem('jinki-theme', next); } catch {}
     });
   });
-  // Labels track data-theme from ANY source (toggle, page-forced theme,
-  // future auto-twilight) — not just our own click handler.
-  new MutationObserver(setLabels).observe(document.documentElement, {
+  // Labels + browser chrome track data-theme from ANY source (toggle,
+  // page-forced theme, palette action) — not just our own click handler.
+  // W5: meta theme-color follows the live theme so iOS status bar /
+  // Android chrome match DAY/NIGHT OPS.
+  const syncThemeColor = () => {
+    const dark = document.documentElement.getAttribute('data-theme') !== 'light';
+    document.querySelectorAll('meta[name="theme-color"]').forEach((m) =>
+      m.setAttribute('content', dark ? '#0A0A0A' : '#F7F6F3')
+    );
+  };
+  syncThemeColor();
+  new MutationObserver(() => { setLabels(); syncThemeColor(); }).observe(document.documentElement, {
     attributes: true,
     attributeFilter: ['data-theme'],
   });

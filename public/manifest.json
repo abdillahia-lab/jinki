@@ -1,11 +1,11 @@
 {
   "name": "Jinki Aerial Intelligence",
   "short_name": "Jinki",
-  "description": "Aerial intelligence for critical infrastructure — data centers, power grids, perimeters, and agricultural operations.",
+  "description": "Aerial intelligence for critical infrastructure \u2014 data centers, power grids, perimeters, and agricultural operations.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#121416",
-  "theme_color": "#00E5FF",
+  "background_color": "#0A0A0A",
+  "theme_color": "#0A0A0A",
   "icons": [
     {
       "src": "/images/jinki-logo.png",

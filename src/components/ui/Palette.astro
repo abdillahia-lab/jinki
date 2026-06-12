@@ -1,0 +1,137 @@
+---
+/*
+  Palette — ⌘K / "/" command surface (W5). Instrument-styled: mono rows,
+  folio indexes, native <dialog>. Self-builds: this page's sections +
+  the site map + actions (theme, assessment, sample). Keyboard loop:
+  type to filter, arrows to move, Enter to go, Esc to close.
+*/
+const PAGES = [
+  { label: 'Home', href: '/' },
+  { label: 'Data Centers', href: '/verticals/data-centers' },
+  { label: 'Energy Grid', href: '/verticals/energy-grid' },
+  { label: 'Security', href: '/verticals/security' },
+  { label: 'Agriculture', href: '/verticals/agriculture' },
+  { label: 'Real Estate', href: '/verticals/real-estate' },
+  { label: 'Intelligence Scan', href: '/services/intelligence-scan' },
+  { label: 'Autonomous Deployment', href: '/services/deployment' },
+  { label: 'Sample Report', href: '/sample-report' },
+  { label: 'About', href: '/about' },
+  { label: 'Status', href: '/status' },
+  { label: 'FAQ', href: '/faq' },
+  { label: 'Contact', href: '/contact' },
+];
+---
+
+<dialog
+  data-palette
+  class="m-auto p-0 w-[min(92vw,38rem)] bg-surface-1 text-ink border border-rule-strong rounded-panel shadow-overlay backdrop:bg-surface-0/70"
+>
+  <div class="flex items-center gap-3 border-b border-rule px-4">
+    <span class="mono-label text-signal-soft shrink-0">CMD</span>
+    <input
+      type="text"
+      placeholder="Jump to a page, section, or action…"
+      class="w-full h-12 bg-transparent border-0 text-body text-ink placeholder:text-ink-3 focus:outline-none"
+      data-palette-input
+      autocomplete="off" spellcheck="false"
+    />
+    <kbd class="mono-label text-ink-3 shrink-0">ESC</kbd>
+  </div>
+  <ul class="list-none m-0 p-1.5 max-h-[50vh] overflow-y-auto" data-palette-list role="listbox"></ul>
+  <p class="mono-label text-ink-3 border-t border-rule px-4 py-2.5 max-w-none">↑↓ NAVIGATE · ↵ GO · CMD+K TOGGLE</p>
+</dialog>
+
+<style>
+  [data-palette] {
+    opacity: 0;
+    transform: translateY(6px) scale(0.99);
+    transition: opacity 0.18s var(--ease-settle), transform 0.18s var(--ease-settle),
+      overlay 0.18s allow-discrete, display 0.18s allow-discrete;
+  }
+  [data-palette][open] { opacity: 1; transform: none; }
+  @starting-style { [data-palette][open] { opacity: 0; transform: translateY(6px) scale(0.99); } }
+  [data-palette]::backdrop { opacity: 0; transition: opacity 0.18s ease, overlay 0.18s allow-discrete, display 0.18s allow-discrete; backdrop-filter: blur(2px); }
+  [data-palette][open]::backdrop { opacity: 1; }
+  @starting-style { [data-palette][open]::backdrop { opacity: 0; } }
+
+  [data-palette-list] li[aria-selected='true'] { background: var(--surface-2); }
+  [data-palette-list] li[aria-selected='true'] .pal-idx { color: var(--signal); }
+</style>
+
+<script define:vars={{ PAGES }}>
+  const dlg = document.querySelector('[data-palette]');
+  const input = dlg?.querySelector('[data-palette-input]');
+  const list = dlg?.querySelector('[data-palette-list]');
+  if (dlg && input && list) {
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const sections = [...document.querySelectorAll('main section[aria-label]')].map((s) => ({
+      kind: 'SECTION',
+      label: s.getAttribute('aria-label') ?? 'Section',
+      act: () => { dlg.close(); s.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }); },
+    }));
+    const goLeadGen = () => {
+      const el = document.getElementById('lead-gen');
+      dlg.close();
+      el ? el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }) : location.assign('/#lead-gen');
+    };
+    const entries = [
+      { kind: 'ACTION', label: 'Request Q3 assessment', act: goLeadGen },
+      { kind: 'ACTION', label: 'Toggle DAY / NIGHT OPS', act: () => { document.querySelector('[data-theme-toggle]')?.dispatchEvent(new MouseEvent('click', { bubbles: true })); } },
+      { kind: 'ACTION', label: 'Download sample report', act: () => { dlg.close(); location.assign('/sample-report'); } },
+      ...sections,
+      ...PAGES.map((p) => ({ kind: 'PAGE', label: p.label, act: () => { dlg.close(); location.assign(p.href); } })),
+    ];
+
+    let filtered = entries;
+    let sel = 0;
+    const render = () => {
+      list.textContent = '';
+      filtered.forEach((e, i) => {
+        const li = document.createElement('li');
+        li.setAttribute('role', 'option');
+        li.setAttribute('aria-selected', String(i === sel));
+        li.className = 'flex items-baseline gap-3 px-3 py-2.5 rounded-[2px] cursor-pointer';
+        const kindEl = document.createElement('span');
+        kindEl.className = 'pal-idx mono-label text-ink-3 tabular w-16 shrink-0';
+        kindEl.textContent = e.kind;
+        const labelEl = document.createElement('span');
+        labelEl.className = 'font-mono text-caption text-ink';
+        labelEl.textContent = e.label;
+        li.append(kindEl, labelEl);
+        li.addEventListener('click', e.act);
+        li.addEventListener('pointerenter', () => {
+          if (sel !== i) {
+            list.children[sel]?.setAttribute('aria-selected', 'false');
+            sel = i;
+            li.setAttribute('aria-selected', 'true');
+          }
+        });
+        list.appendChild(li);
+      });
+    };
+    const filter = () => {
+      const q = input.value.trim().toLowerCase();
+      filtered = q ? entries.filter((e) => e.label.toLowerCase().includes(q)) : entries;
+      sel = 0;
+      render();
+    };
+    input.addEventListener('input', filter);
+
+    const open = () => { input.value = ''; filter(); dlg.showModal(); input.focus(); };
+    addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        dlg.open ? dlg.close() : open();
+      } else if (e.key === '/' && !dlg.open && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName ?? '')) {
+        e.preventDefault();
+        open();
+      }
+    });
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); sel = Math.min(sel + 1, filtered.length - 1); render(); list.children[sel]?.scrollIntoView({ block: 'nearest' }); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); sel = Math.max(sel - 1, 0); render(); list.children[sel]?.scrollIntoView({ block: 'nearest' }); }
+      else if (e.key === 'Enter') { e.preventDefault(); filtered[sel]?.act(); }
+    });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  }
+</script>

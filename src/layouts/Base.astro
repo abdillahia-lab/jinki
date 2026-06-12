@@ -7,6 +7,7 @@
 */
 import '../styles/system.css';
 import SectionMinimap from '../components/ui/SectionMinimap.astro';
+import Palette from '../components/ui/Palette.astro';
 
 interface Props {
   title?: string;
@@ -100,6 +101,7 @@ const orgSchema = {
     <a href="#main-content" class="skip-to-content">Skip to content</a>
     <slot />
     <SectionMinimap />
+    <Palette />
 
     <script>
       // W1: universal reveals (Safari/Firefox) — ~1.2KB, eager
@@ -131,6 +133,7 @@ const orgSchema = {
           href="#lead-gen"
           class="inline-flex items-center h-10 px-5 rounded-pill bg-btn text-btn-fg no-underline font-sans text-caption font-medium min-w-11"
           data-event="cta-assessment:dock"
+          onclick="navigator.vibrate?.(8)"
         >Request Q3</a>
       </div>
     </div>

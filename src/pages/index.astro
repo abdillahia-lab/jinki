@@ -18,6 +18,7 @@ import CTABlock from '../components/ui/CTABlock.astro';
 import LeadForm from '../components/ui/LeadForm.astro';
 import InspectionInstrument from '../components/ui/InspectionInstrument.astro';
 import MissionPlayer from '../components/scenes/MissionPlayer.astro';
+import ActBreak from '../components/ui/ActBreak.astro';
 
 import heroVisible from '../assets/images/dc-rooftop-aerial.webp';
 import heroThermal from '../assets/images/dc-rooftop-aerial-thermal.webp';
@@ -153,6 +154,9 @@ const process = [
       :global([data-theme='light']) .cred-badge-light { display: block; }
     </style>
 
+    <!-- ════════ ACT II — THE PROOF ════════ -->
+    <ActBreak label="THE PROOF" />
+
     <!-- ============ S3 THE DELIVERABLE + STATS ============ -->
     <Section id="deliverable" label="The deliverable" cv>
       <SectionHeader
@@ -197,6 +201,9 @@ const process = [
       />
       <Manifest rows={verticalRows} />
     </Section>
+
+    <!-- ════════ ACT III — THE DECISION ════════ -->
+    <ActBreak label="THE DECISION" />
 
     <!-- ============ S5 TWO SERVICES ============ -->
     <Section id="services" label="Services" cv>
