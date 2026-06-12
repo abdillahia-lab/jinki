@@ -39,6 +39,13 @@ const ACCESS_KEY = 'b2bd961c-acf2-48a6-bf10-a5717c2dea95';
             </li>
           ))}
         </ul>
+        {!context.startsWith('/sample-report') && (
+          <p class="mt-8 rise">
+            <a href="/sample-report" class="mono-label text-signal-soft no-underline hover:text-signal transition-colors" data-event={`cta-sample:leadform${context || '/'}`}>
+              PREFER TO READ FIRST? THE SAMPLE REPORT&nbsp;→
+            </a>
+          </p>
+        )}
       </div>
 
       <div class="lg:col-span-5 lg:col-start-8">

@@ -14,7 +14,6 @@ import TelemetryStrip from '../components/ui/TelemetryStrip.astro';
 import StatRow from '../components/ui/StatRow.astro';
 import Manifest from '../components/ui/Manifest.astro';
 import ProcessTimeline from '../components/ui/ProcessTimeline.astro';
-import CTABlock from '../components/ui/CTABlock.astro';
 import LeadForm from '../components/ui/LeadForm.astro';
 import InspectionInstrument from '../components/ui/InspectionInstrument.astro';
 import MissionPlayer from '../components/scenes/MissionPlayer.astro';
@@ -263,7 +262,7 @@ const process = [
         <div class="lg:col-span-5 lg:col-start-8">
           <ul class="list-none m-0 p-0">
             {[
-              { t: 'Founding rate', d: 'Locked engagement pricing for the first cohort.' },
+              { t: 'Founding rate', d: 'First-cohort engagement pricing, held for founding clients.' },
               { t: 'Priority scheduling', d: 'First access to Q3 assessment windows.' },
               { t: 'Direct founder involvement', d: 'The founder plans, reviews, and presents every founding engagement personally.' },
             ].map((item, i) => (
@@ -276,16 +275,12 @@ const process = [
           </ul>
         </div>
       </div>
-      <CTABlock
-        class="mt-14"
-        title="Hold a Q3 slot before the cohort closes."
-        primary={{ label: 'Request Q3 assessment', href: '#lead-gen', event: 'cta-assessment:founding' }}
-        secondary={{ label: 'See the sample report', href: '/sample-report', kind: 'secondary', event: 'cta-sample:founding' }}
-      />
     </Section>
 
     <!-- ============ S8 LEAD FORM ============ -->
-    <LeadForm context="/" />
+    <!-- Merged closer: the cohort-urgency CTA and the form were two
+         stacked asks for the same action — now one section (owner) -->
+    <LeadForm heading="Hold a Q3 slot before the cohort closes." context="/" />
 
   </main>
   <Footer />
