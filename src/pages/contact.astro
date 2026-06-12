@@ -14,7 +14,7 @@ import LeadForm from '../components/ui/LeadForm.astro';
 const channels = [
   {
     t: 'Assessment requests',
-    d: 'Two fields, one business day, a mutual NDA before we see your site. Q3 founding-cohort slots are scoped and confirmed by the founder personally.',
+    d: 'Two fields, a one-business-day response target, and a mutual NDA before we see your site. Q3 founding-cohort slots are scoped and confirmed by the founder personally.',
     href: '/#lead-gen',
     route: 'REQUEST FORM',
   },
@@ -58,7 +58,7 @@ const jsonLd = {
 
 <Base
   title="Contact — Jinki Aerial Intelligence"
-  description="Founder-direct contact. No SDRs, no ticket queue — assessment requests, sample reports, and security disclosures all reach one inbox within one business day."
+  description="Founder-direct contact. No SDRs, no ticket queue — assessment requests, sample reports, and security disclosures all reach one inbox — responses targeted within one business day."
   jsonLd={jsonLd}
 >
   <Nav />
@@ -73,7 +73,7 @@ const jsonLd = {
           <span class="mono-label text-ink-3">FOUNDER-DIRECT · NO SDRS</span>
         </div>
         <h1 class="text-display font-display font-medium text-ink max-w-[18ch] rise">
-          One inbox. <em class="not-italic text-signal">One business day.</em>
+          One inbox. <em class="not-italic text-signal">A one-business-day target.</em>
         </h1>
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 mt-10">
           <p class="text-lede text-ink-2 lg:col-span-7 rise">
@@ -83,7 +83,7 @@ const jsonLd = {
             who plans the mission and presents the findings.
           </p>
           <div class="lg:col-span-4 lg:col-start-9 mono-label text-ink-3 flex flex-col gap-3 mt-6 lg:mt-0 rise">
-            <span>RESPONSE · &lt; 1 BUSINESS DAY</span>
+            <span>RESPONSE TARGET · &lt; 1 BUSINESS DAY</span>
             <span>ROUTING · DIRECT TO FOUNDER</span>
             <span>NDA · MUTUAL, BEFORE SITE DETAILS</span>
           </div>

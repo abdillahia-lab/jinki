@@ -36,7 +36,7 @@ import { Image } from 'astro:assets';
 const verticalRows = [
   { index: '01', title: 'Data Centers', description: 'Rooftop HVAC cascade, membrane moisture, NFPA 70B hot spots — found before the outage.', datum: '±0.5°C', href: '/verticals/data-centers', thumb: thumbDc },
   { index: '02', title: 'Energy Grid', description: 'Corridor sweeps for line hardware, vegetation encroachment, and component heat signatures.', datum: '50 MI/DAY', href: '/verticals/energy-grid', thumb: thumbEnergy },
-  { index: '03', title: 'Security', description: 'Perimeter thermal surveillance with sub-90-second alert-to-verification.', datum: '<90 S', href: '/verticals/security', thumb: thumbSecurity },
+  { index: '03', title: 'Security', description: 'Perimeter thermal surveillance — alert verification designed for under 90 seconds.', datum: '<90 S', href: '/verticals/security', thumb: thumbSecurity },
   { index: '04', title: 'Agriculture', description: 'Irrigation anomalies, crop stress, and drainage mapped across full acreage.', datum: '1,000+ AC', href: '/verticals/agriculture', thumb: thumbAg },
   { index: '05', title: 'Real Estate', description: 'Envelope performance, roof condition, and documentation for luxury portfolios.', datum: 'PORTFOLIO', href: '/verticals/real-estate', thumb: thumbRe },
   { index: '06', title: 'Maritime', description: 'Terminal equipment thermal, vessel-at-berth surveys, and overwater perimeter watch.', datum: 'PORT-SCALE', href: '/verticals/maritime', thumb: thumbMaritime },
@@ -50,9 +50,9 @@ const heroFindings = [
 
 const stats = [
   { value: '0.5', suffix: '°C', label: 'RADIOMETRIC SENSITIVITY', source: 'Thermal sensor class, full-array single pass' },
-  { value: '48', suffix: 'HR', label: 'SCAN TO RANKED REPORT', source: 'Severity-ranked findings, work-order ready' },
-  { value: '90', suffix: 'S', label: 'ALERT TO VERIFICATION', source: 'Autonomous dock response, persistent deployments' },
-  { value: '200', suffix: '/MO', label: 'AUTONOMOUS MISSION CAPACITY', source: 'Per dock station, around the clock' },
+  { value: '48', suffix: 'HR', label: 'SCAN-TO-REPORT TARGET', source: 'Severity-ranked findings, work-order ready' },
+  { value: '90', suffix: 'S', label: 'ALERT-TO-VERIFICATION TARGET', source: 'Autonomous dock design, persistent deployments' },
+  { value: '200', suffix: '/MO', label: 'AUTONOMOUS MISSION CAPACITY', source: 'Per dock station design capacity' },
 ];
 
 const process = [
@@ -65,7 +65,7 @@ const process = [
 
 <Base
   title="Jinki — Aerial Intelligence for Critical Infrastructure"
-  description="Every anomaly on your facility — found from the air, ranked by severity, delivered in 48 hours. Radiometric thermal inspections that turn into prioritized maintenance work orders."
+  description="Facility anomalies — found from the air, ranked by severity, delivered on a 48-hour target. Radiometric thermal inspections that turn into prioritized maintenance work orders."
   ogImage="/images/og/og-homepage.png"
 >
   <Nav />
@@ -82,15 +82,15 @@ const process = [
               <span class="text-signal-soft">●</span>&nbsp; BOOKING Q3 2026 ASSESSMENTS
             </p>
             <h1 class="text-display font-display font-medium text-ink max-w-[20ch] rise">
-              Every anomaly on your facility — found, ranked, delivered in <em class="not-italic text-signal">48 hours</em>.
+              The anomalies on your facility — found, ranked, delivered on a <em class="not-italic text-signal">48-hour target</em>.
             </h1>
             <p class="text-lede text-ink-2 mt-6 max-w-[58ch] rise">
               Radiometric thermal at 0.5°C sensitivity across your rooftop, perimeter, and
               plant in one aerial pass — delivered as a prioritized findings report your
               team can put into Monday's work orders.
             </p>
-            <div class="flex flex-wrap items-center gap-3 mt-7 rise" data-magnetic-wrap>
-              <span data-magnetic class="inline-block"><Button href="#lead-gen" event="cta-assessment:hero">Request Q3 assessment</Button></span>
+            <div class="flex flex-wrap items-center gap-3 mt-7 rise">
+              <Button href="#lead-gen" event="cta-assessment:hero" magnetic>Request Q3 assessment</Button>
               <Button href="/sample-report" kind="secondary" event="cta-sample:hero">See the sample report</Button>
             </div>
             <!-- Self-selection chips: a facilities director finds their
@@ -164,7 +164,7 @@ const process = [
       <SectionHeader
         index="01" label="THE DELIVERABLE" datum="WORK-ORDER READY"
         title="The report is the product."
-        lede="Not footage. Not a dashboard login. A severity-ranked findings document — every anomaly geolocated, classified against NFPA 70B and ASHRAE thresholds, with a recommended action your team can schedule."
+        lede="Not footage. Not a dashboard login. A severity-ranked findings document — each finding geolocated, classified against NFPA 70B and ASHRAE thresholds, with a recommended action your team can schedule."
       />
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-12 items-start">
         <div class="lg:col-span-7">
@@ -224,13 +224,13 @@ const process = [
         <a href="/services/intelligence-scan" class="group folio-rule rule-draw block pt-6 pb-4 no-underline transition-colors hover:bg-surface-1 px-2 -mx-2">
           <span class="mono-label block mb-3"><span class="text-signal-soft">01 · ONE-TIME</span>&ensp;<span class="text-ink bg-signal-dim px-2 py-0.5 rounded-[2px]">START HERE</span></span>
           <h3 class="text-h2 font-display font-medium text-ink mb-3 transition-transform duration-200 group-hover:translate-x-2">Facility Intelligence Scan</h3>
-          <p class="text-body text-ink-2 mb-4">One aerial pass. Full thermal + visual capture, AI analysis, and a severity-ranked report in 48 hours. The entry point.</p>
-          <span class="mono-label text-ink-3">48 HR TURNAROUND →</span>
+          <p class="text-body text-ink-2 mb-4">One aerial pass. Full thermal + visual capture, AI analysis, and a severity-ranked report on a 48-hour target. The entry point.</p>
+          <span class="mono-label text-ink-3">48 HR TARGET →</span>
         </a>
         <a href="/services/deployment" class="group folio-rule rule-draw block pt-6 pb-4 no-underline transition-colors hover:bg-surface-1 px-2 -mx-2">
           <span class="mono-label text-signal block mb-3">02 · PERSISTENT</span>
           <h3 class="text-h2 font-display font-medium text-ink mb-3 transition-transform duration-200 group-hover:translate-x-2">Autonomous Deployment</h3>
-          <p class="text-body text-ink-2 mb-4">An on-site dock station running 150–200 missions a month. Thermal baselines, degradation velocity, alert verification — no operator required.</p>
+          <p class="text-body text-ink-2 mb-4">An on-site dock station with capacity for up to 200 missions a month. Thermal baselines, degradation velocity, alert verification — no operator required.</p>
           <span class="mono-label text-ink-3">24/7 COVERAGE →</span>
         </a>
       </div>
@@ -241,7 +241,7 @@ const process = [
       <SectionHeader
         index="05" label="PROCESS" datum="NDA → REPORT"
         title="What happens after you submit."
-        lede="Four steps, NDA to report. Your data is processed on-premises, encrypted AES-256 in transit and at rest, and never leaves your control."
+        lede="Four steps, NDA to report. Your data is processed on-premises, encrypted AES-256 in transit and at rest, and stays in your control."
       />
       <ProcessTimeline steps={process} />
       <p class="text-caption text-ink-3 mt-8">

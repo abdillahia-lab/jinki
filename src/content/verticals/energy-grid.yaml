@@ -3,7 +3,7 @@ index: '02'
 order: 2
 metaTitle: Energy & Grid — Jinki Aerial Intelligence
 metaDescription: Predictive aerial intelligence for power lines, solar farms, and substations. Severity-ranked findings
-  within 48 hours across 50+ mile corridors.
+  targeted within 48 hours across 50+ mile corridors.
 ogImage: /images/og/og-energy-grid.png
 hero:
   kicker: ENERGY & GRID // MID-ATLANTIC
@@ -93,7 +93,7 @@ capabilities:
   body: Post-event rapid assessment of arc marks, shattered insulators, bent crossarms, and conductor displacement.
 midCta:
   title: Stop inspecting on a six-month cycle.
-  body: One aerial mission covers 50+ miles of corridor and returns severity-ranked findings within 48 hours.
+  body: One aerial mission covers 50+ miles of corridor and returns severity-ranked findings targeted within 48 hours.
 faqs:
 - q: How much corridor can one mission cover?
   a: A single mission inspects 50 or more miles of transmission corridor, capturing thermal, visual, and 3D spatial
@@ -109,7 +109,7 @@ faqs:
     differentials are flagged at 10°C above ambient.
 - q: What do the deliverables look like?
   a: Severity-ranked findings with GPS coordinates, component IDs, thermal data, clearance measurements, remediation
-    recommendations, and estimated repair costs — delivered within 48 hours. Your crews get prioritized work orders,
+    recommendations, and estimated repair costs — targeted within 48 hours. Your crews get prioritized work orders,
     not raw data.
 - q: Why does predictive inspection matter financially?
   a: Emergency repairs cost 4 to 8 times more than planned maintenance. Identifying failing components months before

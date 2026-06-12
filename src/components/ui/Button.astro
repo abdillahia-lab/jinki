@@ -11,9 +11,12 @@ interface Props {
   id?: string;
   /** data-event for analytics virtual pageviews */
   event?: string;
+  /** magnetic pointer-follow (motion.ts) — set on the anchor itself; a
+      wrapper span collapses to min-content as a flex item */
+  magnetic?: boolean;
 }
 
-const { href, kind = 'primary', arrow = true, class: className = '', id, event } = Astro.props;
+const { href, kind = 'primary', arrow = true, class: className = '', id, event, magnetic = false } = Astro.props;
 
 const base =
   'group inline-flex items-center justify-center gap-2 h-12 px-7 rounded-pill font-sans text-caption font-medium no-underline transition-opacity duration-200 min-w-11';
@@ -24,7 +27,7 @@ const kinds = {
 };
 ---
 
-<a href={href} id={id} data-event={event} class={`${base} ${kinds[kind]} ${className}`}>
+<a href={href} id={id} data-event={event} data-magnetic={magnetic ? '' : undefined} class={`${base} ${kinds[kind]} ${className}`}>
   <slot />
   {arrow && (
     <svg

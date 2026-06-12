@@ -9,7 +9,7 @@ hero:
   kicker: DATA CENTERS // NOVA CORRIDOR
   headline: Find the hidden problem <em>before the outage</em>.
   sub: Aerial thermal intelligence that turns invisible risks into scheduled maintenance. Every rooftop system surveyed,
-    classified, and prioritized within 48 hours.
+    classified, and prioritized — targeted within 48 hours.
   datum: ±0.5°C
 frame:
   caption: FRAME 0147 · DEMONSTRATION ANALYSIS · ROOFTOP HVAC ARRAY
@@ -98,8 +98,8 @@ capabilities:
   body: Thermal surveys after sunset exploit differential cooling rates between wet and dry insulation to find sub-surface
     moisture. Severity is classified and affected square footage mapped for targeted remediation.
 - title: Autonomous Thermal Trending
-  datum: 150–200 MISSIONS/MO
-  body: A permanently stationed aerial platform conducts 150-200 scheduled missions per month from an on-site dock.
+  datum: UP TO 200 MISSIONS/MO
+  body: A permanently stationed aerial platform conducts up to 200 scheduled missions per month from an on-site dock.
     Trend analysis detects degradation velocity over time — not just current state.
 - title: Zero-Disruption Operations
   body: All inspections are conducted externally — rooftops, perimeters, and mechanical equipment areas. No roof
@@ -107,7 +107,7 @@ capabilities:
 midCta:
   title: One day of flight. Every hidden risk, ranked.
   body: A typical data center campus is surveyed in a single day of aerial operations, with prioritized findings
-    delivered within 48 hours.
+    targeted within 48 hours.
 faqs:
 - q: How long does a full facility assessment take?
   a: A typical data center campus can be surveyed in a single day of aerial operations. The prioritized findings
@@ -120,7 +120,7 @@ faqs:
   a: Our thermal inspections align with NFPA 70B electrical maintenance requirements, ASHRAE temperature monitoring
     guidelines, and support environmental compliance documentation. Each deliverable maps findings to relevant standards.
 - q: How does autonomous monitoring differ from a one-time assessment?
-  a: Autonomous monitoring uses a permanently stationed aerial platform with an on-site dock that conducts 150-200
+  a: Autonomous monitoring uses a permanently stationed aerial platform with an on-site dock that conducts up to 200
     scheduled missions per month. This enables thermal trend analysis over time — detecting degradation velocity,
     not just current state.
 - q: What is included in the findings report?

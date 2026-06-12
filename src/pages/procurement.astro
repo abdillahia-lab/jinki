@@ -17,14 +17,14 @@ import LeadForm from '../components/ui/LeadForm.astro';
 
 const PACK = [
   { doc: 'MUTUAL NDA', status: 'ON REQUEST', body: 'Our two-page mutual template, or redline yours — every engagement starts here, before we see your site.' },
-  { doc: 'CERTIFICATE OF INSURANCE', status: 'ON REQUEST', body: '$5M liability per operation; your entity named as additional insured for the engagement.' },
-  { doc: 'W-9', status: 'ON REQUEST', body: 'Current signed W-9 for your vendor record, same-day.' },
+  { doc: 'CERTIFICATE OF INSURANCE', status: 'ON REQUEST', body: '$5M liability per operation; additional-insured naming available for the engagement.' },
+  { doc: 'W-9', status: 'ON REQUEST', body: 'Current signed W-9 for your vendor record, typically same-day.' },
   { doc: 'SECURITY BRIEF', status: 'DOWNLOAD NOW', href: '/docs/jinki-security-brief.pdf', body: 'Data handling, encryption posture, NIST 800-53-based controls, on-premises processing option — the one-pager your security review wants first.' },
   { doc: 'OPERATING AUTHORITY', status: 'ON REQUEST', body: 'FAA Part 107 certification and DC SFRA authorization documentation for your compliance file.' },
 ];
 
 const STEPS = [
-  { title: 'Request the pack', sub: 'The form below, or info@jinki.ai. Documents arrive same business day.', mono: 'T+0' },
+  { title: 'Request the pack', sub: 'The form below, or info@jinki.ai. Documents typically arrive the same business day.', mono: 'T+0' },
   { title: 'Mutual NDA executed', sub: 'Ours or yours. Nothing about your facility is discussed in detail before this.', mono: 'DAY 1' },
   { title: 'Vendor record opened', sub: 'COI, W-9, and any questionnaire your portal requires — we complete them in your format.', mono: 'DAYS 2-5' },
   { title: 'Scan scheduled', sub: 'Scope agreed in a fixed-price SOW; mission scheduled against weather and airspace windows.', mono: 'WEEK 2' },
@@ -47,7 +47,7 @@ const jsonLd = {
 
 <Base
   title="Procurement & Vendor Onboarding — Jinki Aerial Intelligence"
-  description="Everything your vendor review needs, unprompted: mutual NDA, $5M certificate of insurance, W-9, security brief, and FAA operating authority — same business day."
+  description="Everything your vendor review needs, unprompted: mutual NDA, $5M certificate of insurance, W-9, security brief, and FAA operating authority — typically the same business day."
   jsonLd={jsonLd}
 >
   <Nav />
@@ -59,14 +59,14 @@ const jsonLd = {
       <div class="max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16">
         <div class="folio-rule rule-draw flex items-baseline justify-between gap-4 pt-3 mb-10">
           <span class="mono-label text-ink-3"><span class="text-signal">PRC</span>&nbsp;/&nbsp;PROCUREMENT // VENDOR ONBOARDING</span>
-          <span class="mono-label text-ink-3">SAME BUSINESS DAY</span>
+          <span class="mono-label text-ink-3">SAME-DAY TARGET</span>
         </div>
         <h1 class="text-h1 font-display font-medium text-ink max-w-[20ch] rise">
           Built to pass your vendor review <em class="not-italic text-signal">before it starts</em>.
         </h1>
         <p class="text-lede text-ink-2 max-w-[58ch] mt-6 rise">
           Enterprise buyers can't even open a vendor record without the paperwork.
-          Ours is assembled, current, and sent the same business day you ask —
+          Ours is assembled, current, and typically sent the same business day you ask —
           NDA, insurance, tax forms, security posture, operating authority.
         </p>
         <div class="flex flex-wrap items-center gap-3 mt-7 rise">
@@ -103,7 +103,7 @@ const jsonLd = {
     <Section label="Onboarding path" cv>
       <SectionHeader
         index="02" label="ONBOARDING" datum="04 STEPS"
-        title="Request to scheduled, in two weeks."
+        title="Request to scheduled — about two weeks."
       />
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-x-6">
         {STEPS.map((s) => (

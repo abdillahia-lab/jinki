@@ -28,11 +28,11 @@ const d = service.data;
 
 // Scan vs Deployment — same table on both pages, current column marked
 const COMPARE = [
-  { row: 'CADENCE', scan: 'One mission', deploy: '150–200 missions / month' },
-  { row: 'RESPONSE', scan: 'Scheduled window', deploy: 'Alarm to airborne < 90 s' },
-  { row: 'DELIVERABLE', scan: 'Severity-ranked report, 48 hr', deploy: 'Live feeds + trend reports' },
+  { row: 'CADENCE', scan: 'One mission', deploy: 'Up to 200 missions / month' },
+  { row: 'RESPONSE', scan: 'Scheduled window', deploy: 'Alarm to airborne < 90 s target' },
+  { row: 'DELIVERABLE', scan: 'Severity-ranked report, 48 hr target', deploy: 'Live feeds + trend reports' },
   { row: 'BASELINE', scan: 'Point-in-time state', deploy: 'Degradation velocity over time' },
-  { row: 'COMMITMENT', scan: 'Two–three weeks end-to-end', deploy: 'Standing engagement' },
+  { row: 'COMMITMENT', scan: 'About two–three weeks end-to-end', deploy: 'Standing engagement' },
 ];
 const isScan = service.id === 'intelligence-scan';
 
@@ -166,7 +166,7 @@ const jsonLd = {
       />
       <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6">
         {[
-          { n: '01', name: 'FOUNDING SCAN', datum: 'T+48H', body: 'One mission at the locked founding rate. Full facility pass, severity-ranked report in 48 hours. Zero integration required.' },
+          { n: '01', name: 'FOUNDING SCAN', datum: 'T+48H', body: 'One mission at the founding rate. Full facility pass, severity-ranked report on a 48-hour target. Zero integration required.' },
           { n: '02', name: '90-DAY PILOT', datum: 'ONE QUARTER', body: 'Persistent coverage on one site for one quarter — baselines, alert verification, and the trend line that makes the case.' },
           { n: '03', name: 'ANNUAL PROGRAM', datum: 'STANDING', body: 'Standing coverage with degradation-velocity tracking and founder-direct reporting, priced on scope.' },
         ].map((r) => (

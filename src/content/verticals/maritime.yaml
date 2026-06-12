@@ -24,7 +24,7 @@ stats:
 - value: '48'
   suffix: HR
   label: SCAN TO RANKED REPORT
-  source: Service commitment — storm response prioritized
+  source: Delivery target — storm response prioritized
 - value: '24/7'
   label: BERTH AND PERIMETER WATCH
   source: Autonomous dock station, day and night thermal
@@ -71,10 +71,10 @@ capabilities:
   datum: 48 HR
 midCta:
   title: Put a watch on the waterline.
-  body: One mission covers the terminal, the berths, and the basin — report in 48 hours.
+  body: One mission covers the terminal, the berths, and the basin — report targeted within 48 hours.
 faqs:
 - q: Can you legally fly over water and active port operations?
-  a: Yes. Operations are planned under FAA Part 107 with overwater contingencies, coordinated
+  a: Yes, where authorization permits. Operations are planned under FAA Part 107 with overwater contingencies, coordinated
     with facility operations, and flown outside exclusion areas you define. Hampton Roads'
     military airspace coordination is part of mission planning, not an afterthought.
 - q: Do operations interrupt cargo handling or vessel movements?
@@ -86,7 +86,7 @@ faqs:
     delivered with locations marked for a surveyor's confirmation.
 - q: How fast can you document after a storm?
   a: Storm-response missions are prioritized — capture as soon as airspace and weather permit,
-    with the geolocated evidence package delivered within 48 hours of the pass.
+    with the geolocated evidence package targeted within 48 hours of the pass.
 - q: How is sensitive port security data handled?
   a: A mutual NDA precedes every engagement. Imagery is encrypted AES-256 at rest and TLS 1.3
     in transit, with on-premises processing available for facilities that require it.

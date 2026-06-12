@@ -3,7 +3,7 @@ index: '01'
 order: 1
 metaTitle: Facility Intelligence Scan — Jinki Aerial Intelligence
 metaDescription: Comprehensive aerial thermal and visual assessment of facility infrastructure. Severity-ranked
-  intelligence report delivered within 48 hours.
+  intelligence report targeted within 48 hours.
 ogImage: /images/og/og-intelligence-scan.png
 hero:
   kicker: FACILITY INTELLIGENCE SCAN // ONE-TIME
@@ -19,7 +19,7 @@ specs:
 - key: COVERAGE
   value: 100% rooftop, single mission day
 - key: TIMELINE
-  value: Report within 48 hours of capture
+  value: Report targeted within 48 hours of capture
 - key: DELIVERABLE
   value: Severity-ranked Facility Intelligence Report (PDF)
 - key: CLASSIFICATION
@@ -49,7 +49,7 @@ deliverables:
   body: Facility health score, total findings by severity, and recommended priority actions for leadership review.
 - tag: FINDINGS
   title: Geolocated Findings
-  body: Every anomaly mapped to a specific rooftop coordinate, with ΔT measurements, equipment ID, and severity
+  body: Each finding mapped to a specific rooftop coordinate, with ΔT measurements, equipment ID, and severity
     rating.
 - tag: STRUCTURE
   title: Structural Assessment
@@ -88,7 +88,7 @@ midCta:
   body: From signed engagement to delivered report, typically inside fifteen business days.
 faqs:
 - q: How fast do we get the report?
-  a: Severity-ranked findings are delivered within 48 hours of the mission — two business days from capture to prioritized
+  a: Severity-ranked findings are targeted within 48 hours of the mission — about two business days from capture to prioritized
     report.
 - q: How long does the full engagement take?
   a: Two to three weeks end-to-end. From signed engagement to delivered report, typically inside fifteen business

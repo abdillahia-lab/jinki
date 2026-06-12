@@ -98,7 +98,7 @@ midCta:
     spots, mapped with remediation priorities.
 faqs:
 - q: How fast can an aerial unit respond to a perimeter alert?
-  a: The autonomous dock station goes from alert to airborne in under 90 seconds. A full sequence runs from detection
+  a: The autonomous dock station is designed to go from alert to airborne inside 90 seconds. A full sequence runs from detection
     to resolution in under two minutes, with every event classified, tracked, and documented automatically.
 - q: Does this replace our guards and cameras?
   a: No. Aerial surveillance is a force multiplier, not a replacement. It completes your existing security stack

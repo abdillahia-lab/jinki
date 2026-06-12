@@ -2,7 +2,7 @@ title: Autonomous Deployment
 index: '02'
 order: 2
 metaTitle: Autonomous Deployment — Jinki Aerial Intelligence
-metaDescription: Persistent autonomous monitoring from an on-site dock station. 150-200 missions per month — thermal
+metaDescription: Persistent autonomous monitoring from an on-site dock station. up to 200 missions per month — thermal
   baselines, degradation tracking, verified alerts.
 ogImage: /images/og/og-deployment.png
 hero:
@@ -10,7 +10,7 @@ hero:
   headline: Persistent intelligence. <em>Zero intervention.</em>
   sub: For facilities that need continuous visibility, not periodic snapshots. An autonomous dock station on your
     site launches, captures, analyzes, and delivers intelligence — around the clock, with no operator required.
-  datum: 150-200 /MO
+  datum: UP TO 200 /MO
 specs:
 - key: SCOPE
   value: Persistent autonomous monitoring, single facility
@@ -19,9 +19,9 @@ specs:
 - key: SENSORS
   value: Thermal (IR) + visual, day and night
 - key: CADENCE
-  value: 150-200 missions/mo, 6-8 per day
+  value: Up to 200 missions/mo, 6-8 per day
 - key: RESPONSE
-  value: Alarm to airborne in under 90 seconds
+  value: Alarm to airborne — sub-90-second design target
 - key: OPERATION
   value: 24/7, all-weather, zero on-site operators
 - key: TIMELINE
@@ -29,11 +29,11 @@ specs:
 - key: INTEGRATION
   value: SCADA, VMS, BMS, CMMS, digital twin
 stats:
-- value: 150-200
-  label: Missions per month
+- value: '200'
+  label: Mission capacity per month
 - value: <90
   suffix: s
-  label: Dock-to-airborne on alarm
+  label: Dock-to-airborne design target
 - value: '4'
   label: Night thermal patrols per day
 - value: '0'
@@ -49,7 +49,7 @@ deliverables:
     — flagging maintenance needs weeks before they become emergencies.
 - tag: ALERT EVIDENCE
   title: Verified alert response
-  body: On alarm activation the platform launches autonomously and reaches the alert zone in under 90 seconds, capturing
+  body: On alarm activation the platform launches autonomously, designed to reach the alert zone inside 90 seconds, capturing
     thermal and visual evidence so your security operations center can verify before dispatching anyone.
 - tag: SYSTEM FEED
   title: Direct integration delivery
@@ -71,7 +71,7 @@ process:
   sub: Nightly patrols build the thermal baseline that every future anomaly is measured against.
 - mono: ONGOING
   title: Persistent operations
-  sub: 150-200 missions per month — degradation tracking, alert verification, and delivery straight into your systems.
+  sub: Up to 200 missions per month — degradation tracking, alert verification, and delivery straight into your systems.
 midCta:
   title: Continuous visibility, not periodic snapshots.
   body: Tell us about your facility and we will scope a single-dock persistent deployment.
@@ -80,7 +80,7 @@ faqs:
   a: No. The dock station launches, recovers, and recharges the aerial platform autonomously. Missions run on schedule
     or trigger on alarms — zero operators required, 365 days a year.
 - q: What happens when an alarm activates?
-  a: The platform launches automatically and reaches the alert zone in under 90 seconds, streaming thermal and visual
+  a: The platform launches automatically with a sub-90-second alert-to-airborne design target, streaming thermal and visual
     evidence to your security operations center so the alert can be verified before anyone is dispatched.
 - q: Why do thermal patrols run at night?
   a: Thermal anomalies are most visible at night. Four night thermal patrols build and maintain the facility's thermal
@@ -93,6 +93,6 @@ faqs:
     between missions — operations continue around the clock through all seasons.
 - q: How is this different from the one-time intelligence scan?
   a: 'The scan is a one-time assessment of your facility''s current condition. Autonomous deployment is the persistent
-    version: a dock station on your site running 150-200 missions a month, tracking change over time instead of
+    version: a dock station on your site running up to 200 missions a month, tracking change over time instead of
     capturing a single snapshot.'
 serviceType: Autonomous Aerial Monitoring

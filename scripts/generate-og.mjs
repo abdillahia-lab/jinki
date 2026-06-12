@@ -14,7 +14,7 @@ const OUT = new URL('../public/images/og', import.meta.url).pathname;
 mkdirSync(OUT, { recursive: true });
 
 const PAGES = [
-  { file: 'og-homepage', index: 'JK', label: 'AERIAL INTELLIGENCE', title: ['Every anomaly. Found,', 'ranked, delivered', 'in 48 hours.'] },
+  { file: 'og-homepage', index: 'JK', label: 'AERIAL INTELLIGENCE', title: ['Found. Ranked.', 'Delivered on a', '48-hour target.'] },
   { file: 'og-data-centers', index: '01', label: 'DATA CENTERS', title: ['Find the hidden problem', 'before the outage.'] },
   { file: 'og-energy-grid', index: '02', label: 'ENERGY GRID', title: ['Find the failing component', 'before the outage finds you.'] },
   { file: 'og-security', index: '03', label: 'PERIMETER SECURITY', title: ['Your perimeter has gaps.', 'We close them.'] },
