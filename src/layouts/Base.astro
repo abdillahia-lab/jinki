@@ -101,6 +101,24 @@ const orgSchema = {
     <slot />
     <SectionMinimap />
 
+    <script>
+      // W1: universal reveals (Safari/Firefox) — ~1.2KB, eager
+      import '../scripts/reveal-fallback';
+    </script>
+    <script>
+      // W1/W2: premier motion layer — deferred, capability-gated.
+      // Fine pointer + no reduced-motion + idle; touch keeps native
+      // momentum (better than any JS smoothing on mobile).
+      const fine = matchMedia('(pointer: fine)').matches;
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (fine && !reduced) {
+        const load = () => import('../scripts/motion').catch(() => {});
+        'requestIdleCallback' in window
+          ? requestIdleCallback(() => load(), { timeout: 3000 })
+          : setTimeout(load, 600);
+      }
+    </script>
+
     <!-- Mobile CTA dock — single bottom-fixed element; live scan window -->
     <div
       class="cta-dock md:hidden fixed bottom-0 left-0 right-0 bg-surface-0/95 border-t border-rule backdrop-blur-sm"

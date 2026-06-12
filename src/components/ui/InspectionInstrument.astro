@@ -241,10 +241,31 @@ const uid = `inst-${Math.abs([...caption].reduce((a, c) => (a * 33 + c.charCodeA
     const verified = new Set<number>();
     let live = false; // pointer has control
 
-    const setLens = (xPct: number, yPct: number, r = 90) => {
-      inst.style.setProperty('--lx', xPct + '%');
-      inst.style.setProperty('--ly', yPct + '%');
+    // W2: the lens has WEIGHT — it lerps toward the pointer instead of
+    // hard-tracking (spring read, one rAF, runs only while live).
+    let lensX = 50, lensY = 50, lensTX = 50, lensTY = 50, lensRaf = 0;
+    const applyLens = () => {
+      inst.style.setProperty('--lx', lensX + '%');
+      inst.style.setProperty('--ly', lensY + '%');
+    };
+    const lensTick = () => {
+      lensX += (lensTX - lensX) * 0.18;
+      lensY += (lensTY - lensY) * 0.18;
+      applyLens();
+      if (Math.abs(lensTX - lensX) > 0.05 || Math.abs(lensTY - lensY) > 0.05) {
+        lensRaf = requestAnimationFrame(lensTick);
+      } else { lensRaf = 0; }
+    };
+    const setLens = (xPct: number, yPct: number, r = 90, spring = false) => {
       inst.style.setProperty('--lr', r + 'px');
+      lensTX = xPct; lensTY = yPct;
+      if (spring) {
+        if (!lensRaf) lensRaf = requestAnimationFrame(lensTick);
+      } else {
+        lensX = xPct; lensY = yPct;
+        if (lensRaf) { cancelAnimationFrame(lensRaf); lensRaf = 0; }
+        applyLens();
+      }
     };
 
     const sampleTemp = (xPct: number, yPct: number): number | null => {
@@ -277,7 +298,10 @@ const uid = `inst-${Math.abs([...caption].reduce((a, c) => (a * 33 + c.charCodeA
       const chip = chips[i];
       chip?.setAttribute('data-state', 'verified');
       const st = chip?.querySelector('[data-chip-state]');
-      if (st) st.textContent = 'VERIFIED ✓';
+      if (st) {
+        st.textContent = 'VERIFIED ✓';
+        st.classList.add('settle'); // W2: 220ms scale-settle on the flip
+      }
       verifiedCount.textContent = `${verified.size}/${findings.length} VERIFIED`;
     };
 
@@ -334,7 +358,7 @@ const uid = `inst-${Math.abs([...caption].reduce((a, c) => (a * 33 + c.charCodeA
       if (e.pointerType === 'mouse') {
         if (!live) { live = true; inst.classList.add('inst-live'); }
         const [x, y] = toPct(e);
-        setLens(x, y, 90);
+        setLens(x, y, 90, true); // spring follow
         updateReadout(x, y);
         readout.hidden = false;
         checkHit(x, y);

@@ -150,15 +150,30 @@ const PHASES = [
             };
             requestAnimationFrame(tick);
           } else {
-            // scroll scrub through the 280vh host
-            const onScroll = () => {
-              const r = host.getBoundingClientRect();
-              const total = r.height - innerHeight;
-              const t = Math.max(0, Math.min(1, -r.top / total));
-              api.setProgress(t);
-            };
-            addEventListener('scroll', onScroll, { passive: true });
-            onScroll();
+            // Scrub with inertia + phase snapping via ScrollTrigger (W1);
+            // raw-scroll fallback if the motion chunk fails.
+            import('../../scripts/motion').then(({ ScrollTrigger }) => {
+              ScrollTrigger.create({
+                trigger: host,
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: 0.8,
+                snap: {
+                  snapTo: [0, 0.3, 0.62, 0.85, 1],
+                  duration: { min: 0.2, max: 0.6 },
+                  ease: 'power1.inOut',
+                },
+                onUpdate: (self) => api.setProgress(self.progress),
+              });
+            }).catch(() => {
+              const onScroll = () => {
+                const r = host.getBoundingClientRect();
+                const total = r.height - innerHeight;
+                api.setProgress(Math.max(0, Math.min(1, -r.top / total)));
+              };
+              addEventListener('scroll', onScroll, { passive: true });
+              onScroll();
+            });
           }
         }).catch(() => {/* fallback stays */});
       };

@@ -310,6 +310,61 @@
   to { transform: scaleX(1); }
 }
 
+/* W1: universal reveals — Safari/Firefox lack animation-timeline, so a
+   1.2KB IO script adds .in and these TRANSITIONS (interruptible, per
+   the craft checklist) carry the same entrance grammar. */
+@supports not (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .rise:not(.in) { opacity: 0; translate: 0 16px; }
+    .rise { transition: opacity 0.6s var(--ease-settle), translate 0.6s var(--ease-settle); }
+    .rise-stagger:not(.in) > * { opacity: 0; translate: 0 16px; }
+    .rise-stagger > * { transition: opacity 0.55s var(--ease-settle), translate 0.55s var(--ease-settle); }
+    .rise-stagger > *:nth-child(2) { transition-delay: 60ms; }
+    .rise-stagger > *:nth-child(3) { transition-delay: 120ms; }
+    .rise-stagger > *:nth-child(4) { transition-delay: 180ms; }
+    .rise-stagger > *:nth-child(5) { transition-delay: 240ms; }
+    .rise-stagger > *:nth-child(6) { transition-delay: 300ms; }
+    .rule-draw:not(.in) { transform: scaleX(0); }
+    .rule-draw { transform-origin: left; transition: transform 0.8s var(--ease-settle); }
+  }
+}
+
+/* W2: press states — tactile, interruptible, 80ms */
+:is(a, button):is([class*="rounded-pill"], .inst-chip, .composer-chip):active {
+  scale: 0.98;
+  transition-duration: 80ms;
+}
+
+/* W2: dialog enter/exit — nothing pops out of existence */
+dialog[data-sheet] {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.25s var(--ease-settle),
+    transform 0.25s var(--ease-settle),
+    overlay 0.25s allow-discrete,
+    display 0.25s allow-discrete;
+}
+dialog[data-sheet][open] {
+  opacity: 1;
+  transform: none;
+}
+@starting-style {
+  dialog[data-sheet][open] { opacity: 0; transform: translateY(10px); }
+}
+dialog[data-sheet]::backdrop {
+  opacity: 0;
+  transition: opacity 0.25s ease, overlay 0.25s allow-discrete, display 0.25s allow-discrete;
+}
+dialog[data-sheet][open]::backdrop { opacity: 1; }
+@starting-style { dialog[data-sheet][open]::backdrop { opacity: 0; } }
+
+/* W2: verified flip settle */
+@keyframes scale-settle {
+  0% { scale: 0.9; } 60% { scale: 1.04; } 100% { scale: 1; }
+}
+.settle { animation: scale-settle 0.22s var(--ease-settle); }
+
 /* Micro-interactions ≤200ms */
 .link-draw {
   background-image: linear-gradient(currentColor, currentColor);
