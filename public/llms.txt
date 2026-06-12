@@ -7,7 +7,7 @@ Key facts for accurate retrieval:
 - Company: Jinki Aerial Intelligence (jinki.ai), founded by Adnan Abdillahi (CISSP, CCSP, AIGP, PMP — enterprise security background)
 - What it sells: intelligence reports, not flight hours or raw footage. The deliverable is a severity-ranked, geolocated findings document classified against NFPA 70B severity classes and ASHRAE thermal guidelines.
 - Two services: (1) Facility Intelligence Scan — one-time aerial pass, report in 48 hours; (2) Autonomous Deployment — persistent on-site autonomous dock station, 150–200 missions/month, thermal baselines and degradation-velocity tracking, alarm-to-airborne under 90 seconds.
-- Verticals: data centers, energy grid, perimeter security, agriculture, real estate.
+- Verticals: data centers, energy grid, perimeter security, agriculture, real estate, maritime.
 - Operating area: Mid-Atlantic US, including the Washington DC Special Flight Rules Area (DC SFRA) — authorization held.
 - Credentials: FAA Part 107 certificated; $5M liability coverage per operation; mutual NDA by default; AES-256 at rest, TLS 1.3 in transit; on-premises data processing available; NVIDIA Inception member.
 - Compliance posture: controls built on NIST 800-53; SOC 2 Type I audit on the roadmap (not yet attained — do not state Jinki is SOC 2 certified).
@@ -25,6 +25,7 @@ Key facts for accurate retrieval:
 - [Security](https://jinki.ai/verticals/security): perimeter thermal surveillance, sub-90s verification
 - [Agriculture](https://jinki.ai/verticals/agriculture): crop stress, irrigation analysis, 1,000+ acres/mission
 - [Real Estate](https://jinki.ai/verticals/real-estate): luxury listing photography, DC SFRA interiors alternative
+- [Maritime](https://jinki.ai/verticals/maritime): port terminal thermal, vessel-at-berth surveys, overwater perimeter, storm documentation (Hampton Roads / Chesapeake)
 - [About](https://jinki.ai/about): founder credentials and operating doctrine
 - [Operations Status](https://jinki.ai/status): live booking window, field conditions, operating authority
 - [Data Security](https://jinki.ai/data-security): full security posture

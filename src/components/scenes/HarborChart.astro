@@ -1,0 +1,87 @@
+---
+/*
+  HarborChart — maritime hero (drawn chart until aerial photography
+  exists; upgrade path: replace with InspectionInstrument + thermal pair).
+  Nautical-chart idiom matching CorridorChart: channel, berth line,
+  terminal blocks, anchorage, soundings — one signal sweep along the
+  berth face. CSS-only motion, reduced-motion static.
+*/
+---
+
+<figure class="m-0">
+  <div class="border border-rule rounded-panel overflow-hidden bg-surface-1">
+    <svg viewBox="0 0 1000 520" class="w-full block" role="img" aria-label="Harbor chart: container terminal berth line, channel, and anchorage with a thermal watch sweep along the berth face">
+      <!-- water field + soundings -->
+      <rect width="1000" height="520" fill="var(--surface-1)" />
+      <g fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="10" opacity="0.6">
+        <text x="500" y="120">42</text><text x="610" y="150">38</text>
+        <text x="760" y="170">45</text><text x="615" y="395">36</text>
+        <text x="780" y="300">40</text><text x="700" y="420">44</text>
+      </g>
+      <!-- channel -->
+      <path d="M 1000 240 L 560 240 L 430 300 L 430 520" fill="none" stroke="var(--rule-strong)" stroke-width="1.2" stroke-dasharray="10 6" />
+      <path d="M 1000 330 L 590 330 L 470 390 L 470 520" fill="none" stroke="var(--rule-strong)" stroke-width="1.2" stroke-dasharray="10 6" />
+      <g font-family="JetBrains Mono, monospace" font-size="11" fill="var(--ink-3)" letter-spacing="1.5">
+        <text x="700" y="292">CHANNEL · 50 FT</text>
+      </g>
+      <!-- land / terminal -->
+      <path d="M 0 0 H 460 L 430 60 L 400 150 L 380 240 L 360 520 H 0 Z" fill="var(--surface-2)" stroke="var(--rule-strong)" stroke-width="1.4" />
+      <!-- container blocks -->
+      <g fill="var(--surface-3)" stroke="var(--rule)" stroke-width="1">
+        <rect x="60" y="60" width="120" height="34" /><rect x="60" y="106" width="120" height="34" />
+        <rect x="60" y="152" width="120" height="34" /><rect x="220" y="60" width="120" height="34" />
+        <rect x="220" y="106" width="120" height="34" /><rect x="220" y="152" width="120" height="34" />
+      </g>
+      <text x="60" y="225" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--ink-3)" letter-spacing="1.5">CONTAINER YARD</text>
+      <!-- berth face + cranes -->
+      <line x1="380" y1="240" x2="360" y2="520" stroke="var(--ink-1)" stroke-width="2.5" />
+      <g stroke="var(--ink-2)" stroke-width="2" fill="none">
+        <path d="M 350 300 h 22 m -11 0 v -26 l 26 -10" />
+        <path d="M 344 380 h 22 m -11 0 v -26 l 26 -10" />
+        <path d="M 338 460 h 22 m -11 0 v -26 l 26 -10" />
+      </g>
+      <text x="180" y="330" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--ink-3)" letter-spacing="1.5">BERTH 4 — 6</text>
+      <!-- vessel at berth -->
+      <path d="M 392 318 L 470 310 L 496 338 L 470 366 L 392 358 Q 380 338 392 318 Z" fill="var(--surface-3)" stroke="var(--ink-2)" stroke-width="1.5" />
+      <text x="392" y="390" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink-2)" letter-spacing="1">M/V — AT BERTH</text>
+      <!-- anchorage -->
+      <circle cx="800" cy="430" r="56" fill="none" stroke="var(--rule-strong)" stroke-width="1.2" stroke-dasharray="3 5" />
+      <text x="800" y="434" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink-3)" letter-spacing="1.5">ANCHORAGE</text>
+      <!-- watch sweep along the berth face -->
+      <g class="berth-sweep">
+        <line x1="392" y1="250" x2="520" y2="250" stroke="var(--signal)" stroke-width="1.5" opacity="0.85" />
+        <circle cx="392" cy="250" r="4" fill="var(--signal)" />
+      </g>
+      <!-- finding ping on the vessel hull, leader to a clear-water callout -->
+      <circle class="ping" cx="478" cy="328" r="5" fill="none" stroke="var(--signal)" stroke-width="1.5" />
+      <path d="M 484 322 L 530 222 H 548" fill="none" stroke="var(--signal)" stroke-width="1" opacity="0.7" />
+      <text x="554" y="226" font-family="JetBrains Mono, monospace" font-size="11" fill="var(--signal)" letter-spacing="1">HULL MOISTURE · SCREENING</text>
+      <!-- compass -->
+      <g transform="translate(930, 70)">
+        <line x1="0" y1="20" x2="0" y2="-20" stroke="var(--rule-strong)" stroke-width="1" />
+        <path d="M 0 -20 L -5 -9 L 5 -9 Z" fill="var(--signal)" />
+        <text x="0" y="-27" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink-3)">N</text>
+      </g>
+    </svg>
+  </div>
+  <figcaption class="flex flex-wrap items-center justify-between gap-2 border-x border-b border-rule px-4 py-2.5">
+    <span class="mono-label-long text-ink-3">HARBOR PLAN · DEMONSTRATION CHART · GEOMETRY SIMPLIFIED</span>
+    <span class="mono-label text-ink-3">AERIAL FRAMES IN CAPTURE QUEUE</span>
+  </figcaption>
+</figure>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .berth-sweep { animation: berth-run 9s ease-in-out infinite alternate; }
+    @keyframes berth-run {
+      from { transform: translateY(0); }
+      to { transform: translateY(230px); }
+    }
+    .ping { animation: ping-fade 3s ease-out infinite; transform-origin: 478px 328px; }
+    @keyframes ping-fade {
+      0% { opacity: 1; transform: scale(0.6); }
+      70% { opacity: 0; transform: scale(2.2); }
+      100% { opacity: 0; }
+    }
+  }
+</style>

@@ -30,6 +30,7 @@ import thumbEnergy from '../assets/images/thumb-energy-grid.webp';
 import thumbSecurity from '../assets/images/thumb-security.webp';
 import thumbAg from '../assets/images/thumb-agriculture.webp';
 import thumbRe from '../assets/images/thumb-real-estate.webp';
+import thumbMaritime from '../assets/images/thumb-maritime.webp';
 import { Image } from 'astro:assets';
 
 const verticalRows = [
@@ -38,6 +39,7 @@ const verticalRows = [
   { index: '03', title: 'Security', description: 'Perimeter thermal surveillance with sub-90-second alert-to-verification.', datum: '<90 S', href: '/verticals/security', thumb: thumbSecurity },
   { index: '04', title: 'Agriculture', description: 'Irrigation anomalies, crop stress, and drainage mapped across full acreage.', datum: '1,000+ AC', href: '/verticals/agriculture', thumb: thumbAg },
   { index: '05', title: 'Real Estate', description: 'Envelope performance, roof condition, and documentation for luxury portfolios.', datum: 'PORTFOLIO', href: '/verticals/real-estate', thumb: thumbRe },
+  { index: '06', title: 'Maritime', description: 'Terminal equipment thermal, vessel-at-berth surveys, and overwater perimeter watch.', datum: 'PORT-SCALE', href: '/verticals/maritime', thumb: thumbMaritime },
 ];
 
 const heroFindings = [
@@ -195,7 +197,7 @@ const process = [
     <!-- ============ S5 VERTICALS MANIFEST ============ -->
     <Section id="verticals" label="Verticals" cv>
       <SectionHeader
-        index="03" label="VERTICALS" datum="05 SECTORS"
+        index="03" label="VERTICALS" datum={`${String(verticalRows.length).padStart(2, '0')} SECTORS`}
         title="Built for infrastructure that can't go down."
         lede="Each sector has named failure modes. We scan for them specifically — not generically."
       />

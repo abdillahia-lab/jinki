@@ -48,11 +48,13 @@ const verticals = defineCollection({
       sub: z.string(),
       datum: z.string(),               // folio datum, e.g. "±0.5°C"
     }),
+    // Optional: verticals without aerial photography yet (maritime) render
+    // a drawn chart hero instead of the InspectionInstrument.
     frame: z.object({
       caption: z.string(),             // must include DEMONSTRATION ANALYSIS
       alt: z.string(),
       annotations: z.array(annotation).default([]),
-    }),
+    }).optional(),
     stats: z.array(stat).min(3).max(4),
     problems: z.array(z.object({
       tag: z.string(),                 // mono label, e.g. "FAILURE MODE"

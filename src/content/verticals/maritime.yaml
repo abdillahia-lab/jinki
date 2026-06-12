@@ -1,0 +1,93 @@
+title: Maritime
+index: '06'
+order: 6
+metaTitle: Maritime — Jinki Aerial Intelligence
+metaDescription: Aerial thermal intelligence for ports, terminals, and marinas across Hampton Roads and
+  the Chesapeake — equipment heat signatures, vessel-at-berth surveys, overwater perimeter watch.
+ogImage: /images/og/og-maritime.png
+hero:
+  kicker: MARITIME // HAMPTON ROADS · CHESAPEAKE
+  headline: The port never stops. <em>Neither does the watch.</em>
+  sub: Terminals, berths, and marinas across the largest harbor complex on the Atlantic seaboard.
+    Aerial thermal finds the failing crane drive, the moisture in a composite hull, and the
+    overwater blind spot — without stopping a single operation.
+  datum: PORT-SCALE
+stats:
+- value: '500'
+  suffix: + AC
+  label: TERMINAL COVERAGE PER MISSION
+  source: Platform capability, overwater-rated operations
+- value: '0.5'
+  suffix: °C
+  label: RADIOMETRIC SENSITIVITY
+  source: Crane drives, reefer banks, switchgear at standoff
+- value: '48'
+  suffix: HR
+  label: SCAN TO RANKED REPORT
+  source: Service commitment — storm response prioritized
+- value: '24/7'
+  label: BERTH AND PERIMETER WATCH
+  source: Autonomous dock station, day and night thermal
+problems:
+- tag: CRANE DRIVES
+  title: Terminal equipment fails under continuous load
+  body: STS crane drives, spreader electrics, and reefer banks run hot long before they stop.
+    Standoff thermal flags the heat rise while the berth schedule still has slack.
+- tag: HULL MOISTURE
+  title: Composite hulls hide water until the survey
+  body: Moisture in cored laminates is invisible at the dock walk. Post-sunset thermal makes
+    saturated sections read against dry laminate — before haul-out, not after.
+- tag: LITHIUM RISK
+  title: Marina fire risk has changed
+  body: Battery banks aboard and ashore turn a single bad cell into a basin fire. Routine
+    thermal sweeps catch charging anomalies across slips no camera covers.
+- tag: OVERWATER GAPS
+  title: The waterside perimeter is the soft side
+  body: Fixed cameras end at the bulkhead. Aerial watch covers the approach water, the rafted
+    hulls, and the dark side of every pier — where ground patrols can't walk.
+- tag: STORM CLOCK
+  title: Post-storm documentation decides the claim
+  body: After a named storm, the operator who documents first settles first. One pass produces
+    geolocated, time-stamped condition evidence across the whole facility.
+capabilities:
+- title: Terminal equipment thermal
+  body: Crane drives, reefer rows, substations, and conveyor electrics surveyed at standoff
+    against NFPA 70B severity classes.
+  datum: NFPA 70B
+- title: Vessel-at-berth envelope survey
+  body: Hull moisture, deck delamination, and machinery-space heat signatures captured without
+    boarding or downtime.
+- title: Marina fire-risk sweep
+  body: Charging anomalies and battery-bank heat across every slip, scheduled in the post-sunset
+    window when contrast peaks.
+  datum: POST-SUNSET
+- title: Overwater perimeter watch
+  body: Persistent thermal coverage of approach water, piers, and rafted vessels with
+    alarm-triggered aerial verification.
+  datum: <90 S
+- title: Storm-response documentation
+  body: Priority post-event capture — geolocated, time-stamped imagery packaged for insurers
+    and port authorities.
+  datum: 48 HR
+midCta:
+  title: Put a watch on the waterline.
+  body: One mission covers the terminal, the berths, and the basin — report in 48 hours.
+faqs:
+- q: Can you legally fly over water and active port operations?
+  a: Yes. Operations are planned under FAA Part 107 with overwater contingencies, coordinated
+    with facility operations, and flown outside exclusion areas you define. Hampton Roads'
+    military airspace coordination is part of mission planning, not an afterthought.
+- q: Do operations interrupt cargo handling or vessel movements?
+  a: No. All capture is standoff — no berth closures, no crane stoppages, no boarding. Missions
+    are scheduled around your operations window, including night work when thermal contrast is best.
+- q: What can thermal actually see on a vessel hull?
+  a: Moisture in cored composite laminates, wet bulkhead cores, and machinery-space heat
+    signatures read clearly in post-sunset thermal. It is a screening survey — findings are
+    delivered with locations marked for a surveyor's confirmation.
+- q: How fast can you document after a storm?
+  a: Storm-response missions are prioritized — capture as soon as airspace and weather permit,
+    with the geolocated evidence package delivered within 48 hours of the pass.
+- q: How is sensitive port security data handled?
+  a: A mutual NDA precedes every engagement. Imagery is encrypted AES-256 at rest and TLS 1.3
+    in transit, with on-premises processing available for facilities that require it.
+serviceType: Maritime Facility Aerial Thermal Inspection

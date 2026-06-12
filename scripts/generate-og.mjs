@@ -20,6 +20,7 @@ const PAGES = [
   { file: 'og-security', index: '03', label: 'PERIMETER SECURITY', title: ['Your perimeter has gaps.', 'We close them.'] },
   { file: 'og-agriculture', index: '04', label: 'AGRICULTURE', title: ['Your fields are talking.', 'Now you can listen.'] },
   { file: 'og-real-estate', index: '05', label: 'REAL ESTATE', title: ['Photography for the', 'listings that move.'] },
+  { file: 'og-maritime', index: '06', label: 'MARITIME', title: ['The port never stops.', 'Neither does the watch.'] },
   { file: 'og-intelligence-scan', index: 'S1', label: 'FACILITY INTELLIGENCE SCAN', title: ['One mission. Total', 'facility intelligence.'] },
   { file: 'og-deployment', index: 'S2', label: 'AUTONOMOUS DEPLOYMENT', title: ['Persistent intelligence.', 'Zero intervention.'] },
   { file: 'og-sample-report', index: 'SR', label: 'SAMPLE REPORT', title: ['Read the deliverable before', 'you buy the engagement.'] },

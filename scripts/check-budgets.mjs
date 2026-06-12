@@ -18,7 +18,8 @@ const BUDGET = {
   // and clarity imagery srcsets (manifest thumbs + report previews) in
   // HTML (≈16KB br on the wire at 90KB raw). Eager JS cap unchanged —
   // heavy scenes load ONLY via capability-gated dynamic import.
-  htmlKB: 95,
+  // +5KB for vertical 06 (maritime manifest row + chip) — home at 97KB raw.
+  htmlKB: 100,
   cssKB: 60,
   jsKB: 20,
 };

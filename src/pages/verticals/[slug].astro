@@ -19,6 +19,7 @@ import CTABlock from '../../components/ui/CTABlock.astro';
 import LeadForm from '../../components/ui/LeadForm.astro';
 import InspectionInstrument from '../../components/ui/InspectionInstrument.astro';
 import AisleHeat from '../../components/scenes/AisleHeat.astro';
+import HarborChart from '../../components/scenes/HarborChart.astro';
 import CorridorRuler from '../../components/scenes/CorridorRuler.astro';
 import PerimeterRadar from '../../components/scenes/PerimeterRadar.astro';
 import NdviSweep from '../../components/scenes/NdviSweep.astro';
@@ -58,9 +59,11 @@ const FRAMES: Record<string, { visible: ImageMetadata; thermal: ImageMetadata; g
 };
 const frame = FRAMES[vertical.id];
 
-// Dock chips: severity from finding order, title from the label's lead segment
+// Dock chips: severity from finding order, title from the label's lead segment.
+// Verticals without aerial photography yet (maritime) have no frame — the
+// hero falls back to a drawn chart and findings stay empty.
 const SEVS = ['SEV-1', 'SEV-2', 'SEV-2', 'SEV-3'] as const;
-const findings = d.frame.annotations.map((a, i) => ({
+const findings = (d.frame?.annotations ?? []).map((a, i) => ({
   ...a,
   severity: SEVS[Math.min(i, SEVS.length - 1)],
   title: a.label.split('·')[0].trim(),
@@ -107,15 +110,19 @@ const jsonLd = {
           <Button href="/sample-report" kind="secondary" event={`cta-sample:hero-${vertical.id}`}>See the sample report</Button>
         </div>
         <div class="mt-12 md:mt-16">
-          <InspectionInstrument
-            image={frame.visible}
-            thermalImage={frame.thermal}
-            alt={d.frame.alt}
-            findings={findings}
-            caption={d.frame.caption}
-            grid={frame.grid}
-            loading="eager"
-          />
+          {frame && d.frame ? (
+            <InspectionInstrument
+              image={frame.visible}
+              thermalImage={frame.thermal}
+              alt={d.frame.alt}
+              findings={findings}
+              caption={d.frame.caption}
+              grid={frame.grid}
+              loading="eager"
+            />
+          ) : (
+            <HarborChart />
+          )}
         </div>
       </div>
     </section>
