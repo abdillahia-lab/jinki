@@ -1,0 +1,52 @@
+---
+/*
+  CertSeal — a uniform credential seal in the brief system. Vector, so
+  every seal is pixel-identical in size and crisp at any resolution
+  (the brand answer to "all the same size" — the official issuer badges
+  never match each other). Monochrome + one signal accent; acronym is
+  width-normalized via textLength so 4- and 5-letter marks read equal.
+*/
+interface Props {
+  abbr: string;
+  body: string;
+  class?: string;
+}
+const { abbr, body, class: className = '' } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 120 120"
+  class={`block w-[104px] h-[104px] shrink-0 ${className}`}
+  role="img"
+  aria-label={`${abbr} — ${body} certified`}
+>
+  <!-- double ring -->
+  <circle cx="60" cy="60" r="56" fill="var(--surface-1)" stroke="var(--rule-strong)" stroke-width="1.25" />
+  <circle cx="60" cy="60" r="49.5" fill="none" stroke="var(--rule)" stroke-width="1" />
+  <!-- cardinal ticks; top tick carries the signal accent -->
+  <line x1="60" y1="4" x2="60" y2="10.5" stroke="var(--signal)" stroke-width="1.5" stroke-linecap="round" />
+  <line x1="116" y1="60" x2="109.5" y2="60" stroke="var(--rule-strong)" stroke-width="1.25" />
+  <line x1="60" y1="116" x2="60" y2="109.5" stroke="var(--rule-strong)" stroke-width="1.25" />
+  <line x1="4" y1="60" x2="10.5" y2="60" stroke="var(--rule-strong)" stroke-width="1.25" />
+  <!-- acronym, width-normalized -->
+  <text
+    x="60" y="55" text-anchor="middle" dominant-baseline="middle"
+    font-family="'Space Grotesk', system-ui, sans-serif" font-weight="500"
+    font-size="21" letter-spacing="0.5" textLength="58" lengthAdjust="spacingAndGlyphs"
+    fill="var(--ink-1)"
+  >{abbr}</text>
+  <!-- signal divider -->
+  <line x1="51" y1="69" x2="69" y2="69" stroke="var(--signal)" stroke-width="1" opacity="0.55" />
+  <!-- issuer -->
+  <text
+    x="60" y="83" text-anchor="middle"
+    font-family="'JetBrains Mono', monospace" font-size="10" letter-spacing="1"
+    fill="var(--ink-2)"
+  >{body}</text>
+  <!-- microtext -->
+  <text
+    x="60" y="99" text-anchor="middle"
+    font-family="'JetBrains Mono', monospace" font-size="6.4" letter-spacing="2.4"
+    fill="var(--ink-3)"
+  >CERTIFIED</text>
+</svg>

@@ -11,6 +11,7 @@ import Section from '../components/ui/Section.astro';
 import SectionHeader from '../components/ui/SectionHeader.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import CTABlock from '../components/ui/CTABlock.astro';
+import CertSeal from '../components/ui/CertSeal.astro';
 import founderImg from '../assets/images/founder-adnan.webp';
 
 const doctrine = [
@@ -94,7 +95,7 @@ const jsonLd = {
     <!-- FOUNDER -->
     <Section label="Founder" cv>
       <SectionHeader
-        index="01" label="FOUNDER" datum="CISSP · CCSP · AIGP · AAISM · AAIR"
+        index="01" label="FOUNDER" datum="ISC2 · IAPP · ISACA"
         title="The person your request reaches."
       />
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-10 items-start">
@@ -144,6 +145,16 @@ const jsonLd = {
             DIRECT LINE · <a href="mailto:info@jinki.ai" class="text-ink-2 no-underline hover:text-ink">INFO@JINKI.AI</a>
           </p>
         </div>
+      </div>
+
+      <!-- Credential seals — uniform vector marks, one size, any resolution -->
+      <div class="mt-12 md:mt-16 folio-rule pt-7">
+        <p class="mono-label text-ink-3 mb-6">CREDENTIALS · VERIFIED WITH ISSUER</p>
+        <ul class="list-none m-0 p-0 flex flex-wrap items-center gap-x-7 gap-y-6">
+          {credentials.map((c) => (
+            <li><CertSeal abbr={c.abbr} body={c.body} /></li>
+          ))}
+        </ul>
       </div>
     </Section>
 
