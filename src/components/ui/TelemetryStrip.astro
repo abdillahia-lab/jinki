@@ -25,8 +25,8 @@ const build = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
   } ${className}`}
   data-telemetry
 >
-  <span class="whitespace-nowrap">UTC <span class="text-signal tabular" data-t-utc>--:--:--</span></span>
-  <span class="whitespace-nowrap">MID-ATLANTIC SECTOR</span>
+  <span class="whitespace-nowrap"><span class="text-signal tabular" data-t-clock>--:--:--</span> ET</span>
+  <span class="whitespace-nowrap">OPS AREA · MID-ATLANTIC</span>
   <a
     href="/status#scan-window"
     class="whitespace-nowrap no-underline text-ink-3 hover:text-ink-2 transition-colors"
@@ -45,11 +45,17 @@ const build = new Date().toISOString().slice(0, 10).replace(/-/g, '.');
   import { scanWindow, fmtTimeET } from '../../lib/solar';
 
   function initTelemetry(root: Element) {
-    const utc = root.querySelector('[data-t-utc]');
-    if (utc) {
-      const tick = () => {
-        utc.textContent = new Date().toISOString().slice(11, 19);
-      };
+    // Operating-corridor clock — Eastern Time. This is NOT the visitor's
+    // location: it's our ops reference clock (the brand flies ET; the
+    // flight-window line below is ET too). Formatted from the device clock
+    // into the corridor's zone, so it reads correctly wherever the visitor is.
+    const clock = root.querySelector('[data-t-clock]');
+    if (clock) {
+      const fmt = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/New_York', hourCycle: 'h23',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+      });
+      const tick = () => { clock.textContent = fmt.format(new Date()); };
       tick();
       setInterval(tick, 1000);
     }
