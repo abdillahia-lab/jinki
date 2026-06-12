@@ -1,7 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <circle cx="16" cy="16" r="15" fill="#121416"/>
-  <circle cx="16" cy="16" r="2.2" fill="#00E5FF"/>
-  <path d="M 16 8.5 A 7.5 7.5 0 1 1 9.2 19.5" stroke="#00E5FF" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-  <path d="M 22 5 A 13 13 0 0 1 22 27" stroke="#00E5FF" stroke-width="1.3" fill="none" stroke-linecap="round" opacity="0.6"/>
-  <path d="M 10 2.5 A 17 17 0 0 1 28 20" stroke="#00E5FF" stroke-width="0.9" fill="none" stroke-linecap="round" opacity="0.3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .tick { stroke: #F4F4F2; }
+    @media (prefers-color-scheme: light) { .tick { stroke: #121210; } }
+  </style>
+  <!-- Registration ticks + signal dot — the instrument mark -->
+  <g class="tick" stroke-width="2.4" fill="none" stroke-linecap="square">
+    <path d="M4 11 V4 H11" />
+    <path d="M21 4 H28 V11" />
+    <path d="M28 21 V28 H21" />
+    <path d="M11 28 H4 V21" />
+  </g>
+  <circle cx="16" cy="16" r="4.6" fill="#FF4F00" />
 </svg>

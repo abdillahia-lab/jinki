@@ -4,7 +4,7 @@ order: 2
 metaTitle: Autonomous Deployment — Jinki Aerial Intelligence
 metaDescription: Persistent autonomous monitoring from an on-site dock station. 150-200 missions per month — thermal
   baselines, degradation tracking, verified alerts.
-ogImage: /images/og-deployment.png
+ogImage: /images/og/og-deployment.png
 hero:
   kicker: AUTONOMOUS DEPLOYMENT // PERSISTENT
   headline: Persistent intelligence. <em>Zero intervention.</em>

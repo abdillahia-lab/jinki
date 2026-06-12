@@ -5,7 +5,7 @@ theme: light
 metaTitle: Agriculture — Jinki Aerial Intelligence
 metaDescription: 'Precision agriculture intelligence: crop stress detection, irrigation analysis, and yield forecasting
   from aerial thermal data.'
-ogImage: /images/og-agriculture.png
+ogImage: /images/og/og-agriculture.png
 hero:
   kicker: AGRICULTURE // MID-ATLANTIC
   headline: Your fields are telling you something. <em>Now you can listen.</em>

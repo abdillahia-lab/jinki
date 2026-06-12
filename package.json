@@ -7,9 +7,11 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node scripts/check-budgets.mjs",
+    "build": "astro build && node scripts/stamp-pages.mjs && node scripts/check-budgets.mjs",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "gen:og": "node scripts/generate-og.mjs",
+    "gen:thermal": "node scripts/generate-thermal.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.1",

@@ -4,7 +4,7 @@ order: 1
 metaTitle: Data Centers — Jinki Aerial Intelligence
 metaDescription: Aerial thermal intelligence for data centers. Detect cooling failures, roof damage, and structural
   risks before they cause downtime.
-ogImage: /images/og-data-centers.png
+ogImage: /images/og/og-data-centers.png
 hero:
   kicker: DATA CENTERS // NOVA CORRIDOR
   headline: Find the hidden problem <em>before the outage</em>.

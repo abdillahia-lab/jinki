@@ -4,7 +4,7 @@ order: 2
 metaTitle: Energy & Grid — Jinki Aerial Intelligence
 metaDescription: Predictive aerial intelligence for power lines, solar farms, and substations. Severity-ranked findings
   within 48 hours across 50+ mile corridors.
-ogImage: /images/og-energy-grid.png
+ogImage: /images/og/og-energy-grid.png
 hero:
   kicker: ENERGY & GRID // MID-ATLANTIC
   headline: Find the failing component <em>before the outage finds you</em>.
