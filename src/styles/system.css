@@ -211,6 +211,19 @@
   a, button, [role="button"], input, select, textarea { touch-action: manipulation; }
   * { -webkit-tap-highlight-color: transparent; }
 
+  /* iPhone landscape (viewport-fit=cover): keep the fixed chrome out of
+     the sensor housing. Touch devices only — desktop gutters untouched. */
+  @media (pointer: coarse) {
+    [data-nav] nav {
+      padding-left: max(1.25rem, env(safe-area-inset-left));
+      padding-right: max(1.25rem, env(safe-area-inset-right));
+    }
+    [data-cta-dock] > div {
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
+    }
+  }
+
   img, svg, video { display: block; max-width: 100%; height: auto; }
 
   :focus-visible {

@@ -125,9 +125,11 @@ const uid = `inst-${Math.abs([...caption].reduce((a, c) => (a * 33 + c.charCodeA
           class="inst-chip group flex-1 min-w-44 text-left bg-transparent border-0 border-r border-rule last:border-r-0 cursor-pointer px-4 py-3 transition-colors hover:bg-surface-1"
           data-chip={i}
         >
-          <span class="flex items-baseline justify-between gap-2">
-            <span class="mono-label text-ink-3 tabular">F-{String(i + 1).padStart(2, '0')}{f.severity ? ` · ${f.severity}` : ''}</span>
-            <span class="mono-label text-ink-3" data-chip-state>UNVERIFIED</span>
+          <!-- flex-wrap + nowrap spans: tokens never break mid-word on
+               narrow chips; the state drops to its own line instead -->
+          <span class="flex flex-wrap items-baseline justify-between gap-x-2">
+            <span class="mono-label text-ink-3 tabular whitespace-nowrap">F-{String(i + 1).padStart(2, '0')}{f.severity ? ` · ${f.severity}` : ''}</span>
+            <span class="mono-label text-ink-3 whitespace-nowrap" data-chip-state>UNVERIFIED</span>
           </span>
           <span class="block font-mono text-caption text-ink mt-1.5 truncate">{f.title ?? f.label}</span>
         </button>

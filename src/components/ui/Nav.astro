@@ -95,7 +95,7 @@ const inServices = services.some((s) => isActive(s.href));
       </li>
       {topLinks.map((l) => (
         <li class="relative">
-          <a href={l.href} class={`no-underline font-sans text-caption py-2 transition-colors ${isActive(l.href) ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}>
+          <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined} class={`no-underline font-sans text-caption py-2 transition-colors ${isActive(l.href) ? 'text-ink' : 'text-ink-2 hover:text-ink'}`}>
             {l.label}
             {isActive(l.href) && <span class="absolute -bottom-px left-0 right-0 h-0.5 thermal-band"></span>}
           </a>
