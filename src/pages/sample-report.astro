@@ -13,9 +13,12 @@ import SectionHeader from '../components/ui/SectionHeader.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import InspectionInstrument from '../components/ui/InspectionInstrument.astro';
 
+import { Image } from 'astro:assets';
 import sampleVisible from '../assets/images/dc-rooftop-aerial.webp';
 import sampleThermal from '../assets/images/dc-rooftop-aerial-thermal.webp';
 import sampleGrid from '../data/thermal/dc-rooftop-aerial.json';
+import reportP1 from '../assets/images/report-p1.webp';
+import reportP3 from '../assets/images/report-p3.webp';
 
 const ACCESS_KEY = 'b2bd961c-acf2-48a6-bf10-a5717c2dea95';
 
@@ -61,15 +64,32 @@ const sampleFindings = [
         index="01" label="CONTENTS" datum="04 SECTIONS"
         title="What's inside."
       />
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
-        {reportSections.map((s) => (
-          <div class="folio-rule rule-draw pt-5 pb-6">
-            <span class="mono-label text-signal tabular">{s.n}</span>
-            <h3 class="text-h3 font-display font-medium text-ink mt-2 mb-2">{s.t}</h3>
-            <p class="text-body text-ink-2">{s.d}</p>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-12 items-start">
+        <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-x-6">
+          {reportSections.map((s) => (
+            <div class="folio-rule rule-draw pt-5 pb-6">
+              <span class="mono-label text-signal-soft tabular">{s.n}</span>
+              <h3 class="text-h3 font-display font-medium text-ink mt-2 mb-2">{s.t}</h3>
+              <p class="text-body text-ink-2">{s.d}</p>
+            </div>
+          ))}
+        </div>
+        <!-- Real pages, shown BEFORE the form — trust runs preview-first -->
+        <div class="lg:col-span-4 lg:col-start-9">
+          <div class="relative">
+            <div class="border border-rule rounded-panel overflow-hidden rotate-1 translate-x-3 absolute inset-0 opacity-60">
+              <Image src={reportP3} alt="" width={400} loading="lazy" class="w-full" />
+            </div>
+            <div class="relative border border-rule-strong rounded-panel overflow-hidden bg-surface-1 preview-fade">
+              <Image src={reportP1} alt="Cover page of the sample report" width={400} loading="lazy" class="w-full" />
+            </div>
           </div>
-        ))}
+          <p class="mono-label text-ink-3 mt-3 max-w-none">PAGES 1 + 3 OF 6 · FULL PDF BELOW</p>
+        </div>
       </div>
+      <style>
+        .preview-fade { -webkit-mask-image: linear-gradient(180deg, black 70%, transparent 98%); mask-image: linear-gradient(180deg, black 70%, transparent 98%); }
+      </style>
     </Section>
 
     <!-- ============ SCOPE COMPOSER (D1) ============ -->

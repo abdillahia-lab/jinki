@@ -66,14 +66,15 @@ const findings = d.frame.annotations.map((a, i) => ({
   title: a.label.split('·')[0].trim(),
 }));
 
-const SCENES: Record<string, any> = {
-  'data-centers': AisleHeat,
-  'energy-grid': CorridorRuler,
-  'security': PerimeterRadar,
-  'agriculture': NdviSweep,
-  'real-estate': LightStudy,
+const SCENES: Record<string, { component: any; lede: string }> = {
+  'data-centers': { component: AisleHeat, lede: 'What continuous aisle-level thermal watch looks like inside your hall.' },
+  'energy-grid': { component: CorridorRuler, lede: 'How a 50-mile corridor gets captured — structure by structure, one pass.' },
+  'security': { component: PerimeterRadar, lede: 'What persistent watch looks like for a perimeter.' },
+  'agriculture': { component: NdviSweep, lede: 'How zone-level crop health paints in across a full operation, weekly.' },
+  'real-estate': { component: LightStudy, lede: 'How we plan the shot window around the light your property deserves.' },
 };
-const Scene = SCENES[vertical.id];
+const scene = SCENES[vertical.id];
+const Scene = scene?.component;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -99,11 +100,11 @@ const jsonLd = {
           <span class="mono-label text-ink-3">{d.hero.datum}</span>
         </div>
         <h1 class="text-h1 font-display font-medium text-ink max-w-[18ch] rise" set:html={d.hero.headline} />
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-6 mt-8">
-          <p class="text-lede text-ink-2 lg:col-span-7 rise">{d.hero.sub}</p>
-          <div class="lg:col-span-4 lg:col-start-9 flex flex-wrap items-start gap-3 lg:justify-end rise">
-            <Button href="#lead-gen" event={`cta-assessment:hero-${vertical.id}`}>Request Q3 assessment</Button>
-          </div>
+        <!-- CTA lives under the pitch, not orphaned right (C3) -->
+        <p class="text-lede text-ink-2 max-w-[58ch] mt-6 rise">{d.hero.sub}</p>
+        <div class="flex flex-wrap items-center gap-3 mt-7 rise">
+          <Button href="#lead-gen" event={`cta-assessment:hero-${vertical.id}`}>Request Q3 assessment</Button>
+          <Button href="/sample-report" kind="secondary" event={`cta-sample:hero-${vertical.id}`}>See the sample report</Button>
         </div>
         <div class="mt-12 md:mt-16">
           <InspectionInstrument
@@ -127,6 +128,7 @@ const jsonLd = {
     <!-- SECTOR SCENE -->
     {Scene && (
       <Section label="Sector telemetry" spacing="compact" cv>
+        <p class="text-lede text-ink-2 max-w-prose mb-6">{scene.lede}</p>
         <Scene />
       </Section>
     )}
@@ -158,11 +160,15 @@ const jsonLd = {
       <ul class="list-none m-0 p-0">
         {d.capabilities.map((c, i) => (
           <li class="folio-rule rule-draw">
-            <div class="grid grid-cols-[auto_1fr] lg:grid-cols-12 items-baseline gap-x-4 lg:gap-x-6 gap-y-1 py-5">
-              <span class="mono-label text-ink-3 tabular lg:col-span-1">{String(i + 1).padStart(2, '0')}</span>
-              <span class="font-display font-medium text-h3 text-ink lg:col-span-4">{c.title}</span>
-              <span class="text-body text-ink-2 col-start-2 lg:col-start-6 lg:col-span-5">{c.body}</span>
-              {c.datum && <span class="mono-label text-ink-3 col-start-2 lg:col-start-11 lg:col-span-2 lg:text-right">{c.datum}</span>}
+            <!-- xl: single row; below xl: title+datum line then body (C3:
+                 the 4-col grid wrapped awkwardly in the 768-1024 band) -->
+            <div class="grid grid-cols-[auto_1fr] xl:grid-cols-12 items-baseline gap-x-4 xl:gap-x-6 gap-y-1.5 py-5">
+              <span class="mono-label text-ink-3 tabular xl:col-span-1">{String(i + 1).padStart(2, '0')}</span>
+              <span class="flex flex-wrap items-baseline justify-between gap-x-4 xl:contents">
+                <span class="font-display font-medium text-h3 text-ink xl:col-span-4">{c.title}</span>
+                {c.datum && <span class="mono-label text-ink-3 xl:col-start-11 xl:col-span-2 xl:text-right xl:order-last">{c.datum}</span>}
+              </span>
+              <span class="text-body text-ink-2 col-start-2 xl:col-start-6 xl:col-span-5">{c.body}</span>
             </div>
           </li>
         ))}

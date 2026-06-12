@@ -134,12 +134,24 @@ const totalQuestions = groups.reduce((n, g) => n + g.items.length, 0);
           <a href="#lead-gen" class="text-ink link-draw no-underline">ask the founder directly</a> —
           response within one business day.
         </p>
+        <!-- Jump row (C3): get to your section without scrolling blind -->
+        <nav aria-label="Question sections" class="mt-8 rise">
+          <ul class="list-none m-0 p-0 flex flex-wrap gap-2">
+            {groups.map((g) => (
+              <li>
+                <a href={`#faq-${g.index}`} class="inline-flex items-center h-9 px-4 rounded-pill border border-rule-strong no-underline font-mono text-caption text-ink-2 transition-colors hover:border-signal hover:text-ink">
+                  {g.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </section>
 
     <!-- FAQ GROUPS -->
     {groups.map((group, i) => (
-      <Section label={group.label.toLowerCase()} cv>
+      <Section id={`faq-${group.index}`} label={group.label.toLowerCase()} cv>
         <SectionHeader
           index={group.index}
           label={group.label}
