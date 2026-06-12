@@ -61,22 +61,24 @@ const process = [
   <main id="main-content">
 
     <!-- ============ S1 HERO ============ -->
-    <section aria-label="Jinki aerial intelligence" class="pt-14 md:pt-24">
+    <!-- Fold contract (G1): badge + headline + lede + both CTAs inside
+         100svh on a 768px-tall laptop. Rhythm is tight by design. -->
+    <section aria-label="Jinki aerial intelligence" class="pt-8 md:pt-12">
       <div class="max-w-brief mx-auto px-5 sm:px-8 lg:px-12 2xl:px-16">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-10">
           <div class="lg:col-span-9">
-            <p class="mono-label text-ink-3 mb-6 rise">
-              <span class="text-signal">●</span>&nbsp; BOOKING Q3 2026 ASSESSMENTS
+            <p class="mono-label text-ink-3 mb-4 rise">
+              <span class="text-signal-soft">●</span>&nbsp; BOOKING Q3 2026 ASSESSMENTS
             </p>
-            <h1 class="text-display font-display font-medium text-ink max-w-[16ch] rise">
+            <h1 class="text-display font-display font-medium text-ink max-w-[20ch] rise">
               Every anomaly on your facility — found, ranked, delivered in <em class="not-italic text-signal">48 hours</em>.
             </h1>
-            <p class="text-lede text-ink-2 mt-8 max-w-[52ch] rise">
-              Radiometric thermal at 0.5°C sensitivity across your entire rooftop, perimeter,
-              and plant in one aerial pass. No scaffolding, no shutdown, no raw-footage dump —
-              a prioritized findings report your team can put into Monday's work orders.
+            <p class="text-lede text-ink-2 mt-6 max-w-[58ch] rise">
+              Radiometric thermal at 0.5°C sensitivity across your rooftop, perimeter, and
+              plant in one aerial pass — delivered as a prioritized findings report your
+              team can put into Monday's work orders.
             </p>
-            <div class="flex flex-wrap items-center gap-3 mt-10 rise">
+            <div class="flex flex-wrap items-center gap-3 mt-7 rise">
               <Button href="#lead-gen" event="cta-assessment:hero">Request Q3 assessment</Button>
               <Button href="/sample-report" kind="secondary" event="cta-sample:hero">See the sample report</Button>
             </div>

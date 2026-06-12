@@ -7,7 +7,8 @@ interface Props {
   id?: string;
   width?: 'brief' | 'prose' | 'full';
   tone?: 'default' | 'raised';
-  spacing?: 'default' | 'compact' | 'none';
+  /** default = related-section rhythm; act = act-break gap (G5) */
+  spacing?: 'default' | 'act' | 'compact' | 'none';
   cv?: boolean; // content-visibility for below-fold sections
   class?: string;
   label?: string; // aria-label
@@ -30,6 +31,7 @@ const widths = {
 };
 const spacings = {
   default: 'py-section',
+  act: 'py-act',
   compact: 'py-block',
   none: '',
 };

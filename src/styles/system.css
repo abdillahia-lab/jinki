@@ -58,8 +58,9 @@
   --font-sans: 'Inter', 'Inter Fallback', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
 
-  /* 8-step fluid type scale — line-height + tracking baked into utilities */
-  --text-label: clamp(0.6875rem, 0.65rem + 0.2vw, 0.78125rem);
+  /* 8-step fluid type scale — line-height + tracking baked into utilities.
+     Label floor raised to 12px (G2: 11px caps strain scanning). */
+  --text-label: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);
   --text-label--line-height: 1.1;
   --text-label--letter-spacing: 0.12em;
   --text-caption: clamp(0.8125rem, 0.79rem + 0.15vw, 0.875rem);
@@ -78,13 +79,18 @@
   --text-h1: clamp(2.375rem, 1.7rem + 3.5vw, 4.25rem);
   --text-h1--line-height: 1.02;
   --text-h1--letter-spacing: -0.04em;
-  --text-display: clamp(2.875rem, 1.4rem + 7.5vw, 7rem);
-  --text-display--line-height: 0.98;
+  /* Display capped at 88px (was 112px): drama without pushing the hero
+     CTAs below the fold on 1366x768 laptops — the fold test governs. */
+  --text-display: clamp(2.875rem, 1.35rem + 5.6vw, 5.5rem);
+  --text-display--line-height: 1.0;
   --text-display--letter-spacing: -0.045em;
 
   /* Spacing — dynamic scale (p-1 … p-96) + section rhythm */
+  /* Spacing semantics (G5): related sections sit closer; only act
+     breaks earn the big gap. py-section = related rhythm by default. */
   --spacing: 0.25rem;
-  --spacing-section: clamp(5rem, 3rem + 10vw, 11rem);
+  --spacing-section: clamp(3.5rem, 2.5rem + 4.5vw, 6rem);
+  --spacing-act: clamp(6rem, 4rem + 8vw, 10rem);
   --spacing-block: clamp(2.5rem, 2rem + 3vw, 5rem);
 
   /* Radii — panels are sharp-ish, buttons are pills */
@@ -124,6 +130,7 @@
   --color-rule: var(--rule);
   --color-rule-strong: var(--rule-strong);
   --color-signal: var(--signal);
+  --color-signal-soft: var(--signal-soft);
   --color-signal-dim: var(--signal-dim);
   --color-btn: var(--btn-bg);
   --color-btn-fg: var(--btn-fg);
@@ -137,11 +144,14 @@
   --surface-2: #181818;
   --surface-3: #202020;
   --ink-1: #F4F4F2;
-  --ink-2: rgba(244, 244, 242, 0.66);
-  --ink-3: rgba(244, 244, 242, 0.42);
+  --ink-2: rgba(244, 244, 242, 0.68);
+  --ink-3: rgba(244, 244, 242, 0.52);   /* G3: was 42% — strained */
   --rule: rgba(244, 244, 242, 0.12);
-  --rule-strong: rgba(244, 244, 242, 0.26);
+  --rule-strong: rgba(244, 244, 242, 0.32); /* G3: was 26% */
   --signal: #FF4F00;
+  /* G4: small mono in pure signal shimmers on ink — soft variant for
+     labels/telemetry under ~14px */
+  --signal-soft: #FF6B33;
   --signal-dim: rgba(255, 79, 0, 0.32);
   --btn-bg: #F4F4F2;
   --btn-fg: #0A0A0A;
@@ -155,11 +165,12 @@
   --surface-2: #EFEDE8;
   --surface-3: #E7E5DF;
   --ink-1: #121210;
-  --ink-2: rgba(18, 18, 16, 0.66);
-  --ink-3: rgba(18, 18, 16, 0.42);
+  --ink-2: rgba(18, 18, 16, 0.70);
+  --ink-3: rgba(18, 18, 16, 0.55);
   --rule: rgba(18, 18, 16, 0.14);
-  --rule-strong: rgba(18, 18, 16, 0.30);
+  --rule-strong: rgba(18, 18, 16, 0.34);
   --signal: #C23A00;
+  --signal-soft: #B84A1A;
   --signal-dim: rgba(194, 58, 0, 0.32);
   --btn-bg: #121210;
   --btn-fg: #F7F6F3;
@@ -236,6 +247,17 @@
   text-transform: uppercase;
   line-height: 1.1;
 }
+/* G2: long mono strings (>~24ch) relax tracking — caps + wide tracking
+   over a full line strains scanning */
+@utility mono-label-long {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+@utility py-act { padding-block: var(--spacing-act); }
 @utility tabular { font-variant-numeric: tabular-nums; }
 @utility thermal-band { background: var(--thermal-ramp); }
 @utility folio-rule {

@@ -20,7 +20,8 @@ const { class: className = '' } = Astro.props;
 </nav>
 
 <style is:global>
-  /* Hidden below lg; never shown until JS confirms >=4 sections. */
+  /* G10: enhancement, not navigation — only on 2xl+ where it doesn't
+     crowd the content edge. Never shown until JS confirms >=4 sections. */
   #section-minimap {
     display: none;
     position: fixed;
@@ -30,7 +31,7 @@ const { class: className = '' } = Astro.props;
     z-index: var(--z-sticky);
     pointer-events: none; /* only the buttons take input */
   }
-  @media (min-width: 64rem) {
+  @media (min-width: 96rem) {
     #section-minimap:not([hidden]) {
       display: block;
     }

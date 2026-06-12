@@ -80,7 +80,8 @@ const orgSchema = {
     <link rel="manifest" href="/manifest.json" />
     <link rel="alternate" type="application/rss+xml" title="Jinki Blog" href="/rss.xml" />
 
-    <!-- Theme init: stored preference > page-forced > dark (NIGHT OPS) default. -->
+    <!-- Theme init: stored choice > page-forced > system preference (G6:
+         office visitors at noon shouldn't get NIGHT OPS) > dark. -->
     <script is:inline data-page-theme={theme ?? ''}>
       (function () {
         var forced = document.currentScript.getAttribute('data-page-theme');
@@ -89,6 +90,7 @@ const orgSchema = {
           var saved = localStorage.getItem('jinki-theme');
           if (saved === 'dark' || saved === 'light') t = saved;
           else if (forced) t = forced;
+          else if (matchMedia('(prefers-color-scheme: light)').matches) t = 'light';
         } catch (e) { if (forced) t = forced; }
         document.documentElement.setAttribute('data-theme', t);
       })();

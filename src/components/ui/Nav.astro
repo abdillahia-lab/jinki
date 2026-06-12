@@ -124,7 +124,7 @@ const inServices = services.some((s) => isActive(s.href));
         class="lg:hidden bg-transparent border border-rule-strong rounded-panel cursor-pointer mono-label text-ink px-3.5 h-10 min-w-11"
         data-sheet-open aria-haspopup="dialog"
       >
-        INDEX
+        MENU
       </button>
     </div>
   </nav>
@@ -186,6 +186,11 @@ const inServices = services.some((s) => isActive(s.href));
   </div>
 </dialog>
 
+<style>
+  /* G7: click-opened state mirrors the hover-open state */
+  li.dd-open > div { opacity: 1; visibility: visible; transform: translateY(0); }
+</style>
+
 <script>
   // Theme: segmented DAY / NIGHT OPS — the ACTIVE mode is lit in signal,
   // so state and target are both always visible (a label that read only
@@ -227,4 +232,31 @@ const inServices = services.some((s) => isActive(s.href));
     );
     sheet.addEventListener('click', (e) => { if (e.target === sheet) sheet.close(); });
   }
+
+  // G7: dropdowns open on CLICK too (touch-screen laptops can't hover);
+  // hover stays as enhancement via the existing group-hover CSS.
+  document.querySelectorAll<HTMLButtonElement>('[data-dropdown]').forEach((btn) => {
+    const li = btn.closest('li')!;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = li.classList.toggle('dd-open');
+      btn.setAttribute('aria-expanded', String(open));
+      // close siblings
+      document.querySelectorAll('li.dd-open').forEach((other) => {
+        if (other !== li) {
+          other.classList.remove('dd-open');
+          other.querySelector('[data-dropdown]')?.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  });
+  document.addEventListener('click', () => {
+    document.querySelectorAll('li.dd-open').forEach((li) => {
+      li.classList.remove('dd-open');
+      li.querySelector('[data-dropdown]')?.setAttribute('aria-expanded', 'false');
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') document.querySelectorAll('li.dd-open').forEach((li) => li.classList.remove('dd-open'));
+  });
 </script>
