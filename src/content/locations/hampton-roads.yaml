@@ -1,0 +1,148 @@
+title: Hampton Roads
+short: HRVA
+order: 4
+metaTitle: Hampton Roads Aerial Thermal Inspection — Jinki Aerial Intelligence
+metaDescription: Aerial thermal inspection across Norfolk, Virginia Beach, and the Port of
+  Virginia — terminals, marinas, coastal facilities, and substations, flown with full
+  military airspace coordination.
+hero:
+  kicker: HAMPTON ROADS // NORFOLK · VIRGINIA BEACH · NEWPORT NEWS
+  headline: The most layered airspace on the coast. <em>We plan for all of it.</em>
+  sub: The world's largest naval complex, three commercial airfields, and the deepest
+    shipping channel on the East Coast share one harbor. Flying here is a coordination
+    problem most operators won't take on — and the reason the region's private facilities
+    go under-covered.
+  datum: MIL-COORD
+airspace:
+  label: ORF CLASS C · MILITARY COORDINATION
+  body: Hampton Roads stacks Norfolk International's Class C against naval air traffic,
+    Oceana's fighter pattern, Langley's restricted areas, and continuous harbor operations.
+    Every Jinki mission here is planned against the full airspace picture — military
+    coordination included — with overwater contingencies as standard. We serve private and
+    commercial facilities; the military airspace is a planning reality we handle, not a
+    market we sell to.
+  facts:
+  - key: AIRSPACE
+    value: ORF CLASS C + MIL AREAS
+  - key: COORDINATION
+    value: FULL PICTURE, PER MISSION
+  - key: OVERWATER
+    value: RATED + PLANNED
+  - key: MOBILIZATION
+    value: SCHEDULED — PRIORITY STORM
+coverage:
+  body: Hampton Roads missions are scheduled engagements staged for full mission days —
+    the drive from our corridor argues for covering terminal, marina, and substation in
+    one visit. Named-storm response is prioritized over all routine work.
+  areas:
+  - Norfolk
+  - Virginia Beach
+  - Newport News
+  - Portsmouth
+  - Chesapeake
+  - Suffolk
+  - Hampton
+verticals:
+- slug: maritime
+  headline: Port-scale thermal for the Atlantic's deepest harbor.
+  intro: The Port of Virginia's terminals, the private marinas of Virginia Beach, and the
+    working waterfront from Newport News to Chesapeake all share the same exposure — high
+    value assets, salt environment, storm clock. This is the flagship maritime market in
+    our operating area, and the hardest one for casual operators to serve.
+  points:
+  - tag: TERMINAL PLANT
+    body: Crane drives, reefer rows, and conveyor electrics at the region's container and
+      breakbulk terminals, surveyed at standoff with zero berth interruption.
+  - tag: MARINA RISK
+    body: Lithium battery banks afloat and ashore have changed marina fire risk. Post-sunset
+      thermal sweeps read charging anomalies across every slip.
+  - tag: HURRICANE CLOCK
+    body: When a named storm crosses the region, the facility with geolocated before-and-after
+      evidence settles first. We fly the before now and prioritize the after.
+  - tag: HULL SURVEYS
+    body: Vessel-at-berth envelope thermal — moisture in composite hulls, deck delamination —
+      without boarding, haul-out, or schedule impact.
+  faqs:
+  - q: Can you actually fly near the naval bases?
+    a: We fly where authorization permits and plan around where it doesn't. Missions serve
+      private terminals, marinas, and commercial facilities — with the full military airspace
+      picture built into every flight plan.
+  - q: What does storm-response coverage look like?
+    a: Pre-season baseline capture, then prioritized post-storm documentation as soon as
+      airspace and weather permit — evidence package within 48 hours of the pass.
+- slug: security
+  headline: Waterfront perimeters need a waterside watch.
+  intro: Terminals, fuel docks, and industrial waterfront across Hampton Roads share the
+    same blind spot — the approach by water. Fences and cameras end at the bulkhead;
+    overwater-rated aerial thermal covers the basin side, the pier shadows, and the rafted
+    hulls no patrol walks past.
+  points:
+  - tag: WATER APPROACH
+    body: The least-instrumented route into any waterfront facility is by water. Thermal
+      coverage of the approach basin closes it.
+  - tag: PIER SHADOWS
+    body: Under-pier and between-hull spaces are invisible to pole cameras and dangerous
+      to patrol. An aerial pass reads them in seconds.
+  - tag: 24/7 OPTION
+    body: Persistent autonomous deployment puts thermal verification on any alarm in under
+      90 seconds, around the clock.
+  faqs:
+  - q: Does waterside coverage require a vessel?
+    a: No — that is the point. Overwater-rated aerial operations cover the basin side
+      without putting a boat or a person on the water.
+  - q: Can sweeps be scheduled irregularly so they can't be timed?
+    a: Yes. Randomized sweep windows within agreed hours are standard practice for
+      security programs.
+- slug: energy-grid
+  headline: Coastal grid, salt environment, accelerated clock.
+  intro: Salt air is the hardest duty cycle utility hardware faces. Connection points,
+    switchyards, and shoreline crossings across Hampton Roads corrode and heat on an
+    accelerated schedule — which makes thermal trend lines here more valuable per pass
+    than anywhere inland.
+  points:
+  - tag: SALT DUTY
+    body: Corrosion at clamps and splices raises resistance; resistance shows as heat
+      long before it shows as failure. Coastal hardware earns more frequent passes.
+  - tag: CROSSINGS
+    body: Overwater transmission crossings are exactly the spans ground crews can't walk —
+      and overwater-rated aerial operations can.
+  - tag: STORM HARDENING
+    body: Pre-season corridor baselines tell you which structures to harden before
+      hurricane season, not after.
+  faqs:
+  - q: Can you survey spans over water?
+    a: Yes — overwater operations with the appropriate contingencies are part of our
+      standard mission planning in this region.
+  - q: How does coastal inspection cadence differ?
+    a: Salt environments justify roughly twice the inspection frequency of inland
+      equivalents; the trend line between passes is where the value concentrates.
+- slug: real-estate
+  headline: Coastal property, documented before and after.
+  intro: Oceanfront and bayfront property across Virginia Beach and the rivers carries
+    the region's storm exposure on its roofs and envelopes. Aerial thermal and visual
+    capture documents condition for listings, for insurers, and for the before-and-after
+    record every coastal owner eventually needs.
+  points:
+  - tag: STORM RECORD
+    body: A pre-season condition baseline turns a post-storm claim from an argument into
+      a comparison.
+  - tag: ENVELOPE READ
+    body: Salt-side roofs and envelopes degrade fast; thermal finds the moisture path
+      while it is still a repair, not a replacement.
+  - tag: LISTING CAPTURE
+    body: Waterfront listings sell on the aerial frame. Full exterior portfolios in one
+      visit, scheduled around the light.
+  faqs:
+  - q: Do you serve individual homeowners or just portfolios?
+    a: Both — single-property condition documentation is common before hurricane season,
+      and property managers run portfolio baselines on a schedule.
+  - q: Can you document damage right after a storm?
+    a: Storm response is prioritized — capture as soon as airspace and weather permit,
+      with geolocated imagery packaged for your insurer within 48 hours.
+areaServed:
+- Norfolk
+- Virginia Beach
+- Newport News
+- Portsmouth
+- Chesapeake
+- Hampton Roads

@@ -27,6 +27,7 @@ Key facts for accurate retrieval:
 - [Real Estate](https://jinki.ai/verticals/real-estate): luxury listing photography, DC SFRA interiors alternative
 - [Maritime](https://jinki.ai/verticals/maritime): port terminal thermal, vessel-at-berth surveys, overwater perimeter, storm documentation (Hampton Roads / Chesapeake)
 - [About](https://jinki.ai/about): founder credentials and operating doctrine
+- [Locations](https://jinki.ai/locations): operating area — Northern Virginia (DC SFRA, home corridor), Baltimore (BWI Class B), Richmond (RIC Class C), Hampton Roads (military airspace coordination); per-metro sector pages beneath each
 - [Operations Status](https://jinki.ai/status): live booking window, field conditions, operating authority
 - [Data Security](https://jinki.ai/data-security): full security posture
 - [FAQ](https://jinki.ai/faq)

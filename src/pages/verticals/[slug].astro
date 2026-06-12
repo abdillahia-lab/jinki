@@ -79,6 +79,12 @@ const SCENES: Record<string, { component: any; lede: string }> = {
 const scene = SCENES[vertical.id];
 const Scene = scene?.component;
 
+// Metro pages serving this vertical — the internal-link mesh down to
+// the local-intent pages (and their airspace stories).
+const locations = (await getCollection('locations'))
+  .filter((loc) => loc.data.verticals.some((b) => b.slug === vertical.id))
+  .sort((a, b) => a.data.order - b.data.order);
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Service',
@@ -201,6 +207,20 @@ const jsonLd = {
       />
       <Accordion items={d.faqs} jsonLd />
     </Section>
+
+    <!-- METROS SERVING THIS VERTICAL -->
+    {locations.length > 0 && (
+      <Section label="Where we fly this" spacing="compact" cv>
+        <div class="folio-rule rule-draw flex flex-wrap items-baseline gap-x-6 gap-y-3 pt-5 pb-2">
+          <span class="mono-label text-ink-3">{d.title.toUpperCase()} BY METRO</span>
+          {locations.map((loc) => (
+            <a href={`/locations/${loc.id}/${vertical.id}`} class="mono-label text-signal-soft no-underline hover:text-signal transition-colors">
+              {loc.data.title.toUpperCase()}&nbsp;→
+            </a>
+          ))}
+        </div>
+      </Section>
+    )}
 
     <LeadForm context={`/verticals/${vertical.id}`} />
 

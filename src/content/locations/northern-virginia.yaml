@@ -1,0 +1,149 @@
+title: Northern Virginia
+short: NOVA
+order: 1
+metaTitle: Northern Virginia Aerial Thermal Inspection — Jinki Aerial Intelligence
+metaDescription: Aerial thermal inspection across Ashburn, Loudoun County, and the Dulles corridor —
+  flown inside the DC Special Flight Rules Area under held FAA authorization. Data centers,
+  substations, perimeters, luxury property.
+hero:
+  kicker: NORTHERN VIRGINIA // ASHBURN · DULLES CORRIDOR
+  headline: We fly the airspace <em>most operators can't enter.</em>
+  sub: The Dulles corridor sits inside the DC Special Flight Rules Area — among the most
+    restricted airspace in the country. Jinki holds the authorization and the training to
+    operate here, and this is our home corridor. Same-day mobilization, no travel charges.
+  datum: HOME CORRIDOR
+airspace:
+  label: DC SFRA · IAD CLASS B
+  body: Every flight within 30 nautical miles of Washington falls inside the DC Special
+    Flight Rules Area, with the inner Flight Restricted Zone tighter still. Operating here
+    requires FAA SFRA authorization and special awareness training that most aerial operators
+    never obtain — they decline the work or fly somewhere easier. Jinki is certificated for
+    SFRA operations and coordinates Dulles Class B through LAANC as routine procedure, not
+    exception handling.
+  facts:
+  - key: AIRSPACE
+    value: DC SFRA + IAD CLASS B
+  - key: AUTHORIZATION
+    value: SFRA OPS — HELD
+  - key: COORDINATION
+    value: LAANC, ROUTINE
+  - key: MOBILIZATION
+    value: SAME-DAY
+coverage:
+  body: Jinki is based on the Dulles corridor. Northern Virginia missions mobilize same-day
+    when weather and airspace allow, with no mobilization fee inside the home corridor.
+  areas:
+  - Ashburn
+  - Sterling
+  - Leesburg
+  - Herndon
+  - Reston
+  - Chantilly
+  - Manassas
+  - Gainesville
+verticals:
+- slug: data-centers
+  headline: Thermal coverage for the densest data center corridor on earth.
+  intro: Loudoun County is the largest concentration of data centers in the world, and almost
+    all of it sits inside the DC SFRA — which means almost none of it gets routine aerial
+    thermal coverage. Rooftop plants age in place while inspection stays manual, partial,
+    and annual. We fly the whole roof in one pass and rank what we find.
+  points:
+  - tag: SFRA BARRIER
+    body: The airspace that keeps casual operators out is the airspace we hold authorization
+      for. The constraint that makes coverage rare is the reason to schedule it.
+  - tag: ROOFTOP SCALE
+    body: Hundreds of rooftop units per campus, replaced in waves, failing on independent
+      clocks. Single-pass radiometric capture baselines all of them at once.
+  - tag: SUBSTATION SIDE
+    body: Dedicated interconnects and on-campus substations carry the same NFPA 70B thermal
+      classes as the white space — and get a fraction of the attention.
+  - tag: NEW BUILDS
+    body: Commissioning-phase thermal documents envelope and plant condition before
+      handover disputes become change orders.
+  faqs:
+  - q: Can you legally fly over Ashburn data centers?
+    a: Yes. Ashburn sits inside the DC SFRA but outside the inner Flight Restricted Zone.
+      Jinki holds the FAA SFRA authorization and completes the required coordination for
+      every mission — this is the airspace we operate in daily.
+  - q: How fast can you be on-site in Loudoun County?
+    a: Same-day in most cases. We are based on the Dulles corridor; Northern Virginia is
+      home territory with no mobilization fee.
+  - q: Do you need access inside the security fence?
+    a: No. All capture is standoff from above — no escort, no badging, no entry into
+      secure yards. Coordination is a scheduling call with your facilities team.
+- slug: energy-grid
+  headline: The corridor's grid is the corridor's constraint.
+  intro: Data center growth has made Northern Virginia transmission the most-watched grid
+    story in the country. Substations, switchyards, and feeder corridors across Loudoun and
+    Prince William carry record load — and thermal anomalies at connection hardware are
+    found cheapest from the air, before they are found by an outage.
+  points:
+  - tag: LOAD GROWTH
+    body: Equipment commissioned for yesterday's load now runs near rating through summer
+      peaks. Heat at splices, clamps, and bushings is the early signature.
+  - tag: CORRIDOR SWEEPS
+    body: Feeder and transmission corridors swept structure-by-structure in a single
+      mission day, with geolocated findings per tower.
+  - tag: SFRA COVERAGE
+    body: Utility corridors inside the SFRA see fewer aerial inspections for the same
+      reason data centers do. We close that gap under held authorization.
+  faqs:
+  - q: Do you coordinate with the utility before flying a corridor?
+    a: Yes. Missions over or near energized corridors are planned with the asset owner —
+      standoff distances, crossing points, and exclusion areas are agreed before launch.
+  - q: Can you inspect private substations on commercial campuses?
+    a: Yes. Customer-owned substations and interconnects are a core use case — they carry
+      the same failure modes as utility assets with less inspection coverage.
+- slug: security
+  headline: Perimeter watch for facilities that can't have gaps.
+  intro: The corridor's critical campuses run layered physical security on the ground —
+    and almost nothing above it. Aerial thermal adds the layer that sees a warm signature
+    in the treeline, the dark corner of a laydown yard, and the approach a fixed camera
+    can't cover.
+  points:
+  - tag: THERMAL NIGHT
+    body: Radiometric sensors read heat, not light. Full-perimeter sweeps work at 2 AM
+      exactly as they do at noon.
+  - tag: VERIFICATION SPEED
+    body: Persistent deployments put an aerial asset on an alarm in under 90 seconds —
+      before a patrol vehicle clears the gate.
+  - tag: DOCUMENTED SWEEPS
+    body: Every pass produces a time-stamped, geolocated record — evidence quality your
+      insurer and your auditors both recognize.
+  faqs:
+  - q: Can aerial security operations run inside the SFRA at night?
+    a: Yes. SFRA authorization is not daylight-limited, and thermal capture is strongest
+      after dark. Night operations follow the same coordination procedure.
+  - q: Does this replace our ground security?
+    a: No — it closes the layer above it. Ground teams keep doing what they do; the aerial
+      layer covers what they physically can't see.
+- slug: real-estate
+  headline: The estate market's missing documentation layer.
+  intro: Northern Virginia's luxury and estate properties sit in the same restricted
+    airspace as its data centers — which is why most listings have never had legitimate
+    aerial coverage. SFRA-authorized capture is the difference between a listing with
+    drone-free photography gaps and one with a full aerial portfolio.
+  points:
+  - tag: LEGAL CAPTURE
+    body: Unauthorized flights inside the SFRA are a federal violation. Our capture is
+      flown under held authorization — imagery your brokerage can actually publish.
+  - tag: ENVELOPE TRUTH
+    body: Thermal reads roof condition, moisture paths, and envelope performance before
+      the inspector's ladder comes off the truck.
+  - tag: PORTFOLIO SPEED
+    body: Full exterior portfolio — aerial, elevation, and detail frames — in one visit,
+      scheduled around the light.
+  faqs:
+  - q: Is aerial photography even allowed near Washington?
+    a: Only under SFRA authorization, which most photography operators do not hold. Jinki
+      operates in this airspace daily — the authorization is held, not pending.
+  - q: Do you photograph occupied properties?
+    a: Yes, with the owner's scheduling. All capture is exterior and standoff; we
+      coordinate timing with the listing agent.
+areaServed:
+- Ashburn
+- Loudoun County
+- Fairfax County
+- Prince William County
+- Northern Virginia
