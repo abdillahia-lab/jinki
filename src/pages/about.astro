@@ -20,6 +20,16 @@ const doctrine = [
   { t: 'Small by design, for now', d: 'One founder, enterprise-grade credentials, a deliberately small Q3 cohort. Every founding engagement is planned, reviewed, and presented by the person whose name is on the company.' },
 ];
 
+// Founder certifications, spelled out, with issuing body. Single source
+// for the on-page credentials block and the JSON-LD below.
+const credentials = [
+  { abbr: 'CISSP', name: 'Certified Information Systems Security Professional', body: 'ISC2' },
+  { abbr: 'CCSP', name: 'Certified Cloud Security Professional', body: 'ISC2' },
+  { abbr: 'AIGP', name: 'Artificial Intelligence Governance Professional', body: 'IAPP' },
+  { abbr: 'AAISM', name: 'Advanced in AI Security Management', body: 'ISACA' },
+  { abbr: 'AAIR', name: 'Advanced in AI Risk', body: 'ISACA' },
+];
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'AboutPage',
@@ -32,17 +42,12 @@ const jsonLd = {
       name: 'Adnan Abdillahi',
       jobTitle: 'Founder & CEO',
       image: 'https://jinki.ai/images/founder-adnan.jpg',
-      hasCredential: [
-        { name: 'CISSP', org: 'ISC2' },
-        { name: 'CCSP', org: 'ISC2' },
-        { name: 'AIGP', org: 'IAPP' },
-        { name: 'AAISM', org: 'ISACA' },
-        { name: 'AAIR', org: 'ISACA' },
-      ].map((c) => ({
+      hasCredential: credentials.map((c) => ({
         '@type': 'EducationalOccupationalCredential',
         credentialCategory: 'certification',
         name: c.name,
-        recognizedBy: { '@type': 'Organization', name: c.org },
+        alternateName: c.abbr,
+        recognizedBy: { '@type': 'Organization', name: c.body },
       })),
       alumniOf: { '@type': 'Organization', name: 'Deloitte' },
     },
@@ -114,10 +119,9 @@ const jsonLd = {
             Adnan built Jinki at the intersection of enterprise cybersecurity and aerial
             intelligence — discipline he practiced as a cyber risk senior consultant at
             Deloitte. He holds the certifications critical-infrastructure security runs on,
-            CISSP and CCSP (ISC2), alongside the AI governance and security credentials for
-            putting AI responsibly to work on sensitive data — AIGP (IAPP), and AAISM and
-            AAIR (ISACA). That same rigor now goes to finding the physical failures those
-            facilities haven't reported yet.
+            alongside the AI governance, security, and risk credentials for putting AI
+            responsibly to work on sensitive data. That same rigor now goes to finding the
+            physical failures those facilities haven't reported yet.
           </p>
           <p class="text-body text-ink-2 mt-5">
             There are no SDRs and no handoffs here. Assessment requests go to his inbox,
@@ -125,6 +129,17 @@ const jsonLd = {
             person who planned the mission. That stops scaling eventually — founding
             clients get it while it lasts.
           </p>
+          <!-- Credentials, spelled out — the proof behind the acronyms -->
+          <dl class="m-0 mt-8 border-t border-rule pt-6 flex flex-col gap-y-3">
+            {credentials.map((c) => (
+              <div class="grid grid-cols-[4.5rem_1fr] gap-x-4 items-baseline">
+                <dt class="mono-label text-signal tabular">{c.abbr}</dt>
+                <dd class="m-0 text-body text-ink leading-snug">
+                  {c.name} <span class="text-ink-3 whitespace-nowrap">· {c.body}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
           <p class="mono-label text-ink-3 mt-8 max-w-none">
             DIRECT LINE · <a href="mailto:info@jinki.ai" class="text-ink-2 no-underline hover:text-ink">INFO@JINKI.AI</a>
           </p>
