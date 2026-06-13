@@ -22,7 +22,7 @@ const colClass = { 2: 'md:grid-cols-2', 3: 'md:grid-cols-3', 4: 'md:grid-cols-4'
   <div class="hidden md:block absolute top-0 left-0 right-0 h-0.5 thermal-band" aria-hidden="true"></div>
   {steps.map((step, i) => (
     <li class="relative pt-6 md:pt-8 pl-6 md:pl-0 border-l md:border-l-0 border-rule">
-      <div class="md:hidden absolute left-0 top-6 bottom-0 w-0.5 thermal-band" aria-hidden="true" style={i === steps.length - 1 ? 'display:none' : ''}></div>
+      {i < steps.length - 1 && <div class="md:hidden absolute left-0 top-6 bottom-0 w-0.5 thermal-band" aria-hidden="true"></div>}
       <span class="mono-label text-signal block mb-3 tabular">
         {String(i + 1).padStart(2, '0')}{step.mono && <span class="text-ink-3"> · {step.mono}</span>}
       </span>
