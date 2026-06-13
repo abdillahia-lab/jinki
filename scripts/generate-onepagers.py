@@ -122,45 +122,50 @@ def capabilities():
     c.setAuthor('Jinki Aerial Intelligence')
     header(c, 'CAPABILITIES BRIEF · 2026')
 
-    y = headline(c, H - 1.75 * inch, [
-        'The anomalies on your facility —',
-        'found, ranked, delivered on a 48-hour target.',
+    y = headline(c, H - 1.7 * inch, [
+        'Find the failure before it becomes',
+        'an outage — or a claim.',
     ])
-    y -= 0.06 * inch
+    mono(c, M, y + 0.1 * inch, 'AERIAL AI THERMAL INTELLIGENCE · DATA CENTERS & THE GRID', INK3, 8.5)
+    y -= 0.22 * inch
     y = para(c, M, y,
-             'Radiometric aerial thermal at 0.5°C across your rooftop, perimeter, and plant in '
-             'one pass — delivered as a severity-ranked findings report your team puts straight '
-             'into work orders.', size=11, color=INK2, leading=0.24 * inch)
+             'We fly your facility, our AI finds and ranks every thermal and structural problem, '
+             'and you get a report in 48 hours — then we baseline it and track the trend. The same '
+             'report owners maintain on, insurers underwrite on, and lenders close on.',
+             size=11, color=INK2, leading=0.24 * inch)
 
     y -= 0.22 * inch
     y = zone(c, y, 'THE DELIVERABLE')
     y = para(c, M, y,
              'Not footage. Not a dashboard login. A geolocated, severity-ranked findings document — '
              'each anomaly classified against NFPA 70B and ASHRAE thresholds, with a recommended '
-             'action and a 48-hour delivery target.')
+             'action and a 48-hour target. Re-scans on cadence track degradation velocity into a '
+             'living condition-of-record.')
 
     y -= 0.2 * inch
     y = zone(c, y, 'WHAT WE SCAN')
-    y = para(c, M, y,
-             'Data centers · Energy grid · Perimeter security · Agriculture · Real estate · Maritime',
-             font='Courier', size=10, color=INK)
+    c.setFont('Courier', 10)
+    c.setFillColor(INK)
+    c.drawString(M, y, 'Data centers · Energy & the grid')
+    y -= 0.2 * inch
+    mono(c, M, y, 'ALSO FLYING: PERIMETER SECURITY · REAL ESTATE · AGRICULTURE · MARITIME', INK3, 8.5)
 
-    y -= 0.22 * inch
+    y -= 0.26 * inch
     y = zone(c, y, 'WHY JINKI')
     y = bullets(c, y, [
-        'Radiometric thermal at 0.5°C sensitivity — full array, single aerial pass.',
+        'AI-ranked radiometric thermal at 0.5°C — full array, single aerial pass.',
+        'Emergency repairs run 4–8× planned ones; one prevented outage pays for years.',
         'Founder-led: CISSP, CCSP, AIGP, AAISM, AAIR; former cyber risk senior consultant at Deloitte.',
-        '$5M liability per operation · mutual NDA before we see your site.',
-        'AES-256 at rest · TLS 1.3 in transit · on-premises processing available.',
-        "FAA Part 107 · authorized in the DC Special Flight Rules Area, where most operators can't fly.",
+        '$5M liability per operation · mutual NDA · AES-256 · on-premises processing available.',
+        "FAA Part 107 · authorized in the DC Special Flight Rules Area, where most can't fly.",
     ])
 
     y -= 0.16 * inch
     y = zone(c, y, 'THE FOUNDING ENGAGEMENT')
     y = para(c, M, y,
-             'Founding Scan — a single mission at founding-cohort terms: full facility pass, '
-             'severity-ranked report on a 48-hour target, zero integration required. The entry '
-             'point to persistent autonomous monitoring.')
+             'Founding Scan — one mission at founding-cohort terms: full facility pass, severity-'
+             'ranked report on a 48-hour target, zero integration. We baseline it; re-scans build '
+             'the condition-of-record owners, insurers, and lenders rely on.')
 
     footer(c)
     c.showPage()
