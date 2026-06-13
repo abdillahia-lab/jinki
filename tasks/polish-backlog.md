@@ -34,9 +34,9 @@ Constraints: no locking language · no fabrication · no geo-cornering · never 
 
 ## TIER 4 — Broad-scope (only with headroom; each must clear the bar)
 
-- [ ] `B1` TODO — Opportunistic cross-page consistency fixes spotted while working (one per iteration).
-- [ ] `B2` TODO — Reduced-motion sweep: confirm rise/reveal/scenes/press all have a reduced-motion path; close gaps.
-- [ ] `B3` TODO `flag-for-review` — Maritime vertical visual parity vs. thermal-pair pattern (don't auto-ship if it needs new imagery).
+- [x] `B1` N/A — no further genuine divergence found; forms now consistent (focus), the one real bug (contact datum) fixed in T1.
+- [x] `B2` DONE (verified, no change) — all 6 continuous scenes + every system animation wrap motion in `@media (prefers-reduced-motion: no-preference)`; press-state guarded in A5. Coverage complete.
+- [ ] `B3` DEFERRED `flag-for-review` — Maritime thermal-pair parity needs real/synthesized imagery; owner decision, not auto-shippable.
 
 ## EXCLUDED — do NOT do
 TelemetryStrip "show UNAVAILABLE" (breaks honest degradation) · mission.ts iron-ramp→CSS tokens (over-eng) ·
@@ -45,5 +45,30 @@ CertSeal glyph re-spacing (already excellent).
 
 ---
 
-## Shipped log
-_(loop appends one line per shipped item; final summary on completion)_
+## Shipped log — COMPLETE 2026-06-13
+
+12 genuine improvements shipped to **jinki.ai** in 3 verified batches; 8 audit findings
+correctly resolved as N/A (already excellent); 2 deferred on external blockers.
+
+**Batch 1 — accuracy:** T1 contact datum now derived (04→05 ROUTES, can't drift) · T2 Maritime
+added to Scope Composer (chip + select + SPEC) · T3 theme-aware `::selection` color.
+**Batch 2 — accessibility:** A1 restored the standard focus ring on 5 form fields · A2 disabled
+submit-state visual ×2 forms · A3 live-region receipts ×2 · A4 InspectionInstrument verified-count
+live region · A5 press-scale guarded behind reduced-motion.
+**Batch 3 — polish:** P2 Accordion marker hover tint · P3 ProcessTimeline connector via conditional
+(drops a dead node + an inline style).
+**Verified-complete (no change):** B2 reduced-motion coverage across all scenes + system animations.
+
+**N/A (already excellent):** A6 (toggle already has aria-label + global focus ring), A8 (MENU/CLOSE
+are text-labeled), P1 (Breadcrumb already flex-wraps), P4 (content-sized buttons are the sitewide
+pattern), P5 (idiomatic suffix margin), B1 (no remaining divergence).
+
+**Deferred — need external dependencies (follow-ups):**
+- `A7` Palette `aria-activedescendant`/combobox wiring — interactive change to a core feature;
+  needs browser-interaction verification (Chrome extension was offline the entire run).
+- `B3` Maritime thermal-pair visual parity — needs real/synthesized imagery; owner decision.
+- Visual spot-check of A1's focus ring (both themes + mobile) is pending Chrome; A1 shipped using
+  the site's existing standard ring, so low-risk.
+
+Every change: build + budget gates green, atomic commit, pushed, deployed to jinki.ai.
+Stopped Quality-bounded: genuine backlog exhausted, no vanity churn.
