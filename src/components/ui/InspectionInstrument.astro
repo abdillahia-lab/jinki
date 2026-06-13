@@ -142,7 +142,7 @@ const uid = `inst-${Math.abs([...caption].reduce((a, c) => (a * 33 + c.charCodeA
           <span class="hidden md:inline">MOVE THE LENS · CLICK A FINDING</span>
           <span class="md:hidden">TAP TO INSPECT · TAP A FINDING</span>
         </span>
-        <span class="mono-label text-ink-3" data-verified-count>0/{findings.length} VERIFIED</span>
+        <span class="mono-label text-ink-3" data-verified-count role="status" aria-live="polite">0/{findings.length} VERIFIED</span>
       </span>
     </figcaption>
   </div>
