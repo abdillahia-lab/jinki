@@ -26,11 +26,11 @@ Constraints: no locking language · no fabrication · no geo-cornering · never 
 
 ## TIER 3 — Polish & cleanup  (deploy batch 3)
 
-- [ ] `P1` TODO `verify-first` — `src/components/ui/Breadcrumb.astro` `flex-wrap` on mobile (only if a trail overflows ~390px).
-- [ ] `P2` TODO — `src/components/ui/Accordion.astro:38` `group-hover:text-ink` on question text.
-- [ ] `P3` TODO — `src/components/ui/ProcessTimeline.astro:24` Astro conditional `{i < steps.length-1 && …}` instead of style-hidden div.
-- [ ] `P4` TODO `verify-first` — `src/components/ui/CTABlock.astro:31` equal-width buttons when stacked on mobile.
-- [ ] `P5` TODO — `src/components/ui/StatRow.astro:27` suffix spacing via flex gap instead of `ml-0.5` magic margin. Cosmetic/optional.
+- [x] `P1` N/A — Breadcrumb `<ol>` already has `flex-wrap` (line 34). No gap.
+- [x] `P2` DONE — Accordion +/− marker now tints signal on `group-hover` too (was only on `group-open`); question text was already full ink. Subtle hover affordance.
+- [x] `P3` DONE — ProcessTimeline mobile connector via Astro conditional `{i < steps.length-1 && …}` — removes the last step's hidden div + an inline `style` (eases budget gate). Visually identical.
+- [x] `P4` N/A — content-sized wrapping buttons match the hero + sitewide pattern; forcing equal-width would create inconsistency.
+- [x] `P5` N/A — `ml-0.5` suffix spacing is idiomatic; reworking it risks the count-up logic for no gain (no churn).
 
 ## TIER 4 — Broad-scope (only with headroom; each must clear the bar)
 
