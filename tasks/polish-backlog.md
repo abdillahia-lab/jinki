@@ -15,14 +15,14 @@ Constraints: no locking language · no fabrication · no geo-cornering · never 
 
 ## TIER 2 — Accessibility  (deploy batch 2)
 
-- [ ] `A1` TODO — `src/components/ui/LeadForm.astro:67,74,88` inputs: replace `focus:outline-none`+border-only with a clear on-system focus-visible treatment (resting look unchanged). Verified weak.
-- [ ] `A2` TODO — `src/components/ui/LeadForm.astro` submit button: `disabled:opacity-60 disabled:cursor-not-allowed` for the "Filing…" state.
-- [ ] `A3` TODO — `src/components/ui/LeadForm.astro:~106` receipt: `role="status" aria-live="polite"`.
-- [ ] `A4` TODO — `src/components/ui/InspectionInstrument.astro:~145` verified-count: `role="status" aria-live="polite"`.
-- [ ] `A5` TODO — `src/styles/system.css:357` wrap `:active` press state in `@media (prefers-reduced-motion: no-preference)`. Verified.
-- [ ] `A6` TODO `verify-first` — `src/components/ui/Nav.astro` theme toggle focus-visible affordance.
-- [ ] `A7` TODO `verify-first` — `src/components/ui/Palette.astro` `:focus-visible` on items + guard `pointerenter` to `e.pointerType==='mouse'`.
-- [ ] `A8` TODO `verify-first` — `src/components/ui/Nav.astro` icon-only controls (MENU/close) ensure `aria-label`.
+- [x] `A1` DONE — removed `focus:outline-none` from 5 form fields (LeadForm ×3, sample-report ×2) → restores the site's standard 2px signal `:focus-visible` ring. Palette search left as-is (deliberate borderless+caret context). Build green; visual spot-check pending Chrome.
+- [x] `A2` DONE — `disabled:opacity-60 disabled:cursor-not-allowed` on both forms' submit buttons (the "Filing…/One moment…" state).
+- [x] `A3` DONE — `role="status" aria-live="polite"` on LeadForm receipt + sample-report success.
+- [x] `A4` DONE — `role="status" aria-live="polite"` on InspectionInstrument verified-count.
+- [x] `A5` DONE — `:active` press state wrapped in `@media (prefers-reduced-motion: no-preference)`.
+- [x] `A6` N/A — theme toggle is a `<button aria-label>` with no `outline-none`; already gets the global `:focus-visible` ring.
+- [ ] `A7` BLOCKED — Palette `aria-activedescendant`/combobox wiring is an interactive change to a core feature; needs browser-interaction verification (Chrome offline this session). Defer.
+- [x] `A8` N/A — MENU and CLOSE are text-labeled buttons, not icon-only. No gap.
 
 ## TIER 3 — Polish & cleanup  (deploy batch 3)
 
