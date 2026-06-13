@@ -231,7 +231,7 @@
     outline-offset: 3px;
     border-radius: 2px;
   }
-  ::selection { background: var(--signal); color: #0A0A0A; }
+  ::selection { background: var(--signal); color: var(--surface-0); }
 
   input, select, textarea { accent-color: var(--signal); caret-color: var(--signal); }
 
