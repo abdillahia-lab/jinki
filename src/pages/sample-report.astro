@@ -178,14 +178,14 @@ const sampleFindings = [
               <span class="mono-label text-ink-3 block mb-2">WORK EMAIL</span>
               <input
                 type="email" name="email" required autocomplete="email" inputmode="email"
-                class="w-full h-12 bg-surface-1 border border-rule rounded-[2px] px-3.5 text-body text-ink focus:border-signal focus:outline-none transition-colors"
+                class="w-full h-12 bg-surface-1 border border-rule rounded-[2px] px-3.5 text-body text-ink focus:border-signal transition-colors"
               />
             </label>
             <label class="block">
               <span class="mono-label text-ink-3 block mb-2">WHAT DO YOU MANAGE? <span class="text-ink-3 normal-case tracking-normal">(optional)</span></span>
               <select
                 name="vertical" data-vertical-select
-                class="w-full h-12 bg-surface-1 border border-rule rounded-[2px] px-3.5 text-body text-ink focus:border-signal focus:outline-none transition-colors appearance-none cursor-pointer"
+                class="w-full h-12 bg-surface-1 border border-rule rounded-[2px] px-3.5 text-body text-ink focus:border-signal transition-colors appearance-none cursor-pointer"
               >
                 <option value="" class="bg-surface-1 text-ink">—</option>
                 {['Data Centers', 'Energy / Utility', 'Security', 'Agriculture', 'Real Estate', 'Maritime', 'Other'].map((v) => (
@@ -194,12 +194,12 @@ const sampleFindings = [
               </select>
             </label>
             <div>
-              <button type="submit" class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-pill bg-btn text-btn-fg font-sans text-caption font-medium border-0 cursor-pointer hover:opacity-90 transition-opacity min-w-11">
+              <button type="submit" class="inline-flex items-center justify-center gap-2 h-12 px-8 rounded-pill bg-btn text-btn-fg font-sans text-caption font-medium border-0 cursor-pointer hover:opacity-90 disabled:opacity-60 disabled:cursor-not-allowed transition-opacity min-w-11">
                 Get the sample report
               </button>
             </div>
           </form>
-          <div data-sample-success hidden class="border border-rule rounded-panel p-6 bg-surface-1">
+          <div data-sample-success hidden role="status" aria-live="polite" class="border border-rule rounded-panel p-6 bg-surface-1">
             <p class="mono-label text-signal mb-3 max-w-none">REPORT READY</p>
             <p class="text-body text-ink-2 mb-5 max-w-none">
               Here's your report. We'll follow up once by email — no drip sequence, no list.
