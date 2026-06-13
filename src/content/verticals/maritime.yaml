@@ -12,6 +12,39 @@ hero:
     Aerial thermal finds the failing crane drive, the moisture in a composite hull, and the
     overwater blind spot — without stopping a single operation.
   datum: PORT-SCALE
+frame:
+  caption: FRAME 0231 · DEMONSTRATION ANALYSIS · CONTAINER TERMINAL
+  alt: Top-down aerial of a container terminal — quay, gantry cranes, and reefer stacks beside the
+    harbor water — overlaid with thermal annotation boxes marking demonstration findings
+  annotations:
+  - x: 53
+    y: 13
+    w: 12
+    h: 17
+    label: STS CRANE DRIVE · DELTA-T +11.4°C
+    labelAt: bottom
+    confidence: 0.93
+  - x: 75
+    y: 56
+    w: 17
+    h: 18
+    label: REEFER BANK · +6.2°C
+    labelAt: top
+    confidence: 0.88
+  - x: 6
+    y: 71
+    w: 15
+    h: 16
+    label: SWITCHGEAR · DELTA-T +4.8°C
+    labelAt: top
+    confidence: 0.85
+  - x: 30
+    y: 39
+    w: 12
+    h: 13
+    label: QUAY CABLE · DELTA-T +2.3°C
+    labelAt: bottom
+    confidence: 0.8
 stats:
 - value: '500'
   suffix: + AC

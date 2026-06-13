@@ -101,6 +101,7 @@ function resolveKind(label) {
      injected anomalies own the orange/yellow/white top */
 const lumOf = (r, g, b) => 0.299 * r + 0.587 * g + 0.114 * b;
 const greenEx = (r, g, b) => Math.max(0, g - (r + b) / 2);
+const blueEx = (r, g, b) => Math.max(0, b - (r + g) / 2);
 
 const IMAGES = [
   {
@@ -134,6 +135,13 @@ const IMAGES = [
     src: 'luxury-lobby.webp', slug: 'real-estate', palette: 'arctic',
     tMin: 16, tMax: 34, gamma: 0.9, range: [0.10, 0.74],
     proxy: (r, g, b) => lumOf(r, g, b),
+  },
+  {
+    src: 'maritime-terminal-aerial.webp', slug: 'maritime', palette: 'ironbow',
+    tMin: 18, tMax: 48, gamma: 0.95, range: [0.10, 0.60],
+    // top-down sunlit terminal: dark asphalt/containers warm; harbour water +
+    // bright surfaces pulled cool (blue-excess + luminance penalties)
+    proxy: (r, g, b) => 255 - 0.8 * lumOf(r, g, b) - 1.4 * greenEx(r, g, b) - 2.2 * blueEx(r, g, b),
   },
 ];
 

@@ -35,12 +35,15 @@ import agVisible from '../../assets/images/agriculture-fields.jpg';
 import agThermal from '../../assets/images/agriculture-fields-thermal.webp';
 import reVisible from '../../assets/images/luxury-lobby.webp';
 import reThermal from '../../assets/images/luxury-lobby-thermal.webp';
+import maritimeVisible from '../../assets/images/maritime-terminal-aerial.webp';
+import maritimeThermal from '../../assets/images/maritime-terminal-aerial-thermal.webp';
 
 import dcGrid from '../../data/thermal/dc-rooftop-aerial.json';
 import energyGrid from '../../data/thermal/powerline-aerial.json';
 import securityGrid from '../../data/thermal/facility-night-aerial.json';
 import agGrid from '../../data/thermal/agriculture-fields.json';
 import reGrid from '../../data/thermal/luxury-lobby.json';
+import maritimeGrid from '../../data/thermal/maritime-terminal-aerial.json';
 
 export async function getStaticPaths() {
   const verticals = await getCollection('verticals');
@@ -56,6 +59,7 @@ const FRAMES: Record<string, { visible: ImageMetadata; thermal: ImageMetadata; g
   'security': { visible: securityVisible, thermal: securityThermal, grid: securityGrid },
   'agriculture': { visible: agVisible, thermal: agThermal, grid: agGrid },
   'real-estate': { visible: reVisible, thermal: reThermal, grid: reGrid },
+  'maritime': { visible: maritimeVisible, thermal: maritimeThermal, grid: maritimeGrid },
 };
 const frame = FRAMES[vertical.id];
 
