@@ -353,10 +353,13 @@
   }
 }
 
-/* W2: press states — tactile, interruptible, 80ms */
-:is(a, button):is([class*="rounded-pill"], .inst-chip, .composer-chip):active {
-  scale: 0.98;
-  transition-duration: 80ms;
+/* W2: press states — tactile, interruptible, 80ms. Motion-sensitive
+   users get no scale feedback (decorative, not an affordance). */
+@media (prefers-reduced-motion: no-preference) {
+  :is(a, button):is([class*="rounded-pill"], .inst-chip, .composer-chip):active {
+    scale: 0.98;
+    transition-duration: 80ms;
+  }
 }
 
 /* W2: dialog enter/exit — nothing pops out of existence */
