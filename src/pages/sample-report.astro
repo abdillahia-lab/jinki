@@ -105,7 +105,7 @@ const sampleFindings = [
           <fieldset class="border-0 p-0 m-0">
             <legend class="mono-label text-ink-3 mb-4">FACILITY TYPE</legend>
             <div class="flex flex-wrap gap-2" data-composer-type>
-              {['Data Center', 'Energy / Utility', 'Security Perimeter', 'Agriculture', 'Real Estate'].map((t, i) => (
+              {['Data Center', 'Energy / Utility', 'Security Perimeter', 'Agriculture', 'Real Estate', 'Maritime'].map((t, i) => (
                 <button
                   type="button"
                   class={`composer-chip mono-label cursor-pointer px-4 h-10 rounded-pill border transition-colors min-w-11 ${i === 0 ? 'border-signal text-signal' : 'border-rule-strong text-ink-2 hover:border-ink'}`}
@@ -188,7 +188,7 @@ const sampleFindings = [
                 class="w-full h-12 bg-surface-1 border border-rule rounded-[2px] px-3.5 text-body text-ink focus:border-signal focus:outline-none transition-colors appearance-none cursor-pointer"
               >
                 <option value="" class="bg-surface-1 text-ink">—</option>
-                {['Data Centers', 'Energy / Utility', 'Security', 'Agriculture', 'Real Estate', 'Other'].map((v) => (
+                {['Data Centers', 'Energy / Utility', 'Security', 'Agriculture', 'Real Estate', 'Maritime', 'Other'].map((v) => (
                   <option value={v} class="bg-surface-1 text-ink">{v}</option>
                 ))}
               </select>
@@ -229,6 +229,7 @@ const sampleFindings = [
     'Security Perimeter': { coverage: 'Full perimeter + approach zones, thermal-first capture', analysis: 'Sight-line gaps, lighting deficiencies, monitoring blind spots', vertical: 'Security' },
     'Agriculture': { coverage: 'Full-acreage grid pattern, multispectral-ready', analysis: 'Irrigation anomalies, crop stress zones, drainage mapping', vertical: 'Agriculture' },
     'Real Estate': { coverage: 'Envelope + roof + grounds, documentation-grade capture', analysis: 'Envelope performance, roof condition, moisture intrusion', vertical: 'Real Estate' },
+    'Maritime': { coverage: 'Terminal + berths + basin, overwater-rated single-mission capture', analysis: 'Equipment heat signatures, vessel hull moisture, overwater perimeter gaps', vertical: 'Maritime' },
   };
   const TIMELINE: Record<string, string> = {
     '< 10 acres': '48 HR scan-to-report',
