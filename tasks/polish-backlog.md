@@ -36,7 +36,7 @@ Constraints: no locking language · no fabrication · no geo-cornering · never 
 
 - [x] `B1` N/A — no further genuine divergence found; forms now consistent (focus), the one real bug (contact datum) fixed in T1.
 - [x] `B2` DONE (verified, no change) — all 6 continuous scenes + every system animation wrap motion in `@media (prefers-reduced-motion: no-preference)`; press-state guarded in A5. Coverage complete.
-- [ ] `B3` DEFERRED `flag-for-review` — Maritime thermal-pair parity needs real/synthesized imagery; owner decision, not auto-shippable.
+- [x] `B3` DONE — Maritime now runs the real InspectionInstrument: owner chose "source a licensed demo aerial", so a Pexels (free commercial license) top-down container-terminal aerial was sourced → thermal-synth pipeline → 4 findings → full parity with the other 5 verticals. HarborChart kept as fallback.
 
 ## EXCLUDED — do NOT do
 TelemetryStrip "show UNAVAILABLE" (breaks honest degradation) · mission.ts iron-ramp→CSS tokens (over-eng) ·
