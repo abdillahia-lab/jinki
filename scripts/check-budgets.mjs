@@ -19,7 +19,9 @@ const BUDGET = {
   // HTML (≈16KB br on the wire at 90KB raw). Eager JS cap unchanged —
   // heavy scenes load ONLY via capability-gated dynamic import.
   // +5KB for vertical 06 (maritime manifest row + chip) — home at 97KB raw.
-  htmlKB: 100,
+  // +5KB for the condition-of-record band + ConditionTrend sparkline (the
+  // signature recurring-intelligence moment) — home ~103KB raw (~21KB br).
+  htmlKB: 105,
   cssKB: 60,
   jsKB: 20,
 };

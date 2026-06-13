@@ -16,6 +16,7 @@ import Manifest from '../components/ui/Manifest.astro';
 import ProcessTimeline from '../components/ui/ProcessTimeline.astro';
 import LeadForm from '../components/ui/LeadForm.astro';
 import InspectionInstrument from '../components/ui/InspectionInstrument.astro';
+import ConditionTrend from '../components/ui/ConditionTrend.astro';
 import MissionPlayer from '../components/scenes/MissionPlayer.astro';
 import ActBreak from '../components/ui/ActBreak.astro';
 
@@ -63,8 +64,8 @@ const process = [
 ---
 
 <Base
-  title="Jinki — Aerial Intelligence for Critical Infrastructure"
-  description="Facility anomalies — found from the air, ranked by severity, delivered on a 48-hour target. Radiometric thermal inspections that turn into prioritized maintenance work orders."
+  title="Jinki — Aerial AI Thermal Intelligence for Data Centers & Critical Facilities"
+  description="Find the failure before it becomes an outage — or a claim. Aerial AI thermal inspection for data centers and critical facilities: every thermal and structural problem found, ranked, and delivered on a 48-hour target — the report owners maintain on, insurers underwrite on, and lenders close on."
   ogImage="/images/og/og-homepage.png"
 >
   <Nav />
@@ -80,13 +81,15 @@ const process = [
             <p class="mono-label text-ink-3 mb-4 rise">
               <span class="text-signal-soft">●</span>&nbsp; BOOKING Q3 2026 ASSESSMENTS
             </p>
-            <h1 class="text-display font-display font-medium text-ink max-w-[20ch] rise">
-              The anomalies on your facility — found, ranked, delivered on a <em class="not-italic text-signal">48-hour target</em>.
+            <h1 class="text-display font-display font-medium text-ink max-w-[20ch] rise hero-headline">
+              Find the failure before it becomes an outage — <em class="not-italic text-signal hero-claim">or a claim</em>.
             </h1>
-            <p class="text-lede text-ink-2 mt-6 max-w-[58ch] rise">
-              Radiometric thermal at 0.5°C sensitivity across your rooftop, perimeter, and
-              plant in one aerial pass — delivered as a prioritized findings report your
-              team can put into Monday's work orders.
+            <p class="mono-label text-ink-3 mt-4 rise">AERIAL AI THERMAL INTELLIGENCE · DATA CENTERS &amp; THE GRID</p>
+            <p class="text-lede text-ink-2 mt-5 max-w-[60ch] rise">
+              We fly your facility, our AI finds and ranks every thermal and structural
+              problem, and you get a report in 48 hours — then we baseline it and track the
+              trend. Emergency repairs run 4–8× planned ones; one prevented outage pays for
+              years. It's the same report your insurer underwrites on and your lender closes on.
             </p>
             <div class="flex flex-wrap items-center gap-3 mt-7 rise">
               <Button href="#lead-gen" event="cta-assessment:hero" magnetic>Request Q3 assessment</Button>
@@ -196,6 +199,34 @@ const process = [
       </div>
     </Section>
 
+    <!-- ============ S3b CONDITION OF RECORD (recurring + who acts) ============ -->
+    <!-- R3/R4 + D2: the scan compounds into a living record; the same
+         record three buyers act on; demonstrated by the ConditionTrend. -->
+    <Section id="condition" label="Condition of record" spacing="compact" cv>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-10 items-center">
+        <div class="lg:col-span-6 rise">
+          <span class="mono-label text-signal block mb-3">02 · CONDITION OF RECORD</span>
+          <h2 class="text-h2 font-display font-medium text-ink">One scan is a baseline. The next is a trend.</h2>
+          <p class="text-lede text-ink-2 mt-4 max-w-[52ch]">
+            We don't hand you a one-off and walk away. The first scan sets the baseline;
+            re-scans on cadence track degradation velocity — a living condition-of-record
+            for the asset. The longer we watch, the earlier we call the failure.
+          </p>
+          <ul class="list-none m-0 p-0 mt-7 flex flex-wrap gap-x-7 gap-y-2.5 mono-label text-ink-3">
+            <li>OWNERS <span class="text-ink-2 normal-case tracking-normal">maintain on it</span></li>
+            <li>INSURERS <span class="text-ink-2 normal-case tracking-normal">underwrite on it</span></li>
+            <li>LENDERS <span class="text-ink-2 normal-case tracking-normal">close on it</span></li>
+          </ul>
+          <p class="text-caption text-ink-3 mt-4 max-w-[52ch]">
+            A neutral inspector — we don't sell the repair, so the findings carry no agenda.
+          </p>
+        </div>
+        <div class="lg:col-span-5 lg:col-start-8 rise">
+          <ConditionTrend />
+        </div>
+      </div>
+    </Section>
+
     <!-- ============ S4 THE MISSION (live scene) ============ -->
     <MissionPlayer />
 
@@ -204,7 +235,7 @@ const process = [
       <SectionHeader
         index="03" label="VERTICALS" datum={`${String(verticalRows.length).padStart(2, '0')} SECTORS`}
         title="Built for infrastructure that can't go down."
-        lede="Each sector has named failure modes. We scan for them specifically — not generically."
+        lede="Data centers and the grid that powers them lead — where capital and insurers are repricing physical risk. Each sector has named failure modes; we scan for them specifically, not generically."
       />
       <Manifest rows={verticalRows} />
     </Section>

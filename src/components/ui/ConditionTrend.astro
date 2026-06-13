@@ -1,0 +1,72 @@
+---
+/*
+  ConditionTrend — the signature "condition-of-record" moment (D2).
+  Demonstrates the recurring baseline → trend value: a degradation-velocity
+  curve that draws in as it scrolls into view, ending on a ranked finding.
+  Progressive enhancement: default state is fully drawn (no-JS / reduced
+  motion = static, legible); a tiny IO opts into the scroll-draw only when
+  motion is allowed — no flash, no heavy JS, one easing language.
+*/
+---
+
+<figure class="ct m-0" data-condition-trend>
+  <div class="border border-rule rounded-panel overflow-hidden bg-surface-1">
+    <svg viewBox="0 0 360 200" class="w-full block" role="img"
+      aria-label="Degradation-velocity chart: a baseline scan, then a rising thermal trend across re-scans, ending on a ranked finding.">
+      <!-- faint grid -->
+      <g stroke="var(--rule)" stroke-width="1">
+        <line x1="30" y1="48" x2="345" y2="48" /><line x1="30" y1="96" x2="345" y2="96" /><line x1="30" y1="144" x2="345" y2="144" />
+      </g>
+      <!-- baseline reference (where it started) -->
+      <line x1="30" y1="144" x2="345" y2="144" stroke="var(--rule-strong)" stroke-width="1" stroke-dasharray="3 5" />
+      <!-- x-axis marks -->
+      <g fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">
+        <text x="30" y="170">BASELINE</text>
+        <text x="178" y="170" text-anchor="middle">T+90</text>
+        <text x="330" y="170" text-anchor="end">T+180</text>
+      </g>
+      <!-- the trend: gentle rise, then accelerating (degradation velocity) -->
+      <path class="ct-line" d="M 32 144 C 110 140, 150 134, 196 122 S 296 92, 330 60"
+        fill="none" stroke="var(--signal)" stroke-width="2" stroke-linecap="round" />
+      <!-- baseline dot -->
+      <circle cx="32" cy="144" r="3.5" fill="var(--ink-3)" />
+      <!-- ranked finding marker at the uptick -->
+      <g class="ct-marker">
+        <circle cx="330" cy="60" r="5.5" fill="none" stroke="var(--signal)" stroke-width="1.5" />
+        <circle cx="330" cy="60" r="2" fill="var(--signal)" />
+        <text x="318" y="44" text-anchor="end" fill="var(--signal)" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="0.5">ΔT RISING · SEV-2</text>
+      </g>
+    </svg>
+  </div>
+  <figcaption class="flex flex-wrap items-center justify-between gap-2 border-x border-b border-rule px-4 py-2.5">
+    <span class="mono-label-long text-ink-3">DEGRADATION VELOCITY · BASELINE → TREND</span>
+    <span class="mono-label text-ink-3">ILLUSTRATIVE</span>
+  </figcaption>
+</figure>
+
+<style>
+  /* Default = fully drawn and visible. This is the guaranteed state:
+     no-JS, reduced-motion, OR a missed IntersectionObserver all leave the
+     line drawn — the draw-in is a pure enhancement that can never hide it. */
+  .ct-line { stroke-dasharray: 380; stroke-dashoffset: 0; }
+  @media (prefers-reduced-motion: no-preference) {
+    .ct.in .ct-line { animation: ct-draw 1.6s var(--ease-settle) both; }
+    .ct.in .ct-marker { animation: ct-marker-in 0.5s var(--ease-settle) 1.15s both; }
+    @keyframes ct-draw { from { stroke-dashoffset: 380; } to { stroke-dashoffset: 0; } }
+    @keyframes ct-marker-in { from { opacity: 0; } to { opacity: 1; } }
+  }
+</style>
+
+<script>
+  // Enhancement only: add .in when it scrolls into view to play the draw.
+  // If this never fires, the SVG is already in its drawn default state.
+  const fig = document.querySelector('[data-condition-trend]');
+  if (fig && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) { fig.classList.add('in'); io.disconnect(); }
+      }
+    }, { threshold: 0.35 });
+    io.observe(fig);
+  }
+</script>

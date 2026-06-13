@@ -323,6 +323,17 @@
   to { transform: scaleX(1); }
 }
 
+/* D1: kinetic hero — the signal phrase ("or a claim") arrives a beat after
+   the headline settles (the dual-buyer punch). One time-based moment;
+   reduced-motion shows it immediately. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-claim { display: inline-block; animation: claim-settle 0.85s var(--ease-settle) 0.55s both; }
+  @keyframes claim-settle {
+    from { opacity: 0; transform: translateY(0.14em); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
 /* W1: universal reveals — Safari/Firefox lack animation-timeline, so a
    1.2KB IO script adds .in and these TRANSITIONS (interruptible, per
    the craft checklist) carry the same entrance grammar. */
