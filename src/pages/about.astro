@@ -11,7 +11,6 @@ import Section from '../components/ui/Section.astro';
 import SectionHeader from '../components/ui/SectionHeader.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import CTABlock from '../components/ui/CTABlock.astro';
-import CertSeal from '../components/ui/CertSeal.astro';
 import founderImg from '../assets/images/founder-adnan.webp';
 
 const doctrine = [
@@ -24,11 +23,11 @@ const doctrine = [
 // Founder certifications, spelled out, with issuing body. Single source
 // for the on-page credentials block and the JSON-LD below.
 const credentials = [
-  { abbr: 'CISSP', name: 'Certified Information Systems Security Professional', body: 'ISC2' },
-  { abbr: 'CCSP', name: 'Certified Cloud Security Professional', body: 'ISC2' },
-  { abbr: 'AIGP', name: 'Artificial Intelligence Governance Professional', body: 'IAPP' },
-  { abbr: 'AAISM', name: 'Advanced in AI Security Management', body: 'ISACA' },
-  { abbr: 'AAIR', name: 'Advanced in AI Risk', body: 'ISACA' },
+  { abbr: 'CISSP', name: 'Certified Information Systems Security Professional', body: 'ISC2', verify: 'https://www.credly.com/badges/af4cc454-06de-468e-b8db-7f88e714225d/public_url' },
+  { abbr: 'CCSP', name: 'Certified Cloud Security Professional', body: 'ISC2', verify: 'https://www.credly.com/badges/ce01426a-e574-4ea8-beec-608fbaf3959a' },
+  { abbr: 'AIGP', name: 'Artificial Intelligence Governance Professional', body: 'IAPP', verify: 'https://www.credential.net/5466bc34-d37d-4672-be30-350d8eaba122?key=9bcac222239ccd40be0e1484964523ed36630fe773a01e38593ab15795898d04' },
+  { abbr: 'AAISM', name: 'Advanced in AI Security Management', body: 'ISACA', verify: 'https://www.credly.com/badges/04f5bed3-902e-4b91-8a05-dda2e81b56c2/public_url' },
+  { abbr: 'AAIR', name: 'Advanced in AI Risk', body: 'ISACA', verify: 'https://www.credly.com/badges/8a9f345f-af40-4597-9520-3eb8cddb7c90/public_url' },
 ];
 
 const jsonLd = {
@@ -49,6 +48,7 @@ const jsonLd = {
         name: c.name,
         alternateName: c.abbr,
         recognizedBy: { '@type': 'Organization', name: c.body },
+        url: c.verify,
       })),
       alumniOf: { '@type': 'Organization', name: 'Deloitte' },
     },
@@ -130,31 +130,31 @@ const jsonLd = {
             person who planned the mission. That stops scaling eventually — founding
             clients get it while it lasts.
           </p>
-          <!-- Credentials, spelled out — the proof behind the acronyms -->
-          <dl class="m-0 mt-8 border-t border-rule pt-6 flex flex-col gap-y-3">
-            {credentials.map((c) => (
-              <div class="grid grid-cols-[4.5rem_1fr] gap-x-4 items-baseline">
-                <dt class="mono-label text-signal tabular">{c.abbr}</dt>
-                <dd class="m-0 text-body text-ink leading-snug">
-                  {c.name} <span class="text-ink-3 whitespace-nowrap">· {c.body}</span>
-                </dd>
-              </div>
-            ))}
-          </dl>
+          <!-- Credentials — each row links to its public issuer verification -->
+          <div class="mt-8 border-t border-rule pt-6">
+            <p class="mono-label text-ink-3 mb-4">CREDENTIALS · VERIFY WITH THE ISSUER</p>
+            <ul class="list-none m-0 p-0 flex flex-col gap-y-0.5">
+              {credentials.map((c) => (
+                <li>
+                  <a
+                    href={c.verify}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group grid grid-cols-[4.25rem_1fr_auto] gap-x-4 items-baseline py-1.5 no-underline"
+                    aria-label={`Verify ${c.abbr} — ${c.name} — at ${c.body}`}
+                  >
+                    <span class="mono-label text-signal tabular">{c.abbr}</span>
+                    <span class="text-body text-ink leading-snug">{c.name} <span class="text-ink-3 whitespace-nowrap">· {c.body}</span></span>
+                    <span class="mono-label text-ink-3 group-hover:text-signal transition-colors whitespace-nowrap">VERIFY&nbsp;↗</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
           <p class="mono-label text-ink-3 mt-8 max-w-none">
             DIRECT LINE · <a href="mailto:info@jinki.ai" class="text-ink-2 no-underline hover:text-ink">INFO@JINKI.AI</a>
           </p>
         </div>
-      </div>
-
-      <!-- Credential seals — uniform vector marks, one size, any resolution -->
-      <div class="mt-12 md:mt-16 folio-rule pt-7">
-        <p class="mono-label text-ink-3 mb-6">CREDENTIALS · VERIFIED WITH ISSUER</p>
-        <ul class="list-none m-0 p-0 flex flex-wrap items-center gap-x-7 gap-y-6">
-          {credentials.map((c) => (
-            <li><CertSeal abbr={c.abbr} body={c.body} /></li>
-          ))}
-        </ul>
       </div>
     </Section>
 
