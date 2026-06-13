@@ -100,7 +100,7 @@ const jsonLd = {
     <!-- CHANNELS -->
     <Section label="Channels" cv>
       <SectionHeader
-        index="01" label="CHANNELS" datum="04 ROUTES · ONE DESTINATION"
+        index="01" label="CHANNELS" datum={`${String(channels.length).padStart(2, '0')} ROUTES · ONE DESTINATION`}
         title="Pick the door. Same room behind all of them."
       />
       <div>
