@@ -1,0 +1,69 @@
+/* ============================================================
+   JINKI ONE-PAGER — LOCKED BRAND FOUNDATION  (paste verbatim)
+   Resolved from src/styles/system.css. Do NOT edit the tokens,
+   @font-face, @page, or .page rules. Build your design in a
+   SECOND <style> block below this one.
+   RULE: use the CSS variables for ALL colors (never hardcode a
+   hex). That keeps the page on-brand (guardrail G9) and lets it
+   theme-flip (dark <-> light) cleanly.
+   ============================================================ */
+
+/* Fonts — absolute file:// paths so headless Chrome resolves them */
+@font-face{font-family:'Space Grotesk';src:url('file:///Users/aa/JInki.ai/public/fonts/SpaceGrotesk-Variable.woff2') format('woff2-variations');font-weight:300 700;font-style:normal;font-display:swap;}
+@font-face{font-family:'Inter';src:url('file:///Users/aa/JInki.ai/public/fonts/Inter-Variable.woff2') format('woff2-variations');font-weight:300 700;font-style:normal;font-display:swap;}
+@font-face{font-family:'JetBrains Mono';src:url('file:///Users/aa/JInki.ai/public/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:400 700;font-style:normal;font-display:swap;}
+
+:root{
+  color-scheme:dark;
+  --surface-0:#0A0A0A; --surface-1:#111111; --surface-2:#181818; --surface-3:#202020;
+  --ink-1:#F4F4F2; --ink-2:rgba(244,244,242,0.68); --ink-3:rgba(244,244,242,0.52);
+  --rule:rgba(244,244,242,0.12); --rule-strong:rgba(244,244,242,0.32);
+  --signal:#FF4F00; --signal-soft:#FF6B33; --signal-dim:rgba(255,79,0,0.32);
+  --btn-bg:#F4F4F2; --btn-fg:#0A0A0A;
+  /* the ONLY polychrome element — use in 2-3px strips / thin bands only */
+  --thermal-ramp:linear-gradient(90deg,#0A0A0A 0%,#2B0B5E 18%,#8B1E9B 38%,#E33F1E 62%,#FF8A00 80%,#FFD24A 92%,#FFF8E0 100%);
+  --font-display:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;
+  --font-sans:'Inter',ui-sans-serif,system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,'SF Mono',monospace;
+  --radius-panel:4px; --radius-pill:999px;
+  /* type scale — fixed (page width is fixed at 816px, so no fluid clamps) */
+  --text-label:0.8125rem; --text-caption:0.875rem; --text-body:1.0625rem;
+  --text-lede:1.375rem; --text-h3:1.6rem; --text-h2:2.3rem; --text-h1:3.2rem; --text-display:4rem;
+}
+[data-theme="light"]{
+  color-scheme:light;
+  --surface-0:#F7F6F3; --surface-1:#FFFFFF; --surface-2:#EFEDE8; --surface-3:#E7E5DF;
+  --ink-1:#121210; --ink-2:rgba(18,18,16,0.70); --ink-3:rgba(18,18,16,0.55);
+  --rule:rgba(18,18,16,0.14); --rule-strong:rgba(18,18,16,0.34);
+  --signal:#C23A00; --signal-soft:#B84A1A; --signal-dim:rgba(194,58,0,0.32);
+  --btn-bg:#121210; --btn-fg:#F7F6F3;
+}
+
+*{box-sizing:border-box;}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:var(--surface-0);color:var(--ink-1);font-family:var(--font-sans);}
+body{margin:0;font-size:var(--text-body);line-height:1.6;}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:500;color:var(--ink-1);margin:0;text-wrap:balance;letter-spacing:-0.02em;line-height:1.05;}
+p{color:var(--ink-2);margin:0;text-wrap:pretty;}
+em{font-style:normal;color:var(--signal);}
+
+/* The fixed leave-behind canvas — US Letter portrait, single page */
+@page{size:Letter;margin:0;}
+.page{
+  width:8.5in;height:11in;box-sizing:border-box;padding:16mm;
+  overflow:hidden;position:relative;background:var(--surface-0);color:var(--ink-1);
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;
+}
+
+/* Instrument voice + signature utilities (from system.css) */
+.mono-label{font-family:var(--font-mono);font-size:var(--text-label);font-weight:500;letter-spacing:0.12em;text-transform:uppercase;line-height:1.1;}
+.mono-label-long{font-family:var(--font-mono);font-size:var(--text-label);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;line-height:1.6;}
+.mono{font-family:var(--font-mono);}
+.tabular{font-variant-numeric:tabular-nums;}
+.thermal-band{background:var(--thermal-ramp);}
+.folio-rule{border-top:1px solid var(--rule-strong);}
+.signal{color:var(--signal);} .soft{color:var(--signal-soft);}
+.ink-2{color:var(--ink-2);} .ink-3{color:var(--ink-3);}
+
+/* Annotation primitives (for schematic instrument SVGs) */
+.annotation-box{fill:none;stroke:var(--signal-dim);stroke-width:1.5;}
+.annotation-tick{stroke:var(--rule-strong);stroke-width:1.5;fill:none;}

@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jinki — AI you can defend to a regulator and in court</title>
+
+<!-- ============================================================
+     STYLE 1 — LOCKED BRAND FOUNDATION (starter.css, verbatim)
+     ============================================================ -->
+<style>
+/* ============================================================
+   JINKI ONE-PAGER — LOCKED BRAND FOUNDATION  (paste verbatim)
+   Resolved from src/styles/system.css. Do NOT edit the tokens,
+   @font-face, @page, or .page rules. Build your design in a
+   SECOND <style> block below this one.
+   RULE: use the CSS variables for ALL colors (never hardcode a
+   hex). That keeps the page on-brand (guardrail G9) and lets it
+   theme-flip (dark <-> light) cleanly.
+   ============================================================ */
+
+/* Fonts — absolute file:// paths so headless Chrome resolves them */
+@font-face{font-family:'Space Grotesk';src:url('file:///Users/aa/JInki.ai/public/fonts/SpaceGrotesk-Variable.woff2') format('woff2-variations');font-weight:300 700;font-style:normal;font-display:swap;}
+@font-face{font-family:'Inter';src:url('file:///Users/aa/JInki.ai/public/fonts/Inter-Variable.woff2') format('woff2-variations');font-weight:300 700;font-style:normal;font-display:swap;}
+@font-face{font-family:'JetBrains Mono';src:url('file:///Users/aa/JInki.ai/public/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:400 700;font-style:normal;font-display:swap;}
+
+:root{
+  color-scheme:dark;
+  --surface-0:#0A0A0A; --surface-1:#111111; --surface-2:#181818; --surface-3:#202020;
+  --ink-1:#F4F4F2; --ink-2:rgba(244,244,242,0.68); --ink-3:rgba(244,244,242,0.52);
+  --rule:rgba(244,244,242,0.12); --rule-strong:rgba(244,244,242,0.32);
+  --signal:#FF4F00; --signal-soft:#FF6B33; --signal-dim:rgba(255,79,0,0.32);
+  --btn-bg:#F4F4F2; --btn-fg:#0A0A0A;
+  /* the ONLY polychrome element — use in 2-3px strips / thin bands only */
+  --thermal-ramp:linear-gradient(90deg,#0A0A0A 0%,#2B0B5E 18%,#8B1E9B 38%,#E33F1E 62%,#FF8A00 80%,#FFD24A 92%,#FFF8E0 100%);
+  --font-display:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;
+  --font-sans:'Inter',ui-sans-serif,system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,'SF Mono',monospace;
+  --radius-panel:4px; --radius-pill:999px;
+  /* type scale — fixed (page width is fixed at 816px, so no fluid clamps) */
+  --text-label:0.8125rem; --text-caption:0.875rem; --text-body:1.0625rem;
+  --text-lede:1.375rem; --text-h3:1.6rem; --text-h2:2.3rem; --text-h1:3.2rem; --text-display:4rem;
+}
+[data-theme="light"]{
+  color-scheme:light;
+  --surface-0:#F7F6F3; --surface-1:#FFFFFF; --surface-2:#EFEDE8; --surface-3:#E7E5DF;
+  --ink-1:#121210; --ink-2:rgba(18,18,16,0.70); --ink-3:rgba(18,18,16,0.55);
+  --rule:rgba(18,18,16,0.14); --rule-strong:rgba(18,18,16,0.34);
+  --signal:#C23A00; --signal-soft:#B84A1A; --signal-dim:rgba(194,58,0,0.32);
+  --btn-bg:#121210; --btn-fg:#F7F6F3;
+}
+
+*{box-sizing:border-box;}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:var(--surface-0);color:var(--ink-1);font-family:var(--font-sans);}
+body{margin:0;font-size:var(--text-body);line-height:1.6;}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:500;color:var(--ink-1);margin:0;text-wrap:balance;letter-spacing:-0.02em;line-height:1.05;}
+p{color:var(--ink-2);margin:0;text-wrap:pretty;}
+em{font-style:normal;color:var(--signal);}
+
+/* The fixed leave-behind canvas — US Letter portrait, single page */
+@page{size:Letter;margin:0;}
+.page{
+  width:8.5in;height:11in;box-sizing:border-box;padding:16mm;
+  overflow:hidden;position:relative;background:var(--surface-0);color:var(--ink-1);
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;
+}
+
+/* Instrument voice + signature utilities (from system.css) */
+.mono-label{font-family:var(--font-mono);font-size:var(--text-label);font-weight:500;letter-spacing:0.12em;text-transform:uppercase;line-height:1.1;}
+.mono-label-long{font-family:var(--font-mono);font-size:var(--text-label);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;line-height:1.6;}
+.mono{font-family:var(--font-mono);}
+.tabular{font-variant-numeric:tabular-nums;}
+.thermal-band{background:var(--thermal-ramp);}
+.folio-rule{border-top:1px solid var(--rule-strong);}
+.signal{color:var(--signal);} .soft{color:var(--signal-soft);}
+.ink-2{color:var(--ink-2);} .ink-3{color:var(--ink-3);}
+
+/* Annotation primitives (for schematic instrument SVGs) */
+.annotation-box{fill:none;stroke:var(--signal-dim);stroke-width:1.5;}
+.annotation-tick{stroke:var(--rule-strong);stroke-width:1.5;fill:none;}
+</style>
+
+<!-- ============================================================
+     STYLE 2 — TEAM 10 DESIGN CSS
+     Territory: Condition-of-Record document, signed by a Founder-as-Expert-Witness · LIGHT
+     R5 finals: ONE hero — the named instrument "THE GOVERNANCE CHAIN", a flat schematic
+     (squared nodes, hairline outlines, orthogonal tick connectors, NO arrowheads/SaaS fills)
+     mapping each verifiable credential to a named control (AIGP → explainable outputs ·
+     AAIR → human-review gate, with the 0.80 gate FIRING inside that node · AAISM →
+     chain-of-custody). A plain-language line sits under the name so it lands on a 10-sec skim.
+     The separate severity×confidence matrix is CUT (gate now lives in the chain). The
+     credential block is a ruled multi-column roster welded to the chain. Founder quote recast
+     as a stamped methodology line (no curly quotes, no testimonial framing). Vertical air up.
+     ============================================================ -->
+<style>
+/* ============================================================
+   TEAM 10 — Condition-of-Record · signed authority · LIGHT
+   Vertical budget: 11in − 16mm top/bottom ≈ 958px usable. The page is built as a
+   deliberate grid of bands, each pulling its weight — no airy single column.
+   BORDER DISCIPLINE: one hairline weight everywhere = var(--rule). Hierarchy comes from
+   FILL + the engineered grid, not from stacking rule weights. The signed instruments
+   (governance chain + credential ledger) get surface-1 fill; everything else is open.
+   SIGNAL is reserved for: the headline verb, credential abbreviations, the 0.80 gate,
+   flagged marks, and the chain's control nodes — never a fill field.
+   ============================================================ */
+.page{display:flex; flex-direction:column; font-size:var(--text-body);}
+/* Natural height (not force-filled): the bands set the page's vertical rhythm and we tune
+   content so it lands just inside the 16mm bottom margin — no overflow, no dead lower third. */
+.stack{display:flex; flex-direction:column; flex:0 0 auto; position:relative; gap:4px;}
+
+/* ---- masthead (borderless filing header) ----------------------------- */
+.mast{display:flex; align-items:flex-end; justify-content:space-between; gap:16px;}
+.mast .brand{display:flex; align-items:baseline; gap:10px;}
+.brand .mark{font-family:var(--font-display); font-weight:600; font-size:1.12rem; letter-spacing:-0.01em; color:var(--ink-1);}
+.brand .mark b{color:var(--signal); font-weight:600;}
+.brand .desc{color:var(--ink-3); white-space:nowrap; font-size:0.75rem;}
+.mast .docref{text-align:right; line-height:1.3;}
+.mast .docref .d{color:var(--ink-2);} .mast .docref .v{color:var(--ink-3);}
+.thermal-hair{height:2px; width:100%; border-radius:2px;}
+
+/* ---- HERO BAND: claim (left) beside the proprietary instrument legend (right) ----
+   Two columns from the very top — the page declares itself engineered immediately. */
+.herorow{display:grid; grid-template-columns:1.4fr 1fr; gap:18px; align-items:stretch; margin-top:1px;}
+.heroL{display:flex; flex-direction:column; min-width:0;}
+.heroL h1{font-size:1.74rem; line-height:1.02; letter-spacing:-0.03em; max-width:18ch;}
+.heroL h1 em{color:var(--signal);}
+.heroL .sub{color:var(--ink-2); font-size:0.82rem; line-height:1.32; margin-top:6px;}
+.heroL .sub b{color:var(--ink-1); font-weight:600;}
+.heroL .prob{margin-top:auto; padding-top:6px;}
+.heroL .prob .pt{color:var(--ink-2); font-size:0.745rem; line-height:1.28;}
+.heroL .prob .pt b{color:var(--ink-1); font-weight:600;}
+.heroL .prob .pq{display:block; margin-top:4px; color:var(--ink-3); font-size:0.66rem; line-height:1.25; letter-spacing:0.02em;}
+
+/* signed-deponent card — the authority who stands behind the record (filled) */
+.deponent{border:1px solid var(--rule); background:var(--surface-1); padding:9px 13px; display:flex; flex-direction:column; min-width:0;}
+.deponent .colhead{display:flex; align-items:center; justify-content:space-between; gap:8px; padding-bottom:5px; margin-bottom:7px; border-bottom:1px solid var(--rule); line-height:1.1;}
+.deponent .colhead .t{color:var(--ink-2); line-height:1.1;} .deponent .colhead .n{color:var(--ink-3);}
+.deponent .name{font-family:var(--font-display); font-weight:600; font-size:1.3rem; letter-spacing:-0.02em; color:var(--ink-1); line-height:1.0;}
+.deponent .role{display:block; margin-top:5px; color:var(--ink-2); font-size:0.66rem; line-height:1.3; letter-spacing:0.03em;}
+.deponent .attest{margin-top:auto; padding-top:7px;}
+.deponent .attest .q{color:var(--ink-1); font-size:0.82rem; line-height:1.32; font-weight:500;}
+.deponent .attest .q em{color:var(--signal);}
+.deponent .attest .by{display:flex; align-items:baseline; gap:8px; margin-top:6px; line-height:1.2; flex-wrap:wrap;}
+.deponent .attest .by .nm{font-family:var(--font-mono); font-weight:600; font-size:0.66rem; letter-spacing:0.05em; text-transform:uppercase; color:var(--ink-2); min-width:0;}
+.deponent .attest .by .ds{color:var(--ink-3); white-space:nowrap;}
+
+/* ---- section bar (borderless label + single hairline underline) ------
+   Single-line header: idx + heading on the left, meta pinned right. Headings are kept short
+   enough to render IN FULL at this size — no nowrap/ellipsis, so nothing can ever truncate. */
+.section-bar{display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding-bottom:4px; border-bottom:1px solid var(--rule); line-height:1.15;}
+.section-bar .grp{display:flex; align-items:baseline; flex:1 1 auto; min-width:0; line-height:1.15;}
+.section-bar .idx{color:var(--signal); margin-right:9px; flex:0 0 auto; white-space:nowrap;}
+.section-bar h2{font-size:0.98rem; letter-spacing:0.01em; color:var(--ink-1); font-family:var(--font-display); font-weight:500; line-height:1.15;}
+.section-bar .meta{color:var(--ink-3); flex:0 0 auto; white-space:nowrap; align-self:baseline;}
+
+/* plain-language line under the named instrument — lands on a 10-second skim */
+.device-line{margin-top:5px; color:var(--ink-2); font-size:0.8rem; line-height:1.3;}
+.device-line b{color:var(--ink-1); font-weight:600;}
+
+/* ============================================================
+   THE HERO INSTRUMENT — GOVERNANCE CHAIN (proprietary to Jinki).
+   A single filled figure: the founder's credentials wired into the three controls
+   that make a finding defensible. This is the page's load-bearing visual — owned,
+   not the matrix everyone ships.
+   ============================================================ */
+figure.chain{margin:0; border:1px solid var(--rule); background:var(--surface-1); display:flex; flex-direction:column;}
+figure.chain svg{display:block; width:100%;}
+figure.chain figcaption{display:flex; align-items:center; justify-content:space-between; gap:8px; border-top:1px solid var(--rule); padding:3px 11px;}
+figure.chain figcaption .l, figure.chain figcaption .r{color:var(--ink-3);}
+
+/* ---- CREDENTIAL ROSTER — ruled multi-column strip welded to the chain figure ----
+   The R4 rebuild: a 5-column ruled roster (abbr / issuer / full name), NOT a stacked
+   type-soup list. The "→ control" mapping is NOT repeated here — it lives in the chain
+   hero above, where each credential already wires to its control. The roster is the
+   verifiable standing behind that chain; it shares the figure's border (no extra panel). */
+.roster{border:1px solid var(--rule); border-top:0; background:var(--surface-1);}
+.roster .rhead{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:3px 11px; border-bottom:1px solid var(--rule); line-height:1.1;}
+.roster .rhead .t{color:var(--ink-2);} .roster .rhead .n{color:var(--ink-3);}
+.rgrid{display:grid; grid-template-columns:repeat(5,1fr);}
+.cred{padding:4px 9px;}
+.cred + .cred{border-left:1px solid var(--rule);}
+.cred .r1{display:flex; align-items:baseline; gap:6px;}
+.cred .abbr{color:var(--signal); font-weight:600; font-size:var(--text-label);}
+.cred .iss{color:var(--ink-3); font-size:0.62rem;}
+.cred .full{display:block; color:var(--ink-2); font-size:0.62rem; line-height:1.12; margin-top:2px;}
+
+/* ---- METHOD strip (borderless instrument line) ----------------------- */
+.flow{display:grid; grid-template-columns:1fr auto 1fr auto 1fr; align-items:start; gap:8px;}
+.flow .step{min-width:0;}
+.flow .step .sh{display:block; font-family:var(--font-mono); font-size:0.72rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--signal);}
+.flow .step .sd{display:block; color:var(--ink-2); font-size:0.72rem; line-height:1.26; margin-top:3px;}
+.flow .step .sd b{color:var(--ink-1); font-weight:600;}
+.flow .flow-link{align-self:start; margin-top:5px; height:2px; width:100%; min-width:14px; border-radius:2px;}
+
+/* ---- the "imagery is one input" basis note (the defensibility point not in the chain) -- */
+.basis-note{margin-top:5px; color:var(--ink-2); font-size:0.76rem; line-height:1.26; padding-left:11px; border-left:3px solid var(--signal);}
+.basis-note b{color:var(--ink-1); font-weight:600;}
+
+/* ---- LOWER BAND: the deliverable line + a full-width verifiable-facts strip ------
+   No matrix here — the 0.80 gate fires inside the chain hero, keeping a single hero. */
+.deliver{color:var(--ink-2); font-size:0.78rem; line-height:1.32;}
+.deliver b{color:var(--ink-1); font-weight:600;}
+.deliver .dlab{display:inline; color:var(--signal); margin-right:6px;}
+
+/* verifiable facts — same hairline weight as every panel */
+.facts{display:grid; grid-template-columns:repeat(5,1fr); gap:0; border:1px solid var(--rule);}
+.facts .f{padding:7px 10px;}
+.facts .f + .f{border-left:1px solid var(--rule);}
+.facts .f .v{font-family:var(--font-display); font-weight:500; font-size:1.18rem; letter-spacing:-0.02em; color:var(--ink-1); line-height:1; font-variant-numeric:tabular-nums;}
+.facts .f .v .u{font-family:var(--font-mono); font-size:0.78rem; color:var(--signal); margin-left:1px; font-weight:500;}
+.facts .f .lab{color:var(--ink-3); margin-top:6px; display:block; font-size:0.64rem;}
+
+/* ---- close / CTA (hairline + signal keyline marks the action) -------- */
+.foot{margin-top:0;}
+.cta{display:grid; grid-template-columns:1fr auto; gap:16px; align-items:center; border:1px solid var(--rule); border-left:3px solid var(--signal); padding:7px 15px; background:var(--surface-1);}
+.cta .lead h3{font-family:var(--font-display); font-weight:600; font-size:1.08rem; letter-spacing:-0.02em; color:var(--ink-1); line-height:1.04;}
+.cta .lead p{color:var(--ink-2); font-size:0.76rem; line-height:1.28; margin-top:3px; max-width:64ch;}
+.cta .act{display:flex; flex-direction:column; align-items:flex-end; gap:5px; text-align:right;}
+.cta .btn{display:inline-block; background:var(--btn-bg); color:var(--btn-fg); font-family:var(--font-display); font-weight:600; font-size:0.88rem; letter-spacing:-0.01em; padding:8px 15px; border-radius:var(--radius-panel); white-space:nowrap;}
+.cta .direct{color:var(--ink-3);}
+.cta .direct a{color:var(--ink-2); text-decoration:none;}
+
+.footrule{display:flex; align-items:flex-start; justify-content:space-between; gap:18px; margin-top:4px; padding-top:4px; border-top:1px solid var(--rule);}
+.footrule .tag{flex:0 0 auto; color:var(--ink-3); align-self:flex-end; white-space:nowrap;}
+.disc{color:var(--ink-3); font-size:0.66rem; line-height:1.34; max-width:72ch;}
+a{color:inherit;}
+</style>
+</head>
+<body>
+<main class="page">
+<div class="stack">
+
+  <!-- ====================== MASTHEAD (filing header) ====================== -->
+  <header class="mast">
+    <div class="brand">
+      <span class="mark">JINKI<b>.</b></span>
+      <span class="mono-label desc">ROOF / PROPERTY-CONDITION INTELLIGENCE</span>
+    </div>
+    <div class="docref">
+      <div class="mono-label d">CONDITION-OF-RECORD &middot; METHOD &amp; STANDING</div>
+      <div class="mono-label v" style="margin-top:2px;">FOR P&amp;C UNDERWRITING &amp; CLAIMS</div>
+    </div>
+  </header>
+  <div class="thermal-band thermal-hair" aria-hidden="true"></div>
+
+  <!-- ====================== HERO BAND (two columns from the top) ====================== -->
+  <section class="herorow">
+
+    <!-- LEFT: the claim + the qualified problem (H1 now carries the wedge alone) -->
+    <div class="heroL">
+      <h1>AI you can defend to a regulator <em>and in court.</em></h1>
+      <p class="sub">
+        As <b>NAIC scrutiny of AI</b> rises, a finding is only as defensible as the person who signs it.
+      </p>
+      <div class="prob">
+        <p class="pt">
+          Roof condition is a <b>top driver of property loss</b> and one of P&amp;C's <b>most disputed
+          lines</b> &mdash; usually assessed late or inconsistently, so a thin file becomes a <b>disputed claim</b>.
+          <span class="pq mono">DIRECTIONAL · PUBLISHED INDUSTRY LOSS DATA.</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- RIGHT: the founder who stands behind the record + the stamped methodology line -->
+    <div class="deponent">
+      <div class="colhead">
+        <span class="mono-label t">SIGNED BY THE FOUNDER</span>
+      </div>
+      <div class="name">Adnan Abdillahi</div>
+      <span class="mono-label role">FOUNDER &amp; CEO &middot; EX-DELOITTE CYBER RISK</span>
+      <div class="attest">
+        <p class="q">
+          The method is built so every finding is one I can <em>defend in writing</em> &mdash; the standard I sign to.
+        </p>
+        <div class="by">
+          <span class="nm">Stamped methodology &middot; A. Abdillahi</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== HERO INSTRUMENT — THE GOVERNANCE CHAIN ====================== -->
+  <!-- Proprietary visual: the founder's credentials wired to the three controls that make a
+       finding hold up. This is the load-bearing hero, not the generic matrix. -->
+  <section>
+    <div class="section-bar">
+      <div class="grp"><span class="mono-label idx">THE WEDGE</span><h2>The Governance Chain</h2></div>
+      <span class="mono-label meta">CREDENTIAL &#8594; CONTROL &#8594; RECORD</span>
+    </div>
+    <p class="device-line">Your credentials, wired to the controls that make a finding hold up &mdash; <b>defensible to a regulator and in court.</b></p>
+
+    <figure class="chain" style="margin-top:8px;">
+      <svg viewBox="0 0 784 168" role="img" aria-label="Flat instrument schematic of the Governance Chain. Three of the founder's verifiable credentials each wire, via orthogonal connectors, into a named control: AIGP into explainable, severity-ranked outputs; AAIR into the human-review gate, which fires at 0.80 confidence (findings below 0.80 route to a logged human review, at or above auto-clear); AAISM into chain-of-custody and capture metadata. The three controls converge into a single defensible condition-of-record on file. Illustrative schematic of method, not measured data.">
+
+        <!-- column captions -->
+        <g font-family="JetBrains Mono, monospace" font-size="8.5" letter-spacing="1" fill="var(--ink-3)">
+          <text x="20" y="13">CREDENTIAL (VERIFIABLE)</text>
+          <text x="300" y="13">GOVERNANCE CONTROL</text>
+          <text x="612" y="13">OUTPUT</text>
+        </g>
+        <!-- faint column dividers -->
+        <g stroke="var(--rule)" stroke-width="1">
+          <line x1="276" y1="20" x2="276" y2="162"/>
+          <line x1="588" y1="20" x2="588" y2="162"/>
+        </g>
+
+        <!-- ===== CREDENTIAL nodes (left) — squared hairline outlines ===== -->
+        <g font-family="JetBrains Mono, monospace">
+          <!-- AIGP -->
+          <rect x="20" y="28" width="150" height="32" rx="0" fill="none" stroke="var(--rule-strong)" stroke-width="1.2"/>
+          <text x="30" y="44" font-size="12" font-weight="700" fill="var(--signal)">AIGP</text>
+          <text x="30" y="55" font-size="7.5" fill="var(--ink-3)" letter-spacing="0.5">IAPP · AI GOVERNANCE</text>
+          <!-- AAIR -->
+          <rect x="20" y="68" width="150" height="32" rx="0" fill="none" stroke="var(--rule-strong)" stroke-width="1.2"/>
+          <text x="30" y="84" font-size="12" font-weight="700" fill="var(--signal)">AAIR</text>
+          <text x="30" y="95" font-size="7.5" fill="var(--ink-3)" letter-spacing="0.5">ISACA · AI RISK</text>
+          <!-- AAISM -->
+          <rect x="20" y="118" width="150" height="32" rx="0" fill="none" stroke="var(--rule-strong)" stroke-width="1.2"/>
+          <text x="30" y="134" font-size="12" font-weight="700" fill="var(--signal)">AAISM</text>
+          <text x="30" y="145" font-size="7.5" fill="var(--ink-3)" letter-spacing="0.5">ISACA · AI SECURITY MGMT</text>
+        </g>
+
+        <!-- credential -> control connectors: orthogonal runs ending in a tick (no arrowheads) -->
+        <g stroke="var(--signal)" stroke-width="1.4" fill="none">
+          <path d="M170,44 L300,44"/>
+          <path d="M170,84 L300,84"/>
+          <path d="M170,134 L300,134"/>
+        </g>
+        <!-- entry ticks (orthogonal connector marks where each wire meets its control) -->
+        <g stroke="var(--signal)" stroke-width="1.6">
+          <line x1="300" y1="38" x2="300" y2="50"/>
+          <line x1="300" y1="78" x2="300" y2="90"/>
+          <line x1="300" y1="128" x2="300" y2="140"/>
+        </g>
+
+        <!-- ===== CONTROL nodes (center) — squared hairline outlines, open fill ===== -->
+        <g font-family="JetBrains Mono, monospace">
+          <!-- explainable outputs -->
+          <rect x="300" y="28" width="262" height="32" rx="0" fill="none" stroke="var(--rule)" stroke-width="1"/>
+          <text x="312" y="41" font-size="9.5" font-weight="700" fill="var(--ink-1)" letter-spacing="0.4">EXPLAINABLE, SEVERITY-RANKED OUTPUTS</text>
+          <text x="312" y="53" font-size="8" fill="var(--ink-2)" font-family="Inter, sans-serif">Each finding states how it was reached — built for NAIC review.</text>
+
+          <!-- human-review gate — the 0.80 gate FIRES inside this node -->
+          <rect x="300" y="68" width="262" height="50" rx="0" fill="none" stroke="var(--rule)" stroke-width="1"/>
+          <text x="312" y="81" font-size="9.5" font-weight="700" fill="var(--ink-1)" letter-spacing="0.4">HUMAN-REVIEW GATE</text>
+          <!-- inline confidence axis 0.50..1.00, gate at 0.80 -->
+          <line x1="312" y1="106" x2="550" y2="106" stroke="var(--rule-strong)" stroke-width="1"/>
+          <g stroke="var(--rule-strong)" stroke-width="1">
+            <line x1="312" y1="103" x2="312" y2="109"/>
+            <line x1="550" y1="103" x2="550" y2="109"/>
+          </g>
+          <!-- 0.80 firing line -->
+          <line x1="502" y1="92" x2="502" y2="113" stroke="var(--signal)" stroke-width="1.6" stroke-dasharray="4 3"/>
+          <text x="498" y="99" text-anchor="end" font-size="8" font-weight="700" fill="var(--signal)" letter-spacing="0.3">0.80 GATE</text>
+          <!-- findings under 0.80 -> flagged (signal); at/above -> auto-clear (neutral) -->
+          <g fill="var(--signal)"><circle cx="338" cy="106" r="2.4"/><circle cx="372" cy="106" r="2.4"/><circle cx="430" cy="106" r="2.4"/><circle cx="470" cy="106" r="2.4"/></g>
+          <g fill="none" stroke="var(--ink-3)" stroke-width="1.1"><circle cx="516" cy="106" r="2.4"/><circle cx="534" cy="106" r="2.4"/></g>
+          <text x="312" y="116" font-size="7" fill="var(--ink-3)" letter-spacing="0.2">&#8592; UNDER 0.80 ROUTES TO LOGGED HUMAN REVIEW</text>
+
+          <!-- chain of custody -->
+          <rect x="300" y="126" width="262" height="32" rx="0" fill="none" stroke="var(--rule)" stroke-width="1"/>
+          <text x="312" y="139" font-size="9.5" font-weight="700" fill="var(--ink-1)" letter-spacing="0.4">CHAIN-OF-CUSTODY + METADATA</text>
+          <text x="312" y="151" font-size="8" fill="var(--ink-2)" font-family="Inter, sans-serif">Provenance on every captured dataset, producible on demand.</text>
+        </g>
+
+        <!-- control -> record connectors: orthogonal bus into a single tick (no arrowheads) -->
+        <g stroke="var(--rule-strong)" stroke-width="1.3" fill="none">
+          <path d="M562,44 L582,44 L582,93 L626,93"/>
+          <path d="M562,93 L626,93"/>
+          <path d="M562,142 L582,142 L582,93 L626,93"/>
+        </g>
+        <line x1="626" y1="87" x2="626" y2="99" stroke="var(--rule-strong)" stroke-width="1.6"/>
+
+        <!-- ===== OUTPUT node (right): the condition-of-record — squared, signal keyline ===== -->
+        <rect x="626" y="62" width="138" height="62" rx="0" fill="none" stroke="var(--signal)" stroke-width="1.6"/>
+        <text x="695" y="86" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink-1)">Condition-</text>
+        <text x="695" y="101" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink-1)">of-Record</text>
+        <text x="695" y="117" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" letter-spacing="0.5" fill="var(--ink-3)">DEFENSIBLE · ON FILE</text>
+      </svg>
+      <figcaption>
+        <span class="mono-label l">GOVERNANCE CHAIN · CREDENTIAL &#8594; CONTROL &#8594; RECORD</span>
+        <span class="mono-label r">SCHEMATIC · ILLUSTRATIVE</span>
+      </figcaption>
+    </figure>
+
+    <!-- CREDENTIAL ROSTER — ruled 5-column strip welded to the chain (the standing it rests on) -->
+    <div class="roster">
+      <div class="rhead">
+        <span class="mono-label t">STANDING &middot; ADNAN ABDILLAHI</span>
+        <span class="mono-label n">EACH INDEPENDENTLY VERIFIABLE WITH ITS ISSUER &#8599;</span>
+      </div>
+      <div class="rgrid">
+        <div class="cred">
+          <span class="r1"><span class="mono-label abbr tabular">AIGP</span><span class="mono-label iss">IAPP</span></span>
+          <span class="full">AI Governance Professional</span>
+        </div>
+        <div class="cred">
+          <span class="r1"><span class="mono-label abbr tabular">AAIR</span><span class="mono-label iss">ISACA</span></span>
+          <span class="full">Advanced in AI Risk</span>
+        </div>
+        <div class="cred">
+          <span class="r1"><span class="mono-label abbr tabular">AAISM</span><span class="mono-label iss">ISACA</span></span>
+          <span class="full">Advanced in AI Security Management</span>
+        </div>
+        <div class="cred">
+          <span class="r1"><span class="mono-label abbr tabular">CISSP</span><span class="mono-label iss">ISC2</span></span>
+          <span class="full">Certified Information Systems Security Professional</span>
+        </div>
+        <div class="cred">
+          <span class="r1"><span class="mono-label abbr tabular">CCSP</span><span class="mono-label iss">ISC2</span></span>
+          <span class="full">Certified Cloud Security Professional</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== METHOD + EVIDENCE (one merged section) ====================== -->
+  <!-- Defensibility is already carried by the governance-chain hero above; here we show the
+       three-step method, the deliverable line, and a full-width verifiable-facts strip. -->
+  <section>
+    <div class="section-bar">
+      <div class="grp"><span class="mono-label idx">METHOD</span><h2>Capture to condition-of-record</h2></div>
+      <span class="mono-label meta">INSTRUMENT-GRADE · 48-HOUR TARGET</span>
+    </div>
+    <div class="flow" style="margin-top:4px;">
+      <span class="step">
+        <span class="sh">Capture</span>
+        <span class="sd">Aerial thermal + visual, flown in the <b>solar window</b> when thermal contrast is real.</span>
+      </span>
+      <span class="flow-link thermal-band" aria-hidden="true"></span>
+      <span class="step">
+        <span class="sh">Analyze</span>
+        <span class="sd">Anomalies ranked <b>SEV-1/2/3</b>, each confidence-scored; under <b>0.80</b> routes to human review.</span>
+      </span>
+      <span class="flow-link thermal-band" aria-hidden="true"></span>
+      <span class="step">
+        <span class="sh">Record</span>
+        <span class="sd">A geolocated, time-stamped <b>condition-of-record</b>; re-scans track degradation velocity.</span>
+      </span>
+    </div>
+    <p class="basis-note"><b>Imagery is one input</b>, never the sole basis for a decision &mdash; the record states what it rests on, so it holds up to a regulator or in court.</p>
+
+    <!-- LOWER BAND: verifiable facts (full-width) + the deliverable line. The 0.80 gate now
+         fires inside the chain hero above, so no separate matrix — the page stays single-hero. -->
+    <p class="deliver" style="margin-top:6px;"><span class="mono-label dlab">DELIVERABLE</span> A severity-ranked condition brief on a <b>48-hour target</b> &mdash; pre-season baselines, post-event documentation, an underwriting condition input, and renewal-time re-assessment.</p>
+
+    <div class="facts" style="margin-top:6px;">
+      <div class="f">
+        <div class="v">Part&nbsp;<span class="tabular">107</span></div>
+        <span class="mono-label lab">FAA AUTHORITY</span>
+      </div>
+      <div class="f">
+        <div class="v"><span class="tabular">$5</span><span class="u">M</span></div>
+        <span class="mono-label lab">LIABILITY / OPERATION</span>
+      </div>
+      <div class="f">
+        <div class="v">COI</div>
+        <span class="mono-label lab">AVAILABLE PRE-CONTRACT</span>
+      </div>
+      <div class="f">
+        <div class="v">Add&rsquo;l</div>
+        <span class="mono-label lab">INSURED NAMING</span>
+      </div>
+      <div class="f">
+        <div class="v">Mid&#8209;Atl.</div>
+        <span class="mono-label lab">OPERATING AREA</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== CLOSE / CTA ====================== -->
+  <footer class="foot">
+    <div class="cta">
+      <div class="lead">
+        <h3>Start with a single roof.</h3>
+        <p>Request a scoped assessment &mdash; it reaches the founder's inbox directly. No SDRs, no handoffs: the person who signs the standard answers.</p>
+      </div>
+      <div class="act">
+        <span class="btn">Request a scoped assessment</span>
+        <span class="mono-label direct">DIRECT · <a href="mailto:adnan@jinki.ai">ADNAN@JINKI.AI</a></span>
+      </div>
+    </div>
+
+    <div class="footrule">
+      <p class="disc">
+        Figures are targets and capacities, not guarantees. SOC&nbsp;2 is roadmap, not attained.
+        The schematics above are illustrative &mdash; Jinki has completed no client scans to date.
+      </p>
+      <span class="mono-label tag">MID-ATLANTIC</span>
+    </div>
+  </footer>
+
+</div>
+</main>
+</body>
+</html>

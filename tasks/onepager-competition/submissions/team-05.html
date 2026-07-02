@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<title>Jinki — Condition of Record</title>
+<style>
+/* ============================================================
+   JINKI ONE-PAGER — LOCKED BRAND FOUNDATION  (paste verbatim)
+   Resolved from src/styles/system.css. Do NOT edit the tokens,
+   @font-face, @page, or .page rules. Build your design in a
+   SECOND <style> block below this one.
+   RULE: use the CSS variables for ALL colors (never hardcode a
+   hex). That keeps the page on-brand (guardrail G9) and lets it
+   theme-flip (dark <-> light) cleanly.
+   ============================================================ */
+
+/* Fonts — absolute file:// paths so headless Chrome resolves them */
+@font-face{font-family:'Space Grotesk';src:url('file:///Users/aa/JInki.ai/public/fonts/SpaceGrotesk-Variable.woff2') format('woff2-variations');font-weight:300 700;font-style:normal;font-display:swap;}
+@font-face{font-family:'Inter';src:url('file:///Users/aa/JInki.ai/public/fonts/Inter-Variable.woff2') format('woff2-variations');font-weight:300 700;font-style:normal;font-display:swap;}
+@font-face{font-family:'JetBrains Mono';src:url('file:///Users/aa/JInki.ai/public/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:400 700;font-style:normal;font-display:swap;}
+
+:root{
+  color-scheme:dark;
+  --surface-0:#0A0A0A; --surface-1:#111111; --surface-2:#181818; --surface-3:#202020;
+  --ink-1:#F4F4F2; --ink-2:rgba(244,244,242,0.68); --ink-3:rgba(244,244,242,0.52);
+  --rule:rgba(244,244,242,0.12); --rule-strong:rgba(244,244,242,0.32);
+  --signal:#FF4F00; --signal-soft:#FF6B33; --signal-dim:rgba(255,79,0,0.32);
+  --btn-bg:#F4F4F2; --btn-fg:#0A0A0A;
+  /* the ONLY polychrome element — use in 2-3px strips / thin bands only */
+  --thermal-ramp:linear-gradient(90deg,#0A0A0A 0%,#2B0B5E 18%,#8B1E9B 38%,#E33F1E 62%,#FF8A00 80%,#FFD24A 92%,#FFF8E0 100%);
+  --font-display:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;
+  --font-sans:'Inter',ui-sans-serif,system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,'SF Mono',monospace;
+  --radius-panel:4px; --radius-pill:999px;
+  /* type scale — fixed (page width is fixed at 816px, so no fluid clamps) */
+  --text-label:0.8125rem; --text-caption:0.875rem; --text-body:1.0625rem;
+  --text-lede:1.375rem; --text-h3:1.6rem; --text-h2:2.3rem; --text-h1:3.2rem; --text-display:4rem;
+}
+[data-theme="light"]{
+  color-scheme:light;
+  --surface-0:#F7F6F3; --surface-1:#FFFFFF; --surface-2:#EFEDE8; --surface-3:#E7E5DF;
+  --ink-1:#121210; --ink-2:rgba(18,18,16,0.70); --ink-3:rgba(18,18,16,0.55);
+  --rule:rgba(18,18,16,0.14); --rule-strong:rgba(18,18,16,0.34);
+  --signal:#C23A00; --signal-soft:#B84A1A; --signal-dim:rgba(194,58,0,0.32);
+  --btn-bg:#121210; --btn-fg:#F7F6F3;
+}
+
+*{box-sizing:border-box;}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:var(--surface-0);color:var(--ink-1);font-family:var(--font-sans);}
+body{margin:0;font-size:var(--text-body);line-height:1.6;}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:500;color:var(--ink-1);margin:0;text-wrap:balance;letter-spacing:-0.02em;line-height:1.05;}
+p{color:var(--ink-2);margin:0;text-wrap:pretty;}
+em{font-style:normal;color:var(--signal);}
+
+/* The fixed leave-behind canvas — US Letter portrait, single page */
+@page{size:Letter;margin:0;}
+.page{
+  width:8.5in;height:11in;box-sizing:border-box;padding:16mm;
+  overflow:hidden;position:relative;background:var(--surface-0);color:var(--ink-1);
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;
+}
+
+/* Instrument voice + signature utilities (from system.css) */
+.mono-label{font-family:var(--font-mono);font-size:var(--text-label);font-weight:500;letter-spacing:0.12em;text-transform:uppercase;line-height:1.1;}
+.mono-label-long{font-family:var(--font-mono);font-size:var(--text-label);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;line-height:1.6;}
+.mono{font-family:var(--font-mono);}
+.tabular{font-variant-numeric:tabular-nums;}
+.thermal-band{background:var(--thermal-ramp);}
+.folio-rule{border-top:1px solid var(--rule-strong);}
+.signal{color:var(--signal);} .soft{color:var(--signal-soft);}
+.ink-2{color:var(--ink-2);} .ink-3{color:var(--ink-3);}
+
+/* Annotation primitives (for schematic instrument SVGs) */
+.annotation-box{fill:none;stroke:var(--signal-dim);stroke-width:1.5;}
+.annotation-tick{stroke:var(--rule-strong);stroke-width:1.5;fill:none;}
+</style>
+
+<style>
+/* ============================================================
+   TEAM 05 — EDITORIAL (Monocle-grade) · LIGHT
+   Thesis: premium restraint as authority. Composed whitespace,
+   an editorial grid, one idea per horizontal band, separated by
+   folio rules. The serious specialists don't shout.
+   Hero device: an editorial pull-quote band.
+   ============================================================ */
+
+/* Document-wide proportional scale-down: the locked type scale + all rem
+   sizing ride the root font-size, so one value shrinks the whole spread
+   while preserving every editorial relationship. (px values tuned apart.) */
+html{ font-size:10.55px; }
+.page{
+  display:flex; flex-direction:column;
+  font-feature-settings:"liga" 1,"kern" 1;
+}
+
+/* ---- shared editorial primitives ---------------------------- */
+.band{ padding:0; }
+.rule{ border-top:1px solid var(--rule); }
+.rule-strong{ border-top:1px solid var(--rule-strong); }
+.kicker{ color:var(--ink-3); }
+.kicker em, .kicker .signal{ color:var(--signal); }
+.lede{ font-size:var(--text-lede); line-height:1.32; color:var(--ink-1);
+  font-weight:300; letter-spacing:-0.01em; }
+.body-sm{ font-size:var(--text-caption); line-height:1.5; color:var(--ink-2); }
+.dropcap::first-letter{
+  font-family:var(--font-display); font-weight:500; float:left;
+  font-size:2.7rem; line-height:0.8; padding:4px 8px 0 0; color:var(--ink-1);
+  letter-spacing:-0.02em;
+}
+.num{ font-family:var(--font-mono); font-variant-numeric:tabular-nums; color:var(--ink-1); }
+
+/* ===== 1 · MASTHEAD ========================================= */
+.masthead{ display:flex; align-items:flex-end; justify-content:space-between; gap:18px; }
+.wordmark{ display:flex; align-items:baseline; gap:11px; }
+.wordmark h1{ font-size:2.4rem; letter-spacing:-0.035em; font-weight:600; line-height:0.9; }
+.wordmark .reg{ font-family:var(--font-mono); font-size:0.62rem; color:var(--ink-3);
+  letter-spacing:0.18em; transform:translateY(-0.95em); }
+.masthead-meta{ text-align:right; }
+.masthead-meta .row{ display:flex; gap:9px; justify-content:flex-end; align-items:center;
+  color:var(--ink-3); }
+.masthead-meta .row + .row{ margin-top:4px; }
+.dot{ width:3px; height:3px; border-radius:50%; background:var(--ink-3); display:inline-block;
+  vertical-align:middle; }
+.thermal-hair{ height:2px; background:var(--thermal-ramp); margin-top:9px; }
+
+/* ===== 2 · HERO PULL-QUOTE BAND (reserved device) =========== */
+.hero{ padding:6px 0 7px; text-align:center; position:relative; }
+.hero .eyebrow{ color:var(--ink-3); margin-bottom:6px; }
+.hero blockquote{ margin:0; }
+.hero .quote{
+  font-family:var(--font-display); font-weight:300;
+  font-size:2.04rem; line-height:1.1; letter-spacing:-0.025em;
+  color:var(--ink-1); max-width:16.2em; margin:0 auto;
+}
+.hero .quote em{ color:var(--signal); font-weight:500; }
+.hero .attribution{ margin-top:8px; color:var(--ink-3); }
+.hero .qmark{ position:absolute; font-family:var(--font-display); font-weight:500;
+  color:var(--signal-dim); font-size:2.4rem; line-height:1; user-select:none; }
+.hero .qmark.open{ top:11px; left:2px; }
+.hero .qmark.close{ bottom:7px; right:2px; }
+
+/* ===== 3 · STANDFIRST (the problem) ========================= */
+.standfirst{ display:grid; grid-template-columns:1fr 208px; gap:22px; padding:6px 0 7px;
+  align-items:stretch; }
+.standfirst .body{ color:var(--ink-1); font-size:0.97rem; line-height:1.44; }
+.standfirst .body .ink-2{ color:var(--ink-2); }
+.standfirst .body .stake{ color:var(--ink-1); }
+.standfirst .body .qual{ color:var(--ink-3); font-style:normal; }
+/* anchored data cell — the orphaned numerals now live in a hairline frame */
+.datacell{ border:1px solid var(--rule-strong); border-radius:var(--radius-panel);
+  background:var(--surface-1); display:flex; flex-direction:column; }
+.datacell .dch{ display:flex; align-items:center; justify-content:space-between;
+  padding:5px 12px; border-bottom:1px solid var(--rule); color:var(--ink-3); }
+.datacell .dch .dot-s{ width:4px; height:4px; border-radius:50%; background:var(--signal);
+  display:inline-block; }
+.statrow{ padding:8px 12px; }
+.statrow + .statrow{ border-top:1px solid var(--rule); }
+.statrow .fig{ font-family:var(--font-mono); font-weight:600; font-size:1.68rem;
+  letter-spacing:-0.02em; color:var(--ink-1); line-height:1; font-variant-numeric:tabular-nums; }
+.statrow .cap{ color:var(--ink-3); margin-top:5px; display:block; }
+
+/* ===== 4 · METHOD (three-column editorial grid) ============= */
+.section-head{ display:flex; align-items:baseline; justify-content:space-between;
+  padding:6px 0 5px; }
+.section-head h2{ font-size:1.32rem; font-weight:500; letter-spacing:-0.02em; }
+.section-head .meta{ color:var(--ink-3); }
+.method{ display:grid; grid-template-columns:repeat(3,1fr); gap:0;
+  border-top:1px solid var(--rule); }
+.col{ padding:7px 14px 2px; position:relative; }
+.col + .col{ border-left:1px solid var(--rule); }
+.col .step{ display:flex; align-items:center; gap:8px; margin-bottom:7px; }
+.col .step .n{ font-family:var(--font-mono); font-size:0.7rem; color:var(--signal);
+  letter-spacing:0.1em; font-weight:600; }
+.col .step .t{ font-family:var(--font-display); font-weight:500; font-size:1.04rem;
+  letter-spacing:-0.01em; color:var(--ink-1); }
+.col p{ font-size:0.82rem; line-height:1.38; color:var(--ink-2); }
+.col svg{ display:block; width:80%; height:auto; margin-top:5px; }
+.col .sc{ display:flex; align-items:center; justify-content:space-between; gap:8px;
+  margin-top:3px; padding-top:3px; border-top:1px solid var(--rule); }
+.col .sc .lbl{ color:var(--ink-3); font-size:0.58rem; letter-spacing:0.1em; }
+.col .sc .tag{ color:var(--ink-3); font-size:0.58rem; letter-spacing:0.1em; }
+
+/* ===== 5 · INSTRUMENT FIGURE (sev × confidence) ============= */
+.figband{ display:grid; grid-template-columns:212px 1fr; gap:22px; padding:6px 0 6px;
+  border-top:1px solid var(--rule); align-items:center; }
+.figband .fig-wrap{ border:1px solid var(--rule-strong); border-radius:var(--radius-panel);
+  background:var(--surface-1); overflow:hidden; }
+.figband .fig-wrap svg{ display:block; width:100%; height:auto; }
+.figcap{ display:flex; align-items:center; justify-content:space-between;
+  border-top:1px solid var(--rule); padding:7px 11px; }
+.figcap .l{ color:var(--ink-3); } .figcap .r{ color:var(--ink-3); }
+.figband .read h3{ font-size:1.14rem; font-weight:500; letter-spacing:-0.02em;
+  margin-bottom:8px; }
+.figband .read p{ font-size:0.88rem; line-height:1.44; color:var(--ink-2); }
+.figband .read .threshold{ margin-top:7px; display:flex; align-items:baseline; gap:9px; }
+.figband .read .threshold .v{ font-family:var(--font-mono); font-weight:600; color:var(--signal);
+  font-size:1.15rem; letter-spacing:-0.01em; }
+.figband .read .threshold .x{ color:var(--ink-3); font-size:0.8rem; line-height:1.4; }
+
+/* ===== 6 · DEFENSIBILITY (full-width, three columns) ======== */
+.defband{ border-top:1px solid var(--rule); padding:8px 0 3px; }
+.defband > .dh{ display:flex; align-items:baseline; justify-content:space-between;
+  margin-bottom:8px; }
+.defband > .dh h3{ font-size:1.18rem; font-weight:500; letter-spacing:-0.02em; }
+.defband > .dh .meta{ color:var(--ink-3); }
+.defgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; }
+.defcell{ padding-right:24px; position:relative; }
+.defcell + .defcell{ padding-left:24px; border-left:1px solid var(--rule); }
+.defcell .dt{ display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+.defcell .dt .ix{ font-family:var(--font-mono); font-size:0.66rem; color:var(--signal);
+  font-weight:600; letter-spacing:0.05em; }
+.defcell .dt b{ font-family:var(--font-display); font-weight:500; font-size:0.96rem;
+  letter-spacing:-0.01em; color:var(--ink-1); }
+.defcell p{ font-size:0.82rem; line-height:1.38; color:var(--ink-2); }
+
+/* ===== 7 · FOUNDER (bylined credibility) ==================== */
+.founder{ display:grid; grid-template-columns:142px 1fr; gap:18px; padding:6px 0 6px;
+  border-top:1px solid var(--rule); align-items:center; }
+.byline .role{ color:var(--signal); margin-bottom:6px; }
+.byline .name{ font-family:var(--font-display); font-weight:600; font-size:1.32rem;
+  letter-spacing:-0.02em; color:var(--ink-1); line-height:1; }
+.byline .prov{ color:var(--ink-3); margin-top:7px; line-height:1.5; }
+.founder .creds p{ font-size:0.87rem; line-height:1.44; color:var(--ink-2); margin-bottom:8px; }
+.credchips{ display:flex; flex-wrap:wrap; gap:6px; }
+.chip{ font-family:var(--font-mono); font-size:0.66rem; letter-spacing:0.08em;
+  color:var(--ink-1); border:1px solid var(--rule-strong); border-radius:var(--radius-pill);
+  padding:3px 9px; font-weight:500; white-space:nowrap; }
+.chip .iss{ color:var(--ink-3); }
+
+/* ===== 8 · COLOPHON / CTA ================================== */
+.colophon{ margin-top:auto; }
+/* verifiable-facts strip — reference data lives in the colophon editorially */
+.factstrip{ display:grid; grid-template-columns:repeat(6,1fr); gap:0;
+  border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); }
+.factstrip .fc{ padding:5px 9px 5px 0; }
+.factstrip .fc + .fc{ padding-left:12px; border-left:1px solid var(--rule); }
+.factstrip .k{ color:var(--ink-3); display:block; margin-bottom:4px; font-size:0.62rem; }
+.factstrip .v{ font-size:0.78rem; color:var(--ink-1); line-height:1.2; font-weight:500; }
+.factstrip .v .num{ font-family:var(--font-mono); font-weight:600; }
+.cta-row{ display:flex; align-items:center; justify-content:space-between; gap:20px;
+  padding:7px 0 0; }
+.cta-left .lab{ color:var(--ink-3); margin-bottom:6px; }
+.cta-left .act{ font-family:var(--font-display); font-weight:500; font-size:1.34rem;
+  letter-spacing:-0.02em; color:var(--ink-1); line-height:1.05; }
+.cta-left .act em{ color:var(--signal); }
+.cta-right{ text-align:right; }
+.cta-right .to{ font-family:var(--font-mono); font-size:0.95rem; color:var(--ink-1);
+  font-weight:600; letter-spacing:0.01em; }
+.cta-right .sub{ color:var(--ink-3); margin-top:5px; }
+.endbar{ display:flex; align-items:center; justify-content:space-between; gap:12px;
+  margin-top:6px; padding-top:5px; border-top:1px solid var(--rule); }
+.endbar .l{ color:var(--ink-3); } .endbar .r{ color:var(--ink-3); }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <!-- ============ 1 · MASTHEAD ============ -->
+  <header class="masthead band">
+    <div class="wordmark">
+      <h1>Jinki</h1>
+      <span class="reg">AERIAL&nbsp;INTELLIGENCE</span>
+    </div>
+    <div class="masthead-meta">
+      <div class="row mono-label">
+        <span>CONDITION&nbsp;OF&nbsp;RECORD</span><span class="dot"></span><span class="signal">FOR&nbsp;P&amp;C&nbsp;CARRIERS</span>
+      </div>
+      <div class="row mono-label kicker">
+        <span>VOL.&nbsp;01</span><span class="dot"></span><span>ROOF&nbsp;&amp;&nbsp;PROPERTY&nbsp;CONDITION&nbsp;SPECIALIST</span>
+      </div>
+    </div>
+  </header>
+  <div class="thermal-hair" role="presentation"></div>
+
+  <!-- ============ 2 · HERO PULL-QUOTE BAND ============ -->
+  <section class="hero band">
+    <span class="qmark open" aria-hidden="true">&ldquo;</span>
+    <div class="eyebrow mono-label">THE&nbsp;THESIS</div>
+    <blockquote>
+      <p class="quote">Roof condition is among the largest drivers of property loss &mdash; yet it is assessed late, inconsistently, and <em>rarely in a form that survives a deposition.</em></p>
+    </blockquote>
+    <div class="attribution mono-label">JINKI&nbsp;BUILDS&nbsp;THE&nbsp;RECORD&nbsp;THAT&nbsp;DOES.</div>
+    <span class="qmark close" aria-hidden="true">&rdquo;</span>
+  </section>
+
+  <!-- ============ 3 · STANDFIRST (the problem) ============ -->
+  <section class="standfirst band rule-strong">
+    <p class="body dropcap">Underwriting and claims turn on the same disputed fact &mdash; the true state of a roof. <span class="stake">Roof-related causes drive a large share of property loss, and roof condition is among the most disputed facts in a claim</span> <span class="qual">(directional industry framing, not a Jinki measurement).</span> <span class="ink-2">Yet most aerial vendors return imagery and call it evidence. An image is one input. A defensible decision needs a geolocated, time-stamped record, an explainable analysis, and a chain of custody behind both &mdash; the gap Jinki closes. Instrument-grade, and narrow on purpose.</span></p>
+    <aside class="datacell">
+      <div class="dch mono-label"><span>KEY&nbsp;PARAMETERS</span><span class="dot-s" aria-hidden="true"></span></div>
+      <div class="statrow">
+        <span class="fig tabular">48&#8209;hr</span>
+        <span class="cap mono-label">SEVERITY-RANKED&nbsp;BRIEF · TARGET&nbsp;TURNAROUND</span>
+      </div>
+      <div class="statrow">
+        <span class="fig tabular">0.80</span>
+        <span class="cap mono-label">CONFIDENCE&nbsp;FLOOR · BELOW &rarr; HUMAN&nbsp;REVIEW</span>
+      </div>
+    </aside>
+  </section>
+
+  <!-- ============ 4 · METHOD (three-column editorial) ============ -->
+  <div class="section-head band rule">
+    <h2>The method &mdash; instrument-grade, in three movements</h2>
+    <span class="meta mono-label">CAPTURE&nbsp;&middot;&nbsp;ANALYZE&nbsp;&middot;&nbsp;RECORD</span>
+  </div>
+  <section class="method band">
+
+    <!-- 01 CAPTURE: solar-window / capture-geometry schematic -->
+    <article class="col">
+      <div class="step"><span class="n">01</span><span class="t">Capture</span></div>
+      <p>Aerial thermal &amp; visual imagery, flown inside the thermal window &mdash; bound by solar geometry, when contrast is real, not when the calendar permits.</p>
+      <svg viewBox="0 0 200 58" role="img" aria-label="Schematic: a solar arc over a roof plane with the valid thermal-capture window marked.">
+        <!-- ground / roof plane -->
+        <line x1="14" y1="44" x2="186" y2="44" stroke="var(--rule-strong)" stroke-width="1"/>
+        <path d="M76 44 L100 34 L124 44 Z" fill="none" stroke="var(--ink-3)" stroke-width="1"/>
+        <!-- solar arc -->
+        <path d="M24 44 A 56 56 0 0 1 176 44" fill="none" stroke="var(--rule)" stroke-width="1" stroke-dasharray="2 4"/>
+        <!-- valid window arc segment (signal) -->
+        <path d="M46 23 A 56 56 0 0 1 92 8" fill="none" stroke="var(--signal)" stroke-width="2" stroke-linecap="round"/>
+        <!-- sun marker in-window -->
+        <circle cx="67" cy="14" r="3.1" fill="var(--signal)"/>
+        <line x1="67" y1="14" x2="100" y2="34" stroke="var(--signal-dim)" stroke-width="1" stroke-dasharray="1.5 3"/>
+        <!-- ticks -->
+        <line x1="46" y1="23" x2="40" y2="27" class="annotation-tick"/>
+        <line x1="92" y1="8" x2="92" y2="3" class="annotation-tick"/>
+        <text x="100" y="55" text-anchor="middle" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="7" letter-spacing="0.6">VALID&nbsp;ΔT&nbsp;WINDOW</text>
+      </svg>
+      <div class="sc"><span class="lbl mono">CAPTURE&nbsp;GEOMETRY</span><span class="tag mono">SCHEMATIC</span></div>
+    </article>
+
+    <!-- 02 ANALYZE: confidence band with 0.80 review line -->
+    <article class="col">
+      <div class="step"><span class="n">02</span><span class="t">Analyze</span></div>
+      <p>AI surfaces thermal &amp; structural anomalies, ranked <span class="mono">SEV-1/2/3</span>, each carrying a confidence value. Findings under <span class="mono">0.80</span> route to a human.</p>
+      <svg viewBox="0 0 200 58" role="img" aria-label="Schematic: ranked findings plotted by confidence against a 0.80 human-review threshold line.">
+        <!-- axis -->
+        <line x1="20" y1="6" x2="20" y2="46" stroke="var(--rule-strong)" stroke-width="1"/>
+        <line x1="20" y1="46" x2="190" y2="46" stroke="var(--rule-strong)" stroke-width="1"/>
+        <!-- 0.80 threshold line -->
+        <line x1="20" y1="20" x2="190" y2="20" stroke="var(--signal)" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <text x="190" y="16" text-anchor="end" fill="var(--signal)" font-family="JetBrains Mono, monospace" font-size="7" letter-spacing="0.5">0.80&nbsp;REVIEW</text>
+        <!-- bars: confidence per finding -->
+        <rect x="40" y="12" width="15" height="34" fill="var(--ink-3)"/>
+        <rect x="70" y="16" width="15" height="30" fill="var(--ink-3)"/>
+        <rect x="100" y="10" width="15" height="36" fill="var(--ink-3)"/>
+        <!-- below-threshold bar flagged in signal -->
+        <rect x="130" y="28" width="15" height="18" fill="var(--signal)"/>
+        <rect x="160" y="25" width="15" height="21" fill="var(--signal)"/>
+        <text x="47.5" y="55" text-anchor="middle" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="6.5">F1</text>
+        <text x="77.5" y="55" text-anchor="middle" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="6.5">F2</text>
+        <text x="107.5" y="55" text-anchor="middle" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="6.5">F3</text>
+        <text x="137.5" y="55" text-anchor="middle" fill="var(--signal)" font-family="JetBrains Mono, monospace" font-size="6.5">F4</text>
+        <text x="167.5" y="55" text-anchor="middle" fill="var(--signal)" font-family="JetBrains Mono, monospace" font-size="6.5">F5</text>
+      </svg>
+      <div class="sc"><span class="lbl mono">CONFIDENCE&nbsp;DISTRIBUTION</span><span class="tag mono">SCHEMATIC</span></div>
+    </article>
+
+    <!-- 03 RECORD: degradation-velocity curve -->
+    <article class="col">
+      <div class="step"><span class="n">03</span><span class="t">Record</span></div>
+      <p>A geolocated, time-stamped condition-of-record. Re-scans on cadence track degradation velocity &mdash; a living file, not a snapshot.</p>
+      <svg viewBox="0 0 200 58" role="img" aria-label="Schematic: a degradation-velocity curve rising from a baseline scan to a ranked finding over re-scans.">
+        <!-- grid -->
+        <g stroke="var(--rule)" stroke-width="1">
+          <line x1="20" y1="16" x2="190" y2="16"/><line x1="20" y1="31" x2="190" y2="31"/>
+        </g>
+        <!-- baseline -->
+        <line x1="20" y1="44" x2="190" y2="44" stroke="var(--rule-strong)" stroke-width="1" stroke-dasharray="3 5"/>
+        <!-- trend -->
+        <path d="M22 44 C 70 42, 100 37, 130 29 S 178 13, 188 9" fill="none" stroke="var(--signal)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="22" cy="44" r="3" fill="var(--ink-3)"/>
+        <circle cx="188" cy="9" r="3" fill="var(--signal)"/>
+        <text x="22" y="55" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="6.5" letter-spacing="0.4">BASELINE</text>
+        <text x="188" y="55" text-anchor="end" fill="var(--signal)" font-family="JetBrains Mono, monospace" font-size="6.5" letter-spacing="0.4">SEV&#8209;2&nbsp;ΔT&uarr;</text>
+      </svg>
+      <div class="sc"><span class="lbl mono">DEGRADATION&nbsp;VELOCITY</span><span class="tag mono">SCHEMATIC</span></div>
+    </article>
+  </section>
+
+  <!-- ============ 5 · INSTRUMENT FIGURE (sev × confidence) ============ -->
+  <section class="figband band">
+    <figure class="fig-wrap" style="margin:0;">
+      <svg viewBox="0 0 300 168" role="img" aria-label="Schematic severity-by-confidence matrix: severity ranks SEV-1 to SEV-3 on the vertical axis, AI confidence from 0.5 to 1.0 on the horizontal, with a 0.80 human-review line. Findings left of the line fall in a shaded human-review band; findings right of it are auto-cleared.">
+        <!-- shaded human-review band (left of 0.80) -->
+        <rect x="44" y="14" width="80" height="104" fill="var(--surface-2)"/>
+        <!-- plot frame -->
+        <rect x="44" y="14" width="232" height="104" fill="none" stroke="var(--rule-strong)" stroke-width="1.2"/>
+        <!-- confidence gridlines (x) at 0.6 / 0.7 / 0.9 -->
+        <g stroke="var(--rule)" stroke-width="0.75">
+          <line x1="84" y1="14" x2="84" y2="118"/><line x1="204" y1="14" x2="204" y2="118"/><line x1="244" y1="14" x2="244" y2="118"/>
+        </g>
+        <!-- severity gridlines (y) between rows -->
+        <g stroke="var(--rule)" stroke-width="0.75">
+          <line x1="44" y1="48.7" x2="276" y2="48.7"/><line x1="44" y1="83.3" x2="276" y2="83.3"/>
+        </g>
+        <!-- 0.80 review divider (vertical, signal) -->
+        <line x1="124" y1="9" x2="124" y2="118" stroke="var(--signal)" stroke-width="1.6" stroke-dasharray="4 3"/>
+        <text x="124" y="7" text-anchor="middle" fill="var(--signal)" font-family="JetBrains Mono, monospace" font-weight="600" font-size="8" letter-spacing="0.4">0.80&nbsp;REVIEW&nbsp;LINE</text>
+        <!-- y axis ticks + labels: SEV ranks -->
+        <g class="annotation-tick"><line x1="44" y1="31.5" x2="40" y2="31.5"/><line x1="44" y1="66" x2="40" y2="66"/><line x1="44" y1="100.5" x2="40" y2="100.5"/></g>
+        <g font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="500" letter-spacing="0.5" fill="var(--ink-1)">
+          <text x="37" y="34.5" text-anchor="end">SEV&#8209;1</text>
+          <text x="37" y="69" text-anchor="end">SEV&#8209;2</text>
+          <text x="37" y="103.5" text-anchor="end">SEV&#8209;3</text>
+        </g>
+        <!-- x axis ticks + scale values -->
+        <g class="annotation-tick"><line x1="44" y1="118" x2="44" y2="122"/><line x1="124" y1="118" x2="124" y2="122"/><line x1="164" y1="118" x2="164" y2="122"/><line x1="276" y1="118" x2="276" y2="122"/></g>
+        <g font-family="JetBrains Mono, monospace" font-size="7" fill="var(--ink-3)" font-variant-numeric="tabular-nums">
+          <text x="44" y="131" text-anchor="middle">0.50</text>
+          <text x="124" y="131" text-anchor="middle">0.80</text>
+          <text x="276" y="131" text-anchor="middle">1.00</text>
+        </g>
+        <text x="160" y="146" text-anchor="middle" fill="var(--ink-2)" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="500" letter-spacing="0.8">AI&nbsp;CONFIDENCE&nbsp;&rarr;</text>
+        <!-- region labels -->
+        <text x="84" y="159" text-anchor="middle" fill="var(--signal)" font-family="JetBrains Mono, monospace" font-size="7" font-weight="600" letter-spacing="0.4">HUMAN&nbsp;REVIEW</text>
+        <text x="210" y="159" text-anchor="middle" fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="7" letter-spacing="0.4">AUTO&#8209;CLEARED</text>
+        <!-- plotted findings: left of line = flagged (signal, filled+ring), right = cleared (solid ink) -->
+        <g>
+          <circle cx="236" cy="31.5" r="4.6" fill="var(--ink-1)"/>
+          <circle cx="198" cy="66" r="4.6" fill="var(--ink-1)"/>
+          <circle cx="252" cy="59" r="4.6" fill="var(--ink-1)"/>
+          <circle cx="178" cy="100.5" r="4.6" fill="var(--ink-1)"/>
+          <circle cx="244" cy="94" r="4.6" fill="var(--ink-1)"/>
+        </g>
+        <g>
+          <circle cx="96" cy="34" r="6.4" fill="var(--signal-dim)"/><circle cx="96" cy="34" r="3.4" fill="var(--signal)"/>
+          <circle cx="80" cy="71" r="6.4" fill="var(--signal-dim)"/><circle cx="80" cy="71" r="3.4" fill="var(--signal)"/>
+          <circle cx="106" cy="103" r="6.4" fill="var(--signal-dim)"/><circle cx="106" cy="103" r="3.4" fill="var(--signal)"/>
+        </g>
+        <!-- corner registration ticks -->
+        <g class="annotation-tick"><path d="M44 24 V14 H54"/><path d="M266 14 H276 V24"/><path d="M276 108 V118 H266"/><path d="M54 118 H44 V108"/></g>
+      </svg>
+      <figcaption class="figcap">
+        <span class="l mono-label">SEVERITY &times; CONFIDENCE &middot; HUMAN-IN-THE-LOOP</span>
+        <span class="r mono-label">SCHEMATIC</span>
+      </figcaption>
+    </figure>
+    <div class="read">
+      <h3>Every finding is ranked, scored, and accountable.</h3>
+      <p>Severity says how much a finding matters; confidence says how far to trust the machine. Read together on one plane &mdash; and the model never decides alone where it is unsure.</p>
+      <div class="threshold">
+        <span class="v tabular">&lt;&nbsp;0.80</span>
+        <span class="x">routes to a human reviewer before it reaches the brief. Imagery is an input, not a verdict.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6 · DEFENSIBILITY (full-width, three columns) ============ -->
+  <section class="defband band">
+    <div class="dh">
+      <h3>Why it holds up &mdash; built for a deposition, not a dashboard</h3>
+      <span class="meta mono-label">DEFENSIBILITY</span>
+    </div>
+    <div class="defgrid">
+      <div class="defcell">
+        <div class="dt"><span class="ix">01</span><b>Chain of custody</b></div>
+        <p>Capture metadata travels with every record &mdash; who, what, when, and the conditions of flight. The provenance is part of the file.</p>
+      </div>
+      <div class="defcell">
+        <div class="dt"><span class="ix">02</span><b>Explainable outputs</b></div>
+        <p>Each finding shows its severity, its confidence, and the basis for the call &mdash; legible to an adjuster, an auditor, and a regulator alike.</p>
+      </div>
+      <div class="defcell">
+        <div class="dt"><span class="ix">03</span><b>Imagery is one input</b></div>
+        <p>Never the sole basis for a decision. The record informs the underwriter&rsquo;s judgment; it does not replace it. That is what survives scrutiny.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7 · FOUNDER (bylined credibility) ============ -->
+  <section class="founder band">
+    <div class="byline">
+      <div class="role mono-label">FOUNDER &middot; CEO</div>
+      <div class="name">Adnan Abdillahi</div>
+      <div class="prov mono-label-long">FORMER&nbsp;CYBER&nbsp;RISK<br>SR.&nbsp;CONSULTANT,&nbsp;DELOITTE</div>
+    </div>
+    <div class="creds">
+      <p>The wedge no aerial vendor has: <em>AI you can defend</em> &mdash; to a regulator, and in court. Concretely: a written <span class="mono">model-governance protocol</span> &mdash; the <span class="mono">0.80</span> confidence gate, a decision log of every human-review override, and model documentation mapped to the <span class="mono">NIST&nbsp;AI&nbsp;RMF</span>, designed and owned under the founder&rsquo;s <span class="mono">AIGP</span>&#8202;/&#8202;<span class="mono">AAIR</span> credentials &mdash; not a vendor policy page. Requests reach his inbox directly.</p>
+      <div class="credchips">
+        <span class="chip">CISSP <span class="iss">&middot; ISC2</span></span>
+        <span class="chip">CCSP <span class="iss">&middot; ISC2</span></span>
+        <span class="chip">AIGP <span class="iss">&middot; IAPP</span></span>
+        <span class="chip">AAISM <span class="iss">&middot; ISACA</span></span>
+        <span class="chip">AAIR <span class="iss">&middot; ISACA</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8 · COLOPHON / CTA ============ -->
+  <footer class="colophon">
+    <div class="factstrip">
+      <div class="fc"><span class="k mono-label">OPERATING&nbsp;AREA</span><span class="v">Mid-Atlantic</span></div>
+      <div class="fc"><span class="k mono-label">AUTHORITY</span><span class="v">FAA Part&nbsp;<span class="num">107</span></span></div>
+      <div class="fc"><span class="k mono-label">LIABILITY</span><span class="v"><span class="num">$5M</span>&nbsp;/&nbsp;op</span></div>
+      <div class="fc"><span class="k mono-label">ADD&rsquo;L&nbsp;INSURED</span><span class="v">Available</span></div>
+      <div class="fc"><span class="k mono-label">COI</span><span class="v">Pre-contract</span></div>
+      <div class="fc"><span class="k mono-label">CARRIER&nbsp;USE</span><span class="v">Baseline&nbsp;&middot;&nbsp;renewal</span></div>
+    </div>
+    <div class="cta-row">
+      <div class="cta-left">
+        <div class="lab mono-label">THE&nbsp;NEXT&nbsp;STEP</div>
+        <div class="act">Start with a single roof. <em>Request a scoped assessment.</em></div>
+      </div>
+      <div class="cta-right">
+        <div class="to">adnan@jinki.ai</div>
+        <div class="sub mono-label">FOUNDER-DIRECT &middot; NO HANDOFFS</div>
+      </div>
+    </div>
+    <div class="endbar">
+      <span class="l mono-label">JINKI &middot; CONDITION OF RECORD &middot; AERIAL ROOF &amp; PROPERTY INTELLIGENCE</span>
+      <span class="r mono-label">MID-ATLANTIC &middot; VOL.&nbsp;01</span>
+    </div>
+  </footer>
+
+</main>
+</body>
+</html>

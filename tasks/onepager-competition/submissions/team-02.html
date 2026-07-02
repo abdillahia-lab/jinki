@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<title>Jinki — Roof Condition Read · Clinical Acuity Brief</title>
+<style>
+/* ============================================================
+   JINKI ONE-PAGER — LOCKED BRAND FOUNDATION  (paste verbatim)
+   Resolved from src/styles/system.css. Do NOT edit the tokens,
+   @font-face, @page, or .page rules. Build your design in a
+   SECOND <style> block below this one.
+   RULE: use the CSS variables for ALL colors (never hardcode a
+   hex). That keeps the page on-brand (guardrail G9) and lets it
+   theme-flip (dark <-> light) cleanly.
+   ============================================================ */
+
+/* Fonts — absolute file:// paths so headless Chrome resolves them */
+@font-face{font-family:'Space Grotesk';src:url('file:///Users/aa/JInki.ai/public/fonts/SpaceGrotesk-Variable.woff2') format('woff2-variations');font-weight:300 700;font-style:normal;font-display:swap;}
+@font-face{font-family:'Inter';src:url('file:///Users/aa/JInki.ai/public/fonts/Inter-Variable.woff2') format('woff2-variations');font-weight:300 700;font-style:normal;font-display:swap;}
+@font-face{font-family:'JetBrains Mono';src:url('file:///Users/aa/JInki.ai/public/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:400 700;font-style:normal;font-display:swap;}
+
+:root{
+  color-scheme:dark;
+  --surface-0:#0A0A0A; --surface-1:#111111; --surface-2:#181818; --surface-3:#202020;
+  --ink-1:#F4F4F2; --ink-2:rgba(244,244,242,0.68); --ink-3:rgba(244,244,242,0.52);
+  --rule:rgba(244,244,242,0.12); --rule-strong:rgba(244,244,242,0.32);
+  --signal:#FF4F00; --signal-soft:#FF6B33; --signal-dim:rgba(255,79,0,0.32);
+  --btn-bg:#F4F4F2; --btn-fg:#0A0A0A;
+  /* the ONLY polychrome element — use in 2-3px strips / thin bands only */
+  --thermal-ramp:linear-gradient(90deg,#0A0A0A 0%,#2B0B5E 18%,#8B1E9B 38%,#E33F1E 62%,#FF8A00 80%,#FFD24A 92%,#FFF8E0 100%);
+  --font-display:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;
+  --font-sans:'Inter',ui-sans-serif,system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,'SF Mono',monospace;
+  --radius-panel:4px; --radius-pill:999px;
+  /* type scale — fixed (page width is fixed at 816px, so no fluid clamps) */
+  --text-label:0.8125rem; --text-caption:0.875rem; --text-body:1.0625rem;
+  --text-lede:1.375rem; --text-h3:1.6rem; --text-h2:2.3rem; --text-h1:3.2rem; --text-display:4rem;
+}
+[data-theme="light"]{
+  color-scheme:light;
+  --surface-0:#F7F6F3; --surface-1:#FFFFFF; --surface-2:#EFEDE8; --surface-3:#E7E5DF;
+  --ink-1:#121210; --ink-2:rgba(18,18,16,0.70); --ink-3:rgba(18,18,16,0.55);
+  --rule:rgba(18,18,16,0.14); --rule-strong:rgba(18,18,16,0.34);
+  --signal:#C23A00; --signal-soft:#B84A1A; --signal-dim:rgba(194,58,0,0.32);
+  --btn-bg:#121210; --btn-fg:#F7F6F3;
+}
+
+*{box-sizing:border-box;}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:var(--surface-0);color:var(--ink-1);font-family:var(--font-sans);}
+body{margin:0;font-size:var(--text-body);line-height:1.6;}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:500;color:var(--ink-1);margin:0;text-wrap:balance;letter-spacing:-0.02em;line-height:1.05;}
+p{color:var(--ink-2);margin:0;text-wrap:pretty;}
+em{font-style:normal;color:var(--signal);}
+
+/* The fixed leave-behind canvas — US Letter portrait, single page */
+@page{size:Letter;margin:0;}
+.page{
+  width:8.5in;height:11in;box-sizing:border-box;padding:16mm;
+  overflow:hidden;position:relative;background:var(--surface-0);color:var(--ink-1);
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;
+}
+
+/* Instrument voice + signature utilities (from system.css) */
+.mono-label{font-family:var(--font-mono);font-size:var(--text-label);font-weight:500;letter-spacing:0.12em;text-transform:uppercase;line-height:1.1;}
+.mono-label-long{font-family:var(--font-mono);font-size:var(--text-label);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;line-height:1.6;}
+.mono{font-family:var(--font-mono);}
+.tabular{font-variant-numeric:tabular-nums;}
+.thermal-band{background:var(--thermal-ramp);}
+.folio-rule{border-top:1px solid var(--rule-strong);}
+.signal{color:var(--signal);} .soft{color:var(--signal-soft);}
+.ink-2{color:var(--ink-2);} .ink-3{color:var(--ink-3);}
+
+/* Annotation primitives (for schematic instrument SVGs) */
+.annotation-box{fill:none;stroke:var(--signal-dim);stroke-width:1.5;}
+.annotation-tick{stroke:var(--rule-strong);stroke-width:1.5;fill:none;}
+</style>
+
+<style>
+/* ============================================================
+   TEAM 02 — RADIOLOGY / DIAGNOSTIC · LIGHT
+   "The roof gets a diagnosis, not a photo."
+   The page is composed as a clinical read — a radiology report on
+   a roof. Severity = clinical acuity. Confidence = read certainty.
+   Condition-of-record = the patient chart over time. Flat, print-
+   document. The instrument voice (mono) carries every datum, the
+   way structured fields carry a PACS report.
+   ============================================================ */
+
+.page{
+  display:flex; flex-direction:column;
+  font-feature-settings:"ss01","cv05";
+}
+
+/* ---- shared structural rhythm --------------------------------- */
+.rx-rule{border:0;border-top:1px solid var(--rule);margin:0;}
+.rx-rule--strong{border-top-color:var(--rule-strong);}
+.sec-tab{
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:var(--font-mono); font-size:0.625rem; font-weight:600;
+  letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-3);
+}
+.sec-tab .dot{width:5px;height:5px;border-radius:1px;background:var(--signal);}
+.k{font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.06em;color:var(--ink-3);text-transform:uppercase;}
+.v{font-family:var(--font-mono);font-size:0.8125rem;color:var(--ink-1);font-variant-numeric:tabular-nums;}
+
+/* ============================================================
+   1 · LETTERHEAD  — the report masthead
+   ============================================================ */
+.lh{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;}
+.lh-mark{display:flex;align-items:center;gap:11px;}
+.lh-logo{width:30px;height:30px;flex:0 0 auto;}
+.lh-name{font-family:var(--font-display);font-weight:600;font-size:1.18rem;letter-spacing:-0.01em;line-height:1;}
+.lh-sub{font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.13em;text-transform:uppercase;color:var(--ink-3);margin-top:3px;}
+.lh-meta{text-align:right;display:flex;flex-direction:column;gap:2px;}
+.lh-meta .row{display:flex;justify-content:flex-end;gap:8px;font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.04em;}
+.lh-meta .row .lab{color:var(--ink-3);text-transform:uppercase;}
+.lh-meta .row .val{color:var(--ink-1);font-variant-numeric:tabular-nums;}
+
+.thermal-hair{height:2px;width:100%;border-radius:1px;margin-top:11px;}
+
+/* ============================================================
+   2 · HERO  — the diagnosis claim + study line
+   ============================================================ */
+.hero{margin-top:9px;}
+.hero h1{
+  font-size:1.92rem;line-height:0.99;letter-spacing:-0.026em;font-weight:600;
+  max-width:21ch;
+}
+.hero h1 em{color:var(--signal);font-style:normal;}
+.hero-lede{
+  font-family:var(--font-sans);font-size:0.785rem;line-height:1.38;color:var(--ink-2);
+  max-width:96ch;margin-top:6px;
+}
+.hero-lede em{color:var(--signal);font-weight:500;}
+/* read protocol — single instrument-voice ribbon (no tall card) */
+.protocol{
+  display:flex;flex-wrap:wrap;align-items:center;gap:5px 20px;margin-top:8px;
+  padding:6px 11px;border:1px solid var(--rule);border-radius:var(--radius-panel);
+  background:var(--surface-1);
+}
+.protocol .p-item{font-family:var(--font-mono);font-size:0.72rem;color:var(--ink-1);font-variant-numeric:tabular-nums;letter-spacing:0.01em;}
+.protocol .p-item .pl{color:var(--ink-3);text-transform:uppercase;font-size:0.5625rem;letter-spacing:0.09em;margin-right:5px;}
+
+/* ============================================================
+   3 · BODY GRID  — clinical read laid out in two columns
+   ============================================================ */
+/* body region stacks the acuity device, method row, and evidence row */
+.body-stack{display:flex;flex-direction:column;flex:1 1 auto;min-height:0;gap:6px;margin-top:6px;}
+
+/* generic clinical panel */
+.panel{border:1px solid var(--rule);border-radius:var(--radius-panel);background:var(--surface-1);padding:7px 11px;}
+.panel-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;gap:10px;}
+
+/* ---- ACUITY SCALE  — the reserved hero device (full width) ---- */
+.acuity-panel{padding-bottom:7px;}
+.acuity-panel > svg{display:block;width:100%;max-width:540px;margin:0 auto;}
+.lg-disc,.lg-ring,.lg-blk{display:inline-block;width:8px;height:8px;border-radius:1px;margin-right:4px;vertical-align:middle;position:relative;top:-1px;}
+.lg-disc{background:var(--signal);}
+.lg-ring{border:1.4px solid var(--signal);background:transparent;}
+.lg-blk{width:6px;height:6px;background:var(--ink-2);margin-right:1px;}
+.lg-blk.lg-open{background:transparent;border:1px solid var(--ink-3);margin-right:4px;}
+
+/* ---- METHOD ROW — Technique as 3 cards ----------------------- */
+.method-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:10px;}
+.method-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.m-card{border:1px solid var(--rule);border-radius:var(--radius-panel);background:var(--surface-1);padding:7px 10px;}
+.m-top{display:flex;align-items:center;gap:8px;margin-bottom:3px;}
+.tech-num{
+  font-family:var(--font-mono);font-size:0.585rem;font-weight:600;letter-spacing:0.04em;
+  color:var(--signal);border:1px solid var(--signal-dim);border-radius:2px;
+  width:26px;height:16px;display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+}
+.m-title{font-family:var(--font-display);font-weight:600;font-size:0.92rem;letter-spacing:-0.01em;color:var(--ink-1);}
+.m-body{font-family:var(--font-sans);font-size:0.71rem;line-height:1.32;color:var(--ink-2);}
+.m-body b{color:var(--ink-1);font-weight:600;}
+
+/* ---- EVIDENCE ROW — history | chart ------------------------- */
+.evidence{display:grid;grid-template-columns:1.12fr 1fr;gap:8px;align-items:stretch;}
+.history{display:flex;flex-direction:column;}
+.history p{font-family:var(--font-sans);font-size:0.76rem;line-height:1.4;color:var(--ink-2);}
+.history p + p{margin-top:5px;}
+.history em{color:var(--signal);font-weight:500;}
+.chart-panel{display:flex;flex-direction:column;}
+.chart-panel svg{margin-top:1px;}
+
+/* ---- IMPRESSION (defensibility) — panel in evidence row ------ */
+.impression{background:var(--surface-2);border-color:var(--rule-strong);display:flex;flex-direction:column;}
+.impression .imp-lede{
+  font-family:var(--font-display);font-weight:500;font-size:0.92rem;line-height:1.08;
+  letter-spacing:-0.015em;color:var(--ink-1);margin:0 0 6px;
+}
+.impression .imp-lede em{color:var(--signal);font-style:normal;}
+.imp-points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px;}
+.imp-points li{position:relative;padding-left:14px;font-family:var(--font-sans);font-size:0.715rem;line-height:1.3;color:var(--ink-2);}
+.imp-points li::before{content:"";position:absolute;left:0;top:5px;width:6px;height:6px;border:1px solid var(--signal);border-radius:1px;}
+.imp-points li b{color:var(--ink-1);font-weight:600;}
+
+/* ============================================================
+   4 · ATTENDING (founder block) + CTA  — the signature line
+   ============================================================ */
+.attest{
+  display:grid;grid-template-columns:1.5fr 1fr;gap:0;margin-top:6px;
+  border:1px solid var(--rule-strong);border-radius:var(--radius-panel);
+  background:var(--surface-1);overflow:hidden;
+}
+/* verifiable standing facts — full-width footer row inside the attestation */
+.attest-cov{
+  grid-column:1 / -1;display:flex;align-items:center;flex-wrap:wrap;gap:5px 16px;
+  padding:6px 13px;border-top:1px solid var(--rule);background:var(--surface-2);
+}
+.attest-cov .cov-tag{
+  font-family:var(--font-mono);font-size:0.5625rem;font-weight:600;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--ink-3);padding-right:14px;border-right:1px solid var(--rule);
+}
+.attest-cov .cov-item{font-family:var(--font-mono);font-size:0.685rem;color:var(--ink-1);font-variant-numeric:tabular-nums;letter-spacing:0.01em;}
+.attest-cov .cov-item .cl{color:var(--ink-3);text-transform:uppercase;font-size:0.5625rem;letter-spacing:0.06em;margin-right:4px;}
+.attest-l{padding:9px 12px;border-right:1px solid var(--rule);}
+.attest-name{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
+.attest-name .nm{font-family:var(--font-display);font-weight:600;font-size:0.98rem;letter-spacing:-0.01em;}
+.attest-name .ttl{font-family:var(--font-mono);font-size:0.585rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-3);}
+.attest-prev{font-family:var(--font-sans);font-size:0.71rem;line-height:1.34;color:var(--ink-2);margin-top:4px;max-width:56ch;}
+.attest-prev b{color:var(--ink-1);font-weight:600;}
+.creds{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.cred{
+  font-family:var(--font-mono);font-size:0.56rem;font-weight:600;letter-spacing:0.02em;
+  border:1px solid var(--rule-strong);border-radius:var(--radius-pill);
+  padding:2px 6px;color:var(--ink-1);white-space:nowrap;
+}
+.cred .iss{color:var(--ink-3);font-weight:500;}
+.attest-r{padding:9px 12px;display:flex;flex-direction:column;justify-content:space-between;gap:6px;background:var(--surface-2);}
+.cta-k{font-family:var(--font-mono);font-size:0.5625rem;letter-spacing:0.13em;text-transform:uppercase;color:var(--ink-3);}
+.cta-line{font-family:var(--font-display);font-weight:600;font-size:1.08rem;line-height:1.02;letter-spacing:-0.02em;color:var(--ink-1);margin-top:3px;}
+.cta-line em{color:var(--signal);font-style:normal;}
+.cta-contact{display:flex;flex-direction:column;gap:2px;}
+.cta-contact .ct{font-family:var(--font-mono);font-size:0.69rem;color:var(--ink-1);letter-spacing:0.02em;}
+.cta-contact .ct .lab{color:var(--ink-3);}
+.cta-direct{font-family:var(--font-mono);font-size:0.5625rem;letter-spacing:0.04em;color:var(--ink-3);margin-top:4px;text-transform:uppercase;line-height:1.38;}
+
+/* ============================================================
+   5 · FOLIO  — the document footer
+   ============================================================ */
+.folio{display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding-top:6px;}
+.folio span{font-family:var(--font-mono);font-size:0.5625rem;letter-spacing:0.08em;color:var(--ink-3);text-transform:uppercase;}
+.folio .mid{display:flex;gap:6px;align-items:center;}
+.folio .mid .pip{width:3px;height:3px;border-radius:50%;background:var(--rule-strong);}
+
+/* SVG schematic shared text styling */
+.dgm-t{font-family:var(--font-mono);fill:var(--ink-3);}
+.dgm-t-ink{font-family:var(--font-mono);fill:var(--ink-1);}
+.dgm-t-sig{font-family:var(--font-mono);fill:var(--signal);}
+.fig-cap{display:flex;align-items:center;justify-content:space-between;margin-top:6px;}
+.fig-cap .c-l{font-family:var(--font-mono);font-size:0.5625rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);}
+.fig-cap .c-r{font-family:var(--font-mono);font-size:0.5625rem;letter-spacing:0.1em;color:var(--ink-3);border:1px solid var(--rule);border-radius:2px;padding:1.5px 6px;}
+</style>
+</head>
+<body>
+<main class="page">
+
+  <!-- ============================================================
+       1 · LETTERHEAD
+       ============================================================ -->
+  <header class="lh">
+    <div class="lh-mark">
+      <svg class="lh-logo" viewBox="0 0 40 40" role="img" aria-label="Jinki mark">
+        <rect x="1.5" y="1.5" width="37" height="37" rx="4" fill="none" stroke="var(--ink-1)" stroke-width="1.5"/>
+        <!-- schematic aperture / read-target -->
+        <circle cx="20" cy="20" r="11" fill="none" stroke="var(--ink-1)" stroke-width="1.4"/>
+        <path d="M20 5.5 V12 M20 28 V34.5 M5.5 20 H12 M28 20 H34.5" stroke="var(--ink-1)" stroke-width="1.4"/>
+        <circle cx="20" cy="20" r="3.4" fill="var(--signal)"/>
+      </svg>
+      <div>
+        <div class="lh-name">Jinki</div>
+        <div class="lh-sub">Roof &amp; Property-Condition Intelligence</div>
+      </div>
+    </div>
+    <div class="lh-meta">
+      <div class="row"><span class="lab">Document</span><span class="val">Roof Condition Read · Specimen</span></div>
+      <div class="row"><span class="lab">Modality</span><span class="val">Aerial Thermal + Visual</span></div>
+      <div class="row"><span class="lab">For</span><span class="val">P&amp;C Underwriting / Claims</span></div>
+    </div>
+  </header>
+  <div class="thermal-hair thermal-band" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       2 · HERO
+       ============================================================ -->
+  <section class="hero">
+    <h1>The roof gets a <em>diagnosis</em>, not a photo.</h1>
+    <p class="hero-lede">
+      Roof condition drives property loss and claims disputes — yet it is read late, inconsistently,
+      or not defensibly. Jinki reads it like radiology reads a film: aerial thermal + visual,
+      AI-graded for clinical acuity, recorded as a geolocated, time-stamped
+      <em>condition-of-record</em> that holds up to a regulator and in court.
+    </p>
+    <div class="protocol" aria-label="Read protocol">
+      <span class="p-item"><span class="pl">Acuity</span> SEV-1 / 2 / 3</span>
+      <span class="p-item"><span class="pl">Read certainty</span> Conf 0.00–1.00</span>
+      <span class="p-item"><span class="pl">Human-read line</span> <span class="signal">&lt; 0.80</span></span>
+      <span class="p-item"><span class="pl">Report target</span> 48-hour</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BODY STACK — acuity device · method · evidence (flex-fills page)
+       ============================================================ -->
+  <div class="body-stack">
+
+  <!-- 3 · CLINICAL ACUITY SCALE — the reserved hero device (full width) -->
+  <section class="panel acuity-panel">
+    <div class="panel-h">
+      <span class="sec-tab"><span class="dot"></span>01 · Clinical Acuity Scale</span>
+      <span class="mono-label" style="font-size:0.5625rem;color:var(--ink-3);">SEVERITY GRADE × READ CERTAINTY · THE READ, NOT THE PICTURE</span>
+    </div>
+
+    <svg viewBox="0 0 700 140" width="100%" role="img"
+      aria-label="Clinical acuity scale: three severity tiers — SEV-1 immediate, SEV-2 expedite, SEV-3 monitor — each plotted on a read-certainty axis from zero to one, with a human-review line at 0.80. Reads right of the line auto-clear; reads left of it route to a human.">
+      <!-- geometry: vertical ACUITY rail far left; gutter x[34..108] = SEV tier label
+           + acuity-weight blocks; plot field x[120..672] maps confidence 0.00..1.00.
+           x(c) = 120 + c*552  →  0.80 line at x=561.6. lanes y=38/72/106; axis y=122. -->
+
+      <!-- vertical ACUITY rail -->
+      <line x1="20" y1="24" x2="20" y2="110" stroke="var(--rule-strong)" stroke-width="1"/>
+      <path d="M20 24 l-3.2 5.2 h6.4 z" fill="var(--ink-3)"/>
+      <text x="14" y="110" class="dgm-t" font-size="8" letter-spacing="1.5" transform="rotate(-90 14 110)">ACUITY</text>
+
+      <!-- read-certainty axis (horizontal) -->
+      <line x1="120" y1="122" x2="672" y2="122" stroke="var(--rule-strong)" stroke-width="1"/>
+      <g class="dgm-t" font-size="8.5" letter-spacing="0.4">
+        <text x="120" y="135">0.00</text>
+        <text x="396" y="135" text-anchor="middle">0.50</text>
+        <text x="561.6" y="135" text-anchor="middle">0.80</text>
+        <text x="672" y="135" text-anchor="end">1.00</text>
+      </g>
+      <g stroke="var(--rule-strong)" stroke-width="1">
+        <line x1="120" y1="122" x2="120" y2="127"/><line x1="396" y1="122" x2="396" y2="127"/><line x1="561.6" y1="122" x2="561.6" y2="127"/><line x1="672" y1="122" x2="672" y2="127"/>
+      </g>
+
+      <!-- 0.80 human-read threshold (vertical) -->
+      <line x1="561.6" y1="20" x2="561.6" y2="122" stroke="var(--signal)" stroke-width="1.2" stroke-dasharray="3 3"/>
+      <text x="561.6" y="15" text-anchor="middle" class="dgm-t-sig" font-size="8.5" letter-spacing="0.4">0.80 HUMAN-READ LINE</text>
+      <!-- auto-clear field right of the line: hairline ticks only (no fill) -->
+      <g stroke="var(--rule)" stroke-width="1">
+        <line x1="585" y1="27" x2="585" y2="117"/><line x1="608" y1="27" x2="608" y2="117"/><line x1="631" y1="27" x2="631" y2="117"/><line x1="654" y1="27" x2="654" y2="117"/>
+      </g>
+      <!-- LANE: SEV-1 (top · immediate · highest acuity) -->
+      <g>
+        <g><rect x="34" y="31" width="6" height="6" fill="var(--signal)"/><rect x="42" y="31" width="6" height="6" fill="var(--signal)"/><rect x="50" y="31" width="6" height="6" fill="var(--signal)"/></g>
+        <text x="34" y="51" class="dgm-t-sig" font-size="13" font-weight="700" letter-spacing="0.3">SEV-1</text>
+        <text x="80" y="51" class="dgm-t" font-size="8" letter-spacing="0.5">IMMEDIATE</text>
+        <line x1="120" y1="38" x2="672" y2="38" stroke="var(--rule)" stroke-width="1"/>
+        <circle cx="649" cy="38" r="5" fill="var(--signal)"/>
+        <text x="649" y="28" text-anchor="middle" class="dgm-t-ink" font-size="8.5">0.94</text>
+      </g>
+
+      <!-- LANE: SEV-2 (middle · expedite) -->
+      <g>
+        <g><rect x="34" y="65" width="6" height="6" fill="var(--ink-1)"/><rect x="42" y="65" width="6" height="6" fill="var(--ink-1)"/><rect x="50" y="65" width="6" height="6" fill="none" stroke="var(--ink-1)" stroke-width="1"/></g>
+        <text x="34" y="85" class="dgm-t-ink" font-size="13" font-weight="700" letter-spacing="0.3">SEV-2</text>
+        <text x="80" y="85" class="dgm-t" font-size="8" letter-spacing="0.5">EXPEDITE</text>
+        <line x1="120" y1="72" x2="672" y2="72" stroke="var(--rule)" stroke-width="1"/>
+        <circle cx="589.4" cy="72" r="5" fill="var(--ink-1)"/>
+        <text x="589.4" y="62" text-anchor="middle" class="dgm-t-ink" font-size="8.5">0.83</text>
+      </g>
+
+      <!-- LANE: SEV-3 (lower · monitor) -->
+      <g>
+        <g><rect x="34" y="99" width="6" height="6" fill="var(--ink-3)"/><rect x="42" y="99" width="6" height="6" fill="none" stroke="var(--ink-3)" stroke-width="1"/><rect x="50" y="99" width="6" height="6" fill="none" stroke="var(--ink-3)" stroke-width="1"/></g>
+        <text x="34" y="119" class="dgm-t" font-size="13" font-weight="700" letter-spacing="0.3">SEV-3</text>
+        <text x="80" y="119" class="dgm-t" font-size="8" letter-spacing="0.5">MONITOR</text>
+        <line x1="120" y1="106" x2="672" y2="106" stroke="var(--rule)" stroke-width="1"/>
+        <circle cx="512" cy="106" r="5.4" fill="none" stroke="var(--signal)" stroke-width="1.5"/>
+        <circle cx="512" cy="106" r="2" fill="var(--signal)"/>
+        <text x="512" y="96" text-anchor="middle" class="dgm-t-sig" font-size="8.5">0.71 ↦ review</text>
+      </g>
+    </svg>
+
+    <div class="fig-cap">
+      <span class="c-l"><span class="lg-disc"></span>Cleared read (auto-clear)&nbsp;&nbsp;&nbsp;<span class="lg-ring"></span>Below 0.80 → human-in-the-loop&nbsp;&nbsp;&nbsp;<span class="lg-blk"></span><span class="lg-blk lg-open"></span>Acuity weight</span>
+      <span class="c-r">SCHEMATIC</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       4 · METHOD ROW — Technique (Capture / Analyze / Record)
+       ============================================================ -->
+  <section class="method">
+    <div class="method-h">
+      <span class="sec-tab"><span class="dot"></span>02 · Technique</span>
+      <span class="mono-label" style="font-size:0.5625rem;color:var(--ink-3);">INSTRUMENT-GRADE · HUMAN-IN-THE-LOOP</span>
+    </div>
+    <div class="method-grid">
+      <div class="m-card">
+        <div class="m-top"><span class="tech-num">CAP</span><span class="m-title">Capture</span></div>
+        <p class="m-body">Aerial thermal + visual, flown <b>bound by solar geometry</b> — when contrast is real, not by the calendar.</p>
+      </div>
+      <div class="m-card">
+        <div class="m-top"><span class="tech-num">ANL</span><span class="m-title">Analyze</span></div>
+        <p class="m-body">AI grades anomalies <b>SEV-1/2/3</b> with confidence; reads <b>below 0.80 route to human review</b>.</p>
+      </div>
+      <div class="m-card">
+        <div class="m-top"><span class="tech-num">REC</span><span class="m-title">Record</span></div>
+        <p class="m-body">A geolocated, time-stamped record; re-reads track <b>degradation velocity</b> — a living file.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       5 · EVIDENCE ROW — Chart over time  |  Impression (defensibility)
+       ============================================================ -->
+  <div class="evidence">
+
+    <!-- DEGRADATION VELOCITY chart — condition-of-record over time -->
+    <section class="panel chart-panel">
+      <div class="panel-h">
+        <span class="sec-tab"><span class="dot"></span>03 · Chart Over Time</span>
+        <span class="mono-label" style="font-size:0.5625rem;color:var(--ink-3);">DEGRADATION VELOCITY</span>
+      </div>
+      <svg viewBox="0 0 344 82" width="100%" role="img"
+        aria-label="Degradation-velocity chart: a baseline read, then a rising thermal trend across re-reads, ending on a SEV-2 finding.">
+        <g stroke="var(--rule)" stroke-width="1">
+          <line x1="30" y1="14" x2="338" y2="14"/><line x1="30" y1="39" x2="338" y2="39"/><line x1="30" y1="64" x2="338" y2="64"/>
+        </g>
+        <line x1="30" y1="64" x2="338" y2="64" stroke="var(--rule-strong)" stroke-width="1" stroke-dasharray="3 5"/>
+        <g class="dgm-t" font-size="7" letter-spacing="0.4">
+          <text x="30" y="78">BASELINE</text>
+          <text x="184" y="78" text-anchor="middle">RE-READ T+90</text>
+          <text x="338" y="78" text-anchor="end">T+180</text>
+        </g>
+        <path d="M 32 64 C 110 62, 152 56, 200 47 S 304 26, 336 14"
+          fill="none" stroke="var(--signal)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="32" cy="64" r="2.6" fill="var(--ink-3)"/>
+        <circle cx="200" cy="47" r="2.4" fill="var(--ink-1)"/>
+        <circle cx="336" cy="14" r="4.4" fill="none" stroke="var(--signal)" stroke-width="1.4"/>
+        <circle cx="336" cy="14" r="1.7" fill="var(--signal)"/>
+        <text x="323" y="11" text-anchor="end" class="dgm-t-sig" font-size="7.5" letter-spacing="0.3">ΔT RISING · SEV-2</text>
+      </svg>
+      <div class="fig-cap">
+        <span class="c-l">Same roof, re-read on cadence — a living file, not a snapshot</span>
+        <span class="c-r">ILLUSTRATIVE</span>
+      </div>
+    </section>
+
+    <!-- IMPRESSION — defensibility (the underwriter's wedge) -->
+    <section class="panel impression">
+      <div class="panel-h">
+        <span class="sec-tab"><span class="dot"></span>04 · Impression · Defensibility</span>
+      </div>
+      <p class="imp-lede">An AI read you can <em>defend to a regulator and in court</em>.</p>
+      <ul class="imp-points">
+        <li><b>Chain-of-custody + capture metadata</b> on every read — provenance, not assertion.</li>
+        <li><b>Imagery is one input</b>, never the sole basis — explainable outputs that augment the underwriter, not replace them.</li>
+      </ul>
+    </section>
+
+  </div><!-- /evidence -->
+
+  </div><!-- /body-stack -->
+
+  <!-- ============================================================
+       4 · ATTENDING (founder) + CTA + standing coverage
+       ============================================================ -->
+  <section class="attest">
+    <div class="attest-l">
+      <div class="attest-name">
+        <span class="nm">Adnan Abdillahi</span>
+        <span class="ttl">Founder / CEO · the reading physician</span>
+      </div>
+      <p class="attest-prev">
+        Former <b>cyber risk senior consultant at Deloitte</b>. The wedge no aerial vendor has —
+        <b>AI you can govern</b>.
+      </p>
+      <div class="creds" aria-label="Founder credentials">
+        <span class="cred">CISSP <span class="iss">· ISC2</span></span>
+        <span class="cred">CCSP <span class="iss">· ISC2</span></span>
+        <span class="cred">AIGP <span class="iss">· IAPP</span></span>
+        <span class="cred">AAISM <span class="iss">· ISACA</span></span>
+        <span class="cred">AAIR <span class="iss">· ISACA</span></span>
+      </div>
+    </div>
+    <div class="attest-r">
+      <div>
+        <div class="cta-k">Next Step</div>
+        <div class="cta-line">Start with a <em>single roof</em>.</div>
+      </div>
+      <div class="cta-contact">
+        <span class="ct"><span class="lab">Direct ·</span> adnan@jinki.ai</span>
+        <span class="ct"><span class="lab">Scoped read ·</span> jinki.ai</span>
+        <span class="cta-direct">Founder-direct — requests reach his inbox. No SDRs, no handoffs.</span>
+      </div>
+    </div>
+    <!-- verifiable standing facts — folded into the attestation footer -->
+    <div class="attest-cov" aria-label="Verifiable standing facts">
+      <span class="cov-tag">Standing Coverage · Verifiable</span>
+      <span class="cov-item"><span class="cl">Area</span> Mid-Atlantic</span>
+      <span class="cov-item"><span class="cl">Authority</span> FAA Part 107</span>
+      <span class="cov-item"><span class="cl">Liability / Op</span> <span class="signal">$5M · addl-insured</span></span>
+      <span class="cov-item"><span class="cl">COI</span> Pre-contract</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       5 · FOLIO
+       ============================================================ -->
+  <footer class="folio">
+    <span>Jinki · Roof &amp; Property-Condition Intelligence</span>
+    <span class="mid">
+      <span>Condition-of-Record</span><span class="pip"></span>
+      <span>Human-in-the-Loop</span><span class="pip"></span>
+      <span>Mid-Atlantic</span>
+    </span>
+    <span>Specimen — not a completed scan</span>
+  </footer>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jinki — Condition of Record</title>
+<style>
+/* ============================================================
+   JINKI ONE-PAGER — LOCKED BRAND FOUNDATION  (paste verbatim)
+   Resolved from src/styles/system.css. Do NOT edit the tokens,
+   @font-face, @page, or .page rules. Build your design in a
+   SECOND <style> block below this one.
+   RULE: use the CSS variables for ALL colors (never hardcode a
+   hex). That keeps the page on-brand (guardrail G9) and lets it
+   theme-flip (dark <-> light) cleanly.
+   ============================================================ */
+
+/* Fonts — absolute file:// paths so headless Chrome resolves them */
+@font-face{font-family:'Space Grotesk';src:url('file:///Users/aa/JInki.ai/public/fonts/SpaceGrotesk-Variable.woff2') format('woff2-variations');font-weight:300 700;font-style:normal;font-display:swap;}
+@font-face{font-family:'Inter';src:url('file:///Users/aa/JInki.ai/public/fonts/Inter-Variable.woff2') format('woff2-variations');font-weight:300 700;font-style:normal;font-display:swap;}
+@font-face{font-family:'JetBrains Mono';src:url('file:///Users/aa/JInki.ai/public/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:400 700;font-style:normal;font-display:swap;}
+
+:root{
+  color-scheme:dark;
+  --surface-0:#0A0A0A; --surface-1:#111111; --surface-2:#181818; --surface-3:#202020;
+  --ink-1:#F4F4F2; --ink-2:rgba(244,244,242,0.68); --ink-3:rgba(244,244,242,0.52);
+  --rule:rgba(244,244,242,0.12); --rule-strong:rgba(244,244,242,0.32);
+  --signal:#FF4F00; --signal-soft:#FF6B33; --signal-dim:rgba(255,79,0,0.32);
+  --btn-bg:#F4F4F2; --btn-fg:#0A0A0A;
+  /* the ONLY polychrome element — use in 2-3px strips / thin bands only */
+  --thermal-ramp:linear-gradient(90deg,#0A0A0A 0%,#2B0B5E 18%,#8B1E9B 38%,#E33F1E 62%,#FF8A00 80%,#FFD24A 92%,#FFF8E0 100%);
+  --font-display:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;
+  --font-sans:'Inter',ui-sans-serif,system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,'SF Mono',monospace;
+  --radius-panel:4px; --radius-pill:999px;
+  /* type scale — fixed (page width is fixed at 816px, so no fluid clamps) */
+  --text-label:0.8125rem; --text-caption:0.875rem; --text-body:1.0625rem;
+  --text-lede:1.375rem; --text-h3:1.6rem; --text-h2:2.3rem; --text-h1:3.2rem; --text-display:4rem;
+}
+[data-theme="light"]{
+  color-scheme:light;
+  --surface-0:#F7F6F3; --surface-1:#FFFFFF; --surface-2:#EFEDE8; --surface-3:#E7E5DF;
+  --ink-1:#121210; --ink-2:rgba(18,18,16,0.70); --ink-3:rgba(18,18,16,0.55);
+  --rule:rgba(18,18,16,0.14); --rule-strong:rgba(18,18,16,0.34);
+  --signal:#C23A00; --signal-soft:#B84A1A; --signal-dim:rgba(194,58,0,0.32);
+  --btn-bg:#121210; --btn-fg:#F7F6F3;
+}
+
+*{box-sizing:border-box;}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:var(--surface-0);color:var(--ink-1);font-family:var(--font-sans);}
+body{margin:0;font-size:var(--text-body);line-height:1.6;}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:500;color:var(--ink-1);margin:0;text-wrap:balance;letter-spacing:-0.02em;line-height:1.05;}
+p{color:var(--ink-2);margin:0;text-wrap:pretty;}
+em{font-style:normal;color:var(--signal);}
+
+/* The fixed leave-behind canvas — US Letter portrait, single page */
+@page{size:Letter;margin:0;}
+.page{
+  width:8.5in;height:11in;box-sizing:border-box;padding:16mm;
+  overflow:hidden;position:relative;background:var(--surface-0);color:var(--ink-1);
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;
+}
+
+/* Instrument voice + signature utilities (from system.css) */
+.mono-label{font-family:var(--font-mono);font-size:var(--text-label);font-weight:500;letter-spacing:0.12em;text-transform:uppercase;line-height:1.1;}
+.mono-label-long{font-family:var(--font-mono);font-size:var(--text-label);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;line-height:1.6;}
+.mono{font-family:var(--font-mono);}
+.tabular{font-variant-numeric:tabular-nums;}
+.thermal-band{background:var(--thermal-ramp);}
+.folio-rule{border-top:1px solid var(--rule-strong);}
+.signal{color:var(--signal);} .soft{color:var(--signal-soft);}
+.ink-2{color:var(--ink-2);} .ink-3{color:var(--ink-3);}
+
+/* Annotation primitives (for schematic instrument SVGs) */
+.annotation-box{fill:none;stroke:var(--signal-dim);stroke-width:1.5;}
+.annotation-tick{stroke:var(--rule-strong);stroke-width:1.5;fill:none;}
+</style>
+
+<style>
+/* ============================================================
+   TEAM 06 — RESTRAINED LUXURY · DARK · SINGLE-ACCENT VOID
+   Quiet-luxury enterprise: deep monochrome field, surgical
+   accent, generous negative space. The void is the design.
+   Vertical rhythm on one strong column; hairlines do the
+   structural work; ONE signal element carries the tension.
+   ============================================================ */
+
+.page{
+  display:flex;
+  flex-direction:column;
+  padding:14mm 15mm 12mm;
+  font-feature-settings:"ss01","cv05";
+}
+
+/* one quiet vertical seam down the composition — instrument margin */
+.page::before{
+  content:"";
+  position:absolute;
+  top:14mm; bottom:12mm; left:15mm;
+  width:1px;
+  background:var(--rule);
+}
+
+/* everything sits to the right of the seam */
+.frame{ padding-left:8mm; display:flex; flex-direction:column; height:100%; }
+
+/* ---- MASTHEAD ------------------------------------------------ */
+.masthead{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:16px;
+}
+.wordmark{
+  font-family:var(--font-display);
+  font-weight:500;
+  font-size:1.0rem;
+  letter-spacing:0.42em;
+  text-transform:uppercase;
+  color:var(--ink-1);
+  text-indent:0.42em;
+}
+.masthead-meta{
+  display:flex;
+  gap:20px;
+  color:var(--ink-3);
+}
+.masthead-meta .pin{ color:var(--signal); }
+
+.rule-row{
+  display:flex;
+  align-items:center;
+  gap:0;
+  margin-top:7px;
+}
+.rule-row .hair{ flex:1; height:1px; background:var(--rule-strong); }
+/* the single seam node where the accent first appears */
+.rule-row .node{
+  width:5px; height:5px; flex:0 0 auto;
+  background:var(--signal);
+  transform:translateX(-2px);
+}
+
+/* ---- HERO VOID ---------------------------------------------- */
+.hero{
+  padding-top:4mm;
+  padding-bottom:3mm;
+  position:relative;
+}
+.kicker{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  color:var(--ink-3);
+  margin-bottom:4mm;
+}
+.kicker .tk{ width:18px; height:1px; background:var(--signal); flex:0 0 auto; }
+
+.headline{
+  font-size:2.55rem;
+  line-height:1.03;
+  letter-spacing:-0.03em;
+  font-weight:500;
+  max-width:16ch;
+  color:var(--ink-1);
+}
+/* the SINGLE signal element of the void: the closing mark only */
+.headline .mark{ color:var(--signal); }
+
+.lede{
+  font-family:var(--font-sans);
+  font-size:1.1rem;
+  line-height:1.38;
+  color:var(--ink-2);
+  max-width:50ch;
+  margin-top:3.5mm;
+  font-weight:400;
+}
+.lede strong{ color:var(--ink-1); font-weight:500; }
+
+/* the void's instrument hairline — a single confident horizontal
+   axis crossing the dark field, terminating in one accent reading */
+.void-axis{
+  margin-top:4mm;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:end;
+  gap:12px;
+}
+.void-axis .line{
+  position:relative;
+  height:1px;
+  background:linear-gradient(90deg,var(--rule) 0%,var(--rule-strong) 70%,var(--signal) 100%);
+}
+.void-axis .line::after{
+  content:"";
+  position:absolute;
+  right:0; top:-3px;
+  width:7px; height:7px;
+  background:var(--signal);
+}
+.readout{
+  text-align:right;
+  line-height:1;
+  transform:translateY(7px);
+}
+.readout .figure{
+  font-family:var(--font-mono);
+  font-variant-numeric:tabular-nums;
+  font-weight:500;
+  font-size:2.05rem;
+  letter-spacing:-0.02em;
+  color:var(--signal);
+  display:block;
+}
+.readout .figure-cap{
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin-top:6px;
+  display:block;
+}
+
+/* ---- METHOD (typographic schematic, no heavy SVG) ----------- */
+.method{
+  border-top:1px solid var(--rule);
+  padding-top:3.5mm;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
+}
+.step{ padding-right:6mm; position:relative; }
+.step + .step{ padding-left:6mm; border-left:1px solid var(--rule); }
+.step .idx{
+  display:flex; align-items:center; gap:8px;
+  color:var(--ink-3);
+  margin-bottom:6px;
+}
+.step .idx .n{ color:var(--signal); }
+.step .idx .seam{ flex:1; height:1px; background:var(--rule); }
+.step h3{
+  font-family:var(--font-display);
+  font-size:1.0rem;
+  font-weight:500;
+  letter-spacing:-0.01em;
+  color:var(--ink-1);
+  margin-bottom:4px;
+  line-height:1.12;
+}
+.step p{
+  font-size:0.8rem;
+  line-height:1.36;
+  color:var(--ink-2);
+}
+.step p b{ color:var(--ink-1); font-weight:500; }
+
+/* ---- GOVERNANCE PANEL (the wedge + the one honest SVG) ------ */
+.governance{
+  margin-top:3.5mm;
+  display:grid;
+  grid-template-columns:1.04fr 1fr;
+  gap:8mm;
+  align-items:stretch;
+}
+.gov-copy{ display:flex; flex-direction:column; }
+.gov-copy .eyebrow{
+  color:var(--signal);
+  margin-bottom:7px;
+}
+.gov-copy h2{
+  font-family:var(--font-display);
+  font-size:1.16rem;
+  line-height:1.12;
+  letter-spacing:-0.02em;
+  font-weight:500;
+  color:var(--ink-1);
+  max-width:22ch;
+}
+.gov-copy p{
+  font-size:0.78rem;
+  line-height:1.4;
+  color:var(--ink-2);
+  margin-top:6px;
+  max-width:44ch;
+}
+.gov-copy p em{ color:var(--ink-1); font-weight:500; }
+.gov-facts{
+  margin-top:auto;
+  padding-top:7px;
+  border-top:1px solid var(--rule);
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4px 14px;
+}
+.fact .v{
+  font-family:var(--font-mono);
+  font-variant-numeric:tabular-nums;
+  font-weight:500;
+  font-size:0.96rem;
+  color:var(--ink-1);
+  letter-spacing:-0.01em;
+}
+.fact .v .u{ color:var(--signal); }
+.fact .k{
+  font-family:var(--font-mono);
+  font-size:0.62rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin-top:2px;
+}
+
+/* the schematic frame */
+.chart-wrap{
+  display:flex;
+  flex-direction:column;
+}
+.chart-frame{
+  flex:1;
+  border:1px solid var(--rule);
+  border-radius:var(--radius-panel);
+  padding:7px 10px 6px;
+  display:flex;
+  flex-direction:column;
+}
+.chart-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-bottom:3px;
+}
+.chart-head .t{ color:var(--ink-2); }
+.chart-head .s{ color:var(--ink-3); }
+.chart-frame svg{ display:block; width:100%; height:auto; margin-top:auto; margin-bottom:auto; }
+.chart-caption{
+  color:var(--ink-3);
+  margin-top:5px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.chart-caption .dot{ width:5px;height:5px;background:var(--signal);flex:0 0 auto; }
+
+/* ---- CREDIBILITY / FOUNDER --------------------------------- */
+.founder{
+  margin-top:3.5mm;
+  border-top:1px solid var(--rule-strong);
+  padding-top:3.5mm;
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:8mm;
+  align-items:center;
+}
+.founder-id .name{
+  font-family:var(--font-display);
+  font-size:1.13rem;
+  font-weight:500;
+  letter-spacing:-0.01em;
+  color:var(--ink-1);
+}
+.founder-id .role{
+  font-family:var(--font-mono);
+  font-size:0.66rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin-top:5px;
+}
+.founder-creds{ border-left:1px solid var(--rule); padding-left:8mm; }
+.founder-creds .lead{
+  font-size:0.82rem;
+  line-height:1.38;
+  color:var(--ink-2);
+}
+.founder-creds .lead b{ color:var(--ink-1); font-weight:500; }
+.cred-row{
+  margin-top:7px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px 7px;
+}
+.cred{
+  font-family:var(--font-mono);
+  font-size:0.66rem;
+  font-weight:500;
+  letter-spacing:0.05em;
+  color:var(--ink-1);
+  border:1px solid var(--rule-strong);
+  border-radius:var(--radius-pill);
+  padding:2.5px 9px;
+  white-space:nowrap;
+}
+.cred .iss{ color:var(--ink-3); }
+
+/* ---- FOOTER / CTA ------------------------------------------ */
+.foot{ margin-top:auto; padding-top:2.5mm; }
+.foot .thermal-line{
+  height:2px;
+  border-radius:2px;
+  margin-bottom:3mm;
+}
+.cta-row{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:16px;
+}
+.cta-block .cta-label{
+  color:var(--ink-3);
+  margin-bottom:6px;
+}
+.cta-block .cta-line{
+  font-family:var(--font-display);
+  font-size:1.36rem;
+  font-weight:500;
+  letter-spacing:-0.02em;
+  color:var(--ink-1);
+  line-height:1.08;
+}
+.cta-block .cta-line em{ color:var(--signal); }
+.cta-contact{
+  text-align:right;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+.cta-contact a, .cta-contact span{
+  font-family:var(--font-mono);
+  font-size:0.76rem;
+  letter-spacing:0.04em;
+  color:var(--ink-2);
+  text-decoration:none;
+}
+.cta-contact .addr{ color:var(--signal); }
+.cta-contact .fine{
+  font-size:0.6rem;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  margin-top:2px;
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="frame">
+
+    <!-- ============ MASTHEAD ============ -->
+    <header class="masthead">
+      <div class="wordmark">Jinki</div>
+      <div class="masthead-meta mono-label">
+        <span>Aerial Roof Intelligence</span>
+        <span><span class="pin">&#9670;</span>&nbsp;Mid-Atlantic</span>
+      </div>
+    </header>
+    <div class="rule-row">
+      <span class="node"></span>
+      <span class="hair"></span>
+    </div>
+
+    <!-- ============ HERO — SINGLE-ACCENT VOID ============ -->
+    <section class="hero">
+      <div class="kicker mono-label">
+        <span class="tk"></span>
+        <span>Condition&nbsp;of&nbsp;Record&nbsp;&middot;&nbsp;For P&amp;C Underwriting &amp; Claims</span>
+      </div>
+
+      <h1 class="headline">A roof&rsquo;s condition,<br>made defensible<span class="mark">.</span></h1>
+
+      <p class="lede">
+        Instrument-grade roof intelligence for insurers &mdash; <strong>geolocated, time-stamped,
+        severity-ranked</strong>. Built to hold up in a deposition, before a regulator, at renewal.
+      </p>
+
+      <div class="void-axis">
+        <div class="line"></div>
+        <div class="readout">
+          <span class="figure tabular">48<span style="font-size:1.2rem;letter-spacing:0.02em;">h</span></span>
+          <span class="figure-cap">Condition Brief &mdash; Target</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ METHOD ============ -->
+    <section class="method">
+      <div class="step">
+        <div class="idx mono-label"><span class="n">01</span><span>Capture</span><span class="seam"></span></div>
+        <h3>Flown to the thermal window</h3>
+        <p>Aerial thermal &amp; visual imagery, captured <b>when thermal contrast is real</b> &mdash; bound by solar geometry, not the calendar.</p>
+      </div>
+      <div class="step">
+        <div class="idx mono-label"><span class="n">02</span><span>Analyze</span><span class="seam"></span></div>
+        <h3>Ranked, scored, reviewed</h3>
+        <p>AI surfaces anomalies as <b>SEV-1&#8202;/&#8202;2&#8202;/&#8202;3</b>, each carrying a confidence value. Below <b>0.80</b>, a human reviews.</p>
+      </div>
+      <div class="step">
+        <div class="idx mono-label"><span class="n">03</span><span>Record</span><span class="seam"></span></div>
+        <h3>A living file, not a snapshot</h3>
+        <p>A geolocated, time-stamped record; re-scans on cadence track <b>degradation velocity</b> over time.</p>
+      </div>
+    </section>
+
+    <!-- ============ GOVERNANCE WEDGE + HONEST SVG ============ -->
+    <section class="governance">
+      <div class="gov-copy">
+        <div class="eyebrow mono-label">The wedge &mdash; AI you can defend</div>
+        <h2>Explainable by design. Human-in-the-loop by rule.</h2>
+        <p>
+          Imagery is <em>one input</em>, never the sole basis for a decision. Chain-of-custody and
+          capture metadata travel with every finding &mdash; built to hold up under NAIC scrutiny, in
+          a deposition, and at renewal.
+        </p>
+        <div class="gov-facts">
+          <div class="fact">
+            <div class="v tabular">$5<span class="u">M</span></div>
+            <div class="k">Liability / operation</div>
+          </div>
+          <div class="fact">
+            <div class="v tabular">Part&nbsp;107</div>
+            <div class="k">FAA authority</div>
+          </div>
+          <div class="fact">
+            <div class="v tabular">0.80</div>
+            <div class="k">Human-review threshold</div>
+          </div>
+          <div class="fact">
+            <div class="v">COI</div>
+            <div class="k">Available pre-contract</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <div class="chart-frame">
+          <div class="chart-head">
+            <span class="t mono-label">Confidence band</span>
+            <span class="s mono-label">SEV &times; CONF</span>
+          </div>
+          <!-- SCHEMATIC: confidence-banded severity findings with the 0.80
+               human-review line as the single accent. Illustrative only. -->
+          <svg viewBox="0 0 320 150" role="img" aria-label="Schematic confidence-band chart showing findings plotted against a 0.80 human-review threshold">
+            <!-- plot frame -->
+            <g class="annotation-tick" opacity="0.9">
+              <line x1="40" y1="8" x2="40" y2="118"/>
+              <line x1="40" y1="118" x2="312" y2="118"/>
+            </g>
+            <!-- y gridlines (confidence) -->
+            <g stroke="var(--rule)" stroke-width="1">
+              <line x1="40" y1="30" x2="312" y2="30"/>
+              <line x1="40" y1="52" x2="312" y2="52"/>
+              <line x1="40" y1="96" x2="312" y2="96"/>
+            </g>
+            <!-- y labels -->
+            <g fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="0.5">
+              <text x="6" y="11">1.0</text>
+              <text x="6" y="55">.80</text>
+              <text x="6" y="121">.50</text>
+            </g>
+            <!-- the 0.80 human-review line — THE single accent line -->
+            <line x1="40" y1="74" x2="312" y2="74" stroke="var(--signal)" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <text x="312" y="69" text-anchor="end" fill="var(--signal)" font-family="JetBrains Mono, monospace" font-size="8" font-weight="600" letter-spacing="0.5">HUMAN&#8201;REVIEW &lt; 0.80</text>
+
+            <!-- findings: auto-cleared (above line, ink) vs flagged (below, accent ring) -->
+            <g>
+              <!-- above 0.80 → auto-cleared, ink fill -->
+              <circle cx="74" cy="26" r="4" fill="var(--ink-1)"/>
+              <circle cx="110" cy="40" r="5.5" fill="var(--ink-1)"/>
+              <circle cx="160" cy="28" r="4" fill="var(--ink-1)"/>
+              <circle cx="160" cy="56" r="6.5" fill="var(--ink-1)"/>
+              <circle cx="210" cy="44" r="4.5" fill="var(--ink-1)"/>
+              <circle cx="248" cy="34" r="5" fill="var(--ink-1)"/>
+              <circle cx="280" cy="52" r="4" fill="var(--ink-1)"/>
+              <circle cx="92" cy="62" r="4" fill="var(--ink-1)"/>
+              <!-- below 0.80 → flagged for review, hollow signal ring -->
+              <circle cx="128" cy="90" r="5.5" fill="none" stroke="var(--signal)" stroke-width="1.6"/>
+              <circle cx="190" cy="102" r="4.5" fill="none" stroke="var(--signal)" stroke-width="1.6"/>
+              <circle cx="264" cy="94" r="5" fill="none" stroke="var(--signal)" stroke-width="1.6"/>
+            </g>
+
+            <!-- x axis labels: severity tiers -->
+            <g fill="var(--ink-3)" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="0.5" text-anchor="middle">
+              <text x="95" y="131">SEV-1</text>
+              <text x="176" y="131">SEV-2</text>
+              <text x="258" y="131">SEV-3</text>
+            </g>
+            <!-- legend -->
+            <g font-family="JetBrains Mono, monospace" font-size="7.5" letter-spacing="0.4">
+              <circle cx="46" cy="144" r="3.3" fill="var(--ink-1)"/>
+              <text x="54" y="147" fill="var(--ink-3)">AUTO-CLEARED</text>
+              <circle cx="160" cy="144" r="3.3" fill="none" stroke="var(--signal)" stroke-width="1.4"/>
+              <text x="168" y="147" fill="var(--ink-3)">FLAGGED &middot; HUMAN</text>
+            </g>
+          </svg>
+        </div>
+        <div class="chart-caption mono-label">
+          <span class="dot"></span>
+          <span>Schematic &middot; Illustrative &mdash; not a client scan</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOUNDER / CREDIBILITY ============ -->
+    <section class="founder">
+      <div class="founder-id">
+        <div class="name">Adnan Abdillahi</div>
+        <div class="role">Founder &amp; CEO &middot; Founder-direct</div>
+      </div>
+      <div class="founder-creds">
+        <p class="lead">Former cyber-risk senior consultant at <b>Deloitte</b>. The credibility wedge in AI governance &mdash; requests reach his inbox, no handoffs.</p>
+        <div class="cred-row">
+          <span class="cred">CISSP <span class="iss">&middot; ISC2</span></span>
+          <span class="cred">CCSP <span class="iss">&middot; ISC2</span></span>
+          <span class="cred">AIGP <span class="iss">&middot; IAPP</span></span>
+          <span class="cred">AAISM <span class="iss">&middot; ISACA</span></span>
+          <span class="cred">AAIR <span class="iss">&middot; ISACA</span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FOOTER / CTA ============ -->
+    <footer class="foot">
+      <div class="thermal-line thermal-band"></div>
+      <div class="cta-row">
+        <div class="cta-block">
+          <div class="cta-label mono-label">Start small &middot; one action</div>
+          <div class="cta-line">Start with a single roof.<br><em>Request a scoped assessment.</em></div>
+        </div>
+        <div class="cta-contact">
+          <a class="addr">founder@jinki.ai</a>
+          <span>jinki.ai</span>
+          <span class="fine">$5M liability &middot; additional-insured naming available</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</main>
+</body>
+</html>
