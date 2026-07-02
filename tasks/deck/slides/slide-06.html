@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="file:///Users/aa/JInki.ai/tasks/deck/deck.css">
+<style>
+/* .s06 — Method · Capture: copy left, capture-geometry schematic right. */
+.s06 .deck-body{gap:0;}
+.s06 .grid{margin-top:20px;display:grid;grid-template-columns:0.82fr 1.18fr;gap:34px;align-items:center;flex:1 1 auto;min-height:0;}
+.s06 .copy .device-line{margin-top:0;}
+.s06 .copy .device-line + .device-line{margin-top:12px;}
+.s06 .copy .k{font-family:var(--font-mono);font-size:0.66rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--signal);display:block;margin-bottom:12px;}
+.s06 .copy .micro{display:block;margin-top:16px;font-family:var(--font-mono);font-size:0.66rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-3);line-height:1.5;}
+.s06 figure.schem{border:1px solid var(--rule);background:var(--surface-1);padding:18px 22px 14px;}
+.s06 figure.schem svg{width:100%;height:auto;}
+</style>
+</head>
+<body>
+<main class="slide s06">
+  <header class="deck-masthead">
+    <div class="brand">JINKI<span class="dot">.</span><span class="desc">Roof / Property-Condition Intelligence</span></div>
+    <div class="stamp">CONDITION-OF-RECORD · METHOD &amp; STANDING<br>FOR P&amp;C UNDERWRITING &amp; CLAIMS</div>
+  </header>
+  <div class="deck-hair"></div>
+  <div class="deck-body">
+    <div class="section-bar">
+      <div class="grp"><span class="mono-label idx">06 · METHOD</span><h2>Capture</h2></div>
+      <span class="mono-label meta">01 / METHOD · CAPTURE</span>
+    </div>
+
+    <div class="grid">
+      <div class="copy">
+        <span class="k">Disciplined, not opportunistic</span>
+        <p class="device-line">Aerial thermal + visual, flown in the <b>solar window</b> &mdash; when thermal contrast (&Delta;T) is real, not when the calendar says.</p>
+        <p class="device-line">Low sun-angle loads the roof; trapped moisture and delamination hold heat and separate from the background. Capture outside that window reads flat.</p>
+        <span class="micro">SOLAR GEOMETRY BOUNDS THE FLIGHT ·<br>&Delta;T DRIVES THE DECISION</span>
+      </div>
+
+      <figure class="schem">
+        <svg viewBox="0 0 560 300" role="img" aria-label="Flat schematic of capture geometry. A low sun-angle arc sweeps across the sky; a shaded solar-window band marks the interval of low incidence angle when thermal contrast on the roof is real. Below, a roof-section silhouette shows a warmer subsurface-moisture zone reading against the cooler deck. A thin delta-T scale bar, drawn from the thermal ramp, runs along the base from cool to hot as a legend only. Illustrative schematic of method, not measured data.">
+          <!-- frame labels -->
+          <g font-family="JetBrains Mono, monospace" font-size="8.5" letter-spacing="1" fill="var(--ink-3)">
+            <text x="14" y="16">SKY · SUN PATH</text>
+            <text x="410" y="16" text-anchor="start">SOLAR WINDOW</text>
+          </g>
+
+          <!-- horizon rule -->
+          <line x1="14" y1="214" x2="546" y2="214" stroke="var(--rule-strong)" stroke-width="1"/>
+
+          <!-- sun-path arc (low angle) -->
+          <path d="M28,214 Q210,70 468,214" fill="none" stroke="var(--rule-strong)" stroke-width="1.2" stroke-dasharray="5 4"/>
+
+          <!-- SOLAR WINDOW band (low sun-angle interval) — hatched keyline region, NOT a fill field -->
+          <g>
+            <line x1="360" y1="24" x2="360" y2="214" stroke="var(--signal)" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <line x1="452" y1="24" x2="452" y2="214" stroke="var(--signal)" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <line x1="360" y1="30" x2="452" y2="30" stroke="var(--signal)" stroke-width="1.2"/>
+            <g stroke="var(--signal-dim)" stroke-width="1">
+              <line x1="368" y1="34" x2="368" y2="210"/>
+              <line x1="384" y1="34" x2="384" y2="210"/>
+              <line x1="400" y1="34" x2="400" y2="210"/>
+              <line x1="416" y1="34" x2="416" y2="210"/>
+              <line x1="432" y1="34" x2="432" y2="210"/>
+              <line x1="448" y1="34" x2="448" y2="210"/>
+            </g>
+            <text x="406" y="46" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--signal)" letter-spacing="0.4">LOW SUN ANGLE</text>
+            <text x="406" y="57" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="var(--ink-2)" letter-spacing="0.3">&Delta;T IS REAL</text>
+          </g>
+
+          <!-- sun disc riding the arc inside the window -->
+          <circle cx="406" cy="120" r="9" fill="none" stroke="var(--signal)" stroke-width="1.6"/>
+          <g stroke="var(--signal)" stroke-width="1.4">
+            <line x1="406" y1="103" x2="406" y2="97"/>
+            <line x1="423" y1="120" x2="429" y2="120"/>
+            <line x1="418" y1="108" x2="422" y2="104"/>
+          </g>
+          <!-- incident ray to roof -->
+          <path d="M400,127 L300,196" fill="none" stroke="var(--signal)" stroke-width="1.2" stroke-dasharray="3 3"/>
+
+          <!-- ROOF SECTION silhouette (low-slope, ink stroke) -->
+          <g>
+            <path d="M120,214 L120,190 L300,168 L300,196 L120,214 Z" fill="none" stroke="var(--ink-1)" stroke-width="1.6" stroke-linejoin="round"/>
+            <!-- deck line -->
+            <line x1="120" y1="200" x2="300" y2="182" stroke="var(--rule)" stroke-width="1"/>
+            <!-- warmer subsurface-moisture zone: keyline blob only, no fill -->
+            <path d="M196,186 q22,-9 40,-2 q6,10 -8,15 q-24,7 -34,-4 q-4,-6 2,-9 Z" fill="none" stroke="var(--signal)" stroke-width="1.4"/>
+            <text x="216" y="160" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" font-weight="700" fill="var(--signal)" letter-spacing="0.3">SUBSURFACE MOISTURE</text>
+            <line x1="216" y1="163" x2="216" y2="180" stroke="var(--signal)" stroke-width="1" stroke-dasharray="2 2"/>
+            <text x="140" y="230" font-family="JetBrains Mono, monospace" font-size="8" fill="var(--ink-3)" letter-spacing="0.4">ROOF SECTION</text>
+          </g>
+
+          <!-- delta-T SCALE BAR (thermal ramp used as a thin legend, NOT a fill) -->
+          <defs>
+            <linearGradient id="dtramp06" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#0A0A0A"/><stop offset="18%" stop-color="#2B0B5E"/>
+              <stop offset="38%" stop-color="#8B1E9B"/><stop offset="62%" stop-color="#E33F1E"/>
+              <stop offset="80%" stop-color="#FF8A00"/><stop offset="92%" stop-color="#FFD24A"/>
+              <stop offset="100%" stop-color="#FFF8E0"/>
+            </linearGradient>
+          </defs>
+          <rect x="120" y="266" width="320" height="4" rx="2" fill="url(#dtramp06)"/>
+          <g font-family="JetBrains Mono, monospace" font-size="7.5" letter-spacing="0.4" fill="var(--ink-3)">
+            <text x="120" y="286">&Delta;T COOL</text>
+            <text x="440" y="286" text-anchor="end">HOT</text>
+            <text x="280" y="258" text-anchor="middle" fill="var(--ink-3)" letter-spacing="0.6">&Delta;T SCALE · LEGEND ONLY</text>
+          </g>
+        </svg>
+        <figcaption>
+          <span class="mono-label l">CAPTURE GEOMETRY · SCHEMATIC</span>
+          <span class="mono-label r">ILLUSTRATIVE</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+  <footer class="deck-footer">
+    <span class="folio"><b>06</b> / 16</span>
+    <span class="disc">Illustrative schematics · industry figures are directional framing (sourced), not Jinki measurements · no client scans completed to date.</span>
+    <span class="region">Mid-Atlantic</span>
+  </footer>
+</main>
+</body>
+</html>

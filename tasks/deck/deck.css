@@ -1,0 +1,157 @@
+/* ============================================================
+   JINKI SOLUTION DECK — LOCKED FOUNDATION + CHROME
+   16:9 landscape (13.333in × 7.5in = 1280×720 @96dpi). Every slide
+   links this file and writes ONLY a namespaced .sNN {} block.
+   Rules: colors via var(--*) only · single 16px root · no per-slide
+   root/font-size overrides · Signal orange is an ACCENT, never a
+   fill field · every schematic carries an ILLUSTRATIVE/SCHEMATIC
+   caption · stats carry their source. LIGHT theme (data-theme="light").
+   ============================================================ */
+
+/* ---------- BLOCK 1 — brand foundation (locked; from system.css) ---------- */
+@font-face{font-family:'Space Grotesk';src:url('file:///Users/aa/JInki.ai/public/fonts/SpaceGrotesk-Variable.woff2') format('woff2-variations');font-weight:300 700;font-style:normal;font-display:swap;}
+@font-face{font-family:'Inter';src:url('file:///Users/aa/JInki.ai/public/fonts/Inter-Variable.woff2') format('woff2-variations');font-weight:300 700;font-style:normal;font-display:swap;}
+@font-face{font-family:'JetBrains Mono';src:url('file:///Users/aa/JInki.ai/public/fonts/JetBrainsMono-Variable.woff2') format('woff2-variations');font-weight:400 700;font-style:normal;font-display:swap;}
+
+:root{
+  color-scheme:dark;
+  --surface-0:#0A0A0A; --surface-1:#111111; --surface-2:#181818; --surface-3:#202020;
+  --ink-1:#F4F4F2; --ink-2:rgba(244,244,242,0.68); --ink-3:rgba(244,244,242,0.52);
+  --rule:rgba(244,244,242,0.12); --rule-strong:rgba(244,244,242,0.32);
+  --signal:#FF4F00; --signal-soft:#FF6B33; --signal-dim:rgba(255,79,0,0.32);
+  --btn-bg:#F4F4F2; --btn-fg:#0A0A0A;
+  --thermal-ramp:linear-gradient(90deg,#0A0A0A 0%,#2B0B5E 18%,#8B1E9B 38%,#E33F1E 62%,#FF8A00 80%,#FFD24A 92%,#FFF8E0 100%);
+  --font-display:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;
+  --font-sans:'Inter',ui-sans-serif,system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,'SF Mono',monospace;
+  --radius-panel:4px; --radius-pill:999px;
+  --text-label:0.80rem; --text-caption:0.875rem; --text-body:1.0rem; --text-lede:1.3rem;
+  --text-h3:1.5rem; --text-h2:2.1rem; --text-h1:3.0rem; --text-display:3.9rem;
+}
+[data-theme="light"]{
+  color-scheme:light;
+  --surface-0:#F7F6F3; --surface-1:#FFFFFF; --surface-2:#EFEDE8; --surface-3:#E7E5DF;
+  --ink-1:#121210; --ink-2:rgba(18,18,16,0.70); --ink-3:rgba(18,18,16,0.55);
+  --rule:rgba(18,18,16,0.14); --rule-strong:rgba(18,18,16,0.34);
+  --signal:#C23A00; --signal-soft:#B84A1A; --signal-dim:rgba(194,58,0,0.32);
+  --btn-bg:#121210; --btn-fg:#F7F6F3;
+}
+
+*{box-sizing:border-box;}
+html{font-size:16px;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:var(--surface-0);color:var(--ink-1);font-family:var(--font-sans);}
+body{margin:0;font-size:var(--text-body);line-height:1.5;}
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:500;color:var(--ink-1);margin:0;text-wrap:balance;letter-spacing:-0.02em;line-height:1.04;}
+p{color:var(--ink-2);margin:0;text-wrap:pretty;}
+em{font-style:normal;color:var(--signal);}
+svg{display:block;}
+
+/* landscape 16:9 page — Chrome takes PDF geometry from @page (NOT --window-size) */
+@page{size:13.333in 7.5in;margin:0;}
+.slide{
+  position:relative;width:13.333in;height:7.5in;overflow:hidden;
+  background:var(--surface-0);color:var(--ink-1);
+  padding:0.6in 0.72in 0.46in;
+  display:flex;flex-direction:column;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact;
+}
+
+/* instrument utilities */
+.mono-label{font-family:var(--font-mono);font-size:var(--text-label);font-weight:500;letter-spacing:0.12em;text-transform:uppercase;line-height:1.1;}
+.mono-label-long{font-family:var(--font-mono);font-size:var(--text-label);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;line-height:1.5;}
+.mono{font-family:var(--font-mono);} .tabular{font-variant-numeric:tabular-nums;}
+.thermal-band{background:var(--thermal-ramp);} .thermal-hair{height:2px;width:100%;border-radius:2px;background:var(--thermal-ramp);}
+.signal{color:var(--signal);} .soft{color:var(--signal-soft);} .ink-2{color:var(--ink-2);} .ink-3{color:var(--ink-3);}
+.annotation-box{fill:none;stroke:var(--signal-dim);stroke-width:1.5;} .annotation-tick{stroke:var(--rule-strong);stroke-width:1.5;fill:none;}
+.src{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.04em;color:var(--ink-3);}   /* stat source suffix */
+
+/* ---------- BLOCK 2 — deck chrome + component library (locked) ---------- */
+
+/* persistent masthead (identical markup on every slide) */
+.deck-masthead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex:0 0 auto;}
+.deck-masthead .brand{font-family:var(--font-display);font-weight:600;font-size:1.05rem;letter-spacing:-0.01em;color:var(--ink-1);}
+.deck-masthead .brand .dot{color:var(--signal);}
+.deck-masthead .brand .desc{font-family:var(--font-mono);font-weight:500;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-3);margin-left:11px;}
+.deck-masthead .stamp{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-3);text-align:right;line-height:1.55;}
+.deck-hair{height:2px;width:100%;border-radius:2px;background:var(--thermal-ramp);margin:8px 0 0;flex:0 0 auto;}
+
+/* slide body fills between masthead and footer */
+.deck-body{flex:1 1 auto;min-height:0;display:flex;flex-direction:column;padding-top:18px;}
+
+/* persistent footer (folio NN / 16, region, running disclaimer) */
+.deck-footer{flex:0 0 auto;border-top:1px solid var(--rule);margin-top:12px;padding-top:7px;display:flex;align-items:center;justify-content:space-between;gap:14px;font-family:var(--font-mono);font-size:0.56rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-3);}
+.deck-footer .disc{color:var(--ink-3);text-transform:none;letter-spacing:0.01em;flex:1 1 auto;}
+.deck-footer .folio{color:var(--ink-2);flex:0 0 auto;} .deck-footer .folio b{color:var(--signal);}
+.deck-footer .region{flex:0 0 auto;}
+
+/* slide title lockup + kicker */
+.slide-kicker{font-family:var(--font-mono);font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--signal);}
+.slide-title{font-family:var(--font-display);font-weight:500;letter-spacing:-0.025em;line-height:1.02;color:var(--ink-1);font-size:var(--text-h1);}
+.slide-lede{color:var(--ink-2);font-size:var(--text-lede);line-height:1.4;max-width:52ch;}
+
+/* section-bar */
+.section-bar{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:6px;border-bottom:1px solid var(--rule);}
+.section-bar .grp{display:flex;align-items:baseline;flex:1 1 auto;min-width:0;}
+.section-bar .idx{color:var(--signal);margin-right:10px;flex:0 0 auto;font-family:var(--font-mono);font-weight:600;}
+.section-bar h2{font-size:1.1rem;letter-spacing:0.01em;color:var(--ink-1);font-family:var(--font-display);font-weight:500;}
+.section-bar .meta{color:var(--ink-3);flex:0 0 auto;}
+
+/* credential roster (5-col) */
+.roster{border:1px solid var(--rule);background:var(--surface-1);}
+.roster .rhead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 13px;border-bottom:1px solid var(--rule);}
+.rgrid{display:grid;grid-template-columns:repeat(5,1fr);}
+.cred{padding:9px 12px;} .cred + .cred{border-left:1px solid var(--rule);}
+.cred .abbr{color:var(--signal);font-weight:600;font-size:var(--text-label);font-family:var(--font-mono);}
+.cred .iss{color:var(--ink-3);font-size:0.64rem;font-family:var(--font-mono);margin-left:4px;}
+.cred .full{display:block;color:var(--ink-2);font-size:0.72rem;line-height:1.22;margin-top:5px;}
+
+/* method flow (3-step, thermal connectors) */
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:start;gap:16px;}
+.flow .step .sh{display:block;font-family:var(--font-mono);font-size:0.78rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--signal);}
+.flow .step .sd{display:block;color:var(--ink-2);font-size:0.9rem;line-height:1.38;margin-top:7px;}
+.flow .flow-link{align-self:center;height:2px;width:100%;min-width:20px;border-radius:2px;background:var(--thermal-ramp);margin-top:6px;}
+
+/* verifiable-facts strip (5-col) */
+.facts{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--rule);}
+.facts .f{padding:12px 14px;} .facts .f + .f{border-left:1px solid var(--rule);}
+.facts .f .v{font-family:var(--font-display);font-weight:500;font-size:1.55rem;letter-spacing:-0.02em;color:var(--ink-1);line-height:1;font-variant-numeric:tabular-nums;}
+.facts .f .v .u{font-family:var(--font-mono);font-size:0.8rem;color:var(--signal);}
+.facts .f .lab{color:var(--ink-3);margin-top:9px;display:block;font-size:0.66rem;font-family:var(--font-mono);letter-spacing:0.08em;text-transform:uppercase;line-height:1.3;}
+
+/* deponent / founder block */
+.deponent{border:1px solid var(--rule);background:var(--surface-1);padding:15px 18px;display:flex;flex-direction:column;}
+.deponent .name{font-family:var(--font-display);font-weight:600;font-size:1.6rem;letter-spacing:-0.02em;color:var(--ink-1);line-height:1;}
+.deponent .role{font-family:var(--font-mono);font-size:0.66rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-3);margin-top:7px;}
+.deponent .q{color:var(--ink-1);font-size:0.98rem;line-height:1.42;font-weight:500;margin-top:12px;}
+
+/* CTA */
+.cta{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;border:1px solid var(--rule);border-left:3px solid var(--signal);padding:16px 20px;background:var(--surface-1);}
+.cta h3{font-family:var(--font-display);font-weight:600;font-size:1.5rem;letter-spacing:-0.02em;color:var(--ink-1);line-height:1.04;}
+.cta p{color:var(--ink-2);font-size:0.92rem;line-height:1.34;margin-top:6px;}
+.cta .btn{display:inline-block;background:var(--btn-bg);color:var(--btn-fg);font-family:var(--font-display);font-weight:600;font-size:1.05rem;letter-spacing:-0.01em;padding:12px 22px;border-radius:var(--radius-panel);white-space:nowrap;}
+
+/* basis note (imagery-is-one-input) */
+.basis-note{border-left:3px solid var(--signal);padding-left:14px;color:var(--ink-2);font-size:0.95rem;line-height:1.42;}
+.basis-note b{color:var(--ink-1);}
+
+/* def-list (defensibility bullets) */
+.def-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px;}
+.def-list li{position:relative;padding-left:20px;color:var(--ink-2);font-size:0.95rem;line-height:1.42;}
+.def-list li::before{content:"";position:absolute;left:0;top:0.6em;width:9px;height:2px;background:var(--signal);}
+.def-list li b{color:var(--ink-1);}
+
+/* figures + honest captions */
+figure{margin:0;}
+figcaption{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:8px;}
+figcaption .mono-label,figcaption .mono-label-long{color:var(--ink-3);}
+.fig-frame{border:1px solid var(--rule);background:var(--surface-1);padding:16px 18px;}
+
+/* roster inner row + device-line + hero figure sizing (reused) */
+.cred .r1{display:flex;align-items:baseline;gap:6px;}
+.device-line{color:var(--ink-2);font-size:1.02rem;line-height:1.42;} .device-line b{color:var(--ink-1);font-weight:600;}
+figure.chain svg,figure.instrument svg{width:100%;height:auto;}
+
+/* small stat card (for cost/stakes/problem slides) */
+.stat{display:flex;flex-direction:column;gap:6px;}
+.stat .n{font-family:var(--font-display);font-weight:600;font-size:2.0rem;letter-spacing:-0.03em;color:var(--ink-1);line-height:1;font-variant-numeric:tabular-nums;}
+.stat .n .u{font-family:var(--font-mono);font-size:0.9rem;color:var(--signal);}
+.stat .d{color:var(--ink-2);font-size:0.86rem;line-height:1.34;}

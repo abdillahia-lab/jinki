@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="file:///Users/aa/JInki.ai/tasks/deck/deck.css">
+<style>
+/* .s02 — problem: three sourced stat cards + a 2-bar loss-vs-dispute schematic. Colors via var(--*) only. No html/body font-size. */
+.s02 .lede{margin-top:14px;color:var(--ink-2);font-size:var(--text-lede);line-height:1.38;max-width:66ch;}
+.s02 .grid{margin-top:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);}
+.s02 .grid .stat{background:var(--surface-1);padding:16px 18px;gap:8px;}
+.s02 .stat .src{display:block;margin-top:2px;}
+.s02 .lower{margin-top:18px;display:flex;flex-direction:column;gap:12px;}
+.s02 .close{color:var(--ink-1);font-size:1.02rem;line-height:1.44;font-weight:500;max-width:78ch;}
+.s02 .close b{color:var(--ink-1);font-weight:600;}
+.s02 .close em{font-style:normal;color:var(--signal);}
+.s02 figure.schema{border:1px solid var(--rule);background:var(--surface-1);padding:14px 18px 12px;}
+.s02 figure.schema svg{width:100%;height:auto;}
+</style>
+</head>
+<body>
+<main class="slide s02">
+  <header class="deck-masthead">
+    <div class="brand">JINKI<span class="dot">.</span><span class="desc">Roof / Property-Condition Intelligence</span></div>
+    <div class="stamp">CONDITION-OF-RECORD · METHOD &amp; STANDING<br>FOR P&amp;C UNDERWRITING &amp; CLAIMS</div>
+  </header>
+  <div class="deck-hair"></div>
+  <div class="deck-body">
+    <div class="section-bar">
+      <div class="grp"><span class="mono-label idx">02 · PROBLEM</span><h2>Roof is the leading loss driver &mdash; and the most-disputed line</h2></div>
+      <span class="mono-label meta">ASSESSED LATE · INDEFENSIBLY</span>
+    </div>
+    <p class="lede">The roof drives the loss and drives the dispute &mdash; yet its condition is rarely on file in a form that holds up.</p>
+
+    <div class="grid">
+      <div class="stat">
+        <span class="n">~40&ndash;43<span class="u">%</span></span>
+        <span class="d">of homeowners losses are wind &amp; hail &mdash; the #1 driver, and roof-first.</span>
+        <span class="src">III, 2023&ndash;24</span>
+      </div>
+      <div class="stat">
+        <span class="n">~25<span class="u">%</span></span>
+        <span class="d">of residential claim value is roof-related &mdash; roughly $31B of 2024 costs.</span>
+        <span class="src">Verisk, 2024</span>
+      </div>
+      <div class="stat">
+        <span class="n">~38<span class="u">%</span></span>
+        <span class="d">of US roofs read moderate-to-poor in aerial condition data.</span>
+        <span class="src">Verisk, 2025</span>
+      </div>
+    </div>
+
+    <div class="lower">
+      <p class="close">Roof condition is assessed late, inconsistently, or in a form that doesn't hold up &mdash; so a <b>thin file</b> becomes a <em>disputed claim.</em></p>
+      <figure class="schema">
+        <svg viewBox="0 0 760 118" role="img" aria-label="Illustrative two-bar schematic: roof accounts for an outsized share of both property loss (~40%) and claim disputes (~25%). Directional industry framing, not Jinki measurements.">
+          <!-- shared reference scale (0 -> full share) -->
+          <line x1="286" y1="14" x2="286" y2="104" stroke="var(--rule)" stroke-width="1"/>
+          <line x1="732" y1="14" x2="732" y2="104" stroke="var(--rule)" stroke-width="1"/>
+          <text x="286" y="116" font-family="JetBrains Mono, monospace" font-size="7" letter-spacing="0.4" fill="var(--ink-3)">0%</text>
+          <text x="732" y="116" text-anchor="end" font-family="JetBrains Mono, monospace" font-size="7" letter-spacing="0.4" fill="var(--ink-3)">SHARE OF CATEGORY</text>
+
+          <!-- ROW 1 — share of LOSS (~40%) : neutral bar, signal value -->
+          <text x="0" y="34" font-family="JetBrains Mono, monospace" font-size="8.5" letter-spacing="0.6" fill="var(--ink-2)">ROOF SHARE OF PROPERTY LOSS</text>
+          <rect x="286" y="24" width="178" height="20" fill="var(--surface-2)" stroke="var(--rule-strong)" stroke-width="1.4"/>
+          <text x="474" y="39" font-family="Space Grotesk, sans-serif" font-size="13" font-weight="600" fill="var(--signal)">~40%</text>
+
+          <!-- ROW 2 — share of CLAIM DISPUTES (~25%) : signal keyline, both prominent -->
+          <text x="0" y="82" font-family="JetBrains Mono, monospace" font-size="8.5" letter-spacing="0.6" fill="var(--ink-2)">ROOF SHARE OF CLAIM DISPUTES</text>
+          <rect x="286" y="72" width="111" height="20" fill="var(--signal-dim)" stroke="var(--signal)" stroke-width="1.6"/>
+          <text x="407" y="87" font-family="Space Grotesk, sans-serif" font-size="13" font-weight="600" fill="var(--ink-1)">~25%</text>
+        </svg>
+        <figcaption>
+          <span class="mono-label l">ROOF OVER-INDEXES ON BOTH LOSS &amp; DISPUTE &middot; DIRECTIONAL</span>
+          <span class="mono-label r">ILLUSTRATIVE</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+  <footer class="deck-footer">
+    <span class="folio"><b>02</b> / 16</span>
+    <span class="disc">Illustrative schematics · industry figures are directional framing (sourced), not Jinki measurements · no client scans completed to date.</span>
+    <span class="region">Mid-Atlantic</span>
+  </footer>
+</main>
+</body>
+</html>

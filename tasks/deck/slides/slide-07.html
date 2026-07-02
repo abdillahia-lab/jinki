@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="file:///Users/aa/JInki.ai/tasks/deck/deck.css">
+<style>
+/* .s07 — Method · Analyze: copy left, SEV×confidence gate instrument right (enlarged gate node). */
+.s07 .deck-body{gap:0;}
+.s07 .grid{margin-top:20px;display:grid;grid-template-columns:0.8fr 1.2fr;gap:34px;align-items:center;flex:1 1 auto;min-height:0;}
+.s07 .copy .device-line{margin-top:0;}
+.s07 .copy .device-line + .device-line{margin-top:12px;}
+.s07 .copy .k{font-family:var(--font-mono);font-size:0.66rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--signal);display:block;margin-bottom:12px;}
+.s07 .copy .micro{display:block;margin-top:16px;font-family:var(--font-mono);font-size:0.66rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-3);line-height:1.5;}
+.s07 figure.schem{border:1px solid var(--rule);background:var(--surface-1);padding:18px 22px 14px;}
+.s07 figure.schem svg{width:100%;height:auto;}
+</style>
+</head>
+<body>
+<main class="slide s07">
+  <header class="deck-masthead">
+    <div class="brand">JINKI<span class="dot">.</span><span class="desc">Roof / Property-Condition Intelligence</span></div>
+    <div class="stamp">CONDITION-OF-RECORD · METHOD &amp; STANDING<br>FOR P&amp;C UNDERWRITING &amp; CLAIMS</div>
+  </header>
+  <div class="deck-hair"></div>
+  <div class="deck-body">
+    <div class="section-bar">
+      <div class="grp"><span class="mono-label idx">07 · METHOD</span><h2>Analyze</h2></div>
+      <span class="mono-label meta">02 / METHOD · ANALYZE</span>
+    </div>
+
+    <div class="grid">
+      <div class="copy">
+        <span class="k">The human-in-the-loop gate</span>
+        <p class="device-line">Every anomaly is ranked <b>SEV-1/2/3</b> and confidence-scored. Findings <b>under 0.80 route to a logged human review</b>; at or above, they auto-clear.</p>
+        <p class="device-line">The gate is the governance control &mdash; the line a regulator can see, and the reason a weak finding never lands unchecked.</p>
+        <span class="micro">EVERY FINDING SCORED ·<br>THE 0.80 GATE IS THE CONTROL</span>
+      </div>
+
+      <figure class="schem">
+        <svg viewBox="0 0 560 300" role="img" aria-label="Flat instrument schematic of the SEV-by-confidence gate. A horizontal confidence axis runs 0.50 to 1.00. Three severity lanes, SEV-1, SEV-2 and SEV-3, stack vertically. A dashed vertical gate line stands at 0.80. Findings plotted below 0.80 are solid signal-colored marks that route to a logged human review; findings at or above 0.80 are hollow neutral marks that auto-clear onto the record. Illustrative schematic of method, not measured data.">
+          <!-- column headers -->
+          <g font-family="JetBrains Mono, monospace" font-size="8.5" letter-spacing="1" fill="var(--ink-3)">
+            <text x="14" y="15">SEVERITY</text>
+            <text x="150" y="15">CONFIDENCE &#8594;</text>
+          </g>
+
+          <!-- plot bounds -->
+          <!-- x: 0.50 at 150, 1.00 at 520 -->
+          <!-- lane guides -->
+          <g stroke="var(--rule)" stroke-width="1">
+            <line x1="150" y1="70" x2="520" y2="70"/>
+            <line x1="150" y1="120" x2="520" y2="120"/>
+            <line x1="150" y1="170" x2="520" y2="170"/>
+            <line x1="150" y1="220" x2="520" y2="220"/>
+          </g>
+          <!-- left lane axis -->
+          <line x1="150" y1="70" x2="150" y2="220" stroke="var(--rule-strong)" stroke-width="1.2"/>
+
+          <!-- SEV lane labels -->
+          <g font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" letter-spacing="0.4">
+            <text x="20" y="98" fill="var(--ink-1)">SEV-1</text>
+            <text x="20" y="148" fill="var(--ink-1)">SEV-2</text>
+            <text x="20" y="198" fill="var(--ink-1)">SEV-3</text>
+          </g>
+          <g font-family="JetBrains Mono, monospace" font-size="7" letter-spacing="0.3" fill="var(--ink-3)">
+            <text x="20" y="108">CRITICAL</text>
+            <text x="20" y="158">MODERATE</text>
+            <text x="20" y="208">MINOR</text>
+          </g>
+
+          <!-- confidence axis ticks -->
+          <g font-family="JetBrains Mono, monospace" font-size="8" fill="var(--ink-3)" letter-spacing="0.3">
+            <line x1="150" y1="220" x2="150" y2="226" stroke="var(--rule-strong)" stroke-width="1"/>
+            <text x="150" y="238" text-anchor="middle">0.50</text>
+            <line x1="261" y1="220" x2="261" y2="224" stroke="var(--rule)" stroke-width="1"/>
+            <text x="261" y="238" text-anchor="middle">0.65</text>
+            <line x1="446" y1="220" x2="446" y2="224" stroke="var(--rule)" stroke-width="1"/>
+            <text x="446" y="238" text-anchor="middle">0.90</text>
+            <line x1="520" y1="220" x2="520" y2="226" stroke="var(--rule-strong)" stroke-width="1"/>
+            <text x="520" y="238" text-anchor="middle">1.00</text>
+          </g>
+
+          <!-- 0.80 GATE line (x = 150 + (0.80-0.50)/0.50*370 = 372) -->
+          <line x1="372" y1="58" x2="372" y2="222" stroke="var(--signal)" stroke-width="1.6" stroke-dasharray="5 3"/>
+          <text x="372" y="52" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--signal)" letter-spacing="0.4">0.80 GATE</text>
+
+          <!-- region captions -->
+          <text x="258" y="70" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="var(--signal)" letter-spacing="0.3">&#8592; LOGGED HUMAN REVIEW</text>
+          <text x="452" y="70" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7.5" fill="var(--ink-3)" letter-spacing="0.3">AUTO-CLEAR &#8594;</text>
+
+          <!-- UNDER 0.80 — solid signal marks (route to human review) -->
+          <g fill="var(--signal)">
+            <circle cx="205" cy="90" r="3.2"/>
+            <circle cx="250" cy="98" r="3.2"/>
+            <circle cx="320" cy="86" r="3.2"/>
+            <circle cx="232" cy="142" r="3.2"/>
+            <circle cx="300" cy="150" r="3.2"/>
+            <circle cx="348" cy="138" r="3.2"/>
+            <circle cx="196" cy="196" r="3.2"/>
+            <circle cx="284" cy="204" r="3.2"/>
+          </g>
+
+          <!-- AT/ABOVE 0.80 — hollow neutral marks (auto-clear) -->
+          <g fill="none" stroke="var(--ink-3)" stroke-width="1.3">
+            <circle cx="404" cy="92" r="3.2"/>
+            <circle cx="452" cy="98" r="3.2"/>
+            <circle cx="498" cy="88" r="3.2"/>
+            <circle cx="420" cy="146" r="3.2"/>
+            <circle cx="470" cy="152" r="3.2"/>
+            <circle cx="500" cy="140" r="3.2"/>
+            <circle cx="408" cy="198" r="3.2"/>
+            <circle cx="456" cy="202" r="3.2"/>
+            <circle cx="500" cy="196" r="3.2"/>
+          </g>
+
+          <!-- legend -->
+          <g font-family="JetBrains Mono, monospace" font-size="7.5" letter-spacing="0.3">
+            <circle cx="156" cy="264" r="3.2" fill="var(--signal)"/>
+            <text x="166" y="267" fill="var(--ink-2)">UNDER 0.80 · ROUTES TO LOGGED HUMAN REVIEW</text>
+            <circle cx="156" cy="282" r="3.2" fill="none" stroke="var(--ink-3)" stroke-width="1.3"/>
+            <text x="166" y="285" fill="var(--ink-2)">AT / ABOVE 0.80 · AUTO-CLEARS TO RECORD</text>
+          </g>
+        </svg>
+        <figcaption>
+          <span class="mono-label l">SEV &times; CONFIDENCE · HUMAN-IN-THE-LOOP · SCHEMATIC</span>
+          <span class="mono-label r">ILLUSTRATIVE</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+  <footer class="deck-footer">
+    <span class="folio"><b>07</b> / 16</span>
+    <span class="disc">Illustrative schematics · industry figures are directional framing (sourced), not Jinki measurements · no client scans completed to date.</span>
+    <span class="region">Mid-Atlantic</span>
+  </footer>
+</main>
+</body>
+</html>

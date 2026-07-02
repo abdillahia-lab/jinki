@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="file:///Users/aa/JInki.ai/tasks/deck/deck.css">
+<style>
+/* .s13 — where-it-fits matrix: book stage (rows) × UW | Claims (cols). Hairline grid via 1px gap. */
+.s13 .lede{margin-top:14px;color:var(--ink-2);font-size:var(--text-lede);line-height:1.38;max-width:64ch;}
+.s13 .matrix{margin-top:20px;display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);}
+.s13 .matrix > div{background:var(--surface-1);padding:15px 18px;display:flex;flex-direction:column;justify-content:center;}
+.s13 .mh{background:var(--surface-2)!important;border-bottom:2px solid var(--signal);}
+.s13 .mh .k{font-family:var(--font-mono);font-size:0.74rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-1);}
+.s13 .mh.corner .k{color:var(--ink-3);}
+.s13 .rowh{background:var(--surface-2)!important;}
+.s13 .rowh .s{font-family:var(--font-display);font-weight:600;font-size:1.02rem;letter-spacing:-0.01em;color:var(--ink-1);line-height:1.05;}
+.s13 .rowh .sn{font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--signal);margin-bottom:4px;}
+.s13 .cell .a{color:var(--ink-1);font-size:0.9rem;line-height:1.32;font-weight:500;}
+.s13 .cell .dim{color:var(--ink-3);font-size:0.9rem;}
+</style>
+</head>
+<body>
+<main class="slide s13">
+  <header class="deck-masthead">
+    <div class="brand">JINKI<span class="dot">.</span><span class="desc">Roof / Property-Condition Intelligence</span></div>
+    <div class="stamp">CONDITION-OF-RECORD · METHOD &amp; STANDING<br>FOR P&amp;C UNDERWRITING &amp; CLAIMS</div>
+  </header>
+  <div class="deck-hair"></div>
+  <div class="deck-body">
+    <div class="section-bar">
+      <div class="grp"><span class="mono-label idx">13 · FIT</span><h2>Where it fits your book</h2></div>
+      <span class="mono-label meta">UNDERWRITING &times; CLAIMS</span>
+    </div>
+    <p class="lede">One condition-of-record, two desks. The same defensible file enters the book at every stage &mdash; on the underwriting side and the claims side.</p>
+
+    <div class="matrix">
+      <div class="mh corner"><span class="k">Book stage</span></div>
+      <div class="mh"><span class="k">Underwriting</span></div>
+      <div class="mh"><span class="k">Claims</span></div>
+
+      <div class="rowh"><span class="sn">01</span><span class="s">New business</span></div>
+      <div class="cell"><span class="a">Pre-bind condition input &mdash; price the roof you can see, not just its age.</span></div>
+      <div class="cell"><span class="a">A baseline on file, before any loss.</span></div>
+
+      <div class="rowh"><span class="sn">02</span><span class="s">Renewal</span></div>
+      <div class="cell"><span class="a">Re-scan re-price &mdash; condition change, not a static age assumption.</span></div>
+      <div class="cell"><span class="a">Documented change history for the account.</span></div>
+
+      <div class="rowh"><span class="sn">03</span><span class="s">Post-event</span></div>
+      <div class="cell"><span class="a">Portfolio event triage &mdash; where to look first.</span></div>
+      <div class="cell"><span class="a">Time-stamped post-event documentation.</span></div>
+
+      <div class="rowh"><span class="sn">04</span><span class="s">Claim</span></div>
+      <div class="cell"><span class="a">A loss-cause signal to inform the file.</span></div>
+      <div class="cell"><span class="a">A defensible severity + confidence record.</span></div>
+
+      <div class="rowh"><span class="sn">05</span><span class="s">Litigation</span></div>
+      <div class="cell"><span class="dim">&mdash;</span></div>
+      <div class="cell"><span class="a">A chain-of-custody exhibit that holds up.</span></div>
+    </div>
+  </div>
+  <footer class="deck-footer">
+    <span class="folio"><b>13</b> / 16</span>
+    <span class="disc">Illustrative schematics · industry figures are directional framing (sourced), not Jinki measurements · no client scans completed to date.</span>
+    <span class="region">Mid-Atlantic</span>
+  </footer>
+</main>
+</body>
+</html>

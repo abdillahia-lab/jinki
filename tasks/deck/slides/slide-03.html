@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="file:///Users/aa/JInki.ai/tasks/deck/deck.css">
+<style>
+/* .s03 — cost curve: two lenses (UW | Claims) over a thin rising thermal backdrop band. Colors via var(--*) only. No html/body font-size. */
+.s03 .lede{margin-top:14px;color:var(--ink-2);font-size:var(--text-lede);line-height:1.38;max-width:64ch;}
+.s03 .cols{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);}
+.s03 .lens{background:var(--surface-1);padding:16px 18px 18px;display:flex;flex-direction:column;}
+.s03 .lens .lh{font-family:var(--font-mono);font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink-1);padding-bottom:8px;border-bottom:2px solid var(--signal);}
+.s03 .lens ul{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;gap:12px;}
+.s03 .lens li{position:relative;padding-left:18px;color:var(--ink-2);font-size:0.92rem;line-height:1.36;}
+.s03 .lens li::before{content:"";position:absolute;left:0;top:0.55em;width:8px;height:2px;background:var(--signal);}
+.s03 .lens li b{color:var(--ink-1);font-weight:600;}
+.s03 .lens li .src{display:inline;margin-left:5px;}
+.s03 .lens li.sub{font-size:0.8rem;color:var(--ink-3);line-height:1.32;padding-left:18px;}
+.s03 .lens li.sub::before{background:var(--rule-strong);width:6px;top:0.5em;}
+.s03 .lens li.sub b{color:var(--ink-2);font-weight:600;}
+.s03 figure.band{margin-top:18px;border:1px solid var(--rule);background:var(--surface-1);padding:0;overflow:hidden;}
+.s03 figure.band .strip{position:relative;height:52px;}
+.s03 figure.band .ramp{position:absolute;left:0;right:0;bottom:0;height:12px;background:var(--thermal-ramp);opacity:0.09;}
+.s03 figure.band .risewrap{position:absolute;inset:0;}
+.s03 figure.band .risewrap svg{width:100%;height:100%;}
+.s03 figure.band .lbl{position:absolute;top:9px;left:16px;font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-1);}
+.s03 figure.band .lbl b{color:var(--signal);font-weight:600;}
+.s03 figure.band .lbl .src{margin-left:6px;}
+.s03 figure.band .rgt{position:absolute;bottom:8px;right:16px;font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-2);}
+.s03 figure.band .rgt b{color:var(--ink-1);font-weight:600;}
+.s03 figure.band figcaption{padding:7px 16px;border-top:1px solid var(--rule);}
+</style>
+</head>
+<body>
+<main class="slide s03">
+  <header class="deck-masthead">
+    <div class="brand">JINKI<span class="dot">.</span><span class="desc">Roof / Property-Condition Intelligence</span></div>
+    <div class="stamp">CONDITION-OF-RECORD · METHOD &amp; STANDING<br>FOR P&amp;C UNDERWRITING &amp; CLAIMS</div>
+  </header>
+  <div class="deck-hair"></div>
+  <div class="deck-body">
+    <div class="section-bar">
+      <div class="grp"><span class="mono-label idx">03 · COST</span><h2>The gap is expensive today &mdash; and worsening</h2></div>
+      <span class="mono-label meta">UNDERWRITING &amp; CLAIMS LENS</span>
+    </div>
+    <p class="lede">Unpriced roof condition costs on both desks &mdash; it mis-selects the book, and it litigates the claim.</p>
+
+    <div class="cols">
+      <div class="lens">
+        <span class="lh">Underwriting lens</span>
+        <ul>
+          <li>Moderate-to-poor roofs carry <b>~60% higher loss cost</b>.<span class="src">Verisk RCS, 2025</span></li>
+          <li class="sub">Aging (~20-year) roofs are materially likelier to claim &mdash; practitioner estimate, directional, wide range.</li>
+          <li>Condition priced by age, not seen, is <b>adverse selection</b> you can't observe.</li>
+        </ul>
+      </div>
+      <div class="lens">
+        <span class="lh">Claims lens</span>
+        <ul>
+          <li>Loss-adjustment expense runs <b>~10&ndash;15%</b> of losses paid.<span class="src">IRMI</span></li>
+          <li>Disputes concentrate: FL has generated a large majority (<b>~70%+</b>) of US homeowners-insurance litigation while representing a small share of claims.<span class="src">III / FL OIR, ~2021&ndash;22</span></li>
+          <li>A thin file is what turns a covered loss into a <b>contested one</b>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <figure class="band">
+      <div class="strip">
+        <div class="ramp"></div>
+        <div class="risewrap">
+          <svg viewBox="0 0 800 52" preserveAspectRatio="none" role="img" aria-label="Illustrative rising trend line beneath severe-convective-storm loss context. Not measured data.">
+            <path d="M0,46 L200,40 L420,30 L620,20 L800,8" fill="none" stroke="var(--signal)" stroke-width="1.6"/>
+          </svg>
+        </div>
+        <div class="lbl">SCS &amp; HAIL INSURED LOSSES <b>$200B+</b> 2023&ndash;25<span class="src">(industry aggregates, 2023&ndash;25)</span></div>
+        <div class="rgt">HAIL ON &gt;20% OF ROOFS IN <b>16 STATES</b> &mdash; UP FROM 12</div>
+      </div>
+      <figcaption>
+        <span class="mono-label l">SEVERE-CONVECTIVE-STORM COST · RISING</span>
+        <span class="mono-label r">ILLUSTRATIVE</span>
+      </figcaption>
+    </figure>
+  </div>
+  <footer class="deck-footer">
+    <span class="folio"><b>03</b> / 16</span>
+    <span class="disc">Illustrative schematics · industry figures are directional framing (sourced), not Jinki measurements · no client scans completed to date.</span>
+    <span class="region">Mid-Atlantic</span>
+  </footer>
+</main>
+</body>
+</html>
