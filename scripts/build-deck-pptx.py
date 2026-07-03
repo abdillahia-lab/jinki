@@ -6,7 +6,9 @@ placed full-bleed on a native 13.333x7.5in slide. The PDF (fonts embedded, selec
 remains the master; this PPTX is the "drops into any PowerPoint" display artifact and
 the HTML in tasks/deck/slides/ stays the editable source.
 
-Usage:  python3 scripts/build-deck-pptx.py
+Usage:
+  python3 scripts/build-deck-pptx.py            # light deck  -> jinki-solution-deck.pptx
+  python3 scripts/build-deck-pptx.py dark        # dark variant -> jinki-solution-deck-dark.pptx
 """
 import glob
 import os
@@ -19,16 +21,27 @@ try:
 except ImportError:
     sys.exit("python-pptx not installed. Run: python3 -m pip install python-pptx")
 
+theme = sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ("dark", "light") else None
+sfx = f"-{theme}" if theme else ""
+
 ROOT = os.getcwd()
 RENDERS = os.path.join(ROOT, "tasks/deck/renders")
-OUT = os.path.join(ROOT, "public/docs/jinki-solution-deck.pptx")
+OUT = os.path.join(ROOT, f"public/docs/jinki-solution-deck{sfx}.pptx")
+
+
+def matches(path):
+    b = os.path.basename(path)
+    if theme:
+        return b.endswith(f"-{theme}.png")
+    return not (b.endswith("-dark.png") or b.endswith("-light.png"))
+
 
 pngs = sorted(
-    glob.glob(os.path.join(RENDERS, "slide-*.png")),
+    (p for p in glob.glob(os.path.join(RENDERS, "slide-*.png")) if matches(p)),
     key=lambda p: int(re.search(r"slide-(\d+)", os.path.basename(p)).group(1)),
 )
 if not pngs:
-    sys.exit(f"no slide PNGs in {RENDERS} — run scripts/render-deck.mjs first")
+    sys.exit(f"no slide PNGs ({sfx or 'light'}) in {RENDERS} — run scripts/render-deck.mjs first")
 
 prs = Presentation()
 prs.slide_width = Inches(13.333)
@@ -40,6 +53,4 @@ for png in pngs:
 
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 prs.save(OUT)
-print(f"ASSEMBLED {len(pngs)} slides -> {OUT}")
-for p in pngs:
-    print("  +", os.path.basename(p))
+print(f"ASSEMBLED {len(pngs)} slides ({theme or 'light'}) -> {OUT}")
